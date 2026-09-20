@@ -1,0 +1,46 @@
+.hub-header {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.hub-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 4rem;
+  padding-block: var(--space-3);
+}
+
+.hub-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+  min-height: var(--target);
+}
+
+.hub-header__mark {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--color-accent-soft), var(--color-accent) 70%);
+  box-shadow: 0 0 1.25rem color-mix(in srgb, var(--color-accent) 55%, transparent);
+  flex: none;
+}
+
+.hub-header__name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hub-header__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

@@ -1,0 +1,109 @@
+.spec-chip {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 40;
+  min-height: var(--target);
+  min-width: var(--target);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 0.15);
+}
+
+.spec-chip::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: var(--space-2);
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.dev-panel {
+  position: fixed;
+  right: var(--space-4);
+  bottom: calc(var(--space-4) + var(--target) + var(--space-3));
+  z-index: 40;
+  width: min(28rem, calc(100vw - 2 * var(--space-4)));
+  max-height: min(70dvh, 40rem);
+  overflow: auto;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 0.5rem 2rem rgb(0 0 0 / 0.2);
+}
+
+.dev-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.dev-panel__title {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.dev-panel__close {
+  min-width: var(--target);
+  min-height: var(--target);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+}
+
+.dev-panel h3 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin: var(--space-3) 0 var(--space-2);
+}
+
+.dev-panel ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.dev-panel li {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  font-size: 0.9375rem;
+}
+
+.dev-panel code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+.dev-panel__meta {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.dev-panel__hint {
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}

@@ -1,0 +1,70 @@
+.placeholder {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: inherit;
+}
+
+.placeholder__badge {
+  display: none;
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  padding: 0.125rem var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-warning);
+  color: var(--color-primary-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.placeholder__tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + var(--space-2));
+  transform: translateX(-50%);
+  z-index: 30;
+  width: max-content;
+  max-width: min(22rem, 90vw);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 120ms ease;
+  pointer-events: none;
+}
+
+/* Shown on hover AND focus (nothing hover-only, P-03); tap gives the toast. */
+.placeholder:hover .placeholder__tip,
+.placeholder:focus .placeholder__tip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Dev mode: marker always visible (P-09). */
+:root[data-dev='on'] .placeholder {
+  outline: 2px dashed var(--color-warning);
+  outline-offset: 2px;
+}
+
+:root[data-dev='on'] .placeholder:focus-visible {
+  outline: var(--focus-ring) solid var(--color-focus);
+}
+
+:root[data-dev='on'] .placeholder__badge {
+  display: inline-flex;
+}

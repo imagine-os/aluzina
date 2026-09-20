@@ -1,0 +1,12 @@
+# Decisions
+
+One row per decision, append-only. Reversals add a new row and mark the old one **superseded**. `Source` is the prompt number.
+
+| Id | Date | Decision | Why | Source | Status |
+| --- | --- | --- | --- | --- | --- |
+| D-001 | 2026-09-20 | **Monorepo** with npm workspaces `apps/*`; the hub (`apps/hub`) is the root of the GitHub Pages site and builds into repo-root `dist/`. | Justin asked for the repo to be the monorepo for Aluzina; the hub is the house-rule entry point (P-12) and must own `/`. | 0001 | accepted |
+| D-002 | 2026-09-20 | **GitHub Pages via the Actions workflow** (Petrock's `pages.yml`: checkout@v5, setup-node@v5 node 22, `npm ci`, `npm run build`, configure-pages@v5 `enablement: true`, upload-pages-artifact@v3 `dist`, deploy-pages@v4); `react-router-dom` HashRouter; Vite `base: './'`. | Same as Hoy / Petrock: no 404 fallback needed, relative assets, deploy on push to `main`. Pages source must be "GitHub Actions" in Settings. | 0001 | accepted |
+| D-003 | 2026-09-20 | The **Claude Design export lives at `apps/business-os/`** and mounts at **`/business-os/`** under the hub (`dist/business-os/`), keeping its own package and build. | Keeps the prototype intact for the audit (step 2) while the hub stays the root; the root build appends its build when it lands. | 0001 | accepted |
+| D-004 | 2026-09-20 | **English primary** string tables `{ en, es? }` with `useT()`; Spanish falls back to English; language persisted as `aluzina.lang`; toggle on every surface from the start. | House rule (P-13) and Justin: "english/spanish toggle is important". Open question: Aluzina and its customers are Spanish-first, so the **default** language may flip to `es`; the key shape does not change either way. | 0001 | accepted (default language open) |
+| D-005 | 2026-09-20 | **Petrock platform principles P-01..P-15 adopted as binding** (`docs/platform-principles.md`, adapted for Aluzina). | They are the current expression of the workspace admin rules; adopting them verbatim keeps every imagine-os project on one bar. | 0001 | accepted |
+| D-006 | 2026-09-20 | The **288 MB Slack export cannot be fetched by the agent** (50 MB cap on Slack file pulls). Transfer path pending from Justin: a zip under 50 MB without `node_modules` / `dist` / `.next`, a Drive / Dropbox link, or Justin drops the folder into the repo himself. Scaffold proceeds without it. | Unblocks steps 0 and the docs; step 1 waits on the transfer. | 0001 | accepted (waiting) |

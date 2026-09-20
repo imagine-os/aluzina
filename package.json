@@ -1,0 +1,24 @@
+{
+  "name": "aluzina",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Aluzina Business OS monorepo: hub, Claude Design prototype, docs.",
+  "//": "Root build assembles dist/ for GitHub Pages. Hub builds to dist/ (root of the site). When apps/business-os lands (D-003) append its build so it emits into dist/business-os/, e.g. \"build\": \"npm run build -w @aluzina/hub && npm run build -w @aluzina/business-os\".",
+  "workspaces": [
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "npm run dev -w @aluzina/hub",
+    "build": "npm run build -w @aluzina/hub",
+    "preview": "npm run preview -w @aluzina/hub",
+    "typecheck": "npm run typecheck -w @aluzina/hub",
+    "tokens": "npm run tokens -w @aluzina/hub",
+    "screenshots": "node scripts/screenshots.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.1"
+  }
+}

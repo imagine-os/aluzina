@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Aluzina Business OS hub: every surface of the Aluzina system from one page." />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2714%27 fill=%27%23d97706%27/%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%276%27 fill=%27%23fde68a%27/%3E%3C/svg%3E" />
+    <title>Aluzina Business OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap"
+    />
+    <script>
+      // First-paint preferences (mirrors the providers; keys documented in docs/reference/surfaces.md).
+      (function () {
+        try {
+          var theme = localStorage.getItem('aluzina.theme');
+          if (theme !== 'light' && theme !== 'dark') {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+          var lang = localStorage.getItem('aluzina.lang');
+          if (lang === 'es' || lang === 'en') document.documentElement.lang = lang;
+          if (localStorage.getItem('aluzina.devMode') === 'on') document.documentElement.setAttribute('data-dev', 'on');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
