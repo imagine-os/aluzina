@@ -5,6 +5,8 @@ export const coreStrings: StringTable = {
   'core.placeholder.tooltip': { en: 'Not wired yet – {what}', es: 'Aún no está conectado – {what}' },
   'core.placeholder.toast': { en: 'Not wired yet', es: 'Aún no está conectado' },
   'core.placeholder.badge': { en: 'Placeholder', es: 'Pendiente' },
+  'core.thumb.none': { en: 'No preview yet', es: 'Sin vista previa aún' },
+  'core.thumb.alt': { en: 'Preview of {title}', es: 'Vista previa de {title}' },
   'core.dev.panelTitle': { en: 'Page spec {code}', es: 'Especificación de página {code}' },
   'core.dev.actions': { en: 'Declared actions', es: 'Acciones declaradas' },
   'core.dev.noActions': { en: 'No actions declared.', es: 'Sin acciones declaradas.' },

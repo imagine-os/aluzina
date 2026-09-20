@@ -7,6 +7,9 @@ import './HubPage.css';
 export const REPO_URL = 'https://github.com/imagine-os/aluzina';
 export const WEBSITE_URL = 'https://aluzinaa.com';
 
+/** Deploy-time thumbnails (scripts/thumbnails.mjs, D-011); the build id busts the Pages cache on every deploy. */
+const thumb = (code: string) => `./thumbs/${code}.jpg?v=${__BUILD_ID__}`;
+
 interface SurfaceEntry {
   id: SurfaceId;
   code: string;
@@ -68,6 +71,7 @@ export function HubPage() {
                   href={s.href}
                   external={s.external}
                   ctaLabel={s.status === 'live' ? t(s.id === 'website' ? 'hub.cta.visit' : 'hub.cta.open') : undefined}
+                  image={s.status === 'live' ? thumb(s.code) : undefined}
                 />
               </li>
             ))}
@@ -88,6 +92,7 @@ export function HubPage() {
                     statusLabel={t('hub.status.live')}
                     href={p.href}
                     ctaLabel={t('hub.cta.open')}
+                    image={thumb(p.code)}
                   />
                 </li>
               ))}

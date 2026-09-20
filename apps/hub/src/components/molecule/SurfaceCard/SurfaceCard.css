@@ -78,3 +78,59 @@
   font-weight: 500;
   color: var(--color-accent);
 }
+
+/* Thumbnail slot: fixed 16 / 10 ratio (640 x 400 source), never shifts the layout (P-01). */
+.surface-card__thumb {
+  display: block;
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.surface-card__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Bilingual "No preview yet" tile: planned surfaces and failed loads. */
+.surface-card__thumb--empty {
+  border-style: dashed;
+}
+
+.surface-card__thumb-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: 100%;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  text-align: center;
+  padding: var(--space-3);
+}
+
+.surface-card__thumb-mark {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--color-accent-soft, #fde68a) 0 38%, var(--color-accent) 40%);
+  opacity: 0.85;
+}
+
+.surface-card__thumb-code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+:root[data-theme='dark'] .surface-card__thumb img {
+  filter: brightness(0.92);
+}

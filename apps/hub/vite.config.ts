@@ -11,6 +11,7 @@ export default defineConfig({
   base: './',
   define: {
     __APP_VERSION__: JSON.stringify(rootPkg.version),
+    __BUILD_ID__: JSON.stringify(Date.now().toString(36)),
   },
   build: {
     outDir: '../../dist',

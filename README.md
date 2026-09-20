@@ -13,7 +13,7 @@ Monorepo for **Aluzina**, an interior design studio in Medellín (neurointeriori
 | `apps/hub/` | The hub (HUB-01): Vite 5 + React 18 + TypeScript strict, HashRouter, CSS tokens. Builds into repo-root `dist/`, the root of the Pages site. |
 | `apps/business-os/` | The **ALUZINA Business OS prototype** (Claude Design export, static `.dc.html` bundle, D-007) with its vendored runtime (`vendor/`, D-008) and URL-safe entry points (D-010). Copied into `dist/business-os/` by the root build. |
 | `docs/` | Everything documented. Start at [`docs/README.md`](docs/README.md). |
-| `scripts/` | Repo-level tooling (`copy-static.mjs`, `screenshots.mjs`). |
+| `scripts/` | Repo-level tooling (`copy-static.mjs`, `screenshots.mjs`, `thumbnails.mjs`: deploy-time hub thumbnails, D-011). |
 | `.github/workflows/pages.yml` | Build + deploy `dist/` to GitHub Pages on push to `main`. |
 
 npm workspaces (`apps/*`). Root `npm run build` assembles `dist/`: the hub build (site root) then `scripts/copy-static.mjs` (prototype -> `dist/business-os/`, plus `.nojekyll`).
@@ -25,6 +25,7 @@ npm install
 npm run dev          # hub at http://localhost:5173/#/
 npm run build        # hub: tokens + tsc --noEmit + vite build -> dist/; then copy-static -> dist/business-os/ (green before every push)
 npm run preview      # serve dist/ on :4173
+npm run thumbs       # after build: Playwright screenshots of every hub-linked page -> dist/thumbs/ (CI step; never committed)
 npm run typecheck
 npm run tokens       # apps/hub/src/design/tokens.ts -> src/styles/tokens.css
 npm run copy:static  # only the prototype copy

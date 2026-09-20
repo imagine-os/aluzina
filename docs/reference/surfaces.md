@@ -1,6 +1,6 @@
 # Surfaces: routes, scripts, actions, MCP / CLI / API
 
-Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-20 (changelog 0003).
+Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-20 (changelog 0005).
 
 ## 1. What exists today
 
@@ -57,11 +57,30 @@ Declared only: no actions bus runs them yet (section 2.1).
 | --- | --- | --- |
 | `npm run dev` | Vite dev server for the hub, `http://localhost:5173/#/` | |
 | `npm run build` | `npm run build -w @aluzina/hub` (= `tokens` + `tsc --noEmit` + `vite build` -> repo-root `dist/`) `&& node scripts/copy-static.mjs`; must be green before every push | |
+| `npm run thumbs` | `node scripts/thumbnails.mjs`: serves `dist/` on `127.0.0.1:4180` (Node `http`), screenshots every hub-linked surface with Playwright Chromium (1280 x 800 -> 640 x 400 JPEG q80) into `dist/thumbs/<code>.jpg` and writes `dist/thumbs/manifest.json`; CI step after `npm run build`, never part of the build (D-011). Blocks mp4 / webm, never waits for `networkidle`, 45 s per page, failures write the placeholder tile and are recorded in the manifest (`source: "placeholder"`, `error`). Externals (P-00, D-06) are best effort. | `-- --dist=dist --port=4180 --only=HUB-01,BOS-01 --skip-external`; env `PW_EXECUTABLE` / `PLAYWRIGHT_CHROMIUM_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` used only for the external captures |
 | `npm run copy:static` | `node scripts/copy-static.mjs`: copies `apps/business-os/` (minus READMEs) into `dist/business-os/`, writes `dist/.nojekyll`; needs `dist/index.html` first | |
 | `npm run preview` | serve `dist/` on :4173 | |
 | `npm run typecheck` | `tsc --noEmit` in the hub | |
 | `npm run tokens` | `apps/hub/src/design/tokens.ts` -> `apps/hub/src/styles/tokens.css` (`node --experimental-strip-types scripts/gen-tokens.mjs`) | |
 | `npm run screenshots` | `node scripts/screenshots.mjs`: Playwright captures into `docs/screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json` | `-- --base=<url> --out=docs/screenshots --code=HUB-01 --route=/ --shots=en-390,en-1280,en-3840,es-390`; `--static=business-os/` captures a static page instead of a hub route (BOS codes; `--wait=<selector>` defaults to `#dc-root`; `es-*` shots click the page's EN/ES toggle when `--lang-toggle=<selector>` is given, e.g. `--lang-toggle='text="EN"'`; values may contain `=`); env `PW_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` honoured for non-localhost bases; `playwright` pinned to 1.56.1 (Chromium 1194) |
+
+### 1.4b Thumbnail manifest (`/thumbs/manifest.json`, D-011)
+
+Static JSON written at deploy time next to the thumbnails; the contract a hub tool, QA script or agent can read to know what each card shows and how fresh it is:
+
+```json
+{
+  "generatedAt": "2026-09-20T23:39:00.000Z",
+  "capture": { "width": 1280, "height": 800 },
+  "thumb": { "width": 640, "height": 400, "quality": 80 },
+  "items": [
+    { "code": "BOS-01", "path": "thumbs/BOS-01.jpg", "generatedAt": "...", "source": "http://127.0.0.1:4180/business-os/" },
+    { "code": "P-00", "path": "thumbs/P-00.jpg", "generatedAt": "...", "source": "placeholder", "error": "P-00: capture exceeded 45s" }
+  ]
+}
+```
+
+`code` is the page code the card carries; `path` is relative to the site root; `source` is the URL that was captured (local `127.0.0.1` URLs mean "from this build") or `placeholder` when the tile was written instead; `error` is present only for placeholders. Codes today: `BOS-01..06`, `P-00`, `D-06`, `HUB-01`. The hub reads `./thumbs/<code>.jpg?v=<buildId>` directly (`SurfaceCard` `image` prop) and does not depend on the manifest; a missing file renders the bilingual tile (`data-thumb="placeholder"`).
 
 ### 1.5 Data provider
 
@@ -98,4 +117,5 @@ Through the data provider seam (step 7 / 8).
 - 2026-09-20 (prompt 0001): initial version.
 - 2026-09-20 (changelog 0002): `npm run screenshots` flags (`PW_EXECUTABLE`, proxy), playwright pin.
 - 2026-09-20 (changelog 0004): screenshot flags `--wait`, exact-text `--lang-toggle` example.
+- 2026-09-20 (changelog 0005): `npm run thumbs` (1.4) and the `thumbs/manifest.json` contract (1.4b).
 - 2026-09-20 (changelog 0003): static Business OS routes (1.1b) with the `?embed=1&screen=` contract, `hub.openPrototypePage`, `npm run copy:static`, build step, screenshot `--static` / `--lang-toggle` flags.

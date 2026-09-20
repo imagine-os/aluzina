@@ -25,6 +25,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      # Deploy-time thumbnails for the hub cards (D-011): never committed, regenerated from dist/ on every deploy.
+      - run: npx playwright install --with-deps chromium
+      - run: npm run thumbs
       - uses: actions/configure-pages@v5
         with:
           enablement: true
