@@ -25,5 +25,6 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 - Step 0: Pages workflow (`.github/workflows/pages.yml`), build green locally (Fable 5.1)
 - Step 0: docs tree: README, principles, brief, build plan, decisions D-001..D-006, kanban, prompt 0001, changelog 0001, page template + HUB-01, surfaces (Fable 5.1)
 - Step 0: first Pages deploy green (run 35542778592), live at https://imagine-os.github.io/aluzina/ (HTTP 200); live screenshots 390 / 1280 / 3840 EN + 390 ES in `docs/screenshots/HUB-01/` (Fable 5.1)
+- Step 1: prototype verified live at https://imagine-os.github.io/aluzina/business-os/ (run 35543723076; zero external requests; EN/ES toggle works); screenshots BOS-01 (390 / 1280 / 3840 EN, 1280 ES) and BOS-02 (1280) in `docs/screenshots/` (Fable 5.1)
 - Step 1: Claude Design export ingested at `apps/business-os/` (uploads dropped, D-009), runtime + fonts vendored (D-008), URL-safe entry points (D-010), copied into `dist/business-os/` by the root build, hub card BOS-01 live + Prototype pages BOS-02..06 (Fable 5.1)
 - Justin's second Drive link delivered the correct 288 MB zip (D-006 resolved)

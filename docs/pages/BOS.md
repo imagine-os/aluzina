@@ -4,7 +4,7 @@ All served as-is from `/business-os/` through URL-safe forwarders (D-010); origi
 
 | Code | Page | Entry | Original file | What it is | Screenshots |
 | --- | --- | --- | --- | --- | --- |
-| BOS-02 | ALUZINA Home | `/business-os/home.html` | `ALUZINA Home.dc.html` | Marketing home concept: fixed header, hero with the three Seedance loop videos and three transition mp4s (`assets/*.mp4`, 43 MB), marble-and-brass language, `[data-rise]` reveal on scroll. | `docs/screenshots/BOS-02/en-1280.jpg` |
+| BOS-02 | ALUZINA Home | `/business-os/home.html` | `ALUZINA Home.dc.html` | Marketing home concept: fixed header, hero with the three Seedance loop videos and three transition mp4s (`assets/*.mp4`, 43 MB), marble-and-brass language, `[data-rise]` reveal on scroll. | `docs/screenshots/BOS-02/en-1280.jpg` (live) |
 | BOS-03 | Cyber Bridge | `/business-os/cyber-bridge.html` | `Cyber Bridge.dc.html` | Dark concept page: the bridge metaphor (stations, menu, bible as windows onto the OS), `image-slot` elements fed by `.image-slots.state.json`, in-page `#stations` / `#menu` / `#bible` anchors. | step 2 |
 | BOS-04 | Cyber Bridge Deck | `/business-os/cyber-bridge-deck.html` | `Cyber Bridge Deck.dc.html` | 1920x1080 slide deck via `<x-import from="./deck-stage.js">` (`deck-stage.js`, 136 KB): sections with `data-speaker-notes`, keyboard navigation. | step 2 |
 | BOS-05 | Image Generation Plan | `/business-os/image-generation-plan.html` | `Image Generation Plan.dc.html` | Printable document (`doc-page.js`): how the world renders (`assets/os-*.webp`) and the 31 station / menu shots (`assets/world/*.png`) are produced. | step 2 |

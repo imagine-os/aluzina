@@ -1,0 +1,13 @@
+{
+  "capturedAt": "2026-09-20T23:11:57.293Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "BOS-01",
+  "route": "business-os/",
+  "shots": [
+    "es-1280"
+  ],
+  "manifest": {
+    "static": true,
+    "url": "https://imagine-os.github.io/aluzina/business-os/ALUZINA%20Business%20OS.dc.html"
+  }
+}

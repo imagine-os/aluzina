@@ -9,8 +9,9 @@ import { chromium } from 'playwright';
 
 const args = Object.fromEntries(
   process.argv.slice(2).map((a) => {
-    const [k, v = 'true'] = a.replace(/^--/, '').split('=');
-    return [k, v];
+    const eq = a.indexOf('=');
+    const k = a.replace(/^--/, '').split('=')[0];
+    return [k, eq === -1 ? 'true' : a.slice(eq + 1)];
   }),
 );
 
