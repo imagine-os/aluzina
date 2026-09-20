@@ -11,6 +11,9 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 - Step 6: Spanish fill pass over every strings table (Sonnet 5)
 - Step 7: DataProvider seam (Mock, CompanyOs stub, Supabase later), base columns + subscribe, feedback table + FeedbackButton, actions bus + WebMCP generation (Fable 5.1)
 - Step 8: realtime plan doc, presence, version column, offline queue (Fable 5.1, Opus 5)
+- Step 9: role / permission model `src/auth/` (Fable 5.1); per-role portals Founder A-xx, Operations O-xx, Studio S-xx, Brand G-xx, Client C-xx per `docs/knowledge/roles-and-portals.md` (Opus 5); competitions calendar in G-xx once the 20 entries and dates arrive (Opus 5)
+- Knowledge: fill `docs/knowledge/competitions.md` (the 20 competitions and submission dates) and surnames / languages in `team.md` when the founder shares them; confirm "Hoy" = HOY Wellness Center (Fable 5.1)
+- Hub thumbnails: dark-theme variant (`thumbs/<code>-dark.jpg`) and 2x tiles for 4K once the card grid is checked at 2560 / 3840 on the live site (Sonnet 5)
 - Awaiting Justin: default language en vs es for the hub and the OS (D-004)
 - Awaiting Justin: does the public site join the OS as a P-xx module, or stay Lovable-hosted (linked)?
 
@@ -20,6 +23,8 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 
 ## Done
 
+- Hub thumbnails generated at deploy time (D-011): `scripts/thumbnails.mjs` + `npm run thumbs` in the Pages workflow, `SurfaceCard` image slot with bilingual fallback tile, `thumbs/manifest.json`; 9 thumbs in 30 s locally (Fable 5.1)
+- Knowledge base `docs/knowledge/` with change tracking (D-012): README convention, `team.md` (Alejandra Guerra, Miguel, Sarai, Angelica), `competitions.md`, `roles-and-portals.md` (D-013); prompt 0002, changelog 0005 (Fable 5.1)
 - Step 0: monorepo layout (`apps/hub`, `apps/business-os` README, `docs/`, root workspaces) (Fable 5.1)
 - Step 0: HUB-01 hub: EN/ES toggle, light/dark, dev mode, SpecChip + actions panel (Ctrl+.), Placeholder atom, tokens -> tokens.css with `--scale` bands, `window.__aluzina` manifest (Fable 5.1)
 - Step 0: Pages workflow (`.github/workflows/pages.yml`), build green locally (Fable 5.1)

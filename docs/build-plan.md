@@ -13,8 +13,11 @@ Order of operations bound by **dependencies, not dates**. Each step names the mo
 | **6** | **Spanish fill pass**: complete the `es` side of every strings table (export + surfaces), review tone with the owner's site as the reference voice. Never a blocker for earlier steps. | 3 (strings layer exists); repeats after 5 | Sonnet 5 | all |
 | **7** | **Data provider seam**: `DataProvider` interface, `MockProvider` (localStorage) with `id / created_at / updated_at` base columns and `subscribe`, `CompanyOsProvider` stub (reference only, D-183-style hold), Supabase adapter later; `feedback` table + FeedbackButton (P-08); actions bus + WebMCP generation from the manifest. | 3 (knows the entities) | Fable 5.1 | – |
 | **8** | **Multiplayer / realtime**: presence, `version` column and conflict UI, offline queue, realtime subscriptions through the provider. Plan doc first (`docs/reference/realtime-plan.md`). | 7 | Fable 5.1 (plan), Opus 5 (build) | – |
+| **9** | **Per-role portals** (`docs/knowledge/roles-and-portals.md`, D-013): role and permission model (`src/auth/roles.ts`, `permissions.ts`, `demoUsers.ts`, `can()`), then one portal per role: Founder admin / approvals `A-xx`, Operations `O-xx` (schedule, tasks, suppliers, quotes, payments, alerts, reports), Studio `S-xx` (proposals, references, mood boards, plans, schedules, checks), Brand `G-xx` (competitions calendar, presentations, brand, assets), Client `C-xx`; each portal reads its role's entry in `docs/knowledge/team.md`. Alerts (Miguel's "before urgent", Angelica's deadlines) share one notification pattern. | 4 (role switcher, shells), 7 (data for schedules, quotes, competitions); knowledge entries current | Fable 5.1 (roles / permissions, shells, alert pattern), Opus 5 (portals), Sonnet 5 (Spanish fill, screenshots) | A / O / S / G / C |
 
-Parallelism: 4 and 5 can run as parallel agents per module once 3 lands; 6 runs alongside 5; 7 can start its interface during 3.
+Parallelism: 4 and 5 can run as parallel agents per module once 3 lands; 6 runs alongside 5; 7 can start its interface during 3; 9 runs one agent per portal once the role model (Fable 5.1) is in, and folds into 5 where a portal is the staff / admin dashboard.
+
+Recurring (every deploy, not a step): `npm run thumbs` regenerates the hub thumbnails from the build (D-011); knowledge entries in `docs/knowledge/` are updated the turn new information arrives (D-012).
 
 ## Definition of done (every step)
 

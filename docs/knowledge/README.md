@@ -1,0 +1,42 @@
+# docs/knowledge/ - domain knowledge base
+
+What we know about Aluzina as a business: who works there and what each person owns, programmes (competitions), rules, vocabulary, clients, suppliers, anything an agent or developer needs to build the right thing. This folder is the **canonical memory** for domain facts (P-11). Claude's channel memory and any chat summary hold **pointers** into this folder, never the facts themselves; when they disagree, the repo wins.
+
+Engineering knowledge lives elsewhere: decisions in `../decisions.md`, plan in `../build-plan.md`, principles in `../platform-principles.md`, machine surfaces in `../reference/surfaces.md`.
+
+## Entry convention (explicit change tracking)
+
+Every entry, whether a whole file or a `##` section, carries a header block:
+
+```
+status: current | superseded | draft
+since: YYYY-MM-DD
+source: <Slack thread / date / requester, or document name>
+supersedes: <file#section or entry id>   (only when it replaces an older entry)
+```
+
+- `current` is the rule in force. `draft` is captured but not yet confirmed by the owner or Justin. `superseded` is history.
+- **Superseded entries are never deleted.** They get `status: superseded`, a `superseded-by:` pointer to the entry that replaced them, and stay in place so an outdated rule is never mistaken for a current one and the history stays readable.
+- Every file ends with a `## Change log` section: one dated line per change (`- YYYY-MM-DD: what changed (source)`), append-only.
+- Facts are written the way the source stated them; when we paraphrase, the source is still named. Names stay as given by the founder (first names for the team, full name for the founder).
+- Things we do not know yet are written as `_unknown_` placeholders, not guessed.
+
+## Files
+
+| File | What it holds |
+| --- | --- |
+| `team.md` | The Aluzina team: roles and responsibilities as written by the founder. |
+| `competitions.md` | The 2027 competitions programme (20 entries, three projects). |
+| `roles-and-portals.md` | Map from each role to its planned portal, page-code prefix and permissions. |
+
+Planned: `clients.md`, `suppliers.md`, `vocabulary.md` (EN / ES terms used in the studio), `brand.md` (identity rules once Angelica's assets are shared).
+
+## How this gets used
+
+- Agents read this folder before building any role-specific surface and cite the entry (`knowledge/team.md#miguel`) in specs and page docs.
+- The in-app docs viewer (`/#/docs`, build plan step 5) renders these files; until then GitHub is the reader.
+- New information from Slack lands here **in the same turn** it arrives (prompt logged verbatim in `../prompts/`, entry added or superseded here, change log line appended).
+
+## Change log
+
+- 2026-09-20: folder created with the entry convention, `team.md`, `competitions.md`, `roles-and-portals.md` (Slack #aluzina thread 2026-09-20, Justin Massion; prompt 0002, D-012).
