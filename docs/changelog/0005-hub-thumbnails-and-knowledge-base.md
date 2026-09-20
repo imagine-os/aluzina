@@ -29,4 +29,6 @@ Local captures use a browser without a proxy (Playwright's launch-level proxy ro
 
 ## Verified
 
-Filled in after the deploy: Actions run, `thumbs/manifest.json` HTTP 200, live hub screenshots at 1280 and 390 in `docs/screenshots/HUB-01/`.
+- Pages deploy: workflow run [35545531282](https://github.com/imagine-os/aluzina/actions/runs/35545531282) on 98e1b1e, `build` (incl. `npx playwright install --with-deps chromium` + `npm run thumbs`) and `deploy` success, ~2.5 min end to end.
+- https://imagine-os.github.io/aluzina/thumbs/manifest.json -> HTTP 200, `generatedAt` 2026-09-20T23:45:34Z, 9 items, all real captures (`source` = the captured URL, no `placeholder`); `thumbs/HUB-01.jpg` 200 (34 KB), `thumbs/BOS-01.jpg` 200 (45 KB), `thumbs/P-00.jpg` 200 (34 KB); https://imagine-os.github.io/aluzina/ -> 200.
+- Live screenshots with thumbnails: `docs/screenshots/HUB-01/en-1280.jpg`, `en-390.jpg` (+ `routes.json`), replacing the changelog 0002 captures at those widths.

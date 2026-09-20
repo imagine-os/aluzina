@@ -1,12 +1,11 @@
 {
-  "capturedAt": "2026-09-20T22:52:32.483Z",
+  "capturedAt": "2026-09-20T23:47:25.821Z",
   "base": "https://imagine-os.github.io/aluzina/",
   "code": "HUB-01",
+  "route": "/",
   "shots": [
-    "en-390",
     "en-1280",
-    "en-3840",
-    "es-390"
+    "en-390"
   ],
   "manifest": {
     "routes": [
@@ -23,7 +22,8 @@
           "layout": [
             "HubHeader",
             "Title + subtitle",
-            "Surface card grid (7 cards)",
+            "Surface card grid (7 cards, each with a deploy-time thumbnail or a \"No preview yet\" tile)",
+            "Prototype pages grid (5 cards with thumbnails)",
             "Footer (version, repo link, dev hint)"
           ],
           "data": [],
@@ -33,7 +33,8 @@
           "logic": [
             "Live surfaces render as links; planned surfaces render through Placeholder (P-09).",
             "Language, theme and dev mode persist in localStorage (aluzina.lang / aluzina.theme / aluzina.devMode).",
-            "Ctrl+. toggles the dev panel when dev mode is on."
+            "Ctrl+. toggles the dev panel when dev mode is on.",
+            "Card thumbnails load lazily from ./thumbs/<code>.jpg?v=<buildId>, written by scripts/thumbnails.mjs after every CI build (D-011); a missing file falls back to the bilingual tile, planned cards always show the tile."
           ],
           "components": [
             "HubHeader",
@@ -49,6 +50,14 @@
               "intent": "open the {surface}",
               "params": {
                 "surface": "enum:business-os|website|customer|staff|docs|manual|dev"
+              }
+            },
+            {
+              "id": "hub.openPrototypePage",
+              "label": "Open prototype page",
+              "intent": "open the prototype page {page}",
+              "params": {
+                "page": "enum:home|cyber-bridge|cyber-bridge-deck|image-generation-plan|lod-ladder"
               }
             },
             {
@@ -71,13 +80,22 @@
               "permission": "dev.tools"
             }
           ],
-          "checkedAt": [],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920,
+            2560,
+            3840
+          ],
           "notes": [
-            "Role switcher, demo simulator, canvas and plan viewer arrive in build plan step 4 (Dev tools card)."
+            "Role switcher, demo simulator, canvas and plan viewer arrive in build plan step 4 (Dev tools card).",
+            "Business OS prototype (BOS-01) and its pages (BOS-02..06) are the static Claude Design bundle at ./business-os/ (D-007)."
           ]
         }
       }
     ],
-    "version": "0.1.0"
+    "version": "0.3.0"
   }
 }
