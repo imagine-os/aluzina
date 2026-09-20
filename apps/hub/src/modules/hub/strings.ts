@@ -26,8 +26,8 @@ export const strings: StringTable = {
 
   'hub.cards.businessOs.title': { en: 'Business OS prototype', es: 'Prototipo Business OS' },
   'hub.cards.businessOs.desc': {
-    en: 'opens the Claude Design prototype of the Aluzina operations system, mounted at /business-os/',
-    es: 'abre el prototipo de Claude Design del sistema operativo de Aluzina, montado en /business-os/',
+    en: 'the Claude Design prototype of the Aluzina operations system: cockpit, stations, work views, QC, media, design system, docs; EN/ES toggle inside',
+    es: 'el prototipo de Claude Design del sistema operativo de Aluzina: cabina, estaciones, vistas de trabajo, QC, medios, sistema de diseño, docs; con cambio EN/ES adentro',
   },
   'hub.cards.website.title': { en: 'Public website', es: 'Sitio web público' },
   'hub.cards.website.desc': {
@@ -58,6 +58,37 @@ export const strings: StringTable = {
   'hub.cards.dev.desc': {
     en: 'opens the builder tools: tokens, components, specs, actions, routes, plan viewer, canvas and demo simulator',
     es: 'abre las herramientas de construcción: tokens, componentes, especificaciones, acciones, rutas, visor del plan, lienzo y simulador de demo',
+  },
+
+  'hub.section.prototypePages': { en: 'Prototype pages', es: 'Páginas del prototipo' },
+  'hub.section.prototypePagesDesc': {
+    en: 'The other pages that came with the Claude Design export, served as-is from ./business-os/.',
+    es: 'Las demás páginas que vinieron con la exportación de Claude Design, servidas tal cual desde ./business-os/.',
+  },
+  'hub.proto.home.title': { en: 'ALUZINA Home', es: 'ALUZINA Home' },
+  'hub.proto.home.desc': {
+    en: 'marketing home concept with the loop and transition videos (marble and brass)',
+    es: 'concepto de página de inicio con los videos de bucle y transición (mármol y latón)',
+  },
+  'hub.proto.cyberBridge.title': { en: 'Cyber Bridge', es: 'Cyber Bridge' },
+  'hub.proto.cyberBridge.desc': {
+    en: 'dark concept page: stations, menu and bible as windows onto the OS',
+    es: 'página conceptual oscura: estaciones, menú y biblia como ventanas hacia el OS',
+  },
+  'hub.proto.cyberBridgeDeck.title': { en: 'Cyber Bridge Deck', es: 'Cyber Bridge Deck' },
+  'hub.proto.cyberBridgeDeck.desc': {
+    en: '1920 x 1080 slide deck with speaker notes (arrow keys to move)',
+    es: 'presentación 1920 x 1080 con notas del orador (flechas para avanzar)',
+  },
+  'hub.proto.imageGenerationPlan.title': { en: 'Image Generation Plan', es: 'Plan de generación de imágenes' },
+  'hub.proto.imageGenerationPlan.desc': {
+    en: 'printable document: how the world renders and station images are produced',
+    es: 'documento imprimible: cómo se producen los renders del mundo y las imágenes de estaciones',
+  },
+  'hub.proto.lodLadder.title': { en: 'LOD Ladder', es: 'Escalera LOD' },
+  'hub.proto.lodLadder.desc': {
+    en: 'concept page: levels of detail from world map to station close-up',
+    es: 'página conceptual: niveles de detalle desde el mapa del mundo hasta el primer plano de estación',
   },
 
   'hub.footer.version': { en: 'Version {version}', es: 'Versión {version}' },

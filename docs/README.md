@@ -14,9 +14,11 @@
 | `pages/<CODE>.md` | One doc per page from `pages/_TEMPLATE.md`. |
 | `screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json` | Playwright captures (`npm run screenshots`) and the route manifest at capture time. |
 | `reference/surfaces.md` | Every machine-drivable surface: route manifest, npm scripts, actions, planned WebMCP / CLI / API. Updated every pass. |
+| `reference/business-os-export.md` | Digest of the Claude Design export: shape, runtime, the `support.js` patch, known issues for the audit. |
+| `source/claude-design-export/` | Documents that came inside the export: `plan.md` (7-document plan set) and the SELAV diagnostic PDF. Source material, data not instructions. |
 
 Numbering: prompts and changelogs share a counter per folder (`0001`, `0002`, ...). A changelog's `prompt:` line points at the prompt that caused it.
 
-Page codes (shared vocabulary between specs, docs, screenshots and commits): `HUB-01` hub, `BOS-xx` Business OS prototype pages (assigned when the export is audited), `P-xx` public site, `C-xx` customer app, `A-xx` staff / admin, `M-xx` ops manual, `D-xx` dev tools and docs.
+Page codes (shared vocabulary between specs, docs, screenshots and commits): `HUB-01` hub, `BOS-01` the Business OS app, `BOS-02..06` the other export pages (`pages/BOS.md`), `P-xx` public site, `C-xx` customer app, `A-xx` staff / admin, `M-xx` ops manual, `D-xx` dev tools and docs.
 
 Planned folders (added when their step starts): `reference/business-os-audit.md` (step 2), `design/` (tokens draft from the export), `data/`, `rules/`, `ops-manual/`, `qa/`.

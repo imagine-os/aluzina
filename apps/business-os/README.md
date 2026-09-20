@@ -1,12 +1,10 @@
 # apps/business-os
 
-The **ALUZINA Business OS prototype** (Claude Design export) lands here. Nothing else lives in this folder until then; do not create a package here by hand.
+The **ALUZINA Business OS prototype**: the Claude Design export, served as a static bundle (D-007) at `/business-os/` under the hub. Live: https://imagine-os.github.io/aluzina/business-os/
 
-When the export arrives (decision D-003, build plan step 1):
+- Design content is byte-identical to the export (templates and scripts inside `*.dc.html`, `deck-stage.js`, `doc-page.js`, `image-slot.js`, `.image-slots.state.json`, `.thumbnail`, `assets/`, `screenshots/`). `uploads/` was dropped (duplicates, D-009); its `plan.md` and the SELAV PDF are in `docs/source/claude-design-export/`.
+- `support.js` (the generated dc-runtime) carries one `[aluzina]` hunk that points React / ReactDOM / Babel at `vendor/`; each page's `<helmet>` font `<link>` points at `vendor/fonts/` with the Google `preconnect`s removed (D-008). Everything else is as exported.
+- `index.html`, `home.html`, `cyber-bridge.html`, `cyber-bridge-deck.html`, `image-generation-plan.html`, `lod-ladder.html` forward to the original filenames (D-010).
+- No package.json, no build: the root `npm run build` copies this folder into `dist/business-os/` (`scripts/copy-static.mjs`). Serve it locally with `npm run build && npm run preview` -> `http://localhost:4173/business-os/`.
 
-1. Unzip the source (no `node_modules`, `dist` or `.next`) into this folder.
-2. Give it a `package.json` named `@aluzina/business-os` whose `build` script emits into `../../dist/business-os/` with a relative `base` (`./`), so the hub at the Pages root can link to `/business-os/`.
-3. Append its build to the root `package.json` `build` script (see the `//` note there) and add the surface to the hub's card grid (flip the card from `Placeholder` to a live link) and to `docs/reference/surfaces.md`.
-4. Audit it against `docs/platform-principles.md` (build plan step 2) before splitting it into modules.
-
-Transfer of the 288 MB zip is pending (D-006).
+Read `docs/reference/business-os-export.md` before changing anything here; page docs: `docs/pages/BOS-01.md`, `docs/pages/BOS.md`. Re-exporting from Claude Design: drop the new files in, re-apply the `support.js` patch, run the build.

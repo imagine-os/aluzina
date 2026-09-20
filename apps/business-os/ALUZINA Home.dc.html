@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="./vendor/fonts/instrument-plex-a.css" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #F2EFEA; }
+  * { box-sizing: border-box; }
+  a { color: #A8863B; text-decoration: none; }
+  a:hover { color: #7E6323; text-decoration: underline; }
+  [data-rise] { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  [data-rise].in { opacity: 1; transform: none; }
+</style>
+</helmet>
+
+<div style="font-family:'Instrument Sans',system-ui,sans-serif;color:#1B1917;background:#F2EFEA;overflow-x:clip">
+
+  <div style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:20px;padding:14px 30px;background:rgba(242,239,234,.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(27,25,23,.07)">
+    <div style="display:flex;align-items:center;gap:9px;flex:none">
+      <div style="width:24px;height:24px;border-radius:7px;background:linear-gradient(150deg,#C9A85C,#8E7128)"></div>
+      <span style="font-family:'Instrument Serif',serif;font-size:18px;letter-spacing:.02em">ALUZINA</span>
+      <span style="font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#9A9289;padding-top:4px">Business OS</span>
+    </div>
+    <div style="display:flex;gap:18px;margin-left:auto;font-size:12.5px;color:#5C564E;flex-wrap:wrap">
+      <span style="cursor:pointer" style-hover="color:#A8863B">El diagnóstico</span>
+      <span style="cursor:pointer" style-hover="color:#A8863B">La línea</span>
+      <span style="cursor:pointer" style-hover="color:#A8863B">Control editorial</span>
+      <span style="cursor:pointer" style-hover="color:#A8863B">Precios</span>
+    </div>
+    <div style="flex:none;padding:8px 14px;border-radius:9px;background:#211E1B;color:#F4F1EC;font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap" style-hover="background:#3A352F">Agendar diagnóstico</div>
+  </div>
+
+  <div style="position:relative;height:100vh;min-height:620px;overflow:hidden;background:#151312">
+    <video src="assets/loop-1.mp4" poster="assets/os-isometric.webp" autoplay="" loop="" muted="" playsinline="" preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.6"></video>
+    <div style="position:absolute;inset:0;background:linear-gradient(75deg,rgba(18,16,15,.92) 0%,rgba(18,16,15,.6) 48%,rgba(18,16,15,.15) 100%)"></div>
+    <div style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 30px;max-width:1180px;margin:0 auto;color:#F4F1EC">
+      <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#C9A85C;margin-bottom:18px">Del diagnóstico a la operación</div>
+      <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(38px,6.2vw,78px);line-height:1.02;margin:0 0 20px;max-width:19ch">Una marca no se decora. Se programa.</h1>
+      <p style="margin:0 0 30px;font-size:clamp(14px,1.4vw,17px);line-height:1.6;color:#CFC8BE;max-width:56ch">Business OS toma tu diagnóstico de marca y lo convierte en una línea de ensamble: 14 estaciones, 26 entregables, control editorial de cinco compuertas y rutinas que mantienen todo vivo. Marca, submarca y submarca hija, con la misma consistencia.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div style="padding:12px 20px;border-radius:10px;background:#F4F1EC;color:#1B1917;font-size:13.5px;font-weight:600;cursor:pointer" style-hover="background:#fff">Ver el sistema por dentro</div>
+        <div style="padding:12px 20px;border-radius:10px;border:1px solid rgba(244,241,236,.35);color:#F4F1EC;font-size:13.5px;font-weight:500;cursor:pointer" style-hover="border-color:#C9A85C;color:#C9A85C">Agendar diagnóstico</div>
+      </div>
+      <div style="position:absolute;bottom:34px;left:30px;right:30px;display:flex;gap:26px;flex-wrap:wrap;font-size:11px;color:#9A9289;letter-spacing:.04em">
+        <span>14 estaciones</span><span>26 entregables</span><span>5 compuertas de QC</span><span>6 rutinas</span><span style="margin-left:auto">Desplaza ↓</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1180px;margin:0 auto;padding:100px 30px 90px">
+    <div data-rise="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:50px;align-items:start">
+      <div>
+        <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#A8863B;margin-bottom:16px">El punto de quiebre</div>
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(28px,3.4vw,44px);line-height:1.1;margin:0 0 18px">El problema casi nunca es el contenido. Es el recorrido.</h2>
+        <p style="margin:0 0 14px;font-size:14.5px;line-height:1.65;color:#5C564E">Hay hooks que funcionan en un canal y no se transfieren. Hay obra entregada sin ficha de caso. Hay tres nombres distintos para la misma acción. Hay un link de bio que lleva a un video de 2021.</p>
+        <p style="margin:0;font-size:14.5px;line-height:1.65;color:#5C564E">Ninguno de esos es un problema de creatividad. Son huecos en el recorrido, y se cierran con procedimiento, no con inspiración.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:#fff;border:1px solid #E6E1D9;border-radius:13px;padding:16px 18px;display:flex;align-items:center;gap:14px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#A8863B;width:34px">D05</span>
+          <span style="flex:1;font-size:13px">Link de bio apunta a un video de 2021</span>
+          <span style="font-size:10.5px;padding:2px 8px;border-radius:20px;background:#F8E7E4;color:#A33C33;font-weight:600;white-space:nowrap">bloqueado</span>
+        </div>
+        <div style="background:#fff;border:1px solid #E6E1D9;border-radius:13px;padding:16px 18px;display:flex;align-items:center;gap:14px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#A8863B;width:34px">D06</span>
+          <span style="flex:1;font-size:13px">Tres nombres distintos para el mismo CTA</span>
+          <span style="font-size:10.5px;padding:2px 8px;border-radius:20px;background:#F3EAD4;color:#8E7128;font-weight:600;white-space:nowrap">en curso</span>
+        </div>
+        <div style="background:#fff;border:1px solid #E6E1D9;border-radius:13px;padding:16px 18px;display:flex;align-items:center;gap:14px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#A8863B;width:34px">D11</span>
+          <span style="flex:1;font-size:13px">Portafolio sin fichas de caso</span>
+          <span style="font-size:10.5px;padding:2px 8px;border-radius:20px;background:#F3EAD4;color:#8E7128;font-weight:600;white-space:nowrap">en curso</span>
+        </div>
+        <div style="background:#fff;border:1px solid #E6E1D9;border-radius:13px;padding:16px 18px;display:flex;align-items:center;gap:14px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#A8863B;width:34px">D22</span>
+          <span style="flex:1;font-size:13px">Funciones conectar y entretener ausentes</span>
+          <span style="font-size:10.5px;padding:2px 8px;border-radius:20px;background:#F0ECE4;color:#8E8880;font-weight:600;white-space:nowrap">sin empezar</span>
+        </div>
+        <div style="font-size:11.5px;color:#9A9289;padding-left:2px">26 hallazgos, cada uno con su entregable, su estación y su rutina.</div>
+      </div>
+    </div>
+  </div>
+
+  <div data-scrub="" style="position:relative;height:280vh">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;background:#151312">
+      <video data-src="assets/Transition_1_Social_Media_to_Portfolio.mp4" poster="assets/os-topdown.webp" muted="" playsinline="" preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,16,15,.55) 0%,rgba(18,16,15,.1) 40%,rgba(18,16,15,.75) 100%)"></div>
+      <div style="position:relative;height:100%;max-width:1180px;margin:0 auto;padding:0 30px;display:flex;flex-direction:column;justify-content:space-between;color:#F4F1EC">
+        <div style="padding-top:110px">
+          <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#C9A85C;margin-bottom:12px">Paso 1 → 2</div>
+          <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(28px,4.4vw,54px);line-height:1.05;margin:0;max-width:24ch">De publicar sin rastro a un portafolio que argumenta</h2>
+        </div>
+        <div style="padding-bottom:60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px">
+          <p style="margin:0;font-size:13.5px;line-height:1.6;color:#CFC8BE">Cada pieza aprobada queda etiquetada por función, territorio, serie y canal. Nada se pierde en el feed.</p>
+          <p style="margin:0;font-size:13.5px;line-height:1.6;color:#CFC8BE">Cada obra entregada se convierte en ficha de caso: tipo, encargo, decisiones, cambio y una sola llamada a la acción.</p>
+          <p style="margin:0;font-size:13.5px;line-height:1.6;color:#CFC8BE">El consentimiento del cliente viaja con el activo. Sin permiso vigente, la pieza no se programa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1180px;margin:0 auto;padding:100px 30px">
+    <div data-rise="" style="margin-bottom:34px;max-width:60ch">
+      <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#A8863B;margin-bottom:14px">La línea de ensamble</div>
+      <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(28px,3.4vw,44px);line-height:1.1;margin:0 0 16px">Catorce estaciones en orden. Cada salida alimenta la siguiente.</h2>
+      <p style="margin:0;font-size:14.5px;line-height:1.65;color:#5C564E">Cada estación declara sus insumos. Si falta algo, lo pides o lo generamos como provisional marcado. Cuando llega el definitivo, sus dependientes se vuelven a correr solos.</p>
+    </div>
+    <div data-rise="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px">
+      <sc-for list="{{ stations }}" as="s" hint-placeholder-count="14">
+        <div style="background:#fff;border:1px solid #E6E1D9;border-radius:12px;padding:14px 15px;position:relative;overflow:hidden" style-hover="border-color:#C9A85C">
+          <div style="{{ s.bar }}"></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#A8A099;margin-bottom:6px">{{ s.num }}</div>
+          <div style="font-size:13px;font-weight:600;line-height:1.3;margin-bottom:8px">{{ s.name }}</div>
+          <div style="font-size:11px;color:#9A9289;line-height:1.45">{{ s.out }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div data-scrub="" style="position:relative;height:280vh">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;background:#151312">
+      <video data-src="assets/Transition_2_Portfolio_to_Content_Production.mp4" poster="assets/os-elevation.webp" muted="" playsinline="" preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,16,15,.6) 0%,rgba(18,16,15,.1) 45%,rgba(18,16,15,.8) 100%)"></div>
+      <div style="position:relative;height:100%;max-width:1180px;margin:0 auto;padding:0 30px;display:flex;flex-direction:column;justify-content:space-between;color:#F4F1EC">
+        <div style="padding-top:110px">
+          <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#C9A85C;margin-bottom:12px">Paso 2 → 3</div>
+          <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(28px,4.4vw,54px);line-height:1.05;margin:0;max-width:24ch">Del portafolio a la producción semanal</h2>
+        </div>
+        <div style="padding-bottom:60px;max-width:70ch">
+          <p style="margin:0;font-size:13.5px;line-height:1.6;color:#CFC8BE">El brief entra con función, territorio, formato, hook y prioridad. Salen guion, carrusel y caption en tu voz, con la numeración de la serie y el cierre de bucle abierto ya puestos. El material bruto se transcribe y devuelve hooks candidatos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#211E1B;color:#F4F1EC">
+    <div style="max-width:1180px;margin:0 auto;padding:100px 30px">
+      <div data-rise="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:44px;align-items:center">
+        <div>
+          <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#C9A85C;margin-bottom:14px">Control editorial</div>
+          <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(28px,3.4vw,44px);line-height:1.1;margin:0 0 16px">Cinco compuertas. Ninguna pieza pasa sin firmar.</h2>
+          <p style="margin:0 0 26px;font-size:14.5px;line-height:1.65;color:#CFC8BE">Las verificaciones automáticas corren primero: apertura sin saludo, slide 1 con titular, decisión y por qué presentes, voz al 80% sobre música de soporte, corrector contra el diccionario de marca. El revisor humano firma al final.</p>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ gates }}" as="g" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;background:rgba(244,241,236,.06);border:1px solid rgba(244,241,236,.1)">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#C9A85C">{{ g.n }}</span>
+                <span style="font-size:13px;font-weight:600;flex:none">{{ g.name }}</span>
+                <span style="font-size:12px;color:#A79F94;line-height:1.4">{{ g.rule }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(244,241,236,.14)">
+          <img src="assets/os-qc.webp" alt="Centro de control editorial" style="width:100%;display:block" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-scrub="" style="position:relative;height:280vh">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;background:#151312">
+      <video data-src="assets/Transition_3_Content_Production_to_Email_Campaign.mp4" poster="assets/os-dashboard.webp" muted="" playsinline="" preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,16,15,.6) 0%,rgba(18,16,15,.12) 45%,rgba(18,16,15,.82) 100%)"></div>
+      <div style="position:relative;height:100%;max-width:1180px;margin:0 auto;padding:0 30px;display:flex;flex-direction:column;justify-content:space-between;color:#F4F1EC">
+        <div style="padding-top:110px">
+          <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#C9A85C;margin-bottom:12px">Paso 3 → 4</div>
+          <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(28px,4.4vw,54px);line-height:1.05;margin:0;max-width:24ch">De la producción al recorrido completo</h2>
+        </div>
+        <div style="padding-bottom:60px;max-width:70ch">
+          <p style="margin:0;font-size:13.5px;line-height:1.6;color:#CFC8BE">Calendario balanceado por función, checklist de publicación por canal, CTA único, captura de lead con fuente, secuencias a cuentas aliadas y re-puntuación mensual de las seis dimensiones. El recorrido deja de tener huecos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1180px;margin:0 auto;padding:100px 30px">
+    <div data-rise="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+      <div style="background:#fff;border:1px solid #E6E1D9;border-radius:14px;overflow:hidden">
+        <video data-lazy-loop="" data-src="assets/loop-2.mp4" poster="assets/os-isometric.webp" loop="" muted="" playsinline="" preload="none" style="width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:#EEE9E1"></video>
+        <div style="padding:20px">
+          <h3 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:21px;margin:0 0 8px">Una marca, muchas marcas</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5C564E">Árbol de marcas sin límite de profundidad. La submarca hereda tokens, voz y rutinas, y anula solo lo que necesita. Arrancar una nueva es elegir un playbook.</p>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #E6E1D9;border-radius:14px;overflow:hidden">
+        <video data-lazy-loop="" data-src="assets/loop-3.mp4" poster="assets/os-topdown.webp" loop="" muted="" playsinline="" preload="none" style="width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:#EEE9E1"></video>
+        <div style="padding:20px">
+          <h3 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:21px;margin:0 0 8px">Todo etiquetado, todo encontrable</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5C564E">Un solo sistema de etiquetas para tareas, activos, piezas, procedimientos y componentes. Filtra, agrupa y guarda vistas en Kanban, tabla, calendario o grafo.</p>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #E6E1D9;border-radius:14px;overflow:hidden">
+        <img src="assets/os-technical.webp" alt="Hub técnico" style="width:100%;aspect-ratio:16/10;object-fit:cover;display:block" />
+        <div style="padding:20px">
+          <h3 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:21px;margin:0 0 8px">Abierto a agentes</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5C564E">API pública con OpenAPI, servidor MCP, CLI y webhooks sobre los mismos handlers. La capa de voz mapea intenciones a las mismas acciones.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:relative;overflow:hidden;background:#151312;color:#F4F1EC">
+    <video data-lazy-loop="" data-src="assets/loop-1.mp4" poster="assets/os-elevation.webp" loop="" muted="" playsinline="" preload="none" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35"></video>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,16,15,.8),rgba(18,16,15,.94))"></div>
+    <div style="position:relative;max-width:1180px;margin:0 auto;padding:110px 30px;text-align:center">
+      <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(30px,4.6vw,58px);line-height:1.05;margin:0 auto 18px;max-width:24ch">Empieza por el diagnóstico. El sistema hace el resto.</h2>
+      <p style="margin:0 auto 30px;font-size:15px;line-height:1.6;color:#CFC8BE;max-width:56ch">Una sesión, un documento y tu primera línea de ensamble corriendo con tus territorios, tu voz y tus entregables.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <div style="padding:13px 22px;border-radius:10px;background:#F4F1EC;color:#1B1917;font-size:13.5px;font-weight:600;cursor:pointer" style-hover="background:#fff">Agendar diagnóstico</div>
+        <div style="padding:13px 22px;border-radius:10px;border:1px solid rgba(244,241,236,.35);color:#F4F1EC;font-size:13.5px;font-weight:500;cursor:pointer" style-hover="border-color:#C9A85C;color:#C9A85C">Escribir por WhatsApp</div>
+      </div>
+      <div style="margin-top:44px;padding-top:26px;border-top:1px solid rgba(244,241,236,.12);display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:11.5px;color:#8A8278">
+        <span>ALUZINA Business OS</span><span>aluzina.com</span><span>Docs</span><span>API</span><span>Changelog v0.4.0</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const C = ['#7ED6D0','#C7DE7A','#F2A8C0','#C1B4E8','#9BE0B8','#EFCB7A'];
+const STATIONS = [
+  ['01','Marca y árbol','Brand Card, tokens'],
+  ['02','Importar diagnóstico','Estrategia, voz, embudo'],
+  ['03','Estrategia','Positioning Kit, metas'],
+  ['04','Voz y lenguaje','Voice Bible, diccionario'],
+  ['05','Diseño de marca','Plantillas, placas de serie'],
+  ['06','Superficies','Bios, link-in-bio, CTA único'],
+  ['07','Hub técnico','Medición, dominio, booking'],
+  ['08','Casos y pruebas','Case Files, testimonios'],
+  ['09','Producción','Guiones, carruseles, captions'],
+  ['10','Control editorial','Veredicto de 5 compuertas'],
+  ['11','Calendario','Plan balanceado por función'],
+  ['12','Aliados y CRM','Pipeline, lives, leads'],
+  ['13','Medición','Scorecard viva, digest'],
+  ['14','Manual de operaciones','Docs, changelog, glosario']
+];
+const GATES = [
+  ['1','Hook','sin saludo; conflicto, apuesta y promesa'],
+  ['2','Estructura','slide 1 titular, duración en rango'],
+  ['3','Decisión','qué, por qué y qué cambió'],
+  ['4','Audio','voz 80%, música de soporte 20%'],
+  ['5','Ortografía','diccionario de marca primero']
+];
+
+class Component extends DCLogic {
+  componentDidMount() {
+    const attach = v => {
+      if (v.dataset.src && !v.src) { v.src = v.dataset.src; v.load(); }
+    };
+    const scrub = () => {
+      document.querySelectorAll('[data-scrub]').forEach(w => {
+        const v = w.querySelector('video');
+        if (!v || !v.duration || !isFinite(v.duration)) return;
+        const r = w.getBoundingClientRect();
+        const span = r.height - window.innerHeight;
+        const p = Math.min(1, Math.max(0, -r.top / (span || 1)));
+        const t = p * (v.duration - 0.05);
+        if (Math.abs(v.currentTime - t) > 0.03) v.currentTime = t;
+      });
+    };
+    let queued = false;
+    this._onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; scrub(); });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+
+    this._vio = new IntersectionObserver(es => {
+      es.forEach(e => {
+        const v = e.target;
+        if (e.isIntersecting) {
+          attach(v);
+          if (v.hasAttribute('data-lazy-loop')) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+          else { v.addEventListener('loadedmetadata', scrub, { once: true }); v.pause(); }
+        } else if (v.hasAttribute('data-lazy-loop')) { v.pause(); }
+      });
+    }, { rootMargin: '900px 0px' });
+    document.querySelectorAll('[data-scrub] video, [data-lazy-loop]').forEach(v => this._vio.observe(v));
+    scrub();
+
+    this._io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); this._io.unobserve(e.target); } });
+    }, { threshold: 0.14 });
+    document.querySelectorAll('[data-rise]').forEach(el => this._io.observe(el));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+    if (this._vio) this._vio.disconnect();
+    if (this._io) this._io.disconnect();
+  }
+
+  renderVals() {
+    return {
+      stations: STATIONS.map(([num, name, out], i) => ({ num, name, out,
+        bar: { position: 'absolute', left: 0, top: 0, bottom: 0, width: '3px', background: C[i % 6] } })),
+      gates: GATES.map(([n, name, rule]) => ({ n, name, rule }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

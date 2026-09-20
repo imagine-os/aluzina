@@ -59,3 +59,26 @@
     padding-block: var(--space-8);
   }
 }
+
+.hub-group {
+  margin-top: var(--space-7);
+}
+
+.hub-group__title {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-2);
+}
+
+.hub-group__desc {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+  max-width: 48rem;
+}
+
+.hub-grid--compact {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+}
+
+.hub-grid--compact .surface-card {
+  min-height: 7rem;
+}

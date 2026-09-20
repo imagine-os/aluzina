@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="./vendor/fonts/instrument-plex-b.css" rel="stylesheet">
+<style>
+  body { margin: 0; background: #EDE9E3; }
+  a { color: #7A5F1E; }
+  a:hover { color: #4A3A12; }
+  doc-page:not(:defined) { visibility: hidden }
+  table { border-collapse: collapse; width: 100%; table-layout: fixed }
+
+  /* Screen: no desk, no sheet, no paper width — a normal responsive page. */
+  @media screen {
+    doc-page { display: block; --doc-page-w: 100% !important; --doc-page-margin: 0 !important;
+      background: none !important; padding: 0 !important; min-width: 0 !important; min-height: 0 !important }
+    [data-shell] { padding: clamp(18px, 4vw, 40px) clamp(14px, 3.5vw, 34px) 80px;
+      max-width: 1240px; margin: 0 auto }
+    [data-sticky] { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(8px);
+      background: rgba(237,233,227,.86); border-bottom: 1px solid #D8D2C8 }
+  }
+
+  /* Print: real pages, repeating headers, no split rows. */
+  @media print {
+    [data-noprint] { display: none !important }
+    thead { display: table-header-group }
+    tr { break-inside: avoid }
+    [data-shell] { padding: 0; max-width: none }
+  }
+
+  /* Mobile: the spec tables become stacked cards. */
+  @media screen and (max-width: 760px) {
+    [data-spec] { table-layout: auto }
+    [data-spec] thead { display: none }
+    [data-spec] tbody tr { display: grid; grid-template-columns: 108px minmax(0,1fr);
+      gap: 4px 14px; padding: 14px 0; border-bottom: 1px solid #D8D2C8 }
+    [data-spec] tbody td { border: 0 !important; padding: 0 !important }
+    [data-spec] td[data-c="slot"] { grid-row: 1 / span 3 }
+    [data-spec] td[data-c="file"] { align-self: end }
+    [data-spec] image-slot { max-width: 108px !important }
+    [data-grouphead] { display: block; padding: 4px 0 8px !important; background: none !important;
+      border: 0 !important; font-size: 11px !important; color: #211E1B !important }
+  }
+</style>
+<script src="./image-slot.js"></script>
+<script src="./doc-page.js"></script>
+</helmet>
+
+<div data-sticky="" data-noprint="" style="font-family:'Instrument Sans',system-ui,sans-serif">
+  <div style="max-width:1240px;margin:0 auto;padding:10px clamp(14px,3.5vw,34px);display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <span style="display:flex;align-items:center;gap:8px;min-width:0">
+      <span style="width:24px;height:24px;flex:none;border-radius:7px;background:linear-gradient(150deg,#C9A85C,#8E7128);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:13px;color:#1B1917">A</span>
+      <span style="font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Image generation plan</span>
+    </span>
+    <span style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-wrap:wrap">
+      <a href="#bible" style="font-size:11.5px;text-decoration:none;padding:5px 10px;border-radius:7px;background:#F7F5F1;border:1px solid #D8D2C8;white-space:nowrap">Bible</a>
+      <a href="#stations" style="font-size:11.5px;text-decoration:none;padding:5px 10px;border-radius:7px;background:#F7F5F1;border:1px solid #D8D2C8;white-space:nowrap">Stations</a>
+      <a href="#menu" style="font-size:11.5px;text-decoration:none;padding:5px 10px;border-radius:7px;background:#F7F5F1;border:1px solid #D8D2C8;white-space:nowrap">Menu</a>
+      <span onClick="{{ exportPdf }}" style="display:flex;align-items:center;gap:7px;padding:6px 12px;border-radius:8px;background:#211E1B;color:#F4F1EC;font-size:11.5px;font-weight:500;cursor:pointer;white-space:nowrap" style-hover="background:#3D372F">
+        <svg width="13" height="13" viewBox="0 0 16 16" style="fill:none;stroke:#C9A85C;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round"><path d="M8 2v7.5M5 7l3 3 3-3M3 12.5h10"></path></svg>
+        Export as PDF
+      </span>
+    </span>
+  </div>
+</div>
+
+<doc-page margin="0.6in">
+<div data-shell="" style="font-family:'Instrument Sans',system-ui,sans-serif;color:#211E1B;line-height:1.5">
+
+  <div style="border-radius:16px;overflow:hidden;border:1px solid #D8D2C8;background:#211E1B;padding:26px 28px;position:relative;margin-bottom:26px">
+    <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(114deg,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,0) 1px 9px),radial-gradient(120% 130% at 4% 0%,rgba(201,168,92,.3),rgba(0,0,0,0) 62%);pointer-events:none"></div>
+    <div style="position:relative">
+      <div style="font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#B4AA9C">Image generation brief · ALUZINA Business OS</div>
+      <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(26px,4.6vw,38px);line-height:1.05;margin:10px 0 12px;color:#F4F1EC;max-width:24ch">Windows into the virtual studio</h1>
+      <p style="margin:0;max-width:70ch;font-size:13.5px;color:#CFC8BE;text-wrap:pretty">{{ n.total }} images: {{ n.stations }} assembly-line station cards and {{ n.menu }} menu tiles. Every image is a lit interior in one continuous virtual facility, with AI characters mid-task on the exact work that card represents, and the card's title typeset into the frame.</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:30px">
+    <div style="background:#F7F5F1;border:1px solid #D8D2C8;border-radius:12px;padding:13px 14px">
+      <div style="font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459">Delivered</div>
+      <div style="font-family:'Instrument Serif',serif;font-size:24px;line-height:1.2;margin-top:5px">{{ n.done }} of {{ n.total }}</div>
+      <div style="height:5px;border-radius:3px;background:#E4DFD7;overflow:hidden;margin-top:9px"><div style="{{ bar }}"></div></div>
+      <div style="font-size:11.5px;color:#5E574E;margin-top:6px">{{ n.pct }} complete · {{ n.open }} outstanding</div>
+    </div>
+    <div style="background:#F7F5F1;border:1px solid #D8D2C8;border-radius:12px;padding:13px 14px">
+      <div style="font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459">Station cards</div>
+      <div style="font-family:'Instrument Serif',serif;font-size:24px;line-height:1.2;margin-top:5px">1600 × 1000</div>
+      <div style="font-size:11.5px;color:#5E574E;margin-top:4px">16:10 · fills card header</div>
+    </div>
+    <div style="background:#F7F5F1;border:1px solid #D8D2C8;border-radius:12px;padding:13px 14px">
+      <div style="font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459">Menu tiles</div>
+      <div style="font-family:'Instrument Serif',serif;font-size:24px;line-height:1.2;margin-top:5px">1200 × 1500</div>
+      <div style="font-size:11.5px;color:#5E574E;margin-top:4px">4:5 portrait · game-menu window</div>
+    </div>
+    <div style="background:#F7F5F1;border:1px solid #D8D2C8;border-radius:12px;padding:13px 14px">
+      <div style="font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459">Format</div>
+      <div style="font-family:'Instrument Serif',serif;font-size:24px;line-height:1.2;margin-top:5px">WebP q82</div>
+      <div style="font-size:11.5px;color:#5E574E;margin-top:4px">plus 400px-wide preview</div>
+    </div>
+  </div>
+
+  <div data-noprint="" style="display:flex;align-items:flex-start;gap:12px;background:#F7F5F1;border:1px solid #D8D2C8;border-left:3px solid #C9A85C;border-radius:12px;padding:14px 16px;margin-bottom:30px">
+    <div style="font-size:12px;color:#3D372F;line-height:1.6;max-width:82ch">
+      <span style="font-weight:600">This is the live progress board.</span> Delivered renders already sit in their slots and are wired into the Cyber Bridge. Outstanding rows show an empty slot — drag the finished image onto it and it sticks across reloads. Slots are keyed to the row, so a wrong-slot drop is obvious: the scene text beside it will not match the picture.
+    </div>
+  </div>
+
+  <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(20px,2.8vw,25px);font-weight:400;margin:0 0 4px" id="bible">1 · The world bible</h2>
+  <p style="margin:0 0 16px;font-size:13px;color:#5E574E;max-width:78ch">Paste this block verbatim at the head of every prompt. It is what makes {{ n.total }} separate generations read as one place.</p>
+
+  <div style="background:#211E1B;border-radius:13px;padding:18px 20px;margin-bottom:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.75;color:#E8E3DA;white-space:pre-wrap">STYLE BIBLE — use on every image
+
+A single continuous virtual facility called the Business OS: a warm, marble-and-brass
+production studio built as tiered glass-walled rooms. Cinematic 3D render, physically
+based materials, soft volumetric daylight from a high clerestory plus warm brass
+practicals. Shallow depth of field. Camera is always OUTSIDE the room looking IN
+through a glass wall — the viewer is at the window.
+
+MATERIALS: honed cream marble floors and desks, brushed brass fittings and rails,
+pale oak, off-white plaster, matte charcoal steel, linen. Glass is clean, slightly
+tinted, with faint reflections of the viewer's side.
+
+CHARACTERS: 1–3 stylized AI workers. Smooth matte porcelain-white figures with soft
+featureless faces, subtly luminous seams at the joints, wearing simple linen work
+clothes with one brass detail. Calm, purposeful, always mid-action and looking at
+their work, never at the camera. Consistent height and proportion across all images.
+
+LIGHT SURFACES: work is shown on floating translucent holographic panels, physical
+printed sheets, and marble worktops. Panel content is abstract — blocks, rules,
+swatches, waveforms — never fake legible UI text.
+
+PALETTE: warm neutral base (#EDE9E3, #F7F5F1, #211E1B) with brass #C9A85C, plus ONE
+accent colour per image as specified in the row.
+
+TYPOGRAPHY IN IMAGE: the title from the row is set INTO the scene as physical
+signage — brushed brass or milled acrylic letters on the room's back wall, or etched
+into the glass. High-contrast, correctly spelled, elegant serif capitals. Occupies
+the lower-left third for station cards, the lower third centred for menu tiles.
+No other text anywhere in the image. No logos, no watermarks, no UI chrome.
+
+NEGATIVE: no photorealistic human faces, no text besides the specified title, no
+gibberish lettering, no emoji, no neon cyberpunk, no aggressive gradients, no
+lens flare, no cluttered desks, no floating icons, no charts with numbers.</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-bottom:32px">
+    <div style="background:#F7F5F1;border:1px solid #D8D2C8;border-radius:12px;padding:13px 15px">
+      <div style="font-size:11.5px;font-weight:600;margin-bottom:5px">Naming convention</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E574E;line-height:1.7">station-01-brand-tree.webp<br>station-02-diagnostic-import.webp<br>menu-cockpit.webp<br>menu-assembly-line.webp</div>
+      <div style="font-size:11px;color:#5E574E;margin-top:7px">Lowercase, hyphenated, no spaces. Previews get a <span style="font-family:'IBM Plex Mono',monospace">-sm</span> suffix. Deliver as a flat folder plus a CSV of filename, title, row id.</div>
+    </div>
+    <div style="background:#F7F5F1;border:1px solid #D8D2C8;border-radius:12px;padding:13px 15px">
+      <div style="font-size:11.5px;font-weight:600;margin-bottom:5px">Composition rules</div>
+      <div style="font-size:11.5px;color:#5E574E;line-height:1.6">Station cards: camera at standing eye height, room reads left-to-right, characters in the middle third, signage lower-left, top 30% kept quiet so card chrome can overlay. Menu tiles: one tall window, single character centred, signage lower third, deep hallway visible behind for the sense of another room beyond.</div>
+    </div>
+    <div style="background:#F7F5F1;border:1px solid #D8D2C8;border-radius:12px;padding:13px 15px">
+      <div style="font-size:11.5px;font-weight:600;margin-bottom:5px">Consistency protocol</div>
+      <div style="font-size:11.5px;color:#5E574E;line-height:1.6">Generate <span style="font-family:'IBM Plex Mono',monospace">station-01</span> first and approve it as the anchor. Feed it back as a style reference for all remaining {{ n.remaining }} so figures, marble tone and brass finish stay identical. Regenerate any image whose character proportion drifts.</div>
+    </div>
+  </div>
+
+  <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(20px,2.8vw,25px);font-weight:400;margin:0 0 4px" id="stations">2 · Assembly line · {{ n.stations }} station cards</h2>
+  <p style="margin:0 0 14px;font-size:13px;color:#5E574E;max-width:78ch">Scene column describes the room and what the characters are physically doing, drawn from that station's real inputs, steps and outputs. Append it to the style bible.</p>
+
+  <table data-spec="" style="border:1px solid #D8D2C8;border-radius:13px;background:#F7F5F1;margin-bottom:34px">
+    <thead>
+      <tr>
+        <th style="padding:10px 14px;text-align:left;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459;background:#EDE9E3;border-bottom:1px solid #D8D2C8;vertical-align:bottom;width:22%">Slot</th>
+        <th style="padding:10px 14px;text-align:left;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459;background:#EDE9E3;border-bottom:1px solid #D8D2C8;vertical-align:bottom;width:15%">File</th>
+        <th style="padding:10px 14px;text-align:left;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459;background:#EDE9E3;border-bottom:1px solid #D8D2C8;vertical-align:bottom;width:15%">Text in image</th>
+        <th style="padding:10px 14px;text-align:left;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459;background:#EDE9E3;border-bottom:1px solid #D8D2C8;vertical-align:bottom;width:40%">Scene</th>
+        <th style="padding:10px 14px;text-align:left;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459;background:#EDE9E3;border-bottom:1px solid #D8D2C8;vertical-align:bottom;width:8%">Accent</th>
+      </tr>
+    </thead>
+    <tbody>
+      <sc-for list="{{ stations }}" as="s" hint-placeholder-count="14">
+        <tr>
+          <td data-c="slot" style="padding:12px 14px;border-bottom:1px solid #E4DFD7;vertical-align:top;font-size:12px">
+            <image-slot id="{{ s.slotId }}" src="{{ s.shot }}" style="width:100%;max-width:150px;aspect-ratio:16/10;height:auto" radius="8" fit="cover" placeholder="{{ s.ph }}"></image-slot>
+            <div style="{{ s.pill }}">{{ s.state }}</div>
+          </td>
+          <td style="padding:12px 14px;border-bottom:1px solid #E4DFD7;vertical-align:top;font-size:12px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#5E574E;word-break:break-word" data-c="file">{{ s.file }}</td>
+          <td style="padding:12px 14px;border-bottom:1px solid #E4DFD7;vertical-align:top;font-size:12px">
+            <span style="font-weight:600;display:block">{{ s.title }}</span>
+            <span style="font-size:10.5px;color:#6B6459;font-family:'IBM Plex Mono',monospace">station {{ s.num }}</span>
+          </td>
+          <td style="padding:12px 14px;border-bottom:1px solid #E4DFD7;vertical-align:top;font-size:12px;color:#3D372F;text-wrap:pretty">{{ s.scene }}</td>
+          <td style="padding:12px 14px;border-bottom:1px solid #E4DFD7;vertical-align:top;font-size:12px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5E574E;white-space:nowrap">
+            <span style="display:flex;align-items:center;gap:6px"><span style="{{ s.swatch }}"></span>{{ s.hex }}</span>
+          </td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+
+  <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(20px,2.8vw,25px);font-weight:400;margin:0 0 4px" id="menu">3 · Full-page menu · {{ n.menu }} window tiles</h2>
+  <p style="margin:0 0 14px;font-size:13px;color:#5E574E;max-width:78ch">One tile per sidebar destination, grouped as the sidebar groups them. Tapping a tile should feel like stepping through that window, so each scene shows the room that destination governs.</p>
+
+  <sc-for list="{{ menuGroups }}" as="g" hint-placeholder-count="6">
+    <table data-spec="" style="border:1px solid #D8D2C8;border-radius:13px;background:#F7F5F1;margin-bottom:22px">
+      <thead>
+        <tr>
+          <th colspan="4" data-grouphead="" style="padding:10px 14px;text-align:left;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459;background:#EDE9E3;border-bottom:1px solid #D8D2C8;vertical-align:bottom;font-size:10px;letter-spacing:.14em;color:#3D372F;background:#E4DFD7">{{ g.name }}</th>
+        </tr>
+        <tr>
+          <th style="padding:10px 14px;text-align:left;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459;background:#EDE9E3;border-bottom:1px solid #D8D2C8;vertical-align:bottom;width:17%">Slot</th>
+          <th style="padding:10px 14px;text-align:left;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459;background:#EDE9E3;border-bottom:1px solid #D8D2C8;vertical-align:bottom;width:20%">File</th>
+          <th style="padding:10px 14px;text-align:left;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459;background:#EDE9E3;border-bottom:1px solid #D8D2C8;vertical-align:bottom;width:15%">Text in image</th>
+          <th style="padding:10px 14px;text-align:left;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6B6459;background:#EDE9E3;border-bottom:1px solid #D8D2C8;vertical-align:bottom;width:48%">Scene</th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ g.items }}" as="m" hint-placeholder-count="4">
+          <tr>
+            <td data-c="slot" style="padding:12px 14px;border-bottom:1px solid #E4DFD7;vertical-align:top;font-size:12px">
+              <image-slot id="{{ m.slotId }}" src="{{ m.shot }}" style="width:100%;max-width:120px;aspect-ratio:4/5;height:auto" radius="8" fit="cover" placeholder="{{ m.ph }}"></image-slot>
+              <div style="{{ m.pill }}">{{ m.state }}</div>
+            </td>
+            <td style="padding:12px 14px;border-bottom:1px solid #E4DFD7;vertical-align:top;font-size:12px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#5E574E;word-break:break-word" data-c="file">{{ m.file }}</td>
+            <td style="padding:12px 14px;border-bottom:1px solid #E4DFD7;vertical-align:top;font-size:12px;font-weight:600">{{ m.title }}</td>
+            <td style="padding:12px 14px;border-bottom:1px solid #E4DFD7;vertical-align:top;font-size:12px;color:#3D372F;text-wrap:pretty">{{ m.scene }}</td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+  </sc-for>
+
+  <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(20px,2.8vw,25px);font-weight:400;margin:30px 0 4px">4 · How to hand it back</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px">
+    <div style="background:#F7F5F1;border:1px solid #D8D2C8;border-radius:12px;padding:14px 15px;font-size:12px;color:#3D372F;line-height:1.6">
+      <div style="font-weight:600;margin-bottom:5px">1 · Folder</div>
+      Drop all {{ n.total }} WebPs into <span style="font-family:'IBM Plex Mono',monospace">assets/world/</span> using the exact filenames in these tables. I read the filename, so no renaming is needed on my side.
+    </div>
+    <div style="background:#F7F5F1;border:1px solid #D8D2C8;border-radius:12px;padding:14px 15px;font-size:12px;color:#3D372F;line-height:1.6">
+      <div style="font-weight:600;margin-bottom:5px">2 · Manifest</div>
+      Include <span style="font-family:'IBM Plex Mono',monospace">world.csv</span> with columns filename, title, group, accent hex. If a prompt was altered, note it in a fifth column so the bible stays accurate.
+    </div>
+    <div style="background:#F7F5F1;border:1px solid #D8D2C8;border-radius:12px;padding:14px 15px;font-size:12px;color:#3D372F;line-height:1.6">
+      <div style="font-weight:600;margin-bottom:5px">3 · Then I wire</div>
+      I attach station images to the assembly-line cards, build the full-page window menu from the 28 tiles, and add the same imagery to the calendar, graph and canvas nodes already built for it.
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900}}">
+const SW = hex => ({ width: '10px', height: '10px', borderRadius: '3px', flex: 'none',
+  background: hex, boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.12)' });
+
+const STATIONS = [
+  ['01', 'Brand & Tree', 'brand-tree', '#7ED6D0',
+   'A tall atrium where a brass-rooted tree of glowing brand nodes grows up the marble wall. One worker clips a new child node onto a branch; a second holds a floating swatch panel of colour chips and two typeface plates up to the light to check inheritance. Channel handles hang from the branches as small brass tags.'],
+  ['02', 'Diagnostic Import', 'diagnostic-import', '#C7DE7A',
+   'A narrow intake room. A thick printed diagnostic document is fed into a marble-and-brass scanning table; sections lift off the paper as translucent cards and slot into a rack of labelled trays. A worker holds two cards side by side, comparing them against the previous version. Sorted, calm, archival.'],
+  ['03', 'Strategy', 'strategy', '#F2A8C0',
+   'A war room with four large territory boards standing on brass easels in a semicircle. A worker pins a single guiding-concept card at the centre where sightlines meet; another converts three route lines drawn on the floor into a column of nine small goal plates on the wall rack.'],
+  ['04', 'Voice & Language', 'voice-language', '#C1B4E8',
+   'An acoustic study lined with linen panels. Waveforms hover as thin ribbons above a marble desk; a worker lifts a phrase out of a ribbon with tweezers and files it into an open leather dictionary. A second worker adjusts a brass dial on a scoring device, calibrating tone. Rows of small labelled vials read as lexicon.'],
+  ['05', 'Brand Design System', 'brand-design-system', '#9BE0B8',
+   'A print atelier. Cover plates and carousel templates hang drying on brass wires in orderly ranks. A worker presses a fresh plate onto a grid-marked marble bed while another checks a small thumbnail template at arm\'s length for legibility. Open brand book on a stand, spreads visible as abstract blocks.'],
+  ['06', 'Surfaces', 'surfaces', '#EFCB7A',
+   'A gallery of channel storefronts: five tall glass panels in a row, each dressed as a profile surface with banner, bio block and one bright brass call-to-action button. A worker installs the single CTA button on the third panel; another wipes duplicate buttons off a tray, enforcing one per surface.'],
+  ['07', 'Technical Hub', 'technical-hub', '#7ED6D0',
+   'A machine room under glass. A brass pipework funnel descends through four measurement gauges, three lit green and one dark. A worker on a low step kneels to connect the unlit gauge; a second stamps an evidence card and hangs it on the pipe. Redirect lines painted on the floor converge into one canonical channel.'],
+  ['08', 'Proof & Cases', 'proof-cases', '#C1B4E8',
+   'A case-study room. A large before-and-after diptych of an interior stands framed on the marble wall. A worker holds out a signed consent sheet on a brass clipboard; another mounts a small testimonial card beside the diptych. Stacked case files with linen covers on a low shelf.'],
+  ['09', 'Content Production', 'content-production', '#C7DE7A',
+   'A long production bench, work moving left to right: raw footage crates, then a script sheet under a lamp, then a carousel of nine slides laid out with slide one as a bold headline plate. Two workers move a finished set toward a brass hatch marked for review. A hook library card wall glows softly behind.'],
+  ['10', 'Editorial QC', 'editorial-qc', '#F2A8C0',
+   'A five-gate corridor. Five brass archways in perspective, each with a small indicator above it; a content piece rides a marble conveyor through them. A worker at the third arch holds up a flat palm to stop the piece; another signs a verdict card at a lectern. Gates one and two lit, the rest dark.'],
+  ['11', 'Calendar & Distribution', 'calendar-distribution', '#9BE0B8',
+   'A planning hall dominated by a four-week wall grid of recessed marble slots. Workers place approved pieces into slots, one reaching up to a high row; a coverage meter of six vertical brass bars sits beside the grid with one bar visibly short. Channel checklists hang on hooks by the door.'],
+  ['12', 'Allies & CRM', 'allies-crm', '#EFCB7A',
+   'A relations parlour. A wall of small brass nameplates for niche accounts, some tilted forward to show they are qualified. Two workers sit across a marble table mid-outreach, one sliding a sequence card forward; a live-broadcast runbook stands open on a lectern with a small on-air lamp beside it.'],
+  ['13', 'Measurement & Scorecard', 'measurement-scorecard', '#7ED6D0',
+   'An observatory. A living scorecard of six illuminated dials curves across the marble wall, needles at different heights. A worker on a rolling brass ladder re-scores the fourth dial; another collects a printed monthly digest from a slot in the desk. Funnel status shown as a lit glass column beside the dials.'],
+  ['14', 'Operations Manual', 'operations-manual', '#C1B4E8',
+   'A library of living procedures: fourteen bound volumes upright in a brass-railed marble shelf, each with a ribbon marker. A worker writes a changelog entry into the open fourteenth volume on a standing desk; another slides a completed procedure back into place. A glossary drawer sits half open below.']
+];
+
+const MENU = [
+  ['Portfolio & workspaces', [
+    ['all-workspaces', 'All Workspaces', 'A high balcony over the whole facility: tiered glass rooms receding into warm haze, each lit differently, brass walkways linking them. One worker at the rail gestures across the view as if selecting a building.'],
+    ['workspace-canvas', 'Workspace Canvas', 'A model room where scaled glass models of six separate studios sit on marble plinths, brass cables strung between them showing ownership. A worker repositions one plinth with both hands.'],
+    ['switch-subspace', 'Switch Subspace', 'An interior door hall with four brass-framed doorways in one wall, each glimpsing a differently tinted room beyond. A worker holds one door open, mid-step through it.'],
+    ['subspace-canvas', 'Subspace Canvas', 'A single studio opened up like a doll\'s house: one main room with four smaller satellite rooms floating around it on brass arms. A worker adjusts the spacing of one satellite.'],
+    ['portfolio', 'Portfolio', 'A tall accounting gallery: rows of glass cases each holding a small glowing brand object, brass value plates beneath. A worker walks the row with a ledger, pausing at one case.'],
+    ['portfolio-canvas', 'Portfolio Canvas', 'A vast floor map ruled into a grid, small brand objects placed by position on it. A worker crouches to slide one object from one square to another; a second reads the grid from a raised brass platform.']
+  ]],
+  ['Cockpit', [
+    ['cockpit', 'Cockpit', 'The command room at the facility\'s nose: a curved marble console under a wide glass wall looking out over the production floor. One worker seated, hands resting on brass controls, a quiet bank of indicator lamps above.']
+  ]],
+  ['Production', [
+    ['assembly-line', 'Assembly Line', 'The main hall seen down its length: fourteen glass-walled station rooms in a row, brass conveyor running through them, each room lit a slightly different hue. Workers visible small inside several rooms.'],
+    ['stations', 'Stations', 'A single station room shown in detail, its doorway numbered in brass, a worker inside setting out tools on the marble bench with deliberate order.'],
+    ['readiness', 'Readiness', 'A gauge wall: fourteen slender vertical brass meters filled to different heights. A worker tops one up from a small vessel; another marks the shortfall on a slate.'],
+    ['routines', 'Routines', 'A clockwork alcove. A large brass escapement drives six small task carriages around a marble track on a repeating loop. A worker winds the mechanism with a key.']
+  ]],
+  ['Work', [
+    ['board', 'Board', 'A four-column kanban wall of recessed marble slots holding linen cards. Two workers move a card from the second column to the third, one on each end of it.'],
+    ['table', 'Table', 'A records room with a long marble table inlaid with brass row lines; sheets laid out in strict grid order. A worker slides a saved-view tab along the table edge.'],
+    ['calendar', 'Calendar', 'A month-grid wall of thirty small lit niches, some holding several stacked pieces. A worker slots a piece into an empty niche while another counts the stack in a busy day.'],
+    ['timeline', 'Timeline', 'A long horizontal channel wall: five parallel brass lanes running into the distance, each carrying small pieces at intervals. A worker walks alongside adjusting the spacing of one lane.'],
+    ['graph', 'Graph', 'A dark-floored constellation room. Glowing nodes hang at different depths, connected by fine brass filament. A worker reaches into the field to trace one connection with a fingertip.']
+  ]],
+  ['Content', [
+    ['briefs', 'Briefs', 'A briefing room: a rack of eighteen linen envelopes, several pulled forward. A worker at a lectern opens one and lays its contents on the marble surface.'],
+    ['series', 'Series', 'A serial room with numbered episode plates mounted in sequence along a brass rail, the first three finished and the rest blank. A worker hangs the fourth plate.'],
+    ['editorial-qc', 'Editorial QC', 'A review chamber with five small brass gates in a line on a marble bench, a piece resting before the third. A worker leans in with a loupe; another holds a signing pen.'],
+    ['deliverables', 'Deliverables', 'A dispatch room: twenty-six labelled brass pigeonholes, some full, some empty. A worker files a finished bundle into one and closes its small door.']
+  ]],
+  ['Assets & audience', [
+    ['media-library', 'Media Library', 'An archive of tall glass drawers holding stacked image plates, tag labels in brass along each drawer edge. A worker pulls a drawer out to eye level and lifts one plate free.'],
+    ['allies-crm', 'Allies & CRM', 'A meeting parlour with a round marble table and a wall of small brass nameplates. Two workers seated, one sliding a card across; a third nameplate is being mounted.'],
+    ['measurement', 'Measurement', 'An instrument room with six large illuminated dials curving across the marble wall. A worker on a brass ladder adjusts one; a printed digest emerges from a desk slot.']
+  ]],
+  ['System', [
+    ['system-canvas', 'System Canvas', 'A model hall where twelve glowing window panes float in space at varied depths, each showing a different room of the facility in miniature. A worker pushes one pane into place with both hands.'],
+    ['design-system', 'Design System', 'A materials library: marble tone samples, brass finish swatches and type specimens laid out in strict grid drawers. A worker holds two swatches side by side under the light.'],
+    ['docs-changelog', 'Docs & Changelog', 'A scriptorium with a long brass-railed shelf of bound volumes and one open ledger on a standing desk. A worker writes a fresh entry; another shelves a closed volume.'],
+    ['render-studio', 'Render Studio', 'A capture stage: a marble turntable under focused brass lamps, a camera on a rail, a bank of framed test renders on the wall. A worker adjusts the lamp angle mid-take.'],
+    ['api-mcp-cli', 'API, MCP & CLI', 'A patch room of brass jack panels and cable looms feeding out through the glass wall to the rest of the facility. A worker seats a cable into a socket; indicator lamps read as connections.'],
+    ['settings', 'Settings', 'A small calibration cabinet room: rows of labelled brass dials and toggles on a marble panel. A single worker turns one dial a precise quarter-turn.']
+  ]]
+];
+
+// Renders delivered so far. Everything else stays an empty slot.
+const DELIVERED = {
+  'station-01-brand-tree': 1, 'station-03-strategy': 1, 'station-06-surfaces': 1,
+  'station-07-technical-hub': 1, 'station-08-proof-cases': 1, 'station-09-content-production': 1,
+  'station-10-editorial-qc': 1, 'station-11-calendar-distribution': 1, 'station-12-allies-crm': 1,
+  'station-13-measurement-scorecard': 1, 'station-14-operations-manual': 1,
+  'menu-all-workspaces': 1, 'menu-allies-crm': 1, 'menu-api-mcp-cli': 1, 'menu-assembly-line': 1,
+  'menu-board': 1, 'menu-briefs': 1, 'menu-calendar': 1, 'menu-cockpit': 1, 'menu-deliverables': 1,
+  'menu-design-system': 1, 'menu-docs-changelog': 1, 'menu-editorial-qc': 1, 'menu-graph': 1,
+  'menu-measurement': 1, 'menu-media-library': 1, 'menu-portfolio-canvas': 1, 'menu-portfolio': 1,
+  'menu-readiness': 1, 'menu-render-studio': 1, 'menu-routines': 1, 'menu-series': 1,
+  'menu-settings': 1, 'menu-stations': 1, 'menu-subspace-canvas': 1, 'menu-switch-subspace': 1,
+  'menu-system-canvas': 1, 'menu-table': 1, 'menu-timeline': 1, 'menu-workspace-canvas': 1
+};
+const shotFor = base => DELIVERED[base] ? 'assets/world/' + base + '.png' : '';
+const PILL = ok => ({ display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '5px',
+  padding: '2px 7px', borderRadius: '20px', fontFamily: "'IBM Plex Mono',monospace",
+  fontSize: '8.5px', letterSpacing: '.1em', textTransform: 'uppercase',
+  background: ok ? '#DCEBDF' : '#EDE9E3', color: ok ? '#2E5138' : '#6B6459' });
+
+class Component extends DCLogic {
+  renderVals() {
+    const menuCount = MENU.reduce((a, g) => a + g[1].length, 0);
+    const total = STATIONS.length + menuCount;
+    const done = Object.keys(DELIVERED).length;
+    return {
+      exportPdf: () => window.print(),
+      n: { total: String(total), stations: String(STATIONS.length), menu: String(menuCount),
+        remaining: String(total - 1), done: String(done), open: String(total - done),
+        pct: Math.round(done / total * 100) + '%' },
+      bar: { height: '100%', width: (done / total * 100) + '%', background: '#5E8B6A', borderRadius: '3px' },
+      stations: STATIONS.map(([num, title, slug, hex, scene]) => ({
+        num, title, scene, hex,
+        file: 'station-' + num + '-' + slug + '.png',
+        slotId: 'world-st-' + slug, ph: 'Drop ' + title,
+        shot: shotFor('station-' + num + '-' + slug),
+        state: DELIVERED['station-' + num + '-' + slug] ? 'Delivered' : 'Outstanding',
+        pill: PILL(!!DELIVERED['station-' + num + '-' + slug]),
+        swatch: SW(hex)
+      })),
+      menuGroups: MENU.map(([name, items]) => ({
+        name,
+        items: items.map(([slug, title, scene]) => ({
+          title, scene, file: 'menu-' + slug + '.png',
+          slotId: 'world-mn-' + slug, ph: 'Drop ' + title,
+          shot: shotFor('menu-' + slug),
+          state: DELIVERED['menu-' + slug] ? 'Delivered' : 'Outstanding',
+          pill: PILL(!!DELIVERED['menu-' + slug])
+        }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="./vendor/fonts/instrument-plex-b.css" rel="stylesheet">
+<style>
+  body { margin: 0; background: #0D0C0B; }
+  a { color: #C9A85C; }
+  a:hover { color: #EFCB7A; }
+  @keyframes pulse { 0%,100% { opacity: .4 } 50% { opacity: 1 } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#0D0C0B;font-family:'Instrument Sans',system-ui,sans-serif;color:#E8E3DA">
+<div style="max-width:1220px;margin:0 auto;padding:clamp(18px,4vw,40px) clamp(14px,3.5vw,32px) 80px">
+
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#8C8478">Levels of detail · ALUZINA Business OS</div>
+  <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(28px,5vw,44px);line-height:1.05;margin:10px 0 12px;max-width:26ch;color:#F4F1EC">Seven rungs, four directions</h1>
+  <p style="margin:0 0 26px;max-width:74ch;font-size:13.5px;line-height:1.6;color:#CFC8BE;text-wrap:pretty">Minecraft is legible because one rule holds at every scale: a block is a block whether you are holding it or flying over a continent. Our system needs the same property with far more detail — so detail is not a style, it is a rung, and every rung has a fixed budget in all four directions at once. Same address, different resolution.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px;margin-bottom:30px">
+    <sc-for list="{{ dirs }}" as="d" hint-placeholder-count="4">
+      <div style="background:#151312;border:1px solid #322D26;border-radius:13px;padding:14px 15px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="{{ d.dot }}"></span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#8C8478">{{ d.axis }}</span>
+        </div>
+        <div style="font-family:'Instrument Serif',serif;font-size:23px;line-height:1.15;color:#F4F1EC">{{ d.name }}</div>
+        <div style="font-size:11.5px;color:#8C8478;margin-top:6px;line-height:1.5">{{ d.q }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#8C8478;white-space:nowrap">The ladder</span>
+    <span style="flex:1;height:1px;background:#322D26"></span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#C9A85C;white-space:nowrap">{{ count }}</span>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:34px">
+    <sc-for list="{{ rungs }}" as="r" hint-placeholder-count="7">
+      <div style="{{ r.card }}">
+        <div style="{{ r.rail }}"></div>
+        <div style="padding:14px 16px;display:grid;grid-template-columns:minmax(0,1.15fr) repeat(auto-fit,minmax(150px,1fr));gap:14px;align-items:start">
+          <div style="min-width:0">
+            <div style="display:flex;align-items:baseline;gap:9px;flex-wrap:wrap">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#C9A85C">{{ r.id }}</span>
+              <span style="font-family:'Instrument Serif',serif;font-size:22px;line-height:1.1;color:#F4F1EC">{{ r.name }}</span>
+            </div>
+            <div style="font-size:12px;color:#CFC8BE;margin-top:6px;line-height:1.5;max-width:44ch">{{ r.what }}</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#5E574E;margin-top:8px">{{ r.zoom }}</div>
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#8C8478;margin-bottom:5px">Visual</div>
+            <div style="font-size:11.5px;color:#CFC8BE;line-height:1.5">{{ r.visual }}</div>
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#8C8478;margin-bottom:5px">Spatial</div>
+            <div style="font-size:11.5px;color:#CFC8BE;line-height:1.5">{{ r.spatial }}</div>
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#8C8478;margin-bottom:5px">Data</div>
+            <div style="font-size:11.5px;color:#CFC8BE;line-height:1.5">{{ r.data }}</div>
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#8C8478;margin-bottom:5px">Render</div>
+            <div style="font-size:11.5px;color:#CFC8BE;line-height:1.5">{{ r.render }}</div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#8C8478;white-space:nowrap">The three laws</span>
+    <span style="flex:1;height:1px;background:#322D26"></span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:11px;margin-bottom:34px">
+    <sc-for list="{{ laws }}" as="w" hint-placeholder-count="3">
+      <div style="background:#151312;border:1px solid #322D26;border-left:3px solid #C9A85C;border-radius:13px;padding:14px 16px">
+        <div style="font-size:12.5px;font-weight:600;margin-bottom:6px;color:#F4F1EC">{{ w.name }}</div>
+        <div style="font-size:11.5px;color:#CFC8BE;line-height:1.55">{{ w.body }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#8C8478;white-space:nowrap">Same address, every rung</span>
+    <span style="flex:1;height:1px;background:#322D26"></span>
+  </div>
+  <div style="background:#151312;border:1px solid #322D26;border-radius:14px;padding:18px 20px;margin-bottom:16px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:2;color:#E8E3DA;white-space:pre-wrap">{{ address }}</div>
+  </div>
+  <p style="margin:0;max-width:74ch;font-size:12.5px;line-height:1.6;color:#8C8478;text-wrap:pretty">One address resolves at any rung. Ask it coarse and you get a lamp; ask it fine and you get the gate that failed and the frame that proves it. Nothing is re-modelled between rungs — only re-resolved, which is what makes forward and reverse traversal the same operation at any speed.</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1220,&quot;height&quot;:900}}">
+const DIRS = [
+  ['Visual', 'What the eye is given', '#EFCB7A', 'How much of the picture is drawn at this rung?'],
+  ['Spatial', 'Where it sits in the world', '#7ED6D0', 'How far can you travel before the frame changes?'],
+  ['Data', 'What is actually loaded', '#C7DE7A', 'How many records must be true for this to render?'],
+  ['Render', 'How the frame is produced', '#C1B4E8', 'Cached, predicted, or fully computed?']
+];
+
+// id, name, zoom, what, visual, spatial, data, render, tint
+const RUNGS = [
+  ['L0', 'Constellation', 'Whole system · 142 workspaces',
+   'The portfolio as points of light. You are choosing which world to enter, nothing more.',
+   'One lit dot per workspace, colour = health. No imagery, no type below 10px.',
+   'Position carries meaning: stage across, health down. Pan and zoom only.',
+   'Six aggregate numbers per workspace. Nothing per-piece is loaded.',
+   'Fully cached. Aggregates recomputed nightly, never per frame.', '#C1B4E8'],
+  ['L1', 'Hull', 'One workspace · outside view',
+   'A vessel seen whole. Enough to judge health, not enough to work.',
+   'Brand mark, one sparkline, readiness bar, status lamp. Still no scene imagery.',
+   'The workspace is a single tile you can place, group and compare.',
+   'Roll-ups plus blocker count. Fourteen station summaries, no station internals.',
+   'Cached tile. Sparkline drawn from a seven-point series.', '#7ED6D0'],
+  ['L2', 'Window', 'One bay · looking in',
+   'The first rung with a picture. You can see what kind of work happens here.',
+   'A 16:10 still of the room, status lamp, readiness bar, title in-frame.',
+   'Bays sit in a grid you can scan; clicking promotes one to the viewport.',
+   'Station record: inputs held, gate state, routine cadence, feeds.',
+   'Pre-rendered still. Generated once, swapped when the station changes phase.', '#9BE0B8'],
+  ['L3', 'Room', 'One bay · full viewport',
+   'The room at working size. Characters legible, telemetry live, still a picture.',
+   '21:9 render with reticle, scanline, HUD plate and four system readouts.',
+   'You are inside one bay. Neighbours are adjacent, not visible.',
+   'Full station: every input, every step, every output, QC verdicts.',
+   'Pre-rendered still plus live overlay. Overlay updates without re-rendering.', '#EFCB7A'],
+  ['L4', 'Bench', 'One procedure · step by step',
+   'The work itself. Steps as executable rules, not illustration.',
+   'Step list, gate diagram, evidence thumbnails. Imagery becomes reference, not scene.',
+   'Depth replaces breadth: you move along a procedure, not across a floor.',
+   'Live records with history. Every change carries an author and a timestamp.',
+   'Computed on demand. No image generation at this rung.', '#C7DE7A'],
+  ['L5', 'Grain', 'One artefact · one frame',
+   'A single piece: this caption, this frame, this asset, this diff.',
+   'The artefact at full fidelity, with the five QC gates scored against it.',
+   'No spatial movement. You are at a leaf.',
+   'The artefact plus its lineage: which brief, which voice profile, which template.',
+   'Real-time. Predictive pass first, full pass on commit.', '#F2A8C0'],
+  ['L6', 'Source', 'The rule that made it',
+   'The generator behind the artefact: the template, the prompt, the reducer.',
+   'Parameters and their ranges. Nothing pictorial — this is the mould, not the cast.',
+   'Not a place. Reachable from any rung, returns you to the rung you came from.',
+   'Definitions only. Change one here and every rung above re-resolves.',
+   'Generative. Forward runs it, reverse infers it from an existing artefact.', '#8C8478']
+];
+
+const LAWS = [
+  ['One address, seven answers',
+   'Every object has a single stable address. A rung is not a different object — it is the same address answered at a different resolution. Nothing is duplicated to be shown coarsely.'],
+  ['No rung skips a direction',
+   'A rung is only real when all four directions have a stated budget. If Visual gets finer but Data stays coarse, the picture is lying — that is exactly the failure a rung boundary exists to prevent.'],
+  ['Traversal is symmetric',
+   'Down is procedural: run the rule, get the artefact. Up is generative: read the artefact, infer the rule. The same ladder both ways, so you can explore from a finished frame or invent from a bare parameter.']
+];
+
+const ADDRESS = 'aluzina / interiorismo / bay-10 / editorial-qc / gate-3 / piece-0184\n\n' +
+  'L0  ·  one amber dot in the constellation\n' +
+  'L1  ·  ALUZINA hull · 86% ready · 1 blocker\n' +
+  'L2  ·  bay 10 window · lamp running · 4/4 inputs\n' +
+  'L3  ·  the QC corridor, five gates, third one closed\n' +
+  'L4  ·  gate 3 · decision-and-why · rule and evidence\n' +
+  'L5  ·  piece 0184 · caption scored 74, below the floor\n' +
+  'L6  ·  the voice profile that scored it';
+
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      count: RUNGS.length + ' rungs · ' + DIRS.length + ' directions · ' + (RUNGS.length * DIRS.length) + ' budgets',
+      address: ADDRESS,
+      dirs: DIRS.map(([name, axis, tint, q]) => ({
+        name, axis, q,
+        dot: { width: '8px', height: '8px', borderRadius: '3px', flex: 'none', background: tint,
+          boxShadow: '0 0 10px ' + tint + '66' }
+      })),
+      rungs: RUNGS.map(([id, name, zoom, what, visual, spatial, data, render, tint]) => ({
+        id, name, zoom, what, visual, spatial, data, render,
+        card: { position: 'relative', background: '#151312', borderWidth: '1px', borderStyle: 'solid',
+          borderColor: '#322D26', borderRadius: '14px', overflow: 'hidden' },
+        rail: { position: 'absolute', left: 0, top: 0, bottom: 0, width: '3px', background: tint }
+      })),
+      laws: LAWS.map(([name, body]) => ({ name, body }))
+    };
+  }
+}
+</script>
+</body>
+</html>

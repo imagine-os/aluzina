@@ -7,7 +7,7 @@
 ## What exists
 
 - **Public website** at [aluzinaa.com](https://aluzinaa.com), built by the owner in Lovable (React + Tailwind/shadcn bundle, Spanish only). It stays hers; the hub links to it.
-- **ALUZINA Business OS prototype**: a Claude Design export (`ALUZINA Business OS prototype.zip`, 288,159,182 bytes) shared by Justin in Slack #aluzina on 2026-09-20. Not yet in the repo: it exceeds the 50 MB cap on files the agent can pull from Slack (D-006). Transfer path pending.
+- **ALUZINA Business OS prototype**: a Claude Design export (`ALUZINA Business OS prototype.zip`, 288,159,182 bytes) shared by Justin in Slack #aluzina on 2026-09-20. The Slack attachment exceeded the 50 MB cap the agent can pull (D-006); Justin's first Drive link was a different file (an Astra visual recap), his **second Drive link was the correct zip** and it is now in the repo at `apps/business-os/` (static bundle, D-007; live at https://imagine-os.github.io/aluzina/business-os/). Digest: `docs/reference/business-os-export.md`; the plan document set it came with: `docs/source/claude-design-export/plan.md`; the SELAV diagnostic PDF next to it.
 - **This repo** (`imagine-os/aluzina`): GitHub Pages enabled by Justin; intended as the monorepo for everything Aluzina.
 
 ## Requirements stated so far

@@ -1,9 +1,9 @@
 {
   "name": "aluzina",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Aluzina Business OS monorepo: hub, Claude Design prototype, docs.",
-  "//": "Root build assembles dist/ for GitHub Pages. Hub builds to dist/ (root of the site). When apps/business-os lands (D-003) append its build so it emits into dist/business-os/, e.g. \"build\": \"npm run build -w @aluzina/hub && npm run build -w @aluzina/business-os\".",
+  "//": "Root build assembles dist/ for GitHub Pages: the hub builds into dist/ (site root), then scripts/copy-static.mjs copies the static Claude Design bundle apps/business-os/ into dist/business-os/ and writes dist/.nojekyll (D-003, D-007). If the prototype is ever ported to a build step, replace the copy with `npm run build -w @aluzina/business-os` emitting into dist/business-os/.",
   "workspaces": [
     "apps/*"
   ],
@@ -12,11 +12,12 @@
   },
   "scripts": {
     "dev": "npm run dev -w @aluzina/hub",
-    "build": "npm run build -w @aluzina/hub",
+    "build": "npm run build -w @aluzina/hub && node scripts/copy-static.mjs",
     "preview": "npm run preview -w @aluzina/hub",
     "typecheck": "npm run typecheck -w @aluzina/hub",
     "tokens": "npm run tokens -w @aluzina/hub",
-    "screenshots": "node scripts/screenshots.mjs"
+    "screenshots": "node scripts/screenshots.mjs",
+    "copy:static": "node scripts/copy-static.mjs"
   },
   "devDependencies": {
     "playwright": "1.56.1"

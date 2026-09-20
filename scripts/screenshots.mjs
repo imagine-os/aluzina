@@ -1,5 +1,7 @@
 // Playwright captures of the hub into docs/screenshots/<CODE>/<lang>-<width>.jpg plus routes.json.
 // Usage: node scripts/screenshots.mjs [--base=https://imagine-os.github.io/aluzina/] [--out=docs/screenshots] [--shots=en-390,en-1280,en-3840,es-390]
+//        Static page (Business OS bundle): --static=business-os/ --code=BOS-01 [--lang-toggle="button:text-is('EN')"] [--wait=#dc-root]
+//        For static pages `es-*` shots click --lang-toggle after render (the bundle keeps its own language state).
 // Chromium is preinstalled at /opt/pw-browsers in our containers; never run `playwright install`.
 import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -16,6 +18,9 @@ const base = (args.base ?? 'http://localhost:4173/').replace(/\/?$/, '/');
 const outRoot = args.out ?? 'docs/screenshots';
 const code = args.code ?? 'HUB-01';
 const route = args.route ?? '/';
+const staticPath = args.static; // e.g. business-os/ -> captures base + staticPath instead of a hub hash route
+const langToggle = args['lang-toggle'];
+const waitFor = args.wait ?? (staticPath ? '#dc-root' : 'h1');
 const shots = (args.shots ?? 'en-390,en-1280,en-3840,es-390').split(',');
 const heights = { 390: 900, 1280: 900, 3840: 2160 };
 
@@ -46,17 +51,26 @@ for (const shot of shots) {
     [lang],
   );
   const page = await context.newPage();
-  await page.goto(`${base}#${route}`, { waitUntil: 'load', timeout: 60_000 });
-  await page.waitForSelector('h1', { timeout: 30_000 });
-  await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => {});
+  const target = staticPath ? `${base}${staticPath}` : `${base}#${route}`;
+  await page.goto(target, { waitUntil: 'load', timeout: 90_000 });
+  await page.waitForSelector(waitFor, { timeout: 60_000 });
+  if (staticPath) {
+    await page.waitForFunction((sel) => (document.querySelector(sel)?.textContent ?? '').trim().length > 50, waitFor, { timeout: 60_000 });
+  }
+  await page.waitForLoadState('networkidle', { timeout: 30_000 }).catch(() => {});
+  if (staticPath && lang === 'es' && langToggle) {
+    await page.locator(langToggle).first().click();
+    await page.waitForTimeout(600);
+  }
   await page.evaluate(() => document.fonts?.ready);
   const file = join(outDir, `${shot}.jpg`);
   await page.screenshot({ path: file, type: 'jpeg', quality: 80, fullPage: false });
   manifest ??= await page.evaluate(() => window.__aluzina ?? null);
+  if (staticPath) manifest ??= { static: true, url: page.url() };
   console.log(`shot ${file} (${width}x${height}, ${lang})`);
   await context.close();
 }
 
-writeFileSync(join(outDir, 'routes.json'), JSON.stringify({ capturedAt: new Date().toISOString(), base, code, shots, manifest }, null, 2) + '\n');
+writeFileSync(join(outDir, 'routes.json'), JSON.stringify({ capturedAt: new Date().toISOString(), base, code, route: staticPath ?? route, shots, manifest }, null, 2) + '\n');
 await browser.close();
 console.log(`wrote ${join(outDir, 'routes.json')}`);

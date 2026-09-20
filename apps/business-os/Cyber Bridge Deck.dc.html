@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="./vendor/fonts/instrument-plex-b.css" rel="stylesheet">
+<style>
+  body { margin: 0; background: #0D0C0B; }
+  a { color: #C9A85C; }
+  a:hover { color: #EFCB7A; }
+</style>
+</helmet>
+
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+  <section data-label="Title" data-screen-label="01" data-speaker-notes="The bridge is the frame: every station in the Business OS is a window you look through, not a form you fill in." style="width:100%;height:100%;background:#0D0C0B;color:#E8E3DA;font-family:'Instrument Sans',system-ui,sans-serif;display:flex;flex-direction:column;justify-content:center;padding:120px 130px;box-sizing:border-box;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 90% at 50% -10%,rgba(201,168,92,.16),transparent 60%),radial-gradient(80% 70% at 88% 110%,rgba(126,214,208,.10),transparent 60%)"></div>
+    <div style="position:relative">
+      <div style="display:flex;align-items:center;gap:18px;margin-bottom:38px">
+        <div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(150deg,#C9A85C,#7A5F1E);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:34px;color:#0D0C0B">A</div>
+        <div>
+          <div style="font-size:26px;font-weight:600;letter-spacing:.01em">ALUZINA</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;letter-spacing:.2em;text-transform:uppercase;color:#8C8478;margin-top:6px">Business OS · Bridge deck 01</div>
+        </div>
+      </div>
+      <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:132px;line-height:1;margin:0;color:#F4F1EC;max-width:22ch">The Cyber Bridge</h1>
+      <p style="margin:34px 0 0;max-width:60ch;font-size:32px;line-height:1.45;color:#CFC8BE">Fourteen stations as windows into a working world. You do not fill in a form — you look into a bay and see the work underway.</p>
+      <div style="display:flex;gap:16px;margin-top:52px;flex-wrap:wrap">
+        <span style="padding:12px 24px;border-radius:40px;background:#191715;border:1px solid #322D26;font-family:'IBM Plex Mono',monospace;font-size:20px;letter-spacing:.12em;text-transform:uppercase;color:#C9A85C">14 bays</span>
+        <span style="padding:12px 24px;border-radius:40px;background:#191715;border:1px solid #322D26;font-family:'IBM Plex Mono',monospace;font-size:20px;letter-spacing:.12em;text-transform:uppercase;color:#7ED6D0">7 vessels</span>
+        <span style="padding:12px 24px;border-radius:40px;background:#191715;border:1px solid #322D26;font-family:'IBM Plex Mono',monospace;font-size:20px;letter-spacing:.12em;text-transform:uppercase;color:#9BE0B8">6 depth layers</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Premise" data-screen-label="02" data-speaker-notes="The core move: a dashboard tells you a number. A window shows you the work. Same data, radically different legibility." style="width:100%;height:100%;background:#0D0C0B;color:#E8E3DA;font-family:'Instrument Sans',system-ui,sans-serif;display:flex;flex-direction:column;justify-content:center;padding:110px 130px;box-sizing:border-box">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:#8C8478;margin-bottom:26px">The premise</div>
+    <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:88px;line-height:1.08;margin:0 0 56px;color:#F4F1EC;max-width:28ch">Colour tells you nothing. A window tells you everything.</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+      <div style="background:#151312;border:1px solid #322D26;border-left:4px solid #F2A8C0;border-radius:20px;padding:38px 40px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:#F2A8C0;margin-bottom:20px">Before</div>
+        <div style="font-size:34px;font-weight:600;line-height:1.25;margin-bottom:18px;color:#F4F1EC">Fourteen identical cards</div>
+        <div style="font-size:25px;line-height:1.5;color:#8C8478">Only a tint separates Strategy from Editorial QC. You read every label to find anything, and nothing tells you what the work looks like.</div>
+      </div>
+      <div style="background:#151312;border:1px solid #322D26;border-left:4px solid #9BE0B8;border-radius:20px;padding:38px 40px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:#9BE0B8;margin-bottom:20px">After</div>
+        <div style="font-size:34px;font-weight:600;line-height:1.25;margin-bottom:18px;color:#F4F1EC">Fourteen lit rooms</div>
+        <div style="font-size:25px;line-height:1.5;color:#8C8478">Each bay shows characters mid-task on that station's real inputs and gates. You recognise the room before you read the word.</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Forward viewport" data-screen-label="03" data-speaker-notes="The main viewport is 21:9 with reticle corners, scanline and a live telemetry plate. Selecting any bay throws it here." style="width:100%;height:100%;background:#0D0C0B;color:#E8E3DA;font-family:'Instrument Sans',system-ui,sans-serif;display:flex;flex-direction:column;padding:88px 110px;box-sizing:border-box">
+    <div style="display:flex;align-items:baseline;gap:22px;margin-bottom:34px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:#8C8478">Forward viewport</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:.1em;color:#C9A85C;margin-left:auto">BAY 03 · STRATEGY</div>
+    </div>
+    <div style="flex:1;min-height:0;border-radius:24px;border:1px solid #4A4238;background:#151312;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.6)">
+      <div style="display:flex;align-items:center;gap:16px;padding:20px 30px;background:linear-gradient(180deg,#252119,#191715);border-bottom:1px solid #4A4238;flex:none">
+        <span style="display:flex;gap:10px">
+          <span style="width:16px;height:16px;border-radius:50%;background:#C9A85C"></span>
+          <span style="width:16px;height:16px;border-radius:50%;background:#3D372F"></span>
+          <span style="width:16px;height:16px;border-radius:50%;background:#3D372F"></span>
+        </span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:17px;letter-spacing:.18em;text-transform:uppercase;color:#8C8478">Bay 03 · viewport live</span>
+      </div>
+      <div style="flex:1;min-height:0;position:relative;background:#0D0C0B;display:flex;align-items:flex-end;padding:56px 60px">
+        <div style="position:absolute;inset:0;background:radial-gradient(120% 130% at 50% 35%,rgba(242,168,192,.16),transparent 62%),repeating-linear-gradient(0deg,rgba(13,12,11,.34) 0 2px,rgba(0,0,0,0) 2px 6px)"></div>
+        <div style="position:absolute;inset:28px;border:2px solid rgba(201,168,92,.26);border-radius:18px"></div>
+        <div style="position:relative;max-width:60ch">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+            <span style="width:14px;height:14px;border-radius:50%;background:#F2A8C0;box-shadow:0 0 16px #F2A8C0"></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:#B4AA9C">Identity</span>
+            <span style="font-size:19px;padding:5px 16px;border-radius:30px;color:#EFCB7A;box-shadow:inset 0 0 0 1px #EFCB7A">Running</span>
+          </div>
+          <div style="font-family:'Instrument Serif',serif;font-size:86px;line-height:1.02;color:#F4F1EC">Strategy</div>
+          <p style="margin:22px 0 0;font-size:27px;line-height:1.45;color:#CFC8BE">Confirms territories, guiding concept and thesis, then converts three routes into nine objectives.</p>
+        </div>
+      </div>
+      <div style="display:flex;border-top:1px solid #322D26;background:#111010;flex:none">
+        <div style="flex:1;padding:24px 30px;border-right:1px solid #232019">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#8C8478;margin-bottom:14px">Inputs held</div>
+          <div style="height:6px;border-radius:3px;background:#232019;overflow:hidden"><div style="height:100%;width:75%;background:#EFCB7A;border-radius:3px"></div></div>
+          <div style="font-size:22px;color:#CFC8BE;margin-top:14px">3 of 4 aboard</div>
+        </div>
+        <div style="flex:1;padding:24px 30px;border-right:1px solid #232019">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#8C8478;margin-bottom:14px">QC gates</div>
+          <div style="height:6px;border-radius:3px;background:#232019;overflow:hidden"><div style="height:100%;width:100%;background:#9BE0B8;border-radius:3px"></div></div>
+          <div style="font-size:22px;color:#CFC8BE;margin-top:14px">Gates clear</div>
+        </div>
+        <div style="flex:1;padding:24px 30px;border-right:1px solid #232019">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#8C8478;margin-bottom:14px">Routine</div>
+          <div style="height:6px;border-radius:3px;background:#232019;overflow:hidden"><div style="height:100%;width:68%;background:#EFCB7A;border-radius:3px"></div></div>
+          <div style="font-size:22px;color:#CFC8BE;margin-top:14px">Cycling now</div>
+        </div>
+        <div style="flex:1;padding:24px 30px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#8C8478;margin-bottom:14px">Feeds</div>
+          <div style="height:6px;border-radius:3px;background:#232019;overflow:hidden"><div style="height:100%;width:100%;background:#7ED6D0;border-radius:3px"></div></div>
+          <div style="font-size:22px;color:#CFC8BE;margin-top:14px">6 · 9 · 11</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Station bays" data-screen-label="04" data-speaker-notes="Fourteen bays with status lamps: online, running, standby, sealed. Sealed bays flicker so a blocker is visible from across the room." style="width:100%;height:100%;background:#0D0C0B;color:#E8E3DA;font-family:'Instrument Sans',system-ui,sans-serif;display:flex;flex-direction:column;padding:88px 110px;box-sizing:border-box">
+    <div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+      <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:72px;line-height:1;margin:0;color:#F4F1EC">Station bays</h2>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;color:#8C8478;margin-left:auto">2 online · 5 sealed · 14 total</div>
+    </div>
+    <p style="margin:0 0 40px;font-size:26px;color:#8C8478;max-width:74ch">One hull window per station. The lamp is the whole status language: online, running, standby, sealed.</p>
+    <div style="flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,1fr);grid-auto-rows:1fr;gap:20px">
+      <sc-for list="{{ bays }}" as="b" hint-placeholder-count="14">
+        <div style="{{ b.hull }}">
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:linear-gradient(180deg,#252119,#1B1917);border-bottom:1px solid #322D26;flex:none">
+            <span style="{{ b.lamp }}"></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.12em;color:#8C8478">{{ b.num }}</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#5E574E;margin-left:auto">{{ b.statusShort }}</span>
+          </div>
+          <div style="flex:1;min-height:0;position:relative;display:flex;align-items:flex-end;padding:18px">
+            <div style="{{ b.glow }}"></div>
+            <div style="position:relative;font-size:23px;font-weight:600;line-height:1.2;color:#F4F1EC">{{ b.title }}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:16px 18px;flex:none">
+            <div style="flex:1;height:5px;border-radius:3px;background:#232019;overflow:hidden"><div style="{{ b.bar }}"></div></div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:#8C8478">{{ b.have }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-label="Depth stack" data-screen-label="05" data-speaker-notes="Six layers sit between viewer and work. Toggling one changes what the window means — this is the layering system." style="width:100%;height:100%;background:#0D0C0B;color:#E8E3DA;font-family:'Instrument Sans',system-ui,sans-serif;display:flex;flex-direction:column;padding:88px 110px;box-sizing:border-box">
+    <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:72px;line-height:1;margin:0 0 16px;color:#F4F1EC">The depth stack</h2>
+    <p style="margin:0 0 46px;font-size:26px;color:#8C8478;max-width:74ch">Every window is six planes deep. Glass is what you touch; Hull decides whether you may open it at all.</p>
+    <div style="flex:1;min-height:0;display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ layers }}" as="l" hint-placeholder-count="6">
+        <div style="{{ l.row }}">
+          <div style="{{ l.rail }}"></div>
+          <div style="flex:none;width:92px;font-family:'IBM Plex Mono',monospace;font-size:22px;letter-spacing:.12em;color:#C9A85C">{{ l.z }}</div>
+          <div style="flex:none;width:300px;font-size:34px;font-weight:600;color:#F4F1EC">{{ l.name }}</div>
+          <div style="flex:1;min-width:0;font-size:25px;line-height:1.4;color:#8C8478">{{ l.sub }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-label="Fleet" data-screen-label="06" data-speaker-notes="Seven docked vessels. Manrique shows as sealed because membership scoping means you only see the organisations you belong to." style="width:100%;height:100%;background:#0D0C0B;color:#E8E3DA;font-family:'Instrument Sans',system-ui,sans-serif;display:flex;flex-direction:column;padding:88px 110px;box-sizing:border-box">
+    <div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+      <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:72px;line-height:1;margin:0;color:#F4F1EC">Docked fleet</h2>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;color:#8C8478;margin-left:auto">7 vessels · 1 sealed</div>
+    </div>
+    <p style="margin:0 0 44px;font-size:26px;color:#8C8478;max-width:74ch">The bridge belongs to one hull, but the dock holds the whole group. You only see the vessels you are aboard.</p>
+    <div style="flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr;gap:20px">
+      <sc-for list="{{ fleet }}" as="f" hint-placeholder-count="7">
+        <div style="{{ f.hull }}">
+          <div style="{{ f.tint }}"></div>
+          <div style="padding:26px 26px 24px;display:flex;flex-direction:column;gap:18px;height:100%;box-sizing:border-box">
+            <div style="display:flex;align-items:center;gap:16px">
+              <div style="{{ f.mark }}">{{ f.initials }}</div>
+              <div style="min-width:0;flex:1">
+                <div style="font-size:26px;font-weight:600;line-height:1.15;color:#F4F1EC">{{ f.name }}</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:#8C8478;margin-top:5px">{{ f.role }}</div>
+              </div>
+              <span style="{{ f.lamp }}"></span>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:14px">
+              <span style="font-family:'Instrument Serif',serif;font-size:40px;line-height:1;color:#EFCB7A">{{ f.mrr }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:17px;color:#8C8478">{{ f.bays }}</span>
+            </div>
+            <div style="font-size:20px;color:#8C8478;line-height:1.45;margin-top:auto">{{ f.note }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-label="Close" data-screen-label="07" data-speaker-notes="Next step: the 43-image generation brief fills every window, and the bridge stops being a diagram and becomes the interface." style="width:100%;height:100%;background:#0D0C0B;color:#E8E3DA;font-family:'Instrument Sans',system-ui,sans-serif;display:flex;flex-direction:column;justify-content:center;padding:120px 130px;box-sizing:border-box;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(100% 80% at 20% 100%,rgba(201,168,92,.16),transparent 60%)"></div>
+    <div style="position:relative">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:#8C8478;margin-bottom:28px">What lands next</div>
+      <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:104px;line-height:1.04;margin:0 0 44px;color:#F4F1EC;max-width:24ch">Forty-three windows, then it stops being a diagram</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1420px">
+        <div style="background:#151312;border:1px solid #322D26;border-radius:20px;padding:34px 32px">
+          <div style="font-family:'Instrument Serif',serif;font-size:56px;line-height:1;color:#EFCB7A">14</div>
+          <div style="font-size:24px;color:#CFC8BE;margin-top:16px;line-height:1.4">Station renders, one per bay, at 1600 × 1000</div>
+        </div>
+        <div style="background:#151312;border:1px solid #322D26;border-radius:20px;padding:34px 32px">
+          <div style="font-family:'Instrument Serif',serif;font-size:56px;line-height:1;color:#7ED6D0">29</div>
+          <div style="font-size:24px;color:#CFC8BE;margin-top:16px;line-height:1.4">Menu tiles, one per destination, portrait 4:5</div>
+        </div>
+        <div style="background:#151312;border:1px solid #322D26;border-radius:20px;padding:34px 32px">
+          <div style="font-family:'Instrument Serif',serif;font-size:56px;line-height:1;color:#9BE0B8">6</div>
+          <div style="font-size:24px;color:#CFC8BE;margin-top:16px;line-height:1.4">Depth layers, live-toggled per window</div>
+        </div>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;letter-spacing:.14em;text-transform:uppercase;color:#5E574E;margin-top:56px">Drop a render onto any window to bring that bay online</div>
+    </div>
+  </section>
+
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const T = { cyan:'#7ED6D0', lime:'#C7DE7A', pink:'#F2A8C0', mint:'#9BE0B8', lilac:'#C1B4E8', gold:'#EFCB7A' };
+const OK = '#9BE0B8', WARN = '#EFCB7A', BAD = '#F2A8C0';
+
+const BAYS = [
+  ['01','Brand & Tree',T.cyan,'done',6,6],
+  ['02','Diagnostic Import',T.lime,'done',2,2],
+  ['03','Strategy',T.pink,'active',3,4],
+  ['04','Voice & Language',T.lilac,'active',3,4],
+  ['05','Brand Design System',T.mint,'ready',2,4],
+  ['06','Surfaces',T.gold,'ready',4,6],
+  ['07','Technical Hub',T.cyan,'blocked',1,5],
+  ['08','Proof & Cases',T.lilac,'blocked',2,5],
+  ['09','Content Production',T.lime,'ready',5,6],
+  ['10','Editorial QC',T.pink,'ready',4,4],
+  ['11','Calendar & Distribution',T.mint,'blocked',2,4],
+  ['12','Allies & CRM',T.gold,'blocked',1,4],
+  ['13','Measurement & Scorecard',T.cyan,'blocked',1,4],
+  ['14','Operations Manual',T.lilac,'active',5,6]
+];
+
+const STATUS = { done: ['Online', OK], active: ['Running', WARN], ready: ['Standby', T.cyan], blocked: ['Sealed', BAD] };
+
+const LAYERS = [
+  ['z 0','Glass','Viewport chrome · reticle, corner marks, scanline','#8C8478'],
+  ['z 1','HUD','Readiness bars, status lamps, telemetry overlay','#EFCB7A'],
+  ['z 2','World','The render itself · characters mid-task','#7ED6D0'],
+  ['z 3','Data','Live records driving the scene: inputs, steps, outputs','#C7DE7A'],
+  ['z 4','Procedure','The station steps and QC gates as executable rules','#C1B4E8'],
+  ['z 5','Hull','Bay frame, ownership, who may open this window','#F2A8C0']
+];
+
+const FLEET = [
+  ['VirtuOS','VO','Umbrella','#C1B4E8',0,'9 bays','Holding · two studios under one hull','ok'],
+  ['Playset LLC','PL','Studio','#EFCB7A',96,'14 bays','Studio of record · three retained clients','ok'],
+  ['ALUZINA','AL','Client','#7ED6D0',42,'14 bays','Interiors · four sub-brand decks','ok'],
+  ['Santa María Campus','SM','Client','#C7DE7A',61,'11 bays','Campus · four venue brands aboard','ok'],
+  ['Between Gigs','BG','Client','#F2A8C0',18,'8 bays','Media · newsletter and podcast','warn'],
+  ['Hermes','HE','Independent','#9BE0B8',34,'9 bays','Independent · construction brand','ok'],
+  ['Manrique','MA','Independent','#5E574E',12,'6 bays','No access · hull sealed','off']
+];
+
+class Component extends DCLogic {
+  renderVals() {
+    const lamp = (color, big) => ({ width: big ? '14px' : '11px', height: big ? '14px' : '11px',
+      borderRadius: '50%', flex: 'none', background: color, boxShadow: '0 0 12px ' + color });
+
+    return {
+      bays: BAYS.map(([num, title, tint, st, have, need]) => ({
+        num: 'BAY ' + num, title, statusShort: STATUS[st][0], have: have + '/' + need,
+        lamp: lamp(STATUS[st][1]),
+        bar: { height: '100%', width: (have / need * 100) + '%', borderRadius: '3px', background: STATUS[st][1] },
+        glow: { position: 'absolute', inset: 0, background: 'linear-gradient(0deg,' + tint + '2E,transparent 62%)' },
+        hull: { display: 'flex', flexDirection: 'column', minHeight: 0, borderRadius: '16px',
+          overflow: 'hidden', background: '#151312', borderWidth: '1px', borderStyle: 'solid',
+          borderColor: st === 'blocked' ? '#4A2F38' : '#322D26' }
+      })),
+      layers: LAYERS.map(([z, name, sub, tint]) => ({
+        z, name, sub,
+        row: { position: 'relative', display: 'flex', alignItems: 'center', gap: '28px',
+          padding: '26px 34px 26px 46px', borderRadius: '16px', background: '#151312',
+          borderWidth: '1px', borderStyle: 'solid', borderColor: '#322D26' },
+        rail: { position: 'absolute', left: 0, top: 0, bottom: 0, width: '5px', background: tint }
+      })),
+      fleet: FLEET.map(([name, initials, role, tint, mrr, bays, note, st]) => ({
+        name, initials, role, note, bays,
+        mrr: mrr ? '$' + mrr + 'k' : '—',
+        lamp: lamp(st === 'ok' ? OK : st === 'warn' ? WARN : '#3D372F'),
+        tint: { height: '5px', background: tint, flex: 'none' },
+        mark: { width: '48px', height: '48px', borderRadius: '14px', flex: 'none', background: tint,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '19px',
+          fontWeight: 600, color: '#0D0C0B' },
+        hull: { display: 'flex', flexDirection: 'column', minHeight: 0, borderRadius: '18px',
+          overflow: 'hidden', background: '#151312', borderWidth: '1px', borderStyle: 'solid',
+          borderColor: '#322D26' }
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

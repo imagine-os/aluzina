@@ -4,29 +4,30 @@ Monorepo for **Aluzina**, an interior design studio in Medellín (neurointeriori
 
 **Live:** https://imagine-os.github.io/aluzina/ (GitHub Pages, deployed from `main` by `.github/workflows/pages.yml`; Pages source must be **GitHub Actions**). The hub at `/#/` opens every surface.
 
-**Status:** 0.1.0 (2026-09-20, changelog 0001): scaffold, HUB-01 hub, Pages deploy, docs tree. The Business OS prototype export (288 MB zip from Claude Design) is pending transfer (D-006).
+**Status:** 0.2.0 (2026-09-20, changelog 0003): hub (HUB-01) plus the **Business OS prototype** live at https://imagine-os.github.io/aluzina/business-os/ (Claude Design export served as a static bundle with a vendored runtime, BOS-01..BOS-06). Next: audit against the platform principles (build plan step 2).
 
 ## Layout
 
 | Path | What |
 | --- | --- |
 | `apps/hub/` | The hub (HUB-01): Vite 5 + React 18 + TypeScript strict, HashRouter, CSS tokens. Builds into repo-root `dist/`, the root of the Pages site. |
-| `apps/business-os/` | Where the **ALUZINA Business OS prototype** (Claude Design export) lands. Empty except its README until then; it will build into `dist/business-os/` (D-003). |
+| `apps/business-os/` | The **ALUZINA Business OS prototype** (Claude Design export, static `.dc.html` bundle, D-007) with its vendored runtime (`vendor/`, D-008) and URL-safe entry points (D-010). Copied into `dist/business-os/` by the root build. |
 | `docs/` | Everything documented. Start at [`docs/README.md`](docs/README.md). |
-| `scripts/` | Repo-level tooling (`screenshots.mjs`). |
+| `scripts/` | Repo-level tooling (`copy-static.mjs`, `screenshots.mjs`). |
 | `.github/workflows/pages.yml` | Build + deploy `dist/` to GitHub Pages on push to `main`. |
 
-npm workspaces (`apps/*`). Root `npm run build` assembles `dist/`; today that is the hub build, later `&& npm run build -w @aluzina/business-os` is appended so the prototype emits into `dist/business-os/` (see the `//` note in `package.json`).
+npm workspaces (`apps/*`). Root `npm run build` assembles `dist/`: the hub build (site root) then `scripts/copy-static.mjs` (prototype -> `dist/business-os/`, plus `.nojekyll`).
 
 ## Run
 
 ```
 npm install
 npm run dev          # hub at http://localhost:5173/#/
-npm run build        # tokens + tsc --noEmit + vite build -> dist/ (must be green before every push)
+npm run build        # hub: tokens + tsc --noEmit + vite build -> dist/; then copy-static -> dist/business-os/ (green before every push)
 npm run preview      # serve dist/ on :4173
 npm run typecheck
 npm run tokens       # apps/hub/src/design/tokens.ts -> src/styles/tokens.css
+npm run copy:static  # only the prototype copy
 npm run screenshots -- --base=https://imagine-os.github.io/aluzina/   # Playwright captures into docs/screenshots/HUB-01/
 ```
 
