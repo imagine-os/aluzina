@@ -18,7 +18,7 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 
 ## Doing
 
-- Step 0: watch the first Pages deploy; confirm https://imagine-os.github.io/aluzina/ returns 200; capture live screenshots into `docs/screenshots/HUB-01/` (Fable 5.1)
+- (nothing in flight; step 1 waits on the zip transfer, D-006)
 
 ## Done
 
@@ -26,3 +26,4 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 - Step 0: HUB-01 hub: EN/ES toggle, light/dark, dev mode, SpecChip + actions panel (Ctrl+.), Placeholder atom, tokens -> tokens.css with `--scale` bands, `window.__aluzina` manifest (Fable 5.1)
 - Step 0: Pages workflow (`.github/workflows/pages.yml`), build green locally (Fable 5.1)
 - Step 0: docs tree: README, principles, brief, build plan, decisions D-001..D-006, kanban, prompt 0001, changelog 0001, page template + HUB-01, surfaces (Fable 5.1)
+- Step 0: first Pages deploy green (run 35542778592), live at https://imagine-os.github.io/aluzina/ (HTTP 200); live screenshots 390 / 1280 / 3840 EN + 390 ES in `docs/screenshots/HUB-01/` (Fable 5.1)

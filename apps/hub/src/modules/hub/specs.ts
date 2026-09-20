@@ -28,6 +28,6 @@ export const hubSpec = defineSpec({
     { id: 'hub.toggleTheme', label: 'Toggle theme', intent: 'switch between light and dark' },
     { id: 'hub.toggleDevMode', label: 'Toggle developer mode', intent: 'turn developer mode on or off', permission: 'dev.tools' },
   ],
-  checkedAt: [],
+  checkedAt: [390, 1280, 3840],
   notes: ['Role switcher, demo simulator, canvas and plan viewer arrive in build plan step 4 (Dev tools card).'],
 });

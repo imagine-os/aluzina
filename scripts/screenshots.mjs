@@ -19,10 +19,13 @@ const route = args.route ?? '/';
 const shots = (args.shots ?? 'en-390,en-1280,en-3840,es-390').split(',');
 const heights = { 390: 900, 1280: 900, 3840: 2160 };
 
+// Prefer the preinstalled Chromium when present; override with PW_EXECUTABLE.
 const launchOpts = { headless: true };
-if (!process.env.PLAYWRIGHT_BROWSERS_PATH && existsSync('/opt/pw-browsers/chromium')) {
-  launchOpts.executablePath = '/opt/pw-browsers/chromium';
-}
+const preinstalled = process.env.PW_EXECUTABLE ?? '/opt/pw-browsers/chromium';
+if (existsSync(preinstalled)) launchOpts.executablePath = preinstalled;
+// Containers route outbound HTTPS through a proxy; Chromium does not read the env on its own.
+const proxy = process.env.HTTPS_PROXY ?? process.env.https_proxy;
+if (proxy && !base.startsWith('http://localhost')) launchOpts.proxy = { server: proxy };
 
 const browser = await chromium.launch(launchOpts);
 const outDir = join(outRoot, code);
@@ -43,8 +46,9 @@ for (const shot of shots) {
     [lang],
   );
   const page = await context.newPage();
-  await page.goto(`${base}#${route}`, { waitUntil: 'networkidle' });
-  await page.waitForSelector('h1');
+  await page.goto(`${base}#${route}`, { waitUntil: 'load', timeout: 60_000 });
+  await page.waitForSelector('h1', { timeout: 30_000 });
+  await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => {});
   await page.evaluate(() => document.fonts?.ready);
   const file = join(outDir, `${shot}.jpg`);
   await page.screenshot({ path: file, type: 'jpeg', quality: 80, fullPage: false });

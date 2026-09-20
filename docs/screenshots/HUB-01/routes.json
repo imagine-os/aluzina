@@ -1,0 +1,83 @@
+{
+  "capturedAt": "2026-09-20T22:52:32.483Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "HUB-01",
+  "shots": [
+    "en-390",
+    "en-1280",
+    "en-3840",
+    "es-390"
+  ],
+  "manifest": {
+    "routes": [
+      {
+        "path": "/",
+        "code": "HUB-01",
+        "surface": "hub",
+        "status": "built",
+        "spec": {
+          "code": "HUB-01",
+          "name": "Hub",
+          "purpose": "Entry point to every surface of the Aluzina system; language, theme and dev-mode controls.",
+          "surface": "hub",
+          "layout": [
+            "HubHeader",
+            "Title + subtitle",
+            "Surface card grid (7 cards)",
+            "Footer (version, repo link, dev hint)"
+          ],
+          "data": [],
+          "roles": [
+            "public"
+          ],
+          "logic": [
+            "Live surfaces render as links; planned surfaces render through Placeholder (P-09).",
+            "Language, theme and dev mode persist in localStorage (aluzina.lang / aluzina.theme / aluzina.devMode).",
+            "Ctrl+. toggles the dev panel when dev mode is on."
+          ],
+          "components": [
+            "HubHeader",
+            "ToggleButton",
+            "SurfaceCard",
+            "Placeholder",
+            "Toast"
+          ],
+          "actions": [
+            {
+              "id": "hub.openSurface",
+              "label": "Open surface",
+              "intent": "open the {surface}",
+              "params": {
+                "surface": "enum:business-os|website|customer|staff|docs|manual|dev"
+              }
+            },
+            {
+              "id": "hub.setLang",
+              "label": "Set language",
+              "intent": "switch the language to {lang}",
+              "params": {
+                "lang": "enum:en|es"
+              }
+            },
+            {
+              "id": "hub.toggleTheme",
+              "label": "Toggle theme",
+              "intent": "switch between light and dark"
+            },
+            {
+              "id": "hub.toggleDevMode",
+              "label": "Toggle developer mode",
+              "intent": "turn developer mode on or off",
+              "permission": "dev.tools"
+            }
+          ],
+          "checkedAt": [],
+          "notes": [
+            "Role switcher, demo simulator, canvas and plan viewer arrive in build plan step 4 (Dev tools card)."
+          ]
+        }
+      }
+    ],
+    "version": "0.1.0"
+  }
+}

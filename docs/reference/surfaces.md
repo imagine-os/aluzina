@@ -44,7 +44,7 @@ Declared only: no actions bus runs them yet (section 2.1).
 | `npm run preview` | serve `dist/` on :4173 | |
 | `npm run typecheck` | `tsc --noEmit` in the hub | |
 | `npm run tokens` | `apps/hub/src/design/tokens.ts` -> `apps/hub/src/styles/tokens.css` (`node --experimental-strip-types scripts/gen-tokens.mjs`) | |
-| `npm run screenshots` | `node scripts/screenshots.mjs`: Playwright captures into `docs/screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json` | `-- --base=<url> --out=docs/screenshots --code=HUB-01 --route=/ --shots=en-390,en-1280,en-3840,es-390`; Chromium from `/opt/pw-browsers` |
+| `npm run screenshots` | `node scripts/screenshots.mjs`: Playwright captures into `docs/screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json` | `-- --base=<url> --out=docs/screenshots --code=HUB-01 --route=/ --shots=en-390,en-1280,en-3840,es-390`; env `PW_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` honoured for non-localhost bases; `playwright` pinned to 1.56.1 (Chromium 1194) |
 
 ### 1.5 Data provider
 
@@ -79,3 +79,4 @@ Through the data provider seam (step 7 / 8).
 ## 3. Change log of this file
 
 - 2026-09-20 (prompt 0001): initial version.
+- 2026-09-20 (changelog 0002): `npm run screenshots` flags (`PW_EXECUTABLE`, proxy), playwright pin.
