@@ -1,0 +1,331 @@
+/* Builder tools (D-05 / D-07 / D-08). Tokens only: no raw colours, sizes in rem so --scale carries to 4K (P-01). */
+
+.tools-note {
+  margin: 0 0 var(--space-4);
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  max-width: 80ch;
+}
+
+.tools-muted {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.tools-h4 {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+.tools-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.tools-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: var(--space-1);
+  font-size: 0.9375rem;
+}
+
+.tools-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.tools-detail {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tools-detail__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+/* ---------- D-05 plan viewer ---------- */
+
+.tools-board {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.tools-board__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.tools-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  align-items: center;
+}
+
+.tools-timeline {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.tools-timeline__stage {
+  position: relative;
+  overflow: auto;
+  max-height: min(70vh, 56rem);
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+
+.tools-timeline__arrows {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.tools-timeline__arrows path {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 2;
+}
+
+.tools-lane {
+  position: relative;
+  padding: var(--space-2) 0;
+  border-top: 1px dashed var(--color-border);
+}
+
+.tools-lane:first-of-type {
+  border-top: 0;
+}
+
+.tools-lane__title {
+  position: sticky;
+  left: 0;
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.tools-lane__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tools-lane__row {
+  display: grid;
+  grid-template-columns: repeat(var(--plan-depths, 1), minmax(14rem, 1fr));
+  min-width: 0;
+}
+
+.tools-bar {
+  grid-column: calc(var(--plan-depth, 0) + 1);
+  display: grid;
+  gap: 0.125rem;
+  text-align: start;
+  min-height: var(--target);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-left: 0.25rem solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.tools-bar:hover {
+  background: var(--color-surface-raised);
+}
+
+.tools-bar__title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.tools-bar__meta,
+.tools-bar__deps {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.tools-bar--done { border-left-color: var(--color-success); }
+.tools-bar--doing { border-left-color: var(--color-accent); }
+.tools-bar--next { border-left-color: var(--color-focus); }
+.tools-bar--backlog { border-left-color: var(--color-border); }
+
+@media (max-width: 767px) {
+  /* No arrows and no depth columns on a phone: the depth and the dependencies are text on every bar. */
+  .tools-timeline__arrows { display: none; }
+  .tools-lane__row { grid-template-columns: 1fr; }
+  .tools-bar { grid-column: 1; }
+}
+
+/* ---------- D-07 canvas ---------- */
+
+.tools-zoom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.tools-zoom__value {
+  min-width: 6rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9375rem;
+}
+
+.tools-zoom__hint {
+  flex: 1 1 18rem;
+  margin: 0;
+}
+
+.tools-canvas {
+  overflow: auto;
+  max-height: min(72vh, 64rem);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+
+.tools-canvas__inner {
+  /* The grid is laid out at 100% / zoom and scaled back, so the stage never scrolls sideways (P-01). */
+  width: calc(100% / var(--canvas-zoom, 1));
+  transform: scale(var(--canvas-zoom, 1));
+  transform-origin: top left;
+  display: grid;
+  gap: var(--space-5);
+}
+
+.tools-canvas__group-title {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.tools-canvas__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+}
+
+.tools-canvas__grid > li {
+  min-width: 0;
+}
+
+/* ---------- D-08 demo simulator ---------- */
+
+.tools-sim__controls {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  align-items: end;
+  margin-bottom: var(--space-4);
+}
+
+.tools-sim__sync {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.tools-sim__presets {
+  margin-bottom: var(--space-3);
+}
+
+.tools-sim__preset-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tools-sim__frames {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 1024px) {
+  .tools-sim__frames {
+    grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.tools-frame {
+  min-width: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tools-frame__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.tools-frame__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  flex: 0 0 auto;
+}
+
+.tools-frame__head .tools-muted {
+  flex: 1 1 auto;
+}
+
+.tools-frame__box {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.tools-frame__scaler {
+  transform-origin: top left;
+}
+
+.tools-frame__iframe {
+  display: block;
+  border: 0;
+  background: var(--color-bg);
+}
