@@ -1,0 +1,49 @@
+{
+  "username": "aluzina.espacios",
+  "profile_url": "https://www.instagram.com/aluzina.espacios/",
+  "captured_at": "2026-09-21T04:10:33Z",
+  "capture_status": "NOT_CAPTURED",
+  "capture_status_detail": "No profile data could be retrieved from Instagram or any public mirror without logging in. Every field below that is null was not observed; none of it is fabricated. See README.md for the per-route HTTP evidence.",
+  "full_name": null,
+  "biography": null,
+  "external_urls": [],
+  "follower_count": null,
+  "following_count": null,
+  "post_count": null,
+  "is_business": null,
+  "category": null,
+  "is_private": null,
+  "is_verified": null,
+  "profile_pic_url": null,
+  "profile_pic_local": null,
+  "username_resolution_evidence": {
+    "summary": "Instagram's own server-rendered HTML shell for /aluzina.espacios/ (fetched unauthenticated, HTTP 200, 626 KB, 2026-09-21T04:01Z) carries polarisRouteConfig.pageID = 'httpErrorPage', root component 'PolarisErrorRoot', props page_type 'PROFILE' and show_lox_redesigned_404_page = true. That is the shell Instagram serves for a profile URL it cannot resolve. A same-session control fetch of a known-live profile could not be completed because Instagram began answering 429 to every request from this egress (see README). Treat 'username does not exist / was renamed' as the leading but not fully confirmed explanation.",
+    "instagram_shell_pageID": "httpErrorPage",
+    "instagram_shell_root": "PolarisErrorRoot",
+    "mirror_insta_stories_viewer_com": "Page for aluzina.espacios rendered 0 Posts / 0 Followers / 0 Following and the string 'An account with this login does not exist' (the page also contains its other generic error strings, so it is weak evidence on its own).",
+    "search_engines": "WebSearch (two queries) and a Bing \"aluzina.espacios\" site:instagram.com query returned no instagram.com/aluzina.espacios result (Bing returned 7 unrelated non-instagram pages). DuckDuckGo answered with a bot-challenge page (HTTP 202), no data. All Instagram results WebSearch returned for the company point to instagram.com/aluzinaa.",
+    "company_website": "https://aluzinaa.com/ links only to https://www.instagram.com/aluzinaa/ (link texts 'Síguenos', 'Ver Instagram'); see bio_link_site.json.",
+    "repo": "/workspace/aluzina README and seed data name the public site aluzinaa.com and the Instagram channel but do not mention the handle aluzina.espacios."
+  },
+  "likely_actual_account": {
+    "username": "aluzinaa",
+    "url": "https://www.instagram.com/aluzinaa/",
+    "note": "NOT captured either (Instagram answered 429 to the WebFetch and curl attempts). Figures below are search-engine snippet text only, unverified against Instagram, and may be stale.",
+    "snippet_full_name": "ALUZINA",
+    "snippet_follower_count_text": "21K followers",
+    "snippet_following_count_text": "2,903 following",
+    "snippet_post_count_text": "450 posts",
+    "snippet_sources": [
+      "https://www.instagram.com/aluzinaa/ (search-result title 'ALUZINA (@aluzinaa) • Instagram photos and videos')",
+      "https://fi.pinterest.com/pin/766034217862322077/ (pin titled 'A L U Z I N A (@aluzinaa) • Fotos y vídeos de Instagram')",
+      "https://m.facebook.com/aluzinaa/photos/... (Facebook post text references instagram.com/aluzinaa)"
+    ]
+  },
+  "related_public_pages": {
+    "website": "https://aluzinaa.com/",
+    "facebook": "https://www.facebook.com/aluzinaa/ (title in search results: 'Aluzina Espacios | Medellín'; direct fetch redirected to Facebook login)",
+    "linkedin": "https://www.linkedin.com/company/aluzina-universo-del-dise%C3%B1o (from search results; not fetched)",
+    "email_from_website": "espacio@aluzinaa.com",
+    "phone_from_website": "+57 310 390 6773"
+  }
+}

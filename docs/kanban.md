@@ -36,6 +36,7 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 
 ## Doing
 
+- Social intake (Instagram): first public capture blocked by login wall / 429; handle question and Instagram data export requested from Justin in #social-scraping; retry against @aluzinaa pending (Fable 5.1; changelog 0012, D-032)
 - Live screenshots of the 33 portal pages at 390 / 1280 EN (+ 1280 ES per dashboard) after the 0007 deploy (Fable 5.1) — in progress
 - Step 2: audit the export against P-01..P-15: en/es toggle, responsive matrix, inputs, placeholders, actions registry; write `docs/reference/business-os-audit.md` (Fable 5.1, Sonnet 5) — next
 

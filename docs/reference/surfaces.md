@@ -217,3 +217,4 @@ Realtime and presence exist as the mock seam since 0008 (D-023): `subscribe` alr
 - 2026-09-20 (changelog 0004): screenshot flags `--wait`, exact-text `--lang-toggle` example.
 - 2026-09-20 (changelog 0005): `npm run thumbs` (1.4) and the `thumbs/manifest.json` contract (1.4b).
 - 2026-09-20 (changelog 0003): static Business OS routes (1.1b) with the `?embed=1&screen=` contract, `hub.openPrototypePage`, `npm run copy:static`, build step, screenshot `--static` / `--lang-toggle` flags.
+- 2026-09-21 (changelog 0012): no surface change; social intake documented, capture scripts kept in Slack session scratch, not in repo.
