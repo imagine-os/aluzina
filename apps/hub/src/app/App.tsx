@@ -20,7 +20,7 @@ export function App() {
         <SessionProvider>
           <DataContextProvider>
             <RoutesProvider routes={routes}>
-              <HashRouter>
+              <HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                 <Routes>
                   {routes.map((r) => (
                     <Route

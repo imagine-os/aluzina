@@ -11,6 +11,15 @@
   border-radius: inherit;
 }
 
+/* Wrapper mode (D-019): the child control is the target; the wrapper only positions tooltip and badge. */
+.placeholder--bare {
+  display: inline-block;
+  width: auto;
+  min-height: 0;
+  cursor: default;
+  vertical-align: middle;
+}
+
 .placeholder__badge {
   display: none;
   position: absolute;
@@ -25,13 +34,24 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   pointer-events: none;
+  z-index: 1;
 }
 
+.placeholder--bare .placeholder__badge {
+  top: auto;
+  bottom: calc(100% - 0.5rem);
+  right: -0.25rem;
+}
+
+/*
+ * Tooltip: display:none while hidden so it never counts toward scrollWidth (it used to widen pages
+ * 40-90 px at >= 1280); anchored to the trigger's end edge so it cannot extend past the viewport.
+ */
 .placeholder__tip {
+  display: none;
   position: absolute;
-  left: 50%;
+  right: 0;
   bottom: calc(100% + var(--space-2));
-  transform: translateX(-50%);
   z-index: 30;
   width: max-content;
   max-width: min(22rem, 90vw);
@@ -41,18 +61,16 @@
   color: var(--color-primary-text);
   font-size: 0.875rem;
   line-height: 1.4;
-  text-align: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 120ms ease;
+  text-align: start;
   pointer-events: none;
+  white-space: normal;
 }
 
 /* Shown on hover AND focus (nothing hover-only, P-03); tap gives the toast. */
 .placeholder:hover .placeholder__tip,
-.placeholder:focus .placeholder__tip {
-  opacity: 1;
-  visibility: visible;
+.placeholder:focus .placeholder__tip,
+.placeholder:focus-within .placeholder__tip {
+  display: block;
 }
 
 /* Dev mode: marker always visible (P-09). */

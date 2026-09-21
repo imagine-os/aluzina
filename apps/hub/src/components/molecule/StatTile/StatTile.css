@@ -1,4 +1,5 @@
 .stat {
+  container-type: inline-size;
   display: grid;
   gap: var(--space-1);
   align-content: start;
@@ -41,10 +42,15 @@
 
 .stat__value {
   font-family: var(--font-display);
-  font-size: 2rem;
+  /* Never split a number (COP 60,500,000): break at spaces only, scale the type to the tile, ellipsis as last resort. */
+  font-size: clamp(1.25rem, 11cqi, 2rem);
   font-weight: 600;
   line-height: 1.1;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .stat__hint {
