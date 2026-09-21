@@ -13,7 +13,7 @@
 
 .md__h {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: var(--weight-bold);
   line-height: 1.25;
   margin-top: var(--space-2);
 }
@@ -37,10 +37,10 @@
 }
 
 .md__task--done { color: var(--color-text-muted); text-decoration: line-through; }
-.md__box { flex: none; color: var(--color-accent); }
+.md__box { flex: none; color: var(--color-metal-text); }
 
 .md blockquote {
-  border-left: 3px solid var(--color-accent);
+  border-left: 2px solid var(--metal-base);
   padding: var(--space-2) var(--space-4);
   background: var(--color-surface-raised);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -69,13 +69,13 @@
 }
 
 .md a {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-decoration: underline;
   text-underline-offset: 0.15em;
   min-height: 0;
 }
 
-.md hr { border: 0; border-top: 1px solid var(--color-border); }
+.md hr { border: 0; border-top: var(--hairline) solid var(--color-hairline); }
 
 .md__table-wrap { overflow-x: auto; }
 
@@ -95,7 +95,9 @@
 
 .md__table th {
   font-size: 0.75rem;
+  font-weight: var(--weight-medium);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-caps);
   color: var(--color-text-muted);
+  border-bottom-color: var(--color-hairline);
 }

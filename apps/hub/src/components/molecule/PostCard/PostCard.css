@@ -13,7 +13,7 @@
   cursor: pointer;
 }
 
-.pcard:hover { border-color: var(--color-text-muted); }
+.pcard:hover { border-color: var(--metal-base); }
 .pcard--pinned { background: var(--color-surface-raised); }
 
 .pcard__top {
@@ -24,7 +24,7 @@
   min-width: 0;
 }
 
-.pcard__pin { color: var(--color-accent); font-size: 1rem; }
+.pcard__pin { color: var(--color-metal-text); font-size: 1rem; }
 
 .pcard__url {
   font-size: 0.8125rem;
@@ -38,7 +38,7 @@
 .pcard__title {
   font-family: var(--font-display);
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: var(--weight-bold);
   line-height: 1.3;
   overflow-wrap: anywhere;
 }
@@ -64,7 +64,7 @@
 
 .pcard__author { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--color-text); }
 .pcard__tags { display: inline-flex; flex-wrap: wrap; gap: var(--space-2); }
-.pcard__tag { color: var(--color-accent); font-weight: 700; }
+.pcard__tag { color: var(--color-accent-text); font-weight: var(--weight-bold); }
 
 @media (min-width: 1920px) {
   .pcard__title { font-size: 1.25rem; }

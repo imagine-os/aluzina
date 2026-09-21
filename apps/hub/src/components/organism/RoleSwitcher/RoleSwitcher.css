@@ -16,8 +16,10 @@
 }
 
 .role-switcher--compact .field__label {
+  font-family: var(--font-display);
   font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--color-text-muted);
 }

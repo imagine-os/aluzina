@@ -11,7 +11,7 @@
   background: var(--color-surface);
   color: var(--color-text);
   font: inherit;
-  font-weight: 500;
+  font-weight: var(--weight-medium);
   font-size: 1rem;
   line-height: 1.2;
   text-decoration: none;
@@ -21,7 +21,8 @@
 }
 
 .btn:hover:not(:disabled) {
-  border-color: var(--color-accent);
+  border-color: var(--metal-base);
+  background: var(--color-surface-raised);
 }
 
 .btn:disabled {
@@ -30,14 +31,45 @@
 }
 
 .btn--primary {
+  position: relative;
+  overflow: hidden;
   background: var(--color-primary);
   color: var(--color-primary-text);
   border-color: var(--color-primary);
 }
 
 .btn--primary:hover:not(:disabled) {
-  border-color: var(--color-accent);
-  background: color-mix(in srgb, var(--color-primary) 88%, var(--color-accent));
+  border-color: var(--metal-base);
+  background: color-mix(in srgb, var(--color-primary) 86%, var(--metal-base));
+}
+
+/* Sheen: one soft metal highlight sweeps the ink button on hover (decorative; the colour shift above is the affordance). */
+.btn--primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 32%, color-mix(in srgb, var(--metal-highlight) 32%, transparent) 50%, transparent 68%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn--primary:hover:not(:disabled)::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn--primary::after {
+    transform: translateX(-100%);
+  }
+
+  .btn--primary:hover:not(:disabled)::after {
+    animation: btn-sheen 1.4s ease-out 1 forwards;
+  }
+
+  @keyframes btn-sheen {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
 }
 
 .btn--ghost {
@@ -46,12 +78,18 @@
 }
 
 .btn--ghost:hover:not(:disabled) {
+  border-color: transparent;
   background: var(--color-surface-raised);
 }
 
 .btn--danger {
   color: var(--color-danger);
   border-color: var(--color-danger);
+}
+
+.btn--danger:hover:not(:disabled) {
+  border-color: var(--color-danger);
+  background: var(--color-danger-soft);
 }
 
 .btn--sm {

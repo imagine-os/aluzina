@@ -1,0 +1,473 @@
+/*
+ * Design system pages (D-12, D-10, D-13). Tokens only: the pages that document the system must be
+ * built out of it. The manual's rhythm is a gold hairline, a wide-tracked caption, then the plates.
+ */
+.ds-page {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+  margin-top: var(--space-4);
+}
+
+.ds-page > * {
+  min-width: 0;
+}
+
+.ds-section {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.ds-section__eyebrow {
+  margin: var(--space-4) 0 0;
+  color: var(--color-metal-text);
+}
+
+.ds-lede {
+  max-width: 54rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.ds-note {
+  max-width: 54rem;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.ds-source {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  margin: 0 0 var(--space-6);
+}
+
+.ds-muted {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+/* Plates: the framed stages the manual prints its assets on. */
+.ds-plate {
+  margin: 0;
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.ds-plate__stage {
+  display: grid;
+  place-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  min-height: 8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.ds-plate__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.ds-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.ds-grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
+
+.ds-grid--4 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+
+.ds-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.ds-row > .ds-plate {
+  flex: 1 1 10rem;
+}
+
+.ds-row--glyphs > .ds-plate {
+  flex: 0 1 9rem;
+}
+
+/* A forced-theme tile: tokens.css redeclares every --color-* under [data-theme]. */
+.ds-tile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  width: 100%;
+  min-height: 7rem;
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.ds-tile--wide {
+  justify-content: flex-start;
+}
+
+.ds-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.ds-list--gaps {
+  padding-left: 1.25rem;
+}
+
+.ds-house {
+  font-style: normal;
+  color: var(--color-metal-text);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+}
+
+.ds-notes {
+  list-style: none;
+  padding-left: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.ds-notes li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.ds-dot {
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+}
+
+/* Colour plate: the manual's rotated diamond over its print data. */
+.ds-swatch .ds-diamond {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: 1rem auto 1.75rem;
+  transform: rotate(45deg);
+  border-radius: 0.125rem;
+}
+
+.ds-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ds-controls__label {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+}
+
+/* Shader and gradient bands. The canvas needs a real height, so the band sets one. */
+.ds-band {
+  border-radius: var(--radius-lg);
+  min-height: 8rem;
+  overflow: hidden;
+}
+
+.ds-band--css {
+  display: block;
+}
+
+.ds-band__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  min-height: 8rem;
+}
+
+.ds-on-ink {
+  color: var(--brand-ink);
+}
+
+.ds-gradient {
+  display: block;
+  width: 100%;
+  height: 6rem;
+  border-radius: var(--radius-md);
+}
+
+.ds-square {
+  width: 100%;
+  min-height: 8rem;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+}
+
+.ds-pill {
+  width: 100%;
+  min-height: 3.5rem;
+  border-radius: var(--radius-pill);
+  display: grid;
+}
+
+.ds-pill__label {
+  display: grid;
+  place-items: center;
+  min-height: 3.5rem;
+  color: var(--brand-ink);
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-caps);
+  font-size: 0.875rem;
+}
+
+.ds-texture {
+  display: block;
+  width: 100%;
+  height: 8rem;
+  border-radius: var(--radius-md);
+}
+
+.ds-circle {
+  display: block;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+}
+
+.ds-circle--outline {
+  border: 2px solid var(--color-metal-text);
+  background: transparent;
+}
+
+/* Typography plates */
+.ds-specimen {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3.5vw, 2rem);
+  font-weight: var(--weight-light);
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
+  margin: 0 0 var(--space-4);
+}
+
+.ds-weights {
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+}
+
+.ds-weights__num {
+  display: inline-block;
+  min-width: 10rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-regular);
+  color: var(--color-text-muted);
+}
+
+.ds-sample-heading {
+  margin: var(--space-2) 0;
+}
+
+.ds-display {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: var(--weight-black);
+  margin: 0;
+  text-align: center;
+}
+
+.ds-glyph-name {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-caps);
+}
+
+/* Light / dark side by side */
+.ds-theme {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  color: var(--color-text);
+  overflow: hidden;
+}
+
+.ds-theme__inner {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.ds-theme__body {
+  margin: var(--space-3) 0;
+}
+
+/* D-10 tables and chips */
+.ds-token,
+.ds-cell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.ds-cell {
+  align-items: center;
+}
+
+.ds-ratios {
+  display: grid;
+  gap: 0.125rem;
+  font-size: 0.75rem;
+}
+
+.ds-ratios__row {
+  display: flex;
+  gap: var(--space-1);
+  align-items: baseline;
+}
+
+.ds-chip {
+  display: inline-block;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.ds-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-3);
+}
+
+.ds-chips li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ds-chips li > span {
+  display: grid;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.ds-boxes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.ds-boxes li {
+  display: grid;
+  gap: var(--space-1);
+  justify-items: center;
+  font-size: 0.8125rem;
+}
+
+.ds-box {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+}
+
+.ds-box--shadow {
+  background: var(--color-surface);
+  border-color: transparent;
+}
+
+.ds-bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.ds-bars li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ds-bars li > code:first-child {
+  min-width: 7rem;
+}
+
+.ds-bar {
+  display: block;
+  height: 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  flex: none;
+}
+
+@media (min-width: 1920px) {
+  .ds-grid--4 {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  }
+}
+
+/* Ink is the only text colour on a metal or iridescent surface; .eyebrow's muted colour must not win. */
+.ds-band__inner .eyebrow,
+.ds-band__inner .ds-on-ink {
+  color: var(--brand-ink);
+}
+
+/*
+ * The marks letterbox instead of clipping when a tile is narrower than the wordmark (preserveAspectRatio),
+ * and drop a size band on phones so they still fill the plate.
+ */
+.ds-tile .brand-mark,
+.ds-band__inner .brand-mark,
+.ds-plate__stage .brand-mark {
+  max-width: 100%;
+}
+
+.ds-tile .brand-mark__svg,
+.ds-band__inner .brand-mark__svg,
+.ds-plate__stage .brand-mark__svg {
+  max-width: 100%;
+}
+
+@media (max-width: 1023px) {
+  .ds-tile .brand-mark--lg,
+  .ds-band__inner .brand-mark--lg {
+    --brand-mark-h: 2.25rem;
+  }
+}

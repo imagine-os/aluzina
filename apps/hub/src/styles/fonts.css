@@ -1,0 +1,42 @@
+/*
+ * DIN Round Pro (the brand family, docs/source/brand-kit/extraction.md). The woff2 files are
+ * licensed and NOT in the repo: drop them into apps/hub/public/fonts/ with these exact names
+ * (see public/fonts/README.md) and the app picks them up. Until then every rule falls through
+ * to Rubik (Google Fonts, loaded in index.html) and then system-ui via --font-sans.
+ * `font-display: swap` keeps text visible while the file loads or 404s.
+ */
+@font-face {
+  font-family: 'DIN Round Pro';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/DINRoundPro-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DIN Round Pro';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/DINRoundPro-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DIN Round Pro';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/DINRoundPro-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DIN Round Pro';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/DINRoundPro-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DIN Round Pro';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/DINRoundPro-Black.woff2') format('woff2');
+}

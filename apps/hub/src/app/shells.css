@@ -39,7 +39,7 @@
   gap: var(--space-3);
   min-height: 4rem;
   padding: var(--space-2) var(--space-4);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: var(--hairline) solid var(--color-hairline);
   background: var(--color-surface);
 }
 
@@ -48,29 +48,23 @@
 }
 
 .dshell__brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
   min-height: var(--target);
   min-width: var(--target);
+  padding-inline: var(--space-1);
+  border-radius: var(--radius-sm);
   color: inherit;
   text-decoration: none;
 }
 
-.dshell__mark {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, var(--color-accent-soft), var(--color-accent) 70%);
+/* The wordmark is the brand: metal on light, iridescent on dark (set in ShellBrand). */
+.dshell__brand .brand-mark {
   flex: none;
 }
 
-.dshell__brand-name {
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 1.125rem;
+.dshell__brand-mono {
+  display: none;
 }
 
 .dshell__portal {
@@ -78,7 +72,7 @@
   color: var(--color-text-muted);
   white-space: nowrap;
   padding-left: var(--space-3);
-  border-left: 1px solid var(--color-border);
+  border-left: var(--hairline) solid var(--color-hairline);
 }
 
 .dshell__role {
@@ -116,9 +110,23 @@
   align-self: start;
   max-height: calc(100dvh - 4rem);
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   padding: var(--space-4) var(--space-3);
-  border-right: 1px solid var(--color-border);
+  border-right: var(--hairline) solid var(--color-hairline);
   background: var(--color-bg);
+}
+
+/* Sparkle tile at the foot of the sidebar: decorative, in flow after the links, so it never sits under text. */
+.dshell__side-texture {
+  display: block;
+  flex: none;
+  height: 7rem;
+  margin-top: auto;
+  padding-top: var(--space-6);
+  opacity: 0.35;
+  -webkit-mask-position: center bottom;
+  mask-position: center bottom;
 }
 
 .dshell__main {
@@ -126,7 +134,7 @@
   padding: var(--space-5) var(--space-4) var(--space-8);
 }
 
-.dshell__main:focus {
+.dshell__main:focus:not(:focus-visible) {
   outline: none;
 }
 
@@ -147,14 +155,10 @@
 }
 
 .shell-nav__group-title {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
+  /* .eyebrow (global.css) sets the caps, tracking and colour; this only positions it. */
   padding: 0 var(--space-3);
-  margin-bottom: var(--space-2);
+  margin: 0 0 var(--space-2);
+  line-height: 1.5;
 }
 
 .shell-nav__list {
@@ -166,6 +170,7 @@
 }
 
 .shell-nav__link {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -174,22 +179,34 @@
   border-radius: var(--radius-sm);
   color: var(--color-text);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: var(--weight-medium);
 }
 
 .shell-nav__link:hover {
   background: var(--color-surface-raised);
 }
 
+/* Active: periwinkle wash, ink text, a 2 px metal rule on the leading edge. */
 .shell-nav__link--active {
-  background: var(--color-accent-soft);
-  color: var(--color-accent-text);
+  background: var(--color-tint-periwinkle);
+  color: var(--color-text);
+}
+
+.shell-nav__link--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: var(--space-2);
+  bottom: var(--space-2);
+  width: 2px;
+  border-radius: 1px;
+  background: var(--metal-base);
 }
 
 .shell-nav__glyph {
   width: 1.5rem;
   text-align: center;
-  color: var(--color-accent);
+  color: var(--color-metal-text);
 }
 
 .shell-nav__label {
@@ -204,12 +221,13 @@
   z-index: 30;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  border-top: 1px solid var(--color-border);
+  border-top: var(--hairline) solid var(--color-hairline);
   background: var(--color-surface);
   padding-bottom: env(safe-area-inset-bottom);
 }
 
 .dshell__bottom-link {
+  position: relative;
   display: grid;
   justify-items: center;
   gap: 0.125rem;
@@ -230,8 +248,18 @@
 }
 
 .dshell__bottom-link--active {
-  color: var(--color-accent-text);
-  background: var(--color-accent-soft);
+  color: var(--color-text);
+  background: var(--color-tint-periwinkle);
+}
+
+.dshell__bottom-link--active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--space-3);
+  right: var(--space-3);
+  height: 2px;
+  background: var(--metal-base);
 }
 
 .shell-user {
@@ -242,7 +270,7 @@
 }
 
 .shell-user__name {
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   font-size: 1.125rem;
 }
 
@@ -258,9 +286,26 @@
 
   .dshell__portal,
   .dshell__hub-btn,
-  .dshell__role,
-  .dshell__brand-name {
+  .dshell__role {
     display: none;
+  }
+
+  /* Phone top bar: monogram instead of the wordmark so the menu, toggles and avatar fit in 360 px. */
+  .dshell__brand--compact .dshell__brand-word {
+    display: none;
+  }
+
+  .dshell__brand--compact .dshell__brand-mono {
+    display: inline-flex;
+  }
+
+  .dshell__top {
+    gap: var(--space-2);
+    padding-inline: var(--space-3);
+  }
+
+  .dshell__top .shell-controls {
+    flex-wrap: nowrap;
   }
 
   .dshell__body {
@@ -294,7 +339,7 @@
   width: 100%;
   max-width: 30rem;
   margin: 0 auto;
-  border-inline: 1px solid var(--color-border);
+  border-inline: var(--hairline) solid var(--color-hairline);
   background: var(--color-bg);
 }
 
@@ -308,7 +353,7 @@
   gap: var(--space-2);
   min-height: 3.5rem;
   padding: var(--space-2) var(--space-4);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: var(--hairline) solid var(--color-hairline);
   background: var(--color-surface);
 }
 

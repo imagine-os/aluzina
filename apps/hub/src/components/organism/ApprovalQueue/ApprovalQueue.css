@@ -30,7 +30,7 @@
 }
 
 .approvals__title {
-  font-weight: 500;
+  font-weight: var(--weight-medium);
   font-size: 1.0625rem;
 }
 

@@ -1,7 +1,7 @@
 import { defineSpec } from '../../specs/PageSpec';
 
 /** Product surfaces and builder tools on the hub (pass 0013): each card names a page code and is live when a built route with that code exists. */
-export const SURFACE_IDS = ['website', 'services', 'client', 'manual', 'docs', 'spaces', 'business-os', 'plan', 'canvas', 'simulator', 'actions', 'tokens', 'testing', 'components', 'specs', 'multiuser'] as const;
+export const SURFACE_IDS = ['website', 'services', 'client', 'manual', 'docs', 'spaces', 'business-os', 'design', 'plan', 'canvas', 'simulator', 'actions', 'tokens', 'testing', 'components', 'specs', 'multiuser'] as const;
 export type SurfaceId = (typeof SURFACE_IDS)[number];
 
 /** Pages of the Claude Design export served under ./business-os/ (BOS-02..BOS-06, D-010). */
@@ -21,7 +21,7 @@ export const hubSpec = defineSpec({
     'Title + subtitle',
     'Portals grid: A-01 Founder, O-01 Administration and Operations, S-01 Interior Design, G-01 Graphic Design and Communication (cards enter as the demo user; status Live / Stub read from the route manifest), C-01 Client (planned: no route)',
     'Product surfaces grid: P-00 website (external), P-01 services and intake, C-01 client app, M-01 manual, D-06 docs (GitHub link while no route), K-01 Spaces (opens on the current role\'s surface; founder when the role has none), BOS-01 prototype; each card is live when a built route with its code is registered, else Planned (Placeholder)',
-    'Builder and dev tools grid: D-05 plan viewer, D-07 canvas, D-08 demo simulator, D-09 actions, D-10 tokens, D-11 testing hub, D-02 components, D-03 specs, D-04 multiuser; same route-derived status',
+    'Builder and dev tools grid: D-12 design system (brand guidelines; tokens D-10 and textures and effects D-13 inside), D-05 plan viewer, D-07 canvas, D-08 demo simulator, D-09 actions, D-10 tokens, D-11 testing hub, D-02 components, D-03 specs, D-04 multiuser; same route-derived status',
     'Prototype pages grid (BOS-02..06)',
     'Footer (version, repo link, dev hint)',
   ],
@@ -35,9 +35,10 @@ export const hubSpec = defineSpec({
     '?as=<role> on first load selects that demo user (thumbnails, QA, deep links; docs/reference/surfaces.md).',
     'Ctrl+. toggles the dev panel when dev mode is on.',
     'The Spaces card (K-01, prompt 0005) opens /<surface>/spaces for the current role\'s surface (founder for roles without a portal), so the hub never sends a person into another role\'s shell.',
+    'The hero band is a decorative Shimmer (metal, low intensity) behind the wordmark: iridescent on dark, metal on light, ink-free; the title and subtitle sit below it in the theme text colour, so contrast never depends on the shader.',
     'Card thumbnails load lazily from ./thumbs/<code>.jpg?v=<buildId>, written by scripts/thumbnails.mjs after every CI build (D-011); a missing file falls back to the bilingual tile, planned cards always show the tile.',
   ],
-  components: ['HubHeader', 'RoleSwitcher', 'ToggleButton', 'SurfaceCard', 'Placeholder', 'Toast'],
+  components: ['HubHeader', 'RoleSwitcher', 'ToggleButton', 'SurfaceCard', 'Placeholder', 'Toast', 'Shimmer', 'BrandMark'],
   actions: [
     {
       id: 'hub.enterAs',

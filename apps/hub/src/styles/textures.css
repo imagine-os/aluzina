@@ -1,0 +1,91 @@
+/*
+ * Brand textures and finishes (docs/design/brand-system.md, "Textures").
+ * The four tiles approximate the manual's gold line patterns (crop-texturas-b/c): hand-written seamless
+ * SVGs, black strokes, used ONLY as masks so the colour comes from the theme (`--color-hairline`) and
+ * follows the gold / silver switch. Apply the `.texture-*` classes to an EMPTY decorative element
+ * (a pseudo-element or an absolutely positioned div, aria-hidden): a mask hides the element's own
+ * content too. Mask size is in rem so the pattern scales with --scale on large screens.
+ */
+:root {
+  --texture-lattice: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cg fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.2%22 stroke-linejoin=%22round%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M0 20L20 4L40 20L20 36Z%22/%3E%3Cpath d=%22M0 20H40%22/%3E%3Cpath d=%22M0 4L40 36M40 4L0 36%22/%3E%3Cpath d=%22M10 12V28M30 12V28%22/%3E%3C/g%3E%3C/svg%3E");
+  --texture-chevron: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cg fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.2%22 stroke-linejoin=%22round%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M0 26L20 2L40 26%22/%3E%3Cpath d=%22M0 33L20 9L40 33%22/%3E%3Cpath d=%22M0 40L20 16L40 40%22/%3E%3Cpath d=%22M0 12L20 36L40 12%22 opacity=%22.5%22/%3E%3C/g%3E%3C/svg%3E");
+  --texture-circles: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22%3E%3Cg fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.2%22 stroke-linejoin=%22round%22 stroke-linecap=%22round%22%3E%3Ccircle cx=%2224%22 cy=%2224%22 r=%2221%22/%3E%3Cpath d=%22M24 2L11 42L37 42Z%22/%3E%3Cpath d=%22M2 24H46%22/%3E%3Cpath d=%22M24 12L34 24L24 36L14 24Z%22/%3E%3Cpath d=%22M11 42L37 24M37 42L11 24%22/%3E%3C/g%3E%3C/svg%3E");
+  --texture-stars: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Cg fill=%22%23000%22%3E%3Cpath d=%22M10 5.5Q10 10 14.5 10Q10 10 10 14.5Q10 10 5.5 10Q10 10 10 5.5Z%22/%3E%3Cpath d=%22M44 17Q44 20 47 20Q44 20 44 23Q44 20 41 20Q44 20 44 17Z%22/%3E%3Cpath d=%22M26 36.2Q26 40 29.8 40Q26 40 26 43.8Q26 40 22.2 40Q26 40 26 36.2Z%22/%3E%3Cpath d=%22M56 49.5Q56 52 58.5 52Q56 52 56 54.5Q56 52 53.5 52Q56 52 56 49.5Z%22/%3E%3Cpath d=%22M6 51.2Q6 54 8.8 54Q6 54 6 56.8Q6 54 3.2 54Q6 54 6 51.2Z%22/%3E%3C/g%3E%3C/svg%3E");
+  --texture-size: 2.5rem;
+}
+
+.texture-lattice,
+.texture-chevron,
+.texture-circles,
+.texture-stars {
+  background-color: var(--color-hairline);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  -webkit-mask-size: var(--texture-size) var(--texture-size);
+  mask-size: var(--texture-size) var(--texture-size);
+  pointer-events: none;
+}
+
+.texture-lattice { -webkit-mask-image: var(--texture-lattice); mask-image: var(--texture-lattice); }
+.texture-chevron { -webkit-mask-image: var(--texture-chevron); mask-image: var(--texture-chevron); }
+.texture-circles { -webkit-mask-image: var(--texture-circles); mask-image: var(--texture-circles); --texture-size: 3rem; }
+.texture-stars { -webkit-mask-image: var(--texture-stars); mask-image: var(--texture-stars); --texture-size: 4rem; }
+
+/* Metal and iridescent surfaces: the manual's gold band and holographic fills. Ink text on both. */
+.surface-metal {
+  background: var(--gradient-metal);
+  color: var(--brand-ink);
+}
+
+.surface-iridescent {
+  background: var(--gradient-iridescent);
+  color: var(--brand-ink);
+}
+
+/* Pastel wash for backgrounds behind normal text: keeps the theme's text colour readable. */
+.surface-iridescent-soft {
+  background: var(--gradient-iridescent-soft);
+  color: var(--color-text);
+}
+
+/* Gradient text with a solid fallback (metal text on the theme) where background-clip: text is missing. */
+.text-metal {
+  color: var(--color-metal-text);
+}
+
+.text-iridescent {
+  color: var(--color-metal-text);
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .text-metal,
+  .text-iridescent {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .text-metal { background-image: var(--gradient-metal); }
+  .text-iridescent { background-image: var(--gradient-iridescent-x); }
+}
+
+/*
+ * Sheen: a slow highlight sweep across the metal gradient on hover / focus-within. Decorative only;
+ * never the only affordance (P-03), off under prefers-reduced-motion.
+ */
+.sheen {
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sheen:hover,
+  .sheen:focus-within {
+    animation: sheen 8s linear infinite;
+  }
+
+  @keyframes sheen {
+    from { background-position: 0% 0%; }
+    to { background-position: 100% 100%; }
+  }
+}

@@ -55,15 +55,15 @@
   display: grid;
   grid-template-columns: var(--tl-left) 1fr;
   height: var(--tl-axis);
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-raised);
+  border-bottom: var(--hairline) solid var(--color-hairline);
 }
 
 .work-tl__corner {
   position: sticky;
   left: 0;
   z-index: 5;
-  background: var(--color-bg);
+  background: var(--color-surface-raised);
   border-right: 1px solid var(--color-border);
 }
 
@@ -77,9 +77,10 @@
   height: 1.25rem;
   padding-left: var(--space-2);
   border-left: 1px solid var(--color-border);
+  font-family: var(--font-display);
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--color-text-muted);
   white-space: nowrap;
@@ -115,7 +116,7 @@
 }
 
 .work-tl__row--group {
-  background: var(--color-bg);
+  background: var(--color-surface-raised);
 }
 
 .work-tl__left {
@@ -132,15 +133,16 @@
 }
 
 .work-tl__row--group .work-tl__left {
-  background: var(--color-bg);
+  background: var(--color-surface-raised);
 }
 
 .work-tl__group-name {
   flex: 1;
   min-width: 0;
-  font-weight: 700;
-  font-size: 0.875rem;
-  letter-spacing: 0.04em;
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: 0.8125rem;
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -155,7 +157,7 @@
 
 .work-tl__name {
   font-size: 0.9375rem;
-  font-weight: 500;
+  font-weight: var(--weight-medium);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -191,7 +193,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: var(--color-accent);
+  background: var(--metal-base);
   transform: translateX(-1px);
   z-index: 1;
   pointer-events: none;
@@ -204,9 +206,11 @@
   transform: translateX(0.25rem);
   padding: 0 var(--space-1);
   font-size: 0.6875rem;
-  font-weight: 700;
-  color: var(--color-accent-text);
-  background: var(--color-accent);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-ink);
+  background: var(--metal-base);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   white-space: nowrap;
 }
@@ -272,10 +276,11 @@
   text-overflow: ellipsis;
 }
 
-.work-tl__bar--accent .work-tl__fill { background: var(--color-accent-soft); border-color: var(--color-accent); }
-.work-tl__bar--success .work-tl__fill { border-color: var(--color-success); background: color-mix(in srgb, var(--color-success) 18%, var(--color-surface)); }
-.work-tl__bar--warning .work-tl__fill { border-color: var(--color-warning); background: color-mix(in srgb, var(--color-warning) 18%, var(--color-surface)); }
-.work-tl__bar--danger .work-tl__fill { border-color: var(--color-danger); background: color-mix(in srgb, var(--color-danger) 18%, var(--color-surface)); color: var(--color-danger); font-weight: 700; }
+/* Bars: pastel washes, ink text (>= 4.5:1 in both themes); the border carries the status hue. */
+.work-tl__bar--accent .work-tl__fill { background: var(--color-tint-periwinkle); border-color: var(--metal-base); }
+.work-tl__bar--success .work-tl__fill { border-color: var(--color-success); background: var(--color-success-soft); }
+.work-tl__bar--warning .work-tl__fill { border-color: var(--color-warning); background: var(--color-warning-soft); }
+.work-tl__bar--danger .work-tl__fill { border-color: var(--color-danger); background: var(--color-danger-soft); color: var(--color-danger); font-weight: var(--weight-bold); }
 
 /* Milestones: a diamond centred on the day, inside a 44 px target. */
 .work-tl__bar--milestone {
@@ -296,7 +301,7 @@
 
 .work-tl__bar--milestone.work-tl__bar--success .work-tl__fill { background: var(--color-success); }
 .work-tl__bar--milestone.work-tl__bar--danger .work-tl__fill { background: var(--color-danger); }
-.work-tl__bar--milestone.work-tl__bar--accent .work-tl__fill { background: var(--color-accent); }
+.work-tl__bar--milestone.work-tl__bar--accent .work-tl__fill { background: var(--metal-base); }
 
 .work-tl__bar:focus-visible {
   outline: var(--focus-ring) solid var(--color-focus);
@@ -319,10 +324,11 @@
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
-  background: var(--color-bg);
-  font-weight: 700;
-  font-size: 0.875rem;
-  letter-spacing: 0.04em;
+  background: var(--color-surface-raised);
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: 0.8125rem;
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
 }
 

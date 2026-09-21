@@ -1,6 +1,6 @@
 # Surfaces: routes, scripts, actions, MCP / CLI / API
 
-Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0013 foundation).
+Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0014).
 
 ## 1. What exists today
 
@@ -52,11 +52,14 @@ Every surface a machine (script, agent, voice controller, MCP client) can drive,
 | `/<surface>/spaces/graph` | K-04 | as K-01 | built | desktop | `spaces.read` | 6 (Graph; `?focus=<type>:<id>&depth=1\|2\|3\|all` in the hash query) |
 | `/<surface>/spaces/catalog` | K-05 | as K-01 | built | desktop | `spaces.read` | 5 (Catalog; `?tab=deliverables\|clients\|tools\|roles`) |
 | `/<surface>/spaces/import` | K-06 | as K-01 | built | desktop | `spaces.read` | 2 (Import from Slack) |
+| `/design` | D-12 | design | built | desktop | `design.read` | `design.copyToken`, `design.previewMetal` (Brand guidelines) |
+| `/design/tokens` | D-10 | design | built | desktop | `design.read` | `design.searchTokens`, `design.copyToken` (Design tokens) |
+| `/design/effects` | D-13 | design | built | desktop | `design.read` | `design.setShimmerIntensity`, `design.toggleMotion`, `design.setTextureSize`, `design.toggleSheen` (Textures and effects) |
 | `/dev/components` | D-02 | dev | built | desktop | `dev.tools` | `dev.searchComponents`, `dev.filterTier` |
 | `/dev/specs` | D-03 | dev | built | desktop | `dev.tools` | `dev.openSpec`, `dev.filterSurface` |
 | `/dev/multiuser` | D-04 | dev | built | desktop | `dev.tools` | `dev.openAs`, `dev.resetData` |
 
-75 routes, 680 declared action entries: hub 7, founder 144 (26 portal + 62 work + 56 spaces), ops 158 (40 + 62 + 56), studio 160 (42 + 62 + 56), brand 149 (31 + 62 + 56), dev 62 (6 over 3 pages + 56 spaces) (changelog 0009). The `work.*` set is 31 distinct ids declared on eight routes; the `spaces.*` set is 37 distinct ids declared on 30 routes (56 entries per surface). Every action id is `<module>.<verb>` with an intent phrase and, for the portals, a permission; the full list is `window.__aluzina.routes[].spec.actions` and the drawer on `/#/dev/specs`.
+78 routes, 688 declared action entries: hub 7, design 8 (D-12 2, D-10 2, D-13 4; 7 distinct `design.*` ids), founder 144 (26 portal + 62 work + 56 spaces), ops 158 (40 + 62 + 56), studio 160 (42 + 62 + 56), brand 149 (31 + 62 + 56), dev 62 (6 over 3 pages + 56 spaces) (changelog 0014; 75 / 680 in 0009 and after the 0013 foundation). The `work.*` set is 31 distinct ids declared on eight routes; the `spaces.*` set is 37 distinct ids declared on 30 routes (56 entries per surface). Every action id is `<module>.<verb>` with an intent phrase and, for the portals, a permission; the full list is `window.__aluzina.routes[].spec.actions` and the drawer on `/#/dev/specs`.
 
 Consumers: `scripts/screenshots.mjs` (writes the manifest into `docs/screenshots/<CODE>/routes.json`), `/#/dev/specs` (D-03, same data through `RoutesContext`), `scripts/thumbnails.mjs` targets; future QA and WebMCP generation.
 
@@ -85,6 +88,7 @@ Runtime resources: `/business-os/vendor/*.js` (React, ReactDOM, Babel), `/busine
 | --- | --- | --- |
 | `aluzina.lang` | `en` \| `es` | `I18nProvider.setLang` (action `hub.setLang`) |
 | `aluzina.theme` | `light` \| `dark` | `ThemeProvider` (action `hub.toggleTheme`) |
+| `aluzina.metal` | `gold` \| `silver` | D-12 metal preview (action `design.previewMetal`, D-039); applied on `<html data-metal>` by `modules/design/metal.ts` on boot and on change; absent = `tokens.metalDefault` (gold). A preview only: shipping silver is a token change |
 | `aluzina.session` | JSON `{ userId, viewAs: role \| null, devMode }` | `SessionProvider` (`switchUser`, `viewAs`, `toggleDevMode`; actions `hub.enterAs`, `hub.switchRole`, `hub.toggleDevMode`); `userId` is a demo user id (`u-alejandra`, `u-miguel`, `u-sarai`, `u-angelica`, `u-client`, `u-dev`), default `u-dev` |
 | `aluzina.devMode` | `on` \| `off` | mirror of `session.devMode` for the pre-paint script and older tooling |
 | `aluzina.data` | JSON `{ seedVersion, tables }` | `MockProvider` (D-016): every entity table (36 since 0013: 29 + `leads`, `engagements`, `revisionItems`, `changeOrders`, `purchases`, `siteReports`, `messages`); removed and re-seeded by `reset()` or when `SEED_VERSION` changes (5 since 0013) |
@@ -94,7 +98,7 @@ Runtime resources: `/business-os/vendor/*.js` (React, ReactDOM, Babel), `/busine
 
 Cross-tab channels (D-023): `BroadcastChannel('aluzina-data')` carries `{ change: { entity, kind, id }, tabId, rows?: { [entity]: Row[] } }` after every `MockProvider` write; `BroadcastChannel('aluzina-presence')` carries `{ tabId, userId, route, at, bye? }` every 5 s (expiry 15 s). Pages never touch them; Supabase Realtime / Presence replace them behind `subscribe` and `usePresence()`.
 
-Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effective role) (theme / lang / dev also applied pre-paint by the inline script in `apps/hub/index.html`).
+Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effective role), `data-metal` (preview, when set) (theme / lang / dev also applied pre-paint by the inline script in `apps/hub/index.html`).
 
 ### 1.3 Actions declared (P-05)
 
@@ -102,7 +106,7 @@ Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effecti
 | --- | --- | --- | --- | --- |
 | `hub.enterAs` | HUB-01 | open the {role} portal as its demo user | – | `role: enum:founder\|ops\|studio\|brand` |
 | `hub.switchRole` | HUB-01 | view the system as {role} | – | `role: enum:founder\|ops\|studio\|brand\|client\|dev` |
-| `hub.openSurface` | HUB-01 | open the {surface} | – | `surface: enum:business-os\|website\|docs\|manual\|dev` |
+| `hub.openSurface` | HUB-01 | open the {surface} | – | `surface: enum:website\|services\|client\|manual\|docs\|spaces\|business-os\|design\|plan\|canvas\|simulator\|actions\|tokens\|testing\|components\|specs\|multiuser` (pass 0013 list; `design` added in 0014: the D-12 card) |
 | `hub.openPrototypePage` | HUB-01 | open the prototype page {page} | – | `page: enum:home\|cyber-bridge\|cyber-bridge-deck\|image-generation-plan\|lod-ladder` |
 | `hub.setLang` | HUB-01 | switch the language to {lang} | – | `lang: enum:en\|es` |
 | `hub.toggleTheme` | HUB-01 | switch between light and dark | – | – |
@@ -111,17 +115,24 @@ Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effecti
 | `ops.*` (38 entries, 35 ids) | O-01..O-10 | acknowledge / resolve / reopen an alert, confirm / receive / delay a delivery, move a task, pause / activate a supplier, select / shortlist a quote, mark a payment paid or part paid, advance a document, new task / meeting / supplier / alert, request quote, format / export / send report (Placeholders) | `schedule.manage`, `tasks.manage`, `suppliers.manage`, `quotes.request`, `quotes.compare`, `deliveries.manage`, `payments.manage`, `documents.manage`, `alerts.manage`, `reports.write` | ids, dates, amounts |
 | `studio.*` (42 entries) | S-01..S-09 | send a project to check, move a reference to a board, request sample / approve / reject a material, new version / mark final a plan, review / finalise a schedule, move a render pack, tick a check item, save notes, pass / report issues, new proposal / palette / pack / check and capture controls (Placeholders) | `design.develop`, `references.manage`, `materials.manage`, `plans.write`, `schedules.write`, `renders.brief`, `projects.check`, `measurements.write` | ids, text |
 | `brand.*` (31 entries) | G-01..G-07 | edit a competition slot (name, organiser, category, submission date, project, folder, result) and advance its status, advance a presentation / revision / image set, mark an asset superseded or current, import list / open folder / request deck / upload / share / connect storage (Placeholders) | `brand.manage`, `competitions.manage`, `presentations.write`, `images.write`, `revisions.manage`, `assets.manage` | ids, text, date |
+| `design.copyToken` | D-12, D-10 | copy the value of {token} / copy the variable {token} | `design.read` | `token: string` |
+| `design.previewMetal` | D-12 | preview the brand in {metal} | `design.read` | `metal: enum:gold\|silver` |
+| `design.searchTokens` | D-10 | find the token {query} | `design.read` | `query: string` |
+| `design.setShimmerIntensity` | D-13 | set the shimmer intensity to {intensity} | `design.read` | `intensity: enum:0.2\|0.4\|0.6\|0.8\|1` |
+| `design.toggleMotion` | D-13 | turn the shader motion on or off | `design.read` | – |
+| `design.setTextureSize` | D-13 | set the texture tile size to {size} | `design.read` | `size: enum:1.5rem\|2.5rem\|4rem\|6rem` |
+| `design.toggleSheen` | D-13 | turn the sheen sweep on or off on the sample band | `design.read` | – |
 | `dev.searchComponents` | D-02 | find the component {query} | `dev.tools` | `query: string` |
 | `dev.filterTier` | D-02 | show only {tier} components | `dev.tools` | `tier: enum:all\|atom\|molecule\|organism\|template` |
 | `dev.openSpec` | D-03 | show the spec of page {code} | `dev.tools` | `code: string` |
-| `dev.filterSurface` | D-03 | show only {surface} pages | `dev.tools` | `surface: enum:all\|hub\|founder\|ops\|studio\|brand\|client\|dev\|docs\|manual\|public` |
+| `dev.filterSurface` | D-03 | show only {surface} pages | `dev.tools` | `surface: enum:all\|hub\|founder\|ops\|studio\|brand\|client\|dev\|design\|docs\|manual\|public` |
 | `dev.openAs` | D-04 | open a new tab as {role} | `dev.tools` | `role: enum:founder\|ops\|studio\|brand` |
 | `dev.resetData` | D-04 | reset the demo data to the seeds | `dev.tools` | – |
 | `ops.openWork` | O-02, O-03 | open the schedule / tasks in the Work views | `schedule.manage` / `tasks.manage` | – |
 | `spaces.*` (37 ids, 30 routes) | K-01..K-06 | select a space, expand / collapse, search, show archived, browse tree, create space / post, open post, filter by kind / tag / author, sort, edit description, archive, go to my role space; edit / save / pin / set status of a post, file in / remove from a space, set tags, add / remove a relation, open a related entity, comment, open link; focus the graph, set depth, toggle a kind, zoom in / out / fit, open a node; catalog tab, open template (Placeholder) / hub page / project; upload Slack export (Placeholder) | `spaces.read` (navigation, filters, comments), `spaces.write` (every write), `spaces.admin` (archive, upload) | space / post / relation / entity ids, enums (`kind`, `status`, `depth`, `tab`, `direction`), strings (`docs/pages/K-01.md`..`K-06.md`) |
 | `work.*` (31 ids, 8 routes) | W-01, W-02 | switch view, search, filter, sort, group, save / apply / delete a view, add / open / rename / assign a task, set dates / status / priority / tags / description, complete, move, select, bulk update, add / remove dependency, add / tick subtask, comment, zoom, go to today, change month, collapse group, open project | `projects.read` (read and view state, comments) or `tasks.own.write` (every write; `tasks.manage` covers it) | task / person / section / project ids, enums (`view`, `status`, `priority`, `zoom`, `by`), dates, strings (`docs/pages/W-01.md`) |
 
-Declared only: no actions bus runs them yet (section 2.1). Per-action rows for the portals live in each page doc (`docs/pages/<CODE>.md`, section Actions) and in the manifest. Permissions per role: `apps/hub/src/auth/permissions.ts` (`docs/knowledge/roles-and-portals.md`); `suppliers.read` added for studio and ops (0007); `spaces.read / write / admin` and `marketing.*` added, role `marketing` (0009, D-028).
+Declared only: no actions bus runs them yet (section 2.1). Per-action rows for the portals live in each page doc (`docs/pages/<CODE>.md`, section Actions) and in the manifest. Permissions per role: `apps/hub/src/auth/permissions.ts` (`docs/knowledge/roles-and-portals.md`); `suppliers.read` added for studio and ops (0007); `spaces.read / write / admin` and `marketing.*` added, role `marketing` (0009, D-028); `design.read` for every role (0014, D-041).
 
 ### 1.4 npm scripts (the CLI today)
 
@@ -134,7 +145,7 @@ Declared only: no actions bus runs them yet (section 2.1). Per-action rows for t
 | `npm run preview` | serve `dist/` on :4173 | |
 | `npm run typecheck` | `tsc --noEmit` in the hub | |
 | `npm run tokens` | `apps/hub/src/design/tokens.ts` -> `apps/hub/src/styles/tokens.css` (`node --experimental-strip-types scripts/gen-tokens.mjs`) | |
-| `npm run screenshots` | `node scripts/screenshots.mjs`: Playwright captures into `docs/screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json` | `-- --base=<url> --out=docs/screenshots --code=HUB-01 --route=/ --shots=en-390,en-1280,en-3840,es-390`; `--as=<role>` seeds `aluzina.session` with that role's demo user before load (portal pages); `--settle=<ms>` waits after the selector (Work views: 800); `--static=business-os/` captures a static page instead of a hub route (BOS codes; `--wait=<selector>` defaults to `#dc-root`; `es-*` shots click the page's EN/ES toggle when `--lang-toggle=<selector>` is given, e.g. `--lang-toggle='text="EN"'`; values may contain `=`); env `PW_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` honoured for non-localhost bases; `playwright` pinned to 1.56.1 (Chromium 1194) |
+| `npm run screenshots` | `node scripts/screenshots.mjs`: Playwright captures into `docs/screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json` | `-- --base=<url> --out=docs/screenshots --code=HUB-01 --route=/ --shots=en-390,en-1280,en-3840,es-390`; `--as=<role>` seeds `aluzina.session` with that role's demo user before load (portal pages); `--settle=<ms>` waits after the selector (Work views: 800); `--theme=dark` seeds `aluzina.theme=dark`, emulates `prefers-color-scheme: dark` and writes `<lang>-<width>-dark.jpg` (light is the default and keeps `<lang>-<width>.jpg`; run dark before light so `routes.json` ends with the light shot list; 0014); `--static=business-os/` captures a static page instead of a hub route (BOS codes; `--wait=<selector>` defaults to `#dc-root`; `es-*` shots click the page's EN/ES toggle when `--lang-toggle=<selector>` is given, e.g. `--lang-toggle='text="EN"'`; values may contain `=`); env `PW_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` honoured for non-localhost bases; `playwright` pinned to 1.56.1 (Chromium 1194) |
 
 Archived scrapers (not npm scripts, docs-only, changelog 0011): `docs/source/aluzinaa-archive/tools/scrape-aluzinaa.js` and `crawl-direccion.js` re-capture aluzinaa.com and direccion.aluzinaa.com (text, rendered HTML, full-page PNGs at 390 / 768 / 1280 / 1920 / 3840) into `text/`, `html/`, `shots/` next to themselves; run with `node <script>` from a folder that has `playwright` installed and Chromium at `/opt/pw-browsers/chromium`. On this sandbox Chromium needs `--disable-features=ChromeRootStoreUsed` (already passed by `scrape-aluzinaa.js`) or the proxy CA imported into NSS to trust the outbound proxy.
 
@@ -212,6 +223,7 @@ Realtime and presence exist as the mock seam since 0008 (D-023): `subscribe` alr
 
 - 2026-09-21 (changelog 0011): archived scraper scripts for the two public sites and how to re-run them (1.4).
 - 2026-09-21 (changelog 0013, foundation): `window.__aluzina.actions` (1.1, 1.7, 2.1: the bus exists), 36 entities and `SEED_VERSION` 5 (1.2), playbook entities and `projects.serviceCode / pipelineStatus` (1.5); routes and actions of the pass 0013 modules land with the integration.
+- 2026-09-21 (changelog 0014): the `design` surface with D-12 / D-10 / D-13 in the manifest (78 routes, 688 action entries, 1.1); `aluzina.metal` and `data-metal` (1.2); the seven `design.*` actions, `hub.openSurface` and `dev.filterSurface` enums gain `design`, `design.read` for every role (1.3); `--theme=dark` screenshot flag (1.4).
 - 2026-09-21 (changelog 0008): W-01 / W-02 on four surfaces and D-04 in the manifest (45 routes, 400 action entries, 1.1); `aluzina.views.<userId>`, `aluzina.tabUser`, `aluzina.presence` and the two BroadcastChannels (1.2); `work.*`, `dev.openAs`, `dev.resetData`, `ops.openWork` (1.3); `--as` / `--settle` screenshot flags (1.4); `update(…, { basedOn })`, `onConflict`, `setActor`, `sections` / `comments` / `activity`, `SEED_VERSION` 3, `useWork`, `usePresence` (1.5); realtime seam status (2.4).
 - 2026-09-21 (changelog 0007): 33 portal routes in the manifest (A-01..A-07, O-01..O-10, S-01..S-09, G-01..G-07), 148 actions summarised per module (1.3), `suppliers.read`, `tasks.startDate` and `SEED_VERSION` 2 (1.5), bounded hub image wait in `npm run thumbs` (1.4).
 - 2026-09-21 (changelog 0006): seven routes in the manifest with `shell` / `permission`; `?as=<role>` contract (1.1a); `aluzina.session` and `aluzina.data` keys (1.2); portal and dev actions (1.3); DataProvider methods and entities (1.5); thumbnail codes; library as data (2.5).

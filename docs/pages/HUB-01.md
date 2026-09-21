@@ -12,14 +12,15 @@ Entry point to every surface of the Aluzina Business OS for Justin, the owner, t
 
 ## Screenshots
 
-`docs/screenshots/HUB-01/en-390.jpg`, `en-1280.jpg` (live site with the Portals section, changelog 0006), `en-3840.jpg`, `es-390.jpg` (changelog 0002; light theme, dev mode off), plus `routes.json` (manifest at capture time).
+`docs/screenshots/HUB-01/en-390.jpg`, `en-1280.jpg`, `en-1920.jpg`, `en-3840.jpg`, `es-390.jpg` (light) and `en-390-dark.jpg`, `en-1280-dark.jpg` (dark), all recaptured from the local 0.8.0 preview with the brand restyle and the Shimmer hero band (changelog 0014; dev mode off, Rubik unreachable in the sandbox so text renders in the system fallback), plus `routes.json` (manifest at capture time, 78 routes).
 
 ## Layout (top to bottom)
 
-1. `HubHeader`: brand mark + "Aluzina"; `RoleSwitcher` ("Viewing as", native select of the six demo users); controls: language (shows the *other* language, EN/ES), theme (Light / Dark, `aria-pressed`), dev mode (Dev on / Dev off, `aria-pressed`).
-2. Hero: h1 "Aluzina Business OS", one-line subtitle.
+1. `HubHeader`: `BrandMark` wordmark (metal on light, iridescent on dark, changelog 0014); `RoleSwitcher` ("Viewing as", native select of the six demo users); controls: language (shows the *other* language, EN/ES), theme (Light / Dark, `aria-pressed`), dev mode (Dev on / Dev off, `aria-pressed`).
+2. Hero: a decorative `aria-hidden` `Shimmer` metal band carrying the wordmark (D-034), then h1 "Aluzina Business OS" and the one-line subtitle in theme text below it.
 2b. **Portals** grid: A-01 Founder (Alejandra Guerra), O-01 Administration and Operations (Miguel), S-01 Interior Design (Sarai), G-01 Graphic Design and Communication (Angélica) as cards whose status (Live / Stub) is read from the registered dashboard route (button: "Enter as <name> →"), C-01 Client portal (planned, Placeholder). Each with its deploy-time thumbnail.
-3. Surfaces grid (`auto-fill, minmax(18rem, 1fr)`): BOS-01 Business OS prototype (live), P-00 Public website (live, aluzinaa.com), D-06 Docs (live, GitHub `docs/`), M-xx Ops manual (planned), D-02 Dev tools (live, `#/dev/components`). Each card starts with a 16 / 10 thumbnail (`./thumbs/<code>.jpg`, 640 x 400) or the bilingual "No preview yet" tile.
+3. Product surfaces grid (`auto-fill, minmax(18rem, 1fr)`, pass 0013): P-00 Public website (external), P-01 Services and intake, C-01 Client app, M-01 Ops manual, D-06 Docs (GitHub link while no route), K-01 Spaces, BOS-01 prototype; status derived from the route manifest by code (built -> Live, stub -> Stub, no route -> Planned). Each card starts with a 16 / 10 thumbnail (`./thumbs/<code>.jpg`, 640 x 400) or the bilingual "No preview yet" tile.
+3a. Builder and dev tools grid: D-12 Design system (live, `#/design`, changelog 0014), D-05 plan viewer, D-07 canvas, D-08 demo simulator, D-09 actions, D-10 Tokens (live, `#/design/tokens`), D-11 testing hub, D-02 components, D-03 specs, D-04 multiuser; same route-derived status.
 3b. Prototype pages grid (`minmax(15rem, 1fr)`): BOS-02 ALUZINA Home, BOS-03 Cyber Bridge, BOS-04 Cyber Bridge Deck, BOS-05 Image Generation Plan, BOS-06 LOD Ladder, each with its thumbnail.
 4. Footer: version, "Source on GitHub", dev-mode hint.
 5. Dev mode only: SpecChip `HUB-01` bottom-right; panel (Ctrl+. or chip) listing actions, permission, params, verified widths.
@@ -46,7 +47,7 @@ None.
 | --- | --- | --- | --- | --- |
 | `hub.enterAs` | Enter portal as role | open the {role} portal as its demo user | – | `role: enum:founder\|ops\|studio\|brand` |
 | `hub.switchRole` | Switch role | view the system as {role} | – | `role: enum:founder\|ops\|studio\|brand\|client\|dev` |
-| `hub.openSurface` | Open surface | open the {surface} | – | `surface: enum:business-os\|website\|docs\|manual\|dev` |
+| `hub.openSurface` | Open surface | open the {surface} | – | `surface: enum:website\|services\|client\|manual\|docs\|spaces\|business-os\|design\|plan\|canvas\|simulator\|actions\|tokens\|testing\|components\|specs\|multiuser` |
 | `hub.openPrototypePage` | Open prototype page | open the prototype page {page} | – | `page: enum:home\|cyber-bridge\|cyber-bridge-deck\|image-generation-plan\|lod-ladder` |
 | `hub.setLang` | Set language | switch the language to {lang} | – | `lang: enum:en\|es` |
 | `hub.toggleTheme` | Toggle theme | switch between light and dark | – | – |

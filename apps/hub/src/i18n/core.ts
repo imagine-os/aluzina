@@ -33,6 +33,7 @@ export const coreStrings: StringTable = {
   'core.portal.marketing': { en: 'Marketing (in the brand portal)', es: 'Marketing (en el portal de marca)' },
   'core.portal.client': { en: 'Client portal', es: 'Portal del cliente' },
   'core.portal.dev': { en: 'Dev tools', es: 'Herramientas de desarrollo' },
+  'core.portal.design': { en: 'Design system', es: 'Sistema de diseño' },
 
   // session and auth
   'core.session.viewingAs': { en: 'Viewing as', es: 'Viendo como' },

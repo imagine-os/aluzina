@@ -1,0 +1,320 @@
+import type { StringTable } from '../../i18n/types';
+
+/** Design system strings (D-12, D-10, D-13), namespaced `design.*`. Full Spanish (P-13). */
+export const strings: StringTable = {
+  'design.nav.brand': { en: 'Brand guidelines', es: 'Lineamientos de marca' },
+  'design.nav.tokens': { en: 'Tokens', es: 'Tokens' },
+  'design.nav.effects': { en: 'Textures and effects', es: 'Texturas y efectos' },
+  'design.copy': { en: 'Copy {what}', es: 'Copiar {what}' },
+  'design.copied': { en: 'Copied {what}', es: '{what} copiado' },
+  'design.copyFailed': { en: 'Could not copy {what}; select it and copy by hand', es: 'No se pudo copiar {what}; selecciónalo y cópialo a mano' },
+  'design.houseRule': { en: '(house rule)', es: '(regla de la casa)' },
+
+  // D-12 Brand guidelines
+  'design.brand.title': { en: 'Brand guidelines', es: 'Lineamientos de marca' },
+  'design.brand.subtitle': {
+    en: 'The brand manual alive inside the product: every mark, colour and finish below is the same token the app ships with, so this page cannot drift from the software.',
+    es: 'El manual de marca vivo dentro del producto: cada marca, color y acabado de abajo es el mismo token con el que se publica la app, así que esta página no puede desfasarse del software.',
+  },
+  'design.brand.source': {
+    en: 'Source: MANUAL DE MARCA ALUZINA (2026-09-21), docs/knowledge/brand.md',
+    es: 'Fuente: MANUAL DE MARCA ALUZINA (2026-09-21), docs/knowledge/brand.md',
+  },
+
+  'design.brand.logo.eyebrow': { en: 'Logo', es: 'Logo' },
+  'design.brand.logo.desc': {
+    en: 'The wordmark is drawn, not typed: high-contrast capitals with concave flare feet, no crossbar on the A. Gold gradient on light, iridescent on dark, exactly as the manual pairs a white page with its gold band.',
+    es: 'El logotipo está dibujado, no escrito: mayúsculas de alto contraste con remates cóncavos y la A sin travesaño. Degradado dorado sobre claro, iridiscente sobre oscuro, igual que el manual combina la página blanca con su banda dorada.',
+  },
+  'design.brand.logo.light': { en: 'Light: metal wordmark', es: 'Claro: logotipo metálico' },
+  'design.brand.logo.dark': { en: 'Dark: iridescent wordmark', es: 'Oscuro: logotipo iridiscente' },
+  'design.brand.logo.descriptor': { en: 'Descriptor lockup', es: 'Bloque con descriptor' },
+  'design.brand.logo.rules': { en: 'Rules', es: 'Reglas' },
+  'design.brand.logo.ruleMin': {
+    en: 'Minimum height: size sm (1.25 rem). Below that the flare feet close up.',
+    es: 'Altura mínima: tamaño sm (1.25 rem). Por debajo, los remates se cierran.',
+  },
+  'design.brand.logo.ruleClear': {
+    en: 'Clear space: the width of the A\'s foot on every side.',
+    es: 'Área de respeto: el ancho del pie de la A en cada lado.',
+  },
+  'design.brand.logo.ruleFinish': {
+    en: 'Never a flat gold fill: gold is a gradient. Flat gold is only for outlines and descriptor text.',
+    es: 'Nunca un relleno dorado plano: el dorado es un degradado. El dorado plano es solo para contornos y el texto del descriptor.',
+  },
+
+  'design.brand.monogram.eyebrow': { en: 'Monogram', es: 'Monograma' },
+  'design.brand.monogram.desc': {
+    en: 'The A alone: a leaning stem in one secondary colour and a small foot that stays flat gold. The manual prints three variants.',
+    es: 'La A sola: un asta inclinada en un color secundario y un pie pequeño que siempre es dorado plano. El manual imprime tres variantes.',
+  },
+  'design.brand.tone.periwinkle': { en: 'Periwinkle', es: 'Azul lavanda' },
+  'design.brand.tone.aqua': { en: 'Aqua', es: 'Aguamarina' },
+  'design.brand.tone.lime': { en: 'Lime', es: 'Lima' },
+  'design.brand.tone.metal': { en: 'Metal', es: 'Metálico' },
+  'design.brand.tone.outline': { en: 'Outline', es: 'Contorno' },
+
+  'design.brand.colors.eyebrow': { en: 'Colors', es: 'Colores' },
+  'design.brand.colors.desc': {
+    en: 'Four printed colours and nothing else: one metallic primary and three pastel secondaries. The pastels are fills and tints, never text.',
+    es: 'Cuatro colores impresos y nada más: un primario metálico y tres secundarios pastel. Los pasteles son rellenos y tintes, nunca texto.',
+  },
+  'design.brand.colors.role': { en: 'Role', es: 'Función' },
+  'design.brand.colors.rolePrimary': { en: 'Primary, metallic', es: 'Primario, metálico' },
+  'design.brand.colors.roleSecondary': { en: 'Secondary, fills and tints', es: 'Secundario, rellenos y tintes' },
+  'design.brand.colors.gold': { en: 'Gold / Bronze', es: 'Dorado / Bronce' },
+  'design.brand.colors.hex': { en: 'HEX', es: 'HEX' },
+  'design.brand.colors.noteHighlight': {
+    en: 'Highlight #F1D7AA is not a palette colour: it is the bright band decoded from the gold gradient.',
+    es: 'El brillo #F1D7AA no es un color de la paleta: es la banda clara decodificada del degradado dorado.',
+  },
+  'design.brand.colors.noteInk': {
+    en: 'Ink #231F20 carries every caption in the manual and every piece of text on a metal or iridescent surface here.',
+    es: 'La tinta #231F20 lleva cada leyenda del manual y todo el texto sobre superficies metálicas o iridiscentes aquí.',
+  },
+  'design.brand.colors.noteContrast': {
+    en: 'Pastel on white is about 1.2:1. Use them behind ink, never as ink.',
+    es: 'Un pastel sobre blanco da cerca de 1.2:1. Úsalos detrás de la tinta, nunca como tinta.',
+  },
+
+  'design.brand.metal.eyebrow': { en: 'Metal finish', es: 'Acabado metálico' },
+  'design.brand.metal.desc': {
+    en: 'Gold today, silver ready. The metal is one token group, so the whole system changes finish without a redesign.',
+    es: 'Dorado hoy, plateado listo. El metal es un solo grupo de tokens, así que todo el sistema cambia de acabado sin rediseñar nada.',
+  },
+  'design.brand.metal.preview': { en: 'Preview finish', es: 'Previsualizar acabado' },
+  'design.brand.metal.gold': { en: 'Gold', es: 'Dorado' },
+  'design.brand.metal.silver': { en: 'Silver', es: 'Plateado' },
+  'design.brand.metal.note': {
+    en: 'This toggle is a preview: it sets <html data-metal> and remembers it in aluzina.metal on this device. The real switch is one line, tokens.metalDefault = \'silver\' followed by npm run tokens; the gold-tinted accent, hairline and metal-text colours are re-derived in the same change.',
+    es: 'Este interruptor es una vista previa: cambia <html data-metal> y lo recuerda en aluzina.metal en este dispositivo. El cambio real es una línea, tokens.metalDefault = \'silver\' seguido de npm run tokens; los colores accent, hairline y metal-text con matiz dorado se rederivan en el mismo cambio.',
+  },
+  'design.brand.metal.silverDraft': {
+    en: 'Silver values are provisional (Pantone 877 C candidate) until the founder confirms them.',
+    es: 'Los valores del plateado son provisionales (candidato Pantone 877 C) hasta que la fundadora los confirme.',
+  },
+
+  'design.brand.gradients.eyebrow': { en: 'Gradients', es: 'Degradados' },
+  'design.brand.gradients.desc': {
+    en: 'Two gradients, five tokens. The metal one follows the finish switch; the iridescent one is always the three pastels in order.',
+    es: 'Dos degradados, cinco tokens. El metálico sigue el interruptor de acabado; el iridiscente siempre son los tres pasteles en orden.',
+  },
+  'design.brand.gradients.metal': { en: 'Metal: the brushed band, two highlight streaks', es: 'Metálico: la banda cepillada, dos destellos' },
+  'design.brand.gradients.metalSoft': { en: 'Metal soft: 30% into the surface, for text on top', es: 'Metálico suave: 30% sobre la superficie, para texto encima' },
+  'design.brand.gradients.iridescent': { en: 'Iridescent: periwinkle, aqua, lime, top to bottom', es: 'Iridiscente: lavanda, aguamarina, lima, de arriba abajo' },
+  'design.brand.gradients.iridescentX': { en: 'Iridescent across: the footer wordmark band', es: 'Iridiscente horizontal: la banda del logotipo en el pie' },
+  'design.brand.gradients.iridescentSoft': { en: 'Iridescent soft: 35% into the surface, theme text', es: 'Iridiscente suave: 35% sobre la superficie, texto del tema' },
+
+  'design.brand.type.eyebrow': { en: 'Typography', es: 'Tipografía' },
+  'design.brand.type.desc': {
+    en: 'One family, DIN Round Pro, five weights. Hierarchy comes from weight and tracking, never from a second face.',
+    es: 'Una sola familia, DIN Round Pro, cinco pesos. La jerarquía viene del peso y el interletrado, nunca de una segunda tipografía.',
+  },
+  'design.brand.type.lower': { en: 'Lowercase', es: 'Minúsculas' },
+  'design.brand.type.upper': { en: 'Uppercase', es: 'Mayúsculas' },
+  'design.brand.type.digits': { en: 'Digits', es: 'Dígitos' },
+  'design.brand.type.weights': { en: 'Weights', es: 'Pesos' },
+  'design.brand.type.samples': { en: 'In use', es: 'En uso' },
+  'design.brand.type.sampleEyebrow': { en: 'Section caption', es: 'Leyenda de sección' },
+  'design.brand.type.sampleHeading': { en: 'A heading in display bold', es: 'Un título en display negrita' },
+  'design.brand.type.sampleBody': {
+    en: 'Body text at 400 and a 1.5 line height. Uppercase always carries tracking; mixed case never does.',
+    es: 'Texto corrido en 400 con interlínea 1.5. Las mayúsculas siempre llevan interletrado; la caja mixta nunca.',
+  },
+  'design.brand.type.note': {
+    en: 'DIN Round Pro is licensed and not in the repository: drop the files into public/fonts (see its README) and src/styles/fonts.css picks them up. Until then the stack falls back to Rubik, then system-ui, which is what the screenshots show.',
+    es: 'DIN Round Pro es de licencia y no está en el repositorio: coloca los archivos en public/fonts (ver su README) y src/styles/fonts.css los toma. Mientras tanto la pila cae a Rubik y luego a system-ui, que es lo que muestran las capturas.',
+  },
+
+  'design.brand.elements.eyebrow': { en: 'Elements', es: 'Elementos' },
+  'design.brand.elements.desc': {
+    en: 'Five alchemical themes and three verticals, all thin gold outline. They label sections; they never become buttons.',
+    es: 'Cinco temas alquímicos y tres verticales, todos en contorno dorado fino. Etiquetan secciones; nunca se vuelven botones.',
+  },
+
+  'design.brand.textures.eyebrow': { en: 'Textures', es: 'Texturas' },
+  'design.brand.textures.desc': {
+    en: 'Four seamless line patterns and three circles. Patterns are masks, so they take their colour from the theme and follow the metal switch.',
+    es: 'Cuatro patrones de línea continuos y tres círculos. Los patrones son máscaras, así que toman el color del tema y siguen el cambio de metal.',
+  },
+  'design.brand.textures.lattice': { en: 'Lattice', es: 'Retícula' },
+  'design.brand.textures.chevron': { en: 'Chevron wave', es: 'Onda de galones' },
+  'design.brand.textures.circles': { en: 'Circle and star', es: 'Círculo y estrella' },
+  'design.brand.textures.stars': { en: 'Sparkles', es: 'Destellos' },
+  'design.brand.textures.circleMetal': { en: 'Metal circle', es: 'Círculo metálico' },
+  'design.brand.textures.circleIridescent': { en: 'Iridescent circle', es: 'Círculo iridiscente' },
+  'design.brand.textures.circleOutline': { en: 'Outline circle', es: 'Círculo en contorno' },
+  'design.brand.textures.more': { en: 'The shader versions of both finishes live on Textures and effects (D-13).', es: 'Las versiones con shader de ambos acabados están en Texturas y efectos (D-13).' },
+
+  'design.brand.themes.eyebrow': { en: 'Light and dark', es: 'Claro y oscuro' },
+  'design.brand.themes.desc': {
+    en: 'The manual only prints white pages, so dark is ours: a warm near-black, the same gold hue, lifted metal text and the iridescent wordmark. Both themes are checked on every page; dark is not an inversion filter.',
+    es: 'El manual solo imprime páginas blancas, así que el oscuro es nuestro: un casi negro cálido, el mismo matiz dorado, texto metálico más claro y el logotipo iridiscente. Ambos temas se revisan en cada página; el oscuro no es un filtro de inversión.',
+  },
+  'design.brand.themes.light': { en: 'Light', es: 'Claro' },
+  'design.brand.themes.dark': { en: 'Dark', es: 'Oscuro' },
+  'design.brand.themes.sampleTitle': { en: 'Sample card', es: 'Tarjeta de muestra' },
+  'design.brand.themes.sampleBody': {
+    en: 'Body text, a muted caption and one accent badge, on the surface colour of each theme.',
+    es: 'Texto corrido, una leyenda apagada y una insignia de acento, sobre el color de superficie de cada tema.',
+  },
+  'design.brand.themes.sampleBadge': { en: 'Accent', es: 'Acento' },
+  'design.brand.themes.sampleMuted': { en: 'Muted caption', es: 'Leyenda apagada' },
+
+  'design.brand.gaps.eyebrow': { en: 'What the manual does not define', es: 'Lo que el manual no define' },
+  'design.brand.gaps.desc': {
+    en: 'The manual is a style sheet, not a rulebook. These are open until the founder decides; where we needed one we wrote a house rule and labelled it.',
+    es: 'El manual es una hoja de estilo, no un reglamento. Esto queda abierto hasta que la fundadora decida; donde hizo falta escribimos una regla de la casa y la etiquetamos.',
+  },
+  'design.brand.gaps.clearSpace': { en: 'Clear space and minimum sizes', es: 'Área de respeto y tamaños mínimos' },
+  'design.brand.gaps.misuse': { en: 'Misuse cases', es: 'Usos incorrectos' },
+  'design.brand.gaps.photo': { en: 'Photography and imagery direction', es: 'Dirección de fotografía e imagen' },
+  'design.brand.gaps.voice': { en: 'Tone of voice', es: 'Tono de voz' },
+  'design.brand.gaps.icons': { en: 'Iconography beyond the eight glyphs', es: 'Iconografía más allá de los ocho glifos' },
+  'design.brand.gaps.grid': { en: 'Layout grid values', es: 'Valores de retícula de maquetación' },
+  'design.brand.gaps.a11y': { en: 'Accessibility rules (ours: WCAG AA on every text token)', es: 'Reglas de accesibilidad (las nuestras: WCAG AA en cada token de texto)' },
+  'design.brand.gaps.dark': { en: 'Dark mode (ours, inferred, pending confirmation)', es: 'Modo oscuro (nuestro, inferido, pendiente de confirmación)' },
+
+  // D-10 Tokens
+  'design.tokens.title': { en: 'Design tokens', es: 'Tokens de diseño' },
+  'design.tokens.subtitle': {
+    en: 'Every value in src/design/tokens.ts, rendered live in both themes with its CSS variable and its measured contrast. Generated into tokens.css by npm run tokens; never hard-code a hex in a component.',
+    es: 'Cada valor de src/design/tokens.ts, en vivo y en ambos temas, con su variable CSS y su contraste medido. Se genera en tokens.css con npm run tokens; nunca escribas un hex a mano en un componente.',
+  },
+  'design.tokens.search': { en: 'Search a token, a variable or a value…', es: 'Buscar un token, una variable o un valor…' },
+  'design.tokens.summary': { en: '{shown} of {total} tokens', es: '{shown} de {total} tokens' },
+  'design.tokens.none': { en: 'No token matches', es: 'Ningún token coincide' },
+  'design.tokens.live': { en: 'Live, on this screen', es: 'En vivo, en esta pantalla' },
+  'design.tokens.liveDesc': {
+    en: 'Read back from getComputedStyle on <html>: what the browser is actually using right now.',
+    es: 'Leído con getComputedStyle en <html>: lo que el navegador está usando ahora mismo.',
+  },
+  'design.tokens.theme': { en: 'Theme', es: 'Tema' },
+  'design.tokens.metal': { en: 'Metal', es: 'Metal' },
+  'design.tokens.scale': { en: '--scale', es: '--scale' },
+  'design.tokens.viewport': { en: 'Viewport width', es: 'Ancho de ventana' },
+  'design.tokens.band': { en: 'Active scale band', es: 'Banda de escala activa' },
+  'design.tokens.rootSize': { en: 'Root font size', es: 'Tamaño de fuente raíz' },
+  'design.tokens.colors': { en: 'Colours', es: 'Colores' },
+  'design.tokens.colorsDesc': {
+    en: 'Contrast is measured against the theme bg and surface. Text tokens must pass 4.5:1, interface tokens 3:1; backgrounds and decorative edges are reported without a verdict.',
+    es: 'El contraste se mide contra el bg y la surface del tema. Los tokens de texto deben pasar 4.5:1 y los de interfaz 3:1; los de fondo y los bordes decorativos se reportan sin veredicto.',
+  },
+  'design.tokens.col.token': { en: 'Token', es: 'Token' },
+  'design.tokens.col.var': { en: 'CSS variable', es: 'Variable CSS' },
+  'design.tokens.col.light': { en: 'Light', es: 'Claro' },
+  'design.tokens.col.dark': { en: 'Dark', es: 'Oscuro' },
+  'design.tokens.col.value': { en: 'Value', es: 'Valor' },
+  'design.tokens.vsBg': { en: 'bg', es: 'bg' },
+  'design.tokens.vsSurface': { en: 'surface', es: 'surface' },
+  'design.tokens.pass': { en: 'Pass', es: 'Cumple' },
+  'design.tokens.fail': { en: 'Fail', es: 'No cumple' },
+  'design.tokens.kind.text': { en: 'text', es: 'texto' },
+  'design.tokens.kind.ui': { en: 'interface', es: 'interfaz' },
+  'design.tokens.kind.surface': { en: 'background', es: 'fondo' },
+  'design.tokens.kind.onFill': { en: 'on a fill', es: 'sobre un relleno' },
+  'design.tokens.kind.edge': { en: 'edge, reported only', es: 'borde, solo informativo' },
+  'design.tokens.reportedOnly': { en: 'Decorative, reported only', es: 'Decorativo, solo informativo' },
+  'design.tokens.brand': { en: 'Brand constants', es: 'Constantes de marca' },
+  'design.tokens.brandDesc': {
+    en: 'The manual\'s raw values. They exist for the marks and the gradients; UI uses the semantic colours above.',
+    es: 'Los valores en crudo del manual. Existen para las marcas y los degradados; la interfaz usa los colores semánticos de arriba.',
+  },
+  'design.tokens.metalSets': { en: 'Metal sets', es: 'Juegos de metal' },
+  'design.tokens.metalSetsDesc': {
+    en: 'Both finishes are always emitted: :root gets the default, and :root[data-metal="…"] holds every one.',
+    es: 'Ambos acabados siempre se emiten: :root recibe el predeterminado y :root[data-metal="…"] contiene cada uno.',
+  },
+  'design.tokens.default': { en: 'default', es: 'predeterminado' },
+  'design.tokens.gradients': { en: 'Gradients', es: 'Degradados' },
+  'design.tokens.type': { en: 'Type', es: 'Tipografía' },
+  'design.tokens.weights': { en: 'Weights', es: 'Pesos' },
+  'design.tokens.tracking': { en: 'Tracking', es: 'Interletrado' },
+  'design.tokens.radius': { en: 'Radius', es: 'Radios' },
+  'design.tokens.space': { en: 'Space', es: 'Espaciado' },
+  'design.tokens.shadow': { en: 'Shadow', es: 'Sombras' },
+  'design.tokens.misc': { en: 'Hairline, target and focus ring', es: 'Filete, área táctil y anillo de foco' },
+  'design.tokens.bands': { en: 'Responsive scale bands', es: 'Bandas de escala responsiva' },
+  'design.tokens.bandsDesc': {
+    en: 'Body text holds at 16 px up to 1920 and grows from there, so a 4K TV reads from ten feet (P-01).',
+    es: 'El texto se mantiene en 16 px hasta 1920 y crece desde ahí, para que un televisor 4K se lea a tres metros (P-01).',
+  },
+  'design.tokens.bandFrom': { en: 'From {width} px', es: 'Desde {width} px' },
+  'design.tokens.bandActive': { en: 'Active', es: 'Activa' },
+
+  // D-13 Textures and effects
+  'design.effects.title': { en: 'Textures and effects', es: 'Texturas y efectos' },
+  'design.effects.subtitle': {
+    en: 'The shader finishes and the CSS ones, side by side, with the rule that governs all of them: decoration never carries information.',
+    es: 'Los acabados con shader y los de CSS, lado a lado, con la regla que los gobierna a todos: la decoración nunca carga información.',
+  },
+  'design.effects.controls': { en: 'Controls', es: 'Controles' },
+  'design.effects.intensity': { en: 'Shader intensity', es: 'Intensidad del shader' },
+  'design.effects.motion': { en: 'Motion', es: 'Movimiento' },
+  'design.effects.motionOn': { en: 'Motion on', es: 'Movimiento activo' },
+  'design.effects.motionOff': { en: 'Motion off', es: 'Movimiento inactivo' },
+  'design.effects.motionNote': {
+    en: 'Default follows the system setting: under prefers-reduced-motion the shader draws one static frame and stops tracking tilt.',
+    es: 'Por defecto sigue la preferencia del sistema: con prefers-reduced-motion el shader dibuja un solo cuadro fijo y deja de seguir la inclinación.',
+  },
+  'design.effects.shimmer': { en: 'Shimmer, the shader surface', es: 'Shimmer, la superficie con shader' },
+  'design.effects.shimmerDesc': {
+    en: 'A WebGL2 canvas with no dependencies. Metal is anisotropic brushed metal with two specular streaks that follow the pointer, the pen, the touch and, on a phone, the tilt; iridescent is a thin-film shift over the three pastels. It reads the --metal-* variables, so it follows theme and the gold / silver switch, and it falls back to the CSS gradient when WebGL2 is missing.',
+    es: 'Un lienzo WebGL2 sin dependencias. El metálico es metal cepillado anisotrópico con dos destellos especulares que siguen el puntero, el lápiz, el toque y, en un teléfono, la inclinación; el iridiscente es un desplazamiento de película delgada sobre los tres pasteles. Lee las variables --metal-*, así que sigue el tema y el cambio dorado / plateado, y cae al degradado CSS cuando no hay WebGL2.',
+  },
+  'design.effects.bandMetal': { en: 'Metal band', es: 'Banda metálica' },
+  'design.effects.bandIridescent': { en: 'Iridescent band', es: 'Banda iridiscente' },
+  'design.effects.tile': { en: 'Tile', es: 'Mosaico' },
+  'design.effects.chip': { en: 'Chip', es: 'Ficha' },
+  'design.effects.fallback': { en: 'CSS fallback (no shader)', es: 'Respaldo CSS (sin shader)' },
+  'design.effects.fallbackDesc': {
+    en: 'This is what every Shimmer degrades to: the plain gradient token. Nothing on the page depends on the shader running.',
+    es: 'A esto degrada cada Shimmer: el token de degradado a secas. Nada en la página depende de que el shader corra.',
+  },
+  'design.effects.textures': { en: 'Texture tiles', es: 'Mosaicos de textura' },
+  'design.effects.texturesDesc': {
+    en: 'Masks, not images: the colour is --color-hairline and the tile size is in rem, so both follow the theme and the scale bands.',
+    es: 'Máscaras, no imágenes: el color es --color-hairline y el tamaño del mosaico está en rem, así que ambos siguen el tema y las bandas de escala.',
+  },
+  'design.effects.textureSize': { en: 'Tile size', es: 'Tamaño del mosaico' },
+  'design.effects.finishes': { en: 'CSS finishes', es: 'Acabados CSS' },
+  'design.effects.sheen': { en: 'Sheen sweep', es: 'Barrido de brillo' },
+  'design.effects.sheenOn': { en: 'Sheen on', es: 'Brillo activo' },
+  'design.effects.sheenOff': { en: 'Sheen off', es: 'Brillo inactivo' },
+  'design.effects.sheenDesc': {
+    en: 'An eight second highlight sweep that only runs on hover or focus-within, and never under reduced motion. It is decoration on top of an affordance that already works without it (P-03).',
+    es: 'Un barrido de luz de ocho segundos que solo corre al pasar el puntero o al recibir foco, y nunca con movimiento reducido. Es decoración sobre un control que ya funciona sin ella (P-03).',
+  },
+  'design.effects.sheenHint': { en: 'Hover or focus the band to see the sweep.', es: 'Pasa el puntero o enfoca la banda para ver el barrido.' },
+  'design.effects.textMetal': { en: 'Metal text', es: 'Texto metálico' },
+  'design.effects.textIridescent': { en: 'Iridescent text', es: 'Texto iridiscente' },
+  'design.effects.textDesc': {
+    en: 'Gradient text clips the gradient to the glyphs and falls back to solid --color-metal-text. Reserve it for display sizes: at body size the streaks eat the letterforms.',
+    es: 'El texto con degradado recorta el degradado a las letras y cae a --color-metal-text sólido. Resérvalo para tamaños de despliegue: en tamaño de texto corrido los destellos se comen las formas.',
+  },
+  'design.effects.rules': { en: 'Where each one is allowed', es: 'Dónde se permite cada uno' },
+  'design.effects.rule1': {
+    en: 'Decorative only. A finish never carries information: nothing is lost if it fails to render.',
+    es: 'Solo decorativo. Un acabado nunca carga información: no se pierde nada si no se dibuja.',
+  },
+  'design.effects.rule2': {
+    en: 'Metal and iridescent surfaces always take ink text (--brand-ink), in both themes. They are light surfaces even in dark mode.',
+    es: 'Las superficies metálicas e iridiscentes siempre llevan texto en tinta (--brand-ink), en ambos temas. Son superficies claras incluso en modo oscuro.',
+  },
+  'design.effects.rule3': {
+    en: 'Behind running text use the soft variants (metal-soft, iridescent-soft), which keep the theme text colour readable.',
+    es: 'Detrás de texto corrido usa las variantes suaves (metal-soft, iridescent-soft), que mantienen legible el color de texto del tema.',
+  },
+  'design.effects.rule4': {
+    en: 'One finish per screen. A hero band, a footer lockup or a single card: two shader surfaces competing is a bug.',
+    es: 'Un acabado por pantalla. Una banda principal, un bloque de pie o una sola tarjeta: dos superficies con shader compitiendo es un error.',
+  },
+  'design.effects.rule5': {
+    en: 'Motion is off under prefers-reduced-motion, off-screen and on a hidden tab; the shader caps devicePixelRatio at 2.',
+    es: 'El movimiento se apaga con prefers-reduced-motion, fuera de pantalla y con la pestaña oculta; el shader limita devicePixelRatio a 2.',
+  },
+  'design.effects.rule6': {
+    en: 'Never put a finish under a control that only reads because of it: the sheen is an extra, not the affordance.',
+    es: 'Nunca pongas un acabado bajo un control que solo se entiende gracias a él: el brillo es un extra, no el control.',
+  },
+};

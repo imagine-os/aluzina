@@ -37,7 +37,9 @@
 }
 
 .work-header .tabs__tab--selected {
-  background: var(--color-surface-raised);
+  background: var(--color-tint-periwinkle);
+  border-bottom-color: transparent;
+  box-shadow: inset 0 -2px 0 var(--metal-base);
 }
 
 .work-header__select .field__label:not(.visually-hidden) {

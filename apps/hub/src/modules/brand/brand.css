@@ -57,7 +57,7 @@
 }
 
 .brand-list__title {
-  font-weight: 600;
+  font-weight: var(--weight-medium);
   overflow-wrap: anywhere;
 }
 

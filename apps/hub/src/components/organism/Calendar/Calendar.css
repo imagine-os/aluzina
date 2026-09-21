@@ -40,7 +40,8 @@
 }
 
 .calendar__day--today {
-  border-color: var(--color-accent);
+  border-color: var(--metal-base);
+  box-shadow: inset 3px 0 0 var(--metal-base);
 }
 
 .calendar__date {
@@ -51,9 +52,10 @@
 }
 
 .calendar__dow {
+  font-family: var(--font-display);
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
@@ -61,7 +63,12 @@
 .calendar__num {
   font-family: var(--font-display);
   font-size: 1.75rem;
+  font-weight: var(--weight-bold);
   line-height: 1;
+}
+
+.calendar__day--today .calendar__num {
+  color: var(--color-metal-text);
 }
 
 .calendar__events {
@@ -94,11 +101,12 @@
 }
 
 .calendar__event--btn:hover {
-  border-color: var(--color-accent);
+  border-color: var(--metal-base);
+  background: var(--color-surface-raised);
 }
 
 .calendar__title {
-  font-weight: 500;
+  font-weight: var(--weight-medium);
   flex: 1 1 12rem;
 }
 

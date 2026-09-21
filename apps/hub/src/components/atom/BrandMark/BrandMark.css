@@ -1,0 +1,55 @@
+/* BrandMark: height comes from the size, width from the shape's viewBox (intrinsic ratio). */
+.brand-mark {
+  --brand-mark-h: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--brand-mark-h) * 0.35);
+  height: var(--brand-mark-h);
+  vertical-align: middle;
+  flex: none;
+}
+
+.brand-mark--sm { --brand-mark-h: 1.25rem; }
+.brand-mark--md { --brand-mark-h: 2rem; }
+.brand-mark--lg { --brand-mark-h: 3.5rem; }
+.brand-mark--xl { --brand-mark-h: 6rem; }
+
+.brand-mark__svg {
+  display: block;
+  height: var(--brand-mark-h);
+  width: auto;
+  overflow: visible;
+}
+
+/* Outline finish: same hairline weight at every size (non-scaling stroke), rounded like the manual's 1.5 pt line. */
+.brand-mark__stroke {
+  fill: none;
+  stroke: var(--color-metal-text);
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.brand-mark--lg .brand-mark__stroke,
+.brand-mark--xl .brand-mark__stroke {
+  stroke-width: 2px;
+}
+
+/* Descriptor lockup: slash + two wide-tracked bold caps lines, flat metal text. */
+.brand-mark--descriptor {
+  color: var(--color-metal-text);
+}
+
+.brand-mark__descriptor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: calc(var(--brand-mark-h) * 0.26);
+  letter-spacing: var(--tracking-wide);
+  line-height: 1.6;
+  text-transform: uppercase;
+  white-space: nowrap;
+}

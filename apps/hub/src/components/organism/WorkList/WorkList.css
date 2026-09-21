@@ -13,19 +13,22 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--metal-base);
   border-radius: var(--radius-md);
-  background: var(--color-surface-raised);
+  background: var(--color-tint-periwinkle);
+  box-shadow: var(--shadow-sm);
 }
 
 .work-list__head {
   display: grid;
   grid-template-columns: var(--work-cols);
   gap: var(--space-2);
-  padding: 0 var(--space-3);
+  padding: 0 var(--space-3) var(--space-2);
+  border-bottom: var(--hairline) solid var(--color-hairline);
+  font-family: var(--font-display);
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
@@ -51,10 +54,10 @@
   min-height: var(--target);
   padding: var(--space-2) var(--space-3);
   border: 0;
-  background: var(--color-bg);
+  background: var(--color-surface-raised);
   text-align: left;
   font: inherit;
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   cursor: pointer;
 }
 
@@ -102,7 +105,8 @@
 }
 
 .work-row--selected {
-  background: var(--color-accent-soft);
+  background: var(--color-tint-periwinkle);
+  color: var(--color-text);
 }
 
 .work-row--done .work-row__title {
@@ -180,7 +184,7 @@
 
 .work-row__ind--warn {
   color: var(--color-warning);
-  font-weight: 700;
+  font-weight: var(--weight-bold);
 }
 
 .work-row__assignee {
@@ -234,7 +238,7 @@
 }
 
 .work-inline--status-doing .field__select {
-  border-color: var(--color-accent);
+  border-color: var(--metal-base);
 }
 
 .work-inline--status-blocked .field__select {

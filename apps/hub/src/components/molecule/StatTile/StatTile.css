@@ -5,7 +5,7 @@
   align-content: start;
   padding: var(--space-4) var(--space-5);
   border: 1px solid var(--color-border);
-  border-left: 0.375rem solid var(--color-border);
+  border-left: 0.25rem solid var(--color-hairline);
   border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-text);
@@ -14,37 +14,43 @@
 }
 
 .stat--interactive {
+  /* A <button> with inline-size containment shrinks to its padding unless told to fill its grid cell. */
+  width: 100%;
   font: inherit;
   cursor: pointer;
   min-height: var(--target);
 }
 
 .stat--interactive:hover {
-  border-color: var(--color-accent);
+  border-color: var(--metal-base);
+  background: var(--color-surface-raised);
 }
 
-.stat--accent { border-left-color: var(--color-accent); }
+.stat--accent { border-left-color: var(--metal-base); }
 .stat--success { border-left-color: var(--color-success); }
 .stat--warning { border-left-color: var(--color-warning); }
 .stat--danger { border-left-color: var(--color-danger); }
-.stat--info { border-left-color: var(--color-text-muted); }
+.stat--info { border-left-color: var(--color-info); }
 
+/* Eyebrow label (caps, medium, wide tracking, muted) like the manual's captions. */
 .stat__label {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: var(--weight-medium);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-caps);
   color: var(--color-text-muted);
 }
 
 .stat__value {
   font-family: var(--font-display);
   /* Never split a number (COP 60,500,000): break at spaces only, scale the type to the tile, ellipsis as last resort. */
-  font-size: clamp(1.25rem, 11cqi, 2rem);
-  font-weight: 600;
+  font-size: clamp(1.25rem, 10cqi, 2.25rem);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
   line-height: 1.1;
   overflow-wrap: normal;
   white-space: nowrap;

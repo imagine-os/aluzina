@@ -4,9 +4,9 @@ import type { ReactElement } from 'react';
  * Surfaces: the hub, one per portal (D-014), the client app, dev tools, docs / manual and bare public pages.
  * A route's surface decides which sidebar it appears in (DesktopShell groups the routes of the current surface).
  */
-export type Surface = 'hub' | 'founder' | 'ops' | 'studio' | 'brand' | 'client' | 'dev' | 'docs' | 'manual' | 'public';
+export type Surface = 'hub' | 'founder' | 'ops' | 'studio' | 'brand' | 'client' | 'dev' | 'design' | 'docs' | 'manual' | 'public';
 
-export const SURFACES: readonly Surface[] = ['hub', 'founder', 'ops', 'studio', 'brand', 'client', 'dev', 'docs', 'manual', 'public'];
+export const SURFACES: readonly Surface[] = ['hub', 'founder', 'ops', 'studio', 'brand', 'client', 'dev', 'design', 'docs', 'manual', 'public'];
 
 export type ParamType = 'string' | 'number' | 'id' | 'date' | 'boolean' | `enum:${string}`;
 

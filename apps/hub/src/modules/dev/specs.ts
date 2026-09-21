@@ -31,7 +31,7 @@ export const specsSpec = defineSpec({
   components: ['PageHeader', 'StatTile', 'SearchField', 'Select', 'FilterBar', 'DataTable', 'StatusPill', 'Drawer', 'KeyValue', 'Badge'],
   actions: [
     { id: 'dev.openSpec', label: 'Open page spec', intent: 'show the spec of page {code}', permission: 'dev.tools', params: { code: 'string' } },
-    { id: 'dev.filterSurface', label: 'Filter by surface', intent: 'show only {surface} pages', permission: 'dev.tools', params: { surface: 'enum:all|hub|founder|ops|studio|brand|client|dev|docs|manual|public' } },
+    { id: 'dev.filterSurface', label: 'Filter by surface', intent: 'show only {surface} pages', permission: 'dev.tools', params: { surface: 'enum:all|hub|founder|ops|studio|brand|client|dev|design|docs|manual|public' } },
   ],
   checkedAt: [390, 1280],
 });

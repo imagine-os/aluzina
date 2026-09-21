@@ -1,0 +1,34 @@
+/*
+ * Shimmer: the shader surface. The CSS gradient underneath is the fallback (no WebGL2, or a failed
+ * program): the canvas simply covers it when it works. Ink text on both finishes, in both themes.
+ */
+.shimmer {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--brand-ink);
+  border-radius: inherit;
+  min-height: 3rem;
+}
+
+.shimmer--metal {
+  background: var(--gradient-metal);
+}
+
+.shimmer--iridescent {
+  background: var(--gradient-iridescent);
+}
+
+.shimmer__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.shimmer__content {
+  position: relative;
+  z-index: 1;
+}

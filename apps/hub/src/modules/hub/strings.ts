@@ -102,6 +102,11 @@ export const strings: StringTable = {
     en: 'the Claude Design prototype of the Aluzina operations system: cockpit, stations, work views, QC, media, design system, docs; EN/ES toggle inside',
     es: 'el prototipo de Claude Design del sistema operativo de Aluzina: cabina, estaciones, vistas de trabajo, QC, medios, sistema de diseño, docs; con cambio EN/ES adentro',
   },
+  'hub.cards.design.title': { en: 'Design system', es: 'Sistema de diseño' },
+  'hub.cards.design.desc': {
+    en: 'the brand manual alive in the product: logo, palette, gradients, typography, elements and textures (D-12), every design token with its contrast in both themes (D-10) and the shader finishes (D-13). Gold today, silver ready.',
+    es: 'el manual de marca vivo en el producto: logo, paleta, degradados, tipografía, elementos y texturas (D-12), cada token de diseño con su contraste en ambos temas (D-10) y los acabados con shader (D-13). Dorado hoy, plateado listo.',
+  },
   'hub.cards.plan.title': { en: 'Plan viewer', es: 'Visor del plan' },
   'hub.cards.plan.desc': {
     en: 'the development plan from docs/plan/plan.json as kanban, list and timeline with dependencies; tasks bound by dependencies, not dates, with the model per task',

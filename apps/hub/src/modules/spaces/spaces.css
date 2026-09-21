@@ -11,8 +11,8 @@
 .spaces-glyph { color: var(--color-text-muted); }
 .spaces-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .spaces-form { display: grid; gap: var(--space-4); }
-.spaces-h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; margin: 0; display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
-.spaces-h3 { font-size: 0.875rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-text-muted); margin: 0; display: flex; align-items: center; gap: var(--space-2); }
+.spaces-h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: var(--weight-bold); margin: 0; display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+.spaces-h3 { font-family: var(--font-display); font-size: 0.75rem; font-weight: var(--weight-medium); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--color-text-muted); margin: 0; display: flex; align-items: center; gap: var(--space-2); }
 
 /* K-01 / K-02 layout: tree + content, the tree moves into a Drawer under 1024 px */
 .spaces-layout {
@@ -95,7 +95,7 @@
 .spaces-post__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
 .spaces-post__author { display: inline-flex; align-items: center; gap: var(--space-2); }
 .spaces-tags { display: inline-flex; flex-wrap: wrap; gap: var(--space-2); }
-.spaces-tag { color: var(--color-accent); font-weight: 700; }
+.spaces-tag { color: var(--color-accent-text); font-weight: var(--weight-bold); }
 .spaces-status .field__select { min-width: 9rem; }
 
 .spaces-section {
@@ -118,7 +118,7 @@
 .spaces-rel .btn { justify-content: start; min-width: 0; }
 .spaces-rel .btn__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .spaces-rel__type { grid-column: 1 / -1; font-size: 0.8125rem; padding-left: var(--space-2); }
-.spaces-rel-form { display: grid; gap: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-border); }
+.spaces-rel-form { display: grid; gap: var(--space-3); padding-top: var(--space-3); border-top: var(--hairline) solid var(--color-hairline); }
 .spaces-rel-form__target { display: grid; gap: var(--space-2); }
 .spaces-rel-results { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1); }
 
@@ -149,17 +149,17 @@
 .spaces-legend__item { display: inline-flex; align-items: center; gap: var(--space-2); }
 .spaces-legend__dot { display: inline-block; width: 0.75rem; height: 0.75rem; border-radius: 50%; border: 2px solid var(--color-text-muted); background: var(--color-surface); }
 .spaces-legend__dot--area { background: var(--color-primary); border-color: var(--color-primary); }
-.spaces-legend__dot--topic { background: var(--color-accent); border-color: var(--color-accent); }
+.spaces-legend__dot--topic { background: var(--color-metal-text); border-color: var(--color-metal-text); }
 .spaces-legend__dot--role { background: var(--color-success); border-color: var(--color-success); }
 .spaces-legend__dot--client { background: var(--color-warning); border-color: var(--color-warning); }
 .spaces-legend__dot--deliverable { background: var(--color-danger); border-color: var(--color-danger); }
 .spaces-legend__dot--tool { background: var(--color-text-muted); }
-.spaces-legend__dot--project { background: var(--color-accent-soft); border-color: var(--color-accent); }
-.spaces-legend__dot--archive { background: var(--color-bg); border-color: var(--color-border); }
-.spaces-legend__dot--post { border-color: var(--color-accent); }
+.spaces-legend__dot--project { background: var(--color-tint-periwinkle); border-color: var(--color-metal-text); }
+.spaces-legend__dot--archive { background: var(--color-bg); border-color: var(--color-hairline); }
+.spaces-legend__dot--post { border-color: var(--color-metal-text); }
 .spaces-legend__dot--other { border-style: dashed; }
 .spaces-legend__line { display: inline-block; width: 1.5rem; border-top: 2px solid var(--color-border); }
-.spaces-legend__line--filed { border-top: 2px dashed var(--color-accent); }
+.spaces-legend__line--filed { border-top: 2px dashed var(--color-metal-text); }
 .spaces-legend__line--relation { border-top: 1.5px solid var(--color-text-muted); }
 
 /* K-05 / K-06 */

@@ -3,8 +3,11 @@ import { useRoutes } from '../../app/RoutesContext';
 import { demoUserForRole } from '../../auth/demoUsers';
 import { ROLE_META, isRoleId, type RoleId } from '../../auth/roles';
 import { useSession } from '../../auth/SessionProvider';
+import { BrandMark } from '../../components/atom/BrandMark/BrandMark';
+import { Shimmer } from '../../components/atom/Shimmer/Shimmer';
 import { HubHeader } from '../../components/organism/HubHeader/HubHeader';
 import { SurfaceCard, type SurfaceStatus } from '../../components/molecule/SurfaceCard/SurfaceCard';
+import { useTheme } from '../../design/ThemeProvider';
 import { useT } from '../../i18n/I18nProvider';
 import { PORTAL_ROLES, type PrototypePageId, type SurfaceId } from './specs';
 import './HubPage.css';
@@ -45,6 +48,7 @@ const PRODUCT_SURFACES: SurfaceEntry[] = [
 
 /** Builder and dev tools: how the system is built and checked (D-xx). */
 const TOOL_SURFACES: SurfaceEntry[] = [
+  { id: 'design', code: 'D-12', key: 'design', kind: 'route' },
   { id: 'plan', code: 'D-05', key: 'plan', kind: 'route' },
   { id: 'canvas', code: 'D-07', key: 'canvas', kind: 'route' },
   { id: 'simulator', code: 'D-08', key: 'simulator', kind: 'route' },
@@ -83,6 +87,7 @@ const PROTOTYPE_PAGES: PrototypePage[] = [
 export function HubPage() {
   const { t } = useT();
   const { switchUser, role } = useSession();
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const routes = useRoutes();
 
@@ -154,6 +159,11 @@ export function HubPage() {
       <main className="hub-main">
         <div className="container">
           <section className="hub-hero">
+            <Shimmer finish="metal" intensity={0.35} className="hub-hero__band">
+              <div className="hub-hero__band-inner">
+                <BrandMark kind="wordmark" finish={theme === 'dark' ? 'iridescent' : 'metal'} size="xl" />
+              </div>
+            </Shimmer>
             <h1 className="hub-hero__title">{t('hub.title')}</h1>
             <p className="hub-hero__subtitle">{t('hub.subtitle')}</p>
           </section>

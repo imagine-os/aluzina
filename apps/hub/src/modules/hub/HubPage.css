@@ -86,3 +86,67 @@
 .hub-group--first {
   margin-top: 0;
 }
+
+/*
+ * Hero band: a decorative metal Shimmer behind the wordmark (iridescent on dark, metal on light, as the
+ * manual pairs its white page with its gold band). The title and subtitle sit below it in the theme text
+ * colour, so no reading depends on the shader; the band is aria-hidden and degrades to the CSS gradient.
+ */
+.hub-hero {
+  max-width: none;
+}
+
+.hub-hero__band {
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-5);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* A veil washes the finish back so the wordmark, which sits above it, keeps its own gradient. */
+.hub-hero__band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--color-bg) 62%, transparent);
+  pointer-events: none;
+}
+
+:root[data-theme='dark'] .hub-hero__band::after {
+  background: color-mix(in srgb, var(--color-bg) 30%, transparent);
+}
+
+.hub-hero__band-inner {
+  display: grid;
+  place-items: center;
+  min-height: 9rem;
+  padding: var(--space-5) var(--space-6);
+}
+
+.hub-hero__title,
+.hub-hero__subtitle {
+  max-width: 48rem;
+}
+
+@media (min-width: 1280px) {
+  .hub-hero__band-inner {
+    min-height: 12rem;
+  }
+}
+
+/* The hero wordmark letterboxes rather than clipping, and steps down on phones. */
+.hub-hero__band-inner .brand-mark,
+.hub-hero__band-inner .brand-mark__svg {
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .hub-hero__band-inner .brand-mark--xl {
+    --brand-mark-h: 2.5rem;
+  }
+
+  .hub-hero__band-inner {
+    min-height: 6.5rem;
+    padding: var(--space-4);
+  }
+}

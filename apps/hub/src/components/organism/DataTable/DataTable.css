@@ -27,13 +27,23 @@
 
 .table thead th {
   padding-block: var(--space-1);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--color-text-muted);
-  background: var(--color-bg);
+  background: var(--color-surface);
+  border-bottom: var(--hairline) solid var(--color-hairline);
   white-space: nowrap;
+}
+
+/* Selected rows (aria-selected / data-selected) take the periwinkle wash with ink text. */
+.table tbody tr[aria-selected='true'],
+.table tbody tr[data-selected='true'],
+.table tbody tr.table__row--selected {
+  background: var(--color-tint-periwinkle);
+  color: var(--color-text);
 }
 
 .table tbody tr:last-child td {
@@ -124,9 +134,10 @@
 
   .table td::before {
     content: attr(data-label);
+    font-family: var(--font-display);
     font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-caps);
     text-transform: uppercase;
     color: var(--color-text-muted);
     padding-top: 0.2rem;

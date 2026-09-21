@@ -4,6 +4,7 @@ import { ROLE_META, isRoleId } from '../auth/roles';
 import { useSession } from '../auth/SessionProvider';
 import { Avatar } from '../components/atom/Avatar/Avatar';
 import { Badge } from '../components/atom/Badge/Badge';
+import { BrandMark } from '../components/atom/BrandMark/BrandMark';
 import { Button } from '../components/atom/Button/Button';
 import { ToggleButton } from '../components/atom/ToggleButton/ToggleButton';
 import { PresenceBar } from '../components/molecule/PresenceBar/PresenceBar';
@@ -46,6 +47,21 @@ export function GlobalControls({ compact }: { compact?: boolean }) {
   );
 }
 
+/**
+ * Wordmark link home: metal (gold) on light, iridescent on dark (brand-system.md, "Light and dark").
+ * `compact` swaps in the monogram under 768 px, where the top bar also holds the menu, three toggles and the avatar.
+ */
+function ShellBrand({ compact }: { compact?: boolean }) {
+  const { theme } = useTheme();
+  const finish = theme === 'dark' ? 'iridescent' : 'metal';
+  return (
+    <Link className={`dshell__brand${compact ? ' dshell__brand--compact' : ''}`} to="/">
+      <BrandMark kind="wordmark" size="sm" finish={finish} label="Aluzina" className="dshell__brand-word" />
+      {compact && <BrandMark kind="monogram" size="md" tone="periwinkle" label="Aluzina" className="dshell__brand-mono" />}
+    </Link>
+  );
+}
+
 function groupRoutes(navRoutes: RouteDef[]): { group: string | undefined; routes: RouteDef[] }[] {
   const groups = new Map<string | undefined, RouteDef[]>();
   for (const r of navRoutes) {
@@ -62,7 +78,7 @@ function NavList({ routes, onNavigate }: { routes: RouteDef[]; onNavigate?: () =
     <>
       {groupRoutes(routes).map(({ group, routes: rs }) => (
         <div key={group ?? 'ungrouped'} className="shell-nav__group">
-          {group && <h2 className="shell-nav__group-title">{t(`core.nav.${group}`)}</h2>}
+          {group && <h2 className="shell-nav__group-title eyebrow">{t(`core.nav.${group}`)}</h2>}
           <ul className="shell-nav__list">
             {rs.map((r) => (
               <li key={r.path}>
@@ -122,10 +138,7 @@ export function DesktopShell({ route, children }: { route: RouteDef; children: R
       </a>
       <header className="dshell__top">
         <Button className="dshell__menu-btn" variant="ghost" icon="☰" aria-label={t('core.shell.openMenu')} aria-expanded={navOpen} onClick={() => setNavOpen(true)} />
-        <Link className="dshell__brand" to="/">
-          <span className="dshell__mark" aria-hidden="true" />
-          <span className="dshell__brand-name">Aluzina</span>
-        </Link>
+        <ShellBrand compact />
         <span className="dshell__portal">{t(portalKey)}</span>
         <Badge tone="accent" className="dshell__role">{t(isRoleId(role) ? ROLE_META[role].labelKey : 'core.role.unknown')}</Badge>
         <div className="dshell__spacer" />
@@ -141,6 +154,7 @@ export function DesktopShell({ route, children }: { route: RouteDef; children: R
       <div className="dshell__body">
         <nav className="dshell__side shell-nav" aria-label={t('core.shell.nav')}>
           <NavList routes={navRoutes} />
+          <span className="dshell__side-texture texture-stars" aria-hidden="true" />
         </nav>
         <main id="main" className="dshell__main" tabIndex={-1}>
           <div className="dshell__content">{children}</div>
@@ -181,10 +195,7 @@ export function PhoneShell({ route, children }: { route: RouteDef; children: Rea
         {t('core.shell.skip')}
       </a>
       <header className="pshell__top">
-        <Link className="dshell__brand" to="/">
-          <span className="dshell__mark" aria-hidden="true" />
-          <span className="dshell__brand-name">Aluzina</span>
-        </Link>
+        <ShellBrand />
         <GlobalControls compact />
       </header>
       <main id="main" className="pshell__main" tabIndex={-1}>

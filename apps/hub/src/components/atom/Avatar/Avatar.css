@@ -6,13 +6,19 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
+  border: 1px solid var(--color-border);
   background: var(--color-accent-soft);
-  color: var(--color-accent-text);
-  font-weight: 700;
+  color: var(--color-text);
+  font-weight: var(--weight-bold);
   font-size: 0.9375rem;
   letter-spacing: 0.02em;
   overflow: hidden;
 }
+
+/* Tint by initial (Avatar.tsx hashes the first letter): the manual's three pastels, ink text on all. */
+.avatar--periwinkle { background: var(--color-tint-periwinkle); }
+.avatar--aqua { background: var(--color-tint-aqua); }
+.avatar--lime { background: var(--color-tint-lime); }
 
 .avatar--sm { width: 2rem; height: 2rem; font-size: 0.75rem; }
 .avatar--lg { width: 3.5rem; height: 3.5rem; font-size: 1.25rem; }

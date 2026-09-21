@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BrandMark, type BrandMarkTone } from '../../atom/BrandMark/BrandMark';
 import { Placeholder } from '../../atom/Placeholder/Placeholder';
 import { useT } from '../../../i18n/I18nProvider';
 import './SurfaceCard.css';
@@ -25,6 +26,15 @@ interface SurfaceCardProps {
   image?: string;
 }
 
+const TONES: BrandMarkTone[] = ['periwinkle', 'aqua', 'lime'];
+
+/** Stable monogram tint per surface code (O-01, K-05...). */
+function toneOf(code: string): BrandMarkTone {
+  let h = 0;
+  for (const ch of code) h = (h * 31 + (ch.codePointAt(0) ?? 0)) % 997;
+  return TONES[h % TONES.length];
+}
+
 /** 640 x 400 thumbnail slot with a fixed aspect ratio so the grid never shifts (P-01). */
 function Thumb({ image, code, title }: { image?: string; code: string; title: string }) {
   const { t } = useT();
@@ -34,7 +44,9 @@ function Thumb({ image, code, title }: { image?: string; code: string; title: st
     <span className={`surface-card__thumb${empty ? ' surface-card__thumb--empty' : ''}`} data-thumb={empty ? 'placeholder' : 'image'}>
       {empty ? (
         <span className="surface-card__thumb-tile" aria-hidden="true">
-          <span className="surface-card__thumb-mark" />
+          <span className="surface-card__thumb-mark">
+            <BrandMark kind="monogram" tone={toneOf(code)} size="lg" />
+          </span>
           <span className="surface-card__thumb-text">{t('core.thumb.none')}</span>
           <span className="surface-card__thumb-code">{code}</span>
         </span>

@@ -16,6 +16,7 @@
 
 .card--raised {
   background: var(--color-surface-raised);
+  box-shadow: var(--shadow-sm);
 }
 
 .card--interactive {
@@ -27,7 +28,7 @@
 }
 
 .card--interactive:hover {
-  border-color: var(--color-accent);
+  border-color: var(--metal-base);
 }
 
 .card__head {
@@ -64,7 +65,7 @@
 }
 
 .card__footer {
-  border-top: 1px solid var(--color-border);
+  border-top: var(--hairline) solid var(--color-hairline);
   padding-top: var(--space-3);
   color: var(--color-text-muted);
   font-size: 0.9375rem;

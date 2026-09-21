@@ -21,9 +21,10 @@
 .stree__item:hover { background: var(--color-surface-raised); }
 
 .stree__item--selected {
-  background: var(--color-accent-soft);
-  color: var(--color-accent-text);
-  font-weight: 700;
+  background: var(--color-tint-periwinkle);
+  color: var(--color-text);
+  font-weight: var(--weight-bold);
+  box-shadow: inset 2px 0 0 var(--metal-base);
 }
 
 .stree__item--archived .stree__name { color: var(--color-text-muted); text-decoration: line-through; }
@@ -54,11 +55,11 @@
 
 .stree__item--area .stree__glyph { color: var(--color-text); }
 .stree__item--area .stree__name { font-weight: 700; letter-spacing: 0.01em; }
-.stree__item--topic .stree__glyph { color: var(--color-accent); }
+.stree__item--topic .stree__glyph { color: var(--color-metal-text); }
 .stree__item--role .stree__glyph { color: var(--color-success); }
 .stree__item--client .stree__glyph { color: var(--color-warning); }
 .stree__item--deliverable .stree__glyph { color: var(--color-danger); }
-.stree__item--project .stree__glyph { color: var(--color-accent); }
+.stree__item--project .stree__glyph { color: var(--color-metal-text); }
 
 .stree__name {
   flex: 1 1 auto;
@@ -82,4 +83,4 @@
   line-height: 1.5;
 }
 
-.stree__item--selected .stree__count { color: var(--color-accent-text); border-color: var(--color-accent); }
+.stree__item--selected .stree__count { color: var(--color-text); border-color: var(--metal-base); }

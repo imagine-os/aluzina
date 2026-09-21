@@ -7,7 +7,7 @@
   display: flex;
   gap: var(--space-1);
   overflow-x: auto;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: var(--hairline) solid var(--color-hairline);
   scrollbar-width: thin;
 }
 
@@ -18,12 +18,12 @@
   min-height: var(--target);
   padding: 0 var(--space-4);
   border: 0;
-  border-bottom: 3px solid transparent;
+  border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   background: none;
   color: var(--color-text-muted);
   font: inherit;
-  font-weight: 500;
+  font-weight: var(--weight-medium);
   white-space: nowrap;
   cursor: pointer;
 }
@@ -34,7 +34,7 @@
 
 .tabs__tab--selected {
   color: var(--color-text);
-  border-bottom-color: var(--color-accent);
+  border-bottom-color: var(--metal-base);
 }
 
 .tabs__count {

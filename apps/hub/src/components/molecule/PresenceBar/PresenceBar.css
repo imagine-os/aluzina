@@ -22,7 +22,7 @@
 }
 
 .presence__avatar--self {
-  border-color: var(--color-accent);
+  border-color: var(--metal-base);
 }
 
 .presence__more {

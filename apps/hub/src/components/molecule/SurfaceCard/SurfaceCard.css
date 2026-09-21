@@ -16,11 +16,12 @@
 }
 
 .surface-card:hover {
-  border-color: var(--color-accent);
+  border-color: var(--metal-base);
 }
 
 .surface-card--live {
   background: var(--color-surface-raised);
+  box-shadow: var(--shadow-sm);
 }
 
 .surface-card__top {
@@ -48,6 +49,7 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   border: 1px solid var(--color-border);
+  background: var(--color-surface);
   color: var(--color-text-muted);
 }
 
@@ -61,7 +63,8 @@
 
 .surface-card__status--live {
   color: var(--color-success);
-  border-color: var(--color-success);
+  background: var(--color-success-soft);
+  border-color: color-mix(in srgb, var(--color-success) 40%, transparent);
 }
 
 .surface-card__title {
@@ -75,8 +78,8 @@
 
 .surface-card__cta {
   margin-top: auto;
-  font-weight: 500;
-  color: var(--color-accent);
+  font-weight: var(--weight-medium);
+  color: var(--color-accent-text);
 }
 
 /* Thumbnail slot: fixed 16 / 10 ratio (640 x 400 source), never shifts the layout (P-01). */
@@ -86,7 +89,7 @@
   width: 100%;
   overflow: hidden;
   border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
+  border: var(--hairline) solid var(--color-hairline);
   background: var(--color-surface);
 }
 
@@ -118,11 +121,8 @@
 }
 
 .surface-card__thumb-mark {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, var(--color-accent-soft, #fde68a) 0 38%, var(--color-accent) 40%);
-  opacity: 0.85;
+  display: inline-flex;
+  opacity: 0.9;
 }
 
 .surface-card__thumb-code {
@@ -145,5 +145,6 @@ button.surface-card {
 
 .surface-card__status--stub {
   color: var(--color-warning);
-  border-color: var(--color-warning);
+  background: var(--color-warning-soft);
+  border-color: color-mix(in srgb, var(--color-warning) 40%, transparent);
 }

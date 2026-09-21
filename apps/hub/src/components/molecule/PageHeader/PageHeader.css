@@ -2,6 +2,8 @@
   display: grid;
   gap: var(--space-3);
   margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: var(--hairline) solid var(--color-hairline);
 }
 
 .page-header__crumbs ol {
@@ -19,7 +21,7 @@
 .page-header__crumbs li + li::before {
   content: '/';
   margin-right: var(--space-2);
-  color: var(--color-border);
+  color: var(--color-hairline);
 }
 
 .page-header__crumbs a {
@@ -53,6 +55,9 @@
   align-items: center;
   gap: var(--space-3);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
+  /* One family everywhere: page titles carry the hierarchy by weight (black), not by a second face. */
+  font-weight: var(--weight-black);
+  letter-spacing: 0;
 }
 
 .page-header__code {
@@ -63,6 +68,7 @@
   padding: 0.125rem var(--space-2);
   border: 1px dashed var(--color-warning);
   border-radius: var(--radius-sm);
+  background: var(--color-warning-soft);
   color: var(--color-warning);
 }
 

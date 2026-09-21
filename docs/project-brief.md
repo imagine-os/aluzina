@@ -2,7 +2,7 @@
 
 ## Client
 
-**Aluzina** is an interior design studio in Medellín, Colombia (El Poblado, Envigado, Laureles, Sabaneta, Rionegro, Llanogrande). Its positioning, from the public site (data, fetched 2026-09-20): "Diseñamos espacios que se sienten, no solo se ven. Neurointeriorismo e iluminación emocional en Medellín." Services: interior design for homes, hotels and commercial spaces; emotional lighting design; neurointeriorism consulting; custom decorative luminaires; space direction. Tone: professional and warm, sensory, transformation-focused. Visual cues: near-black neutral base with warm amber accents, Playfair Display headings, Roboto body, nature and product photography.
+**Aluzina** is an interior design studio in Medellín, Colombia (El Poblado, Envigado, Laureles, Sabaneta, Rionegro, Llanogrande). Its positioning, from the public site (data, fetched 2026-09-20): "Diseñamos espacios que se sienten, no solo se ven. Neurointeriorismo e iluminación emocional en Medellín." Services: interior design for homes, hotels and commercial spaces; emotional lighting design; neurointeriorism consulting; custom decorative luminaires; space direction. Tone: professional and warm, sensory, transformation-focused. Visual cues: near-black neutral base with warm amber accents, Playfair Display headings, Roboto body, nature and product photography. The brand manual received 2026-09-21 supersedes these visual cues (metallic gold Pantone 875 C, pastel iridescent secondaries, DIN Round Pro typography) — see `knowledge/brand.md`.
 
 ## What exists
 
