@@ -4,7 +4,9 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 
 ## Backlog
 
-- D-020 data layer: entities `clients`, `comments` / annotations (P-08), `partnerships`, `products`, `goals`, `followUps`, `comparisonGroups`, `scheduleItems`, `measurements`, `images` + file storage; fields `payments.supplierId`, `materials.imageUrl`, `references.imageUrl`, `revisions.imageUrl`, `brandAssets.thumbnailUrl`; `tasks.own.write` (Fable 5.1)
+- D-020 data layer (rest): entities `clients`, annotations (P-08, can reuse `comments`), `partnerships`, `products`, `goals`, `followUps`, `comparisonGroups`, `scheduleItems`, `measurements`, `images` + file storage; fields `payments.supplierId`, `materials.imageUrl`, `references.imageUrl`, `revisions.imageUrl`, `brandAssets.thumbnailUrl` (`comments`, `tasks.own.write` done in 0008) (Fable 5.1)
+- Step 11 Work follow-ups: pointer drag to move board cards and shift timeline bars (bonus over the select / drawer paths), section create / rename / reorder UI, `views` table replacing `aluzina.views.<userId>` (D-025), 1920 / 2560 / 3840 and dark captures of W-01 / W-02, an "Open in Work" link from A-07 / S-01 / G-01 task cards (Opus 5)
+- Step 11 realtime: Supabase Realtime + Presence adapters behind `subscribe` / `usePresence()` (D-023), `version` column + merge UI replacing last-write-wins (D-024), conflict log rows for D-04 (Fable 5.1)
 - D-020 alert generation: one rule raising / resolving `alerts` from payments, quotes, deliveries and competition deadlines (`leadDays` before `dueDate`), surfaced per role (Fable 5.1)
 - D-020 seeds: two or three more `plan` / `spec` documents across Casa Laureles, Noam, Café Provenza; competition rows when the 2027 list arrives (Sonnet 5)
 - D-020 product: shared "request" flow (presentations, revisions, image sets) from the studio / ops / founder portals into the brand queue; report templates for O-10; code-split the bundle per module (590 kB chunk warning) (Opus 5)
@@ -15,7 +17,7 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 - Step 5: surfaces: customer app C-xx, staff / admin A-xx, in-app docs D-06/D-07, ops manual M-xx, client proposal view (Opus 5)
 - Step 6: Spanish fill pass over every strings table (Sonnet 5)
 - Step 7 (rest): `feedback` table + FeedbackButton, actions bus + WebMCP generation from the manifest (Fable 5.1)
-- Step 8: realtime plan doc, presence, version column, offline queue (Fable 5.1, Opus 5)
+- Step 8 (rest): realtime plan doc `docs/reference/realtime-plan.md`, offline queue (presence and the realtime seam landed in 0008) (Fable 5.1, Opus 5)
 - Step 9c: Client portal C-xx on PhoneShell (own projects, proposals to approve, messages, payments read) (Opus 5)
 - Step 9c: alert pattern across portals (Miguel's "before urgent" + Angelica's deadlines from `alerts`, lead-time rule, surfaced per role) (Fable 5.1)
 - Dev tools next: `/#/dev/tokens` (D-01), `/#/dev/actions` (D-20), actions bus `run(id, params)`, `viewAs` control in the user menu for founder / dev, plan viewer, canvas, demo simulator (Opus 5)
@@ -33,6 +35,7 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 
 ## Done
 
+- Step 10: Asana-style Work views (changelog 0008, D-021..D-025): `sections` / `comments` / `activity`, six organisms + `PresenceBar` with metas and examples, MockProvider BroadcastChannel realtime with rows in the message, `basedOn` conflicts + toast, `PresenceProvider` + shell bar, Work module W-01 / W-02 on four portals with role defaults, D-04 multiuser page, O-02 / O-03 "Open in Work", `tasks.own.write`, smoke green at 360-2560 for all four views, keyboard-only drawer run, two-tab update in 15-20 ms (Fable 5.1)
 - Step 9c: integration (changelog 0007, D-018..D-020): Placeholder wrapper mode + tooltip clamp, StatTile numbers, Timeline bar targets, router future flags, `suppliers.read`, `tasks.startDate`, thumbnails image-wait bound; tsc + build green; smoke over 36 routes at 390 / 1280 clean; `_pending` drafts merged (Fable 5.1)
 - Step 9b: Founder portal A-01..A-07 (approvals, pipeline, quotes and proposals, products and partnerships, clients, team) (Opus 5)
 - Step 9b: Operations portal O-01..O-10 (schedule, tasks, suppliers, quotes and comparisons, deliveries, payments, documents, alerts, reports) (Opus 5)

@@ -1,0 +1,62 @@
+version: 0.6.0
+date: 2026-09-21
+prompt: 0004
+intent: The Asana views the team already uses (List, Board, Timeline, plus Calendar) become shared organisms and a Work module mounted in every portal (W-01 all projects, W-02 one project), on top of a data layer that now has sections, comments and activity, a cross-tab realtime seam, presence, last-write-wins conflict notices and per-user saved views; D-04 is the multiuser QA page.
+decision: D-021, D-022, D-023, D-024, D-025
+rejected: per-portal forks of the views (one organism family, D-021); drag-and-drop as the way to move cards or bars (the "Move to…" select, prev / next buttons and the drawer's date fields are the mandatory paths, P-03; pointer drag stays a bonus in the backlog); a separate `views` table now (localStorage per user until the table exists, D-025); versioned rows / merge UI now (last-write-wins with a notice, D-024); reloading tables from localStorage on a broadcast (a receiving tab can still read a stale DOMStorage copy, so the changed rows travel inside the message)
+files: apps/hub/src/data/schema/{base,projects,index}.ts, apps/hub/src/data/{provider,MockProvider,DataContext}.ts(x), apps/hub/src/data/seed/{index,projects,work}.ts, apps/hub/src/auth/{permissions,SessionProvider}.ts(x), apps/hub/src/specs/PageSpec.ts, apps/hub/src/i18n/core.ts, apps/hub/src/work/{model,views,labels,sample,useWork}.ts, apps/hub/src/components/organism/{WorkHeader,WorkList,WorkBoard,WorkTimeline,WorkCalendar,TaskDetailDrawer}/* (tsx, css, meta, example), apps/hub/src/components/molecule/PresenceBar/*, apps/hub/src/presence/PresenceProvider.tsx, apps/hub/src/app/{App,shells}.tsx, apps/hub/src/modules/work/{index,specs,strings,WorkPage.tsx,work.css}, apps/hub/src/modules/dev/{MultiuserPage.tsx,index,specs,strings,dev.css}, apps/hub/src/modules/ops/{TasksPage,SchedulePage}.tsx + specs.ts + strings.ts (Open in Work), apps/hub/src/modules/founder/useApprovals.ts (new task fields), apps/hub/src/modules/README.md, scripts/screenshots.mjs (--as, --settle), package.json + apps/hub/package.json (0.6.0), docs/prompts/0004-asana-style-work-views.md, docs/changelog/0008-work-views.md, docs/decisions.md (D-021..D-025), docs/pages/{W-01,W-02,D-04}.md, docs/reference/surfaces.md, docs/kanban.md, docs/build-plan.md, docs/knowledge/{tools-in-use.md,README.md,roles-and-portals.md}, docs/README.md, docs/screenshots/{W-01,W-02,D-04}/
+codes: W-01, W-02, D-04, O-02, O-03
+model: Fable 5.1
+
+# 0008 - Asana-style Work views in the multiuser system (build plan step 10)
+
+Justin: the team uses Asana today and values its List, Timeline and Board views; integrate them beautifully into the multiuser system for project management (prompt 0004, verbatim). This pass ships them as **shared organisms** (D-021) reused by one **Work module** mounted on every portal, over a data layer extended for project management (D-022), with the mock realtime and presence seam (D-023), an interim conflict rule (D-024) and saved views (D-025). 45 routes and 400 declared actions are now in the manifest (36 / 148 before).
+
+## A. Data (`feat(data)`, D-022)
+
+- New entities `sections` (`projectId | null`, `name`, `order`), `comments` (`entity`, `entityId`, `authorId`, `body`) and `activity` (`entity`, `entityId`, `actorId`, `field`, `from`, `to`, `at`). `tasks` gain `sectionId`, `description`, `createdById`, `tags[]`, `subtasks[{id,label,done}]`, `completedAt`, `order`. `BaseRow.updated_by` (optional) records the last writer.
+- `MockProvider` writes one `activity` row per changed field on every `update` (never for `activity` / `comments`), capped at 500 rows. `setActor(userId)` is called by `DataContext` from the session, so `updated_by` and `activity.actorId` name the demo user.
+- `SEED_VERSION` 3: 25 sections and 60 tasks with start / due dates, dependencies, tags, subtasks and Spanish titles for Casa Laureles (brief -> concepto -> desarrollo -> documentación -> compras -> obra, Jul-Dec 2026), HOY Wellness Center (Mar 2026 - Feb 2027) and Noam Residential (Jan-Nov 2026), plus Honey Valley, Ruta N and studio-wide sections; 5 comments and a 4-row activity trail. The founder's "request changes" and "comment" tasks now carry the new fields and the `aprobación` tag.
+- `tasks.own.write` permission (edit tasks assigned to me or created by me, read all) granted to studio and brand; `tasks.manage` (ops, founder) edits everything.
+- `PageSpec` accepts `W-xx` codes. `SessionProvider` keeps the `?as=` demo user per tab in `sessionStorage` (`aluzina.tabUser`) so two tabs stay two people across reloads.
+
+## B. Components (`feat(components)`, D-021) — six organisms, one molecule, all with metas and live examples at `/#/dev/components`
+
+| Component | What it does |
+| --- | --- |
+| `WorkHeader` | View tabs List / Board / Timeline / Calendar with counts (Tabs molecule), search, filters panel (assignee, status, priority, due window, tag, project, show completed), sort, group-by (section / assignee / status / due / project), saved views select + Save (Modal) + delete, presence slot, "Add task". |
+| `WorkList` | Collapsible groups; rows with completion toggle, inline title edit, assignee (Avatar + Select), due date (`Input type=date` with overdue tone), status and priority Selects, tags, subtask / dependency / comment indicators, project name; multi-select checkbox + bulk bar (assign, status, due, section); inline "Add task" per group; keyboard: arrows, Enter, Space (complete), Shift+Space (select), Shift+arrows, Escape; cards under 1024 px. Read-only rows show pills. |
+| `WorkBoard` | Columns per group with WIP counts; rich cards; "Move to…" select plus prev / next buttons; inline add per column; horizontal scroll with snap on phones. |
+| `WorkTimeline` | Gantt: sticky task column and axis, Day / Week / Month zoom (rem-based so it scales on TVs), bars from `startDate` to `dueDate`, milestone diamonds for due-only tasks, section summary bars, today line with label, dependency arrows (SVG, `dependsOn`), overdue / blocked / done / doing tones, "Go to today", bars are buttons (arrows / Home / End move, Enter opens); list with percent mini bars under 768 px. |
+| `WorkCalendar` | Tasks by due date on the library `Calendar` with assignee and status. |
+| `TaskDetailDrawer` | Title, description, section, assignee, start / due, status, priority, tags, dependencies (cycle-safe picker, remove), subtasks checklist + add, comments thread, activity trail ("Miguel changed status · 2 min ago", from -> to), Mark complete / incomplete; read-only mode. Every write carries `basedOn`. |
+| `PresenceBar` (molecule) | Stacked avatars (self ringed) + "Miguel, Sarai are here"; compact mode in the shell top bar. |
+
+Shared model: `src/work/model.ts` (filters, sort, grouping, due windows, cycle check), `views.ts` (saved views, last state per scope), `labels.ts`, `sample.ts` (example data), `useWork.ts` (data + writes + `canEdit`). Strings: 150 `core.work.*` / `core.presence.*` / `core.priority.*` keys, EN + ES (Lista, Tablero, Cronograma, Calendario, Sección, Asignado, Fecha límite, Dependencias, Subtareas, Comentarios).
+
+Three layout defects found by the smoke and fixed in the organisms: native `<select>`s inside grid / flex cells need `min-width: 0` (their `auto` minimum is the longest option); the `visually-hidden` label of `hideLabel` fields is `position: absolute`, so inside a horizontally scrolling board its static position in a far-right column widened the page until the inline field became `position: relative`; a column-flow grid with 25 implicit tracks widened the root in Chromium even inside `overflow: auto`, so the board is a flex row.
+
+## C. Multiuser (`feat(presence)`, D-023, D-024)
+
+- `MockProvider` broadcasts every write on `BroadcastChannel('aluzina-data')` **with the changed rows** (and the activity rows it produced); a receiving tab upserts them and fires the same `subscribe` event, so `useTable` / `useRow` re-render. Fallback: the `storage` event reloads the tables. `reset()` propagates too. Measured: page B reflected page A's status change in 16-20 ms.
+- Conflicts: `update(entity, id, patch, { basedOn })`; when the stored row is newer the write is still applied (last-write-wins) and `onConflict` fires; `DataContext` toasts "Updated by <name> just now; your change was applied over theirs" using `updated_by`.
+- `PresenceProvider` (`src/presence/`): heartbeats `{ tabId, userId, route, at }` every 5 s on `BroadcastChannel('aluzina-presence')` (fallback `aluzina.presence` in localStorage), expires after 15 s, says goodbye on unload; `usePresence()` feeds the `PresenceBar` in `WorkHeader` and in the `DesktopShell` top bar (shown when someone else is here).
+- **D-04 `/#/dev/multiuser`**: steps, "Open a tab as <role>" buttons, channel names and heartbeat, this tab's id, live presence table, last 20 activity rows, "Reset demo data".
+
+## D. Work module (`feat(work)`, W-01 / W-02)
+
+`src/modules/work/` mounts the same `WorkPage` on `/founder/work`, `/ops/work`, `/studio/work`, `/brand/work` (W-01) and `/<surface>/work/:projectId` (W-02), nav group `projects`, order 5 (second item of the phone bottom nav), guards `projects.read` / `tasks.manage` / `tasks.own.write` / `tasks.own.write`. Role defaults: founder -> List grouped by project filtered to the `aprobación` tag (open tasks); ops -> Timeline by section sorted by due date; studio -> Board grouped by status sorted by priority; brand -> List filtered to Angélica. W-01 has an "Open a project…" select; W-02 shows the project name, client and counts with "All work". 31 actions declared per route (`work.setView`, `work.addTask`, `work.moveTask`, `work.setDates`, `work.assign`, `work.complete`, `work.comment`, `work.addDependency`, `work.saveView`, …). O-02 and O-03 gained an "Open in Work" button (`ops.openWork`) and keep working.
+
+## E. Verification (Playwright over `npm run preview`, Chromium 1194)
+
+`/ops/work` as ops at 360 / 390 / 768 / 1280 / 1920 / 2560, each of the four views: rendered, zero console errors, `document.documentElement.scrollWidth === clientWidth` (the board and the timeline scroll inside their own containers). Keyboard-only: Tab reaches a list row, Enter opens the drawer, Escape closes and returns focus to the row, Space toggles complete, ArrowDown moves to the next row. Two tabs in one browser context: A as ops, B as studio; B's presence bar reads "Miguel is here" within 6 s; A changes `tsk-hoy-marmol` to blocked through the inline select, B shows Blocked in 16-20 ms. Also green at 1280: `/founder/work`, `/studio/work`, `/brand/work`, `/ops/work/prj-laureles`, `/dev/multiuser`, `/dev/components`, `/ops/tasks`, `/ops/schedule`. Working captures: `scratchpad/shots/work/{list,board,timeline,drawer,presence-two-tabs}-1280.jpg`, `timeline-390.jpg`; live captures in `docs/screenshots/W-01/`, `W-02/`, `D-04/`.
+
+## F. Real vs placeholder
+
+Real: every view, filter, sort, grouping, saved view, inline edit, bulk edit, move, add task, drawer field, dependency, subtask, comment, activity line, presence, cross-tab update, conflict toast, reset. No `Placeholder` on W-01 / W-02 / D-04. Not done (backlog): pointer drag to move cards or shift bars (bonus, never mandatory), a `views` table, versioned rows / merge UI, Supabase Realtime + Presence adapters behind the same seams, section create / rename / reorder UI (sections come from the seeds and the D-020 data card), 1920+ / dark live captures of the Work views.
+
+## G. Deviations from the brief
+
+- The two-tab test runs two pages in **one** browser context: separate Playwright contexts do not share `localStorage` or `BroadcastChannel`, so the "second context" wording cannot exercise the seam; one context with two tabs is exactly the real browser situation the D-04 page describes.
+- `WorkList` collapses to cards under **1024 px** rather than 768: between 768 and 1023 the sidebar leaves ~28rem for content, too narrow for the seven-column row.
+- The existing `Kanban`, `Timeline`, `DataTable` and `Calendar` organisms stay as they are (used by O-02, O-03, A-03, S-07, G-06 and the dev pages); `WorkCalendar` wraps `Calendar`, the other three Work organisms are new because inline editing, grouping, sticky columns and dependency arrows would have forked their props beyond recognition.

@@ -1,6 +1,6 @@
 # Surfaces: routes, scripts, actions, MCP / CLI / API
 
-Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0007).
+Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0008).
 
 ## 1. What exists today
 
@@ -44,10 +44,13 @@ Every surface a machine (script, agent, voice controller, MCP client) can drive,
 | `/brand/images` | G-05 | brand | built | desktop | `images.write` | 5 (Images for clients) |
 | `/brand/revisions` | G-06 | brand | built | desktop | `revisions.manage` | 3 (Graphic revisions queue) |
 | `/brand/assets` | G-07 | brand | built | desktop | `assets.manage` | 6 (Asset library organization) |
+| `/founder/work`, `/ops/work`, `/studio/work`, `/brand/work` | W-01 | founder / ops / studio / brand | built | desktop | `projects.read` / `tasks.manage` / `tasks.own.write` / `tasks.own.write` | 31 `work.*` per route (Work) |
+| `/<surface>/work/:projectId` (same four surfaces) | W-02 | founder / ops / studio / brand | built | desktop | as W-01 | 31 `work.*` per route (Project work) |
 | `/dev/components` | D-02 | dev | built | desktop | `dev.tools` | `dev.searchComponents`, `dev.filterTier` |
 | `/dev/specs` | D-03 | dev | built | desktop | `dev.tools` | `dev.openSpec`, `dev.filterSurface` |
+| `/dev/multiuser` | D-04 | dev | built | desktop | `dev.tools` | `dev.openAs`, `dev.resetData` |
 
-36 routes, 148 declared actions: hub 7, founder 26 over 7 pages, ops 38 over 10 (35 distinct ids), studio 42 over 9, brand 31 over 7, dev 4 over 2 (changelog 0007). Every action id is `<module>.<verb>` with an intent phrase and, for the portals, a permission; the full list is `window.__aluzina.routes[].spec.actions` and the drawer on `/#/dev/specs`.
+45 routes, 400 declared action entries: hub 7, founder 88 (26 portal + 62 work), ops 102 (40 portal incl. `ops.openWork` x2 + 62 work), studio 104 (42 + 62), brand 93 (31 + 62), dev 6 over 3 pages (changelog 0008). The `work.*` set is 31 distinct ids declared on eight routes. Every action id is `<module>.<verb>` with an intent phrase and, for the portals, a permission; the full list is `window.__aluzina.routes[].spec.actions` and the drawer on `/#/dev/specs`.
 
 Consumers: `scripts/screenshots.mjs` (writes the manifest into `docs/screenshots/<CODE>/routes.json`), `/#/dev/specs` (D-03, same data through `RoutesContext`), `scripts/thumbnails.mjs` targets; future QA and WebMCP generation.
 
@@ -78,7 +81,12 @@ Runtime resources: `/business-os/vendor/*.js` (React, ReactDOM, Babel), `/busine
 | `aluzina.theme` | `light` \| `dark` | `ThemeProvider` (action `hub.toggleTheme`) |
 | `aluzina.session` | JSON `{ userId, viewAs: role \| null, devMode }` | `SessionProvider` (`switchUser`, `viewAs`, `toggleDevMode`; actions `hub.enterAs`, `hub.switchRole`, `hub.toggleDevMode`); `userId` is a demo user id (`u-alejandra`, `u-miguel`, `u-sarai`, `u-angelica`, `u-client`, `u-dev`), default `u-dev` |
 | `aluzina.devMode` | `on` \| `off` | mirror of `session.devMode` for the pre-paint script and older tooling |
-| `aluzina.data` | JSON `{ seedVersion, tables }` | `MockProvider` (D-016): every entity table; removed and re-seeded by `reset()` or when `SEED_VERSION` changes |
+| `aluzina.data` | JSON `{ seedVersion, tables }` | `MockProvider` (D-016): every entity table; removed and re-seeded by `reset()` or when `SEED_VERSION` changes (3 since 0008) |
+| `aluzina.views.<userId>` | JSON `{ views: SavedView[], last: { [scope]: ViewState } }` | Work views (D-025): named saved views and the last `{ view, filters, sort, groupBy }` per scope (`all` or a project id), per demo user |
+| `aluzina.tabUser` (sessionStorage) | demo user id | `SessionProvider`: the `?as=` user of this tab, wins over `aluzina.session.userId` on reload so two tabs stay two people (D-04) |
+| `aluzina.presence` | JSON `{ [tabId]: { tabId, userId, route, at } }` | `PresenceProvider` fallback when `BroadcastChannel` is unavailable (D-023) |
+
+Cross-tab channels (D-023): `BroadcastChannel('aluzina-data')` carries `{ change: { entity, kind, id }, tabId, rows?: { [entity]: Row[] } }` after every `MockProvider` write; `BroadcastChannel('aluzina-presence')` carries `{ tabId, userId, route, at, bye? }` every 5 s (expiry 15 s). Pages never touch them; Supabase Realtime / Presence replace them behind `subscribe` and `usePresence()`.
 
 Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effective role) (theme / lang / dev also applied pre-paint by the inline script in `apps/hub/index.html`).
 
@@ -101,6 +109,10 @@ Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effecti
 | `dev.filterTier` | D-02 | show only {tier} components | `dev.tools` | `tier: enum:all\|atom\|molecule\|organism\|template` |
 | `dev.openSpec` | D-03 | show the spec of page {code} | `dev.tools` | `code: string` |
 | `dev.filterSurface` | D-03 | show only {surface} pages | `dev.tools` | `surface: enum:all\|hub\|founder\|ops\|studio\|brand\|client\|dev\|docs\|manual\|public` |
+| `dev.openAs` | D-04 | open a new tab as {role} | `dev.tools` | `role: enum:founder\|ops\|studio\|brand` |
+| `dev.resetData` | D-04 | reset the demo data to the seeds | `dev.tools` | – |
+| `ops.openWork` | O-02, O-03 | open the schedule / tasks in the Work views | `schedule.manage` / `tasks.manage` | – |
+| `work.*` (31 ids, 8 routes) | W-01, W-02 | switch view, search, filter, sort, group, save / apply / delete a view, add / open / rename / assign a task, set dates / status / priority / tags / description, complete, move, select, bulk update, add / remove dependency, add / tick subtask, comment, zoom, go to today, change month, collapse group, open project | `projects.read` (read and view state, comments) or `tasks.own.write` (every write; `tasks.manage` covers it) | task / person / section / project ids, enums (`view`, `status`, `priority`, `zoom`, `by`), dates, strings (`docs/pages/W-01.md`) |
 
 Declared only: no actions bus runs them yet (section 2.1). Per-action rows for the portals live in each page doc (`docs/pages/<CODE>.md`, section Actions) and in the manifest. Permissions per role: `apps/hub/src/auth/permissions.ts` (`docs/knowledge/roles-and-portals.md`); `suppliers.read` added for studio and ops (0007).
 
@@ -115,7 +127,7 @@ Declared only: no actions bus runs them yet (section 2.1). Per-action rows for t
 | `npm run preview` | serve `dist/` on :4173 | |
 | `npm run typecheck` | `tsc --noEmit` in the hub | |
 | `npm run tokens` | `apps/hub/src/design/tokens.ts` -> `apps/hub/src/styles/tokens.css` (`node --experimental-strip-types scripts/gen-tokens.mjs`) | |
-| `npm run screenshots` | `node scripts/screenshots.mjs`: Playwright captures into `docs/screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json` | `-- --base=<url> --out=docs/screenshots --code=HUB-01 --route=/ --shots=en-390,en-1280,en-3840,es-390`; `--static=business-os/` captures a static page instead of a hub route (BOS codes; `--wait=<selector>` defaults to `#dc-root`; `es-*` shots click the page's EN/ES toggle when `--lang-toggle=<selector>` is given, e.g. `--lang-toggle='text="EN"'`; values may contain `=`); env `PW_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` honoured for non-localhost bases; `playwright` pinned to 1.56.1 (Chromium 1194) |
+| `npm run screenshots` | `node scripts/screenshots.mjs`: Playwright captures into `docs/screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json` | `-- --base=<url> --out=docs/screenshots --code=HUB-01 --route=/ --shots=en-390,en-1280,en-3840,es-390`; `--as=<role>` seeds `aluzina.session` with that role's demo user before load (portal pages); `--settle=<ms>` waits after the selector (Work views: 800); `--static=business-os/` captures a static page instead of a hub route (BOS codes; `--wait=<selector>` defaults to `#dc-root`; `es-*` shots click the page's EN/ES toggle when `--lang-toggle=<selector>` is given, e.g. `--lang-toggle='text="EN"'`; values may contain `=`); env `PW_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` honoured for non-localhost bases; `playwright` pinned to 1.56.1 (Chromium 1194) |
 
 ### 1.4b Thumbnail manifest (`/thumbs/manifest.json`, D-011)
 
@@ -144,12 +156,14 @@ Static JSON written at deploy time next to the thumbnails; the contract a hub to
 | `list` | `list(entity, { where?, orderBy?, dir?, limit? })` | `where` is equality (arrays = "in"); returns copies |
 | `get` | `get(entity, id)` | `null` when missing |
 | `create` | `create(entity, data, id?)` | adds `id`, `created_at`, `updated_at`; emits `create` |
-| `update` | `update(entity, id, patch)` | bumps `updated_at`; emits `update`; throws when missing |
+| `update` | `update(entity, id, patch, { basedOn? })` | bumps `updated_at`, stamps `updated_by`; writes `activity` rows (one per changed field, cap 500, not for `activity` / `comments`); emits `update` (+ `activity` create); throws when missing; when `basedOn` is older than the stored `updated_at` the write still applies and `onConflict` fires (D-024) |
 | `remove` | `remove(entity, id)` | emits `remove` |
-| `subscribe` | `subscribe(entity \| '*', cb) => unsubscribe` | `cb({ entity, kind: 'create' \| 'update' \| 'remove' \| 'reset', id })` |
+| `subscribe` | `subscribe(entity \| '*', cb) => unsubscribe` | `cb({ entity, kind: 'create' \| 'update' \| 'remove' \| 'reset', id })`; also fires for writes made in other tabs (BroadcastChannel, D-023): the realtime seam |
+| `onConflict` | `onConflict(cb) => unsubscribe` | `cb({ entity, id, by, at })` when a `basedOn` write found a newer row (D-024) |
+| `setActor` | `setActor(userId \| null)` | who is writing (`DataContext` sets it from the session): `updated_by`, `activity.actorId` |
 | `reset` | `reset()` | drops local state, re-seeds, emits `reset` per entity |
 
-Entities (`src/data/schema/index.ts`, all rows carry `id, created_at, updated_at`): `projects, tasks (with nullable startDate since 0007), meetings, suppliers, quotes, deliveries, payments, documents, references, materials, schedules, renderPacks, consistencyChecks, competitions, presentations, brandAssets, revisions, alerts`. Seeds: `src/data/seed/*.ts` (globbed, `SEED_VERSION` 2 in `seed/index.ts`). Deferred entities and fields: D-020. React hooks: `useData()`, `useTable(entity, query)`, `useRow(entity, id)` (`src/data/DataContext.tsx`). Planned: `version` column and conflict handling (P-14), `CompanyOsProvider` stub (reference only), Supabase adapter.
+Entities (`src/data/schema/index.ts`, all rows carry `id, created_at, updated_at` and optional `updated_by`): `projects, sections, tasks (sectionId, description, createdById, tags, subtasks, completedAt, order, startDate, dueDate, dependsOn), comments, activity, meetings, suppliers, quotes, deliveries, payments, documents, references, materials, schedules, renderPacks, consistencyChecks, competitions, presentations, brandAssets, revisions, alerts` (21). Seeds: `src/data/seed/*.ts` (globbed, `SEED_VERSION` 3 in `seed/index.ts`; `work.ts` adds the project-management rows). Deferred entities and fields: D-020 (rest). React hooks: `useData()`, `useTable(entity, query)`, `useRow(entity, id)` (`src/data/DataContext.tsx`); Work views: `useWork(projectId)` (`src/work/useWork.ts`), presence: `usePresence()` (`src/presence/PresenceProvider.tsx`). Planned: `version` column and merge UI (P-14, replaces D-024), `CompanyOsProvider` stub (reference only), Supabase adapter with Realtime and Presence behind the same seams.
 
 ### 1.6 HTTP API
 
@@ -175,7 +189,7 @@ An `aluzina` CLI wrapping the scripts and, later, the actions bus (`aluzina scre
 
 ### 2.4 Realtime / presence (P-14), annotations (P-08)
 
-Through the data provider seam (section 1.5): `subscribe` is the realtime hook, `feedback` becomes an entity (step 7 rest / 8).
+Realtime and presence exist as the mock seam since 0008 (D-023): `subscribe` already fires for other tabs' writes and `usePresence()` lists who is here. Supabase Realtime (`postgres_changes` -> `subscribe` events) and Supabase Presence (-> `usePresence()`) replace the two BroadcastChannels without touching pages. Annotations: `feedback` becomes an entity (or reuses `comments` with `kind`), step 7 rest.
 
 ### 2.5 Component library as data (D-017)
 
@@ -183,6 +197,7 @@ Through the data provider seam (section 1.5): `subscribe` is the realtime hook, 
 
 ## 3. Change log of this file
 
+- 2026-09-21 (changelog 0008): W-01 / W-02 on four surfaces and D-04 in the manifest (45 routes, 400 action entries, 1.1); `aluzina.views.<userId>`, `aluzina.tabUser`, `aluzina.presence` and the two BroadcastChannels (1.2); `work.*`, `dev.openAs`, `dev.resetData`, `ops.openWork` (1.3); `--as` / `--settle` screenshot flags (1.4); `update(…, { basedOn })`, `onConflict`, `setActor`, `sections` / `comments` / `activity`, `SEED_VERSION` 3, `useWork`, `usePresence` (1.5); realtime seam status (2.4).
 - 2026-09-21 (changelog 0007): 33 portal routes in the manifest (A-01..A-07, O-01..O-10, S-01..S-09, G-01..G-07), 148 actions summarised per module (1.3), `suppliers.read`, `tasks.startDate` and `SEED_VERSION` 2 (1.5), bounded hub image wait in `npm run thumbs` (1.4).
 - 2026-09-21 (changelog 0006): seven routes in the manifest with `shell` / `permission`; `?as=<role>` contract (1.1a); `aluzina.session` and `aluzina.data` keys (1.2); portal and dev actions (1.3); DataProvider methods and entities (1.5); thumbnail codes; library as data (2.5).
 - 2026-09-20 (prompt 0001): initial version.
