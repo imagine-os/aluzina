@@ -77,7 +77,7 @@ export function seed({ add, users }: SeedCtx): void {
     { id: 'tsk-laureles-entrega', project: P.laureles, section: S.laurelesObra, title: 'Entrega Casa Laureles', role: 'founder', assignee: U.founder, status: 'todo', priority: 'high', start: null, due: '2026-12-15', deps: ['tsk-laureles-instalacion'], tags: ['entrega', 'cliente'], order: 1 },
 
 
-    // HOY Wellness Center's tasks are the Asana import (seed/asana.ts, D-056); nothing is seeded here.
+    // HOY Wellness Center's tasks are the Asana import (seed/asana.ts, D-063); nothing is seeded here.
 
     // ---- Noam Residential: 2026-01-19 -> 2026-11-30 --------------------------------------------
     { id: 'tsk-noam-propuesta', project: P.noam, section: S.noamDiseno, title: 'Propuesta integral del apartamento', role: 'studio', assignee: U.studio, status: 'done', start: '2026-01-19', due: '2026-03-13', tags: ['propuesta'], order: 0 },

@@ -6,7 +6,7 @@ import type { ProjectTemplate, TemplatePhase, TemplateTask, Zone } from './types
 export * from './types';
 export { ALUZINA_WORKFLOW, TRADES, ZONES } from './aluzina-workflow';
 
-/** Every project template the OS knows (one today, D-055). */
+/** Every project template the OS knows (one today, D-062). */
 export const TEMPLATES: readonly ProjectTemplate[] = [ALUZINA_WORKFLOW];
 
 export function templateById(id: string): ProjectTemplate | undefined {

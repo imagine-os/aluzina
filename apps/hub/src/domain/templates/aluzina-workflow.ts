@@ -2,7 +2,7 @@ import type { Text } from '../playbook';
 import type { ProjectTemplate, TemplateTask, Trade, Zone } from './types';
 
 /**
- * `tpl-aluzina-workflow`: the founder's standard project workflow as one bilingual template (D-055).
+ * `tpl-aluzina-workflow`: the founder's standard project workflow as one bilingual template (D-062).
  *
  * Sources (`docs/knowledge/asana-conventions.md`, exports in `docs/source/asana/2026-09-21/`):
  * - **Spine**: ALUZINA WORKFLOW FOR EVERY PROJECT (Spanish, 2023-07-19, still edited) — DISEÑO,

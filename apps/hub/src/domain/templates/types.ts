@@ -2,7 +2,7 @@ import type { RoleId } from '../../auth/roles';
 import type { ServiceCode, Text } from '../playbook';
 
 /**
- * Project templates as typed bilingual data (D-055), not database rows: "create project from template"
+ * Project templates as typed bilingual data (D-062), not database rows: "create project from template"
  * (W-03) walks a `ProjectTemplate` and writes `projects` + `sections` + `tasks` through the DataProvider.
  *
  * The one template today, `tpl-aluzina-workflow`, is the merge of the founder's two living Asana template

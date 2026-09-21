@@ -57,7 +57,7 @@ export const SAMPLE_TASKS: Task[] = [
   task('t5', 'sec-b', 'Planos de iluminación zonas sociales', 'u-sarai', 'todo', 'normal', '2026-10-05', '2026-10-23', ['t3'], ['iluminación']),
   task('t6', 'sec-c', 'Cotizar luminarias sala', 'u-miguel', 'blocked', 'urgent', '2026-09-10', '2026-09-19', ['t5'], ['proveedores']),
   task('t7', 'sec-c', 'Moodboard zonas sociales', 'u-sarai', 'done', 'normal', '2026-07-20', '2026-08-05', [], [], { deliverableId: 'del-mood-board' }),
-  // Nested children (D-055): the List indents them under t5, the Board shows t5 with a child count.
+  // Nested children (D-062): the List indents them under t5, the Board shows t5 with a child count.
   task('t5a', 'sec-b', 'Plano eléctrico', 'u-sarai', 'todo', 'normal', '2026-10-05', '2026-10-14', [], [], { parentTaskId: 't5', deliverableId: 'del-lighting-plan' }),
   task('t5b', 'sec-b', 'Cuadro de luminarias por espacio', 'u-sarai', 'todo', 'normal', '2026-10-14', '2026-10-23', [], [], { parentTaskId: 't5' }),
 ];

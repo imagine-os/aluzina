@@ -1,5 +1,5 @@
 /**
- * Shapes of the generated Asana seed files in this folder (D-055). `scripts/import-asana.mjs`
+ * Shapes of the generated Asana seed files in this folder (D-062). `scripts/import-asana.mjs`
  * (`npm run import:asana`) reads `docs/source/asana/<date>/*.csv` and writes `hoy.ts` and `portfolio.ts`
  * against these types; `apps/hub/src/data/seed/asana.ts` turns them into rows. The generated files are
  * checked in (they are seeds) and must never be edited by hand — re-run the script instead.

@@ -10,7 +10,7 @@ export const SECTION_IDS = {
   laurelesDocs: 'sec-laureles-docs',
   laurelesCompras: 'sec-laureles-compras',
   laurelesObra: 'sec-laureles-obra',
-  // HOY's sections come from the Asana import (seed/asana.ts, D-056), not from here.
+  // HOY's sections come from the Asana import (seed/asana.ts, D-063), not from here.
   noamDiseno: 'sec-noam-diseno',
   noamDocs: 'sec-noam-docs',
   noamCompras: 'sec-noam-compras',

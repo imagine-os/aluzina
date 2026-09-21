@@ -33,7 +33,7 @@ export interface WorkFilters {
   due: DueWindow;
   tag: string;
   project: string;
-  /** Deliverable type the task produces (`deliverables` catalog id); `'none'` = tasks with no deliverable (D-055). */
+  /** Deliverable type the task produces (`deliverables` catalog id); `'none'` = tasks with no deliverable (D-062). */
   deliverable: string;
   showDone: boolean;
 }
@@ -50,7 +50,7 @@ export interface WorkPerson {
   initials?: string;
 }
 
-/** Deliverable type a task produces, as the views need it (`deliverables` catalog, D-055). */
+/** Deliverable type a task produces, as the views need it (`deliverables` catalog, D-062). */
 export interface WorkDeliverable {
   id: string;
   name: string;
@@ -61,7 +61,7 @@ export interface WorkContext {
   sections: Section[];
   projects: Project[];
   people: WorkPerson[];
-  /** The deliverable catalog, for the badges and the drawer's Select (D-055). */
+  /** The deliverable catalog, for the badges and the drawer's Select (D-062). */
   deliverables: WorkDeliverable[];
   /** Comment count per task id. */
   commentCounts: Record<string, number>;
@@ -226,7 +226,7 @@ export function groupTasks(tasks: Task[], groupBy: GroupBy, ctx: WorkContext, la
   return groups.filter((g) => g.tasks.length > 0);
 }
 
-/** ---- Nesting (D-055): `parentTaskId` is the real tree; `subtasks` stays the lightweight checklist. ---- */
+/** ---- Nesting (D-062): `parentTaskId` is the real tree; `subtasks` stays the lightweight checklist. ---- */
 
 /** How many children each task has inside `tasks`. */
 export function childCounts(tasks: Task[]): Record<string, number> {
