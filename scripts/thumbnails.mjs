@@ -53,6 +53,7 @@ const SURFACES = [
   { code: 'O-01', path: '?as=ops#/ops', wait: '.dshell__main' },
   { code: 'S-01', path: '?as=studio#/studio', wait: '.dshell__main' },
   { code: 'G-01', path: '?as=brand#/brand', wait: '.dshell__main' },
+  { code: 'K-01', path: '?as=founder#/founder/spaces', wait: '.pcard' },
   { code: 'D-02', path: '?as=dev#/dev/components', wait: '.dshell__main' },
   { code: 'D-03', path: '?as=dev#/dev/specs', wait: '.dshell__main' },
   { code: 'P-00', url: 'https://aluzinaa.com/', external: true, wait: 'body' },

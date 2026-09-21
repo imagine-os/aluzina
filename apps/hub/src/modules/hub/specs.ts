@@ -1,6 +1,6 @@
 import { defineSpec } from '../../specs/PageSpec';
 
-export const SURFACE_IDS = ['business-os', 'website', 'docs', 'manual', 'dev'] as const;
+export const SURFACE_IDS = ['spaces', 'business-os', 'website', 'docs', 'manual', 'dev'] as const;
 export type SurfaceId = (typeof SURFACE_IDS)[number];
 
 /** Pages of the Claude Design export served under ./business-os/ (BOS-02..BOS-06, D-010). */
@@ -19,7 +19,7 @@ export const hubSpec = defineSpec({
     'HubHeader (brand, "Viewing as" RoleSwitcher, EN/ES, theme, dev mode)',
     'Title + subtitle',
     'Portals grid: A-01 Founder, O-01 Administration and Operations, S-01 Interior Design, G-01 Graphic Design and Communication (cards enter as the demo user; status Live / Stub read from the route manifest), C-01 Client (planned: no route)',
-    'Surface card grid: BOS-01 prototype, P-00 website, D-06 docs, M-xx manual (planned), D-02 dev tools; each with a deploy-time thumbnail or the "No preview yet" tile',
+    'Surface card grid: K-01 Spaces (opens on the current role\'s surface; founder when the role has none), BOS-01 prototype, P-00 website, D-06 docs, M-xx manual (planned), D-02 dev tools; each with a deploy-time thumbnail or the "No preview yet" tile',
     'Prototype pages grid (BOS-02..06)',
     'Footer (version, repo link, dev hint)',
   ],
@@ -31,6 +31,7 @@ export const hubSpec = defineSpec({
     'Language, theme, session (user, viewAs, dev mode) persist in localStorage (aluzina.lang / aluzina.theme / aluzina.session).',
     '?as=<role> on first load selects that demo user (thumbnails, QA, deep links; docs/reference/surfaces.md).',
     'Ctrl+. toggles the dev panel when dev mode is on.',
+    'The Spaces card (K-01, prompt 0005) opens /<surface>/spaces for the current role\'s surface (founder for roles without a portal), so the hub never sends a person into another role\'s shell.',
     'Card thumbnails load lazily from ./thumbs/<code>.jpg?v=<buildId>, written by scripts/thumbnails.mjs after every CI build (D-011); a missing file falls back to the bilingual tile, planned cards always show the tile.',
   ],
   components: ['HubHeader', 'RoleSwitcher', 'ToggleButton', 'SurfaceCard', 'Placeholder', 'Toast'],

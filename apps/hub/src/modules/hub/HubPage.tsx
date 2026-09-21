@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useRoutes } from '../../app/RoutesContext';
 import { demoUserForRole } from '../../auth/demoUsers';
-import { ROLE_META, type RoleId } from '../../auth/roles';
+import { ROLE_META, isRoleId, type RoleId } from '../../auth/roles';
 import { useSession } from '../../auth/SessionProvider';
 import { HubHeader } from '../../components/organism/HubHeader/HubHeader';
 import { SurfaceCard, type SurfaceStatus } from '../../components/molecule/SurfaceCard/SurfaceCard';
@@ -26,6 +26,7 @@ interface SurfaceEntry {
 
 /** Order of the surface grid. Flip `status` and add `href` when a surface goes live (D-003). */
 const SURFACES: SurfaceEntry[] = [
+  { id: 'spaces', code: 'K-01', key: 'spaces', status: 'live', href: '#/founder/spaces' },
   { id: 'business-os', code: 'BOS-01', key: 'businessOs', status: 'live', href: './business-os/' },
   { id: 'website', code: 'P-00', key: 'website', status: 'live', href: WEBSITE_URL, external: true },
   { id: 'docs', code: 'D-06', key: 'docs', status: 'live', href: `${REPO_URL}/tree/main/docs`, external: true },
@@ -59,7 +60,7 @@ const PROTOTYPE_PAGES: PrototypePage[] = [
 
 export function HubPage() {
   const { t } = useT();
-  const { switchUser } = useSession();
+  const { switchUser, role } = useSession();
   const navigate = useNavigate();
   const routes = useRoutes();
 
@@ -68,6 +69,13 @@ export function HubPage() {
     const home = routes.find((r) => r.path === ROLE_META[role].homePath);
     return home ? (home.status === 'built' ? 'live' : 'stub') : 'planned';
   };
+
+  /** Spaces (K-01) mounts on every portal and on dev; open it on the current role's surface, founder when the role has none (client). */
+  const spacesHref = (() => {
+    const surface = isRoleId(role) ? ROLE_META[role].surface : 'founder';
+    return routes.some((r) => r.path === `/${surface}/spaces`) ? `#/${surface}/spaces` : '#/founder/spaces';
+  })();
+  const hrefFor = (s: SurfaceEntry) => (s.id === 'spaces' ? spacesHref : s.href);
 
   const statusLabel = (s: SurfaceStatus) => t(s === 'live' ? 'hub.status.live' : s === 'stub' ? 'hub.status.stub' : 'hub.status.planned');
 
@@ -128,7 +136,7 @@ export function HubPage() {
                     description={t(`hub.cards.${s.key}.desc`)}
                     status={s.status}
                     statusLabel={statusLabel(s.status)}
-                    href={s.href}
+                    href={hrefFor(s)}
                     external={s.external}
                     ctaLabel={s.status === 'live' ? t(s.id === 'website' ? 'hub.cta.visit' : 'hub.cta.open') : undefined}
                     image={s.status === 'live' ? thumb(s.code) : undefined}

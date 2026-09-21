@@ -57,6 +57,11 @@ export const strings: StringTable = {
     es: 'abre la app para clientes: sus proyectos, propuestas y PDFs por revisar, aprobaciones, mensajes, estado de pagos; pensada para el celular',
   },
 
+  'hub.cards.spaces.title': { en: 'Spaces', es: 'Espacios' },
+  'hub.cards.spaces.desc': {
+    en: 'The Hub\'s own organizer replacing the Slack sidebar: spaces without depth limit, posts filed in many places at once, relations between anything, a graph and the catalogs (deliverables, clients, tools, roles).',
+    es: 'El organizador propio del Hub que reemplaza la barra lateral de Slack: espacios sin límite de profundidad, publicaciones archivadas en varios lugares a la vez, relaciones entre todo, un grafo y los catálogos (entregables, clientes, herramientas, roles).',
+  },
   'hub.cards.businessOs.title': { en: 'Business OS prototype', es: 'Prototipo Business OS' },
   'hub.cards.businessOs.desc': {
     en: 'the Claude Design prototype of the Aluzina operations system: cockpit, stations, work views, QC, media, design system, docs; EN/ES toggle inside',
