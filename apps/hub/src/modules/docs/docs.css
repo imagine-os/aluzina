@@ -1,0 +1,74 @@
+/* In-app documentation viewer (D-06, D-15). Tokens only (P-07). */
+
+.docs-page { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); align-content: start; }
+.docs-page > * { min-width: 0; }
+
+.docs-muted { margin: 0; color: var(--color-text-muted); font-size: 0.875rem; }
+.docs-hint { margin-top: var(--space-2); }
+
+.docs-h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; margin: 0; }
+
+.docs-layout {
+  display: grid;
+  grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.docs-side {
+  position: sticky;
+  top: var(--space-4);
+  max-height: calc(100dvh - 8rem);
+  overflow: auto;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.docs-tree { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+.docs-main { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); min-width: 0; }
+.docs-browse { display: none; }
+
+@media (max-width: 1023px) {
+  .docs-layout { grid-template-columns: minmax(0, 1fr); }
+  .docs-side { display: none; }
+  .docs-browse { display: block; }
+}
+
+.docs-path {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.docs-doc {
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Long-form reading: a comfortable measure on a desk monitor, still legible from the couch (P-01) */
+.docs-doc .md { max-width: 80ch; }
+
+.docs-plan { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+
+@media (min-width: 2560px) {
+  .docs-doc { font-size: 1.0625rem; }
+}
+
+@media print {
+  .docs-side,
+  .docs-browse { display: none; }
+  .docs-layout { grid-template-columns: minmax(0, 1fr); }
+  .docs-doc { border: none; padding: 0; background: none; }
+}
