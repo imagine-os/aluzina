@@ -31,4 +31,20 @@ Follow-up (2026-09-21 03:24 UTC, message + screenshot): under Brand Memory, befo
 
 ## Response
 
-Result reply pending; see changelog 0009.
+Reply posted to the Slack thread (verbatim):
+
+> Spaces is live in every portal as the Hub's own organizer: https://imagine-os.github.io/aluzina/?as=founder#/founder/spaces, with the graph at https://imagine-os.github.io/aluzina/?as=founder#/founder/spaces/graph. It fixes the two Slack limits you named. Spaces nest as deep as you like, and a post is filed in as many spaces as it applies to, so a brand rule can live in the brand kit, the marketing guide and three role spaces at once without copies. Anything relates to anything with a typed link (references, applies to, part of, replaces, produced by, for client), and every item shows what points back at it. Entering as a role preselects that role's space and shows everything filed to it from across the Hub. Your sidebar is the seed: the seven sections and all their channels, including the three scraping intake topics, plus example posts filed across spaces. The Catalog tab fills in the blanks as data you can edit: a deliverables list grown from your four to 25 types, clients (Hoy and Sporti as past, current ones from the projects), the nine tools in use with the Hub module that replaces each, and the six role channels mapped to portals. The Import from Slack page shows the mapping and what a real import will do; the upload itself is not wired yet. The build plan now carries the "own the whole platform" roadmap: comms to replace Slack, CRM, documents and e-sign, drafting and render, an in-hub research assistant, finance, a website builder to replace Lovable, marketing production, an integrations layer, and the archive intake for the old website, social and Drive. Fable 5.1 did this pass.
+
+See changelog 0009.
+
+## Follow-up (2026-09-21 03:24 UTC, Justin)
+
+Message (verbatim):
+
+```
+i added a couple new items to the slack menu. The scraping items were me giving instructions to save the old website, social content, and proper drive content etc to the repo memory. The messages are in slack waiting for me to connect claude and github to my instructions that are there waiting.
+```
+
+Reply (verbatim):
+
+> Got it. The three scraping channels are going into the Spaces tree under Brand Memory as intake topics, each seeded with a draft procedure that points at the instructions waiting in Slack, and an archive-intake phase (website, social, Drive) is going on the build plan. Once you've connected Claude and GitHub in those channels, the ingestion work can pick up from there.
