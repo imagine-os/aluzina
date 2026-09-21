@@ -8,24 +8,25 @@
 
 ## Purpose
 
-Entry point to every surface of the Aluzina Business OS for Justin, the owner, testers and agents. It links the live surfaces (the Business OS prototype and its five pages, the owner's Lovable site, the repo docs) and announces the planned ones; every card carries a thumbnail of the page it opens, regenerated on each deploy (D-011) so Justin can tell what is what at a glance. Later it gains the role switcher, demo simulator, canvas and plan viewer (build plan step 4).
+Entry point to every surface of the Aluzina Business OS for Justin, the owner, testers and agents. Since changelog 0006 it opens the **portals**: one card per role (Founder A-01, Administration and Operations O-01, Interior Design S-01, Graphic Design and Communication G-01; Client C-01 planned) that switches the demo user and enters that portal (D-014, D-015), plus a "Viewing as" role switcher in the header. It still links the live surfaces (the Business OS prototype and its five pages, the owner's Lovable site, the repo docs, the dev tools) and announces the planned ones; every card carries a thumbnail of the page it opens, regenerated on each deploy (D-011). Later it gains the demo simulator, canvas and plan viewer (build plan step 4).
 
 ## Screenshots
 
-`docs/screenshots/HUB-01/en-390.jpg`, `en-1280.jpg` (live site with thumbnails, changelog 0005), `en-3840.jpg`, `es-390.jpg` (changelog 0002; light theme, dev mode off), plus `routes.json` (manifest at capture time).
+`docs/screenshots/HUB-01/en-390.jpg`, `en-1280.jpg` (live site with the Portals section, changelog 0006), `en-3840.jpg`, `es-390.jpg` (changelog 0002; light theme, dev mode off), plus `routes.json` (manifest at capture time).
 
 ## Layout (top to bottom)
 
-1. `HubHeader`: brand mark + "Aluzina"; controls: language (shows the *other* language, EN/ES), theme (Light / Dark, `aria-pressed`), dev mode (Dev on / Dev off, `aria-pressed`).
+1. `HubHeader`: brand mark + "Aluzina"; `RoleSwitcher` ("Viewing as", native select of the six demo users); controls: language (shows the *other* language, EN/ES), theme (Light / Dark, `aria-pressed`), dev mode (Dev on / Dev off, `aria-pressed`).
 2. Hero: h1 "Aluzina Business OS", one-line subtitle.
-3. Surface grid (`auto-fill, minmax(18rem, 1fr)`): BOS-01 Business OS prototype (live), P-00 Public website (live, aluzinaa.com), C-xx Customer app (planned), A-xx Staff / admin dashboard (planned), D-06 Docs (live, GitHub `docs/`), M-xx Ops manual (planned), D-xx Dev tools (planned). Each card starts with a 16 / 10 thumbnail (`./thumbs/<code>.jpg`, 640 x 400) or the bilingual "No preview yet" tile.
+2b. **Portals** grid: A-01 Founder (Alejandra Guerra), O-01 Administration and Operations (Miguel), S-01 Interior Design (Sarai), G-01 Graphic Design and Communication (Angélica) as `stub` cards (button: "Enter as <name> →"), C-01 Client portal (planned, Placeholder). Each with its deploy-time thumbnail.
+3. Surfaces grid (`auto-fill, minmax(18rem, 1fr)`): BOS-01 Business OS prototype (live), P-00 Public website (live, aluzinaa.com), D-06 Docs (live, GitHub `docs/`), M-xx Ops manual (planned), D-02 Dev tools (live, `#/dev/components`). Each card starts with a 16 / 10 thumbnail (`./thumbs/<code>.jpg`, 640 x 400) or the bilingual "No preview yet" tile.
 3b. Prototype pages grid (`minmax(15rem, 1fr)`): BOS-02 ALUZINA Home, BOS-03 Cyber Bridge, BOS-04 Cyber Bridge Deck, BOS-05 Image Generation Plan, BOS-06 LOD Ladder, each with its thumbnail.
 4. Footer: version, "Source on GitHub", dev-mode hint.
 5. Dev mode only: SpecChip `HUB-01` bottom-right; panel (Ctrl+. or chip) listing actions, permission, params, verified widths.
 
 ## Data
 
-None (static). Preferences in localStorage: `aluzina.lang`, `aluzina.theme`, `aluzina.devMode`.
+None (static). Preferences in localStorage: `aluzina.lang`, `aluzina.theme`, `aluzina.session` (user, viewAs, devMode; `aluzina.devMode` mirrored).
 
 ## Rules
 
@@ -33,6 +34,7 @@ None.
 
 ## Logic
 
+- Portal cards are `<button>`s: `switchUser(role)` then `navigate('/<portal>')` (action `hub.enterAs`); the header select calls `switchUser` in place (`hub.switchRole`). `?as=<role>` on first load pre-selects a demo user (surfaces.md 1.1a).
 - Live cards render as `<a>` (external: new tab, `rel=noreferrer`); planned cards render through `Placeholder` (a `<button>`): tooltip "Not wired yet – <what it will do>" on hover and focus, toast on click / Enter / Space, dashed outline + badge when `data-dev="on"`.
 - `index.html` applies stored theme / lang / dev mode before first paint; providers take over on mount.
 - Unknown routes redirect to `/`.
@@ -42,7 +44,9 @@ None.
 
 | id | label | intent | permission | params |
 | --- | --- | --- | --- | --- |
-| `hub.openSurface` | Open surface | open the {surface} | – | `surface: enum:business-os\|website\|customer\|staff\|docs\|manual\|dev` |
+| `hub.enterAs` | Enter portal as role | open the {role} portal as its demo user | – | `role: enum:founder\|ops\|studio\|brand` |
+| `hub.switchRole` | Switch role | view the system as {role} | – | `role: enum:founder\|ops\|studio\|brand\|client\|dev` |
+| `hub.openSurface` | Open surface | open the {surface} | – | `surface: enum:business-os\|website\|docs\|manual\|dev` |
 | `hub.openPrototypePage` | Open prototype page | open the prototype page {page} | – | `page: enum:home\|cyber-bridge\|cyber-bridge-deck\|image-generation-plan\|lod-ladder` |
 | `hub.setLang` | Set language | switch the language to {lang} | – | `lang: enum:en\|es` |
 | `hub.toggleTheme` | Toggle theme | switch between light and dark | – | – |
@@ -52,11 +56,11 @@ No actions bus yet: the manifest declares them; nothing runs them by id (step 7)
 
 ## Components
 
-`HubHeader` (organism), `SurfaceCard` (molecule, with the `image` thumbnail slot), `ToggleButton`, `Placeholder`, `Toast` (atoms); `DevTools` (SpecChip + panel, `src/dev/`).
+`HubHeader`, `RoleSwitcher` (organisms), `SurfaceCard` (molecule, `image` thumbnail slot, `onActivate` button variant, `stub` status), `ToggleButton`, `Select`, `Avatar`, `Placeholder`, `Toast` (atoms); `DevTools` (SpecChip + panel, `src/dev/`).
 
 ## Real vs mock / placeholder
 
-Real: language, theme, dev mode, the eight live links (BOS-01..06, P-00, D-06), the manifest, the thumbnails (real screenshots of the deployed build; P-00 and D-06 are captured from the internet and fall back to the tile when unreachable). Placeholder: Customer app, Staff / admin dashboard, Ops manual, Dev tools (4 `data-placeholder` elements, each with the tile).
+Real: language, theme, dev mode, the role switcher and the four portal entries (they switch the session and open guarded routes; the dashboards themselves are stubs until 9b), the nine live links (BOS-01..06, P-00, D-06, D-02), the manifest, the thumbnails (real screenshots of the deployed build; P-00 and D-06 are captured from the internet and fall back to the tile when unreachable). Placeholder: Client portal, Ops manual (2 `data-placeholder` elements, each with the tile).
 
 ## Responsive and input check (P-01, P-03)
 
@@ -64,9 +68,10 @@ Verified on the live site at 390, 1280, 3840; local smoke with thumbnails at 360
 
 ## Strings (P-13)
 
-Namespace `hub.*` (+ `core.*`, incl. `core.thumb.none` / `core.thumb.alt`). EN complete, ES complete.
+Namespace `hub.*` (+ `core.*`, incl. `core.thumb.*`, `core.role.*`, `core.session.*`). EN complete, ES complete.
 
 ## Open questions
 
 - Default language en vs es (D-004).
 - Dark-theme thumbnails (`<code>-dark.jpg`) and 2x tiles for 4K: kanban backlog.
+- Should the hub default to the founder's view instead of the developer's (`DEFAULT_USER_ID`)? Justin decides.

@@ -1,25 +1,44 @@
 # Roles and portals
 
 ```
-status: current (map) / planned (every portal)
-since: 2026-09-20
-source: derived from team.md (prompt 0002) and the hub pattern (P-12); decision D-013
+status: current (map, role ids, permissions) / stub (every portal dashboard)
+since: 2026-09-21
+source: derived from team.md (prompt 0002) and the hub pattern (P-12); decisions D-013, D-014, D-015 (prompt 0003)
+supersedes: the 2026-09-20 version of the "Map" permissions column and the "Next steps (code)" section (kept below as superseded)
 ```
 
-Each role in `team.md` gets its own view of the system ("their own views/portals into their part of the system", Justin). Until real auth exists, the hub's role switcher (build plan step 4) opens any portal as a demo user of that role with dev mode on or off; role guards stay real, identity is mocked (P-12). Roles are strings; pages check permissions with `can('<area>.<verb>')`, never compare roles directly. **Nothing below is built yet**; the codes reserve the page-code namespace.
+Each role in `team.md` gets its own view of the system ("their own views/portals into their part of the system", Justin). Until real auth exists, the hub's role switcher (build plan step 4) opens any portal as a demo user of that role with dev mode on or off; role guards stay real, identity is mocked (P-12). Roles are strings; pages check permissions with `can('<area>.<verb>')`, never compare roles directly. Since changelog 0006 the role model is code (`apps/hub/src/auth/`), the hub opens each portal as its demo user, and every dashboard exists as a **stub** (A-01, O-01, S-01, G-01); the client portal is planned.
 
 ## Map
 
-| Role (person) | Portal | Code prefix | Home screen (planned) | Permissions implied |
-| --- | --- | --- | --- | --- |
-| Founder (Alejandra Guerra) | Admin and approvals | `A-xx` | approvals queue, pipeline and sales, quotes and graphic proposals, project PDFs, partnerships, product development, everything the other portals see | `*` (all), specifically `projects.approve`, `quotes.write`, `proposals.write`, `clients.write`, `sales.write`, `settings.write`, `dev.tools` (with Justin) |
-| Administration and Operations (Miguel) | Operations | `O-xx` | schedule, pending tasks, meetings and commitments, suppliers and follow-ups, price quotes and comparisons, deliveries and dates, payments / accounts / documents, who-owes-what, alerts before urgent, report layouts | `schedule.write`, `tasks.write`, `meetings.write`, `suppliers.write`, `quotes.request`, `quotes.compare`, `deliveries.write`, `payments.write`, `documents.write`, `alerts.write`, `reports.write` |
-| Interior Design (Sarai) | Studio / project development | `S-xx` | design proposals per project, references, mood boards and material palettes, plans and documentation, furniture / materials / elements schedules, rendering and supplier packs, measurements, development monitoring, consistency check before the founder | `projects.read`, `proposals.draft`, `references.write`, `moodboards.write`, `plans.write`, `schedules.write`, `renders.brief`, `measurements.write`, `projects.check` |
-| Graphic Design and Communication (Angelica) | Brand and communication | `G-xx` | competitions calendar (by submission date, materials per entry), sales presentations, brand identity rules, client image sets, graphic revisions queue, asset library | `competitions.write`, `presentations.write`, `brand.write`, `images.write`, `revisions.write`, `assets.write` |
-| Client | Customer portal | `C-xx` | their projects, proposals and PDFs to review, approvals, messages, payments status (read) | `own.projects.read`, `own.proposals.approve`, `own.messages.write`, `own.payments.read` |
-| Justin / developers | Dev tools | `D-xx` | tokens, components, specs, actions, routes, plan viewer, canvas, demo simulator, knowledge base | `dev.tools` |
+```
+status: current
+since: 2026-09-21
+source: apps/hub/src/auth/{roles,permissions}.ts (D-015)
+```
+
+| Role id (person) | Portal | Code prefix | Path | Dashboard | Home screen (planned) | Permissions (`permissions.ts`) |
+| --- | --- | --- | --- | --- | --- | --- |
+| `founder` (Alejandra Guerra) | Admin and approvals | `A-xx` | `/founder` | A-01 (stub) | approvals queue, pipeline and sales, quotes and graphic proposals, project PDFs, partnerships, product development, everything the other portals see | `*` (all); named: `projects.approve`, `projects.write`, `quotes.review`, `proposals.write`, `clients.write`, `sales.write`, `partnerships.write`, `products.write`, `settings.write` |
+| `ops` (Miguel) | Operations | `O-xx` | `/ops` | O-01 (stub) | schedule, pending tasks, meetings and commitments, suppliers and follow-ups, price quotes and comparisons, deliveries and dates, payments / accounts / documents, who-owes-what, alerts before urgent, report layouts | `projects.read`, `schedule.manage`, `tasks.manage`, `meetings.manage`, `suppliers.manage`, `quotes.request`, `quotes.compare`, `deliveries.manage`, `payments.manage`, `documents.manage`, `alerts.manage`, `reports.write` |
+| `studio` (Sarai) | Studio / project development | `S-xx` | `/studio` | S-01 (stub) | design proposals per project, references, mood boards and material palettes, plans and documentation, furniture / materials / elements schedules, rendering and supplier packs, measurements, development monitoring, consistency check before the founder | `projects.read`, `design.develop`, `references.manage`, `materials.manage`, `plans.write`, `schedules.write`, `renders.brief`, `measurements.write`, `projects.check` |
+| `brand` (Angelica) | Brand and communication | `G-xx` | `/brand` | G-01 (stub) | competitions calendar (by submission date, materials per entry), sales presentations, brand identity rules, client image sets, graphic revisions queue, asset library | `projects.read`, `brand.manage`, `competitions.manage`, `presentations.write`, `images.write`, `revisions.manage`, `assets.manage` |
+| `client` | Customer portal | `C-xx` | `/client` | C-01 (planned) | their projects, proposals and PDFs to review, approvals, messages, payments status (read) | `own.projects.read`, `own.proposals.approve`, `own.messages.write`, `own.payments.read` |
+| `dev` (Justin / developers) | Dev tools | `D-xx` | `/dev/*` | D-02 components, D-03 specs (built) | tokens, components, specs, actions, routes, plan viewer, canvas, demo simulator, knowledge base | `projects.read`, `dev.tools`, `session.viewAs` |
+
+Demo users (`demoUsers.ts`): `u-alejandra` (Alejandra Guerra), `u-miguel` (Miguel), `u-sarai` (Sarai), `u-angelica` (Angélica), `u-client` ("Familia Restrepo", invented), `u-dev` (Dev, default). Team members carry only the first names the founder used; no real contact data.
 
 `P-xx` stays the public website, `M-xx` the ops manual, `HUB-01` the hub (`../README.md`). `BOS-xx` are the Claude Design prototype screens; as the prototype is modularised (step 3) each screen is reassigned to the portal above that owns it.
+
+### Superseded: 2026-09-20 permission names
+
+```
+status: superseded
+since: 2026-09-20
+superseded-by: the Map above (2026-09-21, D-015)
+```
+
+The first map used `<area>.write` for most of Miguel's, Sarai's and Angelica's areas (`schedule.write`, `tasks.write`, `meetings.write`, `suppliers.write`, `deliveries.write`, `payments.write`, `documents.write`, `alerts.write`, `moodboards.write`, `competitions.write`, `brand.write`, `assets.write`) and role ids `operations`, `interior_design`, `graphic_design`, `developer`. The code uses `<area>.manage` where the person owns the whole area (request, compare, confirm, follow up, not just write), `design.develop` for Sarai's proposal work, `references.manage` / `materials.manage` for mood boards and palettes, and the shorter role ids `ops`, `studio`, `brand`, `dev`. Meaning unchanged.
 
 ## Cross-role flows (what the portals share)
 
@@ -30,9 +49,15 @@ Each role in `team.md` gets its own view of the system ("their own views/portals
 
 ## Next steps (code)
 
-- `apps/hub/src/auth/roles.ts`: `founder`, `operations`, `interior_design`, `graphic_design`, `client`, `developer` (+ `public`) as role strings; `permissions.ts` with the strings above; `demoUsers.ts` with one fictional demo user per role (never the real team members' data). The hub has no auth folder today, so this is documented here rather than half-built.
-- Hub role switcher (step 4) then opens each portal shell; portals are built in build plan step 9.
+```
+status: current
+since: 2026-09-21
+```
+
+- Done (changelog 0006): `apps/hub/src/auth/` with the roles, permissions and demo users above; `RequireRole` on every route; hub Portals section and role switcher; stub dashboards; `?as=<role>` for thumbnails and QA.
+- Next (build plan 9b): one module per portal replaces its stub (`apps/hub/src/modules/README.md`); then the client portal on `PhoneShell` and the shared alert pattern (9c).
 
 ## Change log
 
 - 2026-09-20: created from the founder's roster; six portals mapped, all planned (prompt 0002, D-013).
+- 2026-09-21: role ids and permission strings aligned with the code (`ops`, `studio`, `brand`, `dev`; `<area>.manage`, `design.develop`, ...), demo users named, dashboards A-01 / O-01 / S-01 / G-01 exist as stubs, D-02 / D-03 built; old names kept as superseded (prompt 0003, changelog 0006, D-014, D-015).

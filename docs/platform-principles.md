@@ -27,7 +27,7 @@ New here? Read `docs/README.md`, then this file, then `project-brief.md`, `build
 ## 3. Control and voice abilities
 
 **P-05 - Every change updates the control and voice abilities.** Each `PageSpec` lists its `actions: { id: '<module>.<verb>', label, intent, permission?, params? }`. A page's buttons, menu items and form submits are its actions; a new button without an entry is incomplete, removing a button removes its entry in the same commit. The manifest is data (`window.__aluzina.routes[].spec.actions`) and is the future WebMCP surface: one tool per action, `name = id`, `description = intent`, input schema from `params`.
-- _Today_: `apps/hub/src/specs/PageSpec.ts` (`ActionDef`); HUB-01 declares `hub.openSurface`, `hub.setLang`, `hub.toggleTheme`, `hub.toggleDevMode` (permission `dev.tools`); the dev panel lists them.
+- _Today_: `apps/hub/src/specs/PageSpec.ts` (`ActionDef`); 20 actions declared across HUB-01 (incl. `hub.enterAs`, `hub.switchRole`), the four portal stubs and D-02 / D-03; the dev panel and `/#/dev/specs` list them; `defineSpec` validates action ids.
 - _Queued_: actions bus (`run(id, params)` registered while mounted), `/#/dev/actions`, WebMCP generation (step 4 / 7).
 
 **P-06 - Voice moves fast, feels realtime and multiplayers with the person.** The controller drives the same UI through the actions registry and the data provider, never a private code path. Actions are idempotent where possible, take ids not screen positions, return readable results; state that matters is addressable (URL / hash / store).
@@ -37,8 +37,8 @@ New here? Read `docs/README.md`, then this file, then `project-brief.md`, `build
 ## 4. Tables, design system and the component library
 
 **P-07 - Tables, design system and the component library are first-class, in the product.** Every design value is a token in `tokens.ts`; every component has a `.meta.ts`; pages never hand-roll a table, button, input, modal, card or tooltip. New components go into the library first, then get used.
-- _Today_: `tokens.ts` -> generated `tokens.css`; five library components with metas (`Placeholder`, `Toast`, `ToggleButton`, `SurfaceCard`, `HubHeader`).
-- _Queued_: `/#/dev/tokens`, `/#/dev/components` (step 4); table registry when data arrives (step 7). The Business OS export's own components are inventoried in step 2 and moved into the library in step 3.
+- _Today_: `tokens.ts` -> generated `tokens.css`; 31 library components with metas and live examples in four tiers (D-017), rendered at `/#/dev/components` (D-02); `DataTable`, `Kanban`, `Timeline`, `Calendar`, `Drawer`, `Modal`, `ApprovalQueue` cover the portals' needs.
+- _Queued_: `/#/dev/tokens`; table registry from `src/data/schema`; the Business OS export's own components are inventoried in step 2 and moved into the library in step 3.
 
 ## 5. Annotations and Submissions in the product
 
@@ -49,7 +49,7 @@ New here? Read `docs/README.md`, then this file, then `project-brief.md`, `build
 ## 6. Placeholder and undeveloped UI
 
 **P-09 - If it is on screen and does not work, it says so.** The `Placeholder` atom: tooltip on hover and focus ("Not wired yet – <what it will do>"), a "not wired yet" toast on activation, dashed outline + badge always visible in dev mode, `data-placeholder` for QA counts.
-- _Today_: `apps/hub/src/components/atom/Placeholder`; the five planned hub cards use it.
+- _Today_: `apps/hub/src/components/atom/Placeholder`; the planned hub cards use it; every stub dashboard renders `PageStub` (one Placeholder per planned section).
 - _Queued_: every stub in the Business OS export gets wrapped (step 2).
 
 ## 7. Surfaces: MCP, CLI, API
@@ -67,26 +67,26 @@ New here? Read `docs/README.md`, then this file, then `project-brief.md`, `build
 ## 9. The Hub and the standard deliverable batch
 
 **P-12 - Every project ships the same batch, reachable from one hub.** Public website, customer app, staff / admin dashboards, docs, ops manual, dev / builder tools, and the hub that opens every surface as any demo user with dev mode on / off. Until real auth, identity is mocked while role guards stay real.
-- _Today_: HUB-01 with seven surface cards (two live: aluzinaa.com, docs on GitHub), dev-mode toggle; no roles yet.
-- _Queued_: role switcher, demo simulator, canvas, plan viewer (step 4).
+- _Today_: HUB-01 opens four portals as their demo users (Portals section + "Viewing as" switcher, D-014 / D-015), `RequireRole` guards every route, `?as=<role>` for tooling; client portal planned on `PhoneShell`.
+- _Queued_: demo simulator, canvas, plan viewer (step 4); real auth behind the same session.
 
 ## 10. Multilingual
 
 **P-13 - English and Spanish from the start.** Every visible string goes through `useT()` with a namespaced key in a `{ en, es? }` table; Spanish falls back to English, so a missing translation is never a blocker but always a gap. "Spanish fill" is a pass, never a blocker; hard-coded English in JSX is a defect. Note: Aluzina's customers and the owner's site are Spanish-first, so the default language is an open question for Justin (D-004).
-- _Today_: `apps/hub/src/i18n` (`I18nProvider`, `useT`, `aluzina.lang`); HUB-01 fully translated.
+- _Today_: `apps/hub/src/i18n` (`I18nProvider`, `useT`, `aluzina.lang`, `format.ts` for COP and dates); HUB-01, shells, auth pages, component strings, stubs and dev pages fully translated.
 - _Queued_: the Business OS export gets the toggle in step 2 and its Spanish fill in step 6.
 
 ## 11. Multiplayer and realtime
 
 **P-14 - Many people at once, with insight into what each is doing.** Presence, optimistic concurrency (`id`, `updated_at`, `version`), online / offline with queued writes, realtime subscriptions. Not first pass, but never designed against: no in-memory-only shared state, writes by id, lists re-render from subscribe events.
-- _Today_: no data layer.
-- _Queued_: `DataProvider` seam with base columns and `subscribe` (step 7); realtime plan (step 8).
+- _Today_: `DataProvider` seam with `id / created_at / updated_at`, writes by id and `subscribe` events; `MockProvider` in localStorage; lists re-render from events (D-016).
+- _Queued_: `version` column and conflict UI, offline queue, realtime subscriptions through the provider (step 8).
 
 ## 12. Company-OS and the 2027+ bar
 
 **P-15 - Build on the Company-OS framework at 2027+ strength.** Agents, voice, realtime and multi-device are normal; no legacy patterns (page reloads, one-user locks, hover-only UI, hard-coded strings and prices). Playset-LLC/Company-OS is **reference only**: nothing wires into it until Justin says so; the provider seam is where it will connect.
-- _Today_: nothing wired; Supabase (DB + Auth) and Stripe assumed later behind seams.
-- _Queued_: `CompanyOsProvider` stub with the data seam (step 7).
+- _Today_: nothing wired; the `DataProvider` interface is the seam; Supabase (DB + Auth) and Stripe assumed later behind it.
+- _Queued_: `CompanyOsProvider` stub (reference only).
 
 ## Working rules carried from the house rules
 

@@ -20,7 +20,9 @@
 
 Numbering: prompts and changelogs share a counter per folder (`0001`, `0002`, ...). A changelog's `prompt:` line points at the prompt that caused it.
 
-Page codes (shared vocabulary between specs, docs, screenshots and commits): `HUB-01` hub, `BOS-01` the Business OS app, `BOS-02..06` the other export pages (`pages/BOS.md`), `P-xx` public site, `C-xx` customer / client portal, `A-xx` founder admin / approvals, `O-xx` operations portal, `S-xx` studio / interior design portal, `G-xx` brand / graphic design portal, `M-xx` ops manual, `D-xx` dev tools and docs (role map: `knowledge/roles-and-portals.md`, D-013).
+Module contract for the app (how to add a page, codes, shells, data, components, docs a module writes): `apps/hub/src/modules/README.md`.
+
+Page codes (shared vocabulary between specs, docs, screenshots and commits): `HUB-01` hub, `BOS-01` the Business OS app, `BOS-02..06` the other export pages (`pages/BOS.md`), `P-xx` public site, `C-xx` customer / client portal, `A-xx` founder admin / approvals, `O-xx` operations portal, `S-xx` studio / interior design portal, `G-xx` brand / graphic design portal, `M-xx` ops manual, `D-xx` dev tools and docs (`D-02` components, `D-03` specs); role map: `knowledge/roles-and-portals.md` (D-013, D-015).
 
 Generated at deploy, never committed: `dist/thumbs/<code>.jpg` + `thumbs/manifest.json`, the hub card thumbnails (`scripts/thumbnails.mjs`, D-011).
 
