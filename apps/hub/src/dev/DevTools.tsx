@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useT } from '../i18n/I18nProvider';
 import type { PageSpec } from '../specs/PageSpec';
-import { useDevMode } from './DevModeProvider';
+import { useDevMode } from '../auth/SessionProvider';
 import './DevTools.css';
 
 /**
