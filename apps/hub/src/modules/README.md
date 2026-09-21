@@ -25,7 +25,7 @@ Modules today: `hub` (HUB-01), `dev` (D-02 components, D-03 specs), `founder` (A
 | client | `C-xx` | `/client/...` | `client` | `C-01` (planned) | `own.projects.read` |
 | dev | `D-xx` | `/dev/...` | `dev` | `D-02` `/dev/components` | `dev.tools` |
 
-Codes are two digits, `01` is the dashboard, then `02..` in the order you build. Use them in `spec.code`, `docs/pages/<CODE>.md`, `docs/screenshots/<CODE>/`, changelog `codes:` lines and commit bodies.
+Codes are two digits, `01` is the dashboard, then `02..` in the order you build. Taken so far: A-01..A-07, O-01..O-10, S-01..S-09, G-01..G-07 (D-018). Use them in `spec.code`, `docs/pages/<CODE>.md`, `docs/screenshots/<CODE>/`, changelog `codes:` lines and commit bodies.
 
 ## Adding a page
 
@@ -96,7 +96,7 @@ import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 - **Permissions**: check with `can('<area>.<verb>')` (list in `src/auth/permissions.ts`); never compare `role`.
 - **Data**: only through `useTable / useRow / useData`. Entities and fields: `src/data/schema/*.ts`; seeds: `src/data/seed/*.ts`. Writes go by id; lists re-render from `subscribe` events. Do not add entities or seed files in this pass: request them.
 - **Components** (P-07): only from `src/components/`; every one is listed with props and a live example at `/#/dev/components`. Pages never hand-roll a table, button, input, modal, card or tooltip. Missing something? Wrap the closest thing in `Placeholder` and request the component.
-- **Placeholder** (P-09): any control that does not work yet is `<Placeholder what={t('...')}>…</Placeholder>`; a route that is not built yet renders `PageStub`. Never leave a control that silently does nothing.
+- **Placeholder** (P-09): any control that does not work yet is `<Placeholder what={t('...')}><Button>…</Button></Placeholder>`: around a `Button` / `<button>` / `<a>` the Placeholder is a span wrapper and the control stays the one tab stop (D-019); around plain content it is itself the button. A route that is not built yet renders `PageStub`. Never leave a control that silently does nothing.
 - **Actions** (P-05): every button, menu item and form submit has an entry in `spec.actions` (`<module>.<verb>`, intent phrase, permission, params). Add / remove them in the same commit as the button.
 - **Quality bar** (P-01, P-03): works at 360 / 390 / 768 / 1280 / 1920 (record what you verified in `checkedAt`); keyboard order, visible focus (global ring), 44 px targets, nothing hover-only or drag-only; light and dark.
 

@@ -1,6 +1,6 @@
 # Surfaces: routes, scripts, actions, MCP / CLI / API
 
-Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0006).
+Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0007).
 
 ## 1. What exists today
 
@@ -8,15 +8,46 @@ Every surface a machine (script, agent, voice controller, MCP client) can drive,
 
 `apps/hub/src/app/manifest.ts` publishes `window.__aluzina = { routes, version }` on load. Each entry: `{ path, code, surface, status: 'built' | 'stub', shell: 'desktop' | 'phone' | 'bare', permission?, spec }` where `spec` is the full `PageSpec` (`apps/hub/src/specs/PageSpec.ts`: code, name, purpose, surface, navGroup?, layout, dataTables, roles, logic, components, actions, checkedAt, notes). Routing is HashRouter, so every page is `/#/<path>`. Routes come from `src/modules/*/index.ts` through the registry (D-014); `permission` is what `RequireRole` checks (D-015).
 
-| path | code | surface | status | shell | permission | actions |
+| path | code | surface | status | shell | permission | actions (page) |
 | --- | --- | --- | --- | --- | --- | --- |
 | `/` | HUB-01 | hub | built | bare | – | `hub.enterAs`, `hub.switchRole`, `hub.openSurface`, `hub.openPrototypePage`, `hub.setLang`, `hub.toggleTheme`, `hub.toggleDevMode` |
-| `/founder` | A-01 | founder | stub | desktop | `projects.approve` | `founder.open` |
-| `/ops` | O-01 | ops | stub | desktop | `schedule.manage` | `ops.open` |
-| `/studio` | S-01 | studio | stub | desktop | `design.develop` | `studio.open` |
-| `/brand` | G-01 | brand | stub | desktop | `brand.manage` | `brand.open` |
+| `/founder` | A-01 | founder | built | desktop | `projects.approve` | 5 (Founder dashboard) |
+| `/founder/approvals` | A-02 | founder | built | desktop | `projects.approve` | 4 (Approvals) |
+| `/founder/pipeline` | A-03 | founder | built | desktop | `projects.read` | 4 (Pipeline) |
+| `/founder/proposals` | A-04 | founder | built | desktop | `quotes.review` | 5 (Quotes and proposals) |
+| `/founder/products` | A-05 | founder | built | desktop | `products.write` | 2 (Products and partnerships) |
+| `/founder/clients` | A-06 | founder | built | desktop | `projects.read` | 3 (Clients and negotiations) |
+| `/founder/team` | A-07 | founder | built | desktop | `projects.read` | 3 (Team overview) |
+| `/ops` | O-01 | ops | built | desktop | `schedule.manage` | 4 (Operations dashboard) |
+| `/ops/schedule` | O-02 | ops | built | desktop | `schedule.manage` | 3 (Project schedule) |
+| `/ops/tasks` | O-03 | ops | built | desktop | `tasks.manage` | 4 (Pending tasks) |
+| `/ops/suppliers` | O-04 | ops | built | desktop | `suppliers.manage` | 4 (Suppliers and follow-ups) |
+| `/ops/quotes` | O-05 | ops | built | desktop | `quotes.compare` | 4 (Quotes and comparisons) |
+| `/ops/deliveries` | O-06 | ops | built | desktop | `deliveries.manage` | 3 (Deliveries and dates) |
+| `/ops/payments` | O-07 | ops | built | desktop | `payments.manage` | 3 (Payments and accounts) |
+| `/ops/documents` | O-08 | ops | built | desktop | `documents.manage` | 4 (Administrative documents) |
+| `/ops/alerts` | O-09 | ops | built | desktop | `alerts.manage` | 5 (Alerts before urgent) |
+| `/ops/reports` | O-10 | ops | built | desktop | `reports.write` | 4 (Reports) |
+| `/studio` | S-01 | studio | built | desktop | `design.develop` | 5 (Studio dashboard) |
+| `/studio/projects` | S-02 | studio | built | desktop | `design.develop` | 4 (Projects and proposals) |
+| `/studio/references` | S-03 | studio | built | desktop | `references.manage` | 5 (References and mood boards) |
+| `/studio/materials` | S-04 | studio | built | desktop | `materials.manage` | 5 (Material palettes) |
+| `/studio/plans` | S-05 | studio | built | desktop | `plans.write` | 4 (Plans and design documentation) |
+| `/studio/schedules` | S-06 | studio | built | desktop | `schedules.write` | 5 (Furniture, material and element schedules) |
+| `/studio/packs` | S-07 | studio | built | desktop | `renders.brief` | 4 (Render and supplier packs) |
+| `/studio/checks` | S-08 | studio | built | desktop | `projects.check` | 6 (Consistency check) |
+| `/studio/measurements` | S-09 | studio | built | desktop | `measurements.write` | 4 (Measurements and requirements) |
+| `/brand` | G-01 | brand | built | desktop | `brand.manage` | 1 (Brand dashboard) |
+| `/brand/competitions` | G-02 | brand | built | desktop | `competitions.manage` | 6 (Competitions 2027) |
+| `/brand/presentations` | G-03 | brand | built | desktop | `presentations.write` | 4 (Sales presentations) |
+| `/brand/identity` | G-04 | brand | built | desktop | `brand.manage` | 6 (Brand identity and assets) |
+| `/brand/images` | G-05 | brand | built | desktop | `images.write` | 5 (Images for clients) |
+| `/brand/revisions` | G-06 | brand | built | desktop | `revisions.manage` | 3 (Graphic revisions queue) |
+| `/brand/assets` | G-07 | brand | built | desktop | `assets.manage` | 6 (Asset library organization) |
 | `/dev/components` | D-02 | dev | built | desktop | `dev.tools` | `dev.searchComponents`, `dev.filterTier` |
 | `/dev/specs` | D-03 | dev | built | desktop | `dev.tools` | `dev.openSpec`, `dev.filterSurface` |
+
+36 routes, 148 declared actions: hub 7, founder 26 over 7 pages, ops 38 over 10 (35 distinct ids), studio 42 over 9, brand 31 over 7, dev 4 over 2 (changelog 0007). Every action id is `<module>.<verb>` with an intent phrase and, for the portals, a permission; the full list is `window.__aluzina.routes[].spec.actions` and the drawer on `/#/dev/specs`.
 
 Consumers: `scripts/screenshots.mjs` (writes the manifest into `docs/screenshots/<CODE>/routes.json`), `/#/dev/specs` (D-03, same data through `RoutesContext`), `scripts/thumbnails.mjs` targets; future QA and WebMCP generation.
 
@@ -62,16 +93,16 @@ Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effecti
 | `hub.setLang` | HUB-01 | switch the language to {lang} | – | `lang: enum:en\|es` |
 | `hub.toggleTheme` | HUB-01 | switch between light and dark | – | – |
 | `hub.toggleDevMode` | HUB-01 | turn developer mode on or off | `dev.tools` | – |
-| `founder.open` | A-01 | open the founder dashboard | `projects.approve` | – |
-| `ops.open` | O-01 | open the operations dashboard | `schedule.manage` | – |
-| `studio.open` | S-01 | open the studio dashboard | `design.develop` | – |
-| `brand.open` | G-01 | open the brand dashboard | `brand.manage` | – |
+| `founder.*` (26 entries) | A-01..A-07 | approve / request changes / comment on a project, move a project phase, set creative direction, mark a document final or sent, sign off a presentation, shortlist a quote, approve a material, mark a task done, new lead / quote / partnership / note (Placeholders) | `projects.approve`, `projects.write`, `quotes.review`, `proposals.write`, `clients.write`, `products.write`, `projects.read` | project / document / quote / task ids |
+| `ops.*` (38 entries, 35 ids) | O-01..O-10 | acknowledge / resolve / reopen an alert, confirm / receive / delay a delivery, move a task, pause / activate a supplier, select / shortlist a quote, mark a payment paid or part paid, advance a document, new task / meeting / supplier / alert, request quote, format / export / send report (Placeholders) | `schedule.manage`, `tasks.manage`, `suppliers.manage`, `quotes.request`, `quotes.compare`, `deliveries.manage`, `payments.manage`, `documents.manage`, `alerts.manage`, `reports.write` | ids, dates, amounts |
+| `studio.*` (42 entries) | S-01..S-09 | send a project to check, move a reference to a board, request sample / approve / reject a material, new version / mark final a plan, review / finalise a schedule, move a render pack, tick a check item, save notes, pass / report issues, new proposal / palette / pack / check and capture controls (Placeholders) | `design.develop`, `references.manage`, `materials.manage`, `plans.write`, `schedules.write`, `renders.brief`, `projects.check`, `measurements.write` | ids, text |
+| `brand.*` (31 entries) | G-01..G-07 | edit a competition slot (name, organiser, category, submission date, project, folder, result) and advance its status, advance a presentation / revision / image set, mark an asset superseded or current, import list / open folder / request deck / upload / share / connect storage (Placeholders) | `brand.manage`, `competitions.manage`, `presentations.write`, `images.write`, `revisions.manage`, `assets.manage` | ids, text, date |
 | `dev.searchComponents` | D-02 | find the component {query} | `dev.tools` | `query: string` |
 | `dev.filterTier` | D-02 | show only {tier} components | `dev.tools` | `tier: enum:all\|atom\|molecule\|organism\|template` |
 | `dev.openSpec` | D-03 | show the spec of page {code} | `dev.tools` | `code: string` |
 | `dev.filterSurface` | D-03 | show only {surface} pages | `dev.tools` | `surface: enum:all\|hub\|founder\|ops\|studio\|brand\|client\|dev\|docs\|manual\|public` |
 
-Declared only: no actions bus runs them yet (section 2.1). Permissions per role: `apps/hub/src/auth/permissions.ts` (`docs/knowledge/roles-and-portals.md`).
+Declared only: no actions bus runs them yet (section 2.1). Per-action rows for the portals live in each page doc (`docs/pages/<CODE>.md`, section Actions) and in the manifest. Permissions per role: `apps/hub/src/auth/permissions.ts` (`docs/knowledge/roles-and-portals.md`); `suppliers.read` added for studio and ops (0007).
 
 ### 1.4 npm scripts (the CLI today)
 
@@ -79,7 +110,7 @@ Declared only: no actions bus runs them yet (section 2.1). Permissions per role:
 | --- | --- | --- |
 | `npm run dev` | Vite dev server for the hub, `http://localhost:5173/#/` | |
 | `npm run build` | `npm run build -w @aluzina/hub` (= `tokens` + `tsc --noEmit` + `vite build` -> repo-root `dist/`) `&& node scripts/copy-static.mjs`; must be green before every push | |
-| `npm run thumbs` | `node scripts/thumbnails.mjs`: serves `dist/` on `127.0.0.1:4180` (Node `http`), screenshots every hub-linked surface (incl. portal dashboards A-01 / O-01 / S-01 / G-01 and dev pages D-02 / D-03 through `?as=<role>`, section 1.1a) with Playwright Chromium (1280 x 800 -> 640 x 400 JPEG q80) into `dist/thumbs/<code>.jpg` and writes `dist/thumbs/manifest.json`; CI step after `npm run build`, never part of the build (D-011). Blocks mp4 / webm, never waits for `networkidle`, 45 s per page, failures write the placeholder tile and are recorded in the manifest (`source: "placeholder"`, `error`). Externals (P-00, D-06) are best effort. | `-- --dist=dist --port=4180 --only=HUB-01,BOS-01 --skip-external`; env `PW_EXECUTABLE` / `PLAYWRIGHT_CHROMIUM_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` used only for the external captures |
+| `npm run thumbs` | `node scripts/thumbnails.mjs`: serves `dist/` on `127.0.0.1:4180` (Node `http`), screenshots every hub-linked surface (incl. portal dashboards A-01 / O-01 / S-01 / G-01 and dev pages D-02 / D-03 through `?as=<role>`, section 1.1a) with Playwright Chromium (1280 x 800 -> 640 x 400 JPEG q80) into `dist/thumbs/<code>.jpg` and writes `dist/thumbs/manifest.json`; CI step after `npm run build`, never part of the build (D-011). Blocks mp4 / webm, never waits for `networkidle`, 45 s per page (the hub's own wait for its lazy thumbnails is bounded to 8 s), failures write the placeholder tile and are recorded in the manifest (`source: "placeholder"`, `error`). Externals (P-00, D-06) are best effort. | `-- --dist=dist --port=4180 --only=HUB-01,BOS-01 --skip-external`; env `PW_EXECUTABLE` / `PLAYWRIGHT_CHROMIUM_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` used only for the external captures |
 | `npm run copy:static` | `node scripts/copy-static.mjs`: copies `apps/business-os/` (minus READMEs) into `dist/business-os/`, writes `dist/.nojekyll`; needs `dist/index.html` first | |
 | `npm run preview` | serve `dist/` on :4173 | |
 | `npm run typecheck` | `tsc --noEmit` in the hub | |
@@ -118,7 +149,7 @@ Static JSON written at deploy time next to the thumbnails; the contract a hub to
 | `subscribe` | `subscribe(entity \| '*', cb) => unsubscribe` | `cb({ entity, kind: 'create' \| 'update' \| 'remove' \| 'reset', id })` |
 | `reset` | `reset()` | drops local state, re-seeds, emits `reset` per entity |
 
-Entities (`src/data/schema/index.ts`, all rows carry `id, created_at, updated_at`): `projects, tasks, meetings, suppliers, quotes, deliveries, payments, documents, references, materials, schedules, renderPacks, consistencyChecks, competitions, presentations, brandAssets, revisions, alerts`. Seeds: `src/data/seed/*.ts` (globbed, `SEED_VERSION` in `seed/index.ts`). React hooks: `useData()`, `useTable(entity, query)`, `useRow(entity, id)` (`src/data/DataContext.tsx`). Planned: `version` column and conflict handling (P-14), `CompanyOsProvider` stub (reference only), Supabase adapter.
+Entities (`src/data/schema/index.ts`, all rows carry `id, created_at, updated_at`): `projects, tasks (with nullable startDate since 0007), meetings, suppliers, quotes, deliveries, payments, documents, references, materials, schedules, renderPacks, consistencyChecks, competitions, presentations, brandAssets, revisions, alerts`. Seeds: `src/data/seed/*.ts` (globbed, `SEED_VERSION` 2 in `seed/index.ts`). Deferred entities and fields: D-020. React hooks: `useData()`, `useTable(entity, query)`, `useRow(entity, id)` (`src/data/DataContext.tsx`). Planned: `version` column and conflict handling (P-14), `CompanyOsProvider` stub (reference only), Supabase adapter.
 
 ### 1.6 HTTP API
 
@@ -152,6 +183,7 @@ Through the data provider seam (section 1.5): `subscribe` is the realtime hook, 
 
 ## 3. Change log of this file
 
+- 2026-09-21 (changelog 0007): 33 portal routes in the manifest (A-01..A-07, O-01..O-10, S-01..S-09, G-01..G-07), 148 actions summarised per module (1.3), `suppliers.read`, `tasks.startDate` and `SEED_VERSION` 2 (1.5), bounded hub image wait in `npm run thumbs` (1.4).
 - 2026-09-21 (changelog 0006): seven routes in the manifest with `shell` / `permission`; `?as=<role>` contract (1.1a); `aluzina.session` and `aluzina.data` keys (1.2); portal and dev actions (1.3); DataProvider methods and entities (1.5); thumbnail codes; library as data (2.5).
 - 2026-09-20 (prompt 0001): initial version.
 - 2026-09-20 (changelog 0002): `npm run screenshots` flags (`PW_EXECUTABLE`, proxy), playwright pin.

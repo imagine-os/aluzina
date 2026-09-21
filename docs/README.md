@@ -20,9 +20,9 @@
 
 Numbering: prompts and changelogs share a counter per folder (`0001`, `0002`, ...). A changelog's `prompt:` line points at the prompt that caused it.
 
-Module contract for the app (how to add a page, codes, shells, data, components, docs a module writes): `apps/hub/src/modules/README.md`.
+Module contract for the app (how to add a page, codes, shells, data, components, docs a module writes): `apps/hub/src/modules/README.md`. Parallel module drafts go to `changelog/_pending/<module>.md` and are merged into the next numbered changelog by the integrator (0007 merged four).
 
-Page codes (shared vocabulary between specs, docs, screenshots and commits): `HUB-01` hub, `BOS-01` the Business OS app, `BOS-02..06` the other export pages (`pages/BOS.md`), `P-xx` public site, `C-xx` customer / client portal, `A-xx` founder admin / approvals, `O-xx` operations portal, `S-xx` studio / interior design portal, `G-xx` brand / graphic design portal, `M-xx` ops manual, `D-xx` dev tools and docs (`D-02` components, `D-03` specs); role map: `knowledge/roles-and-portals.md` (D-013, D-015).
+Page codes (shared vocabulary between specs, docs, screenshots and commits): `HUB-01` hub, `BOS-01` the Business OS app, `BOS-02..06` the other export pages (`pages/BOS.md`), `P-xx` public site, `C-xx` customer / client portal (planned), `A-01..A-07` founder admin / approvals, `O-01..O-10` operations portal, `S-01..S-09` studio / interior design portal, `G-01..G-07` brand / graphic design portal (all built, changelog 0007), `M-xx` ops manual, `D-xx` dev tools and docs (`D-02` components, `D-03` specs); role map: `knowledge/roles-and-portals.md` (D-013, D-015).
 
 Generated at deploy, never committed: `dist/thumbs/<code>.jpg` + `thumbs/manifest.json`, the hub card thumbnails (`scripts/thumbnails.mjs`, D-011).
 
