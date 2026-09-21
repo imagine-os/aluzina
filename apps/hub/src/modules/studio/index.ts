@@ -7,14 +7,16 @@ import { PacksPage } from './PacksPage';
 import { PlansPage } from './PlansPage';
 import { ProjectsPage } from './ProjectsPage';
 import { ReferencesPage } from './ReferencesPage';
+import { RevisionMatrixPage } from './RevisionMatrixPage';
 import { SchedulesPage } from './SchedulesPage';
+import { ServiceChecklistPage } from './ServiceChecklistPage';
 import { StudioHome } from './StudioHome';
-import { checksSpec, homeSpec, materialsSpec, measurementsSpec, packsSpec, plansSpec, projectsSpec, referencesSpec, schedulesSpec } from './specs';
+import { checklistSpec, checksSpec, homeSpec, materialsSpec, measurementsSpec, packsSpec, plansSpec, projectsSpec, referencesSpec, revisionsSpec, schedulesSpec } from './specs';
 
 export { strings } from './strings';
 
 /**
- * Studio portal (S-01..S-09, D-014): Sarai's view of project development, from the creative
+ * Studio portal (S-01..S-11, D-014): Sarai's view of project development, from the creative
  * direction Alejandra sets to the consistency check that hands work back to her.
  * Nav order also decides the phone bottom nav (the first four): dashboard, projects, checks, schedules.
  */
@@ -117,5 +119,38 @@ export const routes: RouteDef[] = [
     spec: measurementsSpec,
     element: createElement(MeasurementsPage),
     nav: { labelKey: 'studio.nav.measurements', order: 80, glyph: '▣' },
+  },
+  {
+    path: '/studio/checklist',
+    code: checklistSpec.code,
+    surface: 'studio',
+    status: 'built',
+    permission: 'engagements.write',
+    shell: 'desktop',
+    spec: checklistSpec,
+    element: createElement(ServiceChecklistPage),
+    nav: { labelKey: 'studio.nav.checklist', order: 45, glyph: '☑' },
+  },
+  {
+    // Same page (S-10), deep-linked to one project; not in the menu.
+    path: '/studio/checklist/:projectId',
+    code: checklistSpec.code,
+    surface: 'studio',
+    status: 'built',
+    permission: 'engagements.write',
+    shell: 'desktop',
+    spec: checklistSpec,
+    element: createElement(ServiceChecklistPage),
+  },
+  {
+    path: '/studio/revisions',
+    code: revisionsSpec.code,
+    surface: 'studio',
+    status: 'built',
+    permission: 'revisionMatrix.write',
+    shell: 'desktop',
+    spec: revisionsSpec,
+    element: createElement(RevisionMatrixPage),
+    nav: { labelKey: 'studio.nav.revisions', order: 46, glyph: '⊞' },
   },
 ];

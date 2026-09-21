@@ -1,4 +1,4 @@
-/* Studio portal (S-01..S-09). Tokens only, class prefix `studio-`, no fixed px widths. */
+/* Studio portal (S-01..S-11). Tokens only, class prefix `studio-`, no fixed px widths. */
 
 .studio-stats {
   display: grid;
@@ -122,4 +122,62 @@
 .studio-detail {
   display: grid;
   gap: var(--space-4);
+}
+
+/* S-10 service checklist */
+
+.studio-stats--top {
+  margin-top: var(--space-4);
+}
+
+.studio-stats--flush {
+  margin-bottom: 0;
+}
+
+.studio-phase__title {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.studio-phase__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  padding: 0 var(--space-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.studio-note--quiet {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+/* S-11 revision matrix */
+
+.studio-form {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.studio-fieldset {
+  display: grid;
+  gap: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  margin: 0;
+}
+
+.studio-legend {
+  padding: 0 var(--space-1);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
 }

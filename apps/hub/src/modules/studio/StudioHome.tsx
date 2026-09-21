@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRegisterActions } from '../../actions';
 import { demoUserById } from '../../auth/demoUsers';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
@@ -25,12 +26,27 @@ export function StudioHome() {
   const { rows: checks, loading: loadingChecks } = useTable('consistencyChecks');
   const { rows: tasks, loading: loadingTasks } = useTable('tasks', { where: { ownerRole: 'studio' }, orderBy: 'dueDate' });
   const { rows: packs, loading: loadingPacks } = useTable('renderPacks', { orderBy: 'dueDate' });
+  const { rows: engagements } = useTable('engagements');
+  const { rows: revisionItems } = useTable('revisionItems');
 
   const projectName = useMemo(() => new Map(projects.map((p) => [p.id, p.name])), [projects]);
   const inDevelopment = useMemo(() => projects.filter((p) => IN_DEVELOPMENT.includes(p.phase)), [projects]);
   const openChecks = useMemo(() => checks.filter((c) => c.status !== 'passed'), [checks]);
   const openTasks = useMemo(() => tasks.filter((x) => x.status !== 'done'), [tasks]);
   const flightPacks = useMemo(() => packs.filter((p) => p.status !== 'delivered'), [packs]);
+  const openEngagements = useMemo(() => engagements.filter((e) => e.status === 'started' || e.status === 'in-progress'), [engagements]);
+  const openRevisions = useMemo(() => revisionItems.filter((r) => r.status === 'revision'), [revisionItems]);
+
+  useRegisterActions({
+    'studio.openChecklist': () => {
+      navigate('/studio/checklist');
+      return '/studio/checklist';
+    },
+    'studio.openRevisions': () => {
+      navigate('/studio/revisions');
+      return '/studio/revisions';
+    },
+  });
 
   return (
     <>
@@ -54,6 +70,27 @@ export function StudioHome() {
       </div>
 
       <div className="studio-stack">
+        <Card title={t('studio.home.delivery')} subtitle={t('studio.home.deliverySub')}>
+          <div className="studio-stats studio-stats--flush">
+            <StatTile
+              label={t('studio.nav.checklist')}
+              value={openEngagements.length}
+              hint={t('studio.home.checklistHint')}
+              tone="accent"
+              glyph="☑"
+              onActivate={() => navigate('/studio/checklist')}
+            />
+            <StatTile
+              label={t('studio.nav.revisions')}
+              value={openRevisions.length}
+              hint={t('studio.home.revisionsHint')}
+              tone="warning"
+              glyph="⊞"
+              onActivate={() => navigate('/studio/revisions')}
+            />
+          </div>
+        </Card>
+
         <Card title={t('studio.home.projects')} subtitle={t('studio.home.projectsSub')}>
           <DataTable<Project>
             caption={t('studio.home.projects')}
