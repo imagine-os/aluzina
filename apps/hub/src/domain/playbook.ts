@@ -780,12 +780,12 @@ export interface LeadChannel {
 }
 
 export const LEAD_CHANNELS: readonly LeadChannel[] = [
-  { id: 'instagram', label: T('Instagram') },
-  { id: 'whatsapp', label: T('WhatsApp') },
+  { id: 'instagram', label: T('Instagram', 'Instagram') },
+  { id: 'whatsapp', label: T('WhatsApp', 'WhatsApp') },
   { id: 'website', label: T('Website', 'Sitio web') },
   { id: 'referral', label: T('Referral', 'Referido') },
   { id: 'email', label: T('Email', 'Correo') },
-  { id: 'networking', label: T('Networking') },
+  { id: 'networking', label: T('Networking', 'Contactos') },
   { id: 'partnership', label: T('Commercial partnership', 'Alianza comercial') },
 ];
 
