@@ -1,0 +1,100 @@
+{
+  "capturedAt": "2026-09-21T01:19:32.790Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "O-07",
+  "route": "/ops/payments",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/ops/payments",
+      "code": "O-07",
+      "surface": "ops",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "payments.manage",
+      "spec": {
+        "code": "O-07",
+        "name": "Payments and accounts",
+        "purpose": "Who owes what: money the clients owe the studio and money the studio owes suppliers, what is overdue today, and the register of part payments and settlements.",
+        "surface": "ops",
+        "navGroup": "money",
+        "layout": [
+          "PageHeader",
+          "StatTile row: clients owe us, we owe suppliers, overdue, net balance",
+          "Card: overdue right now",
+          "FilterBar (search, direction, status)",
+          "DataTable of payments with row actions",
+          "Modal: register a part payment"
+        ],
+        "dataTables": [
+          "payments",
+          "projects"
+        ],
+        "roles": [
+          "ops",
+          "founder"
+        ],
+        "logic": [
+          "Outstanding per row is amountCop - paidCop; the tiles sum it by direction over every row that is not paid.",
+          "Mark paid writes paidCop = amountCop, paidDate = today and status = paid.",
+          "A part payment adds to paidCop and sets status to partial, or to paid when it covers the balance.",
+          "A row whose dueDate is past and is not paid is shown as overdue even when the stored status still says due."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "Card",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "DataTable",
+          "Modal",
+          "Input",
+          "StatusPill",
+          "Button"
+        ],
+        "actions": [
+          {
+            "id": "ops.markPaid",
+            "label": "Mark paid",
+            "intent": "mark the payment {payment} as paid",
+            "permission": "payments.manage",
+            "params": {
+              "payment": "id"
+            }
+          },
+          {
+            "id": "ops.registerPayment",
+            "label": "Register part payment",
+            "intent": "register a part payment of {amount} on {payment}",
+            "permission": "payments.manage",
+            "params": {
+              "payment": "id",
+              "amount": "number"
+            }
+          },
+          {
+            "id": "ops.viewPayment",
+            "label": "Open payment",
+            "intent": "show the payment {payment}",
+            "permission": "payments.manage",
+            "params": {
+              "payment": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "capturedAt": "2026-09-21T01:19:24.691Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "O-05",
+  "route": "/ops/quotes",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/ops/quotes",
+      "code": "O-05",
+      "surface": "ops",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "quotes.compare",
+      "spec": {
+        "code": "O-05",
+        "name": "Quotes and comparisons",
+        "purpose": "Miguel requests supplier quotes and prepares the price comparisons: one card per comparison group with the quotes side by side, the best price and the shortest lead time marked, and one selectable winner.",
+        "surface": "ops",
+        "navGroup": "suppliers",
+        "layout": [
+          "PageHeader (Placeholder: request quote)",
+          "FilterBar (search, project)",
+          "One Card per comparisonGroup with a DataTable of its quotes and the spread",
+          "Drawer: quote detail and notes"
+        ],
+        "dataTables": [
+          "quotes",
+          "suppliers",
+          "projects"
+        ],
+        "roles": [
+          "ops",
+          "founder"
+        ],
+        "logic": [
+          "Selecting a quote writes status = selected on it and status = rejected on every other quote of the same comparisonGroup.",
+          "Shortlisting writes status = shortlisted on that quote only.",
+          "Best price and fastest are computed per group from the live rows and shown as Badges; the spread is the difference between the highest and the lowest price."
+        ],
+        "components": [
+          "PageHeader",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "Card",
+          "DataTable",
+          "Drawer",
+          "KeyValue",
+          "StatusPill",
+          "Badge",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "ops.selectQuote",
+            "label": "Select quote",
+            "intent": "select the quote {quote}",
+            "permission": "quotes.compare",
+            "params": {
+              "quote": "id"
+            }
+          },
+          {
+            "id": "ops.shortlistQuote",
+            "label": "Shortlist quote",
+            "intent": "shortlist the quote {quote}",
+            "permission": "quotes.compare",
+            "params": {
+              "quote": "id"
+            }
+          },
+          {
+            "id": "ops.viewQuote",
+            "label": "Open quote",
+            "intent": "show the quote {quote}",
+            "permission": "quotes.compare",
+            "params": {
+              "quote": "id"
+            }
+          },
+          {
+            "id": "ops.requestQuote",
+            "label": "Request quote",
+            "intent": "request a quote from {supplier} for {item}",
+            "permission": "quotes.request",
+            "params": {
+              "supplier": "id",
+              "item": "string"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

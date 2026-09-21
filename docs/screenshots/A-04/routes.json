@@ -1,0 +1,117 @@
+{
+  "capturedAt": "2026-09-21T01:18:19.593Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "A-04",
+  "route": "/founder/proposals",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/founder/proposals",
+      "code": "A-04",
+      "surface": "founder",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "quotes.review",
+      "spec": {
+        "code": "A-04",
+        "name": "Quotes and proposals",
+        "purpose": "The founder writes the client quotes, the graphic proposals and the project PDFs, and reviews the supplier quotes Miguel collected before a major negotiation (team.md: \"Quotes and graphic proposals\", \"Project PDFs\").",
+        "surface": "founder",
+        "navGroup": "sales",
+        "layout": [
+          "PageHeader (A-04) with a \"New client quote\" placeholder action",
+          "Tabs: client documents / graphic proposals / supplier quotes, each with its count",
+          "Client documents: DataTable of documents of kind quote, project-pdf and brief with row actions mark final and send",
+          "Graphic proposals: DataTable of presentations with a sign-off action on the ones in review",
+          "Supplier quotes: DataTable of the quotes Miguel received, grouped by comparison group, with a shortlist action"
+        ],
+        "dataTables": [
+          "documents",
+          "presentations",
+          "quotes",
+          "projects"
+        ],
+        "roles": [
+          "founder",
+          "brand",
+          "ops"
+        ],
+        "logic": [
+          "Mark final writes documents.status draft -> final; send writes final -> sent. Both are guarded by proposals.write.",
+          "Signing off a presentation writes presentations.status review -> final (proposals.write).",
+          "Shortlisting a supplier quote writes quotes.status -> shortlisted (quotes.review); selecting the winner stays with Miguel in O-05.",
+          "The supplier-quote table shows the comparison group and the item: supplier names are not in the founder read set yet (request filed)."
+        ],
+        "components": [
+          "PageHeader",
+          "Button",
+          "Placeholder",
+          "Tabs",
+          "DataTable",
+          "StatusPill",
+          "Badge",
+          "Card",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "founder.finaliseDocument",
+            "label": "Mark document final",
+            "intent": "mark the document {document} as final",
+            "permission": "proposals.write",
+            "params": {
+              "document": "id"
+            }
+          },
+          {
+            "id": "founder.sendDocument",
+            "label": "Send document to the client",
+            "intent": "send the document {document} to the client",
+            "permission": "proposals.write",
+            "params": {
+              "document": "id"
+            }
+          },
+          {
+            "id": "founder.signOffPresentation",
+            "label": "Sign off presentation",
+            "intent": "sign off the presentation {presentation}",
+            "permission": "proposals.write",
+            "params": {
+              "presentation": "id"
+            }
+          },
+          {
+            "id": "founder.shortlistQuote",
+            "label": "Shortlist supplier quote",
+            "intent": "shortlist the supplier quote {quote}",
+            "permission": "quotes.review",
+            "params": {
+              "quote": "id"
+            }
+          },
+          {
+            "id": "founder.newClientQuote",
+            "label": "New client quote",
+            "intent": "write a new client quote for {project}",
+            "permission": "proposals.write",
+            "params": {
+              "project": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

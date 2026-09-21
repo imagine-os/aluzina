@@ -1,0 +1,96 @@
+{
+  "capturedAt": "2026-09-21T01:19:28.724Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "O-06",
+  "route": "/ops/deliveries",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/ops/deliveries",
+      "code": "O-06",
+      "surface": "ops",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "deliveries.manage",
+      "spec": {
+        "code": "O-06",
+        "name": "Deliveries and dates",
+        "purpose": "Confirming deliveries and dates: what each supplier owes each project, the expected date, the date the supplier actually confirmed, and whether it arrived or slipped.",
+        "surface": "ops",
+        "navGroup": "suppliers",
+        "layout": [
+          "PageHeader",
+          "FilterBar (search, project, status)",
+          "DataTable of deliveries with row actions",
+          "Modal: confirm the date the supplier gave"
+        ],
+        "dataTables": [
+          "deliveries",
+          "suppliers",
+          "projects"
+        ],
+        "roles": [
+          "ops",
+          "founder"
+        ],
+        "logic": [
+          "Confirm opens a Modal with a date input defaulted to the expected date; saving writes confirmedDate and status = confirmed.",
+          "Mark received writes status = delivered; flag as delayed writes status = delayed and clears confirmedDate.",
+          "Rows due in the next 14 days and still pending are marked with the days-left hint."
+        ],
+        "components": [
+          "PageHeader",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "DataTable",
+          "Modal",
+          "Input",
+          "StatusPill",
+          "Button"
+        ],
+        "actions": [
+          {
+            "id": "ops.confirmDelivery",
+            "label": "Confirm delivery",
+            "intent": "confirm the delivery {delivery} for {date}",
+            "permission": "deliveries.manage",
+            "params": {
+              "delivery": "id",
+              "date": "date"
+            }
+          },
+          {
+            "id": "ops.receiveDelivery",
+            "label": "Mark received",
+            "intent": "mark the delivery {delivery} as received",
+            "permission": "deliveries.manage",
+            "params": {
+              "delivery": "id"
+            }
+          },
+          {
+            "id": "ops.delayDelivery",
+            "label": "Flag as delayed",
+            "intent": "flag the delivery {delivery} as delayed",
+            "permission": "deliveries.manage",
+            "params": {
+              "delivery": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

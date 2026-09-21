@@ -1,0 +1,105 @@
+{
+  "capturedAt": "2026-09-21T01:19:36.857Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "O-08",
+  "route": "/ops/documents",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/ops/documents",
+      "code": "O-08",
+      "surface": "ops",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "documents.manage",
+      "spec": {
+        "code": "O-08",
+        "name": "Administrative documents",
+        "purpose": "The administrative paperwork Miguel manages: contracts, invoices, quotes, briefs and reports with their owner, version and state, filterable by kind and project.",
+        "surface": "ops",
+        "navGroup": "documents",
+        "layout": [
+          "PageHeader (Placeholder: upload document)",
+          "FilterBar (search, kind, status)",
+          "DataTable of documents",
+          "Drawer: document detail, advance status, open file (Placeholder)"
+        ],
+        "dataTables": [
+          "documents",
+          "projects"
+        ],
+        "roles": [
+          "ops",
+          "founder"
+        ],
+        "logic": [
+          "Advance status moves the document along draft -> final -> sent -> signed through useData; a signed document has no next state.",
+          "Opening the file is a Placeholder: documents carry no stored url in the mock data yet."
+        ],
+        "components": [
+          "PageHeader",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "DataTable",
+          "Drawer",
+          "KeyValue",
+          "StatusPill",
+          "Badge",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "ops.setDocumentStatus",
+            "label": "Advance status",
+            "intent": "move the document {document} to {status}",
+            "permission": "documents.manage",
+            "params": {
+              "document": "id",
+              "status": "enum:draft|final|sent|signed"
+            }
+          },
+          {
+            "id": "ops.viewDocument",
+            "label": "Open document",
+            "intent": "show the document {document}",
+            "permission": "documents.manage",
+            "params": {
+              "document": "id"
+            }
+          },
+          {
+            "id": "ops.openDocumentFile",
+            "label": "Open file",
+            "intent": "open the file of the document {document}",
+            "permission": "documents.manage",
+            "params": {
+              "document": "id"
+            }
+          },
+          {
+            "id": "ops.uploadDocument",
+            "label": "Upload document",
+            "intent": "upload a document for {project}",
+            "permission": "documents.manage",
+            "params": {
+              "project": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

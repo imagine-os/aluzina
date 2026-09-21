@@ -1,0 +1,110 @@
+{
+  "capturedAt": "2026-09-21T01:19:20.625Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "O-04",
+  "route": "/ops/suppliers",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/ops/suppliers",
+      "code": "O-04",
+      "surface": "ops",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "suppliers.manage",
+      "spec": {
+        "code": "O-04",
+        "name": "Suppliers and follow-ups",
+        "purpose": "Liaising with suppliers: the directory with lead time and rating, and a drawer per supplier with everything open with them right now (quotes, deliveries, money owed) plus the follow-up note.",
+        "surface": "ops",
+        "navGroup": "suppliers",
+        "layout": [
+          "PageHeader (Placeholder: add supplier)",
+          "FilterBar (search, category, status)",
+          "DataTable of suppliers",
+          "Drawer: contact, open quotes, pending deliveries, money owed, follow-up note (Placeholder), pause / activate"
+        ],
+        "dataTables": [
+          "suppliers",
+          "quotes",
+          "deliveries",
+          "payments"
+        ],
+        "roles": [
+          "ops",
+          "founder"
+        ],
+        "logic": [
+          "Pausing or activating a supplier writes suppliers.status (active <-> paused) through useData.",
+          "The drawer joins the supplier to its quotes (not rejected), its deliveries that are not delivered and the outstanding \"out\" payments whose counterparty is the supplier name.",
+          "The follow-up note has no field in the schema yet, so the save button is a Placeholder (request in the changelog draft)."
+        ],
+        "components": [
+          "PageHeader",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "DataTable",
+          "Drawer",
+          "KeyValue",
+          "Textarea",
+          "StatusPill",
+          "Badge",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "ops.viewSupplier",
+            "label": "Open supplier",
+            "intent": "show the supplier {supplier}",
+            "permission": "suppliers.manage",
+            "params": {
+              "supplier": "id"
+            }
+          },
+          {
+            "id": "ops.setSupplierStatus",
+            "label": "Pause or activate supplier",
+            "intent": "set the supplier {supplier} to {status}",
+            "permission": "suppliers.manage",
+            "params": {
+              "supplier": "id",
+              "status": "enum:active|paused"
+            }
+          },
+          {
+            "id": "ops.logFollowUp",
+            "label": "Save follow-up note",
+            "intent": "log a follow-up note on {supplier}",
+            "permission": "suppliers.manage",
+            "params": {
+              "supplier": "id",
+              "note": "string"
+            }
+          },
+          {
+            "id": "ops.addSupplier",
+            "label": "Add supplier",
+            "intent": "add the supplier {name}",
+            "permission": "suppliers.manage",
+            "params": {
+              "name": "string"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

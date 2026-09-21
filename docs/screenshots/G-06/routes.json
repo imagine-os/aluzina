@@ -1,0 +1,101 @@
+{
+  "capturedAt": "2026-09-21T01:18:58.258Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "G-06",
+  "route": "/brand/revisions",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/brand/revisions",
+      "code": "G-06",
+      "surface": "brand",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "revisions.manage",
+      "spec": {
+        "code": "G-06",
+        "name": "Graphic revisions queue",
+        "purpose": "The queue of graphic revisions the rest of the studio asks Angélica for, as a board from requested through in progress and delivered to approved, with who asked and when it is due.",
+        "surface": "brand",
+        "navGroup": "communication",
+        "layout": [
+          "PageHeader (request a revision)",
+          "StatTile row (one per column, plus overdue)",
+          "FilterBar (search, kind)",
+          "Kanban: requested | in-progress | delivered | approved",
+          "Drawer: revision detail (KeyValue)"
+        ],
+        "dataTables": [
+          "revisions",
+          "projects"
+        ],
+        "roles": [
+          "brand",
+          "founder",
+          "studio",
+          "ops"
+        ],
+        "logic": [
+          "Moving a card writes revision.status through useData; the board has explicit move buttons, never drag only (P-03).",
+          "The card subtitle names the project and the requester, resolved from demoUsers.",
+          "Overdue = dueDate in the past and status is neither delivered nor approved."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "Kanban",
+          "Drawer",
+          "KeyValue",
+          "StatusPill",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "brand.moveRevision",
+            "label": "Move revision",
+            "intent": "move the revision {revision} to {status}",
+            "permission": "revisions.manage",
+            "params": {
+              "revision": "id",
+              "status": "enum:requested|in-progress|delivered|approved"
+            }
+          },
+          {
+            "id": "brand.openRevision",
+            "label": "Open revision",
+            "intent": "open the revision {revision}",
+            "permission": "revisions.manage",
+            "params": {
+              "revision": "id"
+            }
+          },
+          {
+            "id": "brand.requestRevision",
+            "label": "Request a revision",
+            "intent": "request a {kind} revision for {project}",
+            "permission": "revisions.manage",
+            "params": {
+              "kind": "enum:image|layout|pdf|presentation|social",
+              "project": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

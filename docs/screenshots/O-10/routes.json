@@ -1,0 +1,104 @@
+{
+  "capturedAt": "2026-09-21T01:19:44.910Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "O-10",
+  "route": "/ops/reports",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/ops/reports",
+      "code": "O-10",
+      "surface": "ops",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "reports.write",
+      "spec": {
+        "code": "O-10",
+        "name": "Reports",
+        "purpose": "Formatting and laying out reports: the live figures of a month (collected, paid out, still outstanding, deliveries due, tasks done) next to the report documents, ready to be laid out in the Aluzina template.",
+        "surface": "ops",
+        "navGroup": "reports",
+        "layout": [
+          "PageHeader (Placeholder: export PDF)",
+          "Select: period (month)",
+          "StatTile row of the period figures",
+          "Card: report documents (DataTable)",
+          "Placeholder row: format and lay out, export, send to founder"
+        ],
+        "dataTables": [
+          "payments",
+          "deliveries",
+          "tasks",
+          "documents"
+        ],
+        "roles": [
+          "ops",
+          "founder"
+        ],
+        "logic": [
+          "The period select lists the last six months; the figures recompute from the live rows whose paidDate, expectedDate or dueDate falls in that month.",
+          "Layout, export and sending are Placeholders: there is no document template engine yet."
+        ],
+        "components": [
+          "PageHeader",
+          "Select",
+          "StatTile",
+          "Card",
+          "DataTable",
+          "StatusPill",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "ops.setReportPeriod",
+            "label": "Set period",
+            "intent": "show the report figures for {period}",
+            "permission": "reports.write",
+            "params": {
+              "period": "string"
+            }
+          },
+          {
+            "id": "ops.buildReport",
+            "label": "Format and lay out report",
+            "intent": "lay out the report for {period}",
+            "permission": "reports.write",
+            "params": {
+              "period": "string"
+            }
+          },
+          {
+            "id": "ops.exportReport",
+            "label": "Export PDF",
+            "intent": "export the report for {period} as a PDF",
+            "permission": "reports.write",
+            "params": {
+              "period": "string"
+            }
+          },
+          {
+            "id": "ops.sendReport",
+            "label": "Send to founder",
+            "intent": "send the report for {period} to the founder",
+            "permission": "reports.write",
+            "params": {
+              "period": "string"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

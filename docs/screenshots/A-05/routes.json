@@ -1,0 +1,90 @@
+{
+  "capturedAt": "2026-09-21T01:18:23.543Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "A-05",
+  "route": "/founder/products",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/founder/products",
+      "code": "A-05",
+      "surface": "founder",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "products.write",
+      "spec": {
+        "code": "A-05",
+        "name": "Products and partnerships",
+        "purpose": "Lighting fixture and product development plus partnerships: the Honey Valley collection with its materials, render packs and open tasks, and the strategic meetings where a partnership is negotiated.",
+        "surface": "founder",
+        "navGroup": "projects",
+        "layout": [
+          "PageHeader (A-05) with a \"New partnership\" placeholder action",
+          "One Card per product project (type lighting-product): phase, creative direction, budget, summary",
+          "Inside the card: materials of the collection with an approve action, render packs and the open tasks",
+          "Card \"Strategic meetings\": the partnership and negotiation meetings with their date and attendees",
+          "Card \"Collection roadmap\": placeholder until a product entity exists"
+        ],
+        "dataTables": [
+          "projects",
+          "materials",
+          "renderPacks",
+          "tasks",
+          "meetings"
+        ],
+        "roles": [
+          "founder",
+          "studio"
+        ],
+        "logic": [
+          "Product projects are the projects of type lighting-product; nothing is hard-coded to Honey Valley.",
+          "Approving a material writes materials.status = approved for the collection the founder owns (products.write).",
+          "Render packs and tasks are read only here: the studio owns them (S-07) and operations the schedule (O-03).",
+          "Strategic meetings are meetings of kind strategic, soonest first."
+        ],
+        "components": [
+          "PageHeader",
+          "Button",
+          "Placeholder",
+          "Card",
+          "DataTable",
+          "StatusPill",
+          "Badge",
+          "KeyValue",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "founder.approveMaterial",
+            "label": "Approve material",
+            "intent": "approve the material {material} for the collection",
+            "permission": "products.write",
+            "params": {
+              "material": "id"
+            }
+          },
+          {
+            "id": "founder.newPartnership",
+            "label": "New partnership",
+            "intent": "record a new partnership with {partner}",
+            "permission": "partnerships.write",
+            "params": {
+              "partner": "string"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

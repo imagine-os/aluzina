@@ -1,0 +1,115 @@
+{
+  "capturedAt": "2026-09-21T01:20:11.256Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "S-06",
+  "route": "/studio/schedules",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/studio/schedules",
+      "code": "S-06",
+      "surface": "studio",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "schedules.write",
+      "spec": {
+        "code": "S-06",
+        "name": "Furniture, material and element schedules",
+        "purpose": "Sarai compiles the schedules — the specification lists of furniture, materials, lighting and elements per project — and walks each one from draft to in review to final before it feeds a supplier pack.",
+        "surface": "studio",
+        "navGroup": "design",
+        "layout": [
+          "PageHeader (Placeholder: new schedule)",
+          "Three StatTiles: items specified, final schedules, draft or in review",
+          "Tabs by kind (all, furniture, materials, lighting, elements) with counts",
+          "DataTable of schedules with row actions (send to review, mark final)",
+          "Drawer: schedule detail with a Placeholder for the line-item list"
+        ],
+        "dataTables": [
+          "schedules",
+          "projects"
+        ],
+        "roles": [
+          "studio",
+          "founder",
+          "ops"
+        ],
+        "logic": [
+          "Tabs filter by schedules.kind; the counts come from the live table so they follow every write.",
+          "Send to review writes status = in-review (only from draft), Mark final writes final (only from in-review) — both need schedules.write.",
+          "A schedule stores only itemCount today: the line items themselves have no entity yet, so opening the list is a Placeholder."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "Tabs",
+          "DataTable",
+          "StatusPill",
+          "Drawer",
+          "KeyValue",
+          "Placeholder",
+          "Button"
+        ],
+        "actions": [
+          {
+            "id": "studio.reviewSchedule",
+            "label": "Send to review",
+            "intent": "send the schedule {schedule} to review",
+            "permission": "schedules.write",
+            "params": {
+              "schedule": "id"
+            }
+          },
+          {
+            "id": "studio.finaliseSchedule",
+            "label": "Mark final",
+            "intent": "mark the schedule {schedule} as final",
+            "permission": "schedules.write",
+            "params": {
+              "schedule": "id"
+            }
+          },
+          {
+            "id": "studio.openSchedule",
+            "label": "Open schedule",
+            "intent": "open the schedule {schedule}",
+            "permission": "schedules.write",
+            "params": {
+              "schedule": "id"
+            }
+          },
+          {
+            "id": "studio.openScheduleItems",
+            "label": "Open item list",
+            "intent": "open the item list of the schedule {schedule}",
+            "permission": "schedules.write",
+            "params": {
+              "schedule": "id"
+            }
+          },
+          {
+            "id": "studio.newSchedule",
+            "label": "New schedule",
+            "intent": "create a {kind} schedule for {project}",
+            "permission": "schedules.write",
+            "params": {
+              "kind": "enum:furniture|materials|lighting|elements",
+              "project": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

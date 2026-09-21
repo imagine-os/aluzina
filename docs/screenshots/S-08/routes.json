@@ -1,0 +1,124 @@
+{
+  "capturedAt": "2026-09-21T01:20:19.324Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "S-08",
+  "route": "/studio/checks",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/studio/checks",
+      "code": "S-08",
+      "surface": "studio",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "projects.check",
+      "spec": {
+        "code": "S-08",
+        "name": "Consistency check",
+        "purpose": "The initial consistency check Sarai runs before work reaches Alejandra: tick every item, leave notes, then pass the check (the project moves to the founder’s queue) or report issues (it stays in the studio).",
+        "surface": "studio",
+        "navGroup": "approvals",
+        "layout": [
+          "PageHeader (Placeholder: new check)",
+          "Three StatTiles: pending, with issues, passed",
+          "One Card per check: project, checked by, Checkbox list of its items, progress line",
+          "Card footer: notes Textarea with save, Mark passed and Report issues buttons"
+        ],
+        "dataTables": [
+          "consistencyChecks",
+          "projects"
+        ],
+        "roles": [
+          "studio",
+          "founder"
+        ],
+        "logic": [
+          "Ticking an item rewrites the whole consistencyChecks.items array by index (projects.check); the list re-renders from the live table.",
+          "Mark passed is disabled until every item is ticked; it writes the check to passed and the project approval to awaiting-founder.",
+          "Report issues writes the check to issues and the project approval back to in-check, so the work stays in the studio.",
+          "Notes are edited locally and written on save, so a half-typed note never reaches the founder."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "Card",
+          "Checkbox",
+          "Textarea",
+          "StatusPill",
+          "Button",
+          "Placeholder",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "studio.toggleCheckItem",
+            "label": "Tick check item",
+            "intent": "tick the item {item} of the check {check}",
+            "permission": "projects.check",
+            "params": {
+              "check": "id",
+              "item": "number"
+            }
+          },
+          {
+            "id": "studio.passCheck",
+            "label": "Mark passed",
+            "intent": "mark the consistency check {check} as passed",
+            "permission": "projects.check",
+            "params": {
+              "check": "id"
+            }
+          },
+          {
+            "id": "studio.reportCheckIssues",
+            "label": "Report issues",
+            "intent": "report issues on the consistency check {check}",
+            "permission": "projects.check",
+            "params": {
+              "check": "id"
+            }
+          },
+          {
+            "id": "studio.saveCheckNotes",
+            "label": "Save notes",
+            "intent": "save the notes of the consistency check {check}",
+            "permission": "projects.check",
+            "params": {
+              "check": "id",
+              "notes": "string"
+            }
+          },
+          {
+            "id": "studio.newCheck",
+            "label": "New check",
+            "intent": "start a consistency check for {project}",
+            "permission": "projects.check",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "studio.addCheckItem",
+            "label": "Add check item",
+            "intent": "add an item to the consistency check {check}",
+            "permission": "projects.check",
+            "params": {
+              "check": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

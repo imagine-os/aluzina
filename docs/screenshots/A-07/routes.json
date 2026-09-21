@@ -1,0 +1,95 @@
+{
+  "capturedAt": "2026-09-21T01:18:31.510Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "A-07",
+  "route": "/founder/team",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/founder/team",
+      "code": "A-07",
+      "surface": "founder",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "projects.read",
+      "spec": {
+        "code": "A-07",
+        "name": "Team overview",
+        "purpose": "What each of the four roles is carrying: their open tasks, the alerts raised for them and the shared meetings, plus the founder's own list, so nothing waits on her without her seeing it.",
+        "surface": "founder",
+        "navGroup": "reports",
+        "layout": [
+          "PageHeader (A-07)",
+          "One StatTile per role with their open task count",
+          "Tabs per role (founder, ops, studio, brand) over a DataTable of that role's tasks; the founder tab can mark her own tasks done",
+          "Card \"Alerts\": every open alert with its role and due date, read only",
+          "Card \"Shared meetings\": the next internal and strategic meetings",
+          "Card \"Vision and growth\": placeholder until goals exist as data"
+        ],
+        "dataTables": [
+          "tasks",
+          "alerts",
+          "meetings",
+          "projects"
+        ],
+        "roles": [
+          "founder"
+        ],
+        "logic": [
+          "Tasks are grouped by ownerRole; done tasks are hidden unless the \"show done\" checkbox is on.",
+          "Only tasks whose ownerRole is founder can be marked done here (projects.write); the other roles own their own boards.",
+          "Alerts are read only: alerts.manage belongs to Miguel (O-09)."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "Tabs",
+          "DataTable",
+          "Checkbox",
+          "Card",
+          "StatusPill",
+          "Badge",
+          "Placeholder",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "founder.completeTask",
+            "label": "Mark my task done",
+            "intent": "mark my task {task} as done",
+            "permission": "projects.write",
+            "params": {
+              "task": "id"
+            }
+          },
+          {
+            "id": "founder.showDoneTasks",
+            "label": "Show done tasks",
+            "intent": "show the tasks that are already done",
+            "permission": "projects.read",
+            "params": {
+              "on": "boolean"
+            }
+          },
+          {
+            "id": "founder.openGoals",
+            "label": "Open vision and growth",
+            "intent": "open the vision and growth goals",
+            "permission": "projects.read"
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

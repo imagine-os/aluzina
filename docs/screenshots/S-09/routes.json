@@ -1,0 +1,104 @@
+{
+  "capturedAt": "2026-09-21T01:20:23.340Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "S-09",
+  "route": "/studio/measurements",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/studio/measurements",
+      "code": "S-09",
+      "surface": "studio",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "measurements.write",
+      "spec": {
+        "code": "S-09",
+        "name": "Measurements and requirements",
+        "purpose": "Sarai verifies measurements and requirements on site before documentation. The projects, site visits and waiting schedules are real; the dimension sheet, the requirements checklist and the site photos are not wired yet.",
+        "surface": "studio",
+        "navGroup": "design",
+        "layout": [
+          "PageHeader (Placeholder: open measurement sheet)",
+          "Three StatTiles: projects to verify, open site tasks, schedules waiting",
+          "Card: projects and sites (DataTable of name, location, phase, due date)",
+          "Card: site visits and measurement tasks, read-only",
+          "Three Placeholder Cards: room-by-room dimensions, requirements per space, site photos and annotations"
+        ],
+        "dataTables": [
+          "projects",
+          "tasks",
+          "schedules"
+        ],
+        "roles": [
+          "studio",
+          "founder"
+        ],
+        "logic": [
+          "Projects to verify = phase development or documentation; open site tasks = studio-owned tasks that are not done; schedules waiting = schedules still draft or in review.",
+          "Nothing on this page writes: measurement capture has no entity yet, so every capture control is a Placeholder and the task list stays read-only (tasks belong to operations)."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "Card",
+          "DataTable",
+          "StatusPill",
+          "Placeholder",
+          "Button"
+        ],
+        "actions": [
+          {
+            "id": "studio.openMeasurementSheet",
+            "label": "Open measurement sheet",
+            "intent": "open the measurement sheet of {project}",
+            "permission": "measurements.write",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "studio.captureDimensions",
+            "label": "Room-by-room dimensions",
+            "intent": "capture the dimensions of {space} in {project}",
+            "permission": "measurements.write",
+            "params": {
+              "project": "id",
+              "space": "string"
+            }
+          },
+          {
+            "id": "studio.addRequirement",
+            "label": "Requirements per space",
+            "intent": "record a requirement for {space} in {project}",
+            "permission": "measurements.write",
+            "params": {
+              "project": "id",
+              "space": "string"
+            }
+          },
+          {
+            "id": "studio.attachSitePhoto",
+            "label": "Site photos and annotations",
+            "intent": "attach a site photo to {project}",
+            "permission": "measurements.write",
+            "params": {
+              "project": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

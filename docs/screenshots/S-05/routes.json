@@ -1,0 +1,107 @@
+{
+  "capturedAt": "2026-09-21T01:20:07.190Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "S-05",
+  "route": "/studio/plans",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/studio/plans",
+      "code": "S-05",
+      "surface": "studio",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "plans.write",
+      "spec": {
+        "code": "S-05",
+        "name": "Plans and design documentation",
+        "purpose": "Sarai drafts the plans and design documentation of each project: the documents of kind plan and spec with their version, who owns them and whether they are still a draft or final.",
+        "surface": "studio",
+        "navGroup": "documents",
+        "layout": [
+          "PageHeader (Placeholder: upload drawing)",
+          "Three StatTiles: plans and specs, still draft, final",
+          "FilterBar (search, project, status)",
+          "DataTable of documents with row actions (new version, mark final)",
+          "Drawer: document detail with a Placeholder to open the stored file"
+        ],
+        "dataTables": [
+          "documents",
+          "projects"
+        ],
+        "roles": [
+          "studio",
+          "founder",
+          "ops"
+        ],
+        "logic": [
+          "Only documents of kind plan or spec are shown; other kinds belong to operations (O-08) and the founder (A-04).",
+          "New version writes version + 1 and status = draft; Mark final writes status = final (plans.write).",
+          "url is null in every seed row, so opening the file is a Placeholder and the detail states that no file is attached."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "DataTable",
+          "StatusPill",
+          "Drawer",
+          "KeyValue",
+          "Placeholder",
+          "Button"
+        ],
+        "actions": [
+          {
+            "id": "studio.newPlanVersion",
+            "label": "New version",
+            "intent": "create a new version of the plan {document}",
+            "permission": "plans.write",
+            "params": {
+              "document": "id"
+            }
+          },
+          {
+            "id": "studio.finalisePlan",
+            "label": "Mark final",
+            "intent": "mark the plan {document} as final",
+            "permission": "plans.write",
+            "params": {
+              "document": "id"
+            }
+          },
+          {
+            "id": "studio.openPlan",
+            "label": "Open document",
+            "intent": "open the plan {document}",
+            "permission": "plans.write",
+            "params": {
+              "document": "id"
+            }
+          },
+          {
+            "id": "studio.uploadDrawing",
+            "label": "Upload drawing",
+            "intent": "upload a drawing file for {project}",
+            "permission": "plans.write",
+            "params": {
+              "project": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

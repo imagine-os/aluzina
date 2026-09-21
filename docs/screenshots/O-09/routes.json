@@ -1,0 +1,116 @@
+{
+  "capturedAt": "2026-09-21T01:19:40.896Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "O-09",
+  "route": "/ops/alerts",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/ops/alerts",
+      "code": "O-09",
+      "surface": "ops",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "alerts.manage",
+      "spec": {
+        "code": "O-09",
+        "name": "Alerts before urgent",
+        "purpose": "Alerting the founder before a situation becomes urgent: dated items with a lead time, grouped by open, acknowledged and resolved, each one pointing at the quote, payment or project behind it.",
+        "surface": "ops",
+        "navGroup": "alerts",
+        "layout": [
+          "PageHeader (Placeholder: new alert)",
+          "Tabs: open | acknowledged | resolved",
+          "One Card per alert with severity, due date, lead time and the entity it is about",
+          "Acknowledge / resolve / reopen buttons"
+        ],
+        "dataTables": [
+          "alerts",
+          "quotes",
+          "payments",
+          "projects",
+          "deliveries"
+        ],
+        "roles": [
+          "ops",
+          "founder"
+        ],
+        "logic": [
+          "Acknowledge writes alerts.status = acknowledged, resolve writes resolved, reopen writes open.",
+          "The days-left line compares dueDate with today and says \"due today\", \"in n days\" or \"n days overdue\"; an alert inside its leadDays window is shown with a warning tone.",
+          "Alerts for other roles are listed too, marked with the role they belong to, because Miguel is the one who chases them."
+        ],
+        "components": [
+          "PageHeader",
+          "Tabs",
+          "Card",
+          "KeyValue",
+          "StatusPill",
+          "Badge",
+          "EmptyState",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "ops.acknowledgeAlert",
+            "label": "Acknowledge alert",
+            "intent": "acknowledge the alert {alert}",
+            "permission": "alerts.manage",
+            "params": {
+              "alert": "id"
+            }
+          },
+          {
+            "id": "ops.resolveAlert",
+            "label": "Resolve alert",
+            "intent": "resolve the alert {alert}",
+            "permission": "alerts.manage",
+            "params": {
+              "alert": "id"
+            }
+          },
+          {
+            "id": "ops.reopenAlert",
+            "label": "Reopen alert",
+            "intent": "reopen the alert {alert}",
+            "permission": "alerts.manage",
+            "params": {
+              "alert": "id"
+            }
+          },
+          {
+            "id": "ops.openAlertSubject",
+            "label": "Open the item",
+            "intent": "open the page of the item behind the alert {alert}",
+            "permission": "projects.read",
+            "params": {
+              "alert": "id"
+            }
+          },
+          {
+            "id": "ops.newAlert",
+            "label": "New alert",
+            "intent": "create an alert about {subject} for {date}",
+            "permission": "alerts.manage",
+            "params": {
+              "subject": "string",
+              "date": "date"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

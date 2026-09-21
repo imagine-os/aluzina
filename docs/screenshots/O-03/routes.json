@@ -1,0 +1,108 @@
+{
+  "capturedAt": "2026-09-21T01:19:16.575Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "O-03",
+  "route": "/ops/tasks",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/ops/tasks",
+      "code": "O-03",
+      "surface": "ops",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "tasks.manage",
+      "spec": {
+        "code": "O-03",
+        "name": "Pending tasks",
+        "purpose": "Miguel tracks every pending task of the studio on a board by state; moving a card writes the task status, and the drawer shows what a blocked task is waiting for.",
+        "surface": "ops",
+        "navGroup": "schedule",
+        "layout": [
+          "PageHeader (Placeholder: new task)",
+          "FilterBar (search, project, owner role, only mine)",
+          "Kanban: to do | doing | blocked | done",
+          "Drawer: task detail with dependencies"
+        ],
+        "dataTables": [
+          "tasks",
+          "projects"
+        ],
+        "roles": [
+          "ops",
+          "founder",
+          "studio",
+          "brand"
+        ],
+        "logic": [
+          "Moving a card calls data.update(\"tasks\", id, { status }) with the target column id; the board re-renders from the live table.",
+          "Filters are page state (search matches the title, project and owner role are selects, \"only mine\" keeps tasks assigned to the signed-in demo user).",
+          "The drawer lists dependsOn tasks by title with their status and offers \"mark done\"."
+        ],
+        "components": [
+          "PageHeader",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "Checkbox",
+          "Kanban",
+          "Drawer",
+          "KeyValue",
+          "StatusPill",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "ops.moveTask",
+            "label": "Move task",
+            "intent": "move the task {task} to {status}",
+            "permission": "tasks.manage",
+            "params": {
+              "task": "id",
+              "status": "enum:todo|doing|blocked|done"
+            }
+          },
+          {
+            "id": "ops.completeTask",
+            "label": "Mark task done",
+            "intent": "mark the task {task} as done",
+            "permission": "tasks.manage",
+            "params": {
+              "task": "id"
+            }
+          },
+          {
+            "id": "ops.viewTask",
+            "label": "Open task",
+            "intent": "show the task {task}",
+            "permission": "tasks.manage",
+            "params": {
+              "task": "id"
+            }
+          },
+          {
+            "id": "ops.newTask",
+            "label": "New task",
+            "intent": "create a task called {title}",
+            "permission": "tasks.manage",
+            "params": {
+              "title": "string"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

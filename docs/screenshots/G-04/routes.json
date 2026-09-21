@@ -1,0 +1,115 @@
+{
+  "capturedAt": "2026-09-21T01:18:50.115Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "G-04",
+  "route": "/brand/identity",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/brand/identity",
+      "code": "G-04",
+      "surface": "brand",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "brand.manage",
+      "spec": {
+        "code": "G-04",
+        "name": "Brand identity and assets",
+        "purpose": "Aluzina's identity in one place: logos, typography, palette, templates and the identity manual, grouped by kind, with the superseded versions kept visible so nobody applies an old file.",
+        "surface": "brand",
+        "navGroup": "brand",
+        "layout": [
+          "PageHeader (upload a new version)",
+          "StatTile row (current, draft, superseded)",
+          "Card \"Identity manual\" with the guideline assets and a placeholder viewer",
+          "One Card per asset kind with a DataTable of its assets (name, format, version, path, status)"
+        ],
+        "dataTables": [
+          "brandAssets"
+        ],
+        "roles": [
+          "brand",
+          "founder",
+          "studio"
+        ],
+        "logic": [
+          "Assets are grouped by kind in a fixed order (logo, typography, palette, template, icon, photo, guideline); empty kinds are not rendered.",
+          "Superseded assets keep their row and are marked; marking an asset superseded is a real write, replacing it with a new version is not wired yet.",
+          "The identity manual card reads the guideline assets and warns when the current manual is superseded."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "Card",
+          "DataTable",
+          "StatusPill",
+          "Badge",
+          "Button",
+          "Placeholder",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "brand.supersedeAsset",
+            "label": "Mark asset superseded",
+            "intent": "mark the asset {asset} as superseded",
+            "permission": "assets.manage",
+            "params": {
+              "asset": "id"
+            }
+          },
+          {
+            "id": "brand.restoreAsset",
+            "label": "Mark asset current",
+            "intent": "mark the asset {asset} as current",
+            "permission": "assets.manage",
+            "params": {
+              "asset": "id"
+            }
+          },
+          {
+            "id": "brand.uploadAsset",
+            "label": "Upload a new version",
+            "intent": "upload a new version of {asset}",
+            "permission": "assets.manage",
+            "params": {
+              "asset": "id"
+            }
+          },
+          {
+            "id": "brand.openManual",
+            "label": "Open the identity manual",
+            "intent": "open the Aluzina identity manual",
+            "permission": "brand.manage"
+          },
+          {
+            "id": "brand.checkIdentity",
+            "label": "Check a file against the identity",
+            "intent": "check whether {file} follows the Aluzina identity",
+            "permission": "brand.manage",
+            "params": {
+              "file": "string"
+            }
+          },
+          {
+            "id": "brand.openTokens",
+            "label": "Open the design tokens",
+            "intent": "open the design tokens behind the identity",
+            "permission": "brand.manage"
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

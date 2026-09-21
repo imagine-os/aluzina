@@ -1,0 +1,104 @@
+{
+  "capturedAt": "2026-09-21T01:20:15.206Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "S-07",
+  "route": "/studio/packs",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/studio/packs",
+      "code": "S-07",
+      "surface": "studio",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "renders.brief",
+      "spec": {
+        "code": "S-07",
+        "name": "Render and supplier packs",
+        "purpose": "Sarai prepares the information for renderings and for suppliers: each pack is briefed, sent, rendered and delivered, and the board shows where every pack stands and how many views it covers.",
+        "surface": "studio",
+        "navGroup": "design",
+        "layout": [
+          "PageHeader (Placeholder: new pack)",
+          "Three StatTiles: in flight, delivered, views briefed",
+          "Kanban with the four pack stages (briefing, sent, rendering, delivered); move buttons, no drag",
+          "Drawer: pack detail with a Placeholder to attach the pack contents"
+        ],
+        "dataTables": [
+          "renderPacks",
+          "projects"
+        ],
+        "roles": [
+          "studio",
+          "founder"
+        ],
+        "logic": [
+          "Moving a card writes renderPacks.status to the target column (renders.brief); the Kanban uses explicit move buttons so keyboard, touch, pen and d-pad all work (P-03).",
+          "Card subtitle shows the project and the view count; the meta line shows the audience and the due date.",
+          "The pack contents (drawings, materials, views) have no entity yet, so attaching them is a Placeholder."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "Kanban",
+          "Drawer",
+          "KeyValue",
+          "StatusPill",
+          "Badge",
+          "Placeholder",
+          "Button"
+        ],
+        "actions": [
+          {
+            "id": "studio.movePack",
+            "label": "Move pack",
+            "intent": "move the pack {pack} to {status}",
+            "permission": "renders.brief",
+            "params": {
+              "pack": "id",
+              "status": "enum:briefing|sent|rendering|delivered"
+            }
+          },
+          {
+            "id": "studio.openPackDetail",
+            "label": "Open pack",
+            "intent": "open the pack {pack}",
+            "permission": "renders.brief",
+            "params": {
+              "pack": "id"
+            }
+          },
+          {
+            "id": "studio.newPack",
+            "label": "New pack",
+            "intent": "brief a new pack for {project}",
+            "permission": "renders.brief",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "studio.attachPackContents",
+            "label": "Attach pack contents",
+            "intent": "attach the contents of the pack {pack}",
+            "permission": "renders.brief",
+            "params": {
+              "pack": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

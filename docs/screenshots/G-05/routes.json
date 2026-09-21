@@ -1,0 +1,117 @@
+{
+  "capturedAt": "2026-09-21T01:18:54.227Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "G-05",
+  "route": "/brand/images",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/brand/images",
+      "code": "G-05",
+      "surface": "brand",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "images.write",
+      "spec": {
+        "code": "G-05",
+        "name": "Images for clients",
+        "purpose": "The image sets Angélica prepares for clients: every image revision grouped by project, from the request through retouching to delivery and the client approval.",
+        "surface": "brand",
+        "navGroup": "communication",
+        "layout": [
+          "PageHeader (new image set)",
+          "StatTile row (requested, in progress, delivered, approved)",
+          "FilterBar (search, status)",
+          "One Card per project with a DataTable of its image revisions",
+          "Drawer: image set detail + advance + share with the client"
+        ],
+        "dataTables": [
+          "revisions",
+          "projects"
+        ],
+        "roles": [
+          "brand",
+          "founder"
+        ],
+        "logic": [
+          "Only revisions with kind = image appear here; the other kinds live in the revisions queue (G-06).",
+          "Rows are grouped by project; revisions without a project fall into a \"no project\" card.",
+          "Advance moves requested -> in-progress -> delivered -> approved; approval by the client is not wired yet."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "Card",
+          "DataTable",
+          "Drawer",
+          "KeyValue",
+          "StatusPill",
+          "Button",
+          "Placeholder",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "brand.openImageSet",
+            "label": "Open image set",
+            "intent": "open the image set {revision}",
+            "permission": "images.write",
+            "params": {
+              "revision": "id"
+            }
+          },
+          {
+            "id": "brand.advanceImageSet",
+            "label": "Advance image set",
+            "intent": "move the image set {revision} to the next status",
+            "permission": "images.write",
+            "params": {
+              "revision": "id"
+            }
+          },
+          {
+            "id": "brand.newImageSet",
+            "label": "New image set",
+            "intent": "prepare a new image set for {project}",
+            "permission": "images.write",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "brand.shareImages",
+            "label": "Share with the client",
+            "intent": "share the image set {revision} with the client",
+            "permission": "images.write",
+            "params": {
+              "revision": "id"
+            }
+          },
+          {
+            "id": "brand.previewImages",
+            "label": "Preview the images",
+            "intent": "preview the images of {revision}",
+            "permission": "images.write",
+            "params": {
+              "revision": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

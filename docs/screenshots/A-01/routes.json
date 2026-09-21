@@ -1,457 +1,118 @@
 {
-  "capturedAt": "2026-09-21T00:54:22.172Z",
+  "capturedAt": "2026-09-21T01:18:07.497Z",
   "base": "https://imagine-os.github.io/aluzina/",
   "code": "A-01",
   "route": "/founder",
+  "shots": [
+    "en-1280",
+    "en-390",
+    "es-1280"
+  ],
   "manifest": {
-    "routes": [
-      {
-        "path": "/brand",
-        "code": "G-01",
-        "surface": "brand",
-        "status": "stub",
-        "shell": "desktop",
-        "permission": "brand.manage",
-        "spec": {
-          "code": "G-01",
-          "name": "Brand dashboard",
-          "purpose": "Angélica's home: the 2027 competitions calendar by submission date, sales presentations, brand identity rules, client image sets, the graphic revisions queue and the asset library (docs/knowledge/team.md#angelica---graphic-design-and-communication).",
-          "surface": "brand",
-          "navGroup": "overview",
-          "layout": [
-            "PageHeader",
-            "Stub: one Placeholder card per planned section (competitions, presentations, identity, images, revisions, assets)"
-          ],
-          "dataTables": [
-            "competitions",
-            "presentations",
-            "brandAssets",
-            "revisions",
-            "alerts"
-          ],
-          "roles": [
-            "brand",
-            "founder"
-          ],
-          "logic": [
-            "Stub (build plan 9b): every section is a Placeholder until the brand module lands."
-          ],
-          "components": [
-            "PageStub",
-            "PageHeader",
-            "Placeholder",
-            "Card"
-          ],
-          "actions": [
-            {
-              "id": "brand.open",
-              "label": "Open brand dashboard",
-              "intent": "open the brand dashboard",
-              "permission": "brand.manage"
-            }
-          ],
-          "checkedAt": [
-            390,
-            1280
-          ]
-        }
-      },
-      {
-        "path": "/dev/components",
-        "code": "D-02",
-        "surface": "dev",
-        "status": "built",
-        "shell": "desktop",
-        "permission": "dev.tools",
-        "spec": {
-          "code": "D-02",
-          "name": "Component library",
-          "purpose": "Every library component rendered from its meta with a live example, props, a11y notes and usages, so builders and Justin see the design system in the product (P-07).",
-          "surface": "dev",
-          "navGroup": "developer",
-          "layout": [
-            "PageHeader",
-            "FilterBar (search + tier tabs)",
-            "One Card per component: live example stage, props KeyValue, a11y list, usages, folder path"
-          ],
-          "dataTables": [],
-          "roles": [
-            "dev",
-            "founder"
-          ],
-          "logic": [
-            "Reads src/design/library.ts (glob over *.meta.ts and *.example.tsx); a component without a meta does not exist here, a meta without an example shows a warning badge.",
-            "Search matches name, purpose and usages; tabs filter by tier."
-          ],
-          "components": [
-            "PageHeader",
-            "Tabs",
-            "SearchField",
-            "FilterBar",
-            "Card",
-            "KeyValue",
-            "Badge",
-            "EmptyState"
-          ],
-          "actions": [
-            {
-              "id": "dev.searchComponents",
-              "label": "Search components",
-              "intent": "find the component {query}",
-              "permission": "dev.tools",
-              "params": {
-                "query": "string"
-              }
-            },
-            {
-              "id": "dev.filterTier",
-              "label": "Filter by tier",
-              "intent": "show only {tier} components",
-              "permission": "dev.tools",
-              "params": {
-                "tier": "enum:all|atom|molecule|organism|template"
-              }
-            }
-          ],
-          "checkedAt": [
-            390,
-            1280
-          ]
-        }
-      },
-      {
-        "path": "/dev/specs",
-        "code": "D-03",
-        "surface": "dev",
-        "status": "built",
-        "shell": "desktop",
-        "permission": "dev.tools",
-        "spec": {
-          "code": "D-03",
-          "name": "Page specs",
-          "purpose": "Every registered route with its status, roles, actions and spec completeness; opens a drawer with the full PageSpec and its actions (P-05).",
-          "surface": "dev",
-          "navGroup": "developer",
-          "layout": [
-            "PageHeader",
-            "StatTiles (routes, built, stubs, actions)",
-            "FilterBar (search + surface select)",
-            "DataTable of routes",
-            "Drawer with the selected spec"
-          ],
-          "dataTables": [],
-          "roles": [
-            "dev",
-            "founder"
-          ],
-          "logic": [
-            "Reads the registered routes (RoutesContext) and specCompleteness(); the same data as window.__aluzina.routes.",
-            "Row activation opens the spec drawer; Escape closes it."
-          ],
-          "components": [
-            "PageHeader",
-            "StatTile",
-            "SearchField",
-            "Select",
-            "FilterBar",
-            "DataTable",
-            "StatusPill",
-            "Drawer",
-            "KeyValue",
-            "Badge"
-          ],
-          "actions": [
-            {
-              "id": "dev.openSpec",
-              "label": "Open page spec",
-              "intent": "show the spec of page {code}",
-              "permission": "dev.tools",
-              "params": {
-                "code": "string"
-              }
-            },
-            {
-              "id": "dev.filterSurface",
-              "label": "Filter by surface",
-              "intent": "show only {surface} pages",
-              "permission": "dev.tools",
-              "params": {
-                "surface": "enum:all|hub|founder|ops|studio|brand|client|dev|docs|manual|public"
-              }
-            }
-          ],
-          "checkedAt": [
-            390,
-            1280
-          ]
-        }
-      },
-      {
-        "path": "/founder",
+    "version": "0.5.0",
+    "route": {
+      "path": "/founder",
+      "code": "A-01",
+      "surface": "founder",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "projects.approve",
+      "spec": {
         "code": "A-01",
+        "name": "Founder dashboard",
+        "purpose": "Alejandra Guerra's home: what waits for her approval, the pipeline by phase, the week's meetings, the alerts operations raised for her and a read-only money snapshot (docs/knowledge/team.md#alejandra-guerra---founder).",
         "surface": "founder",
-        "status": "stub",
-        "shell": "desktop",
-        "permission": "projects.approve",
-        "spec": {
-          "code": "A-01",
-          "name": "Founder dashboard",
-          "purpose": "Alejandra Guerra's home: what waits for her approval, the sales pipeline, quotes and proposals to write, project PDFs, partnerships and product development (docs/knowledge/team.md#alejandra-guerra---founder).",
-          "surface": "founder",
-          "navGroup": "overview",
-          "layout": [
-            "PageHeader",
-            "Stub: one Placeholder card per planned section (approvals, pipeline, quotes, PDFs, partnerships, products)"
-          ],
-          "dataTables": [
-            "projects",
-            "consistencyChecks",
-            "quotes",
-            "documents",
-            "alerts"
-          ],
-          "roles": [
-            "founder"
-          ],
-          "logic": [
-            "Stub (build plan 9b): every section is a Placeholder until the founder module lands."
-          ],
-          "components": [
-            "PageStub",
-            "PageHeader",
-            "Placeholder",
-            "Card"
-          ],
-          "actions": [
-            {
-              "id": "founder.open",
-              "label": "Open founder dashboard",
-              "intent": "open the founder dashboard",
-              "permission": "projects.approve"
+        "navGroup": "overview",
+        "layout": [
+          "PageHeader (A-01) with a \"Review approvals\" primary action",
+          "Four StatTiles: waiting for you, projects in the pipeline, open alerts, money owed to the studio",
+          "Card \"Waiting for you\": ApprovalQueue with the first three projects awaiting the founder",
+          "Card \"Pipeline by phase\": one activation button per phase with its project count, opens A-03",
+          "Card \"This week\": meetings starting in the next seven days",
+          "Card \"Alerts from operations\": open alerts, most urgent first, read only",
+          "Card \"Money\" (read only): owed to the studio, owed to suppliers, overdue count"
+        ],
+        "dataTables": [
+          "projects",
+          "consistencyChecks",
+          "alerts",
+          "meetings",
+          "payments",
+          "tasks"
+        ],
+        "roles": [
+          "founder"
+        ],
+        "logic": [
+          "The approvals card shares the queue logic of A-02: approve writes projects.approval = approved and resolves the founder alerts pointing at that project; request changes writes changes-requested and files a high-priority task for the lead designer; a comment files a normal task with the note.",
+          "Stat tiles and cards are derived from live useTable reads, so a decision taken on A-02 updates the dashboard without a reload.",
+          "Money is read only here: Miguel owns payments (O-07)."
+        ],
+        "components": [
+          "PageHeader",
+          "Button",
+          "StatTile",
+          "Card",
+          "ApprovalQueue",
+          "StatusPill",
+          "Badge",
+          "EmptyState",
+          "KeyValue",
+          "Skeleton"
+        ],
+        "actions": [
+          {
+            "id": "founder.openApprovals",
+            "label": "Review approvals",
+            "intent": "open what is waiting for my approval",
+            "permission": "projects.approve"
+          },
+          {
+            "id": "founder.approveProject",
+            "label": "Approve project",
+            "intent": "approve the project {project}",
+            "permission": "projects.approve",
+            "params": {
+              "project": "id"
             }
-          ],
-          "checkedAt": [
-            390,
-            1280
-          ]
-        }
-      },
-      {
-        "path": "/",
-        "code": "HUB-01",
-        "surface": "hub",
-        "status": "built",
-        "shell": "bare",
-        "spec": {
-          "code": "HUB-01",
-          "name": "Hub",
-          "purpose": "Entry point to every surface of the Aluzina system: portals per role (enter as a demo user), the prototype, the public site, docs and dev tools; language, theme, dev-mode and role controls.",
-          "surface": "hub",
-          "layout": [
-            "HubHeader (brand, \"Viewing as\" RoleSwitcher, EN/ES, theme, dev mode)",
-            "Title + subtitle",
-            "Portals grid: A-01 Founder, O-01 Administration and Operations, S-01 Interior Design, G-01 Graphic Design and Communication (stub cards that enter as the demo user), C-01 Client (planned)",
-            "Surface card grid: BOS-01 prototype, P-00 website, D-06 docs, M-xx manual (planned), D-02 dev tools; each with a deploy-time thumbnail or the \"No preview yet\" tile",
-            "Prototype pages grid (BOS-02..06)",
-            "Footer (version, repo link, dev hint)"
-          ],
-          "dataTables": [],
-          "roles": [
-            "public"
-          ],
-          "logic": [
-            "A portal card calls switchUser(role) then navigates to the portal dashboard (hub.enterAs); the RoleSwitcher changes the demo user in place (hub.switchRole).",
-            "Live / stub surfaces render as links or buttons; planned surfaces render through Placeholder (P-09).",
-            "Language, theme, session (user, viewAs, dev mode) persist in localStorage (aluzina.lang / aluzina.theme / aluzina.session).",
-            "?as=<role> on first load selects that demo user (thumbnails, QA, deep links; docs/reference/surfaces.md).",
-            "Ctrl+. toggles the dev panel when dev mode is on.",
-            "Card thumbnails load lazily from ./thumbs/<code>.jpg?v=<buildId>, written by scripts/thumbnails.mjs after every CI build (D-011); a missing file falls back to the bilingual tile, planned cards always show the tile."
-          ],
-          "components": [
-            "HubHeader",
-            "RoleSwitcher",
-            "ToggleButton",
-            "SurfaceCard",
-            "Placeholder",
-            "Toast"
-          ],
-          "actions": [
-            {
-              "id": "hub.enterAs",
-              "label": "Enter portal as role",
-              "intent": "open the {role} portal as its demo user",
-              "params": {
-                "role": "enum:founder|ops|studio|brand"
-              }
-            },
-            {
-              "id": "hub.switchRole",
-              "label": "Switch role",
-              "intent": "view the system as {role}",
-              "params": {
-                "role": "enum:founder|ops|studio|brand|client|dev"
-              }
-            },
-            {
-              "id": "hub.openSurface",
-              "label": "Open surface",
-              "intent": "open the {surface}",
-              "params": {
-                "surface": "enum:business-os|website|docs|manual|dev"
-              }
-            },
-            {
-              "id": "hub.openPrototypePage",
-              "label": "Open prototype page",
-              "intent": "open the prototype page {page}",
-              "params": {
-                "page": "enum:home|cyber-bridge|cyber-bridge-deck|image-generation-plan|lod-ladder"
-              }
-            },
-            {
-              "id": "hub.setLang",
-              "label": "Set language",
-              "intent": "switch the language to {lang}",
-              "params": {
-                "lang": "enum:en|es"
-              }
-            },
-            {
-              "id": "hub.toggleTheme",
-              "label": "Toggle theme",
-              "intent": "switch between light and dark"
-            },
-            {
-              "id": "hub.toggleDevMode",
-              "label": "Toggle developer mode",
-              "intent": "turn developer mode on or off",
-              "permission": "dev.tools"
+          },
+          {
+            "id": "founder.requestChanges",
+            "label": "Request changes",
+            "intent": "request changes on the project {project}",
+            "permission": "projects.approve",
+            "params": {
+              "project": "id"
             }
-          ],
-          "checkedAt": [
-            360,
-            390,
-            768,
-            1280,
-            1920,
-            2560,
-            3840
-          ],
-          "notes": [
-            "Demo simulator, canvas and plan viewer arrive in build plan step 4 (Dev tools).",
-            "Business OS prototype (BOS-01) and its pages (BOS-02..06) are the static Claude Design bundle at ./business-os/ (D-007).",
-            "Portal dashboards are stubs until the four module workers land (build plan 9b)."
-          ]
-        }
-      },
-      {
-        "path": "/ops",
-        "code": "O-01",
-        "surface": "ops",
-        "status": "stub",
-        "shell": "desktop",
-        "permission": "schedule.manage",
-        "spec": {
-          "code": "O-01",
-          "name": "Operations dashboard",
-          "purpose": "Miguel's home: the overall schedule, pending tasks, meetings, supplier follow-ups, quotes and comparisons, deliveries, payments and who owes what, alerts before a situation becomes urgent (docs/knowledge/team.md#miguel---administration-and-operations).",
-          "surface": "ops",
-          "navGroup": "overview",
-          "layout": [
-            "PageHeader",
-            "Stub: one Placeholder card per planned section (schedule, tasks, meetings, suppliers, quotes, deliveries, payments, alerts)"
-          ],
-          "dataTables": [
-            "tasks",
-            "meetings",
-            "suppliers",
-            "quotes",
-            "deliveries",
-            "payments",
-            "documents",
-            "alerts"
-          ],
-          "roles": [
-            "ops",
-            "founder"
-          ],
-          "logic": [
-            "Stub (build plan 9b): every section is a Placeholder until the ops module lands."
-          ],
-          "components": [
-            "PageStub",
-            "PageHeader",
-            "Placeholder",
-            "Card"
-          ],
-          "actions": [
-            {
-              "id": "ops.open",
-              "label": "Open operations dashboard",
-              "intent": "open the operations dashboard",
-              "permission": "schedule.manage"
+          },
+          {
+            "id": "founder.commentApproval",
+            "label": "Comment on an approval",
+            "intent": "leave the note {note} on the project {project}",
+            "permission": "projects.approve",
+            "params": {
+              "project": "id",
+              "note": "string"
             }
-          ],
-          "checkedAt": [
-            390,
-            1280
-          ]
-        }
-      },
-      {
-        "path": "/studio",
-        "code": "S-01",
-        "surface": "studio",
-        "status": "stub",
-        "shell": "desktop",
-        "permission": "design.develop",
-        "spec": {
-          "code": "S-01",
-          "name": "Studio dashboard",
-          "purpose": "Sarai's home: design proposals per project, references, mood boards and material palettes, plans, furniture and material schedules, render and supplier packs, measurements, the consistency check before work reaches the founder (docs/knowledge/team.md#sarai---interior-design).",
-          "surface": "studio",
-          "navGroup": "overview",
-          "layout": [
-            "PageHeader",
-            "Stub: one Placeholder card per planned section (proposals, references, palettes, plans, schedules, renders, checks)"
-          ],
-          "dataTables": [
-            "projects",
-            "references",
-            "materials",
-            "schedules",
-            "renderPacks",
-            "consistencyChecks",
-            "tasks"
-          ],
-          "roles": [
-            "studio",
-            "founder"
-          ],
-          "logic": [
-            "Stub (build plan 9b): every section is a Placeholder until the studio module lands."
-          ],
-          "components": [
-            "PageStub",
-            "PageHeader",
-            "Placeholder",
-            "Card"
-          ],
-          "actions": [
-            {
-              "id": "studio.open",
-              "label": "Open studio dashboard",
-              "intent": "open the studio dashboard",
-              "permission": "design.develop"
+          },
+          {
+            "id": "founder.openPhase",
+            "label": "Open a pipeline phase",
+            "intent": "show the projects in the phase {phase}",
+            "permission": "projects.read",
+            "params": {
+              "phase": "enum:lead|concept|development|documentation|procurement|execution|delivered"
             }
-          ],
-          "checkedAt": [
-            390,
-            1280
-          ]
-        }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
       }
-    ],
-    "version": "0.4.0"
+    }
   }
 }

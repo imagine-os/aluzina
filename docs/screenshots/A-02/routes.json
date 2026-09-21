@@ -1,0 +1,110 @@
+{
+  "capturedAt": "2026-09-21T01:18:11.485Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "A-02",
+  "route": "/founder/approvals",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/founder/approvals",
+      "code": "A-02",
+      "surface": "founder",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "projects.approve",
+      "spec": {
+        "code": "A-02",
+        "name": "Approvals",
+        "purpose": "Final project approval: every project the studio has checked and handed over waits here with its consistency check, so the founder approves it or sends it back with a note (roles-and-portals.md, approval chain).",
+        "surface": "founder",
+        "navGroup": "approvals",
+        "layout": [
+          "PageHeader (A-02)",
+          "Card \"Waiting for you\": ApprovalQueue, one item per project in-check or awaiting-founder, with the consistency check result as meta",
+          "Card \"Consistency checks\": DataTable of the studio checks with their passed / failed item counts, row opens a Drawer",
+          "Card \"Already decided\": DataTable of approved, client-approved and changes-requested projects",
+          "Drawer: the check item list (label + ok), notes and who checked it"
+        ],
+        "dataTables": [
+          "projects",
+          "consistencyChecks",
+          "tasks",
+          "alerts"
+        ],
+        "roles": [
+          "founder",
+          "studio"
+        ],
+        "logic": [
+          "Queue = projects with approval in-check or awaiting-founder, awaiting-founder first, then by dueDate.",
+          "Approve: projects.approval = approved, and every open or acknowledged alert whose entity is that project becomes resolved.",
+          "Request changes: projects.approval = changes-requested and a high-priority task is created for the project lead designer.",
+          "Comment: a normal-priority task carrying the note is created for the lead designer (there is no comments entity yet).",
+          "The check drawer is read only: Sarai owns consistencyChecks (S-08)."
+        ],
+        "components": [
+          "PageHeader",
+          "Card",
+          "ApprovalQueue",
+          "DataTable",
+          "StatusPill",
+          "Badge",
+          "Drawer",
+          "KeyValue",
+          "Button",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "founder.approveProject",
+            "label": "Approve project",
+            "intent": "approve the project {project}",
+            "permission": "projects.approve",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "founder.requestChanges",
+            "label": "Request changes",
+            "intent": "request changes on the project {project}",
+            "permission": "projects.approve",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "founder.commentApproval",
+            "label": "Comment on an approval",
+            "intent": "leave the note {note} on the project {project}",
+            "permission": "projects.approve",
+            "params": {
+              "project": "id",
+              "note": "string"
+            }
+          },
+          {
+            "id": "founder.openCheck",
+            "label": "Open consistency check",
+            "intent": "show the consistency check {check}",
+            "permission": "projects.read",
+            "params": {
+              "check": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

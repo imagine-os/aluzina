@@ -1,0 +1,116 @@
+{
+  "capturedAt": "2026-09-21T01:20:03.174Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "S-04",
+  "route": "/studio/materials",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/studio/materials",
+      "code": "S-04",
+      "surface": "studio",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "materials.manage",
+      "spec": {
+        "code": "S-04",
+        "name": "Material palettes",
+        "purpose": "Sarai builds the material palette of each project and walks every material from proposed to sampled to approved, so that only approved materials reach a schedule, a supplier pack or the founder.",
+        "surface": "studio",
+        "navGroup": "references",
+        "layout": [
+          "PageHeader (Placeholder: new palette)",
+          "FilterBar (search, project, status)",
+          "One Card per palette with a DataTable of its materials (name, category, finish, colour, unit price, status) and row actions",
+          "Drawer: material detail"
+        ],
+        "dataTables": [
+          "materials",
+          "projects",
+          "suppliers"
+        ],
+        "roles": [
+          "studio",
+          "founder"
+        ],
+        "logic": [
+          "Request sample writes status = sampled, Approve writes approved, Reject writes rejected (materials.manage); each action is hidden when it does not apply to the row.",
+          "Materials are grouped by their palette field; the card subtitle counts total and approved materials.",
+          "unitCop may be null (product materials not quoted yet): it renders as \"Unknown\", never as a zero."
+        ],
+        "components": [
+          "PageHeader",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "Card",
+          "DataTable",
+          "StatusPill",
+          "Drawer",
+          "KeyValue",
+          "Placeholder",
+          "Button",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "studio.sampleMaterial",
+            "label": "Request sample",
+            "intent": "request a sample of the material {material}",
+            "permission": "materials.manage",
+            "params": {
+              "material": "id"
+            }
+          },
+          {
+            "id": "studio.approveMaterial",
+            "label": "Approve material",
+            "intent": "approve the material {material}",
+            "permission": "materials.manage",
+            "params": {
+              "material": "id"
+            }
+          },
+          {
+            "id": "studio.rejectMaterial",
+            "label": "Reject material",
+            "intent": "reject the material {material}",
+            "permission": "materials.manage",
+            "params": {
+              "material": "id"
+            }
+          },
+          {
+            "id": "studio.openMaterial",
+            "label": "Open material",
+            "intent": "open the material {material}",
+            "permission": "materials.manage",
+            "params": {
+              "material": "id"
+            }
+          },
+          {
+            "id": "studio.newPalette",
+            "label": "New palette",
+            "intent": "create a material palette for {project}",
+            "permission": "materials.manage",
+            "params": {
+              "project": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

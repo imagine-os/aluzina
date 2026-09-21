@@ -1,0 +1,116 @@
+{
+  "capturedAt": "2026-09-21T01:19:59.155Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "S-03",
+  "route": "/studio/references",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/studio/references",
+      "code": "S-03",
+      "surface": "studio",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "references.manage",
+      "spec": {
+        "code": "S-03",
+        "name": "References and mood boards",
+        "purpose": "Sarai researches design references and builds mood boards: every reference lives on a board, carries its source and tags, and can be moved to another board as the concept settles.",
+        "surface": "studio",
+        "navGroup": "references",
+        "layout": [
+          "PageHeader (Placeholders: add reference, new mood board)",
+          "FilterBar (search, project, tag)",
+          "One Card per board with a grid of reference tiles (thumbnail slot, title, source, tags)",
+          "Drawer: reference detail, note, move-to-board Select, Placeholder to upload the image"
+        ],
+        "dataTables": [
+          "references",
+          "projects"
+        ],
+        "roles": [
+          "studio",
+          "founder",
+          "brand"
+        ],
+        "logic": [
+          "References are grouped by their board field; boards are sorted by name and show their reference count.",
+          "Move to board writes references.board through useData (references.manage); the grid re-renders live.",
+          "imageUrl is null in every seed row, so each tile shows a labelled empty thumbnail slot with a Placeholder upload control instead of a broken image."
+        ],
+        "components": [
+          "PageHeader",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "Card",
+          "Badge",
+          "Drawer",
+          "KeyValue",
+          "Placeholder",
+          "Button",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "studio.openReference",
+            "label": "Open reference",
+            "intent": "open the reference {reference}",
+            "permission": "references.manage",
+            "params": {
+              "reference": "id"
+            }
+          },
+          {
+            "id": "studio.moveReference",
+            "label": "Move to board",
+            "intent": "move the reference {reference} to the board {board}",
+            "permission": "references.manage",
+            "params": {
+              "reference": "id",
+              "board": "string"
+            }
+          },
+          {
+            "id": "studio.addReference",
+            "label": "Add reference",
+            "intent": "add a reference to the board {board}",
+            "permission": "references.manage",
+            "params": {
+              "board": "string"
+            }
+          },
+          {
+            "id": "studio.newBoard",
+            "label": "New mood board",
+            "intent": "create a mood board for {project}",
+            "permission": "references.manage",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "studio.uploadReferenceImage",
+            "label": "Upload image",
+            "intent": "upload the image of the reference {reference}",
+            "permission": "references.manage",
+            "params": {
+              "reference": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

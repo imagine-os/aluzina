@@ -1,0 +1,107 @@
+{
+  "capturedAt": "2026-09-21T01:18:15.626Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "A-03",
+  "route": "/founder/pipeline",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/founder/pipeline",
+      "code": "A-03",
+      "surface": "founder",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "projects.read",
+      "spec": {
+        "code": "A-03",
+        "name": "Pipeline",
+        "purpose": "Every project as a card in its phase, from lead to delivered: the founder moves a project forward, sets the creative direction and opens the detail of each one (sales and growth view).",
+        "surface": "founder",
+        "navGroup": "projects",
+        "layout": [
+          "PageHeader (A-03) with a \"New lead\" placeholder action",
+          "FilterBar: search, type filter, approval filter",
+          "Kanban with one column per phase (lead … delivered); each card shows the client, the budget and the approval status",
+          "Drawer: project detail (client, type, phase, creative direction, approval, lead designer, budget, dates, location, summary) with the creative-direction action"
+        ],
+        "dataTables": [
+          "projects",
+          "tasks",
+          "meetings"
+        ],
+        "roles": [
+          "founder"
+        ],
+        "logic": [
+          "The Kanban move buttons (never drag: P-03) write projects.phase, so the board is the pipeline itself.",
+          "The filters are combined with AND and are cleared from the FilterBar.",
+          "Set creative direction writes projects.creativeDirection = set; it is the only project field the founder edits from the drawer.",
+          "Moving a project is guarded by projects.write; without it the board is read only."
+        ],
+        "components": [
+          "PageHeader",
+          "Button",
+          "Placeholder",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "Kanban",
+          "Drawer",
+          "KeyValue",
+          "StatusPill",
+          "Badge"
+        ],
+        "actions": [
+          {
+            "id": "founder.moveProject",
+            "label": "Move project to a phase",
+            "intent": "move the project {project} to the phase {phase}",
+            "permission": "projects.write",
+            "params": {
+              "project": "id",
+              "phase": "enum:lead|concept|development|documentation|procurement|execution|delivered"
+            }
+          },
+          {
+            "id": "founder.openProject",
+            "label": "Open project",
+            "intent": "open the project {project}",
+            "permission": "projects.read",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "founder.setCreativeDirection",
+            "label": "Set the creative direction",
+            "intent": "mark the creative direction of {project} as set",
+            "permission": "projects.write",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "founder.newLead",
+            "label": "New lead",
+            "intent": "add a new lead called {name}",
+            "permission": "sales.write",
+            "params": {
+              "name": "string"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

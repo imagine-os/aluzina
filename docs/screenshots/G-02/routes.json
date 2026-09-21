@@ -1,0 +1,126 @@
+{
+  "capturedAt": "2026-09-21T01:18:41.709Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "G-02",
+  "route": "/brand/competitions",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/brand/competitions",
+      "code": "G-02",
+      "surface": "brand",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "competitions.manage",
+      "spec": {
+        "code": "G-02",
+        "name": "Competitions 2027",
+        "purpose": "The 20 competition slots Aluzina enters in 2027, ordered by submission date with undated slots last: each slot carries its materials folder, the project entered and where it stands from slot to result.",
+        "surface": "brand",
+        "navGroup": "competitions",
+        "layout": [
+          "PageHeader",
+          "StatTile row (slots, dated, undated, submitted)",
+          "FilterBar (search, status, project)",
+          "Tabs: DataTable of the slots | Calendar of the dated slots",
+          "Drawer: slot detail (KeyValue) + the form that fills in name, organiser, category, submission date, project and materials folder + status advance"
+        ],
+        "dataTables": [
+          "competitions"
+        ],
+        "roles": [
+          "brand",
+          "founder"
+        ],
+        "logic": [
+          "Sort: submissionDate ascending, rows without a date last, slot number as the tiebreak (docs/knowledge/competitions.md: \"organized by submission date\").",
+          "Every null field renders as \"unknown\"; the 20 slots are seeded empty and are filled in from the drawer form, never guessed.",
+          "Status advances one step along slot -> researching -> preparing -> ready -> submitted -> result; the result text itself is entered in the drawer.",
+          "The Calendar only shows slots that have a submission date; with none set it shows its empty state, which is the honest picture today.",
+          "The list keeps the six columns that fit at 1280 px (slot, competition, date, project, folder, status); organiser and category live in the drawer."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "Tabs",
+          "DataTable",
+          "Calendar",
+          "Drawer",
+          "KeyValue",
+          "Input",
+          "StatusPill",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "brand.openCompetition",
+            "label": "Open competition slot",
+            "intent": "open competition slot {slot}",
+            "permission": "competitions.manage",
+            "params": {
+              "slot": "number"
+            }
+          },
+          {
+            "id": "brand.saveCompetition",
+            "label": "Save competition details",
+            "intent": "set the submission date of slot {slot} to {date}",
+            "permission": "competitions.manage",
+            "params": {
+              "slot": "number",
+              "date": "date"
+            }
+          },
+          {
+            "id": "brand.advanceCompetition",
+            "label": "Advance competition status",
+            "intent": "move competition slot {slot} to the next status",
+            "permission": "competitions.manage",
+            "params": {
+              "slot": "number"
+            }
+          },
+          {
+            "id": "brand.openMaterialsFolder",
+            "label": "Open materials folder",
+            "intent": "open the materials folder of competition slot {slot}",
+            "permission": "competitions.manage",
+            "params": {
+              "slot": "number"
+            }
+          },
+          {
+            "id": "brand.importCompetitions",
+            "label": "Import the competition list",
+            "intent": "import the 2027 competition list",
+            "permission": "competitions.manage"
+          },
+          {
+            "id": "brand.switchCompetitionView",
+            "label": "Switch view",
+            "intent": "show the competitions as a {view}",
+            "permission": "competitions.manage",
+            "params": {
+              "view": "enum:table|calendar"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

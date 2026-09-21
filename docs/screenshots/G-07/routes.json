@@ -1,0 +1,120 @@
+{
+  "capturedAt": "2026-09-21T01:19:02.292Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "G-07",
+  "route": "/brand/assets",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/brand/assets",
+      "code": "G-07",
+      "surface": "brand",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "assets.manage",
+      "spec": {
+        "code": "G-07",
+        "name": "Asset library organization",
+        "purpose": "How Aluzina's graphic files are organized: the folders derived from the brand asset paths and the competition materials folders, so Angélica can see at a glance which folder holds what and which are still empty.",
+        "surface": "brand",
+        "navGroup": "brand",
+        "layout": [
+          "PageHeader (new folder, connect storage)",
+          "StatTile row (folders, files, competition folders, folders still empty)",
+          "FilterBar (search)",
+          "DataTable of folders (path, source, items, status summary)",
+          "Card: what is not wired yet (upload, rename, move, storage sync)"
+        ],
+        "dataTables": [
+          "brandAssets",
+          "competitions"
+        ],
+        "roles": [
+          "brand",
+          "founder"
+        ],
+        "logic": [
+          "Folders are derived, not stored: the parent path of every brandAsset plus every competition materialsFolder; there is no folder entity yet.",
+          "A competition folder with no asset in it counts as empty, which is the normal state until the 2027 materials are produced.",
+          "Everything that would change files on disk (upload, rename, move, sync) is a Placeholder: the hub has no file storage yet."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "FilterBar",
+          "SearchField",
+          "DataTable",
+          "Card",
+          "Badge",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "brand.openFolder",
+            "label": "Open folder",
+            "intent": "open the folder {folder}",
+            "permission": "assets.manage",
+            "params": {
+              "folder": "string"
+            }
+          },
+          {
+            "id": "brand.newFolder",
+            "label": "New folder",
+            "intent": "create the folder {folder}",
+            "permission": "assets.manage",
+            "params": {
+              "folder": "string"
+            }
+          },
+          {
+            "id": "brand.connectStorage",
+            "label": "Connect storage",
+            "intent": "connect the asset library to the studio storage",
+            "permission": "assets.manage"
+          },
+          {
+            "id": "brand.uploadToFolder",
+            "label": "Upload files",
+            "intent": "upload files into {folder}",
+            "permission": "assets.manage",
+            "params": {
+              "folder": "string"
+            }
+          },
+          {
+            "id": "brand.renameFolder",
+            "label": "Rename folder",
+            "intent": "rename the folder {folder}",
+            "permission": "assets.manage",
+            "params": {
+              "folder": "string"
+            }
+          },
+          {
+            "id": "brand.moveAsset",
+            "label": "Move a file",
+            "intent": "move {file} into {folder}",
+            "permission": "assets.manage",
+            "params": {
+              "file": "string",
+              "folder": "string"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

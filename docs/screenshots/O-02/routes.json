@@ -1,0 +1,100 @@
+{
+  "capturedAt": "2026-09-21T01:19:12.534Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "O-02",
+  "route": "/ops/schedule",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/ops/schedule",
+      "code": "O-02",
+      "surface": "ops",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "schedule.manage",
+      "spec": {
+        "code": "O-02",
+        "name": "Project schedule",
+        "purpose": "The overall project schedule: every task on one timeline with its dependencies, and a month calendar of meetings, expected deliveries and payment due dates.",
+        "surface": "ops",
+        "navGroup": "schedule",
+        "layout": [
+          "PageHeader (Placeholder: schedule a meeting)",
+          "Tabs: Timeline | Calendar",
+          "Timeline of tasks with dependsOn",
+          "Calendar of meetings, deliveries and payments",
+          "Drawer: item detail"
+        ],
+        "dataTables": [
+          "tasks",
+          "meetings",
+          "deliveries",
+          "payments",
+          "projects",
+          "suppliers"
+        ],
+        "roles": [
+          "ops",
+          "founder"
+        ],
+        "logic": [
+          "Timeline bars run from tasks.startDate when set, otherwise from the task created_at (or the latest due date among its dependsOn tasks, whichever is later), to its dueDate; tasks without a dueDate are left out.",
+          "Calendar events merge meetings (startsAt), deliveries (confirmedDate or expectedDate) and payments (dueDate); the month is page state and starts on the current month.",
+          "Selecting a bar or an event opens a Drawer with the row detail."
+        ],
+        "components": [
+          "PageHeader",
+          "Tabs",
+          "Timeline",
+          "Calendar",
+          "Drawer",
+          "KeyValue",
+          "StatusPill",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "ops.viewScheduleItem",
+            "label": "Open schedule item",
+            "intent": "show the detail of {item} in the schedule",
+            "permission": "schedule.manage",
+            "params": {
+              "item": "id"
+            }
+          },
+          {
+            "id": "ops.changeMonth",
+            "label": "Change month",
+            "intent": "show the calendar for {month}",
+            "permission": "schedule.manage",
+            "params": {
+              "month": "string"
+            }
+          },
+          {
+            "id": "ops.scheduleMeeting",
+            "label": "Schedule a meeting",
+            "intent": "schedule a meeting with {who} on {date}",
+            "permission": "meetings.manage",
+            "params": {
+              "who": "string",
+              "date": "date"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

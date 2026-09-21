@@ -1,0 +1,106 @@
+{
+  "capturedAt": "2026-09-21T01:19:55.206Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "S-02",
+  "route": "/studio/projects",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/studio/projects",
+      "code": "S-02",
+      "surface": "studio",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "design.develop",
+      "spec": {
+        "code": "S-02",
+        "name": "Projects and proposals",
+        "purpose": "Sarai develops the design proposal of each project from the creative direction Alejandra set: one card per project with its phase, creative direction, approval state and the documents attached, and the hand-off that sends a proposal into the consistency check.",
+        "surface": "studio",
+        "navGroup": "projects",
+        "layout": [
+          "PageHeader (Placeholder: new proposal)",
+          "FilterBar (search, phase, approval)",
+          "Grid of project Cards: client, location, KeyValue with phase / creative direction / approval / due date / budget",
+          "Drawer: project detail, summary, its documents in a DataTable, send-to-check button, Placeholder to request creative direction"
+        ],
+        "dataTables": [
+          "projects",
+          "documents"
+        ],
+        "roles": [
+          "studio",
+          "founder"
+        ],
+        "logic": [
+          "Send to consistency check writes projects.approval = in-check; it is only offered for draft or changes-requested, and only with design.develop.",
+          "Creative direction is read-only for the studio: it is Alejandra’s call, so requesting it is a Placeholder.",
+          "Filters are client-side over the live projects table; the drawer reads the documents of the selected project."
+        ],
+        "components": [
+          "PageHeader",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "Card",
+          "KeyValue",
+          "StatusPill",
+          "DataTable",
+          "Drawer",
+          "Placeholder",
+          "Button",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "studio.openProjectDetail",
+            "label": "Open project detail",
+            "intent": "show the detail of project {project}",
+            "permission": "projects.read",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "studio.sendToCheck",
+            "label": "Send to consistency check",
+            "intent": "send {project} to the consistency check",
+            "permission": "design.develop",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "studio.requestDirection",
+            "label": "Request creative direction",
+            "intent": "ask Alejandra for the creative direction of {project}",
+            "permission": "design.develop",
+            "params": {
+              "project": "id"
+            }
+          },
+          {
+            "id": "studio.newProposalDoc",
+            "label": "New proposal",
+            "intent": "create a proposal document for {project}",
+            "permission": "design.develop",
+            "params": {
+              "project": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

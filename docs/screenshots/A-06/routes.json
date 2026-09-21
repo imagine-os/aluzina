@@ -1,0 +1,100 @@
+{
+  "capturedAt": "2026-09-21T01:18:27.559Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "A-06",
+  "route": "/founder/clients",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/founder/clients",
+      "code": "A-06",
+      "surface": "founder",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "projects.read",
+      "spec": {
+        "code": "A-06",
+        "name": "Clients and negotiations",
+        "purpose": "Client relations, sales and major negotiations in one table: every client with their projects, the budget in play, what they still owe and their next meeting, so the founder prepares a conversation in one look.",
+        "surface": "founder",
+        "navGroup": "sales",
+        "layout": [
+          "PageHeader (A-06) with a \"New lead\" placeholder action",
+          "Three StatTiles: clients, budget in play, owed to the studio",
+          "FilterBar: search by client or project",
+          "DataTable of clients (projects, budget, outstanding, next meeting), row opens a Drawer",
+          "Drawer: the client projects with their phase and approval, their payments and their meetings, plus a placeholder note field"
+        ],
+        "dataTables": [
+          "projects",
+          "payments",
+          "meetings",
+          "documents"
+        ],
+        "roles": [
+          "founder"
+        ],
+        "logic": [
+          "Clients are derived from projects.client (there is no clients entity yet): one row per distinct client name.",
+          "Outstanding = sum of amountCop - paidCop over the payments of direction in that are not paid.",
+          "Next meeting = the earliest future meeting of any project of that client.",
+          "Everything is read only: writing a client note and adding a lead are placeholders until a clients entity exists."
+        ],
+        "components": [
+          "PageHeader",
+          "Button",
+          "Placeholder",
+          "StatTile",
+          "FilterBar",
+          "SearchField",
+          "DataTable",
+          "Drawer",
+          "KeyValue",
+          "StatusPill",
+          "EmptyState"
+        ],
+        "actions": [
+          {
+            "id": "founder.openClient",
+            "label": "Open client",
+            "intent": "open the client {client}",
+            "permission": "projects.read",
+            "params": {
+              "client": "string"
+            }
+          },
+          {
+            "id": "founder.logClientNote",
+            "label": "Log a client note",
+            "intent": "log the note {note} for the client {client}",
+            "permission": "clients.write",
+            "params": {
+              "client": "string",
+              "note": "string"
+            }
+          },
+          {
+            "id": "founder.newLead",
+            "label": "New lead",
+            "intent": "add a new lead called {name}",
+            "permission": "sales.write",
+            "params": {
+              "name": "string"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}

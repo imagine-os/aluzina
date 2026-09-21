@@ -1,0 +1,107 @@
+{
+  "capturedAt": "2026-09-21T01:18:46.045Z",
+  "base": "https://imagine-os.github.io/aluzina/",
+  "code": "G-03",
+  "route": "/brand/presentations",
+  "shots": [
+    "en-1280",
+    "en-390"
+  ],
+  "manifest": {
+    "version": "0.5.0",
+    "route": {
+      "path": "/brand/presentations",
+      "code": "G-03",
+      "surface": "brand",
+      "status": "built",
+      "shell": "desktop",
+      "permission": "presentations.write",
+      "spec": {
+        "code": "G-03",
+        "name": "Sales presentations",
+        "purpose": "Every sales, concept, proposal and competition deck Angélica produces, from requested through drafting and review to final, with its project, slide count and due date.",
+        "surface": "brand",
+        "navGroup": "sales",
+        "layout": [
+          "PageHeader (request a deck)",
+          "StatTile row (open, in review, final, overdue)",
+          "FilterBar (search, kind, status)",
+          "DataTable of presentations",
+          "Drawer: deck detail (KeyValue) + advance + open deck"
+        ],
+        "dataTables": [
+          "presentations",
+          "projects"
+        ],
+        "roles": [
+          "brand",
+          "founder"
+        ],
+        "logic": [
+          "Status advances one step along requested -> drafting -> review -> final; final decks have no advance action.",
+          "Overdue = dueDate in the past and status is not final.",
+          "Slide count 0 means the deck has not been started; it renders as \"unknown\" rather than as a zero-slide deck."
+        ],
+        "components": [
+          "PageHeader",
+          "StatTile",
+          "FilterBar",
+          "SearchField",
+          "Select",
+          "DataTable",
+          "Drawer",
+          "KeyValue",
+          "StatusPill",
+          "Button",
+          "Placeholder"
+        ],
+        "actions": [
+          {
+            "id": "brand.openPresentation",
+            "label": "Open presentation",
+            "intent": "open the presentation {presentation}",
+            "permission": "presentations.write",
+            "params": {
+              "presentation": "id"
+            }
+          },
+          {
+            "id": "brand.advancePresentation",
+            "label": "Advance presentation",
+            "intent": "move the presentation {presentation} to the next status",
+            "permission": "presentations.write",
+            "params": {
+              "presentation": "id"
+            }
+          },
+          {
+            "id": "brand.requestPresentation",
+            "label": "Request a presentation",
+            "intent": "request a {kind} presentation for {project}",
+            "permission": "presentations.write",
+            "params": {
+              "kind": "enum:sales|concept|proposal|competition",
+              "project": "id"
+            }
+          },
+          {
+            "id": "brand.openDeck",
+            "label": "Open the deck file",
+            "intent": "open the deck file of {presentation}",
+            "permission": "presentations.write",
+            "params": {
+              "presentation": "id"
+            }
+          }
+        ],
+        "checkedAt": [
+          360,
+          390,
+          768,
+          1280,
+          1920
+        ]
+      }
+    }
+  }
+}
