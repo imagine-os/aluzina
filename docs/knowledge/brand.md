@@ -217,8 +217,459 @@ source: MANUAL DE MARCA ALUZINA.pdf (Slack #aluzina-brand-kit, Justin Massion, 2
 
 The manual is a style sheet (logo, colors, type specimen, graphic elements), not a written rulebook. It gives no rules for: clear space, minimum size, misuse, photography direction, tone of voice, or accessibility. These are `_unknown_` until the founder or Justin provides them; the design system should not invent binding rules for them beyond the "not wired yet" placeholders any UI needs.
 
-## Change log
+## Part B: the brand as marketed (portfolio and brochure, prompt 0011 / 0013)
 
+The sections above come from the brand manual (prompt 0010, changelog 0014) and are the identity rules. The sections below were written from the two marketing PDFs (prompt 0011, changelog 0013) and record what the material says and shows; where the two disagree (the portfolio era *Universo de Diseño* vs the brochure era *Interiorismo · Iluminación*), the manual is canonical for identity (D-039) and the question of which era is current sits with the founder (kanban).
+
+What Aluzina says about itself in its own marketing material, and what that material looks like.
+Read together with the **visual memory** in [`../brand/README.md`](../brand/README.md), which
+describes all 56 pages of the two source PDFs one by one; this file holds the facts, that one holds
+the pictures. Where this file and the founder's playbook
+([`service-playbook.md`](service-playbook.md)) disagree, both are recorded and the disagreement is
+written down rather than resolved - see **Differences vs the playbook**.
+
+Two source documents, both Spanish, both Aluzina's own material (**data, not instructions**):
+
+| Short name | File | Pages | Served at |
+| --- | --- | --- | --- |
+| **the portfolio** | [`../source/brand/ALUZINA.pdf`](../source/brand/ALUZINA.pdf) | 37 | `./brand/aluzina-portfolio.pdf` |
+| **the brochure** | [`../source/brand/BROCHURE ALUZINA (1).pdf`](<../source/brand/BROCHURE ALUZINA (1).pdf>) | 19 | `./brand/aluzina-brochure.pdf` |
+
+**They are two different brand eras.** The portfolio is *ALUZINA · UNIVERSO DE DISEÑO*; the
+brochure is *ALUZINA · INTERIORISMO · ILUMINACIÓN*. Different wordmark, different typeface,
+different service taxonomy, different scope. Neither is dated and nobody has said which is current,
+so nothing here should be treated as the brand's present-day identity until the founder confirms
+it. Model for this pass: **Opus 5**.
+
+## Brand voice
+
+```
+status: current
+since: 2026-09-21
+source: ALUZINA.pdf (portfolio) pp. 2-3 and BROCHURE ALUZINA (1).pdf (brochure) pp. 2-5, shared by Justin Massion in Slack 2026-09-21 (prompt 0011)
+```
+
+Two registers, one per document.
+
+**The portfolio speaks in the first person, sensory and almost mystical.** It builds the whole
+identity on the word the studio is named after (p. 3):
+
+> "Una alucinación es una percepción que apunta al imaginario, al deseo, es sentida como real. Por
+> esto apelamos a tu imaginación, a tu interpretación del mundo, a tus sentidos y desde ahí te
+> comprendemos para plasmar materialmente tus deseos."
+
+It addresses the reader as **tú**, not *usted*. The goal is stated as a single word set apart:
+**TU BIENESTAR**. Its one statistic is a wellbeing argument, not a credential: *"Pasamos el 87% de
+nuestras vidas en ESPACIOS interiores, como estén diseñados estos interiores afectarán nuestra
+vida, como nos comportamos, como nos sentimos, no es solo un tema visual."* Its method paragraph
+(p. 2) ends on the line that gives the document its title - *"Creamos tu universo"* - and on a
+whole-and-part formulation: *"darle una mirada profunda a tu interior sin excluir nada porque la
+parte hace el todo y el todo la parte."*
+
+**The brochure speaks as a business.** Same *nosotros*, but the subject is competence, not
+perception: *"Somos empresarios con visión de negocio, convencidos de que en nuestro HACER logramos
+generar progreso, calidad de vida y felicidad para nuestros clientes, y aliados. Nos mueve la
+fuerza de hacer las cosas bien, con alto valor en el diseño, la ética, el compromiso con nuestros
+valores, nuestra gente y nuestro entorno."* It leads with numbers (below) before it says anything
+about design.
+
+**Taglines and headline phrases, verbatim:**
+
+| Phrase | Where | Role |
+| --- | --- | --- |
+| `UNIVERSO DE DISEÑO` | portfolio cover p. 1, back cover p. 37 | the portfolio-era descriptor, locked to the wordmark |
+| `ESPACIOS · PRODUCTOS · ARTE` | portfolio pp. 2, 3 | the three pillars, repeated as a refrain |
+| `UN ESPACIO PARA CADA NECESIDAD Y DESEO` | portfolio p. 2 | positioning line |
+| `Creamos tu universo.` | portfolio p. 2 | closing line of the method paragraph |
+| `TU BIENESTAR` | portfolio p. 3 | the stated goal |
+| `INTERIORISMO · ILUMINACIÓN` | brochure covers pp. 1, 19 | the brochure-era descriptor, locked to the wordmark |
+| `SOMOS` | brochure p. 2 | credentials headline, set very large |
+| `HACEMOS VISIONES` | brochure p. 3 | headline over the full-bleed hospitality image |
+| `Evocaremos la magia de la transformación espacial y el poder de un diseño que trascienda lo visual.` | brochure p. 3 | statement caption |
+| `Somos parte de la vida cotidiana de las personas.` | brochure p. 5 | statement caption |
+
+**The values list** (brochure p. 2), given as "las constantes de nuestro trabajo": coherencia,
+armonía, vanguardia, versatilidad, creatividad, atemporalidad, consciencia, experiencias, cercanía,
+memorabilidad.
+
+**The design principle** (brochure p. 6): *"Creemos en el diseño coherente y colaborativo; buscamos
+que nuestra línea arquitectónica y nuestro concepto de diseño se adecue a las expectativas, deseos
+y necesidades reales de cada proyecto…"*
+
+## Positioning and credentials
+
+```
+status: current
+since: 2026-09-21
+source: BROCHURE ALUZINA (1).pdf (brochure) p. 2, shared by Justin Massion in Slack 2026-09-21 (prompt 0011)
+```
+
+The brochure's credentials panel, verbatim: **8 años**, **más de 50 proyectos en Colombia**,
+**4 proyectos internacionales**, **más de 16.743 m² de experiencia**.
+
+The brochure is undated, so "8 años" cannot be converted into a founding year - see **Unknowns**.
+Two of the four international projects are probably `casa-nueva-york-colin-kamesh-raja` and
+`casa-miami-ovy-on-the-drums`, whose names embed New York and Miami, but the brochure never says
+so.
+
+The brochure splits its market three ways (p. 4): **DISEÑO RESIDENCIAL**, **DISEÑO HOTELERÍA**,
+**DISEÑO COMERCIAL**. Its client lists on p. 2 are split only two ways, residencial and comercial -
+hotelería has no list of its own, though Hotel Mantyx sits in the comercial list.
+
+## Services as marketed
+
+```
+status: current
+since: 2026-09-21
+source: ALUZINA.pdf (portfolio) pp. 2-3, BROCHURE ALUZINA (1).pdf (brochure) pp. 4, 6, shared by Justin Massion in Slack 2026-09-21 (prompt 0011)
+```
+
+Neither document markets the playbook's five services. Each cuts the offer a different way.
+
+**The portfolio sells three pillars** (pp. 2-3), which are *output types*:
+
+| Pillar | What the portfolio says it is |
+| --- | --- |
+| **ESPACIOS** | "Creación y desarrollo de ideas para crear un elemento." Space types named on p. 2: **Comerciales, Personales, Efímeros**. |
+| **PRODUCTOS** | "Diseño y producción de mobiliario y productos para espacios a tu medida. Línea de luminarias y producto aluzina." |
+| **ARTE** | "Expresamos nuestra visión del mundo, a través de recursos mixtos, como la pintura bajo diversas técnicas (acrílico, óleo, aerosol, vinilo), fotografía, plásticos (cerámica, madera)." |
+
+**The portfolio's method** (p. 2), as one sentence: start from the client's needs or desires →
+gather information on client, user and space → analyse the data → empathise with the space, the
+client, their brand and the surroundings → build a strategy on a conceptual framework and the
+sensory world → design.
+
+**The brochure sells four capabilities** (p. 4), which are *trades*: **INTERIORISMO**,
+**MOBILIARIO**, **ILUMINACIÓN**, **CONSTRUCCIÓN** - each as an icon tile, over the three market
+tiles (residencial / hotelería / comercial).
+
+**The brochure's delivery process** (p. 6) is four phases, construction-led:
+
+| Phase | Name | Steps as printed |
+| --- | --- | --- |
+| FASE 1 | CONCEPTUALIZACIÓN | Concepto base · Línea base · Modelo base · Producción de entrega |
+| FASE 2 | CONSTRUCTIVOS / LICENCIA | Preproyectos · Etapa previa al desarrollo · Dibujo planos de obra · Coordinación de licencia |
+| FASE 3 | DETALLES | Taller de diseño · Producción de planimetría · Entrega a clientes · Construcción |
+| FASE 4 | SUPERVISIÓN / CIERRE | Inicio de obra · Marcación de obra · Curaduría · Finalización obra |
+
+## Projects / portfolio
+
+```
+status: current
+since: 2026-09-21
+source: ALUZINA.pdf (portfolio) pp. 4-36 and BROCHURE ALUZINA (1).pdf (brochure) p. 2, shared by Justin Massion in Slack 2026-09-21 (prompt 0011)
+```
+
+Two lists that barely overlap: the portfolio **shows** 13 projects, the brochure **names** 20, and
+only three appear in both.
+
+**Shown in the portfolio** (each has a stable slug and page numbers in
+[`../brand/portfolio/index.json`](../brand/portfolio/index.json); full one-line descriptions and
+what each photograph shows are in [`../brand/README.md`](../brand/README.md)):
+
+| Slug | Project | Type | Pages |
+| --- | --- | --- | --- |
+| `brewhouse-bar-cerveza-artesanal` | Brew House - bar de cerveza artesanal | commercial / hospitality | 4-5 |
+| `club-union-sala-de-masajes` | Club Unión - sala de masajes | wellness | 6-7 |
+| `sodime-consultorio-medico` | Sodime - consultorio médico | healthcare | 8-9 |
+| `terminal-norte-plazoleta-comida` | Terminal Norte - plazoleta de comida | public / F&B | 10 |
+| `coassist-aseguradora` | Coassist - aseguradora | commercial / office | 11-12 |
+| `casa-clasico-contemporanea` | Casa clásico-contemporánea | residential | 13-14 |
+| `apartaestudio-i` | Apartaestudio (I) | residential | 15-16 |
+| `apartamento-moderno` | Apartamento moderno | residential | 17-18 |
+| `apartaestudio-ii` | Apartaestudio (II) | residential | 19-20 |
+| `apartamento` | Apartamento con vista | residential | 21-22 |
+| `gahia-pop-up` | Gahia pop-up (Art Events) | event / retail pop-up | 23-24 |
+| `music-and-art-i` | Music & Art (I) (Art Events) | event | 25-26 |
+| `music-and-art-ii` | Music & Art (II) (Art Events) | event | 27-28 |
+
+**Named in the brochure** (p. 2, twenty names in two numbered lists, no images attached to any of
+them; slugs in [`../brand/brochure/index.json`](../brand/brochure/index.json)):
+
+- *Residencial:* Apartamento Parma Noham Ebresum · Casa Nueva York Colin Kamesh Raja · Casa Miami
+  Ovy on the drums · Apartamento La Estrella Estela Clavel · Apartamento Poblado Rio Escondido ·
+  Apartamento Terrasino Cumbres · Parta estudio loma de los parra · Apartamento Seta · Apartaestudio
+  Asemssi · Apartamento Cubik Envigado.
+- *Comercial:* Hotel Mantyx · Coassist · Bebo · Sodime · Área metropolitana de Medellín · Semana de
+  la juventud · Mantyx · Alcaldía de Medellín · London City barber shop · Brewhouse cervecería.
+
+Names are transcribed exactly as printed, including *"Parta estudio loma de los parra"*, which
+reads as a typo for *Apartaestudio*.
+
+**The three that appear in both documents:** Coassist, Sodime, Brewhouse cervecería. These are
+recorded as `relatedPortfolioSlug` in the brochure index so a schema worker can relate the rows.
+
+**Aluzina's own product line** (portfolio pp. 29-32) - not client work: the objects *Mandala*,
+*Arab light*, *Cui*, *Gran baul*, and the luminaires *circular*, *elipse*, *vesis pesis*,
+*metatron*, *paraboloide*, *estrella*. The geometry names (vesica piscis, Metatron's cube) match
+the sacred-geometry line motifs used throughout the portfolio.
+
+**Art work** (portfolio pp. 33-36): collage, photography, illustration, drawing, oil and acrylic
+painting, murals, and painting on timber cross-sections.
+
+## Visual identity (palette, type, imagery)
+
+```
+status: current
+since: 2026-09-21
+source: ALUZINA.pdf (portfolio) and BROCHURE ALUZINA (1).pdf (brochure), colour and font values measured from the page renders in ../brand/, shared by Justin Massion in Slack 2026-09-21 (prompt 0011)
+```
+
+Colour values are sampled from the **JPEG page renders**, not from the PDFs' colour space. They are
+close enough to design against; the authoritative values live in Angelica's source artwork.
+
+**The one thing both eras share: a light, luminous gradient** running blue → aqua → mint → lime.
+This is the brand's only consistent visual asset.
+
+| Token | Hex | Where |
+| --- | --- | --- |
+| Periwinkle / pale blue | `#c3cff5`, `#bfd0e3` | gradient start, both covers |
+| Aqua | `#b8e8ec`, `#b6f6e0` | gradient middle; brochure "RESIDENCIAL" heading |
+| Mint | `#befdc8`, `#cfffde` | gradient; portfolio contact icons |
+| Lime | `#e1fe87`, `#e3ff9a`, `#d5fdaf` | gradient end; brochure "COMERCIAL" heading |
+| Bronze / gold | `#988870`, `#a09078`, `#9e9b7a` | portfolio wordmark (metallic gradient fill) |
+| Warm taupe | `#8e836d` | portfolio body and caption type |
+| Paper white | `#ffffff` | the dominant colour of almost every non-photographic page |
+| Black | `#000000` | brochure body and headings |
+
+**Typography.** Embedded fonts, by document:
+
+- Portfolio: `DINRoundPro-Light`, `DINRoundPro-Medium`, `DINRoundPro-Bold`. All running text and
+  every caption is DIN Round Pro, set in **wide letterspacing** and mostly in caps - e.g.
+  `E S P A C I O S`. The **wordmark itself is not embedded type**: it is outlined artwork in a
+  high-contrast display serif with flared, almost Didone serifs.
+- Brochure: `DINRoundPro-Light`, `DINRoundPro-Medium`, `DINRoundPro-Bold`, plus `Calibri` and
+  `Calibri-Bold`. Calibri carries the body copy, the client lists and the phase steps. Its presence
+  next to DIN Round Pro suggests the brochure was assembled in an office tool rather than a layout
+  tool - worth confirming before treating the brochure as a typographic reference.
+
+**DIN Round Pro is therefore the one typeface both documents share**, and the closest thing Aluzina
+has to a brand face in this material.
+
+**Wordmarks.**
+
+- Portfolio (`../brand/portfolio/page-01.jpg`): `ALUZINA` in the display serif, filled with a
+  gold/bronze metallic gradient, on a cover split diagonally - a blue-to-lime gradient triangle on
+  the left, white on the right. A thin diagonal slash separates the wordmark from the stacked,
+  letterspaced `UNIVERSO / DE DISEÑO`.
+- Brochure (`../brand/brochure/page-01.jpg`): `ALUZINA` in a **light letterspaced sans**, filled
+  with the blue-to-mint-to-lime gradient, on white over a soft prism/light-refraction photograph,
+  with the same diagonal slash and the stacked `INTERIORISMO / ILUMINACIÓN`.
+
+The **diagonal slash** is the only graphic device that survives from one era to the other.
+
+**Motifs and imagery.**
+
+- Portfolio: line-drawn **sacred geometry** - polyhedra, triangles, chevrons - as section markers
+  and pillar icons; the same geometry names the luminaires. Layout is white-dominated, with photos
+  placed as loose asymmetric collages of 2-8 images per page and a small letterspaced caption. Its
+  photography is warm and mixed in quality; several project shots are visibly older or lower
+  resolution.
+- Brochure: **full-bleed edge-to-edge photography** - thirteen of nineteen pages are a single
+  uncaptioned image. The photography is markedly better and more recent-looking: wide interiors,
+  natural light, timber slats, planted walls, black steel-framed glazing, the Medellín valley
+  through the windows. Flat gradient-tile icons carry the capabilities. Recurring subjects: timber
+  slat walls, green/planted walls, murals (a "Medellín" graffiti wall, a pop-art face), indoor-
+  outdoor rooms, and lighting as the hero.
+- Caution: the four capability icons on brochure p. 4 appear to carry a faint **stock-image
+  watermark**. Do not reuse those icons as brand assets without checking licensing.
+
+## Contact channels
+
+```
+status: current
+since: 2026-09-21
+source: ALUZINA.pdf (portfolio) p. 37 and BROCHURE ALUZINA (1).pdf (brochure) pp. 1, 19, shared by Justin Massion in Slack 2026-09-21 (prompt 0011)
+```
+
+Channels only. **Personal phone numbers and email addresses printed in these PDFs are deliberately
+not copied into the repo or into memory** - the contact details are in the source PDF
+(`../source/brand/ALUZINA.pdf` p. 37 and both brochure covers).
+
+| Channel | Handle / address as printed | Where |
+| --- | --- | --- |
+| Website | `WWW.ALUZINA.CO` | portfolio p. 37 |
+| Instagram | `@aluzinaa` | portfolio p. 37; brochure pp. 1, 19 |
+| Facebook | `@aluzinaaespacio` | portfolio p. 37 |
+| Phone (mobile) | *contact details in the source PDF* | portfolio p. 37; brochure pp. 1, 19 |
+| Email | *contact details in the source PDF*, on the `aluzina.co` domain | portfolio p. 37 |
+
+**Two findings that affect other knowledge entries:**
+
+1. **The domain here is `aluzina.co`, not `aluzinaa.com`.** [`public-sites.md`](public-sites.md)
+   documents the live sites as **aluzinaa.com** and **direccion.aluzinaa.com** (two a's, `.com`).
+   The portfolio prints **www.aluzina.co** (one a, `.co`) and an email on the same domain. Whether
+   `aluzina.co` still resolves, redirects, or has been replaced is not known - see **Unknowns**.
+2. **The Instagram handle is `@aluzinaa`.** [`social-channels.md`](social-channels.md) is `draft`
+   precisely because the handle was unresolved between `aluzina.espacios` and `@aluzinaa`. Both
+   PDFs print `@aluzinaa`, and the portfolio prints `@aluzinaaespacio` for **Facebook** - which
+   looks like the origin of the `aluzina.espacios` confusion. This is evidence, not confirmation:
+   the PDFs are undated and the profile scraped on 2026-09-21 was `aluzina.espacios`.
+
+## Differences vs the playbook
+
+```
+status: current
+since: 2026-09-21
+source: comparison of ALUZINA.pdf (portfolio) and BROCHURE ALUZINA (1).pdf (brochure) against service-playbook.md (ALUZINA Operating System – Service Delivery Playbook v1.0), prompt 0011
+```
+
+The founder's playbook and this marketing material describe the same studio in three incompatible
+vocabularies. **Nothing here supersedes the playbook** - the playbook is the canonical service model
+(D-033) and stays so. This section exists so the gap is visible instead of being quietly averaged
+away.
+
+| | Playbook | Portfolio | Brochure |
+| --- | --- | --- | --- |
+| Language | English | Spanish | Spanish |
+| Descriptor | "Interior Design & Emotional Lighting" | "Universo de Diseño" | "Interiorismo · Iluminación" |
+| Tagline | "Spaces + Light + Experiences that transform" | "Un espacio para cada necesidad y deseo" / "Creamos tu universo" | "Hacemos visiones" |
+| Offer is cut by | **depth of engagement** (a service ladder) | **output type** (Espacios / Productos / Arte) | **trade** (Interiorismo / Mobiliario / Iluminación / Construcción) and **market** (Residencial / Hotelería / Comercial) |
+| Process | 10-step client journey, LEAD → FOLLOW-UP | one method paragraph, 6 moves | 4 construction phases, FASE 1-4 |
+| Pipeline | 15 statuses | none | none |
+
+**Specific mismatches to put to the founder:**
+
+1. **None of the five playbook services is named in either document.** There is no "Creative
+   Digital Consultation", no "In-Person Consultation" and no "Interior Styling" anywhere in the
+   marketing material. Only *Comprehensive Interior Design* (≈ interiorismo) and
+   *Execution / Construction* (≈ construcción) have obvious counterparts. The two consultation
+   products and styling are, as far as the client-facing material goes, invisible.
+2. **The brochure sells two things the playbook has no service for:** `MOBILIARIO` (furniture
+   design and production) and `ILUMINACIÓN` as a standalone trade. The portfolio goes further and
+   sells a named **product line** of luminaires and objects.
+3. **The portfolio's ARTE pillar has no counterpart at all.** Murals, painting, photography,
+   illustration and work on timber are a whole revenue line the operating system does not model.
+4. **"Emotional lighting"** - the playbook's central positioning phrase - **appears in neither
+   document**. The brochure says `ILUMINACIÓN`, flatly.
+5. **The brochure's four phases are not the playbook's ten steps.** FASE 2 and FASE 4 include
+   *coordinación de licencia* and *curaduría* - permitting and building-control work that the
+   playbook's journey never names. Conversely the brochure has nothing for LEAD, DIAGNOSIS, BRIEF
+   or FOLLOW-UP.
+6. **Espacios "Efímeros"** (ephemeral / temporary spaces - the pop-ups and events on portfolio
+   pp. 23-28) is a named space type in the portfolio and a real body of work, with no service,
+   phase or status in the playbook.
+
+**How to use this until the founder rules.** Keep `service-playbook.md` and
+`apps/hub/src/domain/playbook.ts` as the operating model. Treat this file as what the *market*
+currently sees. Do not retire either. A kanban card should carry the reconciliation question.
+
+## Portfolio projects as records
+
+```
+status: current
+since: 2026-09-21
+source: docs/brand/portfolio/index.json and docs/brand/brochure/index.json (prompt 0011), seeded by apps/hub/src/data/seed/assets.ts (prompt 0013, Justin: "properly saved by project and relational in the proper way in the database"); model Fable 5.1
+```
+
+The two PDFs and everything the portfolio shows are **rows in the Hub**, derived at seed time from the
+two `index.json` files (imported through the `@docs` alias), so this folder stays the source of truth
+and a re-render of the pages updates the data. `SEED_VERSION` 6.
+
+**Documents and pages** (`assets`, new entity): `ast-portfolio` (37 pages, `./brand/aluzina-portfolio.pdf`)
+and `ast-brochure` (19 pages, `./brand/aluzina-brochure.pdf`), each with `palette`, `fonts`, `bytes`,
+`pageCount`, Slack `sourceFileId` and `sourceName`; one `page` row per render (`ast-portfolio-p01` …
+`ast-brochure-p19`, `repoPath = docs/brand/<doc>/page-NN.jpg`, `url: null` because the renders are not
+served by the app, `parentId` = the document, `palette` = the page's colours, `textExcerpt` = headline).
+`publishedAt` is `null` for both: **neither PDF is dated**.
+
+**Projects** (`projects`, one per portfolio project, id `prj-pf-<slug>`; `pipelineStatus: closed`,
+`phase: delivered`, `approval: client-approved`, `leadDesignerId: u-alejandra`, `budgetCop: 0`):
+
+| Slug | Project id | Hub `type` (closest) | `serviceCode` (guess) | Client row |
+| --- | --- | --- | --- | --- |
+| `brewhouse-bar-cerveza-artesanal` | `prj-pf-brewhouse-bar-cerveza-artesanal` | hospitality | 03 | `cl-brewhouse` Brew House |
+| `club-union-sala-de-masajes` | `prj-pf-club-union-sala-de-masajes` | wellness | 03 | `cl-club-union` Club Unión |
+| `sodime-consultorio-medico` | `prj-pf-sodime-consultorio-medico` | commercial (healthcare) | 03 | `cl-sodime` Sodime |
+| `terminal-norte-plazoleta-comida` | `prj-pf-terminal-norte-plazoleta-comida` | hospitality (public F&B) | 03 | `cl-terminal-norte` Terminal Norte |
+| `coassist-aseguradora` | `prj-pf-coassist-aseguradora` | commercial | 03 | `cl-coassist` Coassist |
+| `casa-clasico-contemporanea` | `prj-pf-casa-clasico-contemporanea` | residential | 03 | none |
+| `apartaestudio-i` | `prj-pf-apartaestudio-i` | residential | 03 | none |
+| `apartamento-moderno` | `prj-pf-apartamento-moderno` | residential | 03 | none |
+| `apartaestudio-ii` | `prj-pf-apartaestudio-ii` | residential | 03 | none |
+| `apartamento` | `prj-pf-apartamento` | residential | 03 | none |
+| `gahia-pop-up` | `prj-pf-gahia-pop-up` | commercial (event / pop-up) | null | `cl-gahia` Gahia |
+| `music-and-art-i` | `prj-pf-music-and-art-i` | commercial (event) | null | none |
+| `music-and-art-ii` | `prj-pf-music-and-art-ii` | commercial (event) | null | none |
+
+Each project also has a **space** `sp-pf-<slug>` (kind `project`, `aboutType: projects`) under the new
+area `sp-portfolio` (Spaces > Portfolio), and a **note** `post-pf-<slug>` (the page-by-page text of the
+portfolio for that project, from `index.json`) filed in both. Two more notes sit in `sp-portfolio`:
+`post-brochure-clients` (the twenty names on brochure p. 2) and `post-portfolio-products` (the product
+and luminaire line, pp. 29-32).
+
+**Relations** (`relations`, D-026), all derived: page `part-of` document (56); portfolio page `depicts`
+project (25; new relation kind `depicts`, "shows", distinct from a mention); project `for-client` client (6);
+project `produced-by` role `founder` (13); brochure p. 2 `references` the three projects both documents
+share (Coassist, Sodime, Brew House); brochure pp. 4 and 6 and portfolio p. 2 `applies-to` playbook
+services `03` / `E` (new relation target registry `services`, id = service code; a **guess** at the closest
+playbook service, the documents predate the playbook); each note `references` the document or pages it
+was read from. G-08 `/brand/documents` renders the projects and services per document from these rows;
+the graph (K-04) and any post can relate to `assets:<id>` and `services:<code>`.
+
+**What is `_unknown_` and how the placeholder reads in the rows:**
+
+- **Year / start date**: no portfolio project is dated. `projects.startDate` needs a string, so every
+  portfolio project carries the placeholder **`2024-01-01`**; treat it as `_unknown_`, never as a fact.
+  `dueDate` is `null`.
+- **City**: `location` is `Ubicación no publicada` for all but `prj-pf-apartamento` (`Medellín`, because
+  the page shows the Medellín valley). Terminal Norte is not given a city either, despite the name.
+- **Client**: residential projects and the two Music & Art events print no client; `projects.client` is
+  the literal `unknown` and no `clients` row exists for them. Gahia is read as the pop-up's brand, which
+  may be wrong. `clientUserId` is `null` everywhere.
+- **Budget**: `budgetCop: 0` means not published, not free.
+- **Service**: `serviceCode` is the integrator's best guess (03 for interior projects, `null` for events);
+  the portfolio sold "Espacios / Productos / Arte", not the playbook's five services.
+- **Hub `type`**: the Hub has five project types; healthcare, public F&B and events are mapped to the
+  closest one and the published type is kept in `summary` ("tipo publicado: …").
+- **The brochure's twenty names are not projects rows**: they have no page, no summary and no date;
+  they stay a note (`post-brochure-clients`) and the table in `clients.md` until the founder says which
+  of them deserve a record.
+- Whether the product line is Honey Valley Lighting is still `_unknown_` (see Unknowns); no relation
+  was written between them.
+
+## Unknowns
+
+```
+status: current
+since: 2026-09-21
+source: gaps in ALUZINA.pdf and BROCHURE ALUZINA (1).pdf, prompt 0011
+```
+
+- **Which document is current**: `_unknown_`. Neither is dated; the two identities are
+  incompatible. This is the single most important question for the founder.
+- **Dates for either PDF, and a founding year**: `_unknown_`. "8 años" on brochure p. 2 cannot be
+  anchored without knowing when the brochure was made.
+- **City and year for every portfolio project**: `_unknown_`. Neither is printed anywhere in the
+  portfolio and neither may be inferred from the photographs.
+- **Which photographs on brochure pp. 7-18 belong to which project**: `_unknown_`. The plates are
+  uncaptioned; only the founder can attribute them.
+- **Which four projects are the "4 proyectos internacionales"**: `_unknown_`. Casa Nueva York and
+  Casa Miami are likely two of them on the strength of their names alone.
+- **Whether `aluzina.co` is still live** and how it relates to `aluzinaa.com`: `_unknown_`.
+- **Whether `@aluzinaa` is still the Instagram handle** in 2026: `_unknown_`; see
+  [`social-channels.md`](social-channels.md).
+- **The authoritative brand hexes, the display serif's name, and licensing for the brochure's
+  stock icons**: `_unknown_`. All three need Angelica's source files.
+- **Whether the product line in the portfolio is the same thing as "Honey Valley Lighting"**
+  (recorded in [`clients.md`](clients.md) as Aluzina's own collection): `_unknown_`. The portfolio
+  calls it "Línea de luminarias y producto aluzina" and never uses the Honey Valley name.
+- **Whether "Apartamento Parma Noham Ebresum" is the seeded client `cl-noam`**: `_unknown_`; the
+  names are suggestive, nothing more.
+
+## Change log
 - 2026-09-21: file created from MANUAL DE MARCA ALUZINA.pdf (Slack #aluzina-brand-kit, Justin Massion; prompt 0010, changelog 0014).
 - 2026-09-21: shipped in the hub (changelog 0014, D-039..D-043): tokens, `design` module D-12 / D-10 / D-13 at `/#/design`, restyle of every portal; the metal-finish entry is rendered live on D-12 (gold / silver preview); dark mode stays `draft` pending the founder.
 - 2026-09-21: **silver edition** (Slack #aluzina-brand-kit, Justin Massion, "MANUAL DE MARCA ALUZINA -1.pdf"; prompt 0014, changelog 0015, D-050..D-052): Logo, Color, Gradients (metallic part), Graphic elements and Metal finish superseded by silver entries (877 C `#C0C0C0`, smooth ramp white -> `#4D4D4D`, iridescent wordmark as the primary logo, INTERIORISMO / ILUMINACIÓN lockup, black footer band, four discs, 1 pt outlines); Dark mode draft updated to the neutral base; "Export defects" section added; source PDFs renamed per edition and the current one served by the hub.
+- 2026-09-21: created from the two PDFs Justin shared (portfolio `ALUZINA.pdf` 37 pp., brochure
+  `BROCHURE ALUZINA (1).pdf` 19 pp.; prompt 0011, changelog 0013; model Opus 5). Records the two
+  brand eras, the shared blue→lime gradient and DIN Round Pro, 13 shown + 20 named projects with
+  stable slugs, the six mismatches against `service-playbook.md`, and evidence that the Instagram
+  handle is `@aluzinaa` and the portfolio-era domain `aluzina.co`. Visual memory in
+  `../brand/README.md`; no entry superseded.
+- 2026-09-21: appended "Portfolio projects as records" (prompt 0013, changelog 0013; model Fable 5.1):
+  the two PDFs and their 56 pages as `assets` rows, the 13 portfolio projects as `projects` rows
+  (`prj-pf-<slug>`, closed / delivered), six `clients` rows, the Spaces area `sp-portfolio` with one
+  space and one note per project, and 126 derived `relations` (`part-of`, `depicts`, `for-client`,
+  `produced-by`, `references`, `applies-to` services). Placeholders named explicitly (`2024-01-01`,
+  `Ubicación no publicada`, `unknown`, `budgetCop: 0`). No entry superseded.

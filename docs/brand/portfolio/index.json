@@ -1,0 +1,1106 @@
+{
+ "document": "ALUZINA portfolio (Universo de Diseño)",
+ "file": "docs/source/brand/ALUZINA.pdf",
+ "servedUrl": "./brand/aluzina-portfolio.pdf",
+ "sourceOriginalName": "ALUZINA.pdf",
+ "slackFileId": "F0C3ADLF01X",
+ "sourceBytes": 2928197,
+ "sharedAt": "2026-09-21T05:05:06Z",
+ "sharedBy": "Justin Massion (Slack #all-aluzina, ts 1789967106.545359, prompt 0011)",
+ "language": "es",
+ "pageCount": 37,
+ "renderedWith": "docs/brand/tools/render-pdf-pages.py (PyMuPDF 1.28.2 + Pillow 12.3.0), <=1400px wide, JPEG q80",
+ "renderBytesTotal": 5849869,
+ "contactSheet": "docs/brand/portfolio/contact-sheet.jpg",
+ "palette": [
+  "#c3cff5",
+  "#b8e8ec",
+  "#befdc8",
+  "#e1fe87",
+  "#988870",
+  "#8e836d",
+  "#ffffff"
+ ],
+ "fonts": [
+  "DINRoundPro-Light",
+  "DINRoundPro-Medium",
+  "DINRoundPro-Bold",
+  "(wordmark: an unnamed high-contrast display serif, outlined not embedded)"
+ ],
+ "pages": [
+  {
+   "page": 1,
+   "image": "docs/brand/portfolio/page-01.jpg",
+   "headline": "ALUZINA / UNIVERSO DE DISEÑO",
+   "description": "Cover. Diagonal split: a periwinkle-to-aqua-to-lime gradient triangle on the left, white on the right. Gold/bronze metallic display-serif wordmark centred, with a thin diagonal slash and the letterspaced tagline.",
+   "text": "D E D I S E Ñ O / U N I V E R S O",
+   "colors": [
+    "#ffffff",
+    "#bfd0e3",
+    "#b6f6e0",
+    "#d5fdaf",
+    "#e3ff9a",
+    "#fffffe"
+   ],
+   "imageCount": 0,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 32067
+  },
+  {
+   "page": 2,
+   "image": "docs/brand/portfolio/page-02.jpg",
+   "headline": "ESPACIOS / PRODUCTOS / ARTE",
+   "description": "The three-pillar diagram: line-drawn sacred-geometry icons (polyhedron, chevron, triangle) over the three pillar names, each with a paragraph. Below, the methodology statement 'UN ESPACIO PARA CADA NECESIDAD Y DESEO' and the space types: Comerciales, Personales, Efímeros.",
+   "text": "E S P A C I O S / P R O D U C T O S / A R T E / eración y desarrollo de / ideas para crear un / elemento. / Diseño / y / producción de mobiliario / y productos para espa- / cios a tu medida. Línea de / luminarias y producto / aluzina / Expresamos / nuestra / visión del mundo, a través / de recursos mixtos, como / la       pintura bajo diversas / técnicas (acrílico, oleo, / aerosol, vinilo)  , fotografía / ,plásticos / (cerámica, / madera) / UN ESPACIO PARA CADA NECESIDAD Y DESEO / Creamos experiencias para ti siguiendo nuestra / metodología, partimos de tus necesidades o deseos, / recopilamos información de cliente, usuario y espacio, / analizamos los datos, empatizamos con el espacio, / contigo, tu marca y el entorno y entendemos lo que / necesitan, creamos una estrategia basada en un marco / conceptual y el mundo sensorial, finalmente / diseñamos. Creamos tu universo. Nos gusta crear / espacios , construir marca, darle una mirada profunda a / tu interior sin excluir nada por que la parte hace el todo / y el todo la parte. / Espacios Comerciales, Personales, Efímeros",
+   "colors": [
+    "#ffffff",
+    "#dfe0de",
+    "#e6f9e9",
+    "#fbfbfb",
+    "#feffff",
+    "#f8fff3"
+   ],
+   "imageCount": 0,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 87517
+  },
+  {
+   "page": 3,
+   "image": "docs/brand/portfolio/page-03.jpg",
+   "headline": "FILOSOFIA",
+   "description": "Philosophy page on white with the gradient triangle motif. Defines 'alucinación' as the root of the name, the promise TU BIENESTAR, and the 87%-of-our-lives-indoors statistic. Repeats the three pillars at the foot.",
+   "text": "F I L O S O F I A / Una alucinación es una percepción que apunta al / imaginario, al deseo, es sentida como real. Por / esto  apelamos a tu imaginación, a tu / interpretación del mundo, a tus sentidos y desde / ahí / te / comprendemos / para / plasmar / materialmente tus deseos. Podemos impactar tu / entorno, tu espacio y por ende tu tiempo. Ofrece- / mos multiplicidad de propuestas sensoriales / según el deseo o la necesidad humana. Es un / universo de diseño y arte para hacer  realidad tus / ilusiones con una sola meta, / TU BIENESTAR / Pasamos el 87% de nuestras vidas en / ESPACIOS interiores, como estén diseñados estos / interiores afectaran nuestra vida, como nos / comportamos, como nos sentimos, no es solo un / tema visual. / E S P A C I O S / P R O D U C T O S / A R T E",
+   "colors": [
+    "#ffffff",
+    "#d6d9d5",
+    "#eaf7e9",
+    "#fbfbfb",
+    "#fffffe",
+    "#f7ffee"
+   ],
+   "imageCount": 0,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 68466
+  },
+  {
+   "page": 4,
+   "image": "docs/brand/portfolio/page-04.jpg",
+   "headline": "BAR CERVEZA ARTESANAL / BREW HOUSE",
+   "description": "Project opener. Two warm photographs of a craft-beer bar: timber tables and stools, a chalk sign reading 'Craft beer make life better', exposed brick and warm filament lighting.",
+   "text": "B A R C E R V E Z A A R T E S A N A L / B R E W H O U S E / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#655646",
+    "#312721",
+    "#ab9f91",
+    "#f9fff6",
+    "#feffff"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 170037,
+   "projectSlug": "brewhouse-bar-cerveza-artesanal",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 5,
+   "image": "docs/brand/portfolio/page-05.jpg",
+   "headline": "",
+   "description": "Full-bleed plate: four views of the brewhouse - the bar counter with bottle display, a barrel, a lattice timber screen and warm pendant lighting.",
+   "text": "",
+   "colors": [
+    "#28221d",
+    "#514030",
+    "#ffffff",
+    "#6e5e4d",
+    "#937459",
+    "#c7baa8"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 231812,
+   "projectSlug": "brewhouse-bar-cerveza-artesanal",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 6,
+   "image": "docs/brand/portfolio/page-06.jpg",
+   "headline": "SALA DE MASAJES / CLUB UNION",
+   "description": "Project opener. A massage room in white and pale timber: treatment bed, cut-out leaf-motif folding screen, wall-mounted cabinetry, potted greenery.",
+   "text": "S A L A D E M A S A J E S / C L U B U N I O N / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#cdcac4",
+    "#948a84",
+    "#f0ede4",
+    "#fafff7",
+    "#fffffd"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 83027,
+   "projectSlug": "club-union-sala-de-masajes",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 7,
+   "image": "docs/brand/portfolio/page-07.jpg",
+   "headline": "",
+   "description": "Plate: further views of the massage suite - the carved leaf screen at full height, twin treatment beds, a basin and white joinery.",
+   "text": "",
+   "colors": [
+    "#c9c7c0",
+    "#8e8b7e",
+    "#625b4f",
+    "#ffffff",
+    "#eae7df",
+    "#a5a094"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 110486,
+   "projectSlug": "club-union-sala-de-masajes",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 8,
+   "image": "docs/brand/portfolio/page-08.jpg",
+   "headline": "CONSULTORIO MEDICO / SODIME",
+   "description": "Project opener. A medical clinic: reception desk with the SODIME sign, a row of orange waiting chairs, wall-mounted screen, turquoise accent wall.",
+   "text": "C O N S U LT O R I O M E D I C O / S O D I M E / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#6b5d50",
+    "#a9afab",
+    "#dadcde",
+    "#f8fff6",
+    "#fffffe"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 87070,
+   "projectSlug": "sodime-consultorio-medico",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 9,
+   "image": "docs/brand/portfolio/page-09.jpg",
+   "headline": "",
+   "description": "Plate: consulting and waiting areas - orange bench seating, turquoise panels, an etched-glass door carrying the SODIME mark.",
+   "text": "",
+   "colors": [
+    "#b2bbb4",
+    "#796b5b",
+    "#a1a59b",
+    "#829791",
+    "#ffffff",
+    "#d3d7d7"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 94724,
+   "projectSlug": "sodime-consultorio-medico",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 10,
+   "image": "docs/brand/portfolio/page-10.jpg",
+   "headline": "PLAZOLETA COMIDA / TERMINAL NORTE",
+   "description": "Single-page project: a food court for the north bus terminal. Shown as a colour site plan plus three 3D renders of the timber-slatted food kiosks - the only page in the portfolio led by drawings rather than photographs.",
+   "text": "P L A Z O L E TA C O M I D A / T E R M I N A L N O R T E / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#afaca5",
+    "#79655a",
+    "#f2f2f1",
+    "#fffffd",
+    "#fbfffb"
+   ],
+   "imageCount": 7,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 119428,
+   "projectSlug": "terminal-norte-plazoleta-comida",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 11,
+   "image": "docs/brand/portfolio/page-11.jpg",
+   "headline": "ASEGURADORA / COASSIST",
+   "description": "Project opener. Insurance-company offices: the glazed shopfront with the Coassist logo, and a reception desk behind etched glass carrying a flowing line graphic.",
+   "text": "A S E G U R A D O R A / C O A S S I S T / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#babebd",
+    "#80776b",
+    "#e5e5e5",
+    "#f9fff8",
+    "#fffffe"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 118391,
+   "projectSlug": "coassist-aseguradora",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 12,
+   "image": "docs/brand/portfolio/page-12.jpg",
+   "headline": "",
+   "description": "Plate: the open-plan office - rows of workstations, a spiral stair, a bar-height meeting table, and the flowing line graphic running along the glazing.",
+   "text": "",
+   "colors": [
+    "#4b4945",
+    "#ffffff",
+    "#bcb9b5",
+    "#958e85",
+    "#7b7a75",
+    "#eeebea"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 182345,
+   "projectSlug": "coassist-aseguradora",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 13,
+   "image": "docs/brand/portfolio/page-13.jpg",
+   "headline": "CASA CLASICO / CONTEMPORANEA",
+   "description": "Project opener. A classic-contemporary house: a living room mixing a gilt animal-head wall piece, dark panelling, layered art and eclectic objects.",
+   "text": "C A S A C L A S I C O / C O N T E M P O R A N E A / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#393026",
+    "#9e9178",
+    "#e9e6e1",
+    "#f8fff7",
+    "#fffffe"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 188975,
+   "projectSlug": "casa-clasico-contemporanea",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 14,
+   "image": "docs/brand/portfolio/page-14.jpg",
+   "headline": "",
+   "description": "Plate: more rooms of the same house - a bedroom with an ornate mirror and dark timber, styled shelf vignettes with topiary and ceramics.",
+   "text": "",
+   "colors": [
+    "#3f3530",
+    "#a7a196",
+    "#857a6d",
+    "#ffffff",
+    "#6a665d",
+    "#dad5ca"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 160833,
+   "projectSlug": "casa-clasico-contemporanea",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 15,
+   "image": "docs/brand/portfolio/page-15.jpg",
+   "headline": "APARTAESTUDIO",
+   "description": "Project opener. A studio apartment: pale timber dining set and stools against exposed brick, a low bed platform with cushions.",
+   "text": "A P A R TA E S T U D I O / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#a39b8f",
+    "#51463a",
+    "#dee3e4",
+    "#fafff8",
+    "#fffffe"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 120800,
+   "projectSlug": "apartaestudio-i",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 16,
+   "image": "docs/brand/portfolio/page-16.jpg",
+   "headline": "",
+   "description": "Plate: the same studio - a wall-mounted screen over a timber console, a round side table, patterned green feature panels.",
+   "text": "",
+   "colors": [
+    "#3a2f27",
+    "#a7a6a2",
+    "#ffffff",
+    "#66635a",
+    "#877a6e",
+    "#d6dad9"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 179744,
+   "projectSlug": "apartaestudio-i",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 17,
+   "image": "docs/brand/portfolio/page-17.jpg",
+   "headline": "APARTAMENTO MODERNO",
+   "description": "Project opener. A modern apartment: a pale sofa under a framed-art grid, glass vessels on a dining table, sculptural pendant lights.",
+   "text": "A PA R TA M E N T O M O D E R N O / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#4c4535",
+    "#baa886",
+    "#e5dccb",
+    "#fafff9",
+    "#fffffd"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 112658,
+   "projectSlug": "apartamento-moderno",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 18,
+   "image": "docs/brand/portfolio/page-18.jpg",
+   "headline": "",
+   "description": "Plate: the same apartment - a bedroom in soft neutrals with three disc wall pieces, a floating shelf vignette, a white tulip chair by a window.",
+   "text": "",
+   "colors": [
+    "#c9bb99",
+    "#786a4e",
+    "#b49f6e",
+    "#a1977c",
+    "#ffffff",
+    "#e0dcd2"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 138251,
+   "projectSlug": "apartamento-moderno",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 19,
+   "image": "docs/brand/portfolio/page-19.jpg",
+   "headline": "APARTAESTUDIO",
+   "description": "Project opener. A second studio apartment, brighter and more playful: a white-walled room with a colour-splash artwork and a soft pouffe.",
+   "text": "A PA R TA E S T U D I O / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#a49a9d",
+    "#675e61",
+    "#eae4de",
+    "#f8fff6",
+    "#fffffd"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 123706,
+   "projectSlug": "apartaestudio-ii",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 20,
+   "image": "docs/brand/portfolio/page-20.jpg",
+   "headline": "",
+   "description": "Plate: the same studio - a chalkboard 'Shopping list' wall, a gallery wall of small frames, a green sofa, patterned green wall panels.",
+   "text": "",
+   "colors": [
+    "#382d21",
+    "#978958",
+    "#bbad7e",
+    "#ffffff",
+    "#d5c490",
+    "#eae1bb"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 217077,
+   "projectSlug": "apartaestudio-ii",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 21,
+   "image": "docs/brand/portfolio/page-21.jpg",
+   "headline": "APARTAMENTO",
+   "description": "Project opener. An apartment with a city outlook: white sectional sofa, coloured scatter cushions, a vertical green wall, floor-to-ceiling glazing onto the Medellín valley.",
+   "text": "A P A R TA M E N T O / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#b5b9b7",
+    "#58574e",
+    "#f8f9f9",
+    "#fffffd",
+    "#fffaf8"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 138913,
+   "projectSlug": "apartamento",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 22,
+   "image": "docs/brand/portfolio/page-22.jpg",
+   "headline": "",
+   "description": "Plate: the same apartment - a glazed balcony with armchairs, a crate-timber feature unit, pendant glass lights.",
+   "text": "",
+   "colors": [
+    "#433630",
+    "#d4d6d3",
+    "#ffffff",
+    "#908f84",
+    "#b7a999",
+    "#f2f5f6"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 189057,
+   "projectSlug": "apartamento",
+   "serviceCode": "ESPACIOS"
+  },
+  {
+   "page": 23,
+   "image": "docs/brand/portfolio/page-23.jpg",
+   "headline": "ART EVENTS / GAHIA POP UP",
+   "description": "Project opener. A pop-up retail/exhibition fit-out in black and white: garments on a rail, monochrome photographs, a low timber plinth.",
+   "text": "A R T E V E N T S / G A H I A P O P U P / E S P A C I O S",
+   "colors": [
+    "#ffffff",
+    "#a6a5a4",
+    "#5e5e61",
+    "#d3d0c9",
+    "#f8fff5",
+    "#feffff"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 108157,
+   "projectSlug": "gahia-pop-up",
+   "serviceCode": "ESPACIOS / ARTE"
+  },
+  {
+   "page": 24,
+   "image": "docs/brand/portfolio/page-24.jpg",
+   "headline": "",
+   "description": "Plate: the pop-up - a wall of small framed works, an animal skull and rounds of timber as props, a white shelving bay with a cloud photograph.",
+   "text": "",
+   "colors": [
+    "#89847a",
+    "#cbc5bd",
+    "#5a5756",
+    "#ffffff",
+    "#a59e96",
+    "#e8e4de"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 143548,
+   "projectSlug": "gahia-pop-up",
+   "serviceCode": "ESPACIOS / ARTE"
+  },
+  {
+   "page": 25,
+   "image": "docs/brand/portfolio/page-25.jpg",
+   "headline": "ART EVENTS / MUSIC & ART",
+   "description": "Project opener. An art-and-music event: a warmly lit gallery room with hung works, speakers and a console.",
+   "text": "A R T E V E N T S / M U S I C & A R T / E S P A C I O S / A R T E",
+   "colors": [
+    "#ffffff",
+    "#7d5f39",
+    "#402c1d",
+    "#d4c2a3",
+    "#f9fff6",
+    "#fffffe"
+   ],
+   "imageCount": 1,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 96982,
+   "projectSlug": "music-and-art-i",
+   "serviceCode": "ESPACIOS / ARTE"
+  },
+  {
+   "page": 26,
+   "image": "docs/brand/portfolio/page-26.jpg",
+   "headline": "",
+   "description": "Plate: the event - a suspended fabric/thread installation catching coloured light, and a crowd shot under a geodesic canopy at dusk.",
+   "text": "",
+   "colors": [
+    "#0c0b0b",
+    "#998169",
+    "#ffffff",
+    "#56312b",
+    "#241c1f",
+    "#cfccc3"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 152739,
+   "projectSlug": "music-and-art-i",
+   "serviceCode": "ESPACIOS / ARTE"
+  },
+  {
+   "page": 27,
+   "image": "docs/brand/portfolio/page-27.jpg",
+   "headline": "ART EVENTS / MUSIC & ART",
+   "description": "Project opener for a second music-and-art event, darker and club-like.",
+   "text": "A R T E V E N T S / M U S I C & A R T / E S P A C I O S / A R T E",
+   "colors": [
+    "#ffffff",
+    "#161520",
+    "#322a45",
+    "#83809d",
+    "#f9fff6",
+    "#feffff"
+   ],
+   "imageCount": 1,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 131340,
+   "projectSlug": "music-and-art-ii",
+   "serviceCode": "ESPACIOS / ARTE"
+  },
+  {
+   "page": 28,
+   "image": "docs/brand/portfolio/page-28.jpg",
+   "headline": "",
+   "description": "Plate: the second event - mirror-ball clusters over a dancing crowd in magenta and cyan wash, a row of circular light discs, and a daylight courtyard with a mural wall.",
+   "text": "",
+   "colors": [
+    "#ffffff",
+    "#181516",
+    "#5b4f49",
+    "#a5a095",
+    "#393535",
+    "#fcfdfc"
+   ],
+   "imageCount": 4,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 228099,
+   "projectSlug": "music-and-art-ii",
+   "serviceCode": "ESPACIOS / ARTE"
+  },
+  {
+   "page": 29,
+   "image": "docs/brand/portfolio/page-29.jpg",
+   "headline": "PRODUCTOS - Mandala / Arab light / Cui / Gran baul",
+   "description": "Product page opening the PRODUCTOS section: four named pieces photographed on white - the pierced Mandala panel, the Arab light shade, the small Cui lamp and the Gran baul chest - with lit detail shots showing the cast light patterns beneath.",
+   "text": "P R O D U C T O S / M a n d a l a / A r a b l i g h t / C u i / G r a n b a u l / P R O D U C T O S",
+   "colors": [
+    "#ffffff",
+    "#5b4a39",
+    "#c8bda3",
+    "#fafaf8",
+    "#fffffe",
+    "#fffdfc"
+   ],
+   "imageCount": 8,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 131256,
+   "serviceCode": "PRODUCTOS"
+  },
+  {
+   "page": 30,
+   "image": "docs/brand/portfolio/page-30.jpg",
+   "headline": "LAMPARAS - circular / elipse",
+   "description": "Two luminaires from the Aluzina lighting line shot against dark backgrounds: a ring pendant and an ellipse form, each with a lit-in-situ shot.",
+   "text": "L A M P A R A S / c i r c u l a r / e l i p s e / P R O D U C T O S",
+   "colors": [
+    "#ffffff",
+    "#352a24",
+    "#7e7362",
+    "#ecebdd",
+    "#f9fff7",
+    "#fffffd"
+   ],
+   "imageCount": 6,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 92935,
+   "serviceCode": "PRODUCTOS"
+  },
+  {
+   "page": 31,
+   "image": "docs/brand/portfolio/page-31.jpg",
+   "headline": "LAMPARAS - vesis pesis / metatron",
+   "description": "Two more luminaires: 'vesis pesis' and 'metatron', shown as object shots plus interiors where the fittings cast geometric shadow patterns across walls and ceilings.",
+   "text": "v e s i s p e s i s / m e t a t r o n / L A M P A R A S / P R O D U C T O S",
+   "colors": [
+    "#ffffff",
+    "#433d34",
+    "#967e5f",
+    "#d1d0c7",
+    "#f9fff6",
+    "#fffffd"
+   ],
+   "imageCount": 6,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 106999,
+   "serviceCode": "PRODUCTOS"
+  },
+  {
+   "page": 32,
+   "image": "docs/brand/portfolio/page-32.jpg",
+   "headline": "LAMPARAS - paraboloide / estrella",
+   "description": "Two further luminaires: a fabric paraboloid pendant and a pierced 'estrella' form, with detail shots of the perforated pattern and the light it throws.",
+   "text": "p a r a b o l o i d e / e s t r e l l a / L A M P A R A S / P R O D U C T O S",
+   "colors": [
+    "#ffffff",
+    "#2e2b27",
+    "#766e5e",
+    "#ddddca",
+    "#f9fff6",
+    "#fffff9"
+   ],
+   "imageCount": 6,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 124629,
+   "serviceCode": "PRODUCTOS"
+  },
+  {
+   "page": 33,
+   "image": "docs/brand/portfolio/page-33.jpg",
+   "headline": "COLLAGE / FOTOGRAFIA / ILUSTRACION",
+   "description": "Opens the ARTE section: a large framed geometric collage in sepia tones, a gold-toned mandala/geometry work, and a peacock-feather illustration.",
+   "text": "C O L L A G E / F O T O G R A F I A / I L U S T R A C I O N / A R T E",
+   "colors": [
+    "#ffffff",
+    "#a88762",
+    "#4a3c30",
+    "#eadebe",
+    "#feffec",
+    "#fdffff"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 157849,
+   "serviceCode": "ARTE"
+  },
+  {
+   "page": 34,
+   "image": "docs/brand/portfolio/page-34.jpg",
+   "headline": "DIBUJO / OLEO / ACRILICO ILUSTRACION",
+   "description": "Drawing and painting: two pencil/charcoal female portraits and a painted big-cat head in warm ochre.",
+   "text": "D I B U J O / O L E O / A C R I L I C O I L U S T R A C I O N / A R T E",
+   "colors": [
+    "#ffffff",
+    "#4c4b47",
+    "#a5a196",
+    "#e7e4da",
+    "#fbfff5",
+    "#fdffff"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 150016,
+   "serviceCode": "ARTE"
+  },
+  {
+   "page": 35,
+   "image": "docs/brand/portfolio/page-35.jpg",
+   "headline": "ARTE MURAL",
+   "description": "Mural work: a large black wolf-head mural being painted on a white wall (the artist at work, in frame) and a cat portrait on a mint ground.",
+   "text": "A R T E M U R A L / A R T E",
+   "colors": [
+    "#ffffff",
+    "#9ca69a",
+    "#635d55",
+    "#cbd9d1",
+    "#fafff5",
+    "#fffffd"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 108748,
+   "serviceCode": "ARTE"
+  },
+  {
+   "page": 36,
+   "image": "docs/brand/portfolio/page-36.jpg",
+   "headline": "MADERA / OLEO / ACRILICO",
+   "description": "Painting on wood: five irregular timber cross-sections, each painted with a photoreal eye, arranged as a wall group.",
+   "text": "M A D E R A / O L E O / A C R I L I C O / A R T E",
+   "colors": [
+    "#ffffff",
+    "#453835",
+    "#726057",
+    "#d3c5b5",
+    "#fcfff6",
+    "#feffff"
+   ],
+   "imageCount": 4,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 100608,
+   "serviceCode": "ARTE"
+  },
+  {
+   "page": 37,
+   "image": "docs/brand/portfolio/page-37.jpg",
+   "headline": "CONTÁCTANOS",
+   "description": "Back cover on white. The gold wordmark and tagline, then contact rows with mint-green icons: phone, email, Instagram @aluzinaa, Facebook @aluzinaaespacio, and WWW.ALUZINA.CO at the foot.",
+   "text": "C O N T Á C T A N O S / W W W . A L U Z I N A . C O / D E D I S E Ñ O / U N I V E R S O / @aluzinaa / @aluzinaaespacio / (+57)3103906773 / espacios@aluzina.co",
+   "colors": [
+    "#ffffff",
+    "#fafaf9",
+    "#d4cdc0",
+    "#cffbee",
+    "#fffffe",
+    "#fafffd"
+   ],
+   "imageCount": 0,
+   "px": [
+    1400,
+    1082
+   ],
+   "bytes": 29027
+  }
+ ],
+ "projects": [
+  {
+   "slug": "brewhouse-bar-cerveza-artesanal",
+   "name": "Brew House - bar de cerveza artesanal",
+   "type": "commercial / hospitality",
+   "city": null,
+   "year": null,
+   "summary": "Craft-beer bar in timber, exposed brick and warm filament lighting, with a lattice screen and barrel detailing.",
+   "pages": [
+    4,
+    5
+   ]
+  },
+  {
+   "slug": "club-union-sala-de-masajes",
+   "name": "Club Unión - sala de masajes",
+   "type": "wellness",
+   "city": null,
+   "year": null,
+   "summary": "Massage suite for Club Unión in white and pale timber, defined by a full-height cut-out leaf-motif screen.",
+   "pages": [
+    6,
+    7
+   ]
+  },
+  {
+   "slug": "sodime-consultorio-medico",
+   "name": "Sodime - consultorio médico",
+   "type": "healthcare",
+   "city": null,
+   "year": null,
+   "summary": "Medical clinic: reception, waiting area in orange and turquoise, and consulting rooms with etched-glass branding.",
+   "pages": [
+    8,
+    9
+   ]
+  },
+  {
+   "slug": "terminal-norte-plazoleta-comida",
+   "name": "Terminal Norte - plazoleta de comida",
+   "type": "public / food & beverage",
+   "city": null,
+   "year": null,
+   "summary": "Food court for the north bus terminal, presented as a site plan plus 3D renders of timber-slatted kiosks.",
+   "pages": [
+    10
+   ]
+  },
+  {
+   "slug": "coassist-aseguradora",
+   "name": "Coassist - aseguradora",
+   "type": "commercial / office",
+   "city": null,
+   "year": null,
+   "summary": "Insurance-company offices: glazed shopfront, etched-glass reception and an open-plan floor with a spiral stair.",
+   "pages": [
+    11,
+    12
+   ]
+  },
+  {
+   "slug": "casa-clasico-contemporanea",
+   "name": "Casa clásico-contemporánea",
+   "type": "residential",
+   "city": null,
+   "year": null,
+   "summary": "A house mixing classical and contemporary registers: dark panelling, gilt pieces, layered art and eclectic objects.",
+   "pages": [
+    13,
+    14
+   ]
+  },
+  {
+   "slug": "apartaestudio-i",
+   "name": "Apartaestudio (I)",
+   "type": "residential",
+   "city": null,
+   "year": null,
+   "summary": "Studio apartment with exposed brick, pale timber dining set and a low platform bed.",
+   "pages": [
+    15,
+    16
+   ]
+  },
+  {
+   "slug": "apartamento-moderno",
+   "name": "Apartamento moderno",
+   "type": "residential",
+   "city": null,
+   "year": null,
+   "summary": "Modern apartment in soft neutrals: framed-art grid, sculptural pendants and glass-vessel styling.",
+   "pages": [
+    17,
+    18
+   ]
+  },
+  {
+   "slug": "apartaestudio-ii",
+   "name": "Apartaestudio (II)",
+   "type": "residential",
+   "city": null,
+   "year": null,
+   "summary": "A brighter, more playful studio apartment with a chalkboard wall, a gallery wall and green patterned panels.",
+   "pages": [
+    19,
+    20
+   ]
+  },
+  {
+   "slug": "apartamento",
+   "name": "Apartamento con vista",
+   "type": "residential",
+   "city": null,
+   "year": null,
+   "summary": "Apartment opening onto the Medellín valley: white sectional, vertical green wall and a glazed balcony.",
+   "pages": [
+    21,
+    22
+   ]
+  },
+  {
+   "slug": "gahia-pop-up",
+   "name": "Gahia pop-up (Art Events)",
+   "type": "event / retail pop-up",
+   "city": null,
+   "year": null,
+   "summary": "Monochrome pop-up retail and exhibition fit-out with timber plinths, framed works and found-object props.",
+   "pages": [
+    23,
+    24
+   ]
+  },
+  {
+   "slug": "music-and-art-i",
+   "name": "Music & Art (I) (Art Events)",
+   "type": "event",
+   "city": null,
+   "year": null,
+   "summary": "Art-and-music event: a warmly lit hanging show plus a thread installation and a geodesic canopy at dusk.",
+   "pages": [
+    25,
+    26
+   ]
+  },
+  {
+   "slug": "music-and-art-ii",
+   "name": "Music & Art (II) (Art Events)",
+   "type": "event",
+   "city": null,
+   "year": null,
+   "summary": "A second, club-like music-and-art event: mirror-ball clusters, magenta and cyan wash, circular light discs.",
+   "pages": [
+    27,
+    28
+   ]
+  }
+ ],
+ "products": [
+  {
+   "slug": "mandala",
+   "name": "Mandala",
+   "summary": "Pierced panel casting a mandala light pattern.",
+   "pages": [
+    29
+   ]
+  },
+  {
+   "slug": "arab-light",
+   "name": "Arab light",
+   "summary": "Pierced shade in an arabesque pattern.",
+   "pages": [
+    29
+   ]
+  },
+  {
+   "slug": "cui",
+   "name": "Cui",
+   "summary": "Small table lamp.",
+   "pages": [
+    29
+   ]
+  },
+  {
+   "slug": "gran-baul",
+   "name": "Gran baul",
+   "summary": "Large chest / storage piece.",
+   "pages": [
+    29
+   ]
+  },
+  {
+   "slug": "lampara-circular",
+   "name": "Lámpara circular",
+   "summary": "Ring pendant luminaire.",
+   "pages": [
+    30
+   ]
+  },
+  {
+   "slug": "lampara-elipse",
+   "name": "Lámpara elipse",
+   "summary": "Ellipse-form luminaire.",
+   "pages": [
+    30
+   ]
+  },
+  {
+   "slug": "lampara-vesis-pesis",
+   "name": "Lámpara vesis pesis",
+   "summary": "Luminaire named for the vesica piscis; throws a geometric shadow pattern.",
+   "pages": [
+    31
+   ]
+  },
+  {
+   "slug": "lampara-metatron",
+   "name": "Lámpara metatron",
+   "summary": "Luminaire on Metatron's-cube geometry; casts a lattice of shadows.",
+   "pages": [
+    31
+   ]
+  },
+  {
+   "slug": "lampara-paraboloide",
+   "name": "Lámpara paraboloide",
+   "summary": "Fabric paraboloid pendant.",
+   "pages": [
+    32
+   ]
+  },
+  {
+   "slug": "lampara-estrella",
+   "name": "Lámpara estrella",
+   "summary": "Pierced star-form luminaire.",
+   "pages": [
+    32
+   ]
+  }
+ ]
+}

@@ -1,0 +1,657 @@
+{
+ "document": "BROCHURE ALUZINA (Interiorismo / Iluminación)",
+ "file": "docs/source/brand/BROCHURE ALUZINA (1).pdf",
+ "servedUrl": "./brand/aluzina-brochure.pdf",
+ "sourceOriginalName": "BROCHURE ALUZINA (1).pdf",
+ "slackFileId": "F0C38CS9D5Y",
+ "sourceBytes": 3130687,
+ "sharedAt": "2026-09-21T05:05:06Z",
+ "sharedBy": "Justin Massion (Slack #all-aluzina, ts 1789967106.545359, prompt 0011)",
+ "language": "es",
+ "pageCount": 19,
+ "renderedWith": "docs/brand/tools/render-pdf-pages.py (PyMuPDF 1.28.2 + Pillow 12.3.0), <=1400px wide, JPEG q80",
+ "renderBytesTotal": 3155826,
+ "contactSheet": "docs/brand/brochure/contact-sheet.jpg",
+ "palette": [
+  "#bfd0e3",
+  "#b6f6e0",
+  "#cfffde",
+  "#d5fdaf",
+  "#e3ff9a",
+  "#000000",
+  "#ffffff"
+ ],
+ "fonts": [
+  "DINRoundPro-Light",
+  "DINRoundPro-Medium",
+  "DINRoundPro-Bold",
+  "Calibri",
+  "Calibri-Bold"
+ ],
+ "pages": [
+  {
+   "page": 1,
+   "image": "docs/brand/brochure/page-01.jpg",
+   "headline": "ILUMINACIÓN",
+   "description": "Cover. A soft prism/light-refraction photograph on white; the ALUZINA wordmark in a light letterspaced sans filled with a blue-to-mint-to-lime gradient, with a diagonal slash and the lockup INTERIORISMO / ILUMINACIÓN, then the handle and phone.",
+   "text": "I L U M I N A C I Ó N / @ a l u z i n a a  + 5 7 3 1 0 3 9 0 6 7 7 3",
+   "colors": [
+    "#ffffff",
+    "#d1ddf2",
+    "#fdfdfe",
+    "#e1faee",
+    "#f2fff3",
+    "#fffffe"
+   ],
+   "imageCount": 1,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 28295
+  },
+  {
+   "page": 2,
+   "image": "docs/brand/brochure/page-02.jpg",
+   "headline": "SOMOS",
+   "description": "The credentials page. 'SOMOS' set huge in a lime-to-aqua gradient; a gradient panel reading 8 AÑOS / 50 Proyectos en Colombia / 4 Proyectos Internacionales; 'más de 16.743 m2 DE EXPERIENCIA'; the values sentence; and two ten-item client lists headed RESIDENCIAL (aqua) and COMERCIAL (lime).",
+   "text": "Las constantes de nuestro trabajo son / la búsqueda de coherencia, armonía, / vanguardia, / versaƟlidad, / creaƟvidad, / atemporalidad, consciencia, experiencias, / cercanía y memorabilidad. / COMERCIAL / 1. Hotel Mantyx. / 2. Coassist. / 3. Bebo. / 4. Sodime. / 5. Área metropolitana de Medellín. / 6. Semana de la juventud. / 7. Mantyx. / 8. Alcaldía de Medellín. / 9. London City barber shop. / 10.Brewhouse cervecería. / 1. Apartamento Parma Noham Ebresum. / 2. Casa Nueva York Colin Kamesh Raja. / 3. Casa Miami Ovy on the drums / 4. Apartamento La Estrella Estela Clavel. / 5. Apartamento Poblado Rio Escondido. / 6. Apartamento Terrasino Cumbres . / 7. Parta estudio loma de los parra. / 8. Apartamento Seta. / 9. Apartaestudio Asemssi. / 10.Apartamento Cubik Envigado. / RESIDENCIAL / 8  AÑOS Diseñando más de / 50 Proyectos en Colombia y / 4 Proyectos Internacionales.",
+   "colors": [
+    "#ffffff",
+    "#fafafa",
+    "#baf9e4",
+    "#cfffde",
+    "#c4cdd1",
+    "#fffffe"
+   ],
+   "imageCount": 1,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 76018
+  },
+  {
+   "page": 3,
+   "image": "docs/brand/brochure/page-03.jpg",
+   "headline": "HACEMOS VISIONES",
+   "description": "Full-bleed interior: a double-height hospitality space with a wrought-iron balcony, a colourful figurative mural and an artificial-turf floor with a football goal. Caption: 'Evocaremos la magia de la transformación espacial y el poder de un diseño que trascienda lo visual.'",
+   "text": "Evocaremos la magia de la transformación espacial / y el poder de un diseño que trascienda lo visual.",
+   "colors": [
+    "#b0b1af",
+    "#49504d",
+    "#ac957b",
+    "#c8c3b3",
+    "#ebdbc2",
+    "#75867e"
+   ],
+   "imageCount": 1,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 195845
+  },
+  {
+   "page": 4,
+   "image": "docs/brand/brochure/page-04.jpg",
+   "headline": "DISEÑO RESIDENCIAL / HOTELERIA / COMERCIAL",
+   "description": "Capability page. Three gradient tiles with line illustrations (house, hotel, storefront) name the three markets; below, four icon tiles name the four capabilities INTERIORISMO, MOBILIARIO, ILUMINACION, CONSTRUCCION. At right, the 'Somos empresarios con visión de negocio' statement.",
+   "text": "INTERIORISMO / MOBILIARIO / CONSTRUCCION / DISEÑO / HOTELERIA / DISEÑO / COMERCIAL / DISEÑO / RESIDENCIAL / ILUMINACION / Somos empresarios con visión de / negocio, convencidos de que en / nuestro  HACER  logramos generar / progreso, calidad de vida y felicidad / para nuestros clientes, y aliados. / Nos mueve la fuerza de hacer las cosas / bien, con  alto valor en el diseño, la / éƟca, el compromiso con  nuestros / valores, nuestra gente y nuestro en- / torno.",
+   "colors": [
+    "#ffffff",
+    "#92f7de",
+    "#8baaab",
+    "#d1f3da",
+    "#fffffd",
+    "#c5ffdf"
+   ],
+   "imageCount": 4,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 97013
+  },
+  {
+   "page": 5,
+   "image": "docs/brand/brochure/page-05.jpg",
+   "headline": "Somos parte de la vida cotidiana de las personas.",
+   "description": "Full-bleed residential interior: a long room in pale timber with an olive sofa, a glass coffee table, a shaggy rug and large plants; a faint 'LUZ' graphic on the wall.",
+   "text": "Somos parte de la vida coƟdiana / de las personas.",
+   "colors": [
+    "#bfbbb4",
+    "#c9a078",
+    "#796342",
+    "#aaa291",
+    "#e2dfd9",
+    "#d5c3b2"
+   ],
+   "imageCount": 1,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 177379
+  },
+  {
+   "page": 6,
+   "image": "docs/brand/brochure/page-06.jpg",
+   "headline": "FASE 1 / FASE 2 / FASE 3 / FASE 4",
+   "description": "The process page: four gradient chips across the top - CONCEPTUALIZACION, CONSTRUCTIVOS/LICENCIA, DETALLES, SUPERVISION/CIERRE - each with its steps listed, over a horizontal milestone timeline. Closing line on collaborative, coherent design.",
+   "text": "Concepto base / Línea base / Modelo base / Producción de entrega / CONCEPTUALIZACION / FASE 1 / Preproyectos / Etapa previa al desarrollo / Dibujo Planos de obra / Coordinación de licencia / CONSTRUCTIVOS/ LICENCIA / FASE 2 / Taller de diseño / Producción de planimetría / Entrega a clientes / Construccion / DETALLES / FASE 3 / Inicio de obra / Marcación de obra / Curaduría / Finalizacion Obra / SUPERVISION/ CIERRE / FASE 4 / Creemos en el diseño coherente  y colaboraƟvo; / buscamos que nuestra línea arquitectónica y / nuestro concepto de diseño se adecue a las / expectaƟvas, deseos y necesidades reales / de cada proyecto…",
+   "colors": [
+    "#ffffff",
+    "#9afdce",
+    "#babec1",
+    "#bdeaea",
+    "#e3ffe2",
+    "#d8fdcd"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 68215
+  },
+  {
+   "page": 7,
+   "image": "docs/brand/brochure/page-07.jpg",
+   "headline": "",
+   "description": "Plate: a living room with a full-height timber-slat wall, a deep grey modular sofa, timber pendant cluster and a patterned rug.",
+   "text": "",
+   "colors": [
+    "#3e3124",
+    "#a48d74",
+    "#645849",
+    "#cdbfad",
+    "#836448",
+    "#f6f4f1"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 165369
+  },
+  {
+   "page": 8,
+   "image": "docs/brand/brochure/page-08.jpg",
+   "headline": "",
+   "description": "Plate: a loft-like room with black steel-framed glazing onto greenery, a drop-down projector screen showing a film, a hammock and a low platform bed.",
+   "text": "",
+   "colors": [
+    "#a08669",
+    "#3d2c1d",
+    "#6d5a45",
+    "#85684c",
+    "#b9a486",
+    "#dacfb3"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 153150
+  },
+  {
+   "page": 9,
+   "image": "docs/brand/brochure/page-09.jpg",
+   "headline": "",
+   "description": "Plate: an indoor-outdoor dining and lounge space - exposed brick and concrete, a planted green wall, a tan leather sofa, a long timber table and a linear fireplace.",
+   "text": "",
+   "colors": [
+    "#a08d67",
+    "#3c2a1a",
+    "#615435",
+    "#816343",
+    "#c7b997",
+    "#dfd4be"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 172809
+  },
+  {
+   "page": 10,
+   "image": "docs/brand/brochure/page-10.jpg",
+   "headline": "",
+   "description": "Plate: a bedroom with a timber-slat headboard wall, a large woven rattan pendant, and a bed on a raised timber platform.",
+   "text": "",
+   "colors": [
+    "#d2c6b6",
+    "#4d301c",
+    "#714f34",
+    "#895e3a",
+    "#b0977c",
+    "#f1ede5"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 147551
+  },
+  {
+   "page": 11,
+   "image": "docs/brand/brochure/page-11.jpg",
+   "headline": "",
+   "description": "Plate: a kitchen with a perforated timber wine wall, an island with pale timber stools, open black-steel shelving, integrated fridge and greenery.",
+   "text": "",
+   "colors": [
+    "#2e1f14",
+    "#654b32",
+    "#8c7454",
+    "#c6b192",
+    "#e1d8c5",
+    "#b18862"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 166288
+  },
+  {
+   "page": 12,
+   "image": "docs/brand/brochure/page-12.jpg",
+   "headline": "",
+   "description": "Plate: a dining area against a full-wall 'Medellín' graffiti mural in hot colours, with a live-edge timber table, black wire chairs and an orange bench.",
+   "text": "",
+   "colors": [
+    "#97b2bf",
+    "#5c484f",
+    "#6c8699",
+    "#d8b8a2",
+    "#e9d4c4",
+    "#a7918b"
+   ],
+   "imageCount": 1,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 175315
+  },
+  {
+   "page": 13,
+   "image": "docs/brand/brochure/page-13.jpg",
+   "headline": "",
+   "description": "Plate: a bar/gaming room - a green-baize table, a large pop-art female mural, Moroccan pierced pendant lamps, red damask walls and gilt panelling.",
+   "text": "",
+   "colors": [
+    "#302623",
+    "#998d77",
+    "#9b583f",
+    "#dfd0b8",
+    "#8a381e",
+    "#9eb8ae"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 202197
+  },
+  {
+   "page": 14,
+   "image": "docs/brand/brochure/page-14.jpg",
+   "headline": "",
+   "description": "Plate: an outdoor terrace over the valley - a pool with arcing water jets under a white steel pergola, artificial turf, a slide and a climbing wall.",
+   "text": "",
+   "colors": [
+    "#223d32",
+    "#7db2b3",
+    "#2c6847",
+    "#c4d5d7",
+    "#5d7969",
+    "#eaf0f1"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 250373
+  },
+  {
+   "page": 15,
+   "image": "docs/brand/brochure/page-15.jpg",
+   "headline": "",
+   "description": "Plate: a living room with floor-to-ceiling glazing onto the city, a white media unit with a large TV, turquoise upholstery and a pale sectional.",
+   "text": "",
+   "colors": [
+    "#788783",
+    "#434141",
+    "#a1b7bc",
+    "#ccced5",
+    "#97918e",
+    "#eaf0f4"
+   ],
+   "imageCount": 3,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 144747
+  },
+  {
+   "page": 16,
+   "image": "docs/brand/brochure/page-16.jpg",
+   "headline": "",
+   "description": "Plate: a study/office with a saturated yellow feature wall, a white desk and task chair, a black shelf with cameras and framed pieces.",
+   "text": "",
+   "colors": [
+    "#906d1b",
+    "#383226",
+    "#615b4d",
+    "#a99246",
+    "#c1bc9b",
+    "#967e36"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 100609
+  },
+  {
+   "page": 17,
+   "image": "docs/brand/brochure/page-17.jpg",
+   "headline": "",
+   "description": "Plate: a bedroom in soft neutrals - built-in wardrobes in pale timber, full-height curtains, an upholstered bench and a jacket on a stand.",
+   "text": "",
+   "colors": [
+    "#56482c",
+    "#c0bea5",
+    "#d0d6ca",
+    "#8d8567",
+    "#ad996b",
+    "#dee4e0"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 189863
+  },
+  {
+   "page": 18,
+   "image": "docs/brand/brochure/page-18.jpg",
+   "headline": "",
+   "description": "Plate: a white spa/wellness room - a stone-clad wall with an inset screen and pebble niche, a deeply tufted white platform, gold accents and a small sculptural table.",
+   "text": "",
+   "colors": [
+    "#8c8a83",
+    "#bbb3a2",
+    "#cbc2b0",
+    "#ab9d89",
+    "#6c6c5c",
+    "#e3d9c6"
+   ],
+   "imageCount": 2,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 108237
+  },
+  {
+   "page": 19,
+   "image": "docs/brand/brochure/page-19.jpg",
+   "headline": "",
+   "description": "Back cover: the gradient ALUZINA wordmark, the INTERIORISMO / ILUMINACIÓN lockup, the handle and phone, over a pale prism photograph. Mirrors the cover.",
+   "text": "I L U M I N A C I Ó N / @ a l u z i n a a  + 5 7 3 1 0 3 9 0 6 7 7 3",
+   "colors": [
+    "#ffffff",
+    "#f2f3f6",
+    "#c3eee0",
+    "#fafefb",
+    "#fffefe",
+    "#fffffe"
+   ],
+   "imageCount": 1,
+   "px": [
+    1400,
+    790
+   ],
+   "bytes": 19540
+  }
+ ],
+ "projects": [
+  {
+   "slug": "apartamento-parma-noham-ebresum",
+   "name": "Apartamento Parma Noham Ebresum",
+   "type": "residencial",
+   "city": null,
+   "year": null,
+   "summary": "Residential list #1. Possibly the same client as the seeded `cl-noam` / Noam Residential - unconfirmed.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "casa-nueva-york-colin-kamesh-raja",
+   "name": "Casa Nueva York Colin Kamesh Raja",
+   "type": "residencial",
+   "city": null,
+   "year": null,
+   "summary": "Residential list #2. Name embeds 'Nueva York'; a likely candidate for one of the 4 international projects - unconfirmed.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "casa-miami-ovy-on-the-drums",
+   "name": "Casa Miami Ovy on the drums",
+   "type": "residencial",
+   "city": null,
+   "year": null,
+   "summary": "Residential list #3. Name embeds 'Miami'; likely a second international project. 'Ovy on the Drums' is a Colombian music producer - unconfirmed as the client.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "apartamento-la-estrella-estela-clavel",
+   "name": "Apartamento La Estrella Estela Clavel",
+   "type": "residencial",
+   "city": null,
+   "year": null,
+   "summary": "Residential list #4. Name embeds La Estrella (Medellín metropolitan area).",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "apartamento-poblado-rio-escondido",
+   "name": "Apartamento Poblado Rio Escondido",
+   "type": "residencial",
+   "city": null,
+   "year": null,
+   "summary": "Residential list #5. Name embeds El Poblado, Medellín.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "apartamento-terrasino-cumbres",
+   "name": "Apartamento Terrasino Cumbres",
+   "type": "residencial",
+   "city": null,
+   "year": null,
+   "summary": "Residential list #6.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "parta-estudio-loma-de-los-parra",
+   "name": "Parta estudio loma de los parra",
+   "type": "residencial",
+   "city": null,
+   "year": null,
+   "summary": "Residential list #7, printed exactly so; 'Parta estudio' reads as a typo for 'Apartaestudio'. Name embeds Loma de los Parra, Medellín.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "apartamento-seta",
+   "name": "Apartamento Seta",
+   "type": "residencial",
+   "city": null,
+   "year": null,
+   "summary": "Residential list #8.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "apartaestudio-asemssi",
+   "name": "Apartaestudio Asemssi",
+   "type": "residencial",
+   "city": null,
+   "year": null,
+   "summary": "Residential list #9.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "apartamento-cubik-envigado",
+   "name": "Apartamento Cubik Envigado",
+   "type": "residencial",
+   "city": null,
+   "year": null,
+   "summary": "Residential list #10. Name embeds Envigado (Medellín metropolitan area).",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "hotel-mantyx",
+   "name": "Hotel Mantyx",
+   "type": "comercial",
+   "city": null,
+   "year": null,
+   "summary": "Commercial list #1. Listed separately from 'Mantyx' (#7), so the studio counts two Mantyx engagements.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "coassist",
+   "name": "Coassist",
+   "type": "comercial",
+   "city": null,
+   "year": null,
+   "summary": "Commercial list #2. Same client as the portfolio's Coassist insurance offices.",
+   "pages": [
+    2
+   ],
+   "relatedPortfolioSlug": "coassist-aseguradora"
+  },
+  {
+   "slug": "bebo",
+   "name": "Bebo",
+   "type": "comercial",
+   "city": null,
+   "year": null,
+   "summary": "Commercial list #3.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "sodime",
+   "name": "Sodime",
+   "type": "comercial",
+   "city": null,
+   "year": null,
+   "summary": "Commercial list #4. Same client as the portfolio's Sodime medical clinic.",
+   "pages": [
+    2
+   ],
+   "relatedPortfolioSlug": "sodime-consultorio-medico"
+  },
+  {
+   "slug": "area-metropolitana-de-medellin",
+   "name": "Área metropolitana de Medellín",
+   "type": "comercial / public sector",
+   "city": null,
+   "year": null,
+   "summary": "Commercial list #5. A public-sector authority, not a private client.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "semana-de-la-juventud",
+   "name": "Semana de la juventud",
+   "type": "comercial / event",
+   "city": null,
+   "year": null,
+   "summary": "Commercial list #6. A youth-week event, most likely tied to the Medellín city programme.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "mantyx",
+   "name": "Mantyx",
+   "type": "comercial",
+   "city": null,
+   "year": null,
+   "summary": "Commercial list #7. See also Hotel Mantyx (#1).",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "alcaldia-de-medellin",
+   "name": "Alcaldía de Medellín",
+   "type": "comercial / public sector",
+   "city": null,
+   "year": null,
+   "summary": "Commercial list #8. The Medellín city hall - public sector.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "london-city-barber-shop",
+   "name": "London City barber shop",
+   "type": "comercial / retail",
+   "city": null,
+   "year": null,
+   "summary": "Commercial list #9.",
+   "pages": [
+    2
+   ]
+  },
+  {
+   "slug": "brewhouse-cerveceria",
+   "name": "Brewhouse cervecería",
+   "type": "comercial / hospitality",
+   "city": null,
+   "year": null,
+   "summary": "Commercial list #10. Same client as the portfolio's Brew House craft-beer bar.",
+   "pages": [
+    2
+   ],
+   "relatedPortfolioSlug": "brewhouse-bar-cerveza-artesanal"
+  }
+ ]
+}
