@@ -31,6 +31,7 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 - Hub thumbnails: dark-theme variant (`thumbs/<code>-dark.jpg`) and 2x tiles for 4K once the card grid is checked at 2560 / 3840 on the live site (Sonnet 5)
 - Awaiting Justin: default language en vs es for the hub and the OS (D-004)
 - Awaiting Justin: does the public site join the OS as a P-xx module, or stay Lovable-hosted (linked)?
+- Awaiting Justin: pick the next pass from prompt 0006: step 2 export audit (Fable 5.1) or the media budget webp / downscale pass (Sonnet 5)
 
 ## Doing
 
