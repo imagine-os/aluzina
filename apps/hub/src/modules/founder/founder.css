@@ -1,0 +1,70 @@
+/* Founder portal (A-01..A-07). Layout only: tokens, no colours of its own, no fixed px widths. */
+
+.founder-page {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+/* Wide enough that a Colombian peso figure never breaks mid-number in a StatTile. */
+.founder-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Counting tiles (one per pipeline phase): short values, so they pack tighter. */
+.founder-stats--compact {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
+  gap: var(--space-3);
+}
+
+.founder-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.founder-stack {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.founder-note {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.founder-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.founder-checklist {
+  display: grid;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.founder-checklist li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: var(--target, 2.75rem);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.founder-checklist li:last-child {
+  border-bottom: 0;
+}
