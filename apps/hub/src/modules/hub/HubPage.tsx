@@ -44,6 +44,7 @@ const PRODUCT_SURFACES: SurfaceEntry[] = [
   { id: 'client', code: 'C-01', key: 'client', kind: 'route', enterAs: 'client' },
   { id: 'manual', code: 'M-01', key: 'manual', kind: 'route' },
   { id: 'docs', code: 'D-06', key: 'docs', kind: 'route', fallbackHref: `${REPO_URL}/tree/main/docs` },
+  { id: 'archive', code: 'S-12', key: 'archive', kind: 'route', enterAs: 'studio', enterUnless: 'projects.read' },
   { id: 'spaces', code: 'K-01', key: 'spaces', kind: 'static', href: '#/founder/spaces' },
   { id: 'business-os', code: 'BOS-01', key: 'businessOs', kind: 'static', href: './business-os/' },
 ];

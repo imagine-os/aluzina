@@ -1,0 +1,56 @@
+/* Tints per file family: mixes of the theme's soft tones with the surface, so both themes and the metal switch apply (tokens only). */
+.file-icon {
+  --tint-pdf: color-mix(in srgb, var(--color-danger-soft) 70%, var(--color-surface));
+  --tint-image: color-mix(in srgb, var(--color-tint-aqua) 70%, var(--color-surface));
+  --tint-vector: color-mix(in srgb, var(--color-tint-periwinkle) 70%, var(--color-surface));
+  --tint-presentation: color-mix(in srgb, var(--color-warning-soft) 70%, var(--color-surface));
+  --tint-spreadsheet: color-mix(in srgb, var(--color-success-soft) 70%, var(--color-surface));
+  --tint-document: color-mix(in srgb, var(--color-info-soft) 70%, var(--color-surface));
+  --tint-cad: color-mix(in srgb, var(--color-tint-lime) 70%, var(--color-surface));
+  --tint-model3d: color-mix(in srgb, var(--color-tint-periwinkle) 50%, var(--color-surface));
+  --tint-video: color-mix(in srgb, var(--color-accent-soft) 80%, var(--color-surface));
+  --tint-audio: color-mix(in srgb, var(--color-tint-aqua) 45%, var(--color-surface));
+  --tint-archive: color-mix(in srgb, var(--color-warning-soft) 45%, var(--color-surface));
+  --tint-folder: var(--color-surface-raised);
+  --tint-other: var(--color-surface-raised);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  color: var(--color-text);
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.file-icon svg {
+  display: block;
+  overflow: visible;
+}
+
+.file-icon__sheet {
+  fill: var(--tint-other);
+}
+
+.file-icon--sm { font-size: 1.25rem; }
+.file-icon--md { font-size: 2rem; }
+.file-icon--lg { font-size: 3.5rem; }
+
+.file-icon--pdf .file-icon__sheet { fill: var(--tint-pdf); }
+.file-icon--image .file-icon__sheet { fill: var(--tint-image); }
+.file-icon--vector .file-icon__sheet { fill: var(--tint-vector); }
+.file-icon--presentation .file-icon__sheet { fill: var(--tint-presentation); }
+.file-icon--spreadsheet .file-icon__sheet { fill: var(--tint-spreadsheet); }
+.file-icon--document .file-icon__sheet { fill: var(--tint-document); }
+.file-icon--cad .file-icon__sheet { fill: var(--tint-cad); }
+.file-icon--model3d .file-icon__sheet { fill: var(--tint-model3d); }
+.file-icon--video .file-icon__sheet { fill: var(--tint-video); }
+.file-icon--audio .file-icon__sheet { fill: var(--tint-audio); }
+.file-icon--archive .file-icon__sheet { fill: var(--tint-archive); }
+.file-icon--folder .file-icon__sheet { fill: var(--tint-folder); }
+
+/* Text marks ("PDF") take the ink colour of their tone so they stay >= 4.5:1 on the tint. */
+.file-icon--pdf { color: var(--color-danger); }
+.file-icon--spreadsheet { color: var(--color-success); }
+.file-icon--presentation { color: var(--color-warning); }
+.file-icon--document { color: var(--color-info); }

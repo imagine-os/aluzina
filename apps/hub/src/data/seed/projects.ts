@@ -71,6 +71,10 @@ export function seed({ add, users }: SeedCtx): void {
     dueDate: '2026-12-15',
     location: 'Laureles, Medellín',
     summary: 'Remodelación integral de casa de dos plantas: sala, comedor, cocina abierta y estudio; iluminación emocional en zonas sociales.',
+    tags: [],
+    coverAssetId: null,
+    year: null,
+    sourceFolderUrl: null,
   });
   add('projects', P.hoy, {
     name: 'HOY Wellness Center',
@@ -88,6 +92,10 @@ export function seed({ add, users }: SeedCtx): void {
     dueDate: '2027-02-28',
     location: 'El Poblado, Medellín',
     summary: 'Centro de bienestar: recepción, salas de terapia, zona húmeda; neurointeriorismo y escenas de luz por ritual.',
+    tags: [],
+    coverAssetId: null,
+    year: null,
+    sourceFolderUrl: null,
   });
   add('projects', P.noam, {
     name: 'Noam Residential',
@@ -105,6 +113,10 @@ export function seed({ add, users }: SeedCtx): void {
     dueDate: '2026-11-30',
     location: 'Envigado',
     summary: 'Apartamento de 210 m²: carpintería a medida, mármol en zonas húmedas, luminarias de la colección Aluzina.',
+    tags: [],
+    coverAssetId: null,
+    year: null,
+    sourceFolderUrl: null,
   });
   add('projects', P.honeyValley, {
     name: 'Honey Valley Lighting',
@@ -122,6 +134,10 @@ export function seed({ add, users }: SeedCtx): void {
     dueDate: null,
     location: 'Taller Aluzina, Medellín',
     summary: 'Familia de luminarias en latón y vidrio ámbar: colgante, aplique y lámpara de mesa; prototipos para concursos 2027.',
+    tags: [],
+    coverAssetId: null,
+    year: null,
+    sourceFolderUrl: null,
   });
   add('projects', P.provenza, {
     name: 'Café Provenza',
@@ -139,6 +155,10 @@ export function seed({ add, users }: SeedCtx): void {
     dueDate: null,
     location: 'Provenza, El Poblado',
     summary: 'Café de especialidad de 80 m²: barra, terraza y mezzanine; primera reunión de concepto pendiente.',
+    tags: [],
+    coverAssetId: null,
+    year: null,
+    sourceFolderUrl: null,
   });
   add('projects', P.rutaN, {
     name: 'Oficinas Ruta N piso 4',
@@ -156,6 +176,10 @@ export function seed({ add, users }: SeedCtx): void {
     dueDate: '2026-12-20',
     location: 'Ruta N, Medellín',
     summary: 'Oficinas abiertas para 60 personas: puestos, salas, cafetería; iluminación circadiana.',
+    tags: [],
+    coverAssetId: null,
+    year: null,
+    sourceFolderUrl: null,
   });
 
   // Sections (D-022): Asana-style groups per project; the Work views group, column and swimlane by them.

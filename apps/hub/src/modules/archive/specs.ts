@@ -1,0 +1,110 @@
+import { defineSpec, type ActionDef, type PageSpec, type Surface } from '../../specs/PageSpec';
+
+/** Widths actually captured and read back for both pages (P-01). */
+const WIDTHS = [360, 390, 768, 1280, 1920];
+
+const DATA_TABLES = ['projects', 'assets', 'relations', 'clients', 'spaces', 'filings', 'posts'];
+const ROLES = ['studio', 'founder', 'brand'];
+
+/** S-12: every control of the archive browser (P-05). Voice speaks these intents. */
+export const ARCHIVE_BROWSER_ACTIONS: ActionDef[] = [
+  { id: 'archive.filterLifecycle', label: 'Filter by lifecycle', intent: 'show only {life} projects', permission: 'projects.read', params: { life: 'enum:prospect|active|past|all' } },
+  { id: 'archive.filterYear', label: 'Filter by year', intent: 'show only projects from {year}', permission: 'projects.read', params: { year: 'string' } },
+  { id: 'archive.filterType', label: 'Filter by project type', intent: 'show only {type} projects', permission: 'projects.read', params: { type: 'enum:residential|commercial|hospitality|wellness|lighting-product|all' } },
+  { id: 'archive.filterTag', label: 'Filter by tag', intent: 'show only projects tagged {tag}', permission: 'projects.read', params: { tag: 'string' } },
+  { id: 'archive.search', label: 'Search the archive', intent: 'find archived projects matching {q}', permission: 'projects.read', params: { q: 'string' } },
+  { id: 'archive.setView', label: 'Switch view', intent: 'show the archive as {view}', permission: 'projects.read', params: { view: 'enum:cards|table' } },
+  { id: 'archive.openProject', label: 'Open a project', intent: 'open the portal view of the project {project}', permission: 'projects.read', params: { project: 'id' } },
+  { id: 'archive.toggleInSet', label: 'Add or remove from the portfolio set', intent: 'put the project {project} in the portfolio set', permission: 'projects.read', params: { project: 'id' } },
+  { id: 'archive.copySet', label: 'Copy the portfolio set', intent: 'copy the portfolio set as a list', permission: 'projects.read' },
+  { id: 'archive.clearSet', label: 'Clear the portfolio set', intent: 'clear the portfolio set', permission: 'projects.read' },
+  { id: 'archive.exportSet', label: 'Export the portfolio set', intent: 'export the portfolio set as a PDF', permission: 'projects.read' },
+  { id: 'archive.importFolder', label: 'Import a folder', intent: 'import a Dropbox or Drive folder into the archive', permission: 'projects.read' },
+];
+
+/** S-13: every control of the project portal view (P-05). */
+export const ARCHIVE_PORTAL_ACTIONS: ActionDef[] = [
+  { id: 'archive.openFile', label: 'Preview a file', intent: 'preview the file {asset}', permission: 'projects.read', params: { asset: 'id' } },
+  { id: 'archive.closeFile', label: 'Close the preview', intent: 'close the file preview', permission: 'projects.read' },
+  { id: 'archive.nextFile', label: 'Next file', intent: 'show the next file', permission: 'projects.read' },
+  { id: 'archive.prevFile', label: 'Previous file', intent: 'show the previous file', permission: 'projects.read' },
+  { id: 'archive.previewPage', label: 'Go to a page', intent: 'go to page {page} of the open file', permission: 'projects.read', params: { page: 'number' } },
+  { id: 'archive.filterStage', label: 'Filter by stage', intent: 'show only the files of the stage {stage}', permission: 'projects.read', params: { stage: 'string' } },
+  { id: 'archive.filterFileType', label: 'Filter by file type', intent: 'show only {type} files', permission: 'projects.read', params: { type: 'string' } },
+  { id: 'archive.searchFiles', label: 'Search the files', intent: 'find files matching {q}', permission: 'projects.read', params: { q: 'string' } },
+  { id: 'archive.setFilesView', label: 'Switch the file view', intent: 'show the files as a {view}', permission: 'projects.read', params: { view: 'enum:grid|list' } },
+  { id: 'archive.setGrouping', label: 'Switch the grouping', intent: 'group the files {mode}', permission: 'projects.read', params: { mode: 'enum:stage|folder' } },
+  { id: 'archive.openSource', label: 'Open a file at the source', intent: 'open the file {asset} in Dropbox', permission: 'projects.read', params: { asset: 'id' } },
+  { id: 'archive.downloadFile', label: 'Download a file', intent: 'download the file {asset}', permission: 'projects.read', params: { asset: 'id' } },
+  { id: 'archive.copyFileLink', label: 'Copy a file link', intent: 'copy the link to the file {asset}', permission: 'projects.read', params: { asset: 'id' } },
+  { id: 'archive.openFolderSource', label: 'Open the source folder', intent: 'open the source folder of this project', permission: 'projects.read' },
+  { id: 'archive.tagFile', label: 'Tag a file', intent: 'tag the file {asset} with {tag}', permission: 'assets.manage', params: { asset: 'id', tag: 'string' } },
+  { id: 'archive.addToSet', label: 'Add this project to the set', intent: 'add this project to the portfolio set', permission: 'projects.read' },
+];
+
+const BROWSER_LOGIC = [
+  'Every project is listed, not only the archived ones: lifecycle tabs (Prospects / In progress / Past / All) come from `lifecycleOf(project.pipelineStatus)`, so "sometimes we want to see everything" is one click and the default is All.',
+  'Filters live in the query string (`?life=&year=&type=&tag=&q=&view=&set=`), so any view is a link a person can paste and an intent voice can address; the actions write the same params.',
+  'A card cover is the project `coverAssetId` thumbnail when there is one; otherwise a 2x2 mosaic of `FileIcon`s for the four most common file types in the project, so a project without photography still reads as itself.',
+  'The portfolio set is a list of project ids in `localStorage["aluzina.archive.set"]`, shared by S-12 and S-13; "Copy list" writes name, year, client and source link per line through `copyText`.',
+  'File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card.',
+];
+
+const PORTAL_LOGIC = [
+  'The delivery order rail is `DELIVERY_STAGES` in `order`, sub-headed by `pipelineGroup`; each stage button carries its file count and filters the sections below. Arrow keys move along the rail (roving tabindex), Home / End jump to the ends.',
+  'Files are grouped two ways (`?group=stage|folder`): by delivery stage (`stageFor`) in pipeline order, or by the studio\'s own numbered folders sorted with `folderOrderKey` and labelled with `folderLabel`, which is the "documents in order" view. Empty numbered folders still render, muted, in the folder view so the structure is complete.',
+  'The preview Drawer holds one asset at a time (`?file=<assetId>`), with Previous / Next walking the currently filtered, sorted file list, and `page` state driving the `DocumentViewer`. When nothing is previewable the viewer renders its sentence and type icon, never a blank frame.',
+  'Related is three reverse queries: the client through `relations` `for-client`, the Spaces post through `spaces.aboutId` and its `filings`, and up to six other projects sharing at least two tags — the "sets of related examples" the studio shows a client.',
+  'Nothing is written this pass except the localStorage set; tagging a file is a declared Placeholder (D-047) because `assets.tags` has no editor yet.',
+];
+
+const BROWSER_COMPONENTS = ['PageHeader', 'StatTile', 'FilterBar', 'SearchField', 'Select', 'ToggleButton', 'Checkbox', 'Card', 'Thumb', 'FileIcon', 'Badge', 'StatusPill', 'Button', 'DataTable', 'EmptyState', 'Placeholder', 'Skeleton'];
+const PORTAL_COMPONENTS = ['PageHeader', 'Card', 'Thumb', 'FileIcon', 'DocumentViewer', 'Drawer', 'FilterBar', 'SearchField', 'Select', 'ToggleButton', 'Badge', 'StatusPill', 'Button', 'EmptyState', 'Placeholder', 'Skeleton'];
+
+export function archiveBrowserSpec(surface: Surface): PageSpec {
+  return defineSpec({
+    code: 'S-12',
+    name: 'Project archive',
+    purpose: 'One browser over every project the studio has ever had — past work, work in progress and prospects — with covers, thumbnails, tags and file counts, so Alejandra can review past work while building a portfolio or assemble a set of related examples for a specific client.',
+    surface,
+    navGroup: 'projects',
+    layout: [
+      'PageHeader (code, title, counts, breadcrumb) with "Portfolio set" toggle and a Placeholder "Import folder"',
+      'StatTile row: Prospects / In progress / Past / All, each a button that sets the lifecycle filter',
+      'FilterBar: search, year, type, tag, sort, and a Cards | Table ToggleButton',
+      'Cards grid (Thumb cover or FileIcon mosaic, name, client, year, StatusPill, Badges, file count) or DataTable with the same columns',
+      'EmptyState when nothing matches',
+      'Sticky portfolio-set bar: count, Copy list, Open in Spaces (Placeholder), Export PDF (Placeholder), Clear',
+    ],
+    dataTables: DATA_TABLES,
+    roles: ROLES,
+    logic: BROWSER_LOGIC,
+    components: BROWSER_COMPONENTS,
+    actions: ARCHIVE_BROWSER_ACTIONS,
+    checkedAt: WIDTHS,
+  });
+}
+
+export function archivePortalSpec(surface: Surface): PageSpec {
+  return defineSpec({
+    code: 'S-13',
+    name: 'Project portal view',
+    purpose: 'Everything about one archived project on a single page: the hero with its cover and source folder, the delivery order as a stage rail, every file previewable in place grouped by stage or by the studio\'s numbered folders, and what the project is related to.',
+    surface,
+    layout: [
+      'PageHeader with breadcrumb (portal / Archive / project)',
+      'Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle and tag Badges, Open in Dropbox / Open in Work / Open space / Add to set',
+      'Delivery order: a stage rail from DELIVERY_STAGES grouped by pipelineGroup, each stage a button with glyph, label and file count',
+      'Files toolbar: search, stage, file type, grid | list, By stage | By folder, Placeholder "Tag file"',
+      'Files by stage (or by numbered folder), each file a Thumb button that opens the preview',
+      'Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file',
+      'Related: client card, the Spaces post about the project, up to six projects sharing two or more tags',
+    ],
+    dataTables: DATA_TABLES,
+    roles: ROLES,
+    logic: PORTAL_LOGIC,
+    components: PORTAL_COMPONENTS,
+    actions: ARCHIVE_PORTAL_ACTIONS,
+    checkedAt: WIDTHS,
+  });
+}

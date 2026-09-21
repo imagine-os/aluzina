@@ -1,7 +1,7 @@
 {
-  "version": "0.10.0",
+  "version": "0.11.0",
   "updatedAt": "2026-09-21",
-  "source": "docs/build-plan.md (steps 0-13, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
+  "source": "docs/build-plan.md (steps 0-14, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
     "done",
     "doing",
@@ -1221,6 +1221,255 @@
         "step-12"
       ],
       "changelog": "0017"
+    },
+    {
+      "id": "ar-01",
+      "title": "Dropbox inventory crawl: depth-1 listing of every project folder in the four share links (scripts/archive/crawl-dropbox.mjs)",
+      "step": "14",
+      "status": "done",
+      "model": "Sonnet 5",
+      "codes": [
+        "S-12"
+      ],
+      "dependsOn": [],
+      "changelog": "0019"
+    },
+    {
+      "id": "ar-02",
+      "title": "Featured project deep crawl + renders: JOE GALLINA INTERIOR, 179 files, thumbnails and page renders of the design deliverables",
+      "step": "14",
+      "status": "done",
+      "model": "Sonnet 5",
+      "codes": [
+        "S-13"
+      ],
+      "dependsOn": [
+        "ar-01"
+      ],
+      "changelog": "0019"
+    },
+    {
+      "id": "ar-03",
+      "title": "Shared code: assets.kind file + archive fields, projects tags / cover / year, domain/archive.ts, FileIcon / Thumb / DocumentViewer, seed/archive.ts",
+      "step": "14",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "D-02"
+      ],
+      "dependsOn": [],
+      "changelog": "0019"
+    },
+    {
+      "id": "ar-04",
+      "title": "Archive module S-12 browser (prospects / in progress / past / all, portfolio set) and S-13 project portal (by stage / by folder, drawer preview) on studio, founder, brand",
+      "step": "14",
+      "status": "done",
+      "model": "Opus 5",
+      "codes": [
+        "S-12",
+        "S-13"
+      ],
+      "dependsOn": [
+        "ar-03"
+      ],
+      "changelog": "0019"
+    },
+    {
+      "id": "ar-05",
+      "title": "Integration: build-index with D-059 redaction, served renders, seed rules (quotes as prospects), hub card, docs, decisions D-055..D-061",
+      "step": "14",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "S-12",
+        "S-13",
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "ar-01",
+        "ar-02",
+        "ar-03",
+        "ar-04"
+      ],
+      "changelog": "0019"
+    },
+    {
+      "id": "ar-06",
+      "title": "Deep index + previews for every 2026 project (crawl depth full, render allow-listed design files, serve)",
+      "step": "14",
+      "status": "next",
+      "model": "Sonnet 5",
+      "codes": [
+        "S-13"
+      ],
+      "dependsOn": [
+        "ar-05"
+      ]
+    },
+    {
+      "id": "ar-07",
+      "title": "Deep index for the 2020-2025 projects, one batch per year folder",
+      "step": "14",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "S-13"
+      ],
+      "dependsOn": [
+        "ar-06"
+      ]
+    },
+    {
+      "id": "ar-08",
+      "title": "Founder confirmation of inferred type / status / client / year per project (changelog 0019 section H), then seed fix",
+      "step": "14",
+      "status": "next",
+      "model": "Fable 5.1 + founder",
+      "codes": [
+        "S-12"
+      ],
+      "dependsOn": [
+        "ar-05"
+      ],
+      "owner": "founder"
+    },
+    {
+      "id": "ar-09",
+      "title": "Tag editing and cover picking in the product: archive.tagFile and archive.setCover write path through the provider (assets.manage)",
+      "step": "14",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "S-13"
+      ],
+      "dependsOn": [
+        "ar-05"
+      ]
+    },
+    {
+      "id": "ar-10",
+      "title": "Portfolio sets as Spaces collections (archive.openSetInSpaces) + Export PDF via the documents module R3",
+      "step": "14",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "S-12",
+        "K-02"
+      ],
+      "dependsOn": [
+        "ar-09",
+        "R3"
+      ]
+    },
+    {
+      "id": "ar-11",
+      "title": "Icon system: SVG icon set replacing the Unicode nav glyphs, entity icons, Thumb on hub cards / Spaces / catalog",
+      "step": "14",
+      "status": "next",
+      "model": "Fable 5.1 (design), Opus 5 (build)",
+      "codes": [
+        "HUB-01",
+        "K-01",
+        "K-05"
+      ],
+      "dependsOn": [
+        "ar-05"
+      ]
+    },
+    {
+      "id": "ar-12",
+      "title": "File storage seam put(file) -> url + Supabase storage + auth gate before any personal document is served (lifts D-059)",
+      "step": "14",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "S-13",
+        "O-13",
+        "G-08"
+      ],
+      "dependsOn": [
+        "step-11"
+      ]
+    },
+    {
+      "id": "ar-13",
+      "title": "Dropbox API connector behind the R9 integrations seam, replacing the headless crawl (mapper from API listing to docs/archive/*.json)",
+      "step": "14",
+      "status": "backlog",
+      "model": "Fable 5.1 (seam), Sonnet 5 (mapper)",
+      "codes": [
+        "S-12"
+      ],
+      "dependsOn": [
+        "R9"
+      ]
+    },
+    {
+      "id": "ar-14",
+      "title": "Client-facing example set page P-06: share a curated set of past projects by link",
+      "step": "14",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "P-06"
+      ],
+      "dependsOn": [
+        "ar-10"
+      ]
+    },
+    {
+      "id": "ar-15",
+      "title": "Intake of \"00 INFORMACION RELEVANTE ALUZINA 2023\" (price lists, catalogues, presentations) as company assets on G-08",
+      "step": "14",
+      "status": "next",
+      "model": "Sonnet 5",
+      "codes": [
+        "G-08"
+      ],
+      "dependsOn": [
+        "ar-05"
+      ]
+    },
+    {
+      "id": "ar-16",
+      "title": "Retry the unlisted folders and re-crawl the empty folders later (SANTIAGO AGUIRRE ILUMINACION root, 15 empty folders)",
+      "step": "14",
+      "status": "next",
+      "model": "Sonnet 5",
+      "codes": [
+        "S-12"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "ar-17",
+      "title": "Migrate G-08 DocFrame to DocumentViewer; Thumb in the K-05 catalog and on Spaces file posts",
+      "step": "14",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "G-08",
+        "K-05",
+        "K-03"
+      ],
+      "dependsOn": [
+        "ar-03"
+      ]
+    },
+    {
+      "id": "ar-18",
+      "title": "QA at 2560 / 3840 + dark theme for S-12 / S-13, Spanish review with the founder",
+      "step": "14",
+      "status": "next",
+      "model": "Sonnet 5",
+      "codes": [
+        "S-12",
+        "S-13"
+      ],
+      "dependsOn": [
+        "ar-05"
+      ]
     }
   ]
 }

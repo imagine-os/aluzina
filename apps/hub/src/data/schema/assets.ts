@@ -1,3 +1,4 @@
+import type { DeliveryStage } from '../../domain/archive';
 import type { BaseRow, Id, ISODate } from './base';
 
 /**
@@ -7,9 +8,18 @@ import type { BaseRow, Id, ISODate } from './base';
  * renders in `docs/brand/<doc>/page-NN.jpg` (`repoPath`, not served by the app, so `url` is null) and say
  * which document they belong to (`parentId`). Seeds derive every row from `docs/brand/<doc>/index.json`
  * through the `@docs` alias, so the repo's visual memory stays the single source (`seed/assets.ts`).
+ *
+ * A `file` (prompt 0017, S-12, D-055 pending) is a file kept in an external archive (Dropbox today) or in the
+ * repo whose role in the project is given by `stage` (`domain/archive.ts`); `fileTypeOf(ext)` gives its icon.
+ * `source` says where it lives, `sourceUrl` opens it there, `folderPath` keeps the original folder names
+ * verbatim, and `thumbnailUrl` / `previewUrls` point at served renders when the crawler produced them.
  */
-export type AssetKind = 'document' | 'page' | 'image' | 'logo' | 'texture';
-export const ASSET_KINDS: readonly AssetKind[] = ['document', 'page', 'image', 'logo', 'texture'];
+export type AssetKind = 'document' | 'page' | 'image' | 'logo' | 'texture' | 'file';
+export const ASSET_KINDS: readonly AssetKind[] = ['document', 'page', 'image', 'logo', 'texture', 'file'];
+
+/** Where a file lives today: served from the repo, or at the platform it was shared from. */
+export type AssetSource = 'repo' | 'slack' | 'dropbox' | 'drive';
+export const ASSET_SOURCES: readonly AssetSource[] = ['repo', 'slack', 'dropbox', 'drive'];
 
 export type AssetStatus = 'current' | 'superseded' | 'draft';
 
@@ -47,4 +57,18 @@ export interface Asset extends BaseRow {
   status: AssetStatus;
   /** The asset this one replaces (a re-exported PDF supersedes the previous row); null otherwise. */
   supersedesId: Id | null;
+  /** Where the file lives today (`repo` for served docs and pages); null when unknown. */
+  source: AssetSource | null;
+  /** The share link that opens the file at the source (the Dropbox href); null when it only exists in the repo. */
+  sourceUrl: string | null;
+  /** Path inside the source folder, `/`-separated, original names, without the file name; `''` at the root; null when not from a folder. */
+  folderPath: string | null;
+  /** Served thumbnail (`./archive/<project>/thumbs/<slug>.jpg`) or null. */
+  thumbnailUrl: string | null;
+  /** Served page renders for the in-app preview (`./archive/<project>/pages/<slug>-page-01.jpg`, …); `[]` when none. */
+  previewUrls: string[];
+  /** Position in the delivery order (`domain/archive.ts`); null when the file has no place in it. */
+  stage: DeliveryStage | null;
+  /** The year the file belongs to (the project's year folder); null when unknown. */
+  year: number | null;
 }

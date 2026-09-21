@@ -262,6 +262,10 @@ export function LeadsPage() {
       dueDate: null,
       location: lead.city,
       summary: lead.notes,
+      tags: [],
+      coverAssetId: null,
+      year: null,
+      sourceFolderUrl: null,
     });
     await data.create('engagements', {
       projectId: project.id,

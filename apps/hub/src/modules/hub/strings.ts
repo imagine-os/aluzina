@@ -97,6 +97,11 @@ export const strings: StringTable = {
     en: 'the repository docs in the app: principles, brief, build plan, decisions, kanban, prompts, changelog, knowledge base and page docs',
     es: 'la documentación del repositorio dentro de la app: principios, brief, plan de construcción, decisiones, kanban, prompts, changelog, base de conocimiento y fichas de página',
   },
+  'hub.cards.archive.title': { en: 'Project archive', es: 'Archivo de proyectos' },
+  'hub.cards.archive.desc': {
+    en: "every project folder of the studio's Dropbox, 2019 to 2026, browsable as prospects, in progress and past, with previews of the design deliverables",
+    es: 'todas las carpetas de proyecto del Dropbox del estudio, 2019 a 2026, navegables como prospectos, en curso y pasados, con vista previa de los entregables de diseño',
+  },
   'hub.cards.spaces.title': { en: 'Spaces', es: 'Espacios' },
   'hub.cards.spaces.desc': {
     en: 'The Hub\'s own organizer replacing the Slack sidebar: spaces without depth limit, posts filed in many places at once, relations between anything, a graph and the catalogs (deliverables, clients, tools, roles).',

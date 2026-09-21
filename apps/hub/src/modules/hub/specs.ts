@@ -1,7 +1,7 @@
 import { defineSpec } from '../../specs/PageSpec';
 
 /** Product surfaces and builder tools on the hub (pass 0013): each card names a page code and is live when a built route with that code exists. */
-export const SURFACE_IDS = ['website', 'services', 'brand-docs', 'client', 'manual', 'docs', 'spaces', 'business-os', 'design', 'plan', 'canvas', 'simulator', 'actions', 'tokens', 'testing', 'components', 'specs', 'multiuser'] as const;
+export const SURFACE_IDS = ['website', 'services', 'brand-docs', 'client', 'manual', 'docs', 'archive', 'spaces', 'business-os', 'design', 'plan', 'canvas', 'simulator', 'actions', 'tokens', 'testing', 'components', 'specs', 'multiuser'] as const;
 export type SurfaceId = (typeof SURFACE_IDS)[number];
 
 /** Pages of the Claude Design export served under ./business-os/ (BOS-02..BOS-06, D-010). */

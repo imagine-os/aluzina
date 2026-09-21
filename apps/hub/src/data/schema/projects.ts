@@ -26,6 +26,14 @@ export interface Project extends BaseRow {
   dueDate: ISODate | null;
   location: string;
   summary: string;
+  /** Free tags (`tags` registry names): `archive`, `dropbox`, the year, the type in Spanish (prompt 0017). `[]` for live projects. */
+  tags: string[];
+  /** The asset shown as the project's cover (an image or a PDF with a thumbnail); null when none. */
+  coverAssetId: Id | null;
+  /** The year the project belongs to (its year folder); null when unknown or when the folder is a range (2019-2023). */
+  year: number | null;
+  /** The shared folder the project's files live in at the source (Dropbox); null for projects born in the hub. */
+  sourceFolderUrl: string | null;
 }
 
 export type TaskStatus = 'todo' | 'doing' | 'blocked' | 'done';

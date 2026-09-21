@@ -1,0 +1,73 @@
+.thumb {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  min-width: 0;
+  width: 100%;
+}
+
+.thumb__box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+}
+
+.thumb--ratio-16x9 .thumb__box { aspect-ratio: 16 / 9; }
+.thumb--ratio-1x1 .thumb__box { aspect-ratio: 1 / 1; }
+.thumb--ratio-3x4 .thumb__box { aspect-ratio: 3 / 4; }
+
+.thumb__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb__fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-metal-soft);
+}
+
+.thumb__badge {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  padding: 0.125rem var(--space-2);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.6;
+  backdrop-filter: blur(4px);
+}
+
+.thumb__caption {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text);
+  font-size: 0.9375rem;
+  line-height: 1.35;
+}
+
+.thumb--sm .thumb__caption { font-size: 0.8125rem; }
+.thumb--lg .thumb__caption { font-size: 1.0625rem; }
+
+/* Large screens seen from far away (P-01): captions and badges scale up with the page. */
+@media (min-width: 2560px) {
+  .thumb__caption { font-size: 1.125rem; }
+  .thumb__badge { font-size: 0.875rem; }
+}

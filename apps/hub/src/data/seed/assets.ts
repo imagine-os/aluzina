@@ -164,13 +164,22 @@ export function seed({ add, users }: SeedCtx): void {
   const pageById = new Map<string, BrandPage>();
   for (const d of docs) {
     const lang = d.index.language === 'es' || d.index.language === 'en' ? d.index.language : null;
-    const base: Pick<AssetRow, 'sourceFileId' | 'sourceName' | 'publishedAt' | 'language' | 'status' | 'supersedesId'> = {
+    // Archive fields (prompt 0017): both PDFs live in the repo and are served; their page renders are in the repo
+    // but not served (thumbnailUrl stays null); as marketing material they sit at the `marketing` stage.
+    const base: Pick<AssetRow, 'sourceFileId' | 'sourceName' | 'publishedAt' | 'language' | 'status' | 'supersedesId' | 'source' | 'sourceUrl' | 'folderPath' | 'thumbnailUrl' | 'previewUrls' | 'stage' | 'year'> = {
       sourceFileId: d.index.slackFileId,
       sourceName: d.index.sourceOriginalName,
       publishedAt: null,
       language: lang,
       status: 'current',
       supersedesId: null,
+      source: 'repo',
+      sourceUrl: null,
+      folderPath: null,
+      thumbnailUrl: null,
+      previewUrls: [],
+      stage: 'marketing',
+      year: null,
     };
     add('assets', d.id, {
       ...base,
@@ -256,6 +265,10 @@ export function seed({ add, users }: SeedCtx): void {
       dueDate: null,
       location: prj.city ?? meta.location,
       summary: `${prj.summary} (Portafolio ${pageLabel}; tipo publicado: ${prj.type}.)`,
+      tags: ['portfolio'],
+      coverAssetId: null,
+      year: prj.year,
+      sourceFolderUrl: null,
     });
 
     if (meta.client) {

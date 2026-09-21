@@ -75,6 +75,8 @@ const SURFACES = [
   { code: 'O-11', path: '?as=ops#/ops/change-orders', wait: '.dshell__main' },
   { code: 'S-10', path: '?as=studio#/studio/checklist', wait: '.dshell__main' },
   { code: 'S-11', path: '?as=studio#/studio/revisions', wait: '.dshell__main' },
+  { code: 'S-12', path: '?as=studio#/studio/archive', wait: '.dshell__main' },
+  { code: 'S-13', path: '?as=studio#/studio/archive/prj-ar-joe-gallina-interior', wait: '.dshell__main' },
   // K-04 opens its 3D view first; SwiftShader (launch args below) renders it headless, and the page falls back to the 2D graph without WebGL.
   { code: 'K-04', path: '?as=founder#/founder/spaces/graph', wait: '.dshell__main' },
   { code: 'P-00', url: 'https://aluzinaa.com/', external: true, wait: 'body' },
