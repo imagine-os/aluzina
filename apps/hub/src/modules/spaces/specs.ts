@@ -37,6 +37,10 @@ const POST_ACTIONS: ActionDef[] = [
 ];
 
 const GRAPH_ACTIONS: ActionDef[] = [
+  { id: 'spaces.switchGraphView', label: 'Switch graph view', intent: 'show the graph as {view}', permission: 'spaces.read', params: { view: 'enum:objects3d|lanes|radial|map|force2d' } },
+  { id: 'spaces.autoRotate', label: 'Auto-rotate', intent: 'start or stop turning the 3D graph', permission: 'spaces.read' },
+  { id: 'spaces.resetCamera', label: 'Reset view', intent: 'reset the graph camera', permission: 'spaces.read' },
+  { id: 'spaces.showAllNodes', label: 'Show all nodes', intent: 'draw every node instead of the closest ones', permission: 'spaces.read' },
   { id: 'spaces.focusGraph', label: 'Focus node', intent: 'centre the graph on {node}', permission: 'spaces.read', params: { node: 'string' } },
   { id: 'spaces.setDepth', label: 'Set depth', intent: 'show {depth} hops around the focus', permission: 'spaces.read', params: { depth: 'enum:1|2|3|all' } },
   { id: 'spaces.filterGraphKind', label: 'Toggle kind', intent: 'show or hide {kind} nodes in the graph', permission: 'spaces.read', params: { kind: 'enum:area|topic|role|client|deliverable|tool|project|archive|post|other' } },
@@ -130,17 +134,21 @@ export function graphSpec(surface: Surface): PageSpec {
     purpose: 'The same spaces, posts and relations as a graph: pick a focus node and a depth, filter by kind, zoom with buttons, open anything with a click or Enter; the picture of "this belongs in more than one place".',
     surface,
     navGroup: 'spaces',
-    layout: ['PageHeader', 'Controls: focus Select (spaces and posts), depth Select (1 / 2 / 3 / all), kind ToggleButtons, show archived, zoom − / + / fit', 'RelationGraph (scrolls inside its container)', 'Legend (node tones, edge styles) and counts'],
+    layout: ['PageHeader', 'Tabs: 3D objects (default), Lanes skill tree, Radial tree, Objects map, Force 2D', 'Controls: focus Select (spaces and posts), depth Select (1 / 2 / 3 / all), camera − / + / fit / reset (+ auto-rotate in 3D), show archived, show all nodes', 'Kind ToggleButtons', 'The chosen view (the 3D one is lazy-loaded behind a Skeleton)', 'Legend (node tones, edge styles, what the pictures are) and counts'],
     dataTables: ['spaces', 'posts', 'filings', 'relations', 'projects', 'tasks', 'documents', 'clients', 'deliverables', 'tools', 'competitions', 'brandAssets', 'presentations'],
     logic: [
       'Nodes: spaces (tone by kind, areas larger), posts, and any other entity a relation points at (dashed "other" nodes labelled with their type). Edges: child (tree), filed (dashed accent), relation (arrow, titled with the kind).',
       'Focus + depth is a breadth-first cut around the focus node over the visible edges; kind filters apply before the cut; `?focus=<type>:<id>` and `?depth=` in the hash query make a view addressable (P-06).',
-      'Layout is the organism\'s own deterministic force simulation (no dependency, ~10 kB; D-026): same input, same picture.',
-      'Zoom is 0.5..3 in steps through buttons (never wheel-only); "fit" matches the container width; the SVG scrolls inside `.rgraph`, the page never scrolls horizontally.',
+      'Five views over the same graph data (prompt 0012, rebuilt on the imagine-os graph gallery): 3D objects (three.js, the default), Lanes skill tree, Radial tree, Objects map and the dependency-free Force 2D `RelationGraph`. The choice lives in localStorage `aluzina.graphView`; every layout is deterministic, so the same input is the same picture.',
+      'Nodes carry system imagery, never bare dots: initials for people and roles, the deploy-time page thumbnail `./thumbs/<code>.jpg` for anything that opens a hub page (with the hub\'s bilingual fallback tile), the space glyph, the post-kind glyph or the catalog glyph for the rest.',
+      'The 3D view is `React.lazy`, so three.js only downloads when someone opens it; it falls back to Force 2D when WebGL is missing or the system asks for reduced motion (with a "show 3D anyway" toggle), pauses its render loop when the tab is hidden and disposes every GPU resource on unmount.',
+      'Rendering is capped at the 140 nodes closest to the focus unless "Show all" is on; depth stays 2 by default.',
+      'Zoom, fit, reset and auto-rotate are buttons driving the view\'s imperative handle (never wheel-only, never drag-only); drag and pinch are extras. Every node is reachable by keyboard through one roving-tabindex overlay: arrows walk neighbours, Enter opens, Space re-centres, Home returns to the focus, and the camera follows the highlighted node.',
     ],
-    components: ['PageHeader', 'Select', 'ToggleButton', 'Checkbox', 'Button', 'RelationGraph', 'Badge', 'EmptyState'],
+    components: ['PageHeader', 'Tabs', 'Select', 'ToggleButton', 'Checkbox', 'Button', 'Skeleton', 'GraphViews', 'RelationGraph', 'Badge', 'EmptyState'],
     actions: GRAPH_ACTIONS,
     ...COMMON,
+    checkedAt: [390, 1280, 1920, 2560],
   });
 }
 

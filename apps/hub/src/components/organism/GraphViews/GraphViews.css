@@ -1,0 +1,104 @@
+/* GraphViews (K-04): the shared chrome of the gallery views. Tokens only, light and dark, 360 -> 3840. */
+
+.gview {
+  position: relative;
+  width: 100%;
+  height: clamp(26rem, 66vh, 54rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+  touch-action: none; /* the drawing pans and pinches; the page scrolls around it */
+}
+
+.gview__svg,
+.gview__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- edges ---- */
+.gview__edge { fill: none; stroke: var(--color-border); stroke-width: 1.5; }
+.gview__edge--child { stroke: var(--color-text-muted); stroke-width: 2; opacity: 0.55; }
+.gview__edge--filed { stroke: var(--color-accent); stroke-dasharray: 6 5; opacity: 0.7; }
+.gview__edge--relation { stroke: var(--color-text-muted); opacity: 0.6; }
+.gview__edge--hot { opacity: 1; stroke-width: 3; }
+.gview__arrowhead { fill: var(--color-text-muted); }
+
+/* ---- lane bands, rings, clusters ---- */
+.glane__band { fill: var(--color-surface-raised); opacity: 0.55; }
+.glane--odd .glane__band { opacity: 0.25; }
+.glane__label { fill: var(--color-text-muted); font-size: 18px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.glane__col { fill: var(--color-text-muted); font-size: 16px; }
+
+.gring__circle { fill: none; stroke: var(--color-border); stroke-dasharray: 3 7; }
+.gring__label { fill: var(--color-text-muted); font-size: 16px; }
+
+.gcluster__frame { fill: var(--color-surface-raised); stroke: var(--color-border); opacity: 0.8; }
+.gcluster__label { fill: var(--color-text-muted); font-size: 18px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* ---- node tiles ---- */
+.gtile__frame { fill: var(--color-surface); stroke: var(--color-text-muted); stroke-width: 2; }
+.gtile--area .gtile__frame { stroke: var(--color-primary); }
+.gtile--topic .gtile__frame,
+.gtile--project .gtile__frame { stroke: var(--color-accent); }
+.gtile--role .gtile__frame { stroke: var(--color-success); }
+.gtile--client .gtile__frame { stroke: var(--color-warning); }
+.gtile--deliverable .gtile__frame { stroke: var(--color-danger); }
+.gtile--post .gtile__frame { stroke: var(--color-accent); stroke-dasharray: 5 4; }
+.gtile--other .gtile__frame { stroke: var(--color-text-muted); stroke-dasharray: 3 4; }
+.gtile--archive .gtile__frame { stroke: var(--color-border); }
+
+.gtile__ring { fill: none; stroke: var(--color-accent); stroke-width: 3; }
+.gtile--active .gtile__frame { stroke-width: 3.5; }
+.gtile__avatar { fill: var(--color-accent-soft); }
+.gtile__initials { fill: var(--color-text); font-size: 20px; font-weight: 700; }
+.gtile__glyph { fill: var(--color-text); }
+.gtile__code { fill: var(--color-text-muted); font-size: 11px; }
+.gtile__label { fill: var(--color-text); font-size: 15px; font-weight: 600; paint-order: stroke; stroke: var(--color-surface); stroke-width: 4px; stroke-linejoin: round; }
+.gtile__sub { fill: var(--color-text-muted); font-size: 13px; paint-order: stroke; stroke: var(--color-surface); stroke-width: 4px; stroke-linejoin: round; }
+
+/* ---- interaction overlay: the one tab stop, the tap targets and the card ---- */
+.gview__layer { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
+.gview__layer-item { position: absolute; top: 0; left: 0; }
+.gview__hit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.gview__hit--focus { box-shadow: inset 0 0 0 2px var(--color-accent); }
+.gview__hit--active { box-shadow: inset 0 0 0 2px var(--color-text-muted); }
+.gview__hit:hover { background: color-mix(in srgb, var(--color-accent) 14%, transparent); }
+
+.gview__tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 1.75rem 0 0 0.5rem;
+  max-width: 18rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  pointer-events: none;
+  display: grid;
+  gap: 0.125rem;
+  z-index: 2;
+}
+.gview__tip-sub,
+.gview__tip-meta { color: var(--color-text-muted); }
+
+@media (min-width: 2560px) {
+  .gview { height: clamp(32rem, 64vh, 70rem); }
+}

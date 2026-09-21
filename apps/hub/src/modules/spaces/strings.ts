@@ -137,6 +137,7 @@ export const strings: StringTable = {
   'spaces.relation.produced-by': { en: 'produced by', es: 'producido por' },
   'spaces.relation.for-client': { en: 'for client', es: 'para el cliente' },
   'spaces.relation.owned-by': { en: 'owned by', es: 'a cargo de' },
+  'spaces.relation.depicts': { en: 'depicts', es: 'muestra' },
 
   'spaces.type.spaces': { en: 'Space', es: 'Espacio' },
   'spaces.type.posts': { en: 'Post', es: 'Publicación' },
@@ -151,6 +152,8 @@ export const strings: StringTable = {
   'spaces.type.competitions': { en: 'Competition', es: 'Concurso' },
   'spaces.type.brandAssets': { en: 'Brand asset', es: 'Activo de marca' },
   'spaces.type.presentations': { en: 'Presentation', es: 'Presentación' },
+  'spaces.type.assets': { en: 'Asset', es: 'Archivo' },
+  'spaces.type.services': { en: 'Service', es: 'Servicio' },
 
   // K-04
   'spaces.graph': { en: 'Graph', es: 'Grafo' },
@@ -175,6 +178,30 @@ export const strings: StringTable = {
   'spaces.edge.child': { en: 'inside (tree)', es: 'dentro de (árbol)' },
   'spaces.edge.filed': { en: 'filed in', es: 'archivado en' },
   'spaces.edge.relation': { en: 'relation (arrow)', es: 'relación (flecha)' },
+  // K-04 gallery views (prompt 0012)
+  'spaces.graph.view': { en: 'Graph view', es: 'Vista del grafo' },
+  'spaces.graph.view.objects3d': { en: '3D objects', es: 'Objetos 3D' },
+  'spaces.graph.view.lanes': { en: 'Lanes skill tree', es: 'Carriles' },
+  'spaces.graph.view.radial': { en: 'Radial tree', es: 'Árbol radial' },
+  'spaces.graph.view.map': { en: 'Objects map', es: 'Mapa de objetos' },
+  'spaces.graph.view.force2d': { en: 'Force 2D', es: 'Fuerza 2D' },
+  'spaces.graph.help': { en: 'Tab reaches the graph, then the arrow keys walk the neighbours of the highlighted node, Enter opens it, Space re-centres the graph on it and Home returns to the focus node. The camera follows.', es: 'Tab llega al grafo, las flechas recorren los vecinos del nodo resaltado, Enter lo abre, Espacio centra el grafo en él e Inicio vuelve al foco. La cámara sigue el recorrido.' },
+  'spaces.graph.node': { en: '{label}, {kind}, {n} links', es: '{label}, {kind}, {n} enlaces' },
+  'spaces.graph.links': { en: '{n} links', es: '{n} enlaces' },
+  'spaces.graph.hops': { en: '{n} hops', es: '{n} saltos' },
+  'spaces.graph.nodeList': { en: 'Graph nodes', es: 'Nodos del grafo' },
+  'spaces.graph.noPreview': { en: 'No preview yet', es: 'Sin vista previa' },
+  'spaces.graph.capped': { en: 'Showing the {n} nodes closest to the focus. Use "Show all" for the rest.', es: 'Se muestran los {n} nodos más cercanos al foco. Usa «Mostrar todo» para el resto.' },
+  'spaces.graph.showAll': { en: 'Show all nodes', es: 'Mostrar todo' },
+  'spaces.graph.autoRotate': { en: 'Auto-rotate', es: 'Rotación automática' },
+  'spaces.graph.reset': { en: 'Reset view', es: 'Restablecer vista' },
+  'spaces.graph.camera': { en: 'Camera', es: 'Cámara' },
+  'spaces.graph.noWebgl': { en: 'This device cannot draw 3D (no WebGL), so the 2D graph is shown instead.', es: 'Este dispositivo no puede dibujar en 3D (sin WebGL); se muestra el grafo 2D.' },
+  'spaces.graph.reducedMotion': { en: 'Your system asks for reduced motion, so the 2D graph is shown. The 3D view stays still if you open it.', es: 'Tu sistema pide menos movimiento, así que se muestra el grafo 2D. La vista 3D se queda quieta si la abres.' },
+  'spaces.graph.show3d': { en: 'Show 3D anyway', es: 'Mostrar 3D de todos modos' },
+  'spaces.graph.loading3d': { en: 'Loading the 3D view…', es: 'Cargando la vista 3D…' },
+  'spaces.graph.legendPictures': { en: 'Pictures come from the system: initials for people and roles, the page thumbnail for anything that opens a hub page, the space or catalog glyph for the rest.', es: 'Las imágenes vienen del sistema: iniciales para personas y roles, la miniatura de la página para lo que abre una página del Hub, y el glifo del espacio o del catálogo para lo demás.' },
+  'spaces.graph.source': { en: 'Views rebuilt on the imagine-os graph gallery.', es: 'Vistas reconstruidas sobre la galería de grafos de imagine-os.' },
   'spaces.graphKeys': { en: 'Keyboard: Tab to a node, Enter opens, Space centres, arrows walk neighbours, Home returns to the focus.', es: 'Teclado: Tab hasta un nodo, Enter abre, Espacio centra, flechas recorren vecinos, Inicio vuelve al foco.' },
 
   // K-05
