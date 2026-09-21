@@ -148,7 +148,7 @@ export function graphSpec(surface: Surface): PageSpec {
     components: ['PageHeader', 'Tabs', 'Select', 'ToggleButton', 'Checkbox', 'Button', 'Skeleton', 'GraphViews', 'RelationGraph', 'Badge', 'EmptyState'],
     actions: GRAPH_ACTIONS,
     ...COMMON,
-    checkedAt: [390, 1280, 1920, 2560],
+    checkedAt: [390, 1280, 1920, 2560, 3840],
   });
 }
 

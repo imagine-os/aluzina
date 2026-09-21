@@ -6,6 +6,9 @@
 //        Static page (Business OS bundle): --static=business-os/ --code=BOS-01 [--lang-toggle="button:text-is('EN')"] [--wait=#dc-root]
 //        For static pages `es-*` shots click --lang-toggle after render (the bundle keeps its own language state).
 // Chromium is preinstalled at /opt/pw-browsers in our containers; never run `playwright install`.
+//        --use-gl=swiftshader --enable-unsafe-swiftshader: software GL for headless captures of WebGL views (K-04 3D).
+//        External bases (not http://localhost) launch with --disable-features=ChromeRootStoreUsed so Chromium trusts the
+//        sandbox's CA-terminating outbound proxy via the OS/NSS store instead of the bundled Chrome Root Store.
 import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
@@ -40,6 +43,10 @@ if (existsSync(preinstalled)) launchOpts.executablePath = preinstalled;
 // Containers route outbound HTTPS through a proxy; Chromium does not read the env on its own.
 const proxy = process.env.HTTPS_PROXY ?? process.env.https_proxy;
 if (proxy && !base.startsWith('http://localhost')) launchOpts.proxy = { server: proxy };
+if (args['use-gl']) {
+  launchOpts.args = [...(launchOpts.args ?? []), `--use-gl=${args['use-gl']}`];
+  if (args['enable-unsafe-swiftshader'] !== undefined) launchOpts.args.push('--enable-unsafe-swiftshader');
+}
 
 const browser = await chromium.launch(launchOpts);
 const outDir = join(outRoot, code);

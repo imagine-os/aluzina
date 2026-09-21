@@ -35,7 +35,7 @@ export const planSpec = defineSpec({
     { id: 'tools.openPlanTask', label: 'Open a plan task', intent: 'open the plan task {task}', permission: 'dev.tools', params: { task: 'id' } },
     { id: 'tools.movePlanTask', label: 'Move a plan task', intent: 'move the plan task {task} to {status}', permission: 'dev.tools', params: { task: 'id', status: 'enum:done|doing|next|backlog' } },
   ],
-  checkedAt: [360, 390, 768, 1280, 1920],
+  checkedAt: [360, 390, 768, 1280, 1920, 3840],
 });
 
 export const canvasSpec = defineSpec({
