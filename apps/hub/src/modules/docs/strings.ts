@@ -2,10 +2,6 @@ import type { StringTable } from '../../i18n/types';
 
 /** In-app documentation viewer (D-06, D-15). UI strings only: the documents are shown as written (P-13). */
 export const strings: StringTable = {
-  // The DesktopShell names the surface with `core.portal.<surface>`; `docs` has no core entry yet
-  // (request in `docs/changelog/_pending/docs.md`: move this key into `src/i18n/core.ts`).
-  'core.portal.docs': { en: 'Documentation', es: 'Documentación' },
-
   'docs.nav.docs': { en: 'Documentation', es: 'Documentación' },
 
   'docs.title': { en: 'Documentation', es: 'Documentación' },

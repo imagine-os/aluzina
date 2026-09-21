@@ -57,8 +57,27 @@ const SURFACES = [
   { code: 'D-12', path: '?as=dev#/design', wait: '.dshell__main' },
   { code: 'D-02', path: '?as=dev#/dev/components', wait: '.dshell__main' },
   { code: 'D-03', path: '?as=dev#/dev/specs', wait: '.dshell__main' },
+  // Pass 0013: builder tools, testing hub, in-app docs, manual, client app, public site, brand documents, CRM and studio pages.
+  { code: 'D-05', path: '?as=dev#/dev/plan', wait: '.dshell__main' },
+  { code: 'D-07', path: '?as=dev#/dev/canvas', wait: '.dshell__main' },
+  { code: 'D-08', path: '?as=dev#/dev/simulator', wait: '.dshell__main' },
+  { code: 'D-09', path: '?as=dev#/dev/actions', wait: '.dshell__main' },
+  { code: 'D-11', path: '?as=dev#/dev/testing', wait: '.dshell__main' },
+  { code: 'D-14', path: '?as=dev#/dev/tokens', wait: '.dshell__main' },
+  { code: 'D-15', path: '?as=dev#/docs/decisions.md', wait: '.dshell__main' },
+  { code: 'D-06', path: '?as=dev#/docs', wait: '.dshell__main' },
+  { code: 'M-01', path: '?as=ops#/manual', wait: '.dshell__main' },
+  { code: 'C-01', path: '?as=client#/client', wait: '.pshell__main' },
+  { code: 'P-01', path: '#/services', wait: 'main' },
+  { code: 'P-05', path: '#/portfolio', wait: 'main' },
+  { code: 'G-08', path: '?as=brand#/brand/documents', wait: '.dshell__main' },
+  { code: 'A-08', path: '?as=founder#/founder/leads', wait: '.dshell__main' },
+  { code: 'O-11', path: '?as=ops#/ops/change-orders', wait: '.dshell__main' },
+  { code: 'S-10', path: '?as=studio#/studio/checklist', wait: '.dshell__main' },
+  { code: 'S-11', path: '?as=studio#/studio/revisions', wait: '.dshell__main' },
+  // K-04 opens its 3D view first; SwiftShader (launch args below) renders it headless, and the page falls back to the 2D graph without WebGL.
+  { code: 'K-04', path: '?as=founder#/founder/spaces/graph', wait: '.dshell__main' },
   { code: 'P-00', url: 'https://aluzinaa.com/', external: true, wait: 'body' },
-  { code: 'D-06', url: 'https://github.com/imagine-os/aluzina/tree/main/docs', external: true, wait: 'main' },
   { code: 'HUB-01', path: '#/', wait: '.surface-card__thumb', hub: true },
 ];
 
@@ -201,7 +220,9 @@ const server = await serveDist();
 const base = `http://127.0.0.1:${port}/`;
 mkdirSync(outDir, { recursive: true });
 
-const launchOpts = { headless: true };
+// SwiftShader gives headless Chromium a software WebGL context so the K-04 3D view (three.js) and the Shimmer finish
+// render instead of falling back; harmless for every other page (D-011, pass 0013).
+const launchOpts = { headless: true, args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] };
 const preinstalled = process.env.PW_EXECUTABLE ?? process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE ?? '/opt/pw-browsers/chromium';
 if (existsSync(preinstalled)) launchOpts.executablePath = preinstalled;
 

@@ -104,7 +104,7 @@ export function DataTable<T>({ columns, rows, rowKey, caption, loading, emptyTit
   }
 
   return (
-    <div className="table-wrap">
+    <div className="table-wrap" tabIndex={0} role="region" aria-label={caption}>
       <table className={cx('table', dense && 'table--dense', onRowActivate && 'table--interactive')}>
         <caption className="visually-hidden">{caption}</caption>
         <thead>

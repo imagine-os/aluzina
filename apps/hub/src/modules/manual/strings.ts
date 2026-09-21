@@ -6,10 +6,6 @@ import type { StringTable } from '../../i18n/types';
  * so the founder's wording is never duplicated in a string table.
  */
 export const strings: StringTable = {
-  // The DesktopShell names the surface with `core.portal.<surface>`; `manual` has no core entry yet
-  // (request in `docs/changelog/_pending/manual.md`: move this key into `src/i18n/core.ts`).
-  'core.portal.manual': { en: 'Manual', es: 'Manual' },
-
   'manual.nav.overview': { en: 'Manual', es: 'Manual' },
   'manual.nav.commercial': { en: 'Commercial process', es: 'Proceso comercial' },
   'manual.nav.governance': { en: 'Governance', es: 'Gobernanza' },

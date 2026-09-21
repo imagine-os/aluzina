@@ -1,3 +1,4 @@
+import { downloadUrl } from '../../design/clipboard';
 import type { Asset } from '../../data/schema';
 
 /**
@@ -75,12 +76,5 @@ export function absoluteDocUrl(href: string): string {
 
 /** Saves a served file without a visible link (the action bus and voice call this, not a click). */
 export function triggerDocDownload(doc: PublicDoc): string {
-  const a = document.createElement('a');
-  a.href = doc.href;
-  a.download = doc.downloadName;
-  a.rel = 'noreferrer';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  return doc.downloadName;
+  return downloadUrl(doc.href, doc.downloadName);
 }

@@ -70,6 +70,10 @@
 .dshell__portal {
   font-weight: 500;
   color: var(--color-text-muted);
+  /* Long portal names ("Operations manual", the Spanish labels) shrink with an ellipsis instead of pushing the user menu off-screen (0013). */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
   padding-left: var(--space-3);
   border-left: var(--hairline) solid var(--color-hairline);
@@ -364,4 +368,37 @@
 
 .pshell__bottom {
   display: grid;
+}
+
+/* Under 480 px the top bar has 44 + 44 + 153 + 44 px of controls and 80 px of gaps and padding: the presence bar (shown when
+   another person or the simulator's frames are online) does not fit and pushed the user menu off-screen (0013 smoke: D-08).
+   Presence stays visible from 480 px up and on D-04. */
+@media (max-width: 479.98px) {
+  .dshell__top .presence {
+    display: none;
+  }
+}
+
+/* Print (0013): a printed page is its content. The manual (M-xx) and any report drop the shell chrome here, so a module never has to hide it itself. */
+@media print {
+  .shell-skip,
+  .dshell__top,
+  .dshell__side,
+  .dshell__bottom,
+  .pshell__top,
+  .pshell__bottom,
+  .shell-controls {
+    display: none !important;
+  }
+
+  .dshell__body,
+  .dshell__main,
+  .dshell__content,
+  .pshell__main {
+    display: block;
+    overflow: visible;
+    height: auto;
+    max-height: none;
+    padding: 0;
+  }
 }

@@ -25,9 +25,9 @@ function DocFrame({ doc, title, fallback, download }: { doc: PublicDoc; title: s
         </iframe>
         <p className="pub-doc__fallback">
           {fallback}{' '}
-          <a className="btn btn--secondary btn--md" href={doc.href} download={doc.downloadName}>
+          <Button href={doc.href} download={doc.downloadName}>
             {download}
-          </a>
+            </Button>
         </p>
       </object>
     </div>
@@ -109,12 +109,9 @@ export function PortfolioPage() {
                   <Button variant="primary" onClick={() => view(doc)}>
                     {t('public.portfolio.view')}
                   </Button>
-                  {/* The library Button has no `download` attribute yet (requested in the changelog draft);
-                      the anchor wears the Button classes so it is the same 44 px target with the same focus
-                      ring, and a plain href would open the PDF instead of saving it (P-03, P-07). */}
-                  <a className="btn btn--secondary btn--md" href={doc.href} download={doc.downloadName} aria-label={t('public.portfolio.downloadAria', { title: title(doc) })}>
+                  <Button href={doc.href} download={doc.downloadName} aria-label={t('public.portfolio.downloadAria', { title: title(doc) })}>
                     {t('public.portfolio.download')}
-                  </a>
+                    </Button>
                   <Button variant="ghost" href={doc.href} external aria-label={t('public.portfolio.newTabAria', { title: title(doc) })}>
                     {t('public.portfolio.newTab')}
                   </Button>

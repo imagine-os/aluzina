@@ -17,6 +17,7 @@ export function Textarea({ label, hint, error, hideLabel, className, rows = 3, .
     <div className={cx('field', error && 'field--error', className)}>
       <label className={cx('field__label', hideLabel && 'visually-hidden')} htmlFor={id}>
         {label}
+        {rest.required && <span aria-hidden="true"> *</span>}
       </label>
       <textarea id={id} className="field__textarea" rows={rows} aria-invalid={error ? true : undefined} aria-describedby={describedBy} {...rest} />
       {hint && !error && <p id={`${id}-hint`} className="field__hint">{hint}</p>}

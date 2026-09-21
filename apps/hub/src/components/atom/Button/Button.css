@@ -16,8 +16,16 @@
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
+  /* Never wider than its container: a long label wraps inside the pill instead of pushing the page sideways at 390 (0013 smoke: D-04, M-06). */
+  max-width: 100%;
   white-space: nowrap;
   transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.btn__label {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
 }
 
 .btn:hover:not(:disabled) {

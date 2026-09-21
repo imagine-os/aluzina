@@ -27,6 +27,7 @@ export function Select({ label, options, hint, error, hideLabel, placeholder, cl
     <div className={cx('field', error && 'field--error', className)}>
       <label className={cx('field__label', hideLabel && 'visually-hidden')} htmlFor={id}>
         {label}
+        {rest.required && <span aria-hidden="true"> *</span>}
       </label>
       <div className="field__control">
         <select id={id} className="field__select" aria-invalid={error ? true : undefined} aria-describedby={describedBy} {...rest}>

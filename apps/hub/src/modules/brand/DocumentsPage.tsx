@@ -33,9 +33,9 @@ export function DocFrame({ doc, page, title, label, fallback, download }: { doc:
         </iframe>
         <p className="brand-doc__fallback">
           {fallback}{' '}
-          <a className="btn btn--secondary btn--md" href={doc.href} download={doc.downloadName}>
+          <Button href={doc.href} download={doc.downloadName}>
             {download}
-          </a>
+            </Button>
         </p>
       </object>
     </div>
@@ -138,6 +138,8 @@ export function DocumentsPage() {
     'brand.downloadDocument': manage && (({ doc }) => triggerDownload(asDoc(doc))),
     'brand.openDocumentTab': manage && (({ doc }) => openTab(asDoc(doc))),
     'brand.shareDocumentLink': manage && (({ doc }) => share(asDoc(doc))),
+    // Declared, shown as a Placeholder, registered so the bus answers honestly instead of `not-live` (D-047).
+    'brand.replaceDocument': manage && (() => 'not wired yet: replacing a document is a commit until file storage exists (D-049)'),
   });
 
   const related = useMemo(() => new Map(docs.map((d) => [d.id, relatedOf(d, pages.rows, relations.rows, projects.rows)])), [docs, pages.rows, relations.rows, projects.rows]);
@@ -179,12 +181,9 @@ export function DocumentsPage() {
                   <Button variant="primary" onClick={() => view(doc)}>
                     {t('brand.documents.view')}
                   </Button>
-                  {/* The library Button has no `download` attribute yet (request in the changelog draft);
-                      until it does, the download is an anchor wearing the Button's own classes, so it is
-                      the same 44 px target with the same focus ring and stays one tab stop (P-03, P-07). */}
-                  <a className="btn btn--secondary btn--md" href={doc.href} download={doc.downloadName} aria-label={t('brand.documents.downloadAria', { title: title(doc) })}>
+                  <Button href={doc.href} download={doc.downloadName} aria-label={t('brand.documents.downloadAria', { title: title(doc) })}>
                     {t('brand.documents.download')}
-                  </a>
+                    </Button>
                   <Button variant="ghost" href={doc.href} external aria-label={t('brand.documents.newTabAria', { title: title(doc) })}>
                     {t('brand.documents.newTab')}
                   </Button>

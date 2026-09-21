@@ -264,11 +264,3 @@
   white-space: pre-wrap;
 }
 
-/*
- * Workaround, not a redesign: an interactive StatTile renders a <button>, and `container-type: inline-size`
- * makes a shrink-to-fit button collapse to its own padding, so the tile would be 55 px wide inside a grid
- * cell. Reported to the library in the changelog draft (A-01 has the same symptom).
- */
-.client-grid > li > .stat {
-  inline-size: 100%;
-}

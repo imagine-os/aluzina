@@ -17,6 +17,6 @@ export default defineMeta({
     initialSort: '{ key, dir }?',
     dense: 'boolean?',
   },
-  a11y: ['<caption>, <th scope=col>, aria-sort on the sorted column', 'sort headers are buttons with a translated label', 'rows: tabindex 0, ArrowUp / ArrowDown move focus, Enter or Space activate', 'phone layout keeps every header via data-label; no horizontal page scroll'],
+  a11y: ['<caption>, <th scope=col>, aria-sort on the sorted column', 'sort headers are buttons with a translated label', 'rows: tabindex 0, ArrowUp / ArrowDown move focus, Enter or Space activate', 'phone layout keeps every header via data-label; no horizontal page scroll', 'the scroll container is a focusable region (tabindex 0, role=region, named by the caption) so a wide table scrolls with the keyboard'],
   usages: ['dev specs page', 'portal list pages'],
 });

@@ -183,6 +183,8 @@ export function RevisionMatrixPage() {
   }, [shown, current, t]);
 
   useRegisterActions({
+    // Declared, shown as a Placeholder, registered so the bus answers honestly instead of `not-live` (D-047).
+    'studio.sendMatrixToClient': () => 'not wired yet: sending the matrix to the client arrives with the messages integration (C-03 reads the same rows today)',
     'studio.selectRevisionProject': ({ project: p }) => {
       const id = String(p);
       if (!tracked.some((x) => x.id === id)) return t('studio.revisions.noProject');

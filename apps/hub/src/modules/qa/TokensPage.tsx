@@ -13,7 +13,7 @@ import { SearchField } from '../../components/molecule/SearchField/SearchField';
 import { DataTable } from '../../components/organism/DataTable/DataTable';
 import { tokens, type ColorSet } from '../../design/tokens';
 import { useT } from '../../i18n/I18nProvider';
-import { copyText } from './copy';
+import { copyText } from '../../design/clipboard';
 import { tokensSpec } from './specs';
 import './qa.css';
 

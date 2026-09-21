@@ -1,3 +1,4 @@
+import { downloadUrl } from '../../design/clipboard';
 import type { Asset } from '../../data/schema';
 
 /**
@@ -82,25 +83,9 @@ export function absoluteUrl(href: string): string {
   return new URL(href, window.location.href).href;
 }
 
-/** Clipboard write that never throws: `navigator.clipboard` is absent on insecure origins and in old browsers. */
-export async function copyText(text: string): Promise<boolean> {
-  try {
-    if (!navigator.clipboard?.writeText) return false;
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    return false;
-  }
-}
+export { copyText } from '../../design/clipboard';
 
 /** Saves a served file without a visible link (the action bus and voice call this, not a click). */
 export function triggerDownload(doc: BrandDoc): string {
-  const a = document.createElement('a');
-  a.href = doc.href;
-  a.download = doc.downloadName;
-  a.rel = 'noreferrer';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  return doc.downloadName;
+  return downloadUrl(doc.href, doc.downloadName);
 }

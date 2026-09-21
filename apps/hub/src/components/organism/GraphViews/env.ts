@@ -6,49 +6,8 @@ import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
  * per theme and rebuilds its materials).
  */
 
-let webglProbe: boolean | null = null;
-
-/** One probe per session: a throwaway context, released immediately. */
-export function isWebGLAvailable(): boolean {
-  if (webglProbe !== null) return webglProbe;
-  if (typeof document === 'undefined') return (webglProbe = false);
-  try {
-    const canvas = document.createElement('canvas');
-    const gl = (canvas.getContext('webgl2') ?? canvas.getContext('webgl')) as WebGLRenderingContext | null;
-    webglProbe = Boolean(gl);
-    gl?.getExtension('WEBGL_lose_context')?.loseContext();
-  } catch {
-    webglProbe = false;
-  }
-  return webglProbe;
-}
-
-export function useWebGLAvailable(): boolean {
-  const [ok] = useState(isWebGLAvailable);
-  return ok;
-}
-
-export function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const on = () => setReduced(mq.matches);
-    mq.addEventListener('change', on);
-    return () => mq.removeEventListener('change', on);
-  }, []);
-  return reduced;
-}
-
-/** True while the document is hidden, so the 3D render loop can stop instead of burning the battery. */
-export function useDocumentHidden(): boolean {
-  const [hidden, setHidden] = useState(() => typeof document !== 'undefined' && document.hidden);
-  useEffect(() => {
-    const on = () => setHidden(document.hidden);
-    document.addEventListener('visibilitychange', on);
-    return () => document.removeEventListener('visibilitychange', on);
-  }, []);
-  return hidden;
-}
+// The environment hooks live in src/design/env.ts since 0013 (shared with D-07 / D-08); re-exported for the views.
+export { isWebGLAvailable, useWebGLAvailable, usePrefersReducedMotion, useDocumentHidden } from '../../../design/env';
 
 export interface GraphPalette {
   bg: string;

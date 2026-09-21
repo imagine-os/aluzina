@@ -17,7 +17,7 @@ import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useRoutes } from '../../app/RoutesContext';
 import { useT } from '../../i18n/I18nProvider';
 import { SURFACES, type ParamType, type Surface } from '../../specs/PageSpec';
-import { copyText, downloadText } from './copy';
+import { copyText, downloadText } from '../../design/clipboard';
 import { actionsSpec } from './specs';
 import './qa.css';
 
