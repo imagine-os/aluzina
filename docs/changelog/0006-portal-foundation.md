@@ -37,6 +37,15 @@ model: Fable 5.1
 
 `scripts/thumbnails.mjs` captures the six new codes through `?as=<role>`; `src/modules/README.md` is the module contract for the parallel workers; surfaces.md records routes, the `?as=` contract, storage keys, actions and the provider methods; roles-and-portals.md carries the permission refinement.
 
-## Verified (local, Playwright Chromium, dist served by `vite preview`)
+## Verified
+
+### Deploy and live site
+
+- Pages workflow run [35548185005](https://github.com/imagine-os/aluzina/actions/runs/35548185005) on a5d0c37: `build` (incl. `npm run thumbs`) and `deploy` success.
+- https://imagine-os.github.io/aluzina/ -> HTTP 200, `window.__aluzina.version` 0.4.0, 7 routes; the Portals section shows 5 cards with 4 real thumbnails; `thumbs/manifest.json` generated 2026-09-21T00:36:43Z with 15 items, all real captures (A-01, O-01, S-01, G-01, D-02, D-03 included, no placeholder tiles).
+- Live: entering as Miguel lands on `#/ops` ("Operations dashboard"), `?as=dev#/dev/components` renders 31 components, no page errors.
+- Live screenshots: `docs/screenshots/{HUB-01,A-01,O-01,S-01,G-01,D-02,D-03}/en-390.jpg`, `en-1280.jpg` with `routes.json` (14 captures; ES and 3840 captures of the new pages are a follow-up for the 9c pass).
+
+### Local smoke (Playwright Chromium, dist served by `vite preview`)
 
 390 and 1280: hub renders 5 portal cards (2 placeholders); entering each portal switches the session user, lands on the right path with the right `data-stub`, sidebar and bottom nav render; brand user on `/founder` gets the denied page and the "Switch to Founder" button lands on A-01; `?as=dev#/dev/components` renders 31 cards with 31 examples; Tabs ArrowRight moves selection; `/#/dev/specs` lists 7 rows, ArrowDown + Enter opens the drawer with focus inside, Escape closes and returns focus to the row; phone menu drawer and user menu work (switching to Sarai via the user menu lands on S-01); ES + dark render; no horizontal overflow at 390; no console errors or warnings. 3840: body 32 px, sidebar 576 px. Remaining sub-44 px hits are the 24 px checkbox box (its 44 px label row is the target) and the focusable tab panel (a region, not a control). Screenshots: coordinating session scratchpad `shots/foundation/`; live captures land in `docs/screenshots/` after the deploy.

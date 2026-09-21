@@ -1,8 +1,8 @@
 {
-  "capturedAt": "2026-09-21T00:54:16.818Z",
+  "capturedAt": "2026-09-21T00:54:43.169Z",
   "base": "https://imagine-os.github.io/aluzina/",
-  "code": "HUB-01",
-  "route": "/",
+  "code": "D-02",
+  "route": "/dev/components",
   "manifest": {
     "routes": [
       {
