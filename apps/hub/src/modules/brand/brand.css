@@ -1,0 +1,105 @@
+/* Brand portal (G-xx) page styles. Tokens only, class prefix `brand-`, no fixed px widths. */
+
+.brand-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.brand-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.brand-grid > li {
+  min-width: 0;
+  display: grid;
+}
+
+.brand-stack {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.brand-list {
+  display: grid;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.brand-list__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  min-height: var(--target);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.brand-list > li:last-child .brand-list__row {
+  border-bottom: 0;
+}
+
+.brand-list__main {
+  flex: 1 1 12rem;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.brand-list__title {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.brand-list__meta {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.brand-unknown {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.brand-path {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.brand-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.brand-form__wide {
+  grid-column: 1 / -1;
+}
+
+.brand-drawer-section {
+  margin-top: var(--space-4);
+}
+
+.brand-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (min-width: 1920px) {
+  .brand-stats {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  }
+}
