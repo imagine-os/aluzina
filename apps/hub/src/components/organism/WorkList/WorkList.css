@@ -114,11 +114,16 @@
   color: var(--color-success);
 }
 
-/* The selection checkbox keeps its accessible label but shows only the box. */
+/* The selection checkbox keeps its accessible label but shows only the box.
+   Explicit 44x44 flex box (not the grid's implicit column collapse) so the
+   padded hit area holds even if a hint or wider label is added later. */
 .work-row__select .check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--target);
   min-height: var(--target);
   padding: 0;
-  justify-content: center;
 }
 
 .work-row__select .check__label {

@@ -22,7 +22,7 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 - Step 9c: alert pattern across portals (Miguel's "before urgent" + Angelica's deadlines from `alerts`, lead-time rule, surfaced per role) (Fable 5.1)
 - Dev tools next: `/#/dev/tokens` (D-01), `/#/dev/actions` (D-20), actions bus `run(id, params)`, `viewAs` control in the user menu for founder / dev, plan viewer, canvas, demo simulator (Opus 5)
 - Data: `version` column + conflict UI, `CompanyOsProvider` stub (reference only), Supabase adapter behind `DataProvider` (Fable 5.1)
-- Component library follow-ups: Checkbox input box is 24 px inside a 44 px label row (checker flags the input), dark-theme pass over every example, `FeedbackButton` (P-08) (Sonnet 5)
+- Component library follow-ups: dark-theme pass over every example, `FeedbackButton` (P-08) (Sonnet 5)
 - Knowledge: fill `docs/knowledge/competitions.md` (the 20 competitions and submission dates) and surnames / languages in `team.md` when the founder shares them; confirm "Hoy" = HOY Wellness Center (Fable 5.1)
 - Hub thumbnails: dark-theme variant (`thumbs/<code>-dark.jpg`) and 2x tiles for 4K once the card grid is checked at 2560 / 3840 on the live site (Sonnet 5)
 - Awaiting Justin: default language en vs es for the hub and the OS (D-004)
@@ -35,6 +35,7 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 
 ## Done
 
+- QA fixes (changelog 0010): five 44px-target / 16px-font defects from the Work views QA matrix (docs/qa/0001) — view-tab and timeline-bar min-heights, row-select checkbox hit label made explicit, shell role badge font at 1920, W-02 breadcrumb "Work" link min-width; re-verified at 390/1280/1920, build green (Sonnet 5)
 - Step 10: Asana-style Work views (changelog 0008, D-021..D-025): `sections` / `comments` / `activity`, six organisms + `PresenceBar` with metas and examples, MockProvider BroadcastChannel realtime with rows in the message, `basedOn` conflicts + toast, `PresenceProvider` + shell bar, Work module W-01 / W-02 on four portals with role defaults, D-04 multiuser page, O-02 / O-03 "Open in Work", `tasks.own.write`, smoke green at 360-2560 for all four views, keyboard-only drawer run, two-tab update in 15-20 ms (Fable 5.1)
 - Step 9c: integration (changelog 0007, D-018..D-020): Placeholder wrapper mode + tooltip clamp, StatTile numbers, Timeline bar targets, router future flags, `suppliers.read`, `tasks.startDate`, thumbnails image-wait bound; tsc + build green; smoke over 36 routes at 390 / 1280 clean; `_pending` drafts merged (Fable 5.1)
 - Step 9b: Founder portal A-01..A-07 (approvals, pipeline, quotes and proposals, products and partnerships, clients, team) (Opus 5)

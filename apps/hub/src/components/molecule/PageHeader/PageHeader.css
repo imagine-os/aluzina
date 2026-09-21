@@ -25,7 +25,9 @@
 .page-header__crumbs a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: var(--target);
+  min-width: var(--target);
   padding-inline: var(--space-1);
   color: inherit;
 }

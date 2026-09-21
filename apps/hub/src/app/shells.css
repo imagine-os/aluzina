@@ -82,6 +82,8 @@
 }
 
 .dshell__role {
+  /* Badge's 0.75rem base drops under 16px once --scale hits 1.125 (1920+); bump it. */
+  font-size: 0.9375rem;
   white-space: nowrap;
 }
 

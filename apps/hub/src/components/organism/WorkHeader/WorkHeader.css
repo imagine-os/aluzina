@@ -32,7 +32,7 @@
 }
 
 .work-header .tabs__tab {
-  min-height: calc(var(--target) - 0.25rem);
+  min-height: var(--target);
   border-radius: var(--radius-sm);
 }
 
