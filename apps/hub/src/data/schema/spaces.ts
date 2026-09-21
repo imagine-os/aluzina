@@ -53,12 +53,13 @@ export interface Filing extends BaseRow {
   spaceId: Id;
 }
 
-export type RelationKind = 'references' | 'applies-to' | 'part-of' | 'replaces' | 'depends-on' | 'belongs-to' | 'produced-by' | 'for-client' | 'owned-by';
-export const RELATION_KINDS: readonly RelationKind[] = ['references', 'applies-to', 'part-of', 'replaces', 'depends-on', 'belongs-to', 'produced-by', 'for-client', 'owned-by'];
+export type RelationKind = 'references' | 'applies-to' | 'part-of' | 'replaces' | 'depends-on' | 'belongs-to' | 'produced-by' | 'for-client' | 'owned-by' | 'depicts';
+/** `depicts` (0013): an asset page shows a project (portfolio page -> project); `references` stays for mentions in text. */
+export const RELATION_KINDS: readonly RelationKind[] = ['references', 'applies-to', 'part-of', 'replaces', 'depends-on', 'belongs-to', 'produced-by', 'for-client', 'owned-by', 'depicts'];
 
 /**
- * Typed link between any two entities (`fromType` / `toType` are entity names, or `roles` / `users` for the
- * role and demo-user registries). "Referenced by" is the reverse query on `toType` + `toId`.
+ * Typed link between any two entities (`fromType` / `toType` are entity names, or `roles` / `users` / `services`
+ * for the role, demo-user and playbook-service registries). "Referenced by" is the reverse query on `toType` + `toId`.
  */
 export interface Relation extends BaseRow {
   fromType: string;

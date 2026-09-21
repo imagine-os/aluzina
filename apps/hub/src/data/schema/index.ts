@@ -1,3 +1,4 @@
+import type { Asset } from './assets';
 import type { BrandAsset, Competition, Presentation, Revision } from './brand';
 import type { Delivery, Document, Payment, Quote, Supplier } from './operations';
 import type { Activity, Alert, Comment, Meeting, Project, Section, Task } from './projects';
@@ -5,6 +6,7 @@ import type { ChangeOrder, Engagement, Lead, Message, Purchase, RevisionItem, Si
 import type { Client, Deliverable, Filing, Post, Relation, Space, Tag, Tool } from './spaces';
 import type { ConsistencyCheck, Material, Reference, RenderPack, Schedule } from './studio';
 
+export * from './assets';
 export * from './base';
 export * from './brand';
 export * from './operations';
@@ -51,6 +53,7 @@ export interface EntityMap {
   purchases: Purchase;
   siteReports: SiteReport;
   messages: Message;
+  assets: Asset;
 }
 
 export type EntityName = keyof EntityMap;
@@ -92,4 +95,5 @@ export const ENTITIES: readonly EntityName[] = [
   'purchases',
   'siteReports',
   'messages',
+  'assets',
 ];

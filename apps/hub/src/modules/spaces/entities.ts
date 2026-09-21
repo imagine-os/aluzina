@@ -2,15 +2,17 @@ import { useCallback, useMemo } from 'react';
 import { DEMO_USERS } from '../../auth/demoUsers';
 import { ROLE_META, ROLES, isRoleId } from '../../auth/roles';
 import { useTable } from '../../data/DataContext';
-import type { Space } from '../../data/schema';
+import type { Asset, Space } from '../../data/schema';
+import { SERVICES, pick } from '../../domain';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';
 
 /**
- * Every entity type a relation may point at (D-026) and how to name and open it. `roles` and `users` are
- * registries, not tables. Adding a type here is the one change needed for a new relation target.
+ * Every entity type a relation may point at (D-026) and how to name and open it. `roles`, `users` and
+ * `services` (the playbook's five services, id = code) are registries, not tables. Adding a type here is the
+ * one change needed for a new relation target.
  */
-export const RELATABLE_TYPES = ['spaces', 'posts', 'projects', 'tasks', 'documents', 'clients', 'deliverables', 'tools', 'roles', 'users', 'competitions', 'brandAssets', 'presentations'] as const;
+export const RELATABLE_TYPES = ['spaces', 'posts', 'projects', 'tasks', 'documents', 'clients', 'deliverables', 'tools', 'roles', 'users', 'competitions', 'brandAssets', 'presentations', 'assets', 'services'] as const;
 export type RelatableType = (typeof RELATABLE_TYPES)[number];
 
 export interface Resolved {
@@ -40,7 +42,7 @@ function workSurface(surface: Surface): Surface {
 }
 
 export function useEntityIndex(surface: Surface): EntityIndex {
-  const { t } = useT();
+  const { t, lang } = useT();
   const spaces = useTable('spaces');
   const posts = useTable('posts');
   const projects = useTable('projects');
@@ -52,7 +54,8 @@ export function useEntityIndex(surface: Surface): EntityIndex {
   const competitions = useTable('competitions');
   const brandAssets = useTable('brandAssets');
   const presentations = useTable('presentations');
-  const loading = [spaces, posts, projects, tasks, documents, clients, deliverables, tools, competitions, brandAssets, presentations].some((x) => x.loading);
+  const assets = useTable('assets');
+  const loading = [spaces, posts, projects, tasks, documents, clients, deliverables, tools, competitions, brandAssets, presentations, assets].some((x) => x.loading);
 
   const base = `/${surface}/spaces`;
   const work = `/${workSurface(surface)}/work`;
@@ -71,6 +74,15 @@ export function useEntityIndex(surface: Surface): EntityIndex {
       competitions: { list: () => competitions.rows.map((c) => ({ id: c.id, label: c.name ?? c.id })), find: (id) => nameOf(competitions.rows, id, (c) => c.name ?? c.id, '/brand/competitions', t('spaces.type.competitions')) },
       brandAssets: { list: () => brandAssets.rows.map((a) => ({ id: a.id, label: a.name })), find: (id) => nameOf(brandAssets.rows, id, (a) => a.name, '/brand/assets', t('spaces.type.brandAssets')) },
       presentations: { list: () => presentations.rows.map((p) => ({ id: p.id, label: p.title })), find: (id) => nameOf(presentations.rows, id, (p) => p.title, '/brand/presentations', t('spaces.type.presentations')) },
+      // Documents open on G-08 (`?doc=<slug>`); a page opens its document at that page (page renders are not served by the app).
+      assets: { list: () => assets.rows.map((a) => ({ id: a.id, label: assetLabel(a, lang) })), find: (id) => nameOf(assets.rows, id, (a) => assetLabel(a, lang), assetRoute(assets.rows, id), t('spaces.type.assets')) },
+      services: {
+        list: () => SERVICES.map((s) => ({ id: s.code, label: `${s.code} · ${pick(s.name, lang)}` })),
+        find: (id) => {
+          const s = SERVICES.find((x) => x.code === id);
+          return s ? { label: `${s.code} · ${pick(s.name, lang)}`, sub: t('spaces.type.services'), route: `/manual/services/${s.slug}` } : null;
+        },
+      },
       roles: {
         list: () => ROLES.map((r) => ({ id: r, label: t(ROLE_META[r].labelKey) })),
         find: (id) => (isRoleId(id) ? { label: t(ROLE_META[id].labelKey), sub: t('spaces.type.roles'), route: roleSpace.has(id) ? `${base}/${roleSpace.get(id)}` : ROLE_META[id].homePath } : null),
@@ -84,7 +96,7 @@ export function useEntityIndex(surface: Surface): EntityIndex {
       },
     };
     return m;
-  }, [spaces.rows, posts.rows, projects.rows, tasks.rows, documents.rows, clients.rows, deliverables.rows, tools.rows, competitions.rows, brandAssets.rows, presentations.rows, base, work, t]);
+  }, [spaces.rows, posts.rows, projects.rows, tasks.rows, documents.rows, clients.rows, deliverables.rows, tools.rows, competitions.rows, brandAssets.rows, presentations.rows, assets.rows, base, work, t, lang]);
 
   const resolve = useCallback((type: string, id: string) => tables[type]?.find(id) ?? null, [tables]);
   const search = useCallback(
@@ -102,4 +114,18 @@ export function useEntityIndex(surface: Surface): EntityIndex {
 function nameOf<T extends { id: string }>(rows: T[], id: string, label: (r: T) => string, route: string | null, sub: string): Resolved | null {
   const r = rows.find((x) => x.id === id);
   return r ? { label: label(r), sub, route } : null;
+}
+
+function assetLabel(a: Asset, lang: 'en' | 'es'): string {
+  return lang === 'es' && a.titleEs ? a.titleEs : a.title;
+}
+
+/** G-08 route of an asset: the document itself, or the parent document opened at the page's number. */
+function assetRoute(rows: Asset[], id: string): string | null {
+  const a = rows.find((x) => x.id === id);
+  if (!a) return null;
+  if (a.kind === 'document') return `/brand/documents?doc=${a.slug}`;
+  const parent = a.parentId ? rows.find((x) => x.id === a.parentId) : undefined;
+  if (parent) return `/brand/documents?doc=${parent.slug}${a.pageNumber ? `&page=${a.pageNumber}` : ''}`;
+  return a.url ? '/brand/documents' : null;
 }
