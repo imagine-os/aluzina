@@ -19,4 +19,8 @@ The portals now exist as the foundation for the four role modules (build plan 9a
 
 Live: https://imagine-os.github.io/aluzina/ (deploy run 35548185005, thumbnails for all six new pages generated). Next: build plan 9b, one worker per portal (Opus 5), then integration and the client portal (9c).
 
-Result reply pending; see changelog 0007.
+Reply (result) posted to the thread, verbatim:
+
+> The four portals are live from the hub at https://imagine-os.github.io/aluzina/. Pick a card to enter as that person, or jump straight in: Founder (Alejandra) ?as=founder#/founder; Administration and Operations (Miguel) ?as=ops#/ops; Interior Design (Sarai) ?as=studio#/studio; Graphic Design and Communication (Angélica) ?as=brand#/brand. Each portal has a dashboard plus one page per responsibility from the roster: 7 pages for Alejandra, 10 for Miguel, 9 for Sarai and 7 for Angélica. Everything runs on realistic mock data for the studio, and the writes are real within the browser. Anything not wired yet says so when you click it. EN/ES toggle is on every page, and 33 pages passed checks from phone to 1920 in light and dark. Underneath sits the foundation the next portals build on: roles and permissions, a role switcher, a 31-component library (?as=dev#/dev/components), and a spec page listing every route and its 148 declared actions. Two things to decide: the hub currently opens as the developer view rather than as Alejandra, and the operations portal has 10 pages instead of 9 because reports needed a home. Opus 5 built the four portals; Fable 5.1 did the foundation and integration.
+
+See changelog 0007.
