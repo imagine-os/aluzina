@@ -1,0 +1,151 @@
+/* A flex row, not a column-flow grid: Chromium adds implicit grid tracks to the root's scrollable
+   overflow even inside an overflow:auto container, which widened the page with 25 sections. */
+.work-board {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+  scroll-snap-type: x proximity;
+}
+
+.work-col {
+  position: relative;
+  display: flex;
+  flex: 0 0 19rem;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  scroll-snap-align: start;
+  max-height: calc(100dvh - 14rem);
+}
+
+.work-col__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.work-col__title {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.work-col__list {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: var(--space-3);
+  min-height: 5rem;
+  overflow-y: auto;
+  align-content: start;
+}
+
+.work-col__empty {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  text-align: center;
+  padding: var(--space-4);
+}
+
+.work-col__add {
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.work-card {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-left-width: 4px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.work-card--blocked {
+  border-left-color: var(--color-warning);
+}
+
+.work-card--done {
+  border-left-color: var(--color-success);
+}
+
+.work-card--done .work-card__title {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.work-card__main {
+  display: grid;
+  gap: var(--space-2);
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.work-card__title {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.work-card__tags,
+.work-card__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+}
+
+.work-card__ind {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.work-card__ind--warn {
+  color: var(--color-warning);
+  font-weight: 700;
+}
+
+.work-card__moves {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.work-card__move {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 767.98px) {
+  .work-board {
+    scroll-snap-type: x mandatory;
+  }
+
+  .work-col {
+    flex-basis: 85vw;
+    max-height: none;
+  }
+}
+
+@media (min-width: 1920px) {
+  .work-col {
+    flex-basis: 22rem;
+  }
+}

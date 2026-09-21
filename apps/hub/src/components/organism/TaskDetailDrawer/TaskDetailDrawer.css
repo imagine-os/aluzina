@@ -1,0 +1,118 @@
+.task-detail {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.task-detail__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.task-detail__muted {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.task-detail__readonly {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.task-detail__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.task-detail__section {
+  display: grid;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.task-detail__h {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.task-detail__list,
+.task-detail__comments,
+.task-detail__activity {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.task-detail__dep {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target);
+}
+
+.task-detail__dep-title {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.task-detail__subtasks {
+  display: grid;
+}
+
+.task-detail__sub--done .check__label {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.task-detail__add,
+.task-detail__comment-form {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.task-detail__add .field,
+.task-detail__comment-form .field {
+  flex: 1;
+}
+
+.task-detail__comment {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2);
+  align-items: start;
+}
+
+.task-detail__comment-head {
+  font-size: 0.875rem;
+}
+
+.task-detail__comment-body {
+  overflow-wrap: anywhere;
+}
+
+.task-detail__activity li {
+  font-size: 0.875rem;
+}
+
+@media (max-width: 479.98px) {
+  .task-detail__grid {
+    grid-template-columns: 1fr;
+  }
+}

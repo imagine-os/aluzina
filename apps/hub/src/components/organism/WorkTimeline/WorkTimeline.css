@@ -1,0 +1,357 @@
+.work-tl {
+  --tl-row: 3rem;
+  --tl-axis: 3.25rem;
+  --tl-day: 1rem;
+  --tl-left: 16rem;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.work-tl__bar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.work-tl__zoom {
+  display: inline-flex;
+  gap: 0.125rem;
+  padding: 0.125rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.work-tl__note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-left: auto;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.work-tl__scroll {
+  position: relative;
+  max-height: calc(100dvh - 15rem);
+  min-height: 12rem;
+  overflow: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  scrollbar-gutter: stable;
+}
+
+.work-tl__grid {
+  position: relative;
+  min-width: 100%;
+}
+
+.work-tl__axis {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: var(--tl-left) 1fr;
+  height: var(--tl-axis);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.work-tl__corner {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background: var(--color-bg);
+  border-right: 1px solid var(--color-border);
+}
+
+.work-tl__axis-track {
+  position: relative;
+}
+
+.work-tl__month {
+  position: absolute;
+  top: 0.25rem;
+  height: 1.25rem;
+  padding-left: var(--space-2);
+  border-left: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.work-tl__tick {
+  position: absolute;
+  top: 1.75rem;
+  height: 1.25rem;
+  border-left: 1px solid var(--color-border);
+  padding-left: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.work-tl__tick--day {
+  text-align: center;
+  padding-left: 0;
+}
+
+.work-tl__rows {
+  position: relative;
+}
+
+.work-tl__row {
+  display: grid;
+  grid-template-columns: var(--tl-left) 1fr;
+  height: var(--tl-row);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.work-tl__row--group {
+  background: var(--color-bg);
+}
+
+.work-tl__left {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  min-width: 0;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+}
+
+.work-tl__row--group .work-tl__left {
+  background: var(--color-bg);
+}
+
+.work-tl__group-name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.work-tl__left-text {
+  display: grid;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.work-tl__name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.work-tl__dates,
+.work-tl__deps-text {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.work-tl__deps-text {
+  color: var(--color-warning);
+}
+
+.work-tl__track {
+  position: relative;
+  background: repeating-linear-gradient(90deg, transparent 0 calc(var(--tl-day) * 7 - 1px), var(--color-border) calc(var(--tl-day) * 7 - 1px) calc(var(--tl-day) * 7));
+}
+
+.work-tl__summary {
+  position: absolute;
+  top: calc(var(--tl-row) / 2 - 0.1875rem);
+  height: 0.375rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-text-muted);
+  opacity: 0.35;
+}
+
+.work-tl__today {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-accent);
+  transform: translateX(-1px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.work-tl__today-label {
+  position: sticky;
+  top: 0;
+  display: inline-block;
+  transform: translateX(0.25rem);
+  padding: 0 var(--space-1);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-accent-text);
+  background: var(--color-accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  white-space: nowrap;
+}
+
+.work-tl__deps {
+  position: absolute;
+  top: 0;
+  left: var(--tl-left);
+  z-index: 2;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.work-tl__deps path {
+  fill: none;
+  stroke: var(--color-text-muted);
+  stroke-width: 1.5px;
+  stroke-dasharray: 4 3;
+}
+
+.work-tl__arrowhead {
+  position: absolute;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  border-top: 0.3125rem solid transparent;
+  border-bottom: 0.3125rem solid transparent;
+  border-left: 0.5rem solid var(--color-text-muted);
+  transform: translate(-0.5rem, -0.3125rem);
+  pointer-events: none;
+}
+
+.work-tl__bar {
+  position: absolute;
+  top: 0.25rem;
+  height: calc(var(--tl-row) - 0.5rem);
+  min-width: var(--target);
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.work-tl__fill {
+  position: absolute;
+  inset: 0.375rem 0;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  overflow: hidden;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.work-tl__fill-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.work-tl__bar--accent .work-tl__fill { background: var(--color-accent-soft); border-color: var(--color-accent); }
+.work-tl__bar--success .work-tl__fill { border-color: var(--color-success); background: color-mix(in srgb, var(--color-success) 18%, var(--color-surface)); }
+.work-tl__bar--warning .work-tl__fill { border-color: var(--color-warning); background: color-mix(in srgb, var(--color-warning) 18%, var(--color-surface)); }
+.work-tl__bar--danger .work-tl__fill { border-color: var(--color-danger); background: color-mix(in srgb, var(--color-danger) 18%, var(--color-surface)); color: var(--color-danger); font-weight: 700; }
+
+/* Milestones: a diamond centred on the day, inside a 44 px target. */
+.work-tl__bar--milestone {
+  width: var(--target);
+  transform: translateX(calc(var(--tl-day) / 2 - var(--target) / 2));
+}
+
+.work-tl__bar--milestone .work-tl__fill {
+  inset: 50% auto auto 50%;
+  width: 1.125rem;
+  height: 1.125rem;
+  padding: 0;
+  border-width: 2px;
+  border-radius: 0.125rem;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--color-surface);
+}
+
+.work-tl__bar--milestone.work-tl__bar--success .work-tl__fill { background: var(--color-success); }
+.work-tl__bar--milestone.work-tl__bar--danger .work-tl__fill { background: var(--color-danger); }
+.work-tl__bar--milestone.work-tl__bar--accent .work-tl__fill { background: var(--color-accent); }
+
+.work-tl__bar:focus-visible {
+  outline: var(--focus-ring) solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Compact fallback (< 768): list with percent-based mini bars, no arrows. */
+.work-tl__mini {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.work-tl__mini-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.work-tl__mini-row {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.work-tl__mini-label {
+  display: grid;
+}
+
+.work-tl__mini-label .work-tl__name,
+.work-tl__mini-label .work-tl__dates {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.work-tl__mini-track {
+  position: relative;
+  height: var(--tl-row);
+  border-radius: var(--radius-sm);
+  background: repeating-linear-gradient(90deg, transparent 0 calc(100% / 12 - 1px), var(--color-border) calc(100% / 12 - 1px) calc(100% / 12));
+}
+
+.work-tl--compact .work-tl__bar--milestone {
+  transform: translateX(calc(var(--target) / -2));
+}

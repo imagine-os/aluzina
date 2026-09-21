@@ -1,0 +1,339 @@
+.work-list {
+  --work-cols: var(--target) var(--target) minmax(14rem, 1fr) minmax(7rem, 10rem) minmax(8.25rem, 9rem) minmax(6.5rem, 8rem) minmax(6rem, 7.5rem) var(--target);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.work-bulk {
+  position: sticky;
+  top: 4rem;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+}
+
+.work-list__head {
+  display: grid;
+  grid-template-columns: var(--work-cols);
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.work-group {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.work-group__head {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+.work-group__toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: var(--target);
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  background: var(--color-bg);
+  text-align: left;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.work-group__chevron {
+  width: 1rem;
+  color: var(--color-text-muted);
+}
+
+.work-group__name {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.work-list__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.work-row {
+  display: grid;
+  grid-template-columns: var(--work-cols);
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-top: 1px solid var(--color-border);
+  min-height: 3.5rem;
+}
+
+/* Grid items default to min-width:auto; native selects must shrink with their column. */
+.work-row > *,
+.work-list__head > * {
+  min-width: 0;
+}
+
+.work-row:hover,
+.work-row:focus-within {
+  background: var(--color-surface-raised);
+}
+
+.work-row:focus-visible {
+  outline: var(--focus-ring) solid var(--color-focus);
+  outline-offset: -3px;
+}
+
+.work-row--selected {
+  background: var(--color-accent-soft);
+}
+
+.work-row--done .work-row__title {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.work-row__done--on {
+  color: var(--color-success);
+}
+
+/* The selection checkbox keeps its accessible label but shows only the box. */
+.work-row__select .check {
+  min-height: var(--target);
+  padding: 0;
+  justify-content: center;
+}
+
+.work-row__select .check__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.work-row__main {
+  display: grid;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.work-row__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.work-row__title {
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.work-row__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.work-row__project {
+  font-weight: 500;
+}
+
+/* Priority shown in the meta line only when its column is hidden (1024-1439). */
+.work-row__priority-inline {
+  display: none;
+}
+
+.work-row__ind--warn {
+  color: var(--color-warning);
+  font-weight: 700;
+}
+
+.work-row__assignee {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.work-row__assignee .work-inline {
+  flex: 1;
+  min-width: 0;
+}
+
+.work-row__text {
+  font-size: 0.9375rem;
+}
+
+/* Compact field variant for inline editors: no label row, no hint row, 44 px control. A native select's
+   min-width:auto is its longest option; it must be 0 here or the option text widens the row, the board
+   column and (through Chromium's root overflow) the page. */
+.work-inline.field {
+  position: relative; /* contains the visually-hidden label (absolute); otherwise its static position in a far-right board column widens the page */
+  margin: 0;
+  gap: 0;
+}
+
+.work-inline .field__control,
+.work-inline .field__select,
+.work-inline .field__input {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.work-inline .field__select,
+.work-inline .field__input {
+  min-height: var(--target);
+  padding-block: 0;
+  font-size: 0.9375rem;
+}
+
+.work-inline--danger .field__input {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+.work-inline--warning .field__input,
+.work-inline--warning .field__select {
+  border-color: var(--color-warning);
+}
+
+.work-inline--status-doing .field__select {
+  border-color: var(--color-accent);
+}
+
+.work-inline--status-blocked .field__select {
+  border-color: var(--color-warning);
+}
+
+.work-inline--status-done .field__select {
+  border-color: var(--color-success);
+}
+
+.work-row--add {
+  min-height: var(--target);
+}
+
+.work-add {
+  grid-column: 2 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.work-add__input {
+  flex: 1 1 14rem;
+}
+
+.work-add__btn {
+  grid-column: 2 / -1;
+  justify-self: start;
+}
+
+/* 1024-1439: the sidebar leaves 44-54rem; the priority column moves into the title meta line. */
+@media (max-width: 1439.98px) and (min-width: 1024px) {
+  .work-list {
+    --work-cols: var(--target) var(--target) minmax(12rem, 1fr) minmax(6rem, 9rem) minmax(8.25rem, 8.5rem) minmax(6rem, 7.5rem) var(--target);
+  }
+
+  .work-row__priority-inline {
+    display: inline-flex;
+  }
+
+  .work-list__head > :nth-child(7),
+  .work-row__priority {
+    display: none;
+  }
+}
+
+/* Under 1024 (phones, and tablets where the sidebar leaves ~28rem) rows become cards. */
+@media (max-width: 1023.98px) {
+  .work-list__head {
+    display: none;
+  }
+
+  .work-row {
+    grid-template-columns: var(--target) minmax(0, 1fr) var(--target);
+    grid-template-areas:
+      'done main open'
+      'select editors editors';
+    row-gap: var(--space-2);
+    padding-block: var(--space-2);
+  }
+
+  .work-row__done { grid-area: done; }
+  .work-row__main { grid-area: main; }
+  .work-row__open { grid-area: open; }
+  .work-row__select { grid-area: select; }
+
+  .work-row__assignee,
+  .work-row__due,
+  .work-row__status,
+  .work-row__priority {
+    grid-area: editors;
+  }
+
+  .work-row__assignee { grid-column: 2 / -1; }
+
+  .work-row__due,
+  .work-row__status,
+  .work-row__priority {
+    display: none;
+  }
+
+  .work-row--selected .work-row__due,
+  .work-row:focus-within .work-row__due,
+  .work-row:focus-within .work-row__status,
+  .work-row:focus-within .work-row__priority {
+    display: block;
+  }
+
+  .work-row:focus-within {
+    grid-template-areas:
+      'done main open'
+      'select editors editors'
+      'select due due'
+      'select status status'
+      'select priority priority';
+  }
+
+  .work-row:focus-within .work-row__due { grid-area: due; }
+  .work-row:focus-within .work-row__status { grid-area: status; }
+  .work-row:focus-within .work-row__priority { grid-area: priority; }
+
+  .work-add,
+  .work-add__btn {
+    grid-column: 1 / -1;
+  }
+}
