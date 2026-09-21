@@ -94,6 +94,8 @@ export const coreStrings: StringTable = {
   'core.calendar.allDay': { en: 'All day', es: 'Todo el día' },
   'core.timeline.dependsOn': { en: 'after {items}', es: 'después de {items}' },
   'core.dialog.close': { en: 'Close dialog', es: 'Cerrar diálogo' },
+  'core.data.conflict': { en: 'Updated by {name} just now; your change was applied over theirs', es: '{name} lo actualizó hace un momento; tu cambio se aplicó sobre el suyo' },
+  'core.data.someone': { en: 'someone else', es: 'otra persona' },
   'core.approval.approve': { en: 'Approve', es: 'Aprobar' },
   'core.approval.reject': { en: 'Request changes', es: 'Pedir cambios' },
   'core.approval.comment': { en: 'Comment', es: 'Comentar' },

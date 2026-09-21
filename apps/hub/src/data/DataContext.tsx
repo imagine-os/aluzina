@@ -1,4 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { demoUserById } from '../auth/demoUsers';
+import { useSession } from '../auth/SessionProvider';
+import { toast } from '../components/atom/Toast/Toast';
+import { useT } from '../i18n/I18nProvider';
 import { MockProvider } from './MockProvider';
 import type { DataProvider, Query, Row } from './provider';
 import type { EntityName } from './schema';
@@ -8,7 +12,30 @@ const Ctx = createContext<DataProvider | null>(null);
 /** Mounts the one provider for the app (MockProvider today, D-016). Pass `provider` to swap it in tests. */
 export function DataContextProvider({ provider, children }: { provider?: DataProvider; children: ReactNode }) {
   const value = useMemo(() => provider ?? new MockProvider(), [provider]);
-  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+  return (
+    <Ctx.Provider value={value}>
+      <DataSession provider={value} />
+      {children}
+    </Ctx.Provider>
+  );
+}
+
+/** Tells the provider who is writing and turns conflicts (D-024) into a toast naming the other writer. */
+function DataSession({ provider }: { provider: DataProvider }) {
+  const { user } = useSession();
+  const { t } = useT();
+  useEffect(() => {
+    provider.setActor(user.id);
+  }, [provider, user.id]);
+  useEffect(
+    () =>
+      provider.onConflict((c) => {
+        const name = (c.by && demoUserById(c.by)?.name) ?? t('core.data.someone');
+        toast(t('core.data.conflict', { name }));
+      }),
+    [provider, t],
+  );
+  return null;
 }
 
 /** The raw provider: `const data = useData(); await data.update('quotes', id, { status: 'selected' })`. */

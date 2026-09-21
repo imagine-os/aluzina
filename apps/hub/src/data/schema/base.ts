@@ -3,6 +3,8 @@ export interface BaseRow {
   id: string;
   created_at: string;
   updated_at: string;
+  /** Demo user id of the last writer (MockProvider sets it from the session; D-024 conflict notice names them). Seeds leave it unset. */
+  updated_by?: string | null;
 }
 
 /** ISO 8601 date (`YYYY-MM-DD`) or date-time. */

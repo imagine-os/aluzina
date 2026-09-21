@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { useSession } from '../../auth/SessionProvider';
 import { toast } from '../../components/atom/Toast/Toast';
 import { useData, useTable } from '../../data/DataContext';
 import type { ConsistencyCheck, Project } from '../../data/schema';
@@ -21,6 +22,7 @@ export interface ApprovalEntry {
 export function useApprovals() {
   const { t } = useT();
   const data = useData();
+  const { user } = useSession();
   const { rows: projects, loading } = useTable('projects', { orderBy: 'dueDate' });
   const { rows: checks } = useTable('consistencyChecks');
   const { rows: alerts } = useTable('alerts');
@@ -79,10 +81,17 @@ export function useApprovals() {
         startDate: null,
         dueDate: null,
         dependsOn: [],
+        sectionId: null,
+        description: '',
+        createdById: user.id,
+        tags: ['aprobación'],
+        subtasks: [],
+        completedAt: null,
+        order: 0,
       });
       toast(t('founder.approvals.rejected', { project: project.name }));
     },
-    [byId, data, t],
+    [byId, data, t, user.id],
   );
 
   /** Comment: there is no comments entity yet, so the note is filed as a task for the lead designer. */
@@ -100,10 +109,17 @@ export function useApprovals() {
         startDate: null,
         dueDate: null,
         dependsOn: [],
+        sectionId: null,
+        description: '',
+        createdById: user.id,
+        tags: ['aprobación'],
+        subtasks: [],
+        completedAt: null,
+        order: 0,
       });
       toast(t('founder.approvals.commented'));
     },
-    [byId, data, t],
+    [byId, data, t, user.id],
   );
 
   return { projects, checks, waiting, decided, loading, approve, requestChanges, comment };

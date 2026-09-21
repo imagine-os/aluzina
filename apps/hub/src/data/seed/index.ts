@@ -3,7 +3,7 @@ import type { EntityName } from '../schema';
 import { SEED_AT, type SeedCtx, type SeedModule } from './types';
 
 /** Bump when the seed shape changes so existing browsers re-seed (MockProvider stores it). */
-export const SEED_VERSION = 2;
+export const SEED_VERSION = 3;
 
 /** One file per area, globbed: add `src/data/seed/<area>.ts` exporting `seed(ctx)` (+ `order`), never edit this file. */
 const modules = import.meta.glob<SeedModule>(['./*.ts', '!./index.ts', '!./types.ts'], { eager: true });

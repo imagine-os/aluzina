@@ -25,18 +25,61 @@ export interface Project extends BaseRow {
 export type TaskStatus = 'todo' | 'doing' | 'blocked' | 'done';
 export type Priority = 'low' | 'normal' | 'high' | 'urgent';
 
+/** Asana-style section of a project's work (D-022): List groups, Board columns and Timeline swimlanes. `projectId` null = studio-wide sections. */
+export interface Section extends BaseRow {
+  projectId: Id | null;
+  name: string;
+  order: number;
+}
+
+export interface Subtask {
+  id: string;
+  label: string;
+  done: boolean;
+}
+
 export interface Task extends BaseRow {
   projectId: Id | null;
+  /** Section inside the project (D-022); null = "no section" group. */
+  sectionId: Id | null;
   title: string;
+  description: string;
   ownerRole: string;
   assigneeId: Id;
+  /** Who created the task (`tasks.own.write` lets the creator edit it); null for seeded rows. */
+  createdById: Id | null;
   status: TaskStatus;
   priority: Priority;
-  /** Planned start; null when only the due date is known (the schedule then derives a start). */
+  /** Planned start; null when only the due date is known (Timeline then renders a milestone). */
   startDate: ISODate | null;
   dueDate: ISODate | null;
-  /** Ids of tasks that must finish first (Timeline dependency indicator). */
+  /** Ids of tasks that must finish first (Timeline dependency arrows). */
   dependsOn: Id[];
+  tags: string[];
+  subtasks: Subtask[];
+  /** Set when status becomes done, cleared when reopened. */
+  completedAt: ISODate | null;
+  /** Manual order inside the section (lower first). */
+  order: number;
+}
+
+/** Comment thread on any row (D-022): `entity` is the table name, `entityId` the row. */
+export interface Comment extends BaseRow {
+  entity: string;
+  entityId: Id;
+  authorId: Id;
+  body: string;
+}
+
+/** One line per changed field, written by the provider on every update (D-022): "Miguel changed status: doing -> done". */
+export interface Activity extends BaseRow {
+  entity: string;
+  entityId: Id;
+  actorId: Id | null;
+  field: string;
+  from: string | null;
+  to: string | null;
+  at: ISODate;
 }
 
 export type MeetingKind = 'client' | 'supplier' | 'internal' | 'site-visit' | 'strategic';

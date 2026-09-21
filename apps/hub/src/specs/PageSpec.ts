@@ -47,7 +47,7 @@ export interface PageSpec {
 }
 
 const REQUIRED: (keyof PageSpec)[] = ['code', 'name', 'purpose', 'surface', 'layout', 'dataTables', 'roles', 'logic', 'components', 'actions', 'checkedAt'];
-const CODE_RE = /^(HUB|BOS|[PCAOSGMD])-\d{2}$/;
+const CODE_RE = /^(HUB|BOS|[PCAOSGMDW])-\d{2}$/;
 
 /** Validates the required fields once at module load, so a half-written spec fails fast in dev and in the smoke test. */
 export function defineSpec(spec: PageSpec): PageSpec {

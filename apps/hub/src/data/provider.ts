@@ -23,6 +23,25 @@ export interface Change<E extends EntityName = EntityName> {
 
 export type Unsubscribe = () => void;
 
+/** Options a write may carry (P-14). */
+export interface WriteOptions {
+  /** The row's `updated_at` the caller's edit was based on; a newer stored row is a conflict (D-024). */
+  basedOn?: string;
+}
+
+/**
+ * Raised when a write was based on an older `updated_at` than the stored row (D-024): the write is still
+ * applied (last-write-wins) and the UI tells the person whose change was overwritten and by whom.
+ */
+export interface Conflict {
+  entity: EntityName;
+  id: string;
+  /** Last writer of the stored row before this write (demo user id), when known. */
+  by: string | null;
+  /** `updated_at` of the stored row before this write. */
+  at: string;
+}
+
 /**
  * The data seam (D-016, P-14). MockProvider today (localStorage), Supabase behind the same
  * interface later; Company-OS only when Justin says so (P-15). Every method is async so the swap is silent.
@@ -32,10 +51,17 @@ export interface DataProvider {
   list<E extends EntityName>(entity: E, query?: Query<E>): Promise<Row<E>[]>;
   get<E extends EntityName>(entity: E, id: string): Promise<Row<E> | null>;
   create<E extends EntityName>(entity: E, data: NewRow<E>, id?: string): Promise<Row<E>>;
-  update<E extends EntityName>(entity: E, id: string, patch: Patch<E>): Promise<Row<E>>;
+  update<E extends EntityName>(entity: E, id: string, patch: Patch<E>, options?: WriteOptions): Promise<Row<E>>;
   remove<E extends EntityName>(entity: E, id: string): Promise<void>;
-  /** Fires after every write to `entity` (or to any entity when `entity` is `'*'`). */
+  /**
+   * Fires after every write to `entity` (or to any entity when `entity` is `'*'`), including writes made
+   * in another tab or by another person: this is the realtime seam (D-023) Supabase Realtime plugs into.
+   */
   subscribe(entity: EntityName | '*', cb: (change: Change) => void): Unsubscribe;
+  /** Fires when a write with `basedOn` found a newer stored row (D-024). */
+  onConflict(cb: (conflict: Conflict) => void): Unsubscribe;
+  /** Who is writing (demo user id today, auth user later): stamped on `updated_by` and on `activity` rows. */
+  setActor(userId: string | null): void;
   /** Drops local state and re-seeds (dev tools). */
   reset(): Promise<void>;
 }

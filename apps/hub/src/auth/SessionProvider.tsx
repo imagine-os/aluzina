@@ -6,6 +6,11 @@ import { isRoleId, type Role } from './roles';
 export const SESSION_STORAGE_KEY = 'aluzina.session';
 /** Mirror of `devMode` kept for the pre-paint script in index.html and older tooling. */
 export const DEV_MODE_STORAGE_KEY = 'aluzina.devMode';
+/**
+ * sessionStorage (per tab): the demo user this tab was opened as through `?as=<role>`. It wins over the
+ * shared `aluzina.session` on reload, so two tabs can stay two different people (D-04 multiuser aid, D-023).
+ */
+export const TAB_USER_STORAGE_KEY = 'aluzina.tabUser';
 
 interface StoredSession {
   userId: string;
@@ -55,11 +60,24 @@ function readInitial(): StoredSession {
     /* storage unavailable or corrupt */
   }
   let userId = typeof stored.userId === 'string' && demoUserById(stored.userId) ? stored.userId : DEFAULT_USER_ID;
+  try {
+    const tabUser = sessionStorage.getItem(TAB_USER_STORAGE_KEY);
+    if (tabUser && demoUserById(tabUser)) userId = tabUser;
+  } catch {
+    /* sessionStorage unavailable */
+  }
   // `?as=<role>` on first load (thumbnails, QA, deep links): documented in docs/reference/surfaces.md.
   const as = readQueryRole();
   if (as && isRoleId(as)) {
     const u = demoUserForRole(as);
-    if (u) userId = u.id;
+    if (u) {
+      userId = u.id;
+      try {
+        sessionStorage.setItem(TAB_USER_STORAGE_KEY, u.id);
+      } catch {
+        /* sessionStorage unavailable */
+      }
+    }
     stored.viewAs = null;
   }
   return { userId, viewAs: typeof stored.viewAs === 'string' ? stored.viewAs : null, devMode: Boolean(stored.devMode) };
@@ -87,6 +105,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const switchUser = useCallback((roleOrUserId: string) => {
     const u = demoUserById(roleOrUserId) ?? demoUserForRole(roleOrUserId);
     if (!u) return;
+    try {
+      sessionStorage.setItem(TAB_USER_STORAGE_KEY, u.id);
+    } catch {
+      /* sessionStorage unavailable */
+    }
     setState((s) => ({ ...s, userId: u.id, viewAs: null }));
   }, []);
 
