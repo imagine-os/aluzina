@@ -18,7 +18,7 @@ Entry point to every surface of the Aluzina Business OS for Justin, the owner, t
 
 1. `HubHeader`: brand mark + "Aluzina"; `RoleSwitcher` ("Viewing as", native select of the six demo users); controls: language (shows the *other* language, EN/ES), theme (Light / Dark, `aria-pressed`), dev mode (Dev on / Dev off, `aria-pressed`).
 2. Hero: h1 "Aluzina Business OS", one-line subtitle.
-2b. **Portals** grid: A-01 Founder (Alejandra Guerra), O-01 Administration and Operations (Miguel), S-01 Interior Design (Sarai), G-01 Graphic Design and Communication (Angélica) as `stub` cards (button: "Enter as <name> →"), C-01 Client portal (planned, Placeholder). Each with its deploy-time thumbnail.
+2b. **Portals** grid: A-01 Founder (Alejandra Guerra), O-01 Administration and Operations (Miguel), S-01 Interior Design (Sarai), G-01 Graphic Design and Communication (Angélica) as cards whose status (Live / Stub) is read from the registered dashboard route (button: "Enter as <name> →"), C-01 Client portal (planned, Placeholder). Each with its deploy-time thumbnail.
 3. Surfaces grid (`auto-fill, minmax(18rem, 1fr)`): BOS-01 Business OS prototype (live), P-00 Public website (live, aluzinaa.com), D-06 Docs (live, GitHub `docs/`), M-xx Ops manual (planned), D-02 Dev tools (live, `#/dev/components`). Each card starts with a 16 / 10 thumbnail (`./thumbs/<code>.jpg`, 640 x 400) or the bilingual "No preview yet" tile.
 3b. Prototype pages grid (`minmax(15rem, 1fr)`): BOS-02 ALUZINA Home, BOS-03 Cyber Bridge, BOS-04 Cyber Bridge Deck, BOS-05 Image Generation Plan, BOS-06 LOD Ladder, each with its thumbnail.
 4. Footer: version, "Source on GitHub", dev-mode hint.

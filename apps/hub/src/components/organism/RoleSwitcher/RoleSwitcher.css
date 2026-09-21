@@ -14,3 +14,10 @@
   min-width: 10rem;
   max-width: 18rem;
 }
+
+.role-switcher--compact .field__label {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}

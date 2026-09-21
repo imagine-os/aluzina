@@ -21,7 +21,6 @@ export function RoleSwitcher({ compact, onSwitched }: RoleSwitcherProps) {
       {!compact && <Avatar name={user.name} initials={user.initials} />}
       <Select
         label={t('core.session.viewingAs')}
-        hideLabel={compact}
         value={user.id}
         onChange={(e) => {
           switchUser(e.target.value);

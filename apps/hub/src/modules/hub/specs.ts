@@ -18,7 +18,7 @@ export const hubSpec = defineSpec({
   layout: [
     'HubHeader (brand, "Viewing as" RoleSwitcher, EN/ES, theme, dev mode)',
     'Title + subtitle',
-    'Portals grid: A-01 Founder, O-01 Administration and Operations, S-01 Interior Design, G-01 Graphic Design and Communication (stub cards that enter as the demo user), C-01 Client (planned)',
+    'Portals grid: A-01 Founder, O-01 Administration and Operations, S-01 Interior Design, G-01 Graphic Design and Communication (cards enter as the demo user; status Live / Stub read from the route manifest), C-01 Client (planned: no route)',
     'Surface card grid: BOS-01 prototype, P-00 website, D-06 docs, M-xx manual (planned), D-02 dev tools; each with a deploy-time thumbnail or the "No preview yet" tile',
     'Prototype pages grid (BOS-02..06)',
     'Footer (version, repo link, dev hint)',
@@ -67,6 +67,6 @@ export const hubSpec = defineSpec({
   notes: [
     'Demo simulator, canvas and plan viewer arrive in build plan step 4 (Dev tools).',
     'Business OS prototype (BOS-01) and its pages (BOS-02..06) are the static Claude Design bundle at ./business-os/ (D-007).',
-    'Portal dashboards are stubs until the four module workers land (build plan 9b).',
+    'Portal card status is derived from the registered dashboard route (built -> Live, stub -> Stub, no route -> Planned), never hard-coded.',
   ],
 });

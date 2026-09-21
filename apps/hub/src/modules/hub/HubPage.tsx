@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useRoutes } from '../../app/RoutesContext';
 import { demoUserForRole } from '../../auth/demoUsers';
 import { ROLE_META, type RoleId } from '../../auth/roles';
 import { useSession } from '../../auth/SessionProvider';
@@ -35,14 +36,10 @@ const SURFACES: SurfaceEntry[] = [
 interface PortalEntry {
   role: RoleId;
   key: string;
-  status: SurfaceStatus;
 }
 
-/** One card per role (D-014). `stub` while the portal module is a PageStub; the client portal is planned. */
-const PORTALS: PortalEntry[] = [
-  ...PORTAL_ROLES.map((role) => ({ role, key: role, status: 'stub' as SurfaceStatus })),
-  { role: 'client', key: 'client', status: 'planned' },
-];
+/** One card per role (D-014). Status comes from the route manifest at render time (see portalStatus); the client portal has no route yet. */
+const PORTALS: PortalEntry[] = [...PORTAL_ROLES.map((role) => ({ role, key: role })), { role: 'client', key: 'client' }];
 
 interface PrototypePage {
   id: PrototypePageId;
@@ -64,6 +61,13 @@ export function HubPage() {
   const { t } = useT();
   const { switchUser } = useSession();
   const navigate = useNavigate();
+  const routes = useRoutes();
+
+  /** Live / stub / planned from the registered dashboard route, so the card can never disagree with the manifest. */
+  const portalStatus = (role: RoleId): SurfaceStatus => {
+    const home = routes.find((r) => r.path === ROLE_META[role].homePath);
+    return home ? (home.status === 'built' ? 'live' : 'stub') : 'planned';
+  };
 
   const statusLabel = (s: SurfaceStatus) => t(s === 'live' ? 'hub.status.live' : s === 'stub' ? 'hub.status.stub' : 'hub.status.planned');
 
@@ -92,17 +96,18 @@ export function HubPage() {
               {PORTALS.map((p) => {
                 const meta = ROLE_META[p.role];
                 const user = demoUserForRole(p.role);
+                const status = portalStatus(p.role);
                 return (
                   <li key={p.role} data-portal={p.role}>
                     <SurfaceCard
                       code={meta.homeCode}
                       title={t(`hub.portals.${p.key}.title`)}
                       description={t(`hub.portals.${p.key}.desc`)}
-                      status={p.status}
-                      statusLabel={statusLabel(p.status)}
-                      onActivate={p.status === 'planned' ? undefined : () => enterAs(p.role)}
-                      ctaLabel={p.status === 'planned' || !user ? undefined : t('hub.cta.enterAs', { name: user.name })}
-                      image={p.status === 'planned' ? undefined : thumb(meta.homeCode)}
+                      status={status}
+                      statusLabel={statusLabel(status)}
+                      onActivate={status === 'planned' ? undefined : () => enterAs(p.role)}
+                      ctaLabel={status === 'planned' || !user ? undefined : t('hub.cta.enterAs', { name: user.name })}
+                      image={status === 'planned' ? undefined : thumb(meta.homeCode)}
                     />
                   </li>
                 );

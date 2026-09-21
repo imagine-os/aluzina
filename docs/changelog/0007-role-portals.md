@@ -95,3 +95,7 @@ Entities `clients`, `goals`, `partnerships`, `products`, `comments` / annotation
 - Pages workflow run [35550298235](https://github.com/imagine-os/aluzina/actions/runs/35550298235) on ae28fca: `build` (incl. `npm run thumbs`) and `deploy` success.
 - Live (Playwright over the proxy): https://imagine-os.github.io/aluzina/ HTTP 200, `__aluzina.version` 0.5.0, 36 routes, 0 stubs; Portals section with 4 real thumbnails; `thumbs/manifest.json` generated 2026-09-21T01:16:34Z, 15 items, no errors, A-01 / O-01 / S-01 / G-01 real captures; `?as=founder#/founder`, `?as=ops#/ops`, `?as=studio#/studio`, `?as=brand#/brand` render live with sidebars of 7 / 10 / 9 / 7 entries, `scrollWidth === clientWidth`, no console errors.
 - Live screenshots: 70 captures from the deployed site, `docs/screenshots/<CODE>/en-390.jpg` + `en-1280.jpg` for all 33 portal pages plus `es-1280.jpg` for A-01 / O-01 / S-01 / G-01, each folder with `routes.json` (bounded script, 0 failures).
+
+## Addendum (same day): hub card status from the manifest
+
+The hub's portal cards still read "Stub" after the modules landed because the status was hard-coded in `HubPage.tsx`. It is now derived from the registered dashboard route (`useRoutes()`: `built` -> Live, `stub` -> Stub, no route -> Planned), so the card can never disagree with `window.__aluzina.routes`. The header's "Viewing as" label is now visible in compact mode (small uppercase) instead of screen-reader only; the default demo user stays `dev` (open question for Justin in `docs/pages/HUB-01.md`). Live hub screenshot re-captured.
