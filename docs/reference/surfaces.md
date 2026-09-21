@@ -217,7 +217,7 @@ Static JSON written at deploy time next to the thumbnails; the contract a hub to
 }
 ```
 
-`code` is the page code the card carries; `path` is relative to the site root; `source` is the URL that was captured (local `127.0.0.1` URLs mean "from this build") or `placeholder` when the tile was written instead; `error` is present only for placeholders. Codes today (36): `BOS-01..06`, `A-01`, `O-01`, `S-01`, `G-01`, `K-01`, `D-12`, `D-02`, `D-03`, `D-05`, `D-07`, `D-08`, `D-09`, `D-11`, `D-14`, `D-15`, `D-06` (the in-app docs since 0013, no longer the GitHub capture), `M-01`, `C-01`, `P-01`, `P-05`, `G-08`, `A-08`, `O-11`, `S-10`, `S-11`, `K-04`, `P-00` (external), `HUB-01`. The hub reads `./thumbs/<code>.jpg?v=<buildId>` directly (`SurfaceCard` `image` prop) and does not depend on the manifest; a missing file renders the bilingual tile (`data-thumb="placeholder"`).
+`code` is the page code the card carries; `path` is relative to the site root; `source` is the URL that was captured (local `127.0.0.1` URLs mean "from this build") or `placeholder` when the tile was written instead; `error` is present only for placeholders. Codes today (34): `BOS-01..06`, `A-01`, `O-01`, `S-01`, `G-01`, `K-01`, `D-12`, `D-02`, `D-03`, `D-05`, `D-07`, `D-08`, `D-09`, `D-11`, `D-14`, `D-15`, `D-06` (the in-app docs since 0013, no longer the GitHub capture), `M-01`, `C-01`, `P-01`, `P-05`, `G-08`, `A-08`, `O-11`, `S-10`, `S-11`, `K-04`, `P-00` (external), `HUB-01`. The hub reads `./thumbs/<code>.jpg?v=<buildId>` directly (`SurfaceCard` `image` prop) and does not depend on the manifest; a missing file renders the bilingual tile (`data-thumb="placeholder"`).
 
 ### 1.5 Data provider (D-016)
 
