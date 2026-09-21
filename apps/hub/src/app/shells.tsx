@@ -6,6 +6,8 @@ import { Avatar } from '../components/atom/Avatar/Avatar';
 import { Badge } from '../components/atom/Badge/Badge';
 import { BrandMark } from '../components/atom/BrandMark/BrandMark';
 import { Button } from '../components/atom/Button/Button';
+import { Icon } from '../components/atom/Icon/Icon';
+import { resolveIcon } from '../components/atom/Icon/iconMap';
 import { ToggleButton } from '../components/atom/ToggleButton/ToggleButton';
 import { PresenceBar } from '../components/molecule/PresenceBar/PresenceBar';
 import { Drawer } from '../components/organism/Drawer/Drawer';
@@ -70,6 +72,21 @@ function groupRoutes(navRoutes: RouteDef[]): { group: string | undefined; routes
   return [...groups.entries()].map(([group, routes]) => ({ group, routes })).sort((a, b) => navGroupOrder(a.group) - navGroupOrder(b.group));
 }
 
+/**
+ * The glyph slot of a nav row: the drawn icon for the route's page code, then for its Unicode glyph, then
+ * the glyph text itself (docs/design/icons.md). Always decorative - the label next to it carries the
+ * meaning (P-03) - and modules never change: `nav.glyph` stays exactly as each module wrote it.
+ */
+function NavIcon({ route, className, fallbackDot }: { route: RouteDef; className?: string; fallbackDot?: boolean }) {
+  const name = resolveIcon(route.code, route.nav?.glyph);
+  if (!name && !route.nav?.glyph && !fallbackDot) return null;
+  return (
+    <span className={className} aria-hidden="true">
+      {name ? <Icon name={name} size="md" /> : (route.nav?.glyph ?? <Icon name="dot" size="md" />)}
+    </span>
+  );
+}
+
 function NavList({ routes, onNavigate }: { routes: RouteDef[]; onNavigate?: () => void }) {
   const { t } = useT();
   const { devMode } = useSession();
@@ -82,7 +99,7 @@ function NavList({ routes, onNavigate }: { routes: RouteDef[]; onNavigate?: () =
             {rs.map((r) => (
               <li key={r.path}>
                 <NavLink to={r.path} end className={({ isActive }) => `shell-nav__link${isActive ? ' shell-nav__link--active' : ''}`} onClick={onNavigate}>
-                  {r.nav?.glyph && <span className="shell-nav__glyph" aria-hidden="true">{r.nav.glyph}</span>}
+                  <NavIcon route={r} className="shell-nav__glyph" />
                   <span className="shell-nav__label">{t(r.nav!.labelKey)}</span>
                   {devMode && r.status === 'stub' && <Badge tone="warning">{t('core.shell.stub')}</Badge>}
                 </NavLink>
@@ -163,12 +180,12 @@ export function DesktopShell({ route, children }: { route: RouteDef; children: R
         <nav className="dshell__bottom" aria-label={t('core.shell.nav')}>
           {bottom.map((r) => (
             <NavLink key={r.path} to={r.path} end className={({ isActive }) => `dshell__bottom-link${isActive ? ' dshell__bottom-link--active' : ''}`}>
-              <span aria-hidden="true">{r.nav?.glyph ?? '•'}</span>
+              <NavIcon route={r} fallbackDot />
               <span>{t(r.nav!.labelKey)}</span>
             </NavLink>
           ))}
           <button type="button" className="dshell__bottom-link" onClick={() => setNavOpen(true)}>
-            <span aria-hidden="true">…</span>
+            <span aria-hidden="true"><Icon name="more" size="md" /></span>
             <span>{t('core.shell.more')}</span>
           </button>
         </nav>
@@ -204,7 +221,7 @@ export function PhoneShell({ route, children }: { route: RouteDef; children: Rea
         <nav className="dshell__bottom pshell__bottom" aria-label={t('core.shell.nav')}>
           {navRoutes.map((r) => (
             <NavLink key={r.path} to={r.path} end className={({ isActive }) => `dshell__bottom-link${isActive ? ' dshell__bottom-link--active' : ''}`}>
-              <span aria-hidden="true">{r.nav?.glyph ?? '•'}</span>
+              <NavIcon route={r} fallbackDot />
               <span>{t(r.nav!.labelKey)}</span>
             </NavLink>
           ))}

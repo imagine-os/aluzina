@@ -1,0 +1,101 @@
+{
+ "folderName": "18_ALMA PRANA 2026",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOwGLDXkJ4PtC_gIPWYaLKw/PROYECTOS%202026/18_ALMA%20PRANA%202026?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+ "crawledAt": "2026-09-21T20:48:48.867Z",
+ "indexedAt": "2026-09-21T21:17:52.579Z",
+ "fileCount": 3,
+ "totalBytes": 17474458,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/alma-prana-2026/",
+ "files": [
+  {
+   "path": "ALMA PRANA 1.pdf",
+   "name": "ALMA PRANA 1.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 57331,
+   "modified": "11 days ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHICBqbjaY8N9elIXJhxGds/PROYECTOS%202026/18_ALMA%20PRANA%202026/ALMA%20PRANA%201.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+   "downloaded": true,
+   "slug": "alma-prana-1",
+   "thumb": "thumbs/alma-prana-1.jpg",
+   "pages": [
+    "pages/alma-prana-1-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#000101",
+    "#000000",
+    "#f5f5f5",
+    "#a1a1a1",
+    "#313232",
+    "#010101"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "ALMA PRANA.pdf",
+   "name": "ALMA PRANA.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 377766,
+   "modified": "11 days ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOONSUjVbDkTxOT01M4nn4M/PROYECTOS%202026/18_ALMA%20PRANA%202026/ALMA%20PRANA.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+   "downloaded": true,
+   "slug": "alma-prana",
+   "thumb": "thumbs/alma-prana.jpg",
+   "pages": [
+    "pages/alma-prana-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#040404",
+    "#a1a1a1",
+    "#434343",
+    "#dcdcdc",
+    "#f7f7f7"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "Alma santa.pdf",
+   "name": "Alma santa.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 17039360,
+   "modified": "11 days ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AD5ai7fgB5kO0aetKbT9Kro/PROYECTOS%202026/18_ALMA%20PRANA%202026/Alma%20santa.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+   "downloaded": false,
+   "slug": "alma-santa",
+   "thumb": "thumbs/alma-santa.jpg",
+   "pages": [
+    "pages/alma-santa-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#636363",
+    "#1c1c1c",
+    "#b2b2b2",
+    "#e4e4e4",
+    "#f8f8f8"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 3,
+  "pages": 3,
+  "bytes": 150523,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

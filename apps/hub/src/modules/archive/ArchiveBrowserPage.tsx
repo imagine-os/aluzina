@@ -272,6 +272,8 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
           {shown.map((p) => {
             const files = filesByProject.get(p.id) ?? [];
             const cover = p.coverAssetId ? (assetsById.get(p.coverAssetId)?.thumbnailUrl ?? null) : null;
+            // Files that carry at least one tag: how far the tagging pass has got on this project (ar-09).
+            const tagged = files.reduce((n, file) => n + (file.tags.length > 0 ? 1 : 0), 0);
             const life = LIFECYCLES.find((l) => l.id === lifecycleOf(p.pipelineStatus));
             return (
               <li key={p.id} data-project={p.id}>
@@ -284,6 +286,7 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
                         <span>{p.client}</span>
                         {p.year !== null && <span>· {p.year}</span>}
                         <span>· {files.length === 0 ? t('archive.browser.noFiles') : files.length === 1 ? t('archive.browser.filesOne') : t('archive.browser.files', { count: files.length })}</span>
+                        {tagged > 0 && <span>· {t('archive.browser.tagged', { count: tagged })}</span>}
                         {p.sourceFolderUrl && <span title={t('archive.browser.source')} aria-label={t('archive.browser.source')}>· ⛁</span>}
                       </span>
                       <span className="arc-card__badges">

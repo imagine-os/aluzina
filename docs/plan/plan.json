@@ -1,1532 +1,1594 @@
 {
-  "version": "0.12.0",
-  "updatedAt": "2026-09-21",
-  "source": "docs/build-plan.md (steps 0-14, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
-  "statuses": [
-    "done",
-    "doing",
-    "next",
-    "backlog"
-  ],
-  "tasks": [
-    {
-      "id": "step-0",
-      "title": "Scaffold + Pages: monorepo, HUB-01, tokens, i18n, Placeholder, dev mode, actions manifest, Pages workflow, docs tree, live screenshots",
-      "step": "0",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "HUB-01"
-      ],
-      "dependsOn": [],
-      "changelog": "0001"
-    },
-    {
-      "id": "step-1",
-      "title": "Ingest the Claude Design export into apps/business-os, mount under the hub, record its structure",
-      "step": "1",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "BOS-01",
-        "BOS-02",
-        "BOS-03",
-        "BOS-04",
-        "BOS-05",
-        "BOS-06"
-      ],
-      "dependsOn": [
-        "step-0"
-      ],
-      "changelog": "0003"
-    },
-    {
-      "id": "step-2",
-      "title": "Audit the export against P-01..P-15; write docs/reference/business-os-audit.md",
-      "step": "2",
-      "status": "next",
-      "model": "Fable 5.1, Sonnet 5",
-      "codes": [
-        "BOS-01"
-      ],
-      "dependsOn": [
-        "step-1"
-      ]
-    },
-    {
-      "id": "step-3",
-      "title": "Module split + PageSpecs + page docs + screenshots for the export; qa:responsive and strings-coverage check",
-      "step": "3",
-      "status": "backlog",
-      "model": "Opus 5, Sonnet 5, Fable 5.1",
-      "codes": [
-        "BOS-01"
-      ],
-      "dependsOn": [
-        "step-2"
-      ]
-    },
-    {
-      "id": "step-4",
-      "title": "Hub tools (done via pass 0013): D-05 plan viewer, D-07 canvas, D-08 demo simulator, D-09 actions, D-14 dev tokens, D-11 testing hub; D-10 design tokens in the design module (0014)",
-      "step": "4",
-      "status": "done",
-      "model": "Fable 5.1, Opus 5",
-      "codes": [
-        "D-05",
-        "D-07",
-        "D-08",
-        "D-09",
-        "D-14",
-        "D-11",
-        "D-10"
-      ],
-      "dependsOn": [
-        "step-9a"
-      ],
-      "changelog": "0013"
-    },
-    {
-      "id": "step-5",
-      "title": "Surfaces (done via pass 0013): client app C-01..C-06, in-app docs D-06 / D-15, ops manual M-01..M-08, public P-01..P-05; open: client proposal view (step-5-proposal)",
-      "step": "5",
-      "status": "done",
-      "model": "Opus 5, Fable 5.1",
-      "codes": [
-        "C-01",
-        "M-01",
-        "D-06",
-        "D-15",
-        "P-01",
-        "P-05"
-      ],
-      "dependsOn": [
-        "step-9a",
-        "step-12"
-      ],
-      "changelog": "0013"
-    },
-    {
-      "id": "step-6",
-      "title": "Spanish fill pass over every strings table",
-      "step": "6",
-      "status": "backlog",
-      "model": "Sonnet 5",
-      "codes": [],
-      "dependsOn": [
-        "step-9b"
-      ]
-    },
-    {
-      "id": "step-7",
-      "title": "Data provider seam (rest): feedback table + FeedbackButton, WebMCP generation from the manifest",
-      "step": "7",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [],
-      "dependsOn": [
-        "step-9a",
-        "pass-0013-foundation"
-      ]
-    },
-    {
-      "id": "step-8",
-      "title": "Multiplayer / realtime: plan doc, version column, offline queue, realtime subscriptions",
-      "step": "8",
-      "status": "backlog",
-      "model": "Fable 5.1, Opus 5",
-      "codes": [],
-      "dependsOn": [
-        "step-7",
-        "step-10"
-      ]
-    },
-    {
-      "id": "step-9a",
-      "title": "Portal foundation: auth, registry, shells, DataProvider + MockProvider, component library, D-02 / D-03, hub Portals",
-      "step": "9a",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "HUB-01",
-        "D-02",
-        "D-03",
-        "A-01",
-        "O-01",
-        "S-01",
-        "G-01"
-      ],
-      "dependsOn": [
-        "step-0"
-      ],
-      "changelog": "0006"
-    },
-    {
-      "id": "step-9b",
-      "title": "Four portal modules in parallel: Founder A-xx, Operations O-xx, Studio S-xx, Brand G-xx",
-      "step": "9b",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "A-01",
-        "O-01",
-        "S-01",
-        "G-01"
-      ],
-      "dependsOn": [
-        "step-9a"
-      ],
-      "changelog": "0007"
-    },
-    {
-      "id": "step-9c",
-      "title": "Integration of the portal pass: Placeholder wrapper, shared fixes, smoke over 36 routes, live screenshots",
-      "step": "9c",
-      "status": "done",
-      "model": "Fable 5.1, Sonnet 5",
-      "codes": [
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "step-9b"
-      ],
-      "changelog": "0007"
-    },
-    {
-      "id": "step-10",
-      "title": "Asana-style Work views W-01 / W-02, sections / comments / activity, cross-tab realtime and presence, D-04",
-      "step": "10",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "W-01",
-        "W-02",
-        "D-04"
-      ],
-      "dependsOn": [
-        "step-9c"
-      ],
-      "changelog": "0008"
-    },
-    {
-      "id": "step-11",
-      "title": "Client portal + realtime provider: Supabase Realtime / Presence adapters, version column, views table, pointer drag",
-      "step": "11",
-      "status": "backlog",
-      "model": "Opus 5, Fable 5.1",
-      "codes": [
-        "C-01",
-        "W-01",
-        "W-02"
-      ],
-      "dependsOn": [
-        "step-10",
-        "pass-0013-client"
-      ]
-    },
-    {
-      "id": "step-12",
-      "title": "Spaces: the Hub's relational organizer replacing the Slack sidebar, K-01..K-06, catalogs, knowledge docs",
-      "step": "12",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "K-01",
-        "K-02",
-        "K-03",
-        "K-04",
-        "K-05",
-        "K-06",
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "step-10"
-      ],
-      "changelog": "0009"
-    },
-    {
-      "id": "qa-0010",
-      "title": "QA fixes: 44px targets and 16px fonts from the Work views matrix",
-      "step": "10",
-      "status": "done",
-      "model": "Sonnet 5",
-      "codes": [
-        "W-01",
-        "W-02"
-      ],
-      "dependsOn": [
-        "step-10"
-      ],
-      "changelog": "0010"
-    },
-    {
-      "id": "step-13",
-      "title": "Pass 0013: the service playbook into the product + the Hub bundle (foundation, twelve workers, integration; screenshots and Spanish fill follow)",
-      "step": "13",
-      "status": "done",
-      "model": "Fable 5.1, Opus 5, Sonnet 5",
-      "codes": [
-        "P-01",
-        "P-05",
-        "C-01",
-        "M-01",
-        "D-05",
-        "D-06",
-        "D-07",
-        "D-08",
-        "D-09",
-        "D-14",
-        "D-11",
-        "D-15",
-        "A-08",
-        "O-11",
-        "S-10",
-        "S-11",
-        "G-08",
-        "K-04",
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "step-12"
-      ],
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-foundation",
-      "title": "Foundation: prompt 0009, knowledge/service-playbook.md, domain/playbook.ts, entities leads / engagements / revisionItems / changeOrders / purchases / siteReports / messages, permissions, nav groups, actions bus, plan.json, hub cards, D-033..D-037",
-      "step": "13",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "step-12"
-      ],
-      "owner": "foundation",
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-public",
-      "title": "Module public: services pages from SERVICES + intake flow writing leads (P-01..)",
-      "step": "13",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "P-01",
-        "P-02",
-        "P-03",
-        "P-04",
-        "P-05"
-      ],
-      "dependsOn": [
-        "pass-0013-foundation"
-      ],
-      "owner": "public",
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-client",
-      "title": "Module client: client app on PhoneShell (own projects, engagement progress, revision matrix, messages, payments read) C-01..",
-      "step": "13",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "C-01",
-        "C-02",
-        "C-03",
-        "C-04",
-        "C-05",
-        "C-06"
-      ],
-      "dependsOn": [
-        "pass-0013-foundation"
-      ],
-      "owner": "client",
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-crm",
-      "title": "CRM pipeline on the playbook statuses (A-08 leads, A-03 rework, O-11..O-13 execution control) + studio service checklist S-10 and revision matrix S-11",
-      "step": "13",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "A-03",
-        "A-08",
-        "O-11",
-        "O-12",
-        "O-13",
-        "S-10",
-        "S-11"
-      ],
-      "dependsOn": [
-        "pass-0013-foundation"
-      ],
-      "owner": "crm",
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-manual",
-      "title": "Module manual: bilingual ops manual from the playbook (M-01..)",
-      "step": "13",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "M-01",
-        "M-02",
-        "M-03",
-        "M-04",
-        "M-05",
-        "M-06",
-        "M-07",
-        "M-08"
-      ],
-      "dependsOn": [
-        "pass-0013-foundation"
-      ],
-      "owner": "manual",
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-docs",
-      "title": "Module docs: in-app docs viewer over the repo docs (D-06)",
-      "step": "13",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "D-06",
-        "D-15"
-      ],
-      "dependsOn": [
-        "pass-0013-foundation"
-      ],
-      "owner": "docs",
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-devtools",
-      "title": "Dev tools: plan viewer D-05 (kanban / list / timeline from plan.json), canvas D-07, demo simulator D-08, actions D-09, tokens D-10",
-      "step": "13",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "D-05",
-        "D-07",
-        "D-08"
-      ],
-      "dependsOn": [
-        "pass-0013-foundation"
-      ],
-      "owner": "devtools",
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-qa",
-      "title": "Module qa: D-09 actions registry, D-14 design tokens with contrast, D-11 testing hub (QA matrix, specCompleteness, placeholder counts)",
-      "step": "13",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "D-09",
-        "D-14",
-        "D-11"
-      ],
-      "dependsOn": [
-        "pass-0013-foundation"
-      ],
-      "owner": "qa",
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-integration",
-      "title": "Integration: twelve _pending drafts merged, shared library fixes, changelog 0013, version 0.10.0, rebase onto 0014 / 0015, build green, smoke over 113 routes, deploy",
-      "step": "13",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "pass-0013-public",
-        "pass-0013-client",
-        "pass-0013-crm",
-        "pass-0013-manual",
-        "pass-0013-docs",
-        "pass-0013-devtools",
-        "pass-0013-qa"
-      ],
-      "owner": "integration",
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-screenshots",
-      "title": "Live screenshots of the new pages at 390 / 1280 / 1920 EN + ES",
-      "step": "13",
-      "status": "done",
-      "model": "Sonnet 5",
-      "codes": [
-        "P-01",
-        "P-02",
-        "P-03",
-        "P-04",
-        "P-05",
-        "C-01",
-        "C-02",
-        "C-03",
-        "C-04",
-        "C-05",
-        "C-06",
-        "M-01",
-        "M-02",
-        "M-03",
-        "M-04",
-        "M-05",
-        "M-06",
-        "M-07",
-        "M-08",
-        "D-05",
-        "D-06",
-        "D-07",
-        "D-08",
-        "D-09",
-        "D-11",
-        "D-14",
-        "D-15",
-        "A-03",
-        "A-08",
-        "O-11",
-        "O-12",
-        "O-13",
-        "S-10",
-        "S-11",
-        "G-08",
-        "K-04",
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "pass-0013-integration"
-      ],
-      "changelog": "0016"
-    },
-    {
-      "id": "pass-0013-spanish",
-      "title": "Spanish fill over the new strings tables and the playbook translations",
-      "step": "13",
-      "status": "done",
-      "model": "Sonnet 5",
-      "codes": [],
-      "dependsOn": [
-        "pass-0013-integration"
-      ],
-      "changelog": "0016"
-    },
-    {
-      "id": "R1",
-      "title": "Comms: channels and DMs on Spaces, presence, mentions, notifications; transport integrations later",
-      "step": "R1",
-      "status": "backlog",
-      "model": "Fable 5.1, Opus 5",
-      "codes": [
-        "K-01"
-      ],
-      "dependsOn": [
-        "step-12",
-        "step-11"
-      ]
-    },
-    {
-      "id": "R2",
-      "title": "CRM: first pages done in 0013 (A-08, A-03, O-11..O-13); open: follow-ups (D-020), A-06 / K-05 Clients on leads, leads.read views",
-      "step": "R2",
-      "status": "doing",
-      "model": "Opus 5",
-      "codes": [
-        "A-03",
-        "A-06",
-        "K-05"
-      ],
-      "dependsOn": [
-        "step-12",
-        "pass-0013-crm"
-      ]
-    },
-    {
-      "id": "R3",
-      "title": "Documents and e-sign: templates as first-class assets, generation from data, approval chain, versions",
-      "step": "R3",
-      "status": "backlog",
-      "model": "Fable 5.1, Opus 5",
-      "codes": [
-        "O-08",
-        "A-04"
-      ],
-      "dependsOn": [
-        "step-12",
-        "R2"
-      ]
-    },
-    {
-      "id": "R4",
-      "title": "Drafting / CAD viewer and render pipeline (S-05, S-07)",
-      "step": "R4",
-      "status": "backlog",
-      "model": "Fable 5.1, Opus 5",
-      "codes": [
-        "S-05",
-        "S-07"
-      ],
-      "dependsOn": [
-        "step-12"
-      ]
-    },
-    {
-      "id": "R5",
-      "title": "Research assistant over the actions registry and the knowledge base",
-      "step": "R5",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [],
-      "dependsOn": [
-        "pass-0013-foundation",
-        "step-12"
-      ]
-    },
-    {
-      "id": "R6",
-      "title": "Finance: invoices, payments, who-owes-what, payroll (Stripe)",
-      "step": "R6",
-      "status": "backlog",
-      "model": "Fable 5.1, Opus 5",
-      "codes": [
-        "O-07"
-      ],
-      "dependsOn": [
-        "R2"
-      ]
-    },
-    {
-      "id": "R7",
-      "title": "Public website builder: pages from Spaces posts + case studies, brand kit tokens, publish to Pages",
-      "step": "R7",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "P-01"
-      ],
-      "dependsOn": [
-        "step-12",
-        "R3",
-        "pass-0013-public"
-      ]
-    },
-    {
-      "id": "R8",
-      "title": "Marketing production and scheduler: content calendar, review through G-06, scheduler, metrics",
-      "step": "R8",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "G-06"
-      ],
-      "dependsOn": [
-        "R1",
-        "R7"
-      ]
-    },
-    {
-      "id": "R9",
-      "title": "Integrations layer: Slack export, Asana, Google Drive / Calendar behind one seam",
-      "step": "R9",
-      "status": "backlog",
-      "model": "Fable 5.1, Sonnet 5",
-      "codes": [
-        "K-06"
-      ],
-      "dependsOn": [
-        "step-12",
-        "R1"
-      ]
-    },
-    {
-      "id": "R10",
-      "title": "Archive intake: website, social and Drive ingestion into Spaces posts + repo files",
-      "step": "R10",
-      "status": "backlog",
-      "model": "Fable 5.1, Sonnet 5",
-      "codes": [
-        "K-06"
-      ],
-      "dependsOn": [
-        "step-12"
-      ]
-    },
-    {
-      "id": "kb-spaces-followups",
-      "title": "Spaces follow-ups: Slack export import behind K-06, move / reorder UI, tag editor, visibility enforcement, post versions, file posts, 4K captures",
-      "step": "12",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "K-06",
-        "K-02",
-        "K-04"
-      ],
-      "dependsOn": [
-        "step-12"
-      ]
-    },
-    {
-      "id": "kb-marketing-portal",
-      "title": "Marketing portal for the marketing role (today lands on /brand/spaces)",
-      "step": "5",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "G-01"
-      ],
-      "dependsOn": [
-        "step-12"
-      ]
-    },
-    {
-      "id": "kb-d020-data",
-      "title": "D-020 data layer (rest): partnerships, products, goals, followUps, comparisonGroups, scheduleItems, measurements, images + file storage; image url fields",
-      "step": "7",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [],
-      "dependsOn": [
-        "step-9c"
-      ]
-    },
-    {
-      "id": "kb-work-followups",
-      "title": "Step 11 Work follow-ups: pointer drag, section management UI, views table, 4K and dark captures, Open in Work links",
-      "step": "11",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "W-01",
-        "W-02"
-      ],
-      "dependsOn": [
-        "step-10"
-      ]
-    },
-    {
-      "id": "kb-alert-generation",
-      "title": "D-020 alert generation: one rule raising / resolving alerts from payments, quotes, deliveries and competition deadlines",
-      "step": "9c",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [
-        "O-09"
-      ],
-      "dependsOn": [
-        "step-9c"
-      ]
-    },
-    {
-      "id": "kb-seeds-more",
-      "title": "D-020 seeds: more plan / spec documents; competition rows when the 2027 list arrives",
-      "step": "9c",
-      "status": "backlog",
-      "model": "Sonnet 5",
-      "codes": [
-        "O-08",
-        "G-02"
-      ],
-      "dependsOn": [
-        "step-9c"
-      ]
-    },
-    {
-      "id": "kb-request-flow",
-      "title": "D-020 product: shared request flow into the brand queue, report templates for O-10, code-split per module",
-      "step": "9c",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "G-06",
-        "O-10"
-      ],
-      "dependsOn": [
-        "step-9c"
-      ]
-    },
-    {
-      "id": "kb-portal-polish",
-      "title": "Portal polish: 1920 / 2560 / 3840 captures of every portal page, dark pass, checkedAt to the full matrix",
-      "step": "9c",
-      "status": "backlog",
-      "model": "Sonnet 5",
-      "codes": [
-        "A-01",
-        "O-01",
-        "S-01",
-        "G-01"
-      ],
-      "dependsOn": [
-        "step-9c"
-      ]
-    },
-    {
-      "id": "kb-media-budget",
-      "title": "Media budget: convert apps/business-os world PNGs (93 MB) to webp once the audit says which are kept",
-      "step": "2",
-      "status": "backlog",
-      "model": "Sonnet 5",
-      "codes": [
-        "BOS-01"
-      ],
-      "dependsOn": [
-        "step-2"
-      ]
-    },
-    {
-      "id": "kb-alert-pattern",
-      "title": "Alert pattern across portals: before-urgent + deadlines from alerts with a lead-time rule, per role",
-      "step": "9c",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [
-        "O-09",
-        "G-02"
-      ],
-      "dependsOn": [
-        "step-9c"
-      ]
-    },
-    {
-      "id": "kb-data-version",
-      "title": "Data: version column + conflict UI, CompanyOsProvider stub, Supabase adapter behind DataProvider",
-      "step": "8",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [],
-      "dependsOn": [
-        "step-10"
-      ]
-    },
-    {
-      "id": "kb-library-dark",
-      "title": "Component library follow-ups: dark-theme pass over every example, FeedbackButton (P-08)",
-      "step": "7",
-      "status": "backlog",
-      "model": "Sonnet 5",
-      "codes": [
-        "D-02"
-      ],
-      "dependsOn": [
-        "step-9a"
-      ]
-    },
-    {
-      "id": "kb-knowledge-gaps",
-      "title": "Knowledge: competitions list, team surnames and languages, Hoy confirmation, Sporti, client contacts, deliverable durations",
-      "step": "12",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [],
-      "dependsOn": [
-        "step-12"
-      ]
-    },
-    {
-      "id": "kb-thumbs-dark",
-      "title": "Hub thumbnails: dark variant and 2x tiles for 4K",
-      "step": "0",
-      "status": "backlog",
-      "model": "Sonnet 5",
-      "codes": [
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "step-0"
-      ]
-    },
-    {
-      "id": "kb-await-lang",
-      "title": "Awaiting Justin: default language en vs es (D-004)",
-      "step": "0",
-      "status": "backlog",
-      "model": "Justin",
-      "codes": [],
-      "dependsOn": []
-    },
-    {
-      "id": "kb-await-public",
-      "title": "Awaiting Justin: does the public site join the OS as the P-xx module live at /#/services (P-01..P-05) or stay linked (P-00)?",
-      "step": "5",
-      "status": "backlog",
-      "model": "Justin",
-      "codes": [
-        "P-00",
-        "P-01"
-      ],
-      "dependsOn": []
-    },
-    {
-      "id": "kb-screenshots-0007",
-      "title": "Live screenshots of the 33 portal pages at 390 / 1280 EN (+ 1280 ES per dashboard); folded into the 0013 screenshot pass",
-      "step": "9c",
-      "status": "next",
-      "model": "Sonnet 5",
-      "codes": [
-        "A-01",
-        "O-01",
-        "S-01",
-        "G-01"
-      ],
-      "dependsOn": [
-        "pass-0013-integration"
-      ]
-    },
-    {
-      "id": "kb-thumbs",
-      "title": "Hub thumbnails generated at deploy time (D-011)",
-      "step": "0",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "step-0"
-      ],
-      "changelog": "0005"
-    },
-    {
-      "id": "kb-knowledge",
-      "title": "Knowledge base docs/knowledge with change tracking (D-012), team, competitions, roles-and-portals",
-      "step": "0",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [],
-      "dependsOn": [
-        "step-0"
-      ],
-      "changelog": "0005"
-    },
-    {
-      "id": "kb-deploy-0",
-      "title": "First Pages deploy green, live screenshots of HUB-01",
-      "step": "0",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "step-0"
-      ],
-      "changelog": "0002"
-    },
-    {
-      "id": "kb-deploy-1",
-      "title": "Prototype verified live at /business-os/, screenshots BOS-01 / BOS-02",
-      "step": "1",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "BOS-01",
-        "BOS-02"
-      ],
-      "dependsOn": [
-        "step-1"
-      ],
-      "changelog": "0004"
-    },
-    {
-      "id": "pass-0013-graph",
-      "title": "K-04 graph in five views on the graph gallery techniques, three.js lazy 3D view, system imagery (prompt 0012, D-053)",
-      "step": "13",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "K-04"
-      ],
-      "dependsOn": [
-        "pass-0013-foundation"
-      ],
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-brand-docs",
-      "title": "Portfolio and brochure: served PDFs, 56 page renders as visual memory, knowledge/brand.md part B, G-08 brand documents page, P-05, hub card (prompt 0011, D-049)",
-      "step": "13",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "G-08",
-        "P-05",
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "pass-0013-foundation"
-      ],
-      "changelog": "0013"
-    },
-    {
-      "id": "pass-0013-brand-data",
-      "title": "Brand documents as relational rows: assets entity, portfolio projects, clients, Spaces > Portfolio, 126 relations, services registry, depicts kind (prompt 0013, D-044..D-046)",
-      "step": "13",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "G-08",
-        "P-05",
-        "K-02",
-        "K-04"
-      ],
-      "dependsOn": [
-        "pass-0013-brand-docs"
-      ],
-      "changelog": "0013"
-    },
-    {
-      "id": "step-5-proposal",
-      "title": "Client proposal view of the full stack (the one step-5 surface still open)",
-      "step": "5",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "P-01",
-        "C-01"
-      ],
-      "dependsOn": [
-        "step-5"
-      ]
-    },
-    {
-      "id": "kb-0013-document-viewer",
-      "title": "DocumentViewer organism taking an Asset row (object -> iframe -> sentence, download, page fallback) replacing the G-08 / P-05 hand-rolled frame",
-      "step": "13",
-      "status": "next",
-      "model": "Opus 5",
-      "codes": [
-        "G-08",
-        "P-05"
-      ],
-      "dependsOn": [
-        "pass-0013-integration"
-      ]
-    },
-    {
-      "id": "kb-0013-components",
-      "title": "Library components requested by pass 0013: Stepper / FormStep, Accordion, ProgressBar / Meter, Checklist, MessageBubble / Thread, Swatch, Tooltip, ParamForm, DeviceFrame, ZoomStage, DependencyLane, Slider; Markdown heading ids + linkResolver",
-      "step": "13",
-      "status": "next",
-      "model": "Opus 5",
-      "codes": [
-        "P-03",
-        "C-01",
-        "C-02",
-        "S-10",
-        "O-13",
-        "D-09",
-        "D-14",
-        "D-05",
-        "D-07",
-        "D-08",
-        "K-04"
-      ],
-      "dependsOn": [
-        "pass-0013-integration"
-      ]
-    },
-    {
-      "id": "kb-0013-file-storage",
-      "title": "File-storage seam on the DataProvider (put(file) -> url): O-13 photos, G-08 replace document, intake floor plans, O-08 documents",
-      "step": "13",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [
-        "O-13",
-        "G-08",
-        "P-03",
-        "O-08"
-      ],
-      "dependsOn": [
-        "kb-data-version"
-      ]
-    },
-    {
-      "id": "kb-0013-governance",
-      "title": "useGovernance() / canEnter(project, status) in src/domain shared by S-10 / A-03 / O-11; GovernanceRule.pageCode[]; Work views migrate phase -> pipelineStatus then drop phase (D-048)",
-      "step": "13",
-      "status": "next",
-      "model": "Fable 5.1",
-      "codes": [
-        "A-03",
-        "S-10",
-        "O-11",
-        "W-01"
-      ],
-      "dependsOn": [
-        "pass-0013-integration"
-      ]
-    },
-    {
-      "id": "kb-0013-leads-policy",
-      "title": "leads row-level policy for anonymous visitors + rate limiting before /start goes on a public domain; leads.read view for brand / marketing",
-      "step": "13",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [
-        "P-03",
-        "A-08"
-      ],
-      "dependsOn": [
-        "kb-data-version"
-      ]
-    },
-    {
-      "id": "kb-0013-client-fields",
-      "title": "documents.clientVisible, own.brief.write, unread badge on the client bottom nav, client sign-off on change orders (clientApprovedAt), purchases.quoteId",
-      "step": "13",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [
-        "C-02",
-        "C-04",
-        "C-06",
-        "O-11",
-        "O-12"
-      ],
-      "dependsOn": [
-        "pass-0013-integration"
-      ]
-    },
-    {
-      "id": "kb-0013-feedback",
-      "title": "feedback entity + FeedbackButton (P-08): D-11 File a bug becomes real",
-      "step": "7",
-      "status": "next",
-      "model": "Fable 5.1",
-      "codes": [
-        "D-11"
-      ],
-      "dependsOn": [
-        "pass-0013-integration"
-      ]
-    },
-    {
-      "id": "kb-0013-webmcp",
-      "title": "WebMCP tool generation from window.__aluzina.actions.declared (paramSchema / toolJson move to src/actions); postMessage seam for D-08",
-      "step": "7",
-      "status": "next",
-      "model": "Fable 5.1",
-      "codes": [
-        "D-09",
-        "D-08"
-      ],
-      "dependsOn": [
-        "pass-0013-integration"
-      ]
-    },
-    {
-      "id": "kb-graph-label-collisions",
-      "title": "Graph views: label collision pass (hide / stagger by zoom), focus-neighbourhood framing in 3D, node cap re-check after a Slack import",
-      "step": "12",
-      "status": "next",
-      "model": "Opus 5",
-      "codes": [
-        "K-04"
-      ],
-      "dependsOn": [
-        "pass-0013-graph"
-      ]
-    },
-    {
-      "id": "kb-graph-thumb-codes",
-      "title": "pageCode as data on deliverables / tools; K-0x routes in scripts/thumbnails.mjs",
-      "step": "12",
-      "status": "next",
-      "model": "Sonnet 5",
-      "codes": [
-        "K-04",
-        "K-05"
-      ],
-      "dependsOn": [
-        "pass-0013-graph"
-      ]
-    },
-    {
-      "id": "kb-0013-tokens-pages",
-      "title": "D-14 dev tokens (contrast view) vs D-10 design tokens: one page or a clear split",
-      "step": "4",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [
-        "D-10",
-        "D-14"
-      ],
-      "dependsOn": [
-        "pass-0013-integration"
-      ]
-    },
-    {
-      "id": "kb-0013-qa-followups",
-      "title": "QA follow-ups: shadow elevations onto the 0014 shadow tokens, specCompleteness checkedAt threshold to seven widths, D-05 swimlane compact mode, S-11 / D-11 wide tables 768..1500, Spanish review of domain/playbook.ts with the founder",
-      "step": "13",
-      "status": "backlog",
-      "model": "Sonnet 5",
-      "codes": [
-        "D-05",
-        "D-11",
-        "S-11"
-      ],
-      "dependsOn": [
-        "pass-0013-integration"
-      ]
-    },
-    {
-      "id": "kb-0013-assets-followups",
-      "title": "K-05 catalog tab for assets; G-01 documents row from assets; brochure-only names as projects (founder decides)",
-      "step": "13",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "K-05",
-        "G-01"
-      ],
-      "dependsOn": [
-        "pass-0013-brand-data"
-      ]
-    },
-    {
-      "id": "kb-await-brand-era",
-      "title": "Awaiting founder: which brand era is current (portfolio Universo de Diseno vs brochure Interiorismo / Iluminacion); playbook services vs brochure trades; product line = Honey Valley?",
-      "step": "13",
-      "status": "backlog",
-      "model": "Justin",
-      "codes": [
-        "G-08",
-        "P-05"
-      ],
-      "dependsOn": []
-    },
-    {
-      "id": "kb-asana-importer",
-      "title": "Asana into the Work module: nesting, deliverables, project template (W-03) and the CSV importer",
-      "step": "12",
-      "status": "done",
-      "model": "Fable 5.1, Opus 5",
-      "codes": [
-        "W-01",
-        "W-02",
-        "W-03",
-        "K-06"
-      ],
-      "dependsOn": [
-        "step-12"
-      ],
-      "changelog": "0020"
-    },
-    {
-      "id": "ar-01",
-      "title": "Dropbox inventory crawl: depth-1 listing of every project folder in the four share links (scripts/archive/crawl-dropbox.mjs)",
-      "step": "14",
-      "status": "done",
-      "model": "Sonnet 5",
-      "codes": [
-        "S-12"
-      ],
-      "dependsOn": [],
-      "changelog": "0019"
-    },
-    {
-      "id": "ar-02",
-      "title": "Featured project deep crawl + renders: JOE GALLINA INTERIOR, 179 files, thumbnails and page renders of the design deliverables",
-      "step": "14",
-      "status": "done",
-      "model": "Sonnet 5",
-      "codes": [
-        "S-13"
-      ],
-      "dependsOn": [
-        "ar-01"
-      ],
-      "changelog": "0019"
-    },
-    {
-      "id": "ar-03",
-      "title": "Shared code: assets.kind file + archive fields, projects tags / cover / year, domain/archive.ts, FileIcon / Thumb / DocumentViewer, seed/archive.ts",
-      "step": "14",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "D-02"
-      ],
-      "dependsOn": [],
-      "changelog": "0019"
-    },
-    {
-      "id": "ar-04",
-      "title": "Archive module S-12 browser (prospects / in progress / past / all, portfolio set) and S-13 project portal (by stage / by folder, drawer preview) on studio, founder, brand",
-      "step": "14",
-      "status": "done",
-      "model": "Opus 5",
-      "codes": [
-        "S-12",
-        "S-13"
-      ],
-      "dependsOn": [
-        "ar-03"
-      ],
-      "changelog": "0019"
-    },
-    {
-      "id": "ar-05",
-      "title": "Integration: build-index with D-059 redaction, served renders, seed rules (quotes as prospects), hub card, docs, decisions D-055..D-061",
-      "step": "14",
-      "status": "done",
-      "model": "Fable 5.1",
-      "codes": [
-        "S-12",
-        "S-13",
-        "HUB-01"
-      ],
-      "dependsOn": [
-        "ar-01",
-        "ar-02",
-        "ar-03",
-        "ar-04"
-      ],
-      "changelog": "0019"
-    },
-    {
-      "id": "ar-06",
-      "title": "Deep index + previews for every 2026 project (crawl depth full, render allow-listed design files, serve)",
-      "step": "14",
-      "status": "next",
-      "model": "Sonnet 5",
-      "codes": [
-        "S-13"
-      ],
-      "dependsOn": [
-        "ar-05"
-      ]
-    },
-    {
-      "id": "ar-07",
-      "title": "Deep index for the 2020-2025 projects, one batch per year folder",
-      "step": "14",
-      "status": "backlog",
-      "model": "Sonnet 5",
-      "codes": [
-        "S-13"
-      ],
-      "dependsOn": [
-        "ar-06"
-      ]
-    },
-    {
-      "id": "ar-08",
-      "title": "Founder confirmation of inferred type / status / client / year per project (changelog 0019 section H), then seed fix",
-      "step": "14",
-      "status": "next",
-      "model": "Fable 5.1 + founder",
-      "codes": [
-        "S-12"
-      ],
-      "dependsOn": [
-        "ar-05"
-      ],
-      "owner": "founder"
-    },
-    {
-      "id": "ar-09",
-      "title": "Tag editing and cover picking in the product: archive.tagFile and archive.setCover write path through the provider (assets.manage)",
-      "step": "14",
-      "status": "next",
-      "model": "Opus 5",
-      "codes": [
-        "S-13"
-      ],
-      "dependsOn": [
-        "ar-05"
-      ]
-    },
-    {
-      "id": "ar-10",
-      "title": "Portfolio sets as Spaces collections (archive.openSetInSpaces) + Export PDF via the documents module R3",
-      "step": "14",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "S-12",
-        "K-02"
-      ],
-      "dependsOn": [
-        "ar-09",
-        "R3"
-      ]
-    },
-    {
-      "id": "ar-11",
-      "title": "Icon system: SVG icon set replacing the Unicode nav glyphs, entity icons, Thumb on hub cards / Spaces / catalog",
-      "step": "14",
-      "status": "next",
-      "model": "Fable 5.1 (design), Opus 5 (build)",
-      "codes": [
-        "HUB-01",
-        "K-01",
-        "K-05"
-      ],
-      "dependsOn": [
-        "ar-05"
-      ]
-    },
-    {
-      "id": "ar-12",
-      "title": "File storage seam put(file) -> url + Supabase storage + auth gate before any personal document is served (lifts D-059)",
-      "step": "14",
-      "status": "backlog",
-      "model": "Fable 5.1",
-      "codes": [
-        "S-13",
-        "O-13",
-        "G-08"
-      ],
-      "dependsOn": [
-        "step-11"
-      ]
-    },
-    {
-      "id": "ar-13",
-      "title": "Dropbox API connector behind the R9 integrations seam, replacing the headless crawl (mapper from API listing to docs/archive/*.json)",
-      "step": "14",
-      "status": "backlog",
-      "model": "Fable 5.1 (seam), Sonnet 5 (mapper)",
-      "codes": [
-        "S-12"
-      ],
-      "dependsOn": [
-        "R9"
-      ]
-    },
-    {
-      "id": "ar-14",
-      "title": "Client-facing example set page P-06: share a curated set of past projects by link",
-      "step": "14",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "P-06"
-      ],
-      "dependsOn": [
-        "ar-10"
-      ]
-    },
-    {
-      "id": "ar-15",
-      "title": "Intake of \"00 INFORMACION RELEVANTE ALUZINA 2023\" (price lists, catalogues, presentations) as company assets on G-08",
-      "step": "14",
-      "status": "next",
-      "model": "Sonnet 5",
-      "codes": [
-        "G-08"
-      ],
-      "dependsOn": [
-        "ar-05"
-      ]
-    },
-    {
-      "id": "ar-16",
-      "title": "Retry the unlisted folders and re-crawl the empty folders later (SANTIAGO AGUIRRE ILUMINACION root, 15 empty folders)",
-      "step": "14",
-      "status": "next",
-      "model": "Sonnet 5",
-      "codes": [
-        "S-12"
-      ],
-      "dependsOn": []
-    },
-    {
-      "id": "ar-17",
-      "title": "Migrate G-08 DocFrame to DocumentViewer; Thumb in the K-05 catalog and on Spaces file posts",
-      "step": "14",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "G-08",
-        "K-05",
-        "K-03"
-      ],
-      "dependsOn": [
-        "ar-03"
-      ]
-    },
-    {
-      "id": "ar-18",
-      "title": "QA at 2560 / 3840 + dark theme for S-12 / S-13, Spanish review with the founder",
-      "step": "14",
-      "status": "next",
-      "model": "Sonnet 5",
-      "codes": [
-        "S-12",
-        "S-13"
-      ],
-      "dependsOn": [
-        "ar-05"
-      ]
-    },
-    {
-      "id": "kb-0020-template-editor",
-      "title": "Project template editor in the product: a second (commercial) template, editing in the product, durations per task so a created project has a populated timeline",
-      "step": "12",
-      "status": "backlog",
-      "model": "Fable 5.1, Opus 5",
-      "codes": [
-        "W-03"
-      ],
-      "dependsOn": [
-        "kb-asana-importer"
-      ]
-    },
-    {
-      "id": "kb-0020-vendor-jobs",
-      "title": "Portfolio vendor jobs onto O-12: purchases.profitAluzina, purchases.aluzinaResponsibility and payment rows for the 18 parsed jobs",
-      "step": "12",
-      "status": "backlog",
-      "model": "Fable 5.1, Opus 5",
-      "codes": [
-        "O-12",
-        "C-05"
-      ],
-      "dependsOn": [
-        "kb-asana-importer"
-      ]
-    },
-    {
-      "id": "kb-0020-hoy-adaptation",
-      "title": "Awaiting founder: is PROYECTO HOY the HOY Wellness Center and are ZONE 1..11 its spaces? Then prune the 2023 residue from the seeded tree and drop the flag in the project summary",
-      "step": "12",
-      "status": "backlog",
-      "model": "Justin",
-      "codes": [
-        "W-02"
-      ],
-      "dependsOn": [
-        "kb-asana-importer"
-      ]
-    },
-    {
-      "id": "kb-0020-work-actions",
-      "title": "Register the 31 pre-0020 work.* actions on W-01 / W-02 so every declared action is runnable (P-05, D-047)",
-      "step": "12",
-      "status": "backlog",
-      "model": "Opus 5",
-      "codes": [
-        "W-01",
-        "W-02"
-      ],
-      "dependsOn": [
-        "kb-asana-importer"
-      ]
-    }
-  ]
+ "version": "0.13.0",
+ "updatedAt": "2026-09-21",
+ "source": "docs/build-plan.md (steps 0-14, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
+ "statuses": [
+  "done",
+  "doing",
+  "next",
+  "backlog"
+ ],
+ "tasks": [
+  {
+   "id": "step-0",
+   "title": "Scaffold + Pages: monorepo, HUB-01, tokens, i18n, Placeholder, dev mode, actions manifest, Pages workflow, docs tree, live screenshots",
+   "step": "0",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "HUB-01"
+   ],
+   "dependsOn": [],
+   "changelog": "0001"
+  },
+  {
+   "id": "step-1",
+   "title": "Ingest the Claude Design export into apps/business-os, mount under the hub, record its structure",
+   "step": "1",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "BOS-01",
+    "BOS-02",
+    "BOS-03",
+    "BOS-04",
+    "BOS-05",
+    "BOS-06"
+   ],
+   "dependsOn": [
+    "step-0"
+   ],
+   "changelog": "0003"
+  },
+  {
+   "id": "step-2",
+   "title": "Audit the export against P-01..P-15; write docs/reference/business-os-audit.md",
+   "step": "2",
+   "status": "next",
+   "model": "Fable 5.1, Sonnet 5",
+   "codes": [
+    "BOS-01"
+   ],
+   "dependsOn": [
+    "step-1"
+   ]
+  },
+  {
+   "id": "step-3",
+   "title": "Module split + PageSpecs + page docs + screenshots for the export; qa:responsive and strings-coverage check",
+   "step": "3",
+   "status": "backlog",
+   "model": "Opus 5, Sonnet 5, Fable 5.1",
+   "codes": [
+    "BOS-01"
+   ],
+   "dependsOn": [
+    "step-2"
+   ]
+  },
+  {
+   "id": "step-4",
+   "title": "Hub tools (done via pass 0013): D-05 plan viewer, D-07 canvas, D-08 demo simulator, D-09 actions, D-14 dev tokens, D-11 testing hub; D-10 design tokens in the design module (0014)",
+   "step": "4",
+   "status": "done",
+   "model": "Fable 5.1, Opus 5",
+   "codes": [
+    "D-05",
+    "D-07",
+    "D-08",
+    "D-09",
+    "D-14",
+    "D-11",
+    "D-10"
+   ],
+   "dependsOn": [
+    "step-9a"
+   ],
+   "changelog": "0013"
+  },
+  {
+   "id": "step-5",
+   "title": "Surfaces (done via pass 0013): client app C-01..C-06, in-app docs D-06 / D-15, ops manual M-01..M-08, public P-01..P-05; open: client proposal view (step-5-proposal)",
+   "step": "5",
+   "status": "done",
+   "model": "Opus 5, Fable 5.1",
+   "codes": [
+    "C-01",
+    "M-01",
+    "D-06",
+    "D-15",
+    "P-01",
+    "P-05"
+   ],
+   "dependsOn": [
+    "step-9a",
+    "step-12"
+   ],
+   "changelog": "0013"
+  },
+  {
+   "id": "step-6",
+   "title": "Spanish fill pass over every strings table",
+   "step": "6",
+   "status": "backlog",
+   "model": "Sonnet 5",
+   "codes": [],
+   "dependsOn": [
+    "step-9b"
+   ]
+  },
+  {
+   "id": "step-7",
+   "title": "Data provider seam (rest): feedback table + FeedbackButton, WebMCP generation from the manifest",
+   "step": "7",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [],
+   "dependsOn": [
+    "step-9a",
+    "pass-0013-foundation"
+   ]
+  },
+  {
+   "id": "step-8",
+   "title": "Multiplayer / realtime: plan doc, version column, offline queue, realtime subscriptions",
+   "step": "8",
+   "status": "backlog",
+   "model": "Fable 5.1, Opus 5",
+   "codes": [],
+   "dependsOn": [
+    "step-7",
+    "step-10"
+   ]
+  },
+  {
+   "id": "step-9a",
+   "title": "Portal foundation: auth, registry, shells, DataProvider + MockProvider, component library, D-02 / D-03, hub Portals",
+   "step": "9a",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "HUB-01",
+    "D-02",
+    "D-03",
+    "A-01",
+    "O-01",
+    "S-01",
+    "G-01"
+   ],
+   "dependsOn": [
+    "step-0"
+   ],
+   "changelog": "0006"
+  },
+  {
+   "id": "step-9b",
+   "title": "Four portal modules in parallel: Founder A-xx, Operations O-xx, Studio S-xx, Brand G-xx",
+   "step": "9b",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "A-01",
+    "O-01",
+    "S-01",
+    "G-01"
+   ],
+   "dependsOn": [
+    "step-9a"
+   ],
+   "changelog": "0007"
+  },
+  {
+   "id": "step-9c",
+   "title": "Integration of the portal pass: Placeholder wrapper, shared fixes, smoke over 36 routes, live screenshots",
+   "step": "9c",
+   "status": "done",
+   "model": "Fable 5.1, Sonnet 5",
+   "codes": [
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "step-9b"
+   ],
+   "changelog": "0007"
+  },
+  {
+   "id": "step-10",
+   "title": "Asana-style Work views W-01 / W-02, sections / comments / activity, cross-tab realtime and presence, D-04",
+   "step": "10",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "W-01",
+    "W-02",
+    "D-04"
+   ],
+   "dependsOn": [
+    "step-9c"
+   ],
+   "changelog": "0008"
+  },
+  {
+   "id": "step-11",
+   "title": "Client portal + realtime provider: Supabase Realtime / Presence adapters, version column, views table, pointer drag",
+   "step": "11",
+   "status": "backlog",
+   "model": "Opus 5, Fable 5.1",
+   "codes": [
+    "C-01",
+    "W-01",
+    "W-02"
+   ],
+   "dependsOn": [
+    "step-10",
+    "pass-0013-client"
+   ]
+  },
+  {
+   "id": "step-12",
+   "title": "Spaces: the Hub's relational organizer replacing the Slack sidebar, K-01..K-06, catalogs, knowledge docs",
+   "step": "12",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "K-01",
+    "K-02",
+    "K-03",
+    "K-04",
+    "K-05",
+    "K-06",
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "step-10"
+   ],
+   "changelog": "0009"
+  },
+  {
+   "id": "qa-0010",
+   "title": "QA fixes: 44px targets and 16px fonts from the Work views matrix",
+   "step": "10",
+   "status": "done",
+   "model": "Sonnet 5",
+   "codes": [
+    "W-01",
+    "W-02"
+   ],
+   "dependsOn": [
+    "step-10"
+   ],
+   "changelog": "0010"
+  },
+  {
+   "id": "step-13",
+   "title": "Pass 0013: the service playbook into the product + the Hub bundle (foundation, twelve workers, integration; screenshots and Spanish fill follow)",
+   "step": "13",
+   "status": "done",
+   "model": "Fable 5.1, Opus 5, Sonnet 5",
+   "codes": [
+    "P-01",
+    "P-05",
+    "C-01",
+    "M-01",
+    "D-05",
+    "D-06",
+    "D-07",
+    "D-08",
+    "D-09",
+    "D-14",
+    "D-11",
+    "D-15",
+    "A-08",
+    "O-11",
+    "S-10",
+    "S-11",
+    "G-08",
+    "K-04",
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "step-12"
+   ],
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-foundation",
+   "title": "Foundation: prompt 0009, knowledge/service-playbook.md, domain/playbook.ts, entities leads / engagements / revisionItems / changeOrders / purchases / siteReports / messages, permissions, nav groups, actions bus, plan.json, hub cards, D-033..D-037",
+   "step": "13",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "step-12"
+   ],
+   "owner": "foundation",
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-public",
+   "title": "Module public: services pages from SERVICES + intake flow writing leads (P-01..)",
+   "step": "13",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "P-01",
+    "P-02",
+    "P-03",
+    "P-04",
+    "P-05"
+   ],
+   "dependsOn": [
+    "pass-0013-foundation"
+   ],
+   "owner": "public",
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-client",
+   "title": "Module client: client app on PhoneShell (own projects, engagement progress, revision matrix, messages, payments read) C-01..",
+   "step": "13",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "C-01",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06"
+   ],
+   "dependsOn": [
+    "pass-0013-foundation"
+   ],
+   "owner": "client",
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-crm",
+   "title": "CRM pipeline on the playbook statuses (A-08 leads, A-03 rework, O-11..O-13 execution control) + studio service checklist S-10 and revision matrix S-11",
+   "step": "13",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "A-03",
+    "A-08",
+    "O-11",
+    "O-12",
+    "O-13",
+    "S-10",
+    "S-11"
+   ],
+   "dependsOn": [
+    "pass-0013-foundation"
+   ],
+   "owner": "crm",
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-manual",
+   "title": "Module manual: bilingual ops manual from the playbook (M-01..)",
+   "step": "13",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "M-01",
+    "M-02",
+    "M-03",
+    "M-04",
+    "M-05",
+    "M-06",
+    "M-07",
+    "M-08"
+   ],
+   "dependsOn": [
+    "pass-0013-foundation"
+   ],
+   "owner": "manual",
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-docs",
+   "title": "Module docs: in-app docs viewer over the repo docs (D-06)",
+   "step": "13",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "D-06",
+    "D-15"
+   ],
+   "dependsOn": [
+    "pass-0013-foundation"
+   ],
+   "owner": "docs",
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-devtools",
+   "title": "Dev tools: plan viewer D-05 (kanban / list / timeline from plan.json), canvas D-07, demo simulator D-08, actions D-09, tokens D-10",
+   "step": "13",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "D-05",
+    "D-07",
+    "D-08"
+   ],
+   "dependsOn": [
+    "pass-0013-foundation"
+   ],
+   "owner": "devtools",
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-qa",
+   "title": "Module qa: D-09 actions registry, D-14 design tokens with contrast, D-11 testing hub (QA matrix, specCompleteness, placeholder counts)",
+   "step": "13",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "D-09",
+    "D-14",
+    "D-11"
+   ],
+   "dependsOn": [
+    "pass-0013-foundation"
+   ],
+   "owner": "qa",
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-integration",
+   "title": "Integration: twelve _pending drafts merged, shared library fixes, changelog 0013, version 0.10.0, rebase onto 0014 / 0015, build green, smoke over 113 routes, deploy",
+   "step": "13",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "pass-0013-public",
+    "pass-0013-client",
+    "pass-0013-crm",
+    "pass-0013-manual",
+    "pass-0013-docs",
+    "pass-0013-devtools",
+    "pass-0013-qa"
+   ],
+   "owner": "integration",
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-screenshots",
+   "title": "Live screenshots of the new pages at 390 / 1280 / 1920 EN + ES",
+   "step": "13",
+   "status": "done",
+   "model": "Sonnet 5",
+   "codes": [
+    "P-01",
+    "P-02",
+    "P-03",
+    "P-04",
+    "P-05",
+    "C-01",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06",
+    "M-01",
+    "M-02",
+    "M-03",
+    "M-04",
+    "M-05",
+    "M-06",
+    "M-07",
+    "M-08",
+    "D-05",
+    "D-06",
+    "D-07",
+    "D-08",
+    "D-09",
+    "D-11",
+    "D-14",
+    "D-15",
+    "A-03",
+    "A-08",
+    "O-11",
+    "O-12",
+    "O-13",
+    "S-10",
+    "S-11",
+    "G-08",
+    "K-04",
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "pass-0013-integration"
+   ],
+   "changelog": "0016"
+  },
+  {
+   "id": "pass-0013-spanish",
+   "title": "Spanish fill over the new strings tables and the playbook translations",
+   "step": "13",
+   "status": "done",
+   "model": "Sonnet 5",
+   "codes": [],
+   "dependsOn": [
+    "pass-0013-integration"
+   ],
+   "changelog": "0016"
+  },
+  {
+   "id": "R1",
+   "title": "Comms: channels and DMs on Spaces, presence, mentions, notifications; transport integrations later",
+   "step": "R1",
+   "status": "backlog",
+   "model": "Fable 5.1, Opus 5",
+   "codes": [
+    "K-01"
+   ],
+   "dependsOn": [
+    "step-12",
+    "step-11"
+   ]
+  },
+  {
+   "id": "R2",
+   "title": "CRM: first pages done in 0013 (A-08, A-03, O-11..O-13); open: follow-ups (D-020), A-06 / K-05 Clients on leads, leads.read views",
+   "step": "R2",
+   "status": "doing",
+   "model": "Opus 5",
+   "codes": [
+    "A-03",
+    "A-06",
+    "K-05"
+   ],
+   "dependsOn": [
+    "step-12",
+    "pass-0013-crm"
+   ]
+  },
+  {
+   "id": "R3",
+   "title": "Documents and e-sign: templates as first-class assets, generation from data, approval chain, versions",
+   "step": "R3",
+   "status": "backlog",
+   "model": "Fable 5.1, Opus 5",
+   "codes": [
+    "O-08",
+    "A-04"
+   ],
+   "dependsOn": [
+    "step-12",
+    "R2"
+   ]
+  },
+  {
+   "id": "R4",
+   "title": "Drafting / CAD viewer and render pipeline (S-05, S-07)",
+   "step": "R4",
+   "status": "backlog",
+   "model": "Fable 5.1, Opus 5",
+   "codes": [
+    "S-05",
+    "S-07"
+   ],
+   "dependsOn": [
+    "step-12"
+   ]
+  },
+  {
+   "id": "R5",
+   "title": "Research assistant over the actions registry and the knowledge base",
+   "step": "R5",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [],
+   "dependsOn": [
+    "pass-0013-foundation",
+    "step-12"
+   ]
+  },
+  {
+   "id": "R6",
+   "title": "Finance: invoices, payments, who-owes-what, payroll (Stripe)",
+   "step": "R6",
+   "status": "backlog",
+   "model": "Fable 5.1, Opus 5",
+   "codes": [
+    "O-07"
+   ],
+   "dependsOn": [
+    "R2"
+   ]
+  },
+  {
+   "id": "R7",
+   "title": "Public website builder: pages from Spaces posts + case studies, brand kit tokens, publish to Pages",
+   "step": "R7",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "P-01"
+   ],
+   "dependsOn": [
+    "step-12",
+    "R3",
+    "pass-0013-public"
+   ]
+  },
+  {
+   "id": "R8",
+   "title": "Marketing production and scheduler: content calendar, review through G-06, scheduler, metrics",
+   "step": "R8",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "G-06"
+   ],
+   "dependsOn": [
+    "R1",
+    "R7"
+   ]
+  },
+  {
+   "id": "R9",
+   "title": "Integrations layer: Slack export, Asana, Google Drive / Calendar behind one seam",
+   "step": "R9",
+   "status": "backlog",
+   "model": "Fable 5.1, Sonnet 5",
+   "codes": [
+    "K-06"
+   ],
+   "dependsOn": [
+    "step-12",
+    "R1"
+   ]
+  },
+  {
+   "id": "R10",
+   "title": "Archive intake: website, social and Drive ingestion into Spaces posts + repo files",
+   "step": "R10",
+   "status": "backlog",
+   "model": "Fable 5.1, Sonnet 5",
+   "codes": [
+    "K-06"
+   ],
+   "dependsOn": [
+    "step-12"
+   ]
+  },
+  {
+   "id": "kb-spaces-followups",
+   "title": "Spaces follow-ups: Slack export import behind K-06, move / reorder UI, tag editor, visibility enforcement, post versions, file posts, 4K captures",
+   "step": "12",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "K-06",
+    "K-02",
+    "K-04"
+   ],
+   "dependsOn": [
+    "step-12"
+   ]
+  },
+  {
+   "id": "kb-marketing-portal",
+   "title": "Marketing portal for the marketing role (today lands on /brand/spaces)",
+   "step": "5",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "G-01"
+   ],
+   "dependsOn": [
+    "step-12"
+   ]
+  },
+  {
+   "id": "kb-d020-data",
+   "title": "D-020 data layer (rest): partnerships, products, goals, followUps, comparisonGroups, scheduleItems, measurements, images + file storage; image url fields",
+   "step": "7",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [],
+   "dependsOn": [
+    "step-9c"
+   ]
+  },
+  {
+   "id": "kb-work-followups",
+   "title": "Step 11 Work follow-ups: pointer drag, section management UI, views table, 4K and dark captures, Open in Work links",
+   "step": "11",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "W-01",
+    "W-02"
+   ],
+   "dependsOn": [
+    "step-10"
+   ]
+  },
+  {
+   "id": "kb-alert-generation",
+   "title": "D-020 alert generation: one rule raising / resolving alerts from payments, quotes, deliveries and competition deadlines",
+   "step": "9c",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [
+    "O-09"
+   ],
+   "dependsOn": [
+    "step-9c"
+   ]
+  },
+  {
+   "id": "kb-seeds-more",
+   "title": "D-020 seeds: more plan / spec documents; competition rows when the 2027 list arrives",
+   "step": "9c",
+   "status": "backlog",
+   "model": "Sonnet 5",
+   "codes": [
+    "O-08",
+    "G-02"
+   ],
+   "dependsOn": [
+    "step-9c"
+   ]
+  },
+  {
+   "id": "kb-request-flow",
+   "title": "D-020 product: shared request flow into the brand queue, report templates for O-10, code-split per module",
+   "step": "9c",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "G-06",
+    "O-10"
+   ],
+   "dependsOn": [
+    "step-9c"
+   ]
+  },
+  {
+   "id": "kb-portal-polish",
+   "title": "Portal polish: 1920 / 2560 / 3840 captures of every portal page, dark pass, checkedAt to the full matrix",
+   "step": "9c",
+   "status": "backlog",
+   "model": "Sonnet 5",
+   "codes": [
+    "A-01",
+    "O-01",
+    "S-01",
+    "G-01"
+   ],
+   "dependsOn": [
+    "step-9c"
+   ]
+  },
+  {
+   "id": "kb-media-budget",
+   "title": "Media budget: convert apps/business-os world PNGs (93 MB) to webp once the audit says which are kept",
+   "step": "2",
+   "status": "backlog",
+   "model": "Sonnet 5",
+   "codes": [
+    "BOS-01"
+   ],
+   "dependsOn": [
+    "step-2"
+   ]
+  },
+  {
+   "id": "kb-alert-pattern",
+   "title": "Alert pattern across portals: before-urgent + deadlines from alerts with a lead-time rule, per role",
+   "step": "9c",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [
+    "O-09",
+    "G-02"
+   ],
+   "dependsOn": [
+    "step-9c"
+   ]
+  },
+  {
+   "id": "kb-data-version",
+   "title": "Data: version column + conflict UI, CompanyOsProvider stub, Supabase adapter behind DataProvider",
+   "step": "8",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [],
+   "dependsOn": [
+    "step-10"
+   ]
+  },
+  {
+   "id": "kb-library-dark",
+   "title": "Component library follow-ups: dark-theme pass over every example, FeedbackButton (P-08)",
+   "step": "7",
+   "status": "backlog",
+   "model": "Sonnet 5",
+   "codes": [
+    "D-02"
+   ],
+   "dependsOn": [
+    "step-9a"
+   ]
+  },
+  {
+   "id": "kb-knowledge-gaps",
+   "title": "Knowledge: competitions list, team surnames and languages, Hoy confirmation, Sporti, client contacts, deliverable durations",
+   "step": "12",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [],
+   "dependsOn": [
+    "step-12"
+   ]
+  },
+  {
+   "id": "kb-thumbs-dark",
+   "title": "Hub thumbnails: dark variant and 2x tiles for 4K",
+   "step": "0",
+   "status": "backlog",
+   "model": "Sonnet 5",
+   "codes": [
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "step-0"
+   ]
+  },
+  {
+   "id": "kb-await-lang",
+   "title": "Awaiting Justin: default language en vs es (D-004)",
+   "step": "0",
+   "status": "backlog",
+   "model": "Justin",
+   "codes": [],
+   "dependsOn": []
+  },
+  {
+   "id": "kb-await-public",
+   "title": "Awaiting Justin: does the public site join the OS as the P-xx module live at /#/services (P-01..P-05) or stay linked (P-00)?",
+   "step": "5",
+   "status": "backlog",
+   "model": "Justin",
+   "codes": [
+    "P-00",
+    "P-01"
+   ],
+   "dependsOn": []
+  },
+  {
+   "id": "kb-screenshots-0007",
+   "title": "Live screenshots of the 33 portal pages at 390 / 1280 EN (+ 1280 ES per dashboard); folded into the 0013 screenshot pass",
+   "step": "9c",
+   "status": "next",
+   "model": "Sonnet 5",
+   "codes": [
+    "A-01",
+    "O-01",
+    "S-01",
+    "G-01"
+   ],
+   "dependsOn": [
+    "pass-0013-integration"
+   ]
+  },
+  {
+   "id": "kb-thumbs",
+   "title": "Hub thumbnails generated at deploy time (D-011)",
+   "step": "0",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "step-0"
+   ],
+   "changelog": "0005"
+  },
+  {
+   "id": "kb-knowledge",
+   "title": "Knowledge base docs/knowledge with change tracking (D-012), team, competitions, roles-and-portals",
+   "step": "0",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [],
+   "dependsOn": [
+    "step-0"
+   ],
+   "changelog": "0005"
+  },
+  {
+   "id": "kb-deploy-0",
+   "title": "First Pages deploy green, live screenshots of HUB-01",
+   "step": "0",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "step-0"
+   ],
+   "changelog": "0002"
+  },
+  {
+   "id": "kb-deploy-1",
+   "title": "Prototype verified live at /business-os/, screenshots BOS-01 / BOS-02",
+   "step": "1",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "BOS-01",
+    "BOS-02"
+   ],
+   "dependsOn": [
+    "step-1"
+   ],
+   "changelog": "0004"
+  },
+  {
+   "id": "pass-0013-graph",
+   "title": "K-04 graph in five views on the graph gallery techniques, three.js lazy 3D view, system imagery (prompt 0012, D-053)",
+   "step": "13",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "K-04"
+   ],
+   "dependsOn": [
+    "pass-0013-foundation"
+   ],
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-brand-docs",
+   "title": "Portfolio and brochure: served PDFs, 56 page renders as visual memory, knowledge/brand.md part B, G-08 brand documents page, P-05, hub card (prompt 0011, D-049)",
+   "step": "13",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "G-08",
+    "P-05",
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "pass-0013-foundation"
+   ],
+   "changelog": "0013"
+  },
+  {
+   "id": "pass-0013-brand-data",
+   "title": "Brand documents as relational rows: assets entity, portfolio projects, clients, Spaces > Portfolio, 126 relations, services registry, depicts kind (prompt 0013, D-044..D-046)",
+   "step": "13",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "G-08",
+    "P-05",
+    "K-02",
+    "K-04"
+   ],
+   "dependsOn": [
+    "pass-0013-brand-docs"
+   ],
+   "changelog": "0013"
+  },
+  {
+   "id": "step-5-proposal",
+   "title": "Client proposal view of the full stack (the one step-5 surface still open)",
+   "step": "5",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "P-01",
+    "C-01"
+   ],
+   "dependsOn": [
+    "step-5"
+   ]
+  },
+  {
+   "id": "kb-0013-document-viewer",
+   "title": "DocumentViewer organism taking an Asset row (object -> iframe -> sentence, download, page fallback) replacing the G-08 / P-05 hand-rolled frame",
+   "step": "13",
+   "status": "next",
+   "model": "Opus 5",
+   "codes": [
+    "G-08",
+    "P-05"
+   ],
+   "dependsOn": [
+    "pass-0013-integration"
+   ]
+  },
+  {
+   "id": "kb-0013-components",
+   "title": "Library components requested by pass 0013: Stepper / FormStep, Accordion, ProgressBar / Meter, Checklist, MessageBubble / Thread, Swatch, Tooltip, ParamForm, DeviceFrame, ZoomStage, DependencyLane, Slider; Markdown heading ids + linkResolver",
+   "step": "13",
+   "status": "next",
+   "model": "Opus 5",
+   "codes": [
+    "P-03",
+    "C-01",
+    "C-02",
+    "S-10",
+    "O-13",
+    "D-09",
+    "D-14",
+    "D-05",
+    "D-07",
+    "D-08",
+    "K-04"
+   ],
+   "dependsOn": [
+    "pass-0013-integration"
+   ]
+  },
+  {
+   "id": "kb-0013-file-storage",
+   "title": "File-storage seam on the DataProvider (put(file) -> url): O-13 photos, G-08 replace document, intake floor plans, O-08 documents",
+   "step": "13",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [
+    "O-13",
+    "G-08",
+    "P-03",
+    "O-08"
+   ],
+   "dependsOn": [
+    "kb-data-version"
+   ]
+  },
+  {
+   "id": "kb-0013-governance",
+   "title": "useGovernance() / canEnter(project, status) in src/domain shared by S-10 / A-03 / O-11; GovernanceRule.pageCode[]; Work views migrate phase -> pipelineStatus then drop phase (D-048)",
+   "step": "13",
+   "status": "next",
+   "model": "Fable 5.1",
+   "codes": [
+    "A-03",
+    "S-10",
+    "O-11",
+    "W-01"
+   ],
+   "dependsOn": [
+    "pass-0013-integration"
+   ]
+  },
+  {
+   "id": "kb-0013-leads-policy",
+   "title": "leads row-level policy for anonymous visitors + rate limiting before /start goes on a public domain; leads.read view for brand / marketing",
+   "step": "13",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [
+    "P-03",
+    "A-08"
+   ],
+   "dependsOn": [
+    "kb-data-version"
+   ]
+  },
+  {
+   "id": "kb-0013-client-fields",
+   "title": "documents.clientVisible, own.brief.write, unread badge on the client bottom nav, client sign-off on change orders (clientApprovedAt), purchases.quoteId",
+   "step": "13",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [
+    "C-02",
+    "C-04",
+    "C-06",
+    "O-11",
+    "O-12"
+   ],
+   "dependsOn": [
+    "pass-0013-integration"
+   ]
+  },
+  {
+   "id": "kb-0013-feedback",
+   "title": "feedback entity + FeedbackButton (P-08): D-11 File a bug becomes real",
+   "step": "7",
+   "status": "next",
+   "model": "Fable 5.1",
+   "codes": [
+    "D-11"
+   ],
+   "dependsOn": [
+    "pass-0013-integration"
+   ]
+  },
+  {
+   "id": "kb-0013-webmcp",
+   "title": "WebMCP tool generation from window.__aluzina.actions.declared (paramSchema / toolJson move to src/actions); postMessage seam for D-08",
+   "step": "7",
+   "status": "next",
+   "model": "Fable 5.1",
+   "codes": [
+    "D-09",
+    "D-08"
+   ],
+   "dependsOn": [
+    "pass-0013-integration"
+   ]
+  },
+  {
+   "id": "kb-graph-label-collisions",
+   "title": "Graph views: label collision pass (hide / stagger by zoom), focus-neighbourhood framing in 3D, node cap re-check after a Slack import",
+   "step": "12",
+   "status": "next",
+   "model": "Opus 5",
+   "codes": [
+    "K-04"
+   ],
+   "dependsOn": [
+    "pass-0013-graph"
+   ]
+  },
+  {
+   "id": "kb-graph-thumb-codes",
+   "title": "pageCode as data on deliverables / tools; K-0x routes in scripts/thumbnails.mjs",
+   "step": "12",
+   "status": "next",
+   "model": "Sonnet 5",
+   "codes": [
+    "K-04",
+    "K-05"
+   ],
+   "dependsOn": [
+    "pass-0013-graph"
+   ]
+  },
+  {
+   "id": "kb-0013-tokens-pages",
+   "title": "D-14 dev tokens (contrast view) vs D-10 design tokens: one page or a clear split",
+   "step": "4",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [
+    "D-10",
+    "D-14"
+   ],
+   "dependsOn": [
+    "pass-0013-integration"
+   ]
+  },
+  {
+   "id": "kb-0013-qa-followups",
+   "title": "QA follow-ups: shadow elevations onto the 0014 shadow tokens, specCompleteness checkedAt threshold to seven widths, D-05 swimlane compact mode, S-11 / D-11 wide tables 768..1500, Spanish review of domain/playbook.ts with the founder",
+   "step": "13",
+   "status": "backlog",
+   "model": "Sonnet 5",
+   "codes": [
+    "D-05",
+    "D-11",
+    "S-11"
+   ],
+   "dependsOn": [
+    "pass-0013-integration"
+   ]
+  },
+  {
+   "id": "kb-0013-assets-followups",
+   "title": "K-05 catalog tab for assets; G-01 documents row from assets; brochure-only names as projects (founder decides)",
+   "step": "13",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "K-05",
+    "G-01"
+   ],
+   "dependsOn": [
+    "pass-0013-brand-data"
+   ]
+  },
+  {
+   "id": "kb-await-brand-era",
+   "title": "Awaiting founder: which brand era is current (portfolio Universo de Diseno vs brochure Interiorismo / Iluminacion); playbook services vs brochure trades; product line = Honey Valley?",
+   "step": "13",
+   "status": "backlog",
+   "model": "Justin",
+   "codes": [
+    "G-08",
+    "P-05"
+   ],
+   "dependsOn": []
+  },
+  {
+   "id": "kb-asana-importer",
+   "title": "Asana into the Work module: nesting, deliverables, project template (W-03) and the CSV importer",
+   "step": "12",
+   "status": "done",
+   "model": "Fable 5.1, Opus 5",
+   "codes": [
+    "W-01",
+    "W-02",
+    "W-03",
+    "K-06"
+   ],
+   "dependsOn": [
+    "step-12"
+   ],
+   "changelog": "0020"
+  },
+  {
+   "id": "ar-01",
+   "title": "Dropbox inventory crawl: depth-1 listing of every project folder in the four share links (scripts/archive/crawl-dropbox.mjs)",
+   "step": "14",
+   "status": "done",
+   "model": "Sonnet 5",
+   "codes": [
+    "S-12"
+   ],
+   "dependsOn": [],
+   "changelog": "0019"
+  },
+  {
+   "id": "ar-02",
+   "title": "Featured project deep crawl + renders: JOE GALLINA INTERIOR, 179 files, thumbnails and page renders of the design deliverables",
+   "step": "14",
+   "status": "done",
+   "model": "Sonnet 5",
+   "codes": [
+    "S-13"
+   ],
+   "dependsOn": [
+    "ar-01"
+   ],
+   "changelog": "0019"
+  },
+  {
+   "id": "ar-03",
+   "title": "Shared code: assets.kind file + archive fields, projects tags / cover / year, domain/archive.ts, FileIcon / Thumb / DocumentViewer, seed/archive.ts",
+   "step": "14",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "D-02"
+   ],
+   "dependsOn": [],
+   "changelog": "0019"
+  },
+  {
+   "id": "ar-04",
+   "title": "Archive module S-12 browser (prospects / in progress / past / all, portfolio set) and S-13 project portal (by stage / by folder, drawer preview) on studio, founder, brand",
+   "step": "14",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "S-12",
+    "S-13"
+   ],
+   "dependsOn": [
+    "ar-03"
+   ],
+   "changelog": "0019"
+  },
+  {
+   "id": "ar-05",
+   "title": "Integration: build-index with D-059 redaction, served renders, seed rules (quotes as prospects), hub card, docs, decisions D-055..D-061",
+   "step": "14",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "S-12",
+    "S-13",
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "ar-01",
+    "ar-02",
+    "ar-03",
+    "ar-04"
+   ],
+   "changelog": "0019"
+  },
+  {
+   "id": "ar-06",
+   "title": "Deep index + previews for every 2026 project (crawl depth full, render allow-listed design files, serve)",
+   "step": "14",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "S-13"
+   ],
+   "dependsOn": [
+    "ar-05"
+   ],
+   "changelog": "0021"
+  },
+  {
+   "id": "ar-07",
+   "title": "Deep index for the 2020-2025 projects, one batch per year folder",
+   "step": "14",
+   "status": "backlog",
+   "model": "Sonnet 5",
+   "codes": [
+    "S-13"
+   ],
+   "dependsOn": [
+    "ar-06",
+    "ar-19"
+   ]
+  },
+  {
+   "id": "ar-08",
+   "title": "Founder confirmation of inferred type / status / client / year per project (changelog 0019 section H), then seed fix",
+   "step": "14",
+   "status": "next",
+   "model": "Fable 5.1 + founder",
+   "codes": [
+    "S-12"
+   ],
+   "dependsOn": [
+    "ar-05"
+   ],
+   "owner": "founder"
+  },
+  {
+   "id": "ar-09",
+   "title": "Tag editing, delivery stage and cover picking in the product: archive.tagFile / setStage / setCover / setProjectTags write path through the provider, TagEditor molecule, permission archive.curate (D-067)",
+   "step": "14",
+   "status": "done",
+   "model": "Opus 5",
+   "codes": [
+    "S-13"
+   ],
+   "dependsOn": [
+    "ar-05"
+   ],
+   "changelog": "0021"
+  },
+  {
+   "id": "ar-10",
+   "title": "Portfolio sets as Spaces collections (archive.openSetInSpaces) + Export PDF via the documents module R3",
+   "step": "14",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "S-12",
+    "K-02"
+   ],
+   "dependsOn": [
+    "ar-09",
+    "R3"
+   ]
+  },
+  {
+   "id": "ar-11",
+   "title": "Icon system: SVG icon set replacing the Unicode nav glyphs, entity icons, Thumb on hub cards / Spaces / catalog",
+   "step": "14",
+   "status": "done",
+   "model": "Fable 5.1 (design), Opus 5 (build)",
+   "codes": [
+    "HUB-01",
+    "K-01",
+    "K-05"
+   ],
+   "dependsOn": [
+    "ar-05"
+   ],
+   "changelog": "0021"
+  },
+  {
+   "id": "ar-12",
+   "title": "File storage seam put(file) -> url + Supabase storage + auth gate before any personal document is served (lifts D-059)",
+   "step": "14",
+   "status": "backlog",
+   "model": "Fable 5.1",
+   "codes": [
+    "S-13",
+    "O-13",
+    "G-08"
+   ],
+   "dependsOn": [
+    "step-11"
+   ]
+  },
+  {
+   "id": "ar-13",
+   "title": "Dropbox API connector behind the R9 integrations seam, replacing the headless crawl (mapper from API listing to docs/archive/*.json)",
+   "step": "14",
+   "status": "backlog",
+   "model": "Fable 5.1 (seam), Sonnet 5 (mapper)",
+   "codes": [
+    "S-12"
+   ],
+   "dependsOn": [
+    "R9"
+   ]
+  },
+  {
+   "id": "ar-14",
+   "title": "Client-facing example set page P-06: share a curated set of past projects by link",
+   "step": "14",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "P-06"
+   ],
+   "dependsOn": [
+    "ar-10"
+   ]
+  },
+  {
+   "id": "ar-15",
+   "title": "Intake of \"00 INFORMACION RELEVANTE ALUZINA 2023\" (price lists, catalogues, presentations) as company assets on G-08",
+   "step": "14",
+   "status": "done",
+   "model": "Sonnet 5",
+   "codes": [
+    "G-08"
+   ],
+   "dependsOn": [
+    "ar-05"
+   ],
+   "changelog": "0021"
+  },
+  {
+   "id": "ar-16",
+   "title": "Retry the unlisted folder (already listed) and re-crawl the 15 empty folders: 12 hold files, 3 stay empty; inventories refreshed, the four 2026 ones deep-indexed",
+   "step": "14",
+   "status": "done",
+   "model": "Sonnet 5",
+   "codes": [
+    "S-12"
+   ],
+   "dependsOn": [],
+   "changelog": "0021"
+  },
+  {
+   "id": "ar-17",
+   "title": "Migrate G-08 DocFrame to DocumentViewer; Thumb in the K-05 catalog and on Spaces file posts",
+   "step": "14",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "G-08",
+    "K-05",
+    "K-03"
+   ],
+   "dependsOn": [
+    "ar-03"
+   ]
+  },
+  {
+   "id": "ar-18",
+   "title": "QA at 2560 / 3840 + dark theme for S-12 / S-13 and HUB-01 (docs/qa/0004); Spanish review with the founder stays a founder session",
+   "step": "14",
+   "status": "done",
+   "model": "Fable 5.1",
+   "codes": [
+    "S-12",
+    "S-13"
+   ],
+   "dependsOn": [
+    "ar-05"
+   ],
+   "changelog": "0021"
+  },
+  {
+   "id": "ar-19",
+   "title": "Lazy / split asset store: page rows and deep-index files out of the seed, loaded per project from docs/archive/projects/<slug>/index.json (store at 3.66 MB of the 4.5 MB localStorage line, bundle 2.9 MB), before ar-07",
+   "step": "14",
+   "status": "next",
+   "model": "Fable 5.1",
+   "codes": [
+    "S-13",
+    "S-12"
+   ],
+   "dependsOn": [
+    "ar-06"
+   ]
+  },
+  {
+   "id": "ar-20",
+   "title": "Drawer / Modal onClose focus-trap re-run fix across callers (useFocusTrap depends on onClose; every caller but S-13 passes an inline arrow)",
+   "step": "14",
+   "status": "next",
+   "model": "Opus 5",
+   "codes": [
+    "D-02"
+   ],
+   "dependsOn": [
+    "ar-09"
+   ]
+  },
+  {
+   "id": "ar-21",
+   "title": "Remaining Unicode glyphs inside module bodies -> Icon (K-01 space heading, post kinds, Button icon ☰, theme toggle ☾ / ☼)",
+   "step": "14",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "K-01",
+    "K-03",
+    "HUB-01"
+   ],
+   "dependsOn": [
+    "ar-11"
+   ]
+  },
+  {
+   "id": "ar-22",
+   "title": "HOY 2026: 180 of 206 files in stage Other — folder-template phrases (IMAGENES, MANUAL DE MARCA, INFORMACION DISEÑO INTERIOR, DETALLES TECNICOS DE ILUMINACION) into stageFor",
+   "step": "14",
+   "status": "next",
+   "model": "Sonnet 5",
+   "codes": [
+    "S-13"
+   ],
+   "dependsOn": [
+    "ar-06"
+   ]
+  },
+  {
+   "id": "kb-0020-template-editor",
+   "title": "Project template editor in the product: a second (commercial) template, editing in the product, durations per task so a created project has a populated timeline",
+   "step": "12",
+   "status": "backlog",
+   "model": "Fable 5.1, Opus 5",
+   "codes": [
+    "W-03"
+   ],
+   "dependsOn": [
+    "kb-asana-importer"
+   ]
+  },
+  {
+   "id": "kb-0020-vendor-jobs",
+   "title": "Portfolio vendor jobs onto O-12: purchases.profitAluzina, purchases.aluzinaResponsibility and payment rows for the 18 parsed jobs",
+   "step": "12",
+   "status": "backlog",
+   "model": "Fable 5.1, Opus 5",
+   "codes": [
+    "O-12",
+    "C-05"
+   ],
+   "dependsOn": [
+    "kb-asana-importer"
+   ]
+  },
+  {
+   "id": "kb-0020-hoy-adaptation",
+   "title": "Awaiting founder: is PROYECTO HOY the HOY Wellness Center and are ZONE 1..11 its spaces? Then prune the 2023 residue from the seeded tree and drop the flag in the project summary",
+   "step": "12",
+   "status": "backlog",
+   "model": "Justin",
+   "codes": [
+    "W-02"
+   ],
+   "dependsOn": [
+    "kb-asana-importer"
+   ]
+  },
+  {
+   "id": "kb-0020-work-actions",
+   "title": "Register the 31 pre-0020 work.* actions on W-01 / W-02 so every declared action is runnable (P-05, D-047)",
+   "step": "12",
+   "status": "backlog",
+   "model": "Opus 5",
+   "codes": [
+    "W-01",
+    "W-02"
+   ],
+   "dependsOn": [
+    "kb-asana-importer"
+   ]
+  }
+ ]
 }

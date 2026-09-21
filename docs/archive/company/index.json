@@ -1,0 +1,316 @@
+{
+ "folderName": "00 INFORMACION RELEVANTE ALUZINA 2023",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/AAcyG9ZoLQiTrnoPkjlJJds?rlkey=tp6stvztcp5r4cyy1ftz19mp0&st=rmm8dih7&e=1&dl=0",
+ "crawledAt": "2026-09-21",
+ "files": [
+  {
+   "name": "ALUZINA PRICE NEW YORK.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 178944,
+   "modified": "Jul 20, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/AGXxVClsYcur_OhWCp-9DX0/ALUZINA%20PRICE%20NEW%20YORK.pdf?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "owner": "aluzina",
+   "visibility": "internal",
+   "tags": [
+    "precios"
+   ],
+   "note": "Aluzina's own price list for the New York market. Contains prices: never rendered or excerpted."
+  },
+  {
+   "name": "BOMBILLA ALUZINOGENA .pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 48391782,
+   "modified": "Jul 20, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/AINTGZwXFGD85y9_We2AnZg/BOMBILLA%20ALUZINOGENA%20.pdf?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": "thumbs/bombilla-aluzinogena.jpg",
+   "pages": [
+    "pages/bombilla-aluzinogena-page-01.jpg",
+    "pages/bombilla-aluzinogena-page-02.jpg",
+    "pages/bombilla-aluzinogena-page-03.jpg"
+   ],
+   "pageCount": 3,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I B O M B I L L O A L U Z I N O G E N O DISEÑO VIDA UTIL 15000 Horas ROSCA E27 POTENCIA 3W COLOR Silver - Black POTENCIA LUMINICA 1000 LM ILUMINACION Calida-dimerizable EFICACIA (lm/w) 83,3 CONTENIDO CODIGO Ficha Tecnica B- Alu01 Triangular Gold - White DISEÑO VIDA UTIL 15000 Horas ROSCA E27 POTENCIA 3W COLOR Silver - Black POTENCIA LUMINICA 1000 LM ILUMINACION Calida-dimerizable EFICACIA (lm/w) 83,3 CONTENIDO CODIGO Ficha Tecnica B- Alu01 Gold - White Sombras/ formas definidas Generacion de atmosferas B O M B I L L O A L U Z I N O G E N O C u a l q u i e r b o m ",
+   "palette": [
+    "#ffffff",
+    "#c1d2e6",
+    "#b4f5e4",
+    "#deff95",
+    "#d7fbc8",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf",
+   "owner": "aluzina",
+   "visibility": "public",
+   "tags": [
+    "catálogo"
+   ],
+   "note": "One-product spec sheet for a lightbulb Aluzina sells under its own \"Bombillo Aluzinógeno\" name (wattage, lumens, colour, life hours)."
+  },
+  {
+   "name": "BROCHURE DE OTRA EMPRESA COLOMBIANA DE INTERIORISMO.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 17710449,
+   "modified": "Aug 9, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/AG6fa3fUZYjxFfLRU6KbCCA/BROCHURE%20DE%20OTRA%20EMPRESA%20COLOMBIANA%20DE%20INTERIORISMO.pdf?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "owner": "third-party",
+   "visibility": "internal",
+   "tags": [
+    "referencia"
+   ],
+   "note": "Brochure of another Colombian interior design company, kept as a competitive reference. Not Aluzina's work; copyrighted."
+  },
+  {
+   "name": "Catalog LU7.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 30335304,
+   "modified": "Aug 16, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/AHVsP7w1w1L55Sp9KIufYpE/Catalog%20LU7.pdf?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "owner": "third-party",
+   "visibility": "internal",
+   "tags": [
+    "referencia"
+   ],
+   "note": "Third-party lighting fixture catalogue (brand \"LU7\"), kept as a supplier / product reference. Not Aluzina's work; copyrighted."
+  },
+  {
+   "name": "CATALOGO ^ALUZINA^.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 133693440,
+   "modified": "May 11, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/AI5l3Hbs0d9ILtizXqBr518/CATALOGO%20%5EALUZINA%5E.pdf?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": "thumbs/catalogo-aluzina.jpg",
+   "pages": [
+    "pages/catalogo-aluzina-page-01.jpg",
+    "pages/catalogo-aluzina-page-02.jpg",
+    "pages/catalogo-aluzina-page-03.jpg",
+    "pages/catalogo-aluzina-page-04.jpg",
+    "pages/catalogo-aluzina-page-05.jpg",
+    "pages/catalogo-aluzina-page-06.jpg"
+   ],
+   "pageCount": 64,
+   "textExcerpt": "I L U M I N A C I Ó N I N T E R I O R I S M O LUZ I L U M I N A R t u s p r o y e c t o s D i s e ñ o b y C o l o m b i a n L a l u z p r o v i e n e d e u n a s i t u a c i ó n q u e s e d a e n e l á t o m o , e x i s t e u n a p a r t í c u l a q u e e s u n e l e c t r ó n , u n a e s f e r a n e g a t i v a l a c u a l e s t á c i r c u n d a n d o e l n ú c l e o d e l á t o m o . É l s e e n c u e n t r a o r b i t a n d o e n l a p a r t e e x t e r i o r a s í m i s m o , c o m o l o s p l a n e t a s o r b i t a n a l s o l . U n e l e c t r ó n s e m u e v e d e s u ó r b i t a a c ",
+   "palette": [
+    "#030304",
+    "#010105",
+    "#080407",
+    "#070307",
+    "#17080a",
+    "#593c34"
+   ],
+   "renderer": "pymupdf",
+   "owner": "aluzina",
+   "visibility": "public",
+   "tags": [
+    "catálogo"
+   ],
+   "note": "Product / capabilities catalogue for Aluzina's lighting and interiorismo work (64 pages; first 6 rendered)."
+  },
+  {
+   "name": "FICHAS TECNICAS LAZARO ROSA VIOLAN.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 2076180,
+   "modified": "Jul 27, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/AF7_hJ5fmpN2wRSMJDWwieY/FICHAS%20TECNICAS%20LAZARO%20ROSA%20VIOLAN.pdf?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "owner": "third-party",
+   "visibility": "internal",
+   "tags": [
+    "referencia"
+   ],
+   "note": "Third-party technical spec sheets for Lázaro Rosa-Violán (a Spanish designer/brand), kept as a design reference. Not Aluzina's work; copyrighted."
+  },
+  {
+   "name": "INTERIOR DESIGN STUDIOS MEDELLIN.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 177684,
+   "modified": "Sep 1, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/AE1xYt6wYLWNzh_08kbWJV4/INTERIOR%20DESIGN%20STUDIOS%20MEDELLIN.pdf?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "owner": "aluzina",
+   "visibility": "internal",
+   "tags": [
+    "investigación"
+   ],
+   "note": "Market research: a list of other interior design studios in Medellín, kept for internal competitive reference."
+  },
+  {
+   "name": "INTEROR DESIGN PRESENTATION   .ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 31551652,
+   "modified": "Jul 11, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/ALma8ledRrTm5IhRaJDyS6I/INTEROR%20DESIGN%20PRESENTATION%20%20%20.ai?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": "thumbs/interor-design-presentation.jpg",
+   "pages": [
+    "pages/interor-design-presentation-page-01.jpg",
+    "pages/interor-design-presentation-page-02.jpg",
+    "pages/interor-design-presentation-page-03.jpg",
+    "pages/interor-design-presentation-page-04.jpg",
+    "pages/interor-design-presentation-page-05.jpg",
+    "pages/interor-design-presentation-page-06.jpg"
+   ],
+   "pageCount": 9,
+   "textExcerpt": "U N I V E R S E D E S I G N We remaind the 87% of hour lifes in interior spaces they way that they are design impact our lifes . Its about feeling righ not only looking beutifull Making the ordinary extraordinary, . Undertand client Undertand space Undertand user Concept Strategy Design",
+   "palette": [
+    "#090909",
+    "#2c3633",
+    "#0a090a",
+    "#070606",
+    "#080908",
+    "#090908"
+   ],
+   "renderer": "pymupdf",
+   "owner": "aluzina",
+   "visibility": "public",
+   "tags": [
+    "presentación"
+   ],
+   "note": "English-language interior design capabilities presentation (\"We remain 87% of our lives indoors\")."
+  },
+  {
+   "name": "LISTA DE PRECIOS COLOMBIA.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 435159,
+   "modified": "Jun 5, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/AD-Sz1YoBgufDkNwHh67JHM/LISTA%20DE%20PRECIOS%20COLOMBIA.pdf?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "owner": "aluzina",
+   "visibility": "internal",
+   "tags": [
+    "precios"
+   ],
+   "note": "Aluzina's own price list for the Colombian market. Contains prices: never rendered or excerpted."
+  },
+  {
+   "name": "lista de precios.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 580803,
+   "modified": "Jan 28, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/ACSWSl_TN_WeNK1vzzD8_j4/lista%20de%20precios.pdf?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "owner": "aluzina",
+   "visibility": "internal",
+   "tags": [
+    "precios"
+   ],
+   "note": "An earlier / undated Aluzina price list (2022 file date). Contains prices: never rendered or excerpted."
+  },
+  {
+   "name": "MENSAJES DE IMPORTANCIA DE INTERIORISMO.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 1405092,
+   "modified": "Jun 23, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/ADiF8usXJ14gDq7oarr0fjQ/MENSAJES%20DE%20IMPORTANCIA%20DE%20INTERIORISMO.ai?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": "thumbs/mensajes-de-importancia-de-interiorismo.jpg",
+   "pages": [
+    "pages/mensajes-de-importancia-de-interiorismo-page-01.jpg",
+    "pages/mensajes-de-importancia-de-interiorismo-page-02.jpg",
+    "pages/mensajes-de-importancia-de-interiorismo-page-03.jpg"
+   ],
+   "pageCount": 3,
+   "textExcerpt": "Tu te comportas de acuerdo a tu entorno",
+   "palette": [
+    "#ffffff",
+    "#b7b7b7",
+    "#d2d2d1",
+    "#9f9f9f",
+    "#f3f3f3",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf",
+   "owner": "aluzina",
+   "visibility": "public",
+   "tags": [
+    "presentación"
+   ],
+   "note": "Short deck of talking points on why interior design matters (\"Tu te comportas de acuerdo a tu entorno\")."
+  },
+  {
+   "name": "PRESENTACION DE ALUZINA y EXPERIENCIA LUZ DIRECTORA Y MARCAS Y.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 40936407,
+   "modified": "Jul 11, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/aakz1kqtsw6poj3ay2ipr/ACoLBeBGp0RxV7Bi_B-FsS0/PRESENTACION%20DE%20ALUZINA%20y%20EXPERIENCIA%20LUZ%20DIRECTORA%20Y%20MARCAS%20Y.ai?rlkey=tp6stvztcp5r4cyy1ftz19mp0&dl=0",
+   "thumb": "thumbs/presentacion-de-aluzina-y-experiencia-luz-directora-y-marcas-y.jpg",
+   "pages": [
+    "pages/presentacion-de-aluzina-y-experiencia-luz-directora-y-marcas-y-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo SPA /HOTEL /RESTAURANTE METODOLOGIA Estudiar Contrastar Interrogar Análisis de datos Estrategia Recolección de datos Diseño Valorar con el lugar Conceptualizacion TU ESPACIO PARA CONSTRUIR TU EXPERIENCIA ESPACIAL El servicio del equipo de diseno siendo 4 profecionales altamnete capacitados en el design thinking Las reflexiones y los procesos bajo los cuales se resuelven",
+   "palette": [
+    "#0b0b0b",
+    "#4b3e34",
+    "#151312",
+    "#28221e",
+    "#100f0e",
+    "#796c63"
+   ],
+   "renderer": "pymupdf",
+   "owner": "aluzina",
+   "visibility": "public",
+   "tags": [
+    "presentación"
+   ],
+   "note": "Company / brand presentation deck introducing Aluzina's design philosophy (\"universo de diseño\")."
+  }
+ ],
+ "served": {
+  "thumbs": 5,
+  "pages": 19,
+  "bytes": 1199734,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

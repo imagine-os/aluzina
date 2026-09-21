@@ -4,6 +4,7 @@ import { demoUserForRole } from '../../auth/demoUsers';
 import { ROLE_META, isRoleId, type RoleId } from '../../auth/roles';
 import { useCan, useSession } from '../../auth/SessionProvider';
 import { BrandMark } from '../../components/atom/BrandMark/BrandMark';
+import { resolveIcon } from '../../components/atom/Icon/iconMap';
 import { Shimmer } from '../../components/atom/Shimmer/Shimmer';
 import { HubHeader } from '../../components/organism/HubHeader/HubHeader';
 import { SurfaceCard, type SurfaceStatus } from '../../components/molecule/SurfaceCard/SurfaceCard';
@@ -143,6 +144,7 @@ export function HubPage() {
           onActivate={r.onActivate}
           ctaLabel={cta}
           image={r.status === 'live' ? thumb(s.code) : undefined}
+          icon={resolveIcon(s.code)}
         />
       </li>
     );
@@ -192,6 +194,7 @@ export function HubPage() {
                       onActivate={status === 'planned' ? undefined : () => enterAs(p.role)}
                       ctaLabel={status === 'planned' || !user ? undefined : t('hub.cta.enterAs', { name: user.name })}
                       image={status === 'planned' ? undefined : thumb(meta.homeCode)}
+                      icon={resolveIcon(meta.homeCode)}
                     />
                   </li>
                 );
@@ -232,6 +235,7 @@ export function HubPage() {
                     href={p.href}
                     ctaLabel={t('hub.cta.open')}
                     image={thumb(p.code)}
+                    icon={resolveIcon(p.code)}
                   />
                 </li>
               ))}

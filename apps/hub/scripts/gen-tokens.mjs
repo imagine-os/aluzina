@@ -35,6 +35,7 @@ lines.push(vars('weight', tokens.weight));
 for (const [k, v] of Object.entries(tokens.radius)) lines.push(`  --radius-${k}: ${v};`);
 for (const [k, v] of Object.entries(tokens.space)) lines.push(`  --space-${k}: ${v};`);
 lines.push(vars('shadow', tokens.shadow));
+lines.push(vars('icon', tokens.icon));
 lines.push(`  --hairline: ${tokens.hairline};`);
 lines.push(`  --target: ${tokens.target};`);
 lines.push(`  --focus-ring: ${tokens.focusRing};`);

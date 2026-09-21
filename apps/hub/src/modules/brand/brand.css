@@ -207,3 +207,39 @@
     height: clamp(30rem, 72vh, 76rem);
   }
 }
+
+/* ---------------------------------------------------------------- company documents (ar-15) */
+
+.brand-doc__company {
+  margin: var(--space-5) 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.brand-grid--company {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+  margin-top: var(--space-3);
+}
+
+.brand-grid--company > li {
+  min-width: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* The whole thumbnail is the button (one tab stop, P-03); the caption reads the file name. */
+.brand-doc__company-tile {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+}
+
+.brand-doc__company-tile:focus-visible {
+  outline: var(--focus-ring) solid var(--color-focus);
+  outline-offset: 2px;
+}

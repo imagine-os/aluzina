@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { cx } from '../../../design/cx';
+import { Icon } from '../../atom/Icon/Icon';
+import { SPACE_KIND_ICONS } from '../../atom/Icon/iconMap';
 import { useT } from '../../../i18n/I18nProvider';
 import './SpaceTree.css';
 
@@ -154,12 +156,14 @@ export function SpaceTree({ nodes, selectedId, onSelect, expanded, onToggle, lab
                     onToggle(node.id, !open);
                   }}
                 >
-                  <span aria-hidden="true">{open ? '▾' : '▸'}</span>
+                  <Icon name={open ? 'chevron-down' : 'chevron-right'} size="sm" />
                 </button>
               ) : (
                 <span className="stree__chevron stree__chevron--leaf" aria-hidden="true" />
               )}
-              <span className="stree__glyph" aria-hidden="true">{node.glyph}</span>
+              <span className="stree__glyph" aria-hidden="true">
+                {SPACE_KIND_ICONS[node.kind] ? <Icon name={SPACE_KIND_ICONS[node.kind]} size="md" /> : node.glyph}
+              </span>
               <span className="stree__name">{node.name}</span>
               {node.count !== undefined && node.count > 0 && (
                 <span className="stree__count" aria-label={t('core.spaces.tree.posts', { n: node.count })}>

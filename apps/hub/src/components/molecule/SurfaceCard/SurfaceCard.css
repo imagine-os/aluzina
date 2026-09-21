@@ -31,6 +31,13 @@
   gap: var(--space-3);
 }
 
+.surface-card__id {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
 .surface-card__code {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
@@ -123,6 +130,11 @@
 .surface-card__thumb-mark {
   display: inline-flex;
   opacity: 0.9;
+}
+
+/* The empty tile draws the surface icon large (still from the token, so it follows --scale). */
+.surface-card__thumb-mark .icon {
+  font-size: calc(var(--icon-xl) * 1.6);
 }
 
 .surface-card__thumb-code {

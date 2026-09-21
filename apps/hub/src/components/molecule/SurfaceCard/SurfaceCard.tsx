@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BrandMark, type BrandMarkTone } from '../../atom/BrandMark/BrandMark';
+import { Icon, type IconName } from '../../atom/Icon/Icon';
 import { Placeholder } from '../../atom/Placeholder/Placeholder';
 import { useT } from '../../../i18n/I18nProvider';
 import './SurfaceCard.css';
@@ -24,6 +25,12 @@ interface SurfaceCardProps {
    * Omitted for planned surfaces; a failed load falls back to the bilingual "No preview yet" tile.
    */
   image?: string;
+  /**
+   * Icon of the surface the card opens (resolved from its page code, docs/design/icons.md): shown next to
+   * the code in the header line and large inside the empty thumbnail tile. Decorative - the code, title and
+   * description carry the meaning.
+   */
+  icon?: IconName;
 }
 
 const TONES: BrandMarkTone[] = ['periwinkle', 'aqua', 'lime'];
@@ -36,7 +43,7 @@ function toneOf(code: string): BrandMarkTone {
 }
 
 /** 640 x 400 thumbnail slot with a fixed aspect ratio so the grid never shifts (P-01). */
-function Thumb({ image, code, title }: { image?: string; code: string; title: string }) {
+function Thumb({ image, code, title, icon }: { image?: string; code: string; title: string; icon?: IconName }) {
   const { t } = useT();
   const [broken, setBroken] = useState(false);
   const empty = !image || broken;
@@ -45,7 +52,7 @@ function Thumb({ image, code, title }: { image?: string; code: string; title: st
       {empty ? (
         <span className="surface-card__thumb-tile" aria-hidden="true">
           <span className="surface-card__thumb-mark">
-            <BrandMark kind="monogram" tone={toneOf(code)} size="lg" />
+            {icon ? <Icon name={icon} size="xl" tone="accent" /> : <BrandMark kind="monogram" tone={toneOf(code)} size="lg" />}
           </span>
           <span className="surface-card__thumb-text">{t('core.thumb.none')}</span>
           <span className="surface-card__thumb-code">{code}</span>
@@ -65,12 +72,15 @@ function Thumb({ image, code, title }: { image?: string; code: string; title: st
   );
 }
 
-function Body({ code, title, description, status, statusLabel, ctaLabel, image }: SurfaceCardProps) {
+function Body({ code, title, description, status, statusLabel, ctaLabel, image, icon }: SurfaceCardProps) {
   return (
     <>
-      <Thumb image={image} code={code} title={title} />
+      <Thumb image={image} code={code} title={title} icon={icon} />
       <div className="surface-card__top">
-        <span className="surface-card__code">{code}</span>
+        <span className="surface-card__id">
+          {icon && <Icon name={icon} size="sm" tone="muted" />}
+          <span className="surface-card__code">{code}</span>
+        </span>
         <span className={`surface-card__status surface-card__status--${status}`}>{statusLabel}</span>
       </div>
       <h2 className="surface-card__title">{title}</h2>

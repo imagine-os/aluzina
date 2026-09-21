@@ -1,7 +1,8 @@
 import { defineSpec, type ActionDef, type PageSpec, type Surface } from '../../specs/PageSpec';
 
 /** Widths actually captured and read back for both pages (P-01). */
-const WIDTHS = [360, 390, 768, 1280, 1920];
+/** 2560 / 3840 + dark verified in ar-18 (docs/qa/0004-archive-4k-dark.md, changelog 0021). */
+const WIDTHS = [360, 390, 768, 1280, 1920, 2560, 3840];
 
 const DATA_TABLES = ['projects', 'assets', 'relations', 'clients', 'spaces', 'filings', 'posts'];
 const ROLES = ['studio', 'founder', 'brand'];
@@ -38,7 +39,10 @@ export const ARCHIVE_PORTAL_ACTIONS: ActionDef[] = [
   { id: 'archive.downloadFile', label: 'Download a file', intent: 'download the file {asset}', permission: 'projects.read', params: { asset: 'id' } },
   { id: 'archive.copyFileLink', label: 'Copy a file link', intent: 'copy the link to the file {asset}', permission: 'projects.read', params: { asset: 'id' } },
   { id: 'archive.openFolderSource', label: 'Open the source folder', intent: 'open the source folder of this project', permission: 'projects.read' },
-  { id: 'archive.tagFile', label: 'Tag a file', intent: 'tag the file {asset} with {tag}', permission: 'assets.manage', params: { asset: 'id', tag: 'string' } },
+  { id: 'archive.tagFile', label: 'Tag a file', intent: 'tag the file {asset} with {tags}', permission: 'archive.curate', params: { asset: 'id', tags: 'string' } },
+  { id: 'archive.setStage', label: 'Move a file to a stage', intent: 'move the file {asset} to the delivery stage {stage}', permission: 'archive.curate', params: { asset: 'id', stage: 'string' } },
+  { id: 'archive.setCover', label: 'Set the project cover', intent: 'use the file {asset} as the cover of this project', permission: 'archive.curate', params: { asset: 'id' } },
+  { id: 'archive.setProjectTags', label: 'Tag the project', intent: 'tag the project {project} with {tags}', permission: 'archive.curate', params: { project: 'id', tags: 'string' } },
   { id: 'archive.addToSet', label: 'Add this project to the set', intent: 'add this project to the portfolio set', permission: 'projects.read' },
 ];
 
@@ -47,7 +51,8 @@ const BROWSER_LOGIC = [
   'Filters live in the query string (`?life=&year=&type=&tag=&q=&view=&set=`), so any view is a link a person can paste and an intent voice can address; the actions write the same params.',
   'A card cover is the project `coverAssetId` thumbnail when there is one; otherwise a 2x2 mosaic of `FileIcon`s for the four most common file types in the project, so a project without photography still reads as itself.',
   'The portfolio set is a list of project ids in `localStorage["aluzina.archive.set"]`, shared by S-12 and S-13; "Copy list" writes name, year, client and source link per line through `copyText`.',
-  'File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card.',
+  'File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card; the card also says how many of them carry tags.',
+  'The Tag filter\'s options are the live union of `projects[].tags`, so a tag saved on S-13 shows up here without a reload (D-023).',
 ];
 
 const PORTAL_LOGIC = [
@@ -55,11 +60,15 @@ const PORTAL_LOGIC = [
   'Files are grouped two ways (`?group=stage|folder`): by delivery stage (`stageFor`) in pipeline order, or by the studio\'s own numbered folders sorted with `folderOrderKey` and labelled with `folderLabel`, which is the "documents in order" view. Empty numbered folders still render, muted, in the folder view so the structure is complete.',
   'The preview Drawer holds one asset at a time (`?file=<assetId>`), with Previous / Next walking the currently filtered, sorted file list, and `page` state driving the `DocumentViewer`. When nothing is previewable the viewer renders its sentence and type icon, never a blank frame.',
   'Related is three reverse queries: the client through `relations` `for-client`, the Spaces post through `spaces.aboutId` and its `filings`, and up to six other projects sharing at least two tags — the "sets of related examples" the studio shows a client.',
-  'Nothing is written this pass except the localStorage set; tagging a file is a declared Placeholder (D-047) because `assets.tags` has no editor yet.',
+  'Tags are real writes (ar-09): the `TagEditor` holds a draft and Save writes it once through `data.update(\'assets\', id, { tags }, { basedOn: asset.updated_at })` or on `projects`, both behind the curation permission `archive.curate` (studio, brand, founder), so one save is one row version and a stale edit raises the global D-024 conflict toast.',
+  'Tags are free text, trimmed, lower-cased and de-duplicated; the suggestion list is the live union of every file tag, the `tags` registry names and the delivery-stage ids, so new vocabulary reaches S-12\'s tag filter the moment it is saved (lists re-render from `subscribe`, D-023).',
+  'The delivery stage of a file is a `Select` over `DELIVERY_STAGES` that writes `assets.stage` at once: the rail, the sections and the counts move with it because they all read the same rows.',
+  '"Set as cover" writes `projects.coverAssetId`, offered only for an image or a PDF that already has a thumbnail; a coverable file without a render is a Placeholder saying why, and a `confidencial` or redacted file is never offered as a cover (D-059).',
+  'The portfolio set is still localStorage only; Spaces collections and PDF export are ar-10.',
 ];
 
 const BROWSER_COMPONENTS = ['PageHeader', 'StatTile', 'FilterBar', 'SearchField', 'Select', 'ToggleButton', 'Checkbox', 'Card', 'Thumb', 'FileIcon', 'Badge', 'StatusPill', 'Button', 'DataTable', 'EmptyState', 'Placeholder', 'Skeleton'];
-const PORTAL_COMPONENTS = ['PageHeader', 'Card', 'Thumb', 'FileIcon', 'DocumentViewer', 'Drawer', 'FilterBar', 'SearchField', 'Select', 'ToggleButton', 'Badge', 'StatusPill', 'Button', 'EmptyState', 'Placeholder', 'Skeleton'];
+const PORTAL_COMPONENTS = ['PageHeader', 'Card', 'Thumb', 'FileIcon', 'DocumentViewer', 'Drawer', 'FilterBar', 'SearchField', 'Select', 'ToggleButton', 'TagEditor', 'Badge', 'StatusPill', 'Button', 'EmptyState', 'Placeholder', 'Skeleton'];
 
 export function archiveBrowserSpec(surface: Surface): PageSpec {
   return defineSpec({
@@ -93,11 +102,11 @@ export function archivePortalSpec(surface: Surface): PageSpec {
     surface,
     layout: [
       'PageHeader with breadcrumb (portal / Archive / project)',
-      'Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle and tag Badges, Open in Dropbox / Open in Work / Open space / Add to set',
+      'Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle Badge, the project Tags row (TagEditor for archive.curate, read-only Badges otherwise), Open in Dropbox / Open in Work / Open space / Add to set',
       'Delivery order: a stage rail from DELIVERY_STAGES grouped by pipelineGroup, each stage a button with glyph, label and file count',
-      'Files toolbar: search, stage, file type, grid | list, By stage | By folder, Placeholder "Tag file"',
+      'Files toolbar: search, stage, file type, grid | list, By stage | By folder (tagging lives in the preview drawer)',
       'Files by stage (or by numbered folder), each file a Thumb button that opens the preview',
-      'Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file',
+      'Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file, then "Tags and stage": TagEditor + Save, the delivery-stage Select and "Set as cover"',
       'Related: client card, the Spaces post about the project, up to six projects sharing two or more tags',
     ],
     dataTables: DATA_TABLES,

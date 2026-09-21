@@ -2,8 +2,12 @@ import type { NewRow, Row } from '../provider';
 import type { EntityName } from '../schema';
 import { SEED_AT, type SeedCtx, type SeedModule } from './types';
 
-/** Bump when the seed shape changes so existing browsers re-seed (MockProvider stores it). */
-export const SEED_VERSION = 8;
+/**
+ * Bump when the seed shape changes so existing browsers re-seed (MockProvider stores it).
+ * 9: changelog 0021 (step 14 pass 2) — 18 deep indexes of PROYECTOS 2026 and the 12 company documents of
+ * "00 INFORMACION RELEVANTE ALUZINA 2023" land as rows; existing stores re-seed to see them.
+ */
+export const SEED_VERSION = 9;
 
 /** One file per area, globbed: add `src/data/seed/<area>.ts` exporting `seed(ctx)` (+ `order`), never edit this file. */
 const modules = import.meta.glob<SeedModule>(['./*.ts', '!./index.ts', '!./types.ts'], { eager: true });

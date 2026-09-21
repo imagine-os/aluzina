@@ -30,8 +30,8 @@
 // | # | Rule | Effect |
 // |---|------|--------|
 // | R1 | file name matches NAME_RE (rut, seguridad social, seg soc, planilla, autoliquidacion, arus, cedula, tarjeta profesional, contrato / contract / agreement, comprobante, cuenta de cobro, factura, fv-, fra, cxc, pedido, cotizaci, quotation, invoice, whatsapp image, pago, payment, cash, asana, .xml, "c.m ") | name -> "<Tipo> (redactado).<ext>", `redacted: true`, no thumb / pages / excerpt / palette; ext, size, modified, href kept |
-// | R2 | any folder segment of the file's path matches FOLDER_RE (administrativo y financiero, suppliers and financial status, cierre de proyecto, contables, cuentas de cobro, facturas) | same as R1; Tipo from the name when R1 also matches, else "Documento financiero" ("Documento de cierre" under cierre de proyecto). Exception: a file named "logo" keeps its name |
-// | R3 | text excerpt carries personal data (fecha de nacimiento, cédula / C.C., NIT), the name says "feng shui" (the report is the owner's birth chart), or the file is on the explicit SENSITIVE_CONTENT list (delivery form naming the client and apartment with an internal process review; contractor-dispute letters) | name kept, `redacted: true`, no thumb / pages / excerpt / palette (`redactedReason`) |
+// | R2 | any folder segment of the file's path matches FOLDER_RE (administrativo y financiero, suppliers and financial status, cierre de proyecto, contables, cuentas de cobro, facturas; since ar-06 also contratos, cotizaci*, documentacion importante, consignaciones, pagos, proveedores) | same as R1; Tipo from the name when R1 also matches, else "Documento financiero" ("Documento de cierre" under cierre de proyecto). Exception: a file named "logo" keeps its name |
+// | R3 | text excerpt carries personal data (fecha de nacimiento, cédula / C.C., NIT) or reads as a quotation / invoice (FIN_CONTENT_RE: no. de cotización, facturar a nombre, V/R unit, total a pagar, forma de pago, valor total; ar-06), the name says "feng shui" (the report is the owner's birth chart), or the file is on the explicit SENSITIVE_CONTENT list (delivery form naming the client and apartment with an internal process review; contractor-dispute letters) | name kept, `redacted: true`, no thumb / pages / excerpt / palette (`redactedReason`) |
 // | R4 | folder segments that are person names (table SEGMENT_MAP, explicit, no guessing): suppliers and financial status/04_ALUZINA/<NN NAME ROLE> -> "NN EQUIPO <ROLE>"; 10_MERY & SONS/<NN NAME> -> "NN CONTRATISTA"; 01_AJOTA ANDREA JIMENEZ ARTISTA -> 01_ARTISTA; 02_ALEX DAVID BEDOYA ELECTRICO -> 02_ELECTRICISTA; 06_DOMOTICA YAKO DAVID -> 06_DOMOTICA; unknown segments under 04_ALUZINA -> "NN EQUIPO" | path rewritten; `folderPath` in the app shows the rewritten segments |
 // | R5 | company folder names (ALFA, DECORCERAMICA, INDURAL, J.F.S.R INGENIEROS CONSTRUCTORES, MERY & SONS, MOSAGRES ACABADOS, NEBULA, PISENDE, SEMCO, TECHOS Y ESTRUCTURAS HERREÑO, TECNICOCINA, AMAZON, PERFIL LED, LED LIGHT, ILUMINACION ANTIOQUIA) and project folder names (the studio's identifiers) | kept as they are; Justin can ask for any of them to be redacted |
 // | R6 | share links embed the full path URL-encoded, so a redacted file's `href` / `sourceHref` (and a person-named folder's `href`) is replaced by the link of the nearest SAFE ancestor folder: the company-level supplier folder, or the project root when the parent is a person folder or the file sits under ADMINISTRATIVO Y FINANCIERO / CIERRE DE PROYECTO / CONTABLES / CUENTAS DE COBRO / FACTURAS | the link opens the folder at Dropbox, never names the document |
@@ -52,6 +52,7 @@ if (!args.inventory) {
 const OUT = args.out ?? 'docs/archive';
 const MAX_PAGES = parseInt(args['max-pages'] ?? '8', 10);
 const readJson = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
+const dec = (u) => { try { return decodeURIComponent(u); } catch { return u; } };
 const list = (v) => (v ? String(v).split(',').filter(Boolean) : []);
 const pairs = (v) => list(v).map((s) => { const i = s.indexOf('='); return [s.slice(0, i), s.slice(i + 1)]; });
 
@@ -95,8 +96,16 @@ function yearOfModified(t) { const m = /(\d{4})$/.exec((t || '').trim()); const 
 // Redaction (D-059)
 // ---------------------------------------------------------------------------------------------------------------------
 const NAME_RE = /\brut\b|seguridad social|seg soc|planilla|autoliquidacion|\barus\b|cedula|tarjeta profesional|contrato|contract|agree?ment|comprobante|cuenta ?de ?cobro|cuentadecobro|factura|\bfv-|\bfra\b|\bcxc\b|pedido|cotizaci|quotation|invoice|whatsapp image|\bpagos?\b|payment|\bcash\b|asana|\.xml$|c\.m /;
-const FOLDER_RE = /administrativo y financiero|suppliers and financial status|cierre de proyecto|contables|cuentas de cobro|facturas/;
+const FOLDER_RE = /administrativo y financiero|suppliers and financial status|cierre de proyecto|contables|cuentas de cobro|facturas|\bcontratos?\b|cotizaci|documentacion importante|consignacion|\bpagos?\b|proveedor/;
 const CONTENT_RE = /fecha (de )?nacimiento|\bcedula\b|\bc\.?c\.?\s*\d|\bnit\b/;
+/** R3 (ar-06): a quotation or invoice recognised by its text, whatever the file is called (supplier quotations named by order number). */
+const FIN_CONTENT_RE = /no\.? de cotizacion|facturar a nombre|v\/r unit|total a pagar|forma de pago|valor total/;
+/** R1 (ar-06), explicit: file names that carry a client's personal name -> neutral display name, previews dropped, link to the folder. */
+const RENAME_FILES = new Map([
+  ['Wilson Arismendi, gerente general de Copetran APARTAMENTO CARTAGENA 80 MTS.pdf', 'Primera propuesta APARTAMENTO CARTAGENA 80 MTS (nombre del cliente omitido).pdf'],
+  ['Wilson Arismendi, gerente general de Copetran APARTAMENTO CARTAGENA 80 MTS.ai', 'Primera propuesta APARTAMENTO CARTAGENA 80 MTS (nombre del cliente omitido).ai'],
+]);
+const EXTRA_PERSON_NAMES = ['WILSON ARISMENDI'];
 /** R3, explicit: files whose rendered pages were reviewed and carry personal or dispute content (name kept, previews dropped). */
 const SENSITIVE_CONTENT = new Map([
   ['Design and Construction Project Delivery JOE MATHEW GALLINA.docx', 'formulario de entrega con nombre del cliente, apartamento y revisión interna del proceso'],
@@ -143,8 +152,8 @@ const folderHrefs = new Map();
 const PERSON_SEGMENTS = new Set(Object.values(SEGMENT_MAP).flatMap((t) => Object.keys(t)));
 /** The founder is the studio's public face (aluzinaa.com, the brand manual): her name is not private data (R7 exemption). */
 const PUBLIC_NAMES = new Set(['ALEJANDRA GUERRA LOTERO']);
-const PERSON_NAMES = [...PERSON_SEGMENTS].map((seg) => seg.replace(/^\d+[_ ]+/, '').replace(/\b(ENCARGADA OBRA|DISENADORA JUNION|trabajos varios|CONTABILIDAD Y COMPRAS|CONTADORA|plamtilla de excel|ARTISTA|ELECTRICO|DOMOTICA|AJOTA)\b/g, '').trim()).filter((n) => n.split(' ').length >= 2 && !PUBLIC_NAMES.has(n));
-const PRIVATE_TOP_RE = /administrativo y financiero|cierre de proyecto|contables|cuentas de cobro|facturas/;
+const PERSON_NAMES = [...EXTRA_PERSON_NAMES, ...[...PERSON_SEGMENTS].map((seg) => seg.replace(/^\d+[_ ]+/, '').replace(/\b(ENCARGADA OBRA|DISENADORA JUNION|trabajos varios|CONTABILIDAD Y COMPRAS|CONTADORA|plamtilla de excel|ARTISTA|ELECTRICO|DOMOTICA|AJOTA)\b/g, '').trim())].filter((n) => n.split(' ').length >= 2 && !PUBLIC_NAMES.has(n));
+const PRIVATE_TOP_RE = /administrativo y financiero|cierre de proyecto|contables|cuentas de cobro|facturas|\bcontratos?\b|cotizaci|documentacion importante|consignacion|\bpagos?\b|proveedor/;
 /**
  * R6: link of the nearest ancestor folder that carries no person segment and no private folder: under
  * "suppliers and financial status" at most the company folder (depth 1, unless that segment is a person); under an
@@ -156,7 +165,8 @@ function safeAncestorHref(folderPath, rootHref, scope = '') {
   let depth = segs.length;
   if (PRIVATE_TOP_RE.test(norm(segs[0]))) depth = 0;
   else if (/suppliers and financial status/.test(norm(segs[0]))) depth = Math.min(depth, 2);
-  for (let i = 0; i < depth; i++) if (PERSON_SEGMENTS.has(segs[i]) || FOLDER_RE.test(norm(segs[i])) && i > 0) { depth = i; break; }
+  // A segment that names a person, a private folder (R2) or matches the file-name pattern (COTIZACION, PAGOS, ...) is never linked: fall back to the folder above it.
+  for (let i = 0; i < depth; i++) if (PERSON_SEGMENTS.has(segs[i]) || FOLDER_RE.test(norm(segs[i])) && i > 0 || NAME_RE.test(norm(segs[i]))) { depth = i; break; }
   for (let d = depth; d > 0; d--) {
     const href = folderHrefs.get(`${scope}::${segs.slice(0, d).join('/')}`);
     if (href) return href;
@@ -172,6 +182,7 @@ function typeFor(nameNorm, folderNorm) {
 }
 /** Returns null when the file keeps its name, else the redacted display name. */
 function redactedName(name, folderPath) {
+  if (RENAME_FILES.has(name)) return RENAME_FILES.get(name);
   const n = norm(name);
   const f = norm(folderPath || '');
   const byName = NAME_RE.test(n);
@@ -244,6 +255,8 @@ for (const p of inventory) {
   const raw = rawByKey.get(key);
   let entry = { ...p };
   if (raw && raw.listed && !p.listed) entry = fromRaw(raw);
+  // ar-16: a re-crawl that lists MORE children than the inventory had (the folder was empty or partially loaded) replaces it.
+  else if (raw && raw.listed && raw.children.length > (p.children || []).length) entry = fromRaw(raw);
   else if (raw && raw.children) {
     const hrefs = new Map(raw.children.map((c) => [c.name, c.href]));
     entry.children = p.children.map((c) => ({ ...c, href: c.href ?? hrefs.get(c.name) ?? null }));
@@ -293,6 +306,15 @@ if (saRoot && !byKey.has('root/SANTIAGO AGUIRRE ILUMINACION')) {
   if (e.id === 'santiago-aguirre-iluminacion') e.id = 'santiago-aguirre-iluminacion-root';
 }
 
+/** Year folder of a deep index from its share URL: `PROYECTOS%202026/...` -> 2026, `PROYECTOS%20ALUZINA%202025/...` -> 2025, `PROYECTOS%20ALUZINA%202019%202023/<project>` -> 2019-2023. */
+function yearFolderOfUrl(url) {
+  const u = dec(url);
+  const range = /PROYECTOS ALUZINA (\d{4}) (\d{4})\//.exec(u);
+  const one = /PROYECTOS (?:ALUZINA )?(\d{4})\//.exec(u.replace(/PROYECTOS ALUZINA \d{4} \d{4}\//, ''));
+  if (one) return one[1];
+  if (range) return `${range[1]}-${range[2]}`;
+  return '2019-2023';
+}
 // 5. Featured projects from their deep indexes.
 const deepOut = [];
 for (const [slugId, file] of pairs(args.deep)) {
@@ -310,7 +332,7 @@ for (const [slugId, file] of pairs(args.deep)) {
   const extensions = {};
   for (const f of deep.files) extensions[f.ext || '(none)'] = (extensions[f.ext || '(none)'] || 0) + 1;
   const newest = deep.files.map((f) => f.modified).filter(Boolean).sort((a, b) => approxDays(a) - approxDays(b))[0] ?? null;
-  const yearFolder = /PROYECTOS%20ALUZINA%20(\d{4})%20(\d{4})/.exec(deep.sourceUrl) ? deep.sourceUrl.match(/PROYECTOS%20ALUZINA%20(\d{4})%20(\d{4})/).slice(1).join('-') : '2019-2023';
+  const yearFolder = yearFolderOfUrl(deep.sourceUrl);
   byKey.set(`${yearFolder}/${deep.folderName}`, {
     id: slugId, folderName: deep.folderName, yearFolder, numberPrefix: numberPrefix(deep.folderName), sourceHref: deep.sourceUrl,
     childCount: children.length, fileCount: deep.files.length, dirCount: dirChildren.length, extensions, totalBytesKnown: deep.totalBytes, latestModified: newest,
@@ -326,14 +348,15 @@ function redactDeep(deep, slugId) {
     const folder = f.path.includes('/') ? f.path.slice(0, f.path.lastIndexOf('/')) : '';
     const newFolder = rewriteSegments(folder);
     const r = redactedName(f.name, folder);
-    const contentHit = !r && (CONTENT_RE.test(norm(f.textExcerpt || '')) || /feng shui/.test(norm(f.name)) || SENSITIVE_CONTENT.has(f.name));
+    const finHit = !r && FIN_CONTENT_RE.test(norm(f.textExcerpt || ''));
+    const contentHit = !r && (finHit || CONTENT_RE.test(norm(f.textExcerpt || '')) || /feng shui/.test(norm(f.name)) || SENSITIVE_CONTENT.has(f.name));
     const pathTouched = newFolder !== folder;
     const safeHref = r || contentHit || pathTouched ? safeAncestorHref(folder, deep.sourceUrl, slugId) : f.sourceHref;
     if (safeHref !== f.sourceHref) stats.hrefsReplaced++;
     const base = { path: newFolder ? `${newFolder}/${r ?? f.name}` : r ?? f.name, name: r ?? f.name, ext: f.ext, mimeType: f.mimeType || null, bytes: f.bytes ?? null, modified: f.modified ?? null, sourceHref: safeHref, downloaded: Boolean(f.downloaded), slug: f.slug };
     if (r || contentHit) {
       if (r) stats.deepRedacted++; else stats.deepContentRedacted++;
-      return { ...base, thumb: null, pages: [], pageCount: f.pageCount ?? null, textExcerpt: '', palette: [], renderer: null, redacted: true, redactedReason: r ? (NAME_RE.test(norm(f.name)) ? 'nombre de archivo' : 'carpeta administrativa o financiera') : SENSITIVE_CONTENT.get(f.name) ?? (/feng shui/.test(norm(f.name)) ? 'informe feng shui (carta natal del propietario)' : 'contenido con datos personales') };
+      return { ...base, thumb: null, pages: [], pageCount: f.pageCount ?? null, textExcerpt: '', palette: [], renderer: null, redacted: true, redactedReason: r ? (RENAME_FILES.has(f.name) ? 'nombre del cliente en el nombre del archivo' : NAME_RE.test(norm(f.name)) ? 'nombre de archivo' : 'carpeta administrativa o financiera') : SENSITIVE_CONTENT.get(f.name) ?? (finHit ? 'contenido financiero (cotización o factura)' : /feng shui/.test(norm(f.name)) ? 'informe feng shui (carta natal del propietario)' : 'contenido con datos personales') };
     }
     const pages = (f.pages || []).slice(0, MAX_PAGES).map((p) => `pages/${path.basename(p)}`);
     if (f.thumb) stats.previewsKept++;
@@ -428,7 +451,6 @@ const redaction = { inventoryFiles: stats.inventoryFiles, inventoryRedacted: sta
 // R7 self-check: nothing personal or financial survives in names, paths or links. Fails the run before writing.
 // ---------------------------------------------------------------------------------------------------------------------
 const problems = [];
-const dec = (u) => { try { return decodeURIComponent(u); } catch { return u; } };
 const rootPathOf = (href) => { const m = /\/scl\/fo\/[^/]+\/[^/]+\/([^?]*)/.exec(dec(href || '')); return m ? m[1] : ''; };
 function checkHref(where, href, rootHref, originalName) {
   if (!href) return;

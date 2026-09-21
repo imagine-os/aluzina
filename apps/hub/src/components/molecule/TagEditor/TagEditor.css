@@ -1,0 +1,116 @@
+/* TagEditor (molecule). Tokens only: the chips reuse the Badge look, the listbox the Card surface. */
+
+.tagedit {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.tagedit__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Chip = Badge + its own remove button, so the badge stays the one visual for a tag everywhere. */
+.tagedit__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-raised);
+  padding-inline-start: var(--space-1);
+}
+
+.tagedit__chip .badge {
+  border: 0;
+  background: transparent;
+  max-width: 14rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tagedit__remove {
+  min-width: var(--target);
+  min-height: var(--target);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.tagedit__remove:hover:not(:disabled),
+.tagedit__remove:focus-visible {
+  color: var(--color-text);
+  background: var(--color-accent-soft);
+}
+
+.tagedit__remove:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.tagedit__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.tagedit__field {
+  position: relative;
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.tagedit__list {
+  position: absolute;
+  z-index: 20;
+  inset-inline: 0;
+  top: calc(100% + var(--space-1));
+  max-height: 16rem;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: var(--space-1);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.tagedit__option {
+  display: flex;
+  align-items: center;
+  min-height: var(--target);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.tagedit__option:hover,
+.tagedit__option--active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-text);
+}
+
+.tagedit__hint,
+.tagedit__count {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}

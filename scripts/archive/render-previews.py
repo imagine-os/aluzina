@@ -6,7 +6,8 @@ paths and limits as arguments; the download / render logic is theirs.
 
 Subcommands
   download  --entries=<entries.json> --files=<dir> [--budget-mb=400] [--max-single-mb=120] [--allow=<prefix>[,<prefix>]]
-            [--deny-names=<regex>]   curl -L (dl=1) each file the allow-list permits, size-checked against the listing;
+            [--allow-re=<regex over the folder path>] [--allow-root=true] [--deny-names=<regex>] [--exts=pdf,jpg,...] [--delay=1]
+            curl -L (dl=1) each file the allow-list permits, size-checked against the listing;
             writes <files>/../download-log.{json,md}. Default allow-list: `DISEÑO/` plus nothing at the root; default
             deny: the D-059 NAME_RE (RUT, seguridad social, contrato, factura, cotización, ...) and the administrative /
             supplier / closing folders. TLS: curl's default verification through HTTPS_PROXY (never disabled).
@@ -14,7 +15,7 @@ Subcommands
             PyMuPDF for pdf / ai / eps, Pillow for images, LibreOffice (soffice --headless) for Office files, ffmpeg for
             one video frame; writes <out>/thumbs/<slug>[-page-NN].jpg and <out>/index.json (shape `DeepIndex`, raw:
             build-index.mjs redacts it). Files not downloaded (or denied) get `thumb: null, pages: []`.
-  stream    --index=<index.json> --out=<dir> --paths=<path>[,<path>]   one very large PDF at a time: download to a temp
+  stream    --index=<index.json> --out=<dir> --paths=<path>[,<path>] | --paths-file=<json list>   one very large PDF at a time: download to a temp
             file, render, delete (`downloaded: false`, `renderer: pymupdf`), as the workers did for the 0.3-1 GB presentations.
   serve     --index=<redacted index.json> --src=<thumbs dir> --dest=<apps/hub/public/archive/<slug>> [--max-pages=8]
             [--thumb-px=640] [--thumb-q=80] [--page-px=1200] [--page-q=72]   copies the renders the REDACTED index still
@@ -28,7 +29,7 @@ FFMPEG = os.environ.get('FFMPEG', '/opt/pw-browsers/ffmpeg-1011/ffmpeg-linux')
 SOFFICE = os.environ.get('SOFFICE', '/usr/bin/soffice')
 UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36'
 NAME_RE = re.compile(r'\brut\b|seguridad social|seg soc|planilla|autoliquidacion|\barus\b|cedula|tarjeta profesional|contrato|contract|agree?ment|comprobante|cuenta ?de ?cobro|cuentadecobro|factura|\bfv-|\bfra\b|\bcxc\b|pedido|cotizaci|quotation|invoice|whatsapp image|\bpagos?\b|payment|\bcash\b|asana|\.xml$|c\.m ', re.I)
-FOLDER_RE = re.compile(r'administrativo y financiero|suppliers and financial status|cierre de proyecto|contables|cuentas de cobro|facturas', re.I)
+FOLDER_RE = re.compile(r'administrativo y financiero|suppliers and financial status|cierre de proyecto|contables|cuentas de cobro|facturas|\bcontratos?\b|cotizaci|documentacion importante|consignacion|proveedor|supplier', re.I)
 
 
 def args_of(argv):
@@ -60,14 +61,19 @@ def slugs_for(files):
     return slugs
 
 
-def deny_reason(path, allow_prefixes, deny_re):
-    """None when the file may be downloaded / rendered, else a short reason (privacy first, then the allow-list)."""
+def deny_reason(path, allow_prefixes, deny_re, allow_re=None, allow_root=False):
+    """None when the file may be downloaded / rendered, else a short reason (privacy first, then the allow-list).
+    allow_re (ar-06): a regex matched against the accent-stripped folder path (design folders of the 2026 template:
+    propuesta, fotografia, presentacion, planos, cronograma, obra y avance, ...); allow_root: loose files at the top level."""
     name = path.rsplit('/', 1)[-1]
     folder = path[: -len(name)].rstrip('/')
-    if FOLDER_RE.search(strip(folder)): return 'privacy: administrative / supplier / closing folder (D-059)'
+    if FOLDER_RE.search(strip(folder)): return 'privacy: administrative / contracts / quotation / supplier / closing folder (D-059)'
     if deny_re.search(strip(name).replace('_', ' ')): return 'privacy: file name pattern (D-059)'
-    if not any(path.startswith(p) for p in allow_prefixes): return 'not in preview allow-list'
-    return None
+    if any(path.startswith(p) for p in allow_prefixes): return None
+    if allow_root and not folder: return None
+    if allow_re is not None and folder and allow_re.search(strip(folder)): return None
+    return 'not in preview allow-list'
+
 
 
 def unit_tol(size_text):
@@ -99,15 +105,21 @@ def cmd_download(a):
     budget = int(a.get('budget-mb', '400')) * 1024 * 1024
     max_single = int(a.get('max-single-mb', '120')) * 1024 * 1024
     allow = [p for p in a.get('allow', 'DISEÑO/').split(',') if p]
+    allow_re = re.compile(a['allow-re'], re.I) if a.get('allow-re') else None
+    allow_root = a.get('allow-root') == 'true'
+    exts = set(x.strip().lower() for x in a['exts'].split(',') if x.strip()) if a.get('exts') else None  # renderable types only (ar-06)
+    pause = float(a.get('delay', '0'))  # seconds between downloads (gentle pacing)
     deny_re = re.compile(a['deny-names'], re.I) if a.get('deny-names') else NAME_RE
     log, spent = [], 0
     for e in files:
         rel = e['path']; dest = os.path.join(root, rel)
         row = {'path': rel, 'listed': e['size'], 'size_text': e.get('size_text')}
-        why = deny_reason(rel, allow, deny_re)
+        why = deny_reason(rel, allow, deny_re, allow_re, allow_root)
         if why:
             if os.path.exists(dest): os.remove(dest)
             row.update(status='skipped', reason=why, bytes=0); log.append(row); continue
+        if exts is not None and (e['ext'] or '').lower() not in exts:
+            row.update(status='skipped', reason=f"type .{e['ext']} has no renderer (not downloaded)", bytes=0); log.append(row); continue
         if e['size'] is None:
             row.update(status='failed', reason='no size listed', bytes=0); log.append(row); continue
         if e['size'] > max_single:
@@ -119,6 +131,7 @@ def cmd_download(a):
             row.update(status='ok', bytes=b, reason='already present'); log.append(row); continue
         os.makedirs(os.path.dirname(dest), exist_ok=True)
         ok, err = False, ''
+        if pause: time.sleep(pause)
         for _ in range(3):
             rc, code, stderr = curl(dl_url(e['href']), dest)
             if rc == 0 and code == '200' and os.path.exists(dest):
@@ -185,6 +198,9 @@ def render_pdf(doc, slug, rec, thumbs, pages_n, page_px, thumb_px):
 def cmd_render(a):
     import pymupdf
     from PIL import Image
+    try:  # HEIC phone photos (ar-06): optional, only when pillow-heif is installed
+        import pillow_heif; pillow_heif.register_heif_opener()
+    except Exception: pass
     entries = json.load(open(a['entries']))
     files = [e for e in entries['entries'] if not e['is_dir']]
     root = a['files']; out = a['out']; thumbs = os.path.join(out, 'thumbs'); os.makedirs(thumbs, exist_ok=True)
@@ -245,7 +261,8 @@ def cmd_stream(a):
     min_free = 2.5 * 1024 ** 3
     pages_n = int(a.get('pages', '12')); page_px = int(a.get('page-px', '1400')); thumb_px = int(a.get('thumb-px', '640'))
     log = []
-    for path in [p for p in a['paths'].split(',') if p]:
+    paths = json.load(open(a['paths-file'])) if a.get('paths-file') else [p for p in a.get('paths', '').split(',') if p]  # --paths-file: JSON list, for paths that contain commas
+    for path in paths:
         rec = recs[path]; row = {'path': path, 'listed': rec['bytes']}
         if rec.get('renderer') == 'pymupdf' and rec.get('pages'):
             row['status'] = 'already rendered'; log.append(row); continue

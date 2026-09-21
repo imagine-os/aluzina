@@ -40,7 +40,7 @@ const name = args.name ? `-${args.name}` : ''; // --name=board -> <lang>-<width>
 const suffix = `${name}${theme === 'dark' ? '-dark' : ''}`;
 const storage = args.storage ? JSON.parse(args.storage) : {};
 const scroll = Number(args.scroll ?? 0);
-const heights = { 390: 900, 1280: 900, 3840: 2160 };
+const heights = { 390: 900, 1280: 900, 1920: 1080, 2560: 1440, 3840: 2160 };
 
 // Prefer the preinstalled Chromium when present; override with PW_EXECUTABLE.
 const launchOpts = { headless: true };

@@ -242,6 +242,7 @@ export const documentsSpec = defineSpec({
     'PageHeader (replace document, a Placeholder)',
     'One Card per assets row of kind document: title, file name, page count and size, how many pages are records, the colours and fonts read from the file, and View / Download / Open in new tab / Share link',
     'Related section per Card: the projects its pages depict (links to the Work view) and the playbook services its pages argue for (links to the manual), read from relations',
+    'Section "Company documents (Dropbox 2023)": a grid of Thumb tiles (thumbnail or FileIcon, badge = pages or ext, caption = file name, owner / visibility Badges) for the 12 files of ar-15, each opening a Drawer with a DocumentViewer (served pages for the 5 rendered ones; a sentence + "Open at source" for the price lists and the 3 third-party files)',
     'Viewer Card: Tabs (one per document) around an <object> PDF viewer with an <iframe> and a plain-text fallback; ?page=N opens the PDF at that page',
     'Card "Where these files live": the files are static assets shipped with the app until file storage exists; the rows and their relations are data',
   ],
@@ -265,10 +266,13 @@ export const documentsSpec = defineSpec({
     { id: 'brand.openDocumentTab', label: 'Open a document in a new tab', intent: 'open the {doc} in a new tab', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
     { id: 'brand.shareDocumentLink', label: 'Copy the document link', intent: 'copy the link to the {doc}', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
     { id: 'brand.replaceDocument', label: 'Replace a document', intent: 'upload a new version of the {doc}', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
+    { id: 'brand.openCompanyDocument', label: 'Open a company document', intent: 'open the company document {asset}', permission: 'brand.manage', params: { asset: 'string' } },
+    { id: 'brand.closeCompanyDocument', label: 'Close the company document viewer', intent: 'close the company document viewer', permission: 'brand.manage' },
   ],
   checkedAt: [360, 390, 768, 1280, 1920, 2560, 3840],
   notes: [
     'Page count, file size, palette and fonts come from the assets row, which the seed derives from docs/brand/<doc>/index.json (prompt 0013): replacing a PDF means re-rendering the pages and updating the index, and the row follows; the static list in documents.ts is only the loading fallback (and what G-01 still lists).',
     'The same rows are published to visitors on P-05 /portfolio; both pages keep their own DocFrame until a DocumentViewer organism lands in the library (request in docs/changelog/_pending/brand-docs.md).',
+    'The "Company documents" section (ar-15) reads assets rows tagged `empresa` (seed/company.ts, order 75) instead of a fixed doc list, so it grows with the next Dropbox intake without a page change.',
   ],
 });

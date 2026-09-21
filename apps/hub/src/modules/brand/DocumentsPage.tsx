@@ -2,14 +2,19 @@ import { useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
 import { useCan } from '../../auth/SessionProvider';
+import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
 import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 import { toast } from '../../components/atom/Toast/Toast';
 import { Card } from '../../components/molecule/Card/Card';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { Tabs } from '../../components/molecule/Tabs/Tabs';
+import { Thumb } from '../../components/molecule/Thumb/Thumb';
+import { DocumentViewer } from '../../components/organism/DocumentViewer/DocumentViewer';
+import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useTable } from '../../data/DataContext';
 import type { Asset, Project, Relation } from '../../data/schema';
+import { fileTypeOf } from '../../domain/archive';
 import { SERVICES, pick, type Service } from '../../domain';
 import { useT } from '../../i18n/I18nProvider';
 import { absoluteUrl, copyText, docIn, docsFromAssets, fontNames, formatMb, triggerDownload, type BrandDoc } from './documents';
@@ -89,6 +94,24 @@ export function DocumentsPage() {
   const projects = useTable('projects');
   const docs = useMemo(() => docsFromAssets(documents.rows, documents.loading), [documents.rows, documents.loading]);
 
+  // ---- Company documents (ar-15): the 12 Dropbox files tagged `empresa` (seed/company.ts) ----
+  const companyAssets = useTable('assets', { where: { kind: 'file', status: 'current' } });
+  const companyDocs = useMemo(() => companyAssets.rows.filter((a) => a.tags.includes('empresa')).sort((a, b) => a.title.localeCompare(b.title)), [companyAssets.rows]);
+  const [companyOpenId, setCompanyOpenId] = useState<string | null>(null);
+  const companyOpen = companyDocs.find((a) => a.id === companyOpenId) ?? null;
+  const companyExt = (a: Asset) => (a.sourceName ?? a.title).split('.').pop()?.toUpperCase() ?? '';
+  const companyOwner = (a: Asset) => t(a.tags.includes('propio') ? 'brand.documents.company.ownerOwn' : 'brand.documents.company.ownerThirdParty');
+  const companyVisibility = (a: Asset) => t(a.tags.includes('público') ? 'brand.documents.company.visibilityPublic' : 'brand.documents.company.visibilityInternal');
+  const openCompany = (a: Asset): string => {
+    setCompanyOpenId(a.id);
+    return a.id;
+  };
+  const closeCompany = (): string => {
+    setCompanyOpenId(null);
+    return 'closed';
+  };
+  const asCompanyAsset = (value: unknown): Asset | undefined => companyDocs.find((a) => a.id === value || a.title === value);
+
   const [params, setParams] = useSearchParams();
   const [fallbackId, setFallbackId] = useState('portfolio');
   const current: BrandDoc = docIn(docs, params.get('doc')) ?? docIn(docs, fallbackId) ?? docs[0];
@@ -140,6 +163,12 @@ export function DocumentsPage() {
     'brand.shareDocumentLink': manage && (({ doc }) => share(asDoc(doc))),
     // Declared, shown as a Placeholder, registered so the bus answers honestly instead of `not-live` (D-047).
     'brand.replaceDocument': manage && (() => 'not wired yet: replacing a document is a commit until file storage exists (D-049)'),
+    'brand.openCompanyDocument': manage && (({ asset }) => {
+      const found = asCompanyAsset(asset);
+      if (!found) return 'unknown company document';
+      return openCompany(found);
+    }),
+    'brand.closeCompanyDocument': manage && (() => closeCompany()),
   });
 
   const related = useMemo(() => new Map(docs.map((d) => [d.id, relatedOf(d, pages.rows, relations.rows, projects.rows)])), [docs, pages.rows, relations.rows, projects.rows]);
@@ -228,6 +257,80 @@ export function DocumentsPage() {
           );
         })}
       </ul>
+
+      {/* Company documents (ar-15): assets tagged `empresa`, read from data so the grid grows with the next intake. */}
+      <section className="brand-doc__company" aria-labelledby="brand-company-title">
+        <h2 id="brand-company-title" className="brand-doc__related-title">
+          {t('brand.documents.company.title')}
+        </h2>
+        <p className="brand-doc__note">{t('brand.documents.company.subtitle')}</p>
+        <ul className="brand-grid brand-grid--company">
+          {companyDocs.map((a) => {
+            const type = fileTypeOf(a.sourceName ?? a.title);
+            const badge = a.pageCount ? t(a.pageCount === 1 ? 'brand.documents.company.pagesOne' : 'brand.documents.company.pages', { count: a.pageCount }) : companyExt(a);
+            return (
+              <li key={a.id} data-asset={a.id}>
+                <button type="button" className="brand-doc__company-tile" aria-label={t('brand.documents.company.openAria', { title: a.title })} onClick={() => openCompany(a)}>
+                  <Thumb src={a.thumbnailUrl} alt={a.title} type={type} ratio="4:3" badge={badge} caption={a.title} size="md" />
+                </button>
+                <p className="brand-doc__meta">
+                  <Badge tone={a.tags.includes('propio') ? 'accent' : 'neutral'}>{companyOwner(a)}</Badge>
+                  <Badge tone={a.tags.includes('público') ? 'success' : 'warning'}>{companyVisibility(a)}</Badge>
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <Drawer open={companyOpen !== null} onClose={closeCompany} title={companyOpen?.title ?? ''}>
+        {companyOpen && (
+          <>
+            <p className="brand-doc__meta">
+              <Badge tone={companyOpen.tags.includes('propio') ? 'accent' : 'neutral'}>{companyOwner(companyOpen)}</Badge>
+              <Badge tone={companyOpen.tags.includes('público') ? 'success' : 'warning'}>{companyVisibility(companyOpen)}</Badge>
+              {formatMb(companyOpen.bytes ?? 0, lang) !== '0.0' && <span className="brand-list__meta">{formatMb(companyOpen.bytes ?? 0, lang)} MB</span>}
+            </p>
+            {companyOpen.previewUrls.length > 0 ? (
+              <DocumentViewer
+                asset={{
+                  title: companyOpen.title,
+                  titleEs: companyOpen.titleEs,
+                  url: companyOpen.url,
+                  sourceUrl: companyOpen.sourceUrl,
+                  mimeType: companyOpen.mimeType,
+                  previewUrls: companyOpen.previewUrls,
+                  pageCount: companyOpen.pageCount,
+                  thumbnailUrl: companyOpen.thumbnailUrl,
+                  fileType: fileTypeOf(companyOpen.sourceName ?? companyOpen.title),
+                }}
+                controls={false}
+                labels={{
+                  fallback: t('brand.documents.company.viewerFallback'),
+                  download: t('brand.documents.company.viewerDownload'),
+                  openSource: t('brand.documents.company.openSource'),
+                  page: (n, total) => t('brand.documents.company.viewerPosition', { index: n, total }),
+                  prev: t('brand.documents.company.viewerPrev'),
+                  next: t('brand.documents.company.viewerNext'),
+                  thumbnails: t('brand.documents.company.viewerThumbnails'),
+                }}
+              />
+            ) : (
+              <p className="brand-doc__note">{t('brand.documents.company.noPreview')}</p>
+            )}
+            <div className="brand-actions-row">
+              {companyOpen.sourceUrl && (
+                <Button href={companyOpen.sourceUrl} external>
+                  {t('brand.documents.company.openSource')}
+                </Button>
+              )}
+              <Button variant="ghost" onClick={closeCompany}>
+                {t('brand.documents.company.close')}
+              </Button>
+            </div>
+          </>
+        )}
+      </Drawer>
 
       <div className="brand-stack">
         <div ref={viewerRef} tabIndex={-1} className="brand-doc__anchor" id="brand-documents-viewer">

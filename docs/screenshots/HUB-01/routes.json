@@ -1,18 +1,1232 @@
 {
-  "capturedAt": "2026-09-21T07:00:42.288Z",
+  "capturedAt": "2026-09-21T21:32:51.492Z",
   "base": "http://localhost:4173/",
   "code": "HUB-01",
   "route": "/",
   "shots": [
-    "en-390",
     "en-1280",
-    "es-1280",
+    "en-1280-icons",
+    "en-1280-icons-dark",
     "en-1920",
-    "en-3840"
+    "en-3840",
+    "en-390",
+    "es-1280"
   ],
   "theme": "light",
   "manifest": {
     "routes": [
+      {
+        "path": "/studio/archive",
+        "code": "S-12",
+        "surface": "studio",
+        "status": "built",
+        "shell": "desktop",
+        "permission": "projects.read",
+        "spec": {
+          "code": "S-12",
+          "name": "Project archive",
+          "purpose": "One browser over every project the studio has ever had — past work, work in progress and prospects — with covers, thumbnails, tags and file counts, so Alejandra can review past work while building a portfolio or assemble a set of related examples for a specific client.",
+          "surface": "studio",
+          "navGroup": "projects",
+          "layout": [
+            "PageHeader (code, title, counts, breadcrumb) with \"Portfolio set\" toggle and a Placeholder \"Import folder\"",
+            "StatTile row: Prospects / In progress / Past / All, each a button that sets the lifecycle filter",
+            "FilterBar: search, year, type, tag, sort, and a Cards | Table ToggleButton",
+            "Cards grid (Thumb cover or FileIcon mosaic, name, client, year, StatusPill, Badges, file count) or DataTable with the same columns",
+            "EmptyState when nothing matches",
+            "Sticky portfolio-set bar: count, Copy list, Open in Spaces (Placeholder), Export PDF (Placeholder), Clear"
+          ],
+          "dataTables": [
+            "projects",
+            "assets",
+            "relations",
+            "clients",
+            "spaces",
+            "filings",
+            "posts"
+          ],
+          "roles": [
+            "studio",
+            "founder",
+            "brand"
+          ],
+          "logic": [
+            "Every project is listed, not only the archived ones: lifecycle tabs (Prospects / In progress / Past / All) come from `lifecycleOf(project.pipelineStatus)`, so \"sometimes we want to see everything\" is one click and the default is All.",
+            "Filters live in the query string (`?life=&year=&type=&tag=&q=&view=&set=`), so any view is a link a person can paste and an intent voice can address; the actions write the same params.",
+            "A card cover is the project `coverAssetId` thumbnail when there is one; otherwise a 2x2 mosaic of `FileIcon`s for the four most common file types in the project, so a project without photography still reads as itself.",
+            "The portfolio set is a list of project ids in `localStorage[\"aluzina.archive.set\"]`, shared by S-12 and S-13; \"Copy list\" writes name, year, client and source link per line through `copyText`.",
+            "File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card; the card also says how many of them carry tags.",
+            "The Tag filter's options are the live union of `projects[].tags`, so a tag saved on S-13 shows up here without a reload (D-023)."
+          ],
+          "components": [
+            "PageHeader",
+            "StatTile",
+            "FilterBar",
+            "SearchField",
+            "Select",
+            "ToggleButton",
+            "Checkbox",
+            "Card",
+            "Thumb",
+            "FileIcon",
+            "Badge",
+            "StatusPill",
+            "Button",
+            "DataTable",
+            "EmptyState",
+            "Placeholder",
+            "Skeleton"
+          ],
+          "actions": [
+            {
+              "id": "archive.filterLifecycle",
+              "label": "Filter by lifecycle",
+              "intent": "show only {life} projects",
+              "permission": "projects.read",
+              "params": {
+                "life": "enum:prospect|active|past|all"
+              }
+            },
+            {
+              "id": "archive.filterYear",
+              "label": "Filter by year",
+              "intent": "show only projects from {year}",
+              "permission": "projects.read",
+              "params": {
+                "year": "string"
+              }
+            },
+            {
+              "id": "archive.filterType",
+              "label": "Filter by project type",
+              "intent": "show only {type} projects",
+              "permission": "projects.read",
+              "params": {
+                "type": "enum:residential|commercial|hospitality|wellness|lighting-product|all"
+              }
+            },
+            {
+              "id": "archive.filterTag",
+              "label": "Filter by tag",
+              "intent": "show only projects tagged {tag}",
+              "permission": "projects.read",
+              "params": {
+                "tag": "string"
+              }
+            },
+            {
+              "id": "archive.search",
+              "label": "Search the archive",
+              "intent": "find archived projects matching {q}",
+              "permission": "projects.read",
+              "params": {
+                "q": "string"
+              }
+            },
+            {
+              "id": "archive.setView",
+              "label": "Switch view",
+              "intent": "show the archive as {view}",
+              "permission": "projects.read",
+              "params": {
+                "view": "enum:cards|table"
+              }
+            },
+            {
+              "id": "archive.openProject",
+              "label": "Open a project",
+              "intent": "open the portal view of the project {project}",
+              "permission": "projects.read",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "archive.toggleInSet",
+              "label": "Add or remove from the portfolio set",
+              "intent": "put the project {project} in the portfolio set",
+              "permission": "projects.read",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "archive.copySet",
+              "label": "Copy the portfolio set",
+              "intent": "copy the portfolio set as a list",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.clearSet",
+              "label": "Clear the portfolio set",
+              "intent": "clear the portfolio set",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.exportSet",
+              "label": "Export the portfolio set",
+              "intent": "export the portfolio set as a PDF",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.importFolder",
+              "label": "Import a folder",
+              "intent": "import a Dropbox or Drive folder into the archive",
+              "permission": "projects.read"
+            }
+          ],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920
+          ]
+        }
+      },
+      {
+        "path": "/studio/archive/:projectId",
+        "code": "S-13",
+        "surface": "studio",
+        "status": "built",
+        "shell": "desktop",
+        "permission": "projects.read",
+        "spec": {
+          "code": "S-13",
+          "name": "Project portal view",
+          "purpose": "Everything about one archived project on a single page: the hero with its cover and source folder, the delivery order as a stage rail, every file previewable in place grouped by stage or by the studio's numbered folders, and what the project is related to.",
+          "surface": "studio",
+          "layout": [
+            "PageHeader with breadcrumb (portal / Archive / project)",
+            "Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle Badge, the project Tags row (TagEditor for archive.curate, read-only Badges otherwise), Open in Dropbox / Open in Work / Open space / Add to set",
+            "Delivery order: a stage rail from DELIVERY_STAGES grouped by pipelineGroup, each stage a button with glyph, label and file count",
+            "Files toolbar: search, stage, file type, grid | list, By stage | By folder (tagging lives in the preview drawer)",
+            "Files by stage (or by numbered folder), each file a Thumb button that opens the preview",
+            "Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file, then \"Tags and stage\": TagEditor + Save, the delivery-stage Select and \"Set as cover\"",
+            "Related: client card, the Spaces post about the project, up to six projects sharing two or more tags"
+          ],
+          "dataTables": [
+            "projects",
+            "assets",
+            "relations",
+            "clients",
+            "spaces",
+            "filings",
+            "posts"
+          ],
+          "roles": [
+            "studio",
+            "founder",
+            "brand"
+          ],
+          "logic": [
+            "The delivery order rail is `DELIVERY_STAGES` in `order`, sub-headed by `pipelineGroup`; each stage button carries its file count and filters the sections below. Arrow keys move along the rail (roving tabindex), Home / End jump to the ends.",
+            "Files are grouped two ways (`?group=stage|folder`): by delivery stage (`stageFor`) in pipeline order, or by the studio's own numbered folders sorted with `folderOrderKey` and labelled with `folderLabel`, which is the \"documents in order\" view. Empty numbered folders still render, muted, in the folder view so the structure is complete.",
+            "The preview Drawer holds one asset at a time (`?file=<assetId>`), with Previous / Next walking the currently filtered, sorted file list, and `page` state driving the `DocumentViewer`. When nothing is previewable the viewer renders its sentence and type icon, never a blank frame.",
+            "Related is three reverse queries: the client through `relations` `for-client`, the Spaces post through `spaces.aboutId` and its `filings`, and up to six other projects sharing at least two tags — the \"sets of related examples\" the studio shows a client.",
+            "Tags are real writes (ar-09): the `TagEditor` holds a draft and Save writes it once through `data.update('assets', id, { tags }, { basedOn: asset.updated_at })` or on `projects`, both behind the curation permission `archive.curate` (studio, brand, founder), so one save is one row version and a stale edit raises the global D-024 conflict toast.",
+            "Tags are free text, trimmed, lower-cased and de-duplicated; the suggestion list is the live union of every file tag, the `tags` registry names and the delivery-stage ids, so new vocabulary reaches S-12's tag filter the moment it is saved (lists re-render from `subscribe`, D-023).",
+            "The delivery stage of a file is a `Select` over `DELIVERY_STAGES` that writes `assets.stage` at once: the rail, the sections and the counts move with it because they all read the same rows.",
+            "\"Set as cover\" writes `projects.coverAssetId`, offered only for an image or a PDF that already has a thumbnail; a coverable file without a render is a Placeholder saying why, and a `confidencial` or redacted file is never offered as a cover (D-059).",
+            "The portfolio set is still localStorage only; Spaces collections and PDF export are ar-10."
+          ],
+          "components": [
+            "PageHeader",
+            "Card",
+            "Thumb",
+            "FileIcon",
+            "DocumentViewer",
+            "Drawer",
+            "FilterBar",
+            "SearchField",
+            "Select",
+            "ToggleButton",
+            "TagEditor",
+            "Badge",
+            "StatusPill",
+            "Button",
+            "EmptyState",
+            "Placeholder",
+            "Skeleton"
+          ],
+          "actions": [
+            {
+              "id": "archive.openFile",
+              "label": "Preview a file",
+              "intent": "preview the file {asset}",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.closeFile",
+              "label": "Close the preview",
+              "intent": "close the file preview",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.nextFile",
+              "label": "Next file",
+              "intent": "show the next file",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.prevFile",
+              "label": "Previous file",
+              "intent": "show the previous file",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.previewPage",
+              "label": "Go to a page",
+              "intent": "go to page {page} of the open file",
+              "permission": "projects.read",
+              "params": {
+                "page": "number"
+              }
+            },
+            {
+              "id": "archive.filterStage",
+              "label": "Filter by stage",
+              "intent": "show only the files of the stage {stage}",
+              "permission": "projects.read",
+              "params": {
+                "stage": "string"
+              }
+            },
+            {
+              "id": "archive.filterFileType",
+              "label": "Filter by file type",
+              "intent": "show only {type} files",
+              "permission": "projects.read",
+              "params": {
+                "type": "string"
+              }
+            },
+            {
+              "id": "archive.searchFiles",
+              "label": "Search the files",
+              "intent": "find files matching {q}",
+              "permission": "projects.read",
+              "params": {
+                "q": "string"
+              }
+            },
+            {
+              "id": "archive.setFilesView",
+              "label": "Switch the file view",
+              "intent": "show the files as a {view}",
+              "permission": "projects.read",
+              "params": {
+                "view": "enum:grid|list"
+              }
+            },
+            {
+              "id": "archive.setGrouping",
+              "label": "Switch the grouping",
+              "intent": "group the files {mode}",
+              "permission": "projects.read",
+              "params": {
+                "mode": "enum:stage|folder"
+              }
+            },
+            {
+              "id": "archive.openSource",
+              "label": "Open a file at the source",
+              "intent": "open the file {asset} in Dropbox",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.downloadFile",
+              "label": "Download a file",
+              "intent": "download the file {asset}",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.copyFileLink",
+              "label": "Copy a file link",
+              "intent": "copy the link to the file {asset}",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.openFolderSource",
+              "label": "Open the source folder",
+              "intent": "open the source folder of this project",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.tagFile",
+              "label": "Tag a file",
+              "intent": "tag the file {asset} with {tags}",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id",
+                "tags": "string"
+              }
+            },
+            {
+              "id": "archive.setStage",
+              "label": "Move a file to a stage",
+              "intent": "move the file {asset} to the delivery stage {stage}",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id",
+                "stage": "string"
+              }
+            },
+            {
+              "id": "archive.setCover",
+              "label": "Set the project cover",
+              "intent": "use the file {asset} as the cover of this project",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.setProjectTags",
+              "label": "Tag the project",
+              "intent": "tag the project {project} with {tags}",
+              "permission": "archive.curate",
+              "params": {
+                "project": "id",
+                "tags": "string"
+              }
+            },
+            {
+              "id": "archive.addToSet",
+              "label": "Add this project to the set",
+              "intent": "add this project to the portfolio set",
+              "permission": "projects.read"
+            }
+          ],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920
+          ]
+        }
+      },
+      {
+        "path": "/founder/archive",
+        "code": "S-12",
+        "surface": "founder",
+        "status": "built",
+        "shell": "desktop",
+        "permission": "projects.read",
+        "spec": {
+          "code": "S-12",
+          "name": "Project archive",
+          "purpose": "One browser over every project the studio has ever had — past work, work in progress and prospects — with covers, thumbnails, tags and file counts, so Alejandra can review past work while building a portfolio or assemble a set of related examples for a specific client.",
+          "surface": "founder",
+          "navGroup": "projects",
+          "layout": [
+            "PageHeader (code, title, counts, breadcrumb) with \"Portfolio set\" toggle and a Placeholder \"Import folder\"",
+            "StatTile row: Prospects / In progress / Past / All, each a button that sets the lifecycle filter",
+            "FilterBar: search, year, type, tag, sort, and a Cards | Table ToggleButton",
+            "Cards grid (Thumb cover or FileIcon mosaic, name, client, year, StatusPill, Badges, file count) or DataTable with the same columns",
+            "EmptyState when nothing matches",
+            "Sticky portfolio-set bar: count, Copy list, Open in Spaces (Placeholder), Export PDF (Placeholder), Clear"
+          ],
+          "dataTables": [
+            "projects",
+            "assets",
+            "relations",
+            "clients",
+            "spaces",
+            "filings",
+            "posts"
+          ],
+          "roles": [
+            "studio",
+            "founder",
+            "brand"
+          ],
+          "logic": [
+            "Every project is listed, not only the archived ones: lifecycle tabs (Prospects / In progress / Past / All) come from `lifecycleOf(project.pipelineStatus)`, so \"sometimes we want to see everything\" is one click and the default is All.",
+            "Filters live in the query string (`?life=&year=&type=&tag=&q=&view=&set=`), so any view is a link a person can paste and an intent voice can address; the actions write the same params.",
+            "A card cover is the project `coverAssetId` thumbnail when there is one; otherwise a 2x2 mosaic of `FileIcon`s for the four most common file types in the project, so a project without photography still reads as itself.",
+            "The portfolio set is a list of project ids in `localStorage[\"aluzina.archive.set\"]`, shared by S-12 and S-13; \"Copy list\" writes name, year, client and source link per line through `copyText`.",
+            "File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card; the card also says how many of them carry tags.",
+            "The Tag filter's options are the live union of `projects[].tags`, so a tag saved on S-13 shows up here without a reload (D-023)."
+          ],
+          "components": [
+            "PageHeader",
+            "StatTile",
+            "FilterBar",
+            "SearchField",
+            "Select",
+            "ToggleButton",
+            "Checkbox",
+            "Card",
+            "Thumb",
+            "FileIcon",
+            "Badge",
+            "StatusPill",
+            "Button",
+            "DataTable",
+            "EmptyState",
+            "Placeholder",
+            "Skeleton"
+          ],
+          "actions": [
+            {
+              "id": "archive.filterLifecycle",
+              "label": "Filter by lifecycle",
+              "intent": "show only {life} projects",
+              "permission": "projects.read",
+              "params": {
+                "life": "enum:prospect|active|past|all"
+              }
+            },
+            {
+              "id": "archive.filterYear",
+              "label": "Filter by year",
+              "intent": "show only projects from {year}",
+              "permission": "projects.read",
+              "params": {
+                "year": "string"
+              }
+            },
+            {
+              "id": "archive.filterType",
+              "label": "Filter by project type",
+              "intent": "show only {type} projects",
+              "permission": "projects.read",
+              "params": {
+                "type": "enum:residential|commercial|hospitality|wellness|lighting-product|all"
+              }
+            },
+            {
+              "id": "archive.filterTag",
+              "label": "Filter by tag",
+              "intent": "show only projects tagged {tag}",
+              "permission": "projects.read",
+              "params": {
+                "tag": "string"
+              }
+            },
+            {
+              "id": "archive.search",
+              "label": "Search the archive",
+              "intent": "find archived projects matching {q}",
+              "permission": "projects.read",
+              "params": {
+                "q": "string"
+              }
+            },
+            {
+              "id": "archive.setView",
+              "label": "Switch view",
+              "intent": "show the archive as {view}",
+              "permission": "projects.read",
+              "params": {
+                "view": "enum:cards|table"
+              }
+            },
+            {
+              "id": "archive.openProject",
+              "label": "Open a project",
+              "intent": "open the portal view of the project {project}",
+              "permission": "projects.read",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "archive.toggleInSet",
+              "label": "Add or remove from the portfolio set",
+              "intent": "put the project {project} in the portfolio set",
+              "permission": "projects.read",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "archive.copySet",
+              "label": "Copy the portfolio set",
+              "intent": "copy the portfolio set as a list",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.clearSet",
+              "label": "Clear the portfolio set",
+              "intent": "clear the portfolio set",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.exportSet",
+              "label": "Export the portfolio set",
+              "intent": "export the portfolio set as a PDF",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.importFolder",
+              "label": "Import a folder",
+              "intent": "import a Dropbox or Drive folder into the archive",
+              "permission": "projects.read"
+            }
+          ],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920
+          ]
+        }
+      },
+      {
+        "path": "/founder/archive/:projectId",
+        "code": "S-13",
+        "surface": "founder",
+        "status": "built",
+        "shell": "desktop",
+        "permission": "projects.read",
+        "spec": {
+          "code": "S-13",
+          "name": "Project portal view",
+          "purpose": "Everything about one archived project on a single page: the hero with its cover and source folder, the delivery order as a stage rail, every file previewable in place grouped by stage or by the studio's numbered folders, and what the project is related to.",
+          "surface": "founder",
+          "layout": [
+            "PageHeader with breadcrumb (portal / Archive / project)",
+            "Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle Badge, the project Tags row (TagEditor for archive.curate, read-only Badges otherwise), Open in Dropbox / Open in Work / Open space / Add to set",
+            "Delivery order: a stage rail from DELIVERY_STAGES grouped by pipelineGroup, each stage a button with glyph, label and file count",
+            "Files toolbar: search, stage, file type, grid | list, By stage | By folder (tagging lives in the preview drawer)",
+            "Files by stage (or by numbered folder), each file a Thumb button that opens the preview",
+            "Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file, then \"Tags and stage\": TagEditor + Save, the delivery-stage Select and \"Set as cover\"",
+            "Related: client card, the Spaces post about the project, up to six projects sharing two or more tags"
+          ],
+          "dataTables": [
+            "projects",
+            "assets",
+            "relations",
+            "clients",
+            "spaces",
+            "filings",
+            "posts"
+          ],
+          "roles": [
+            "studio",
+            "founder",
+            "brand"
+          ],
+          "logic": [
+            "The delivery order rail is `DELIVERY_STAGES` in `order`, sub-headed by `pipelineGroup`; each stage button carries its file count and filters the sections below. Arrow keys move along the rail (roving tabindex), Home / End jump to the ends.",
+            "Files are grouped two ways (`?group=stage|folder`): by delivery stage (`stageFor`) in pipeline order, or by the studio's own numbered folders sorted with `folderOrderKey` and labelled with `folderLabel`, which is the \"documents in order\" view. Empty numbered folders still render, muted, in the folder view so the structure is complete.",
+            "The preview Drawer holds one asset at a time (`?file=<assetId>`), with Previous / Next walking the currently filtered, sorted file list, and `page` state driving the `DocumentViewer`. When nothing is previewable the viewer renders its sentence and type icon, never a blank frame.",
+            "Related is three reverse queries: the client through `relations` `for-client`, the Spaces post through `spaces.aboutId` and its `filings`, and up to six other projects sharing at least two tags — the \"sets of related examples\" the studio shows a client.",
+            "Tags are real writes (ar-09): the `TagEditor` holds a draft and Save writes it once through `data.update('assets', id, { tags }, { basedOn: asset.updated_at })` or on `projects`, both behind the curation permission `archive.curate` (studio, brand, founder), so one save is one row version and a stale edit raises the global D-024 conflict toast.",
+            "Tags are free text, trimmed, lower-cased and de-duplicated; the suggestion list is the live union of every file tag, the `tags` registry names and the delivery-stage ids, so new vocabulary reaches S-12's tag filter the moment it is saved (lists re-render from `subscribe`, D-023).",
+            "The delivery stage of a file is a `Select` over `DELIVERY_STAGES` that writes `assets.stage` at once: the rail, the sections and the counts move with it because they all read the same rows.",
+            "\"Set as cover\" writes `projects.coverAssetId`, offered only for an image or a PDF that already has a thumbnail; a coverable file without a render is a Placeholder saying why, and a `confidencial` or redacted file is never offered as a cover (D-059).",
+            "The portfolio set is still localStorage only; Spaces collections and PDF export are ar-10."
+          ],
+          "components": [
+            "PageHeader",
+            "Card",
+            "Thumb",
+            "FileIcon",
+            "DocumentViewer",
+            "Drawer",
+            "FilterBar",
+            "SearchField",
+            "Select",
+            "ToggleButton",
+            "TagEditor",
+            "Badge",
+            "StatusPill",
+            "Button",
+            "EmptyState",
+            "Placeholder",
+            "Skeleton"
+          ],
+          "actions": [
+            {
+              "id": "archive.openFile",
+              "label": "Preview a file",
+              "intent": "preview the file {asset}",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.closeFile",
+              "label": "Close the preview",
+              "intent": "close the file preview",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.nextFile",
+              "label": "Next file",
+              "intent": "show the next file",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.prevFile",
+              "label": "Previous file",
+              "intent": "show the previous file",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.previewPage",
+              "label": "Go to a page",
+              "intent": "go to page {page} of the open file",
+              "permission": "projects.read",
+              "params": {
+                "page": "number"
+              }
+            },
+            {
+              "id": "archive.filterStage",
+              "label": "Filter by stage",
+              "intent": "show only the files of the stage {stage}",
+              "permission": "projects.read",
+              "params": {
+                "stage": "string"
+              }
+            },
+            {
+              "id": "archive.filterFileType",
+              "label": "Filter by file type",
+              "intent": "show only {type} files",
+              "permission": "projects.read",
+              "params": {
+                "type": "string"
+              }
+            },
+            {
+              "id": "archive.searchFiles",
+              "label": "Search the files",
+              "intent": "find files matching {q}",
+              "permission": "projects.read",
+              "params": {
+                "q": "string"
+              }
+            },
+            {
+              "id": "archive.setFilesView",
+              "label": "Switch the file view",
+              "intent": "show the files as a {view}",
+              "permission": "projects.read",
+              "params": {
+                "view": "enum:grid|list"
+              }
+            },
+            {
+              "id": "archive.setGrouping",
+              "label": "Switch the grouping",
+              "intent": "group the files {mode}",
+              "permission": "projects.read",
+              "params": {
+                "mode": "enum:stage|folder"
+              }
+            },
+            {
+              "id": "archive.openSource",
+              "label": "Open a file at the source",
+              "intent": "open the file {asset} in Dropbox",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.downloadFile",
+              "label": "Download a file",
+              "intent": "download the file {asset}",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.copyFileLink",
+              "label": "Copy a file link",
+              "intent": "copy the link to the file {asset}",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.openFolderSource",
+              "label": "Open the source folder",
+              "intent": "open the source folder of this project",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.tagFile",
+              "label": "Tag a file",
+              "intent": "tag the file {asset} with {tags}",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id",
+                "tags": "string"
+              }
+            },
+            {
+              "id": "archive.setStage",
+              "label": "Move a file to a stage",
+              "intent": "move the file {asset} to the delivery stage {stage}",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id",
+                "stage": "string"
+              }
+            },
+            {
+              "id": "archive.setCover",
+              "label": "Set the project cover",
+              "intent": "use the file {asset} as the cover of this project",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.setProjectTags",
+              "label": "Tag the project",
+              "intent": "tag the project {project} with {tags}",
+              "permission": "archive.curate",
+              "params": {
+                "project": "id",
+                "tags": "string"
+              }
+            },
+            {
+              "id": "archive.addToSet",
+              "label": "Add this project to the set",
+              "intent": "add this project to the portfolio set",
+              "permission": "projects.read"
+            }
+          ],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920
+          ]
+        }
+      },
+      {
+        "path": "/brand/archive",
+        "code": "S-12",
+        "surface": "brand",
+        "status": "built",
+        "shell": "desktop",
+        "permission": "projects.read",
+        "spec": {
+          "code": "S-12",
+          "name": "Project archive",
+          "purpose": "One browser over every project the studio has ever had — past work, work in progress and prospects — with covers, thumbnails, tags and file counts, so Alejandra can review past work while building a portfolio or assemble a set of related examples for a specific client.",
+          "surface": "brand",
+          "navGroup": "projects",
+          "layout": [
+            "PageHeader (code, title, counts, breadcrumb) with \"Portfolio set\" toggle and a Placeholder \"Import folder\"",
+            "StatTile row: Prospects / In progress / Past / All, each a button that sets the lifecycle filter",
+            "FilterBar: search, year, type, tag, sort, and a Cards | Table ToggleButton",
+            "Cards grid (Thumb cover or FileIcon mosaic, name, client, year, StatusPill, Badges, file count) or DataTable with the same columns",
+            "EmptyState when nothing matches",
+            "Sticky portfolio-set bar: count, Copy list, Open in Spaces (Placeholder), Export PDF (Placeholder), Clear"
+          ],
+          "dataTables": [
+            "projects",
+            "assets",
+            "relations",
+            "clients",
+            "spaces",
+            "filings",
+            "posts"
+          ],
+          "roles": [
+            "studio",
+            "founder",
+            "brand"
+          ],
+          "logic": [
+            "Every project is listed, not only the archived ones: lifecycle tabs (Prospects / In progress / Past / All) come from `lifecycleOf(project.pipelineStatus)`, so \"sometimes we want to see everything\" is one click and the default is All.",
+            "Filters live in the query string (`?life=&year=&type=&tag=&q=&view=&set=`), so any view is a link a person can paste and an intent voice can address; the actions write the same params.",
+            "A card cover is the project `coverAssetId` thumbnail when there is one; otherwise a 2x2 mosaic of `FileIcon`s for the four most common file types in the project, so a project without photography still reads as itself.",
+            "The portfolio set is a list of project ids in `localStorage[\"aluzina.archive.set\"]`, shared by S-12 and S-13; \"Copy list\" writes name, year, client and source link per line through `copyText`.",
+            "File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card; the card also says how many of them carry tags.",
+            "The Tag filter's options are the live union of `projects[].tags`, so a tag saved on S-13 shows up here without a reload (D-023)."
+          ],
+          "components": [
+            "PageHeader",
+            "StatTile",
+            "FilterBar",
+            "SearchField",
+            "Select",
+            "ToggleButton",
+            "Checkbox",
+            "Card",
+            "Thumb",
+            "FileIcon",
+            "Badge",
+            "StatusPill",
+            "Button",
+            "DataTable",
+            "EmptyState",
+            "Placeholder",
+            "Skeleton"
+          ],
+          "actions": [
+            {
+              "id": "archive.filterLifecycle",
+              "label": "Filter by lifecycle",
+              "intent": "show only {life} projects",
+              "permission": "projects.read",
+              "params": {
+                "life": "enum:prospect|active|past|all"
+              }
+            },
+            {
+              "id": "archive.filterYear",
+              "label": "Filter by year",
+              "intent": "show only projects from {year}",
+              "permission": "projects.read",
+              "params": {
+                "year": "string"
+              }
+            },
+            {
+              "id": "archive.filterType",
+              "label": "Filter by project type",
+              "intent": "show only {type} projects",
+              "permission": "projects.read",
+              "params": {
+                "type": "enum:residential|commercial|hospitality|wellness|lighting-product|all"
+              }
+            },
+            {
+              "id": "archive.filterTag",
+              "label": "Filter by tag",
+              "intent": "show only projects tagged {tag}",
+              "permission": "projects.read",
+              "params": {
+                "tag": "string"
+              }
+            },
+            {
+              "id": "archive.search",
+              "label": "Search the archive",
+              "intent": "find archived projects matching {q}",
+              "permission": "projects.read",
+              "params": {
+                "q": "string"
+              }
+            },
+            {
+              "id": "archive.setView",
+              "label": "Switch view",
+              "intent": "show the archive as {view}",
+              "permission": "projects.read",
+              "params": {
+                "view": "enum:cards|table"
+              }
+            },
+            {
+              "id": "archive.openProject",
+              "label": "Open a project",
+              "intent": "open the portal view of the project {project}",
+              "permission": "projects.read",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "archive.toggleInSet",
+              "label": "Add or remove from the portfolio set",
+              "intent": "put the project {project} in the portfolio set",
+              "permission": "projects.read",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "archive.copySet",
+              "label": "Copy the portfolio set",
+              "intent": "copy the portfolio set as a list",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.clearSet",
+              "label": "Clear the portfolio set",
+              "intent": "clear the portfolio set",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.exportSet",
+              "label": "Export the portfolio set",
+              "intent": "export the portfolio set as a PDF",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.importFolder",
+              "label": "Import a folder",
+              "intent": "import a Dropbox or Drive folder into the archive",
+              "permission": "projects.read"
+            }
+          ],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920
+          ]
+        }
+      },
+      {
+        "path": "/brand/archive/:projectId",
+        "code": "S-13",
+        "surface": "brand",
+        "status": "built",
+        "shell": "desktop",
+        "permission": "projects.read",
+        "spec": {
+          "code": "S-13",
+          "name": "Project portal view",
+          "purpose": "Everything about one archived project on a single page: the hero with its cover and source folder, the delivery order as a stage rail, every file previewable in place grouped by stage or by the studio's numbered folders, and what the project is related to.",
+          "surface": "brand",
+          "layout": [
+            "PageHeader with breadcrumb (portal / Archive / project)",
+            "Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle Badge, the project Tags row (TagEditor for archive.curate, read-only Badges otherwise), Open in Dropbox / Open in Work / Open space / Add to set",
+            "Delivery order: a stage rail from DELIVERY_STAGES grouped by pipelineGroup, each stage a button with glyph, label and file count",
+            "Files toolbar: search, stage, file type, grid | list, By stage | By folder (tagging lives in the preview drawer)",
+            "Files by stage (or by numbered folder), each file a Thumb button that opens the preview",
+            "Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file, then \"Tags and stage\": TagEditor + Save, the delivery-stage Select and \"Set as cover\"",
+            "Related: client card, the Spaces post about the project, up to six projects sharing two or more tags"
+          ],
+          "dataTables": [
+            "projects",
+            "assets",
+            "relations",
+            "clients",
+            "spaces",
+            "filings",
+            "posts"
+          ],
+          "roles": [
+            "studio",
+            "founder",
+            "brand"
+          ],
+          "logic": [
+            "The delivery order rail is `DELIVERY_STAGES` in `order`, sub-headed by `pipelineGroup`; each stage button carries its file count and filters the sections below. Arrow keys move along the rail (roving tabindex), Home / End jump to the ends.",
+            "Files are grouped two ways (`?group=stage|folder`): by delivery stage (`stageFor`) in pipeline order, or by the studio's own numbered folders sorted with `folderOrderKey` and labelled with `folderLabel`, which is the \"documents in order\" view. Empty numbered folders still render, muted, in the folder view so the structure is complete.",
+            "The preview Drawer holds one asset at a time (`?file=<assetId>`), with Previous / Next walking the currently filtered, sorted file list, and `page` state driving the `DocumentViewer`. When nothing is previewable the viewer renders its sentence and type icon, never a blank frame.",
+            "Related is three reverse queries: the client through `relations` `for-client`, the Spaces post through `spaces.aboutId` and its `filings`, and up to six other projects sharing at least two tags — the \"sets of related examples\" the studio shows a client.",
+            "Tags are real writes (ar-09): the `TagEditor` holds a draft and Save writes it once through `data.update('assets', id, { tags }, { basedOn: asset.updated_at })` or on `projects`, both behind the curation permission `archive.curate` (studio, brand, founder), so one save is one row version and a stale edit raises the global D-024 conflict toast.",
+            "Tags are free text, trimmed, lower-cased and de-duplicated; the suggestion list is the live union of every file tag, the `tags` registry names and the delivery-stage ids, so new vocabulary reaches S-12's tag filter the moment it is saved (lists re-render from `subscribe`, D-023).",
+            "The delivery stage of a file is a `Select` over `DELIVERY_STAGES` that writes `assets.stage` at once: the rail, the sections and the counts move with it because they all read the same rows.",
+            "\"Set as cover\" writes `projects.coverAssetId`, offered only for an image or a PDF that already has a thumbnail; a coverable file without a render is a Placeholder saying why, and a `confidencial` or redacted file is never offered as a cover (D-059).",
+            "The portfolio set is still localStorage only; Spaces collections and PDF export are ar-10."
+          ],
+          "components": [
+            "PageHeader",
+            "Card",
+            "Thumb",
+            "FileIcon",
+            "DocumentViewer",
+            "Drawer",
+            "FilterBar",
+            "SearchField",
+            "Select",
+            "ToggleButton",
+            "TagEditor",
+            "Badge",
+            "StatusPill",
+            "Button",
+            "EmptyState",
+            "Placeholder",
+            "Skeleton"
+          ],
+          "actions": [
+            {
+              "id": "archive.openFile",
+              "label": "Preview a file",
+              "intent": "preview the file {asset}",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.closeFile",
+              "label": "Close the preview",
+              "intent": "close the file preview",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.nextFile",
+              "label": "Next file",
+              "intent": "show the next file",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.prevFile",
+              "label": "Previous file",
+              "intent": "show the previous file",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.previewPage",
+              "label": "Go to a page",
+              "intent": "go to page {page} of the open file",
+              "permission": "projects.read",
+              "params": {
+                "page": "number"
+              }
+            },
+            {
+              "id": "archive.filterStage",
+              "label": "Filter by stage",
+              "intent": "show only the files of the stage {stage}",
+              "permission": "projects.read",
+              "params": {
+                "stage": "string"
+              }
+            },
+            {
+              "id": "archive.filterFileType",
+              "label": "Filter by file type",
+              "intent": "show only {type} files",
+              "permission": "projects.read",
+              "params": {
+                "type": "string"
+              }
+            },
+            {
+              "id": "archive.searchFiles",
+              "label": "Search the files",
+              "intent": "find files matching {q}",
+              "permission": "projects.read",
+              "params": {
+                "q": "string"
+              }
+            },
+            {
+              "id": "archive.setFilesView",
+              "label": "Switch the file view",
+              "intent": "show the files as a {view}",
+              "permission": "projects.read",
+              "params": {
+                "view": "enum:grid|list"
+              }
+            },
+            {
+              "id": "archive.setGrouping",
+              "label": "Switch the grouping",
+              "intent": "group the files {mode}",
+              "permission": "projects.read",
+              "params": {
+                "mode": "enum:stage|folder"
+              }
+            },
+            {
+              "id": "archive.openSource",
+              "label": "Open a file at the source",
+              "intent": "open the file {asset} in Dropbox",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.downloadFile",
+              "label": "Download a file",
+              "intent": "download the file {asset}",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.copyFileLink",
+              "label": "Copy a file link",
+              "intent": "copy the link to the file {asset}",
+              "permission": "projects.read",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.openFolderSource",
+              "label": "Open the source folder",
+              "intent": "open the source folder of this project",
+              "permission": "projects.read"
+            },
+            {
+              "id": "archive.tagFile",
+              "label": "Tag a file",
+              "intent": "tag the file {asset} with {tags}",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id",
+                "tags": "string"
+              }
+            },
+            {
+              "id": "archive.setStage",
+              "label": "Move a file to a stage",
+              "intent": "move the file {asset} to the delivery stage {stage}",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id",
+                "stage": "string"
+              }
+            },
+            {
+              "id": "archive.setCover",
+              "label": "Set the project cover",
+              "intent": "use the file {asset} as the cover of this project",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.setProjectTags",
+              "label": "Tag the project",
+              "intent": "tag the project {project} with {tags}",
+              "permission": "archive.curate",
+              "params": {
+                "project": "id",
+                "tags": "string"
+              }
+            },
+            {
+              "id": "archive.addToSet",
+              "label": "Add this project to the set",
+              "intent": "add this project to the portfolio set",
+              "permission": "projects.read"
+            }
+          ],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920
+          ]
+        }
+      },
       {
         "path": "/brand",
         "code": "G-01",
@@ -724,6 +1938,7 @@
             "PageHeader (replace document, a Placeholder)",
             "One Card per assets row of kind document: title, file name, page count and size, how many pages are records, the colours and fonts read from the file, and View / Download / Open in new tab / Share link",
             "Related section per Card: the projects its pages depict (links to the Work view) and the playbook services its pages argue for (links to the manual), read from relations",
+            "Section \"Company documents (Dropbox 2023)\": a grid of Thumb tiles (thumbnail or FileIcon, badge = pages or ext, caption = file name, owner / visibility Badges) for the 12 files of ar-15, each opening a Drawer with a DocumentViewer (served pages for the 5 rendered ones; a sentence + \"Open at source\" for the price lists and the 3 third-party files)",
             "Viewer Card: Tabs (one per document) around an <object> PDF viewer with an <iframe> and a plain-text fallback; ?page=N opens the PDF at that page",
             "Card \"Where these files live\": the files are static assets shipped with the app until file storage exists; the rows and their relations are data"
           ],
@@ -800,6 +2015,21 @@
               "params": {
                 "doc": "enum:portfolio|brochure"
               }
+            },
+            {
+              "id": "brand.openCompanyDocument",
+              "label": "Open a company document",
+              "intent": "open the company document {asset}",
+              "permission": "brand.manage",
+              "params": {
+                "asset": "string"
+              }
+            },
+            {
+              "id": "brand.closeCompanyDocument",
+              "label": "Close the company document viewer",
+              "intent": "close the company document viewer",
+              "permission": "brand.manage"
             }
           ],
           "checkedAt": [
@@ -813,7 +2043,8 @@
           ],
           "notes": [
             "Page count, file size, palette and fonts come from the assets row, which the seed derives from docs/brand/<doc>/index.json (prompt 0013): replacing a PDF means re-rendering the pages and updating the index, and the row follows; the static list in documents.ts is only the loading fallback (and what G-01 still lists).",
-            "The same rows are published to visitors on P-05 /portfolio; both pages keep their own DocFrame until a DocumentViewer organism lands in the library (request in docs/changelog/_pending/brand-docs.md)."
+            "The same rows are published to visitors on P-05 /portfolio; both pages keep their own DocFrame until a DocumentViewer organism lands in the library (request in docs/changelog/_pending/brand-docs.md).",
+            "The \"Company documents\" section (ar-15) reads assets rows tagged `empresa` (seed/company.ts, order 75) instead of a fixed doc list, so it grows with the next Dropbox intake without a page change."
           ]
         }
       },
@@ -2837,7 +4068,7 @@
               "label": "Open surface",
               "intent": "open the {surface}",
               "params": {
-                "surface": "enum:website|services|brand-docs|client|manual|docs|spaces|business-os|design|plan|canvas|simulator|actions|tokens|testing|components|specs|multiuser"
+                "surface": "enum:website|services|brand-docs|client|manual|docs|archive|spaces|business-os|design|plan|canvas|simulator|actions|tokens|testing|components|specs|multiuser"
               }
             },
             {
@@ -5970,7 +7201,8 @@
             390,
             1280,
             1920,
-            2560
+            2560,
+            3840
           ]
         }
       },
@@ -6091,15 +7323,16 @@
         "permission": "spaces.read",
         "spec": {
           "code": "K-06",
-          "name": "Import from Slack",
-          "purpose": "Where the Slack export will land: the mapping from Justin's sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.",
+          "name": "Import from Slack and Asana",
+          "purpose": "Where imports land: the mapping from Justin's Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).",
           "surface": "founder",
           "navGroup": "spaces",
           "layout": [
             "PageHeader",
-            "Card: upload (Placeholder) + note that this page is read-only today",
-            "DataTable: Slack section / channel -> space (kind, posts today)",
-            "Checklist Card: what the import will do"
+            "Card: Slack upload (Placeholder) + note that this page is read-only today",
+            "Card: Asana import (the script, the generated seeds and their counts)",
+            "Checklist Card: what a Slack import will do",
+            "DataTable: Slack section / channel -> space (kind, posts today)"
           ],
           "dataTables": [
             "spaces",
@@ -6107,11 +7340,13 @@
           ],
           "logic": [
             "Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.",
-            "The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts."
+            "The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.",
+            "The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files."
           ],
           "components": [
             "PageHeader",
             "Card",
+            "KeyValue",
             "Placeholder",
             "Button",
             "DataTable",
@@ -6907,7 +8142,8 @@
             390,
             1280,
             1920,
-            2560
+            2560,
+            3840
           ]
         }
       },
@@ -7028,15 +8264,16 @@
         "permission": "spaces.read",
         "spec": {
           "code": "K-06",
-          "name": "Import from Slack",
-          "purpose": "Where the Slack export will land: the mapping from Justin's sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.",
+          "name": "Import from Slack and Asana",
+          "purpose": "Where imports land: the mapping from Justin's Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).",
           "surface": "ops",
           "navGroup": "spaces",
           "layout": [
             "PageHeader",
-            "Card: upload (Placeholder) + note that this page is read-only today",
-            "DataTable: Slack section / channel -> space (kind, posts today)",
-            "Checklist Card: what the import will do"
+            "Card: Slack upload (Placeholder) + note that this page is read-only today",
+            "Card: Asana import (the script, the generated seeds and their counts)",
+            "Checklist Card: what a Slack import will do",
+            "DataTable: Slack section / channel -> space (kind, posts today)"
           ],
           "dataTables": [
             "spaces",
@@ -7044,11 +8281,13 @@
           ],
           "logic": [
             "Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.",
-            "The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts."
+            "The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.",
+            "The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files."
           ],
           "components": [
             "PageHeader",
             "Card",
+            "KeyValue",
             "Placeholder",
             "Button",
             "DataTable",
@@ -7844,7 +9083,8 @@
             390,
             1280,
             1920,
-            2560
+            2560,
+            3840
           ]
         }
       },
@@ -7965,15 +9205,16 @@
         "permission": "spaces.read",
         "spec": {
           "code": "K-06",
-          "name": "Import from Slack",
-          "purpose": "Where the Slack export will land: the mapping from Justin's sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.",
+          "name": "Import from Slack and Asana",
+          "purpose": "Where imports land: the mapping from Justin's Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).",
           "surface": "studio",
           "navGroup": "spaces",
           "layout": [
             "PageHeader",
-            "Card: upload (Placeholder) + note that this page is read-only today",
-            "DataTable: Slack section / channel -> space (kind, posts today)",
-            "Checklist Card: what the import will do"
+            "Card: Slack upload (Placeholder) + note that this page is read-only today",
+            "Card: Asana import (the script, the generated seeds and their counts)",
+            "Checklist Card: what a Slack import will do",
+            "DataTable: Slack section / channel -> space (kind, posts today)"
           ],
           "dataTables": [
             "spaces",
@@ -7981,11 +9222,13 @@
           ],
           "logic": [
             "Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.",
-            "The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts."
+            "The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.",
+            "The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files."
           ],
           "components": [
             "PageHeader",
             "Card",
+            "KeyValue",
             "Placeholder",
             "Button",
             "DataTable",
@@ -8781,7 +10024,8 @@
             390,
             1280,
             1920,
-            2560
+            2560,
+            3840
           ]
         }
       },
@@ -8902,15 +10146,16 @@
         "permission": "spaces.read",
         "spec": {
           "code": "K-06",
-          "name": "Import from Slack",
-          "purpose": "Where the Slack export will land: the mapping from Justin's sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.",
+          "name": "Import from Slack and Asana",
+          "purpose": "Where imports land: the mapping from Justin's Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).",
           "surface": "brand",
           "navGroup": "spaces",
           "layout": [
             "PageHeader",
-            "Card: upload (Placeholder) + note that this page is read-only today",
-            "DataTable: Slack section / channel -> space (kind, posts today)",
-            "Checklist Card: what the import will do"
+            "Card: Slack upload (Placeholder) + note that this page is read-only today",
+            "Card: Asana import (the script, the generated seeds and their counts)",
+            "Checklist Card: what a Slack import will do",
+            "DataTable: Slack section / channel -> space (kind, posts today)"
           ],
           "dataTables": [
             "spaces",
@@ -8918,11 +10163,13 @@
           ],
           "logic": [
             "Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.",
-            "The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts."
+            "The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.",
+            "The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files."
           ],
           "components": [
             "PageHeader",
             "Card",
+            "KeyValue",
             "Placeholder",
             "Button",
             "DataTable",
@@ -9718,7 +10965,8 @@
             390,
             1280,
             1920,
-            2560
+            2560,
+            3840
           ]
         }
       },
@@ -9839,15 +11087,16 @@
         "permission": "spaces.read",
         "spec": {
           "code": "K-06",
-          "name": "Import from Slack",
-          "purpose": "Where the Slack export will land: the mapping from Justin's sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.",
+          "name": "Import from Slack and Asana",
+          "purpose": "Where imports land: the mapping from Justin's Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).",
           "surface": "dev",
           "navGroup": "spaces",
           "layout": [
             "PageHeader",
-            "Card: upload (Placeholder) + note that this page is read-only today",
-            "DataTable: Slack section / channel -> space (kind, posts today)",
-            "Checklist Card: what the import will do"
+            "Card: Slack upload (Placeholder) + note that this page is read-only today",
+            "Card: Asana import (the script, the generated seeds and their counts)",
+            "Checklist Card: what a Slack import will do",
+            "DataTable: Slack section / channel -> space (kind, posts today)"
           ],
           "dataTables": [
             "spaces",
@@ -9855,11 +11104,13 @@
           ],
           "logic": [
             "Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.",
-            "The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts."
+            "The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.",
+            "The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files."
           ],
           "components": [
             "PageHeader",
             "Card",
+            "KeyValue",
             "Placeholder",
             "Button",
             "DataTable",
@@ -11732,7 +12983,8 @@
             390,
             768,
             1280,
-            1920
+            1920,
+            3840
           ]
         }
       },
@@ -12305,6 +13557,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -12665,6 +13942,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -13025,6 +14327,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -13385,6 +14712,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -13745,6 +15097,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -14105,6 +15482,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -14465,6 +15867,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -14825,6 +16252,289 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
+            }
+          ],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920,
+            2560
+          ]
+        }
+      },
+      {
+        "path": "/founder/work/new",
+        "code": "W-03",
+        "surface": "founder",
+        "status": "built",
+        "shell": "desktop",
+        "permission": "projects.write",
+        "spec": {
+          "code": "W-03",
+          "name": "New project from template",
+          "purpose": "Create a project from the founder’s own workflow instead of duplicating an Asana project by hand: choose the template, name the project and its client, keep the phases that apply, pick the zones, and the OS writes the sections and the whole task tree with owners and deliverables (D-062).",
+          "surface": "founder",
+          "navGroup": "projects",
+          "layout": [
+            "PageHeader (W-03)",
+            "Tabs: the five steps",
+            "Card per step: template / project and client / phases / zones / review",
+            "Back and Next, Create on the last step"
+          ],
+          "dataTables": [
+            "projects",
+            "sections",
+            "tasks",
+            "clients",
+            "deliverables"
+          ],
+          "roles": [
+            "founder",
+            "ops"
+          ],
+          "logic": [
+            "The template is typed data, not rows (`src/domain/templates`): `tpl-aluzina-workflow` is the merge of the founder’s two Asana template projects plus PROYECTO HOY’s kickoff section.",
+            "Zone-scoped template tasks (references per space, 3D model per space, the nine-lens deep design) are written once per chosen zone; every other task once. The review step counts what will be created before anything is written.",
+            "Create writes one `projects` row, one `sections` row per chosen phase and the tasks parents-first, each with `templateTaskId`, `deliverableId`, `ownerRole`, the team member for that role as assignee, `order` and `parentTaskId`; then it opens W-02 for the new project.",
+            "Everything is `projects.write`: the founder always, operations since this pass. Without it the review step says so and Create stays disabled while the action still answers readably (D-047)."
+          ],
+          "components": [
+            "PageHeader",
+            "Tabs",
+            "Card",
+            "Select",
+            "Input",
+            "Checkbox",
+            "Button",
+            "KeyValue",
+            "StatTile",
+            "Badge"
+          ],
+          "actions": [
+            {
+              "id": "work.selectTemplate",
+              "label": "Choose the template",
+              "intent": "use the project template {template}",
+              "permission": "projects.write",
+              "params": {
+                "template": "id"
+              }
+            },
+            {
+              "id": "work.setTemplateStep",
+              "label": "Go to a step",
+              "intent": "go to the {step} step",
+              "permission": "projects.write",
+              "params": {
+                "step": "enum:template|project|phases|zones|review"
+              }
+            },
+            {
+              "id": "work.setProjectName",
+              "label": "Name the project",
+              "intent": "call the new project {name}",
+              "permission": "projects.write",
+              "params": {
+                "name": "string"
+              }
+            },
+            {
+              "id": "work.selectClient",
+              "label": "Choose the client",
+              "intent": "the new project is for the client {client}",
+              "permission": "projects.write",
+              "params": {
+                "client": "id"
+              }
+            },
+            {
+              "id": "work.selectTemplatePhases",
+              "label": "Choose the phases",
+              "intent": "include the phases {phases}",
+              "permission": "projects.write",
+              "params": {
+                "phases": "string"
+              }
+            },
+            {
+              "id": "work.selectTemplateZones",
+              "label": "Choose the zones",
+              "intent": "include the zones {zones}",
+              "permission": "projects.write",
+              "params": {
+                "zones": "string"
+              }
+            },
+            {
+              "id": "work.addZone",
+              "label": "Add a zone",
+              "intent": "add the zone {zone} to this project",
+              "permission": "projects.write",
+              "params": {
+                "zone": "string"
+              }
+            },
+            {
+              "id": "work.createProjectFromTemplate",
+              "label": "Create the project",
+              "intent": "create the project from the template",
+              "permission": "projects.write"
+            }
+          ],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920,
+            2560
+          ]
+        }
+      },
+      {
+        "path": "/ops/work/new",
+        "code": "W-03",
+        "surface": "ops",
+        "status": "built",
+        "shell": "desktop",
+        "permission": "projects.write",
+        "spec": {
+          "code": "W-03",
+          "name": "New project from template",
+          "purpose": "Create a project from the founder’s own workflow instead of duplicating an Asana project by hand: choose the template, name the project and its client, keep the phases that apply, pick the zones, and the OS writes the sections and the whole task tree with owners and deliverables (D-062).",
+          "surface": "ops",
+          "navGroup": "projects",
+          "layout": [
+            "PageHeader (W-03)",
+            "Tabs: the five steps",
+            "Card per step: template / project and client / phases / zones / review",
+            "Back and Next, Create on the last step"
+          ],
+          "dataTables": [
+            "projects",
+            "sections",
+            "tasks",
+            "clients",
+            "deliverables"
+          ],
+          "roles": [
+            "founder",
+            "ops"
+          ],
+          "logic": [
+            "The template is typed data, not rows (`src/domain/templates`): `tpl-aluzina-workflow` is the merge of the founder’s two Asana template projects plus PROYECTO HOY’s kickoff section.",
+            "Zone-scoped template tasks (references per space, 3D model per space, the nine-lens deep design) are written once per chosen zone; every other task once. The review step counts what will be created before anything is written.",
+            "Create writes one `projects` row, one `sections` row per chosen phase and the tasks parents-first, each with `templateTaskId`, `deliverableId`, `ownerRole`, the team member for that role as assignee, `order` and `parentTaskId`; then it opens W-02 for the new project.",
+            "Everything is `projects.write`: the founder always, operations since this pass. Without it the review step says so and Create stays disabled while the action still answers readably (D-047)."
+          ],
+          "components": [
+            "PageHeader",
+            "Tabs",
+            "Card",
+            "Select",
+            "Input",
+            "Checkbox",
+            "Button",
+            "KeyValue",
+            "StatTile",
+            "Badge"
+          ],
+          "actions": [
+            {
+              "id": "work.selectTemplate",
+              "label": "Choose the template",
+              "intent": "use the project template {template}",
+              "permission": "projects.write",
+              "params": {
+                "template": "id"
+              }
+            },
+            {
+              "id": "work.setTemplateStep",
+              "label": "Go to a step",
+              "intent": "go to the {step} step",
+              "permission": "projects.write",
+              "params": {
+                "step": "enum:template|project|phases|zones|review"
+              }
+            },
+            {
+              "id": "work.setProjectName",
+              "label": "Name the project",
+              "intent": "call the new project {name}",
+              "permission": "projects.write",
+              "params": {
+                "name": "string"
+              }
+            },
+            {
+              "id": "work.selectClient",
+              "label": "Choose the client",
+              "intent": "the new project is for the client {client}",
+              "permission": "projects.write",
+              "params": {
+                "client": "id"
+              }
+            },
+            {
+              "id": "work.selectTemplatePhases",
+              "label": "Choose the phases",
+              "intent": "include the phases {phases}",
+              "permission": "projects.write",
+              "params": {
+                "phases": "string"
+              }
+            },
+            {
+              "id": "work.selectTemplateZones",
+              "label": "Choose the zones",
+              "intent": "include the zones {zones}",
+              "permission": "projects.write",
+              "params": {
+                "zones": "string"
+              }
+            },
+            {
+              "id": "work.addZone",
+              "label": "Add a zone",
+              "intent": "add the zone {zone} to this project",
+              "permission": "projects.write",
+              "params": {
+                "zone": "string"
+              }
+            },
+            {
+              "id": "work.createProjectFromTemplate",
+              "label": "Create the project",
+              "intent": "create the project from the template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -14838,9 +16548,960 @@
         }
       }
     ],
-    "version": "0.10.0",
+    "version": "0.12.0",
     "actions": {
       "declared": [
+        {
+          "id": "archive.filterLifecycle",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Filter by lifecycle",
+          "intent": "show only {life} projects",
+          "permission": "projects.read",
+          "params": {
+            "life": "enum:prospect|active|past|all"
+          }
+        },
+        {
+          "id": "archive.filterYear",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Filter by year",
+          "intent": "show only projects from {year}",
+          "permission": "projects.read",
+          "params": {
+            "year": "string"
+          }
+        },
+        {
+          "id": "archive.filterType",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Filter by project type",
+          "intent": "show only {type} projects",
+          "permission": "projects.read",
+          "params": {
+            "type": "enum:residential|commercial|hospitality|wellness|lighting-product|all"
+          }
+        },
+        {
+          "id": "archive.filterTag",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Filter by tag",
+          "intent": "show only projects tagged {tag}",
+          "permission": "projects.read",
+          "params": {
+            "tag": "string"
+          }
+        },
+        {
+          "id": "archive.search",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Search the archive",
+          "intent": "find archived projects matching {q}",
+          "permission": "projects.read",
+          "params": {
+            "q": "string"
+          }
+        },
+        {
+          "id": "archive.setView",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Switch view",
+          "intent": "show the archive as {view}",
+          "permission": "projects.read",
+          "params": {
+            "view": "enum:cards|table"
+          }
+        },
+        {
+          "id": "archive.openProject",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Open a project",
+          "intent": "open the portal view of the project {project}",
+          "permission": "projects.read",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "archive.toggleInSet",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Add or remove from the portfolio set",
+          "intent": "put the project {project} in the portfolio set",
+          "permission": "projects.read",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "archive.copySet",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Copy the portfolio set",
+          "intent": "copy the portfolio set as a list",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.clearSet",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Clear the portfolio set",
+          "intent": "clear the portfolio set",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.exportSet",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Export the portfolio set",
+          "intent": "export the portfolio set as a PDF",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.importFolder",
+          "code": "S-12",
+          "path": "/studio/archive",
+          "label": "Import a folder",
+          "intent": "import a Dropbox or Drive folder into the archive",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.openFile",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Preview a file",
+          "intent": "preview the file {asset}",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.closeFile",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Close the preview",
+          "intent": "close the file preview",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.nextFile",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Next file",
+          "intent": "show the next file",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.prevFile",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Previous file",
+          "intent": "show the previous file",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.previewPage",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Go to a page",
+          "intent": "go to page {page} of the open file",
+          "permission": "projects.read",
+          "params": {
+            "page": "number"
+          }
+        },
+        {
+          "id": "archive.filterStage",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Filter by stage",
+          "intent": "show only the files of the stage {stage}",
+          "permission": "projects.read",
+          "params": {
+            "stage": "string"
+          }
+        },
+        {
+          "id": "archive.filterFileType",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Filter by file type",
+          "intent": "show only {type} files",
+          "permission": "projects.read",
+          "params": {
+            "type": "string"
+          }
+        },
+        {
+          "id": "archive.searchFiles",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Search the files",
+          "intent": "find files matching {q}",
+          "permission": "projects.read",
+          "params": {
+            "q": "string"
+          }
+        },
+        {
+          "id": "archive.setFilesView",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Switch the file view",
+          "intent": "show the files as a {view}",
+          "permission": "projects.read",
+          "params": {
+            "view": "enum:grid|list"
+          }
+        },
+        {
+          "id": "archive.setGrouping",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Switch the grouping",
+          "intent": "group the files {mode}",
+          "permission": "projects.read",
+          "params": {
+            "mode": "enum:stage|folder"
+          }
+        },
+        {
+          "id": "archive.openSource",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Open a file at the source",
+          "intent": "open the file {asset} in Dropbox",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.downloadFile",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Download a file",
+          "intent": "download the file {asset}",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.copyFileLink",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Copy a file link",
+          "intent": "copy the link to the file {asset}",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.openFolderSource",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Open the source folder",
+          "intent": "open the source folder of this project",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.tagFile",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Tag a file",
+          "intent": "tag the file {asset} with {tags}",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id",
+            "tags": "string"
+          }
+        },
+        {
+          "id": "archive.setStage",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Move a file to a stage",
+          "intent": "move the file {asset} to the delivery stage {stage}",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id",
+            "stage": "string"
+          }
+        },
+        {
+          "id": "archive.setCover",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Set the project cover",
+          "intent": "use the file {asset} as the cover of this project",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.setProjectTags",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Tag the project",
+          "intent": "tag the project {project} with {tags}",
+          "permission": "archive.curate",
+          "params": {
+            "project": "id",
+            "tags": "string"
+          }
+        },
+        {
+          "id": "archive.addToSet",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Add this project to the set",
+          "intent": "add this project to the portfolio set",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.filterLifecycle",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Filter by lifecycle",
+          "intent": "show only {life} projects",
+          "permission": "projects.read",
+          "params": {
+            "life": "enum:prospect|active|past|all"
+          }
+        },
+        {
+          "id": "archive.filterYear",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Filter by year",
+          "intent": "show only projects from {year}",
+          "permission": "projects.read",
+          "params": {
+            "year": "string"
+          }
+        },
+        {
+          "id": "archive.filterType",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Filter by project type",
+          "intent": "show only {type} projects",
+          "permission": "projects.read",
+          "params": {
+            "type": "enum:residential|commercial|hospitality|wellness|lighting-product|all"
+          }
+        },
+        {
+          "id": "archive.filterTag",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Filter by tag",
+          "intent": "show only projects tagged {tag}",
+          "permission": "projects.read",
+          "params": {
+            "tag": "string"
+          }
+        },
+        {
+          "id": "archive.search",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Search the archive",
+          "intent": "find archived projects matching {q}",
+          "permission": "projects.read",
+          "params": {
+            "q": "string"
+          }
+        },
+        {
+          "id": "archive.setView",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Switch view",
+          "intent": "show the archive as {view}",
+          "permission": "projects.read",
+          "params": {
+            "view": "enum:cards|table"
+          }
+        },
+        {
+          "id": "archive.openProject",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Open a project",
+          "intent": "open the portal view of the project {project}",
+          "permission": "projects.read",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "archive.toggleInSet",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Add or remove from the portfolio set",
+          "intent": "put the project {project} in the portfolio set",
+          "permission": "projects.read",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "archive.copySet",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Copy the portfolio set",
+          "intent": "copy the portfolio set as a list",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.clearSet",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Clear the portfolio set",
+          "intent": "clear the portfolio set",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.exportSet",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Export the portfolio set",
+          "intent": "export the portfolio set as a PDF",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.importFolder",
+          "code": "S-12",
+          "path": "/founder/archive",
+          "label": "Import a folder",
+          "intent": "import a Dropbox or Drive folder into the archive",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.openFile",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Preview a file",
+          "intent": "preview the file {asset}",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.closeFile",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Close the preview",
+          "intent": "close the file preview",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.nextFile",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Next file",
+          "intent": "show the next file",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.prevFile",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Previous file",
+          "intent": "show the previous file",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.previewPage",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Go to a page",
+          "intent": "go to page {page} of the open file",
+          "permission": "projects.read",
+          "params": {
+            "page": "number"
+          }
+        },
+        {
+          "id": "archive.filterStage",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Filter by stage",
+          "intent": "show only the files of the stage {stage}",
+          "permission": "projects.read",
+          "params": {
+            "stage": "string"
+          }
+        },
+        {
+          "id": "archive.filterFileType",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Filter by file type",
+          "intent": "show only {type} files",
+          "permission": "projects.read",
+          "params": {
+            "type": "string"
+          }
+        },
+        {
+          "id": "archive.searchFiles",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Search the files",
+          "intent": "find files matching {q}",
+          "permission": "projects.read",
+          "params": {
+            "q": "string"
+          }
+        },
+        {
+          "id": "archive.setFilesView",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Switch the file view",
+          "intent": "show the files as a {view}",
+          "permission": "projects.read",
+          "params": {
+            "view": "enum:grid|list"
+          }
+        },
+        {
+          "id": "archive.setGrouping",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Switch the grouping",
+          "intent": "group the files {mode}",
+          "permission": "projects.read",
+          "params": {
+            "mode": "enum:stage|folder"
+          }
+        },
+        {
+          "id": "archive.openSource",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Open a file at the source",
+          "intent": "open the file {asset} in Dropbox",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.downloadFile",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Download a file",
+          "intent": "download the file {asset}",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.copyFileLink",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Copy a file link",
+          "intent": "copy the link to the file {asset}",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.openFolderSource",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Open the source folder",
+          "intent": "open the source folder of this project",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.tagFile",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Tag a file",
+          "intent": "tag the file {asset} with {tags}",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id",
+            "tags": "string"
+          }
+        },
+        {
+          "id": "archive.setStage",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Move a file to a stage",
+          "intent": "move the file {asset} to the delivery stage {stage}",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id",
+            "stage": "string"
+          }
+        },
+        {
+          "id": "archive.setCover",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Set the project cover",
+          "intent": "use the file {asset} as the cover of this project",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.setProjectTags",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Tag the project",
+          "intent": "tag the project {project} with {tags}",
+          "permission": "archive.curate",
+          "params": {
+            "project": "id",
+            "tags": "string"
+          }
+        },
+        {
+          "id": "archive.addToSet",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Add this project to the set",
+          "intent": "add this project to the portfolio set",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.filterLifecycle",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Filter by lifecycle",
+          "intent": "show only {life} projects",
+          "permission": "projects.read",
+          "params": {
+            "life": "enum:prospect|active|past|all"
+          }
+        },
+        {
+          "id": "archive.filterYear",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Filter by year",
+          "intent": "show only projects from {year}",
+          "permission": "projects.read",
+          "params": {
+            "year": "string"
+          }
+        },
+        {
+          "id": "archive.filterType",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Filter by project type",
+          "intent": "show only {type} projects",
+          "permission": "projects.read",
+          "params": {
+            "type": "enum:residential|commercial|hospitality|wellness|lighting-product|all"
+          }
+        },
+        {
+          "id": "archive.filterTag",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Filter by tag",
+          "intent": "show only projects tagged {tag}",
+          "permission": "projects.read",
+          "params": {
+            "tag": "string"
+          }
+        },
+        {
+          "id": "archive.search",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Search the archive",
+          "intent": "find archived projects matching {q}",
+          "permission": "projects.read",
+          "params": {
+            "q": "string"
+          }
+        },
+        {
+          "id": "archive.setView",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Switch view",
+          "intent": "show the archive as {view}",
+          "permission": "projects.read",
+          "params": {
+            "view": "enum:cards|table"
+          }
+        },
+        {
+          "id": "archive.openProject",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Open a project",
+          "intent": "open the portal view of the project {project}",
+          "permission": "projects.read",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "archive.toggleInSet",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Add or remove from the portfolio set",
+          "intent": "put the project {project} in the portfolio set",
+          "permission": "projects.read",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "archive.copySet",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Copy the portfolio set",
+          "intent": "copy the portfolio set as a list",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.clearSet",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Clear the portfolio set",
+          "intent": "clear the portfolio set",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.exportSet",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Export the portfolio set",
+          "intent": "export the portfolio set as a PDF",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.importFolder",
+          "code": "S-12",
+          "path": "/brand/archive",
+          "label": "Import a folder",
+          "intent": "import a Dropbox or Drive folder into the archive",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.openFile",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Preview a file",
+          "intent": "preview the file {asset}",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.closeFile",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Close the preview",
+          "intent": "close the file preview",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.nextFile",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Next file",
+          "intent": "show the next file",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.prevFile",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Previous file",
+          "intent": "show the previous file",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.previewPage",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Go to a page",
+          "intent": "go to page {page} of the open file",
+          "permission": "projects.read",
+          "params": {
+            "page": "number"
+          }
+        },
+        {
+          "id": "archive.filterStage",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Filter by stage",
+          "intent": "show only the files of the stage {stage}",
+          "permission": "projects.read",
+          "params": {
+            "stage": "string"
+          }
+        },
+        {
+          "id": "archive.filterFileType",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Filter by file type",
+          "intent": "show only {type} files",
+          "permission": "projects.read",
+          "params": {
+            "type": "string"
+          }
+        },
+        {
+          "id": "archive.searchFiles",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Search the files",
+          "intent": "find files matching {q}",
+          "permission": "projects.read",
+          "params": {
+            "q": "string"
+          }
+        },
+        {
+          "id": "archive.setFilesView",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Switch the file view",
+          "intent": "show the files as a {view}",
+          "permission": "projects.read",
+          "params": {
+            "view": "enum:grid|list"
+          }
+        },
+        {
+          "id": "archive.setGrouping",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Switch the grouping",
+          "intent": "group the files {mode}",
+          "permission": "projects.read",
+          "params": {
+            "mode": "enum:stage|folder"
+          }
+        },
+        {
+          "id": "archive.openSource",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Open a file at the source",
+          "intent": "open the file {asset} in Dropbox",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.downloadFile",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Download a file",
+          "intent": "download the file {asset}",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.copyFileLink",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Copy a file link",
+          "intent": "copy the link to the file {asset}",
+          "permission": "projects.read",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.openFolderSource",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Open the source folder",
+          "intent": "open the source folder of this project",
+          "permission": "projects.read"
+        },
+        {
+          "id": "archive.tagFile",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Tag a file",
+          "intent": "tag the file {asset} with {tags}",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id",
+            "tags": "string"
+          }
+        },
+        {
+          "id": "archive.setStage",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Move a file to a stage",
+          "intent": "move the file {asset} to the delivery stage {stage}",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id",
+            "stage": "string"
+          }
+        },
+        {
+          "id": "archive.setCover",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Set the project cover",
+          "intent": "use the file {asset} as the cover of this project",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.setProjectTags",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Tag the project",
+          "intent": "tag the project {project} with {tags}",
+          "permission": "archive.curate",
+          "params": {
+            "project": "id",
+            "tags": "string"
+          }
+        },
+        {
+          "id": "archive.addToSet",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Add this project to the set",
+          "intent": "add this project to the portfolio set",
+          "permission": "projects.read"
+        },
         {
           "id": "brand.openSection",
           "code": "G-01",
@@ -15251,6 +17912,25 @@
           "params": {
             "doc": "enum:portfolio|brochure"
           }
+        },
+        {
+          "id": "brand.openCompanyDocument",
+          "code": "G-08",
+          "path": "/brand/documents",
+          "label": "Open a company document",
+          "intent": "open the company document {asset}",
+          "permission": "brand.manage",
+          "params": {
+            "asset": "string"
+          }
+        },
+        {
+          "id": "brand.closeCompanyDocument",
+          "code": "G-08",
+          "path": "/brand/documents",
+          "label": "Close the company document viewer",
+          "intent": "close the company document viewer",
+          "permission": "brand.manage"
         },
         {
           "id": "client.openProject",
@@ -16110,7 +18790,7 @@
           "label": "Open surface",
           "intent": "open the {surface}",
           "params": {
-            "surface": "enum:website|services|brand-docs|client|manual|docs|spaces|business-os|design|plan|canvas|simulator|actions|tokens|testing|components|specs|multiuser"
+            "surface": "enum:website|services|brand-docs|client|manual|docs|archive|spaces|business-os|design|plan|canvas|simulator|actions|tokens|testing|components|specs|multiuser"
           }
         },
         {
@@ -21953,6 +24633,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-01",
+          "path": "/founder/work",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-01",
+          "path": "/founder/work",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-01",
+          "path": "/founder/work",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-02",
           "path": "/founder/work/:projectId",
@@ -22308,6 +25019,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-02",
+          "path": "/founder/work/:projectId",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-02",
+          "path": "/founder/work/:projectId",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-02",
+          "path": "/founder/work/:projectId",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-01",
           "path": "/ops/work",
@@ -22663,6 +25405,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-01",
+          "path": "/ops/work",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-01",
+          "path": "/ops/work",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-01",
+          "path": "/ops/work",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-02",
           "path": "/ops/work/:projectId",
@@ -23018,6 +25791,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-02",
+          "path": "/ops/work/:projectId",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-02",
+          "path": "/ops/work/:projectId",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-02",
+          "path": "/ops/work/:projectId",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-01",
           "path": "/studio/work",
@@ -23373,6 +26177,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-01",
+          "path": "/studio/work",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-01",
+          "path": "/studio/work",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-01",
+          "path": "/studio/work",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-02",
           "path": "/studio/work/:projectId",
@@ -23728,6 +26563,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-02",
+          "path": "/studio/work/:projectId",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-02",
+          "path": "/studio/work/:projectId",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-02",
+          "path": "/studio/work/:projectId",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-01",
           "path": "/brand/work",
@@ -24083,6 +26949,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-01",
+          "path": "/brand/work",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-01",
+          "path": "/brand/work",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-01",
+          "path": "/brand/work",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-02",
           "path": "/brand/work/:projectId",
@@ -24436,6 +27333,207 @@
           "params": {
             "project": "id"
           }
+        },
+        {
+          "id": "work.setDeliverable",
+          "code": "W-02",
+          "path": "/brand/work/:projectId",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-02",
+          "path": "/brand/work/:projectId",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-02",
+          "path": "/brand/work/:projectId",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
+          "id": "work.selectTemplate",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Choose the template",
+          "intent": "use the project template {template}",
+          "permission": "projects.write",
+          "params": {
+            "template": "id"
+          }
+        },
+        {
+          "id": "work.setTemplateStep",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Go to a step",
+          "intent": "go to the {step} step",
+          "permission": "projects.write",
+          "params": {
+            "step": "enum:template|project|phases|zones|review"
+          }
+        },
+        {
+          "id": "work.setProjectName",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Name the project",
+          "intent": "call the new project {name}",
+          "permission": "projects.write",
+          "params": {
+            "name": "string"
+          }
+        },
+        {
+          "id": "work.selectClient",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Choose the client",
+          "intent": "the new project is for the client {client}",
+          "permission": "projects.write",
+          "params": {
+            "client": "id"
+          }
+        },
+        {
+          "id": "work.selectTemplatePhases",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Choose the phases",
+          "intent": "include the phases {phases}",
+          "permission": "projects.write",
+          "params": {
+            "phases": "string"
+          }
+        },
+        {
+          "id": "work.selectTemplateZones",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Choose the zones",
+          "intent": "include the zones {zones}",
+          "permission": "projects.write",
+          "params": {
+            "zones": "string"
+          }
+        },
+        {
+          "id": "work.addZone",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Add a zone",
+          "intent": "add the zone {zone} to this project",
+          "permission": "projects.write",
+          "params": {
+            "zone": "string"
+          }
+        },
+        {
+          "id": "work.createProjectFromTemplate",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Create the project",
+          "intent": "create the project from the template",
+          "permission": "projects.write"
+        },
+        {
+          "id": "work.selectTemplate",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Choose the template",
+          "intent": "use the project template {template}",
+          "permission": "projects.write",
+          "params": {
+            "template": "id"
+          }
+        },
+        {
+          "id": "work.setTemplateStep",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Go to a step",
+          "intent": "go to the {step} step",
+          "permission": "projects.write",
+          "params": {
+            "step": "enum:template|project|phases|zones|review"
+          }
+        },
+        {
+          "id": "work.setProjectName",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Name the project",
+          "intent": "call the new project {name}",
+          "permission": "projects.write",
+          "params": {
+            "name": "string"
+          }
+        },
+        {
+          "id": "work.selectClient",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Choose the client",
+          "intent": "the new project is for the client {client}",
+          "permission": "projects.write",
+          "params": {
+            "client": "id"
+          }
+        },
+        {
+          "id": "work.selectTemplatePhases",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Choose the phases",
+          "intent": "include the phases {phases}",
+          "permission": "projects.write",
+          "params": {
+            "phases": "string"
+          }
+        },
+        {
+          "id": "work.selectTemplateZones",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Choose the zones",
+          "intent": "include the zones {zones}",
+          "permission": "projects.write",
+          "params": {
+            "zones": "string"
+          }
+        },
+        {
+          "id": "work.addZone",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Add a zone",
+          "intent": "add the zone {zone} to this project",
+          "permission": "projects.write",
+          "params": {
+            "zone": "string"
+          }
+        },
+        {
+          "id": "work.createProjectFromTemplate",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Create the project",
+          "intent": "create the project from the template",
+          "permission": "projects.write"
         }
       ]
     }

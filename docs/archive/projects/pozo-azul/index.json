@@ -1,0 +1,54 @@
+{
+ "folderName": "015_POZO AZUL",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AICo_yk0ojNKu60hGn0NUq0/PROYECTOS%202026/015_POZO%20AZUL?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+ "crawledAt": "2026-09-21T20:48:18.157Z",
+ "indexedAt": "2026-09-21T21:17:52.593Z",
+ "fileCount": 1,
+ "totalBytes": 126771,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/pozo-azul/",
+ "files": [
+  {
+   "path": "Propuesta_ALUZINA_Pozo_Azul_Jorge.pdf",
+   "name": "Propuesta_ALUZINA_Pozo_Azul_Jorge.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 126776,
+   "modified": "Last month",
+   "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGDesuks-sbF8s1830S2wzA/PROYECTOS%202026/015_POZO%20AZUL/Propuesta_ALUZINA_Pozo_Azul_Jorge.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+   "downloaded": true,
+   "slug": "propuesta-aluzina-pozo-azul-jorge",
+   "thumb": "thumbs/propuesta-aluzina-pozo-azul-jorge.jpg",
+   "pages": [
+    "pages/propuesta-aluzina-pozo-azul-jorge-page-01.jpg",
+    "pages/propuesta-aluzina-pozo-azul-jorge-page-02.jpg",
+    "pages/propuesta-aluzina-pozo-azul-jorge-page-03.jpg",
+    "pages/propuesta-aluzina-pozo-azul-jorge-page-04.jpg",
+    "pages/propuesta-aluzina-pozo-azul-jorge-page-05.jpg",
+    "pages/propuesta-aluzina-pozo-azul-jorge-page-06.jpg"
+   ],
+   "pageCount": 7,
+   "textExcerpt": "ALUZINA INTERIORISMO / ILUMINACIÓN PROPUESTA DE TRABAJO EDITORIAL Contenido, Styling y Proyección Editorial para Hotel Pozo Azul ALUZINA para Pozo Azul Alejandra Guerra Lotero Directora · ALUZINA · Representante Antioquia, Asociación Colombiana de Diseño Interior Julio 2026 1. Presentación ESTIMADO JORGE Mi nombre es Alejandra Guerra, directora de ALUZINA, estudio de diseño interior con sede en Medellín. Desde hace diez años trabajo profesionalmente en interiorismo e iluminación estratégica, y actualmente soy la representante para Antioquia de la Asociación Colombiana de Diseño Interior. Tuve ",
+   "palette": [
+    "#090909",
+    "#ffffff",
+    "#0b0b0b",
+    "#3c413f",
+    "#070707",
+    "#080909"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 6,
+  "bytes": 420698,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

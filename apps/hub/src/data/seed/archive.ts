@@ -1,5 +1,4 @@
 import inventoryRaw from '@docs/archive/index.json';
-import joeGallinaRaw from '@docs/archive/projects/joe-gallina-interior/index.json';
 import {
   DELIVERY_STAGES,
   PROJECT_TYPE_TAGS,
@@ -124,10 +123,19 @@ interface DeepIndex {
 
 export const ARCHIVE_INVENTORY = inventoryRaw as unknown as Inventory;
 
-/** Deep indexes by inventory project id; add one import per featured project (the JSON is the source, D-037). */
-export const DEEP_INDEXES: Record<string, DeepIndex> = {
-  'joe-gallina-interior': joeGallinaRaw as unknown as DeepIndex,
-};
+/**
+ * Deep indexes by inventory project id (= the folder slug `docs/archive/projects/<slug>/index.json`). Every file build-index
+ * writes is picked up by the glob, so a new featured project needs no import here (ar-06; the JSON is the source, D-037).
+ * Vite resolves the `@docs` alias inside the glob (mirrored in tsconfig `paths`); the key is whatever path form Vite emits,
+ * so the slug is read from the `/projects/<slug>/index.json` tail.
+ */
+const DEEP_INDEX_MODULES = import.meta.glob('@docs/archive/projects/*/index.json', { eager: true, import: 'default' }) as Record<string, unknown>;
+export const DEEP_INDEXES: Record<string, DeepIndex> = Object.fromEntries(
+  Object.entries(DEEP_INDEX_MODULES).flatMap(([file, mod]) => {
+    const m = /\/projects\/([^/]+)\/index\.json$/.exec(file);
+    return m ? [[m[1], mod as DeepIndex]] : [];
+  }),
+);
 
 export const ARCHIVE_SPACE_ID = 'sp-archive';
 export const ARCHIVE_ADMIN_SPACE_ID = 'sp-ar-admin';

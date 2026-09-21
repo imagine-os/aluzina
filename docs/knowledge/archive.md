@@ -2,18 +2,18 @@
 
 status: current
 since: 2026-09-21
-source: Dropbox shared folders from Justin Massion, Slack #past-projects 2026-09-21 16:35 UTC (prompt 0017); crawled read-only with `scripts/archive/crawl-dropbox.mjs`, indexed and redacted with `scripts/archive/build-index.mjs` (D-058, D-059); machine-readable twin: `docs/archive/index.json` and `docs/archive/projects/joe-gallina-interior/index.json`
+source: Dropbox shared folders from Justin Massion, Slack #past-projects 2026-09-21 16:35 UTC (prompt 0017); crawled read-only with `scripts/archive/crawl-dropbox.mjs`, indexed and redacted with `scripts/archive/build-index.mjs` (D-058, D-059); machine-readable twin: `docs/archive/index.json` and `docs/archive/projects/<slug>/index.json` (19 deep indexes: JOE GALLINA INTERIOR and the 18 folders of PROYECTOS 2026, ar-06)
 
-What Aluzina's Dropbox holds as far as the four share links show it: 187 project-level folders in 8 groups, 1225 files and 243 subfolders at the first level inside them, about 18.8 GB of listed sizes (Dropbox display values, so approximate; the inventory is one level deep, the deep index of the featured project goes to every file). **Everything in the "inferred type" and "status" columns is inferred** from the folder name and the year folder (D-060); the founder has not confirmed any of it. Names are the studio's folder names verbatim; file names that identify a personal or financial document are replaced by their type (D-059).
+What Aluzina's Dropbox holds as far as the four share links show it: 187 project-level folders in 8 groups, 1444 files and 245 subfolders at the first level inside them, about 21.4 GB of listed sizes (Dropbox display values, so approximate; the inventory is one level deep, the 19 deep indexes go to every file). **Everything in the "inferred type" and "status" columns is inferred** from the folder name and the year folder (D-060); the founder has not confirmed any of it. Names are the studio's folder names verbatim; file names that identify a personal or financial document are replaced by their type (D-059).
 
 ## How the archive is organised (observations)
 
 - **One folder per year, one folder per project.** Link C is named "PROYECTOS ALUZINA 2019 2023" but holds the year folders 2020, 2021, 2022, 2024 and 2025 next to the 2019-2023 projects; link B is 2026 on its own. Two project folders sit at the root of link C next to the year folders (LIFE VIOLETA VILLA with eight subfolders, SANTIAGO AGUIRRE ILUMINACION).
 - **Numbering conventions change by year.** 2020-2021 use a running counter with a `0_` prefix (`0_69` .. `0_112`, continuing across years); 2022 and 2024 have no numbers; 2025 restarts at `01` .. `038`; 2026 restarts at `01_` .. `019_` (with `010_`, `011_` and a typo-style `1O` in older folders). The number is the order the studio opened the project in, and `domain/archive.ts` (`folderNumber`, `compareFolderPaths`) keeps that order in the product.
-- **Inside a project the 2026 folders follow a template**: `00_PRIMERA PROPUESTA`, `01 FOTOGRAFIA Y VIDEO DEL ESPACIO`, `02 PRESENTACION DE DISEÑO DEL ESPACIO`, `03 PLANOS DEL ESPACIO`, `04_COTIZACION DEL ESPACIO`, `05 CRONOGRAMA DE OBRA`, `06 CONTRATOS`, `07_ FOTOGRAFIAS DE OBRA Y AVANCE`, `08 DOCUMENTACION IMPORTANTE` … (CARTAGENA COPETRAN, HOY: 13 subfolders each). The featured 2023 project uses `DISEÑO/00_FENG SHUI` .. `011_MODELOS` plus `ADMINISTRATIVO Y FINANCIERO`, `suppliers and financial status` and `CIERRE DE PROYECTO`. Older folders (2020-2022) mostly hold loose files at the top level (quotations, plans, renders, spreadsheets).
+- **Inside a project the 2026 folders follow a template** (all 18 are deep-indexed since ar-06: 754 files across the 19 deep indexes; the template folders `04_COTIZACION DEL ESPACIO`, `06 CONTRATOS`, `08 DOCUMENTACION IMPORTANTE`, `09 CONSIGNACIONES`, `PAGOS` and `COTIZACIONES DE PROVEEDORES` are private (R2) and were never downloaded; site photos named `WhatsApp Image …` stay unpreviewed under R1): `00_PRIMERA PROPUESTA`, `01 FOTOGRAFIA Y VIDEO DEL ESPACIO`, `02 PRESENTACION DE DISEÑO DEL ESPACIO`, `03 PLANOS DEL ESPACIO`, `04_COTIZACION DEL ESPACIO`, `05 CRONOGRAMA DE OBRA`, `06 CONTRATOS`, `07_ FOTOGRAFIAS DE OBRA Y AVANCE`, `08 DOCUMENTACION IMPORTANTE` … (CARTAGENA COPETRAN, HOY: 13 subfolders each). The featured 2023 project uses `DISEÑO/00_FENG SHUI` .. `011_MODELOS` plus `ADMINISTRATIVO Y FINANCIERO`, `suppliers and financial status` and `CIERRE DE PROYECTO`. Older folders (2020-2022) mostly hold loose files at the top level (quotations, plans, renders, spreadsheets).
 - **Quotation-only folders** (`COTIZACION HELADERIA` 2022, `011 COTIZACION LUMINARIA CORAZON` 2025) are the studio's record of a prospect: seeded as `proposal-sent` projects on the Prospects shelf (D-060). One **admin folder** (`FACTURAS DE VENTA Y CUENTAS DE COBRO 2022`) is not a project: its files are posts in the Spaces area "Administrativo".
 - **Container folders** that are not projects: `PROYECTOS ALUZINA 2020 GRAFICOS`, `PROYECTOS 2021 SEGUNDO SEMESTRE` (noted in the data; confirm).
-- **Empty folders** (15, listed with "Carpeta vacía" in their note): 06_YOLIMA CLIENTA (2026), 08_HONEY VALLEY LUMINARIA (2026), 09_LINA TABARES (2026), 017_HUG (2026), 01 DISENO GRAFICO  SER INTERIOR (2025), 07 IMAGENES EL SILENCIO DE LOS PAJAROS (2025), 08 DISENO INTERIOR juan (2025), 016 APARTAMENTO VALENTIN RAMOZ (2025), ACABADOS Y FORMAS (2024), ESPACIO COLIN MEDELLIN (2024), 0_93 FINCA ANTIOQUIA ILUMINACION (2021), 0_72 LONDON CITY BARBER SHOP (2020), 0_83 REVERDESER (2020), FABI SOPETRAN (2019-2023), NEW YORK HOUSE (2019-2023). Either the work lives elsewhere or the folder was created ahead of the project; re-crawl later (ar-16).
+- **Empty folders** (3 after the ar-16 re-check of 2026-09-21: `01 DISENO GRAFICO  SER INTERIOR` (2025), `08 DISENO INTERIOR juan` (2025), `0_72 LONDON CITY BARBER SHOP` (2020)). The other 12 folders the first pass had listed as empty were not: the Dropbox viewer had shown them before their grid loaded. Re-listed with their files: 06_YOLIMA CLIENTA 5, 08_HONEY VALLEY LUMINARIA 83, 09_LINA TABARES 7, 017_HUG 12 (2026, now deep-indexed); 07 IMAGENES EL SILENCIO DE LOS PAJAROS 2, 016 APARTAMENTO VALENTIN RAMOZ 8 + 1 folder (2025); ACABADOS Y FORMAS 1, ESPACIO COLIN MEDELLIN 11 (2024); 0_93 FINCA ANTIOQUIA ILUMINACION 16 (2021); 0_83 REVERDESER 5 (2020); FABI SOPETRAN 1, NEW YORK HOUSE 70 + 1 folder (2019-2023). Either the three remaining folders were created ahead of the work or it lives elsewhere; confirm with the founder.
 - **Duplicates / continuations across years** (noted in the data, confirm with the founder): 05_SODIME (2026); 08_HONEY VALLEY LUMINARIA (2026); 18_ALMA PRANA 2026 (2026); 019_ SIMON CALERA (2026); 05 SANTIAGO AGUIRRE ILUMINACION (2025); 07 IMAGENES EL SILENCIO DE LOS PAJAROS (2025); 014 EL ENCANTO (2025); 028 NATALIE KENEDY OFFICE AND TERRACE (2025); 034 ALMA PRANA (2025); 037 PARQUE BONNY NORIEGA (2025); CALERA EL SILENCIO DE LOS PAJAROS (2024); CASA JORGE Y LIGIA (2024); DESARROLLO DE ILUMINACION (2024); EL ENCANTO (2024); LIGIA Y JORGE (2024); PORTAL DEL VALLE NATHALY KENEDY (2024); SEGUNDO PROCESO DE VILLA VERDE (2024); SIMON CALERA (2024); UPPERTRIP (2024); UPPERTRIP TUBO 2024 (2024); 0_ APARTAMEMTO PAOLA JIMENA (2022); SHABELA FOTOS (2022); SHAVELA (2022); 0_95 APTO PAOLA (2021); 0_103 COASSIST 2021 (2021); 0_107 PROYECTOS BONNY (2021); 0_108 PUNTO COMERCIAL UPPER TRIP (2021); 0_112 VILLA VERDE (2021); SHABELA CHARCUTERÍA NECOCLI 2021 (2021); 0_73 COASSIST TERMIAL DE EL SUR 2020 (2020); 0_79 SODIME producciom (2020); BONNY JUEGO NUBE (2019-2023); SANTIAGO AGUIRRE ILUMINACION (root).
 - **WhatsApp images and quotations dominate the small folders**; plans (dwg / pdf), renders (jpg / png), Illustrator sources (ai) and spreadsheets (xlsx) are the studio's working formats. File types at the first level: jpg 446, pdf 416, ai 100, xlsx 93, png 69, jpeg 65, jfif 29, mp4 28, docx 23, mov 21, psd 20, heic 17.
 
@@ -25,24 +25,24 @@ Columns: project folder (verbatim) | year | inferred type | inferred status | fi
 
 | Project folder | Year | Inferred type | Inferred status | Files | Subfolders | Main types | Latest modified | Note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 01_ CARTAGENA COPETRAN | 2026 | comercial | en curso (contratado) | 0 | 13 | — | — |  |
-| 02_LINA ZAPATA | 2026 | comercial | en curso (contratado) | 26 | 0 | jpg 22, png 4 | — |  |
-| 03_ANDRES Y ANDREA | 2026 | comercial | en curso (contratado) | 1 | 5 | pdf 1 | 4 months ago |  |
-| 04_DECERO | 2026 | comercial | en curso (contratado) | 2 | 2 | ai 1, pdf 1 | 2 months ago |  |
-| 05_SODIME | 2026 | comercial | en curso (contratado) | 0 | 2 | — | — | También aparece como 0_79 SODIME producciom (2020); posible duplicado o continuación, confirmar con la fundadora. |
-| 06_YOLIMA CLIENTA | 2026 | comercial | en curso (contratado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
-| 07_PLAY SET | 2026 | comercial | en curso (contratado) | 0 | 3 | — | — |  |
-| 08_HONEY VALLEY LUMINARIA | 2026 | iluminación | en curso (contratado) | 0 | 0 | — | — | También aparece como DESARROLLO DE ILUMINACION (2024); posible duplicado o continuación, confirmar con la fundadora. Carpeta vacía en el rastreo. |
-| 09_LINA TABARES | 2026 | hospitalidad | en curso (contratado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
-| 010_HOY | 2026 | bienestar | en curso (contratado) | 0 | 13 | — | — |  |
-| 011_SPORTI | 2026 | comercial | en curso (contratado) | 1 | 6 | png 1 | 11 days ago |  |
-| 013_CASA DHARMA SAN PEDRO DE LOS MILAGROS | 2026 | residencial | en curso (contratado) | 0 | 2 | — | — |  |
-| 014_ROBLE COLONIAL GUATAPE | 2026 | comercial | en curso (contratado) | 1 | 0 | pdf 1 | 11 days ago |  |
-| 015_POZO AZUL | 2026 | comercial | en curso (contratado) | 1 | 0 | pdf 1 | Last month |  |
-| 016_Ecoluz, ILUMINACION | 2026 | iluminación | en curso (contratado) | 3 | 0 | pdf 3 | 2 months ago |  |
-| 017_HUG | 2026 | comercial | en curso (contratado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
-| 18_ALMA PRANA 2026 | 2026 | comercial | en curso (contratado) | 3 | 0 | pdf 3 | 11 days ago | También aparece como 034 ALMA PRANA (2025); posible duplicado o continuación, confirmar con la fundadora. |
-| 019_ SIMON CALERA | 2026 | comercial | en curso (contratado) | 17 | 0 | jpg 17 | — | También aparece como SIMON CALERA (2024); posible duplicado o continuación, confirmar con la fundadora. |
+| 01_ CARTAGENA COPETRAN | 2026 | comercial | en curso (contratado) | 37 | 11 | pdf 28, jpg 3, jpeg 3, xlsx 2 | 14 days ago | Proyecto destacado con índice completo: 37 archivos en 14 carpetas (11 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 14 days ago. |
+| 02_LINA ZAPATA | 2026 | comercial | en curso (contratado) | 26 | 0 | jpg 22, png 4 | — | Proyecto destacado con índice completo: 26 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta —. |
+| 03_ANDRES Y ANDREA | 2026 | comercial | en curso (contratado) | 28 | 5 | jpeg 24, pdf 3, zip 1 | 9 days ago | Proyecto destacado con índice completo: 28 archivos en 5 carpetas (5 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 9 days ago. |
+| 04_DECERO | 2026 | comercial | en curso (contratado) | 5 | 2 | pdf 4, ai 1 | 2 months ago | Proyecto destacado con índice completo: 5 archivos en 3 carpetas (2 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 2 months ago. |
+| 05_SODIME | 2026 | comercial | en curso (contratado) | 76 | 3 | png 32, heic 23, mov 8, pdf 6 | 27 minutes ago | Proyecto destacado con índice completo: 76 archivos en 7 carpetas (3 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 27 minutes ago. También aparece como 0_79 SODIME producciom (2020); posible duplicado o continuación, confirmar con la fundadora. |
+| 06_YOLIMA CLIENTA | 2026 | comercial | en curso (contratado) | 5 | 0 | pdf 2, jpeg 2, png 1 | — | Proyecto destacado con índice completo: 5 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta —. |
+| 07_PLAY SET | 2026 | comercial | en curso (contratado) | 46 | 3 | png 30, jpg 5, otf 2, ttf 2 | 4 months ago | Proyecto destacado con índice completo: 46 archivos en 10 carpetas (3 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 4 months ago. |
+| 08_HONEY VALLEY LUMINARIA | 2026 | iluminación | en curso (contratado) | 83 | 1 | jpg 60, png 18, pdf 4, webp 1 | 4 months ago | Proyecto destacado con índice completo: 83 archivos en 1 carpetas (1 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 4 months ago. También aparece como DESARROLLO DE ILUMINACION (2024); posible duplicado o continuación, confirmar con la fundadora. |
+| 09_LINA TABARES | 2026 | hospitalidad | en curso (contratado) | 7 | 0 | jpg 4, png 2, jpeg 1 | — | Proyecto destacado con índice completo: 7 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta —. |
+| 010_HOY | 2026 | bienestar | en curso (contratado) | 206 | 13 | png 98, jpeg 41, jpg 30, pdf 24 | 19 days ago | Proyecto destacado con índice completo: 206 archivos en 19 carpetas (13 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 19 days ago. |
+| 011_SPORTI | 2026 | comercial | en curso (contratado) | 14 | 6 | pdf 9, png 1, jpeg 1, html 1 | 11 days ago | Proyecto destacado con índice completo: 14 archivos en 6 carpetas (6 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 11 days ago. |
+| 013_CASA DHARMA SAN PEDRO DE LOS MILAGROS | 2026 | residencial | en curso (contratado) | 5 | 2 | jpeg 4, pdf 1 | Last month | Proyecto destacado con índice completo: 5 archivos en 2 carpetas (2 de primer nivel), rastreado 2026-09-21; archivos fechados hasta Last month. |
+| 014_ROBLE COLONIAL GUATAPE | 2026 | comercial | en curso (contratado) | 1 | 0 | pdf 1 | 11 days ago | Proyecto destacado con índice completo: 1 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 11 days ago. |
+| 015_POZO AZUL | 2026 | comercial | en curso (contratado) | 1 | 0 | pdf 1 | Last month | Proyecto destacado con índice completo: 1 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta Last month. |
+| 016_Ecoluz, ILUMINACION | 2026 | iluminación | en curso (contratado) | 3 | 0 | pdf 3 | 2 months ago | Proyecto destacado con índice completo: 3 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 2 months ago. |
+| 017_HUG | 2026 | comercial | en curso (contratado) | 12 | 0 | png 10, pdf 1, skp 1 | — | Proyecto destacado con índice completo: 12 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta —. |
+| 18_ALMA PRANA 2026 | 2026 | comercial | en curso (contratado) | 3 | 0 | pdf 3 | 11 days ago | Proyecto destacado con índice completo: 3 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 11 days ago. También aparece como 034 ALMA PRANA (2025); posible duplicado o continuación, confirmar con la fundadora. |
+| 019_ SIMON CALERA | 2026 | comercial | en curso (contratado) | 17 | 0 | jpg 17 | — | Proyecto destacado con índice completo: 17 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta —. También aparece como SIMON CALERA (2024); posible duplicado o continuación, confirmar con la fundadora. |
 
 ### PROYECTOS ALUZINA 2025 (inside link C) — 37 folders
 
@@ -54,7 +54,7 @@ Columns: project folder (verbatim) | year | inferred type | inferred status | fi
 | 04 MATRIMONIO SOFIA DURAN | 2025 | bienestar | pasado (cerrado) | 1 | 1 | pdf 1 | May 10, 2024 |  |
 | 05 SANTIAGO AGUIRRE ILUMINACION | 2025 | iluminación | pasado (cerrado) | 8 | 0 | pdf 4, ai 3, xlsx 1 | Feb 1, 2025 | También aparece como SANTIAGO AGUIRRE ILUMINACION (root); posible duplicado o continuación, confirmar con la fundadora. |
 | 06 PABLO ARANGO | 2025 | comercial | pasado (cerrado) | 1 | 0 | xlsx 1 | Jan 29, 2025 |  |
-| 07 IMAGENES EL SILENCIO DE LOS PAJAROS | 2025 | comercial | pasado (cerrado) | 0 | 0 | — | — | También aparece como CALERA EL SILENCIO DE LOS PAJAROS (2024); posible duplicado o continuación, confirmar con la fundadora. Carpeta vacía en el rastreo. |
+| 07 IMAGENES EL SILENCIO DE LOS PAJAROS | 2025 | comercial | pasado (cerrado) | 2 | 0 | png 2 | — | También aparece como CALERA EL SILENCIO DE LOS PAJAROS (2024); posible duplicado o continuación, confirmar con la fundadora. |
 | 08 DISENO INTERIOR juan | 2025 | residencial | pasado (cerrado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
 | 09 TORRES CLARAS | 2025 | comercial | pasado (cerrado) | 8 | 0 | pdf 7, xlsx 1 | Feb 19, 2025 |  |
 | 010 DENTALI | 2025 | bienestar | pasado (cerrado) | 3 | 3 | pdf 2, ai 1 | Feb 11, 2025 |  |
@@ -63,7 +63,7 @@ Columns: project folder (verbatim) | year | inferred type | inferred status | fi
 | 013 HANS WAGNER | 2025 | comercial | pasado (cerrado) | 2 | 0 | ai 1, pdf 1 | Feb 18, 2025 |  |
 | 014 EL ENCANTO | 2025 | comercial | pasado (cerrado) | 0 | 3 | — | — | También aparece como EL ENCANTO (2024); posible duplicado o continuación, confirmar con la fundadora. |
 | 015 APARTAMENTO MANUEL DE LIMA | 2025 | residencial | pasado (cerrado) | 2 | 0 | ai 1, pdf 1 | Feb 19, 2025 |  |
-| 016 APARTAMENTO VALENTIN RAMOZ | 2025 | residencial | pasado (cerrado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
+| 016 APARTAMENTO VALENTIN RAMOZ | 2025 | residencial | pasado (cerrado) | 8 | 1 | jpg 8 | — |  |
 | 017 CASA GERMAN OYUELA | 2025 | residencial | pasado (cerrado) | 0 | 1 | — | — |  |
 | 019 CASA HERMOSA ILUMINACION PRECIOSA | 2025 | iluminación | pasado (cerrado) | 26 | 0 | jpg 18, txt 5, mov 2, pdf 1 | — |  |
 | 020 casa rustica iluminacio. | 2025 | iluminación | pasado (cerrado) | 8 | 0 | pdf 3, jpg 3, png 2 | — |  |
@@ -90,7 +90,7 @@ Columns: project folder (verbatim) | year | inferred type | inferred status | fi
 
 | Project folder | Year | Inferred type | Inferred status | Files | Subfolders | Main types | Latest modified | Note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| ACABADOS Y FORMAS | 2024 | comercial | pasado (cerrado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
+| ACABADOS Y FORMAS | 2024 | comercial | pasado (cerrado) | 1 | 0 | png 1 | — |  |
 | AGARTHA FEST | 2024 | comercial | pasado (cerrado) | 5 | 0 | xlsx 3, pdf 2 | Jun 8, 2024 |  |
 | AIRBNB TANGUERO | 2024 | hospitalidad | pasado (cerrado) | 2 | 2 | pdf 2 | Jun 20, 2024 |  |
 | CALERA EL SILENCIO DE LOS PAJAROS | 2024 | comercial | pasado (cerrado) | 4 | 2 | jpg 2, psd 1, txt 1 | Sep 15, 2024 | También aparece como 07 IMAGENES EL SILENCIO DE LOS PAJAROS (2025); posible duplicado o continuación, confirmar con la fundadora. |
@@ -103,7 +103,7 @@ Columns: project folder (verbatim) | year | inferred type | inferred status | fi
 | DECOILUMINAR | 2024 | comercial | pasado (cerrado) | 6 | 2 | docx 2, mov 2, png 1, pdf 1 | Aug 12, 2024 |  |
 | DESARROLLO DE ILUMINACION | 2024 | iluminación | pasado (cerrado) | 1 | 0 | ai 1 | Jun 24, 2024 | También aparece como 08_HONEY VALLEY LUMINARIA (2026); posible duplicado o continuación, confirmar con la fundadora. |
 | EL ENCANTO | 2024 | comercial | pasado (cerrado) | 1 | 0 | pdf 1 | Dec 26, 2024 | También aparece como 014 EL ENCANTO (2025); posible duplicado o continuación, confirmar con la fundadora. |
-| ESPACIO COLIN MEDELLIN | 2024 | bienestar | pasado (cerrado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
+| ESPACIO COLIN MEDELLIN | 2024 | bienestar | pasado (cerrado) | 11 | 0 | jpg 3, psd 3, pdf 2, png 2 | — |  |
 | ESTELA PARMA | 2024 | comercial | pasado (cerrado) | 1 | 0 | pdf 1 | Jul 30, 2024 |  |
 | FELIPE ZAPATA CONSULTORIO | 2024 | bienestar | pasado (cerrado) | 1 | 0 | pdf 1 | Jan 25, 2024 |  |
 | GLORIA MOLINA | 2024 | comercial | pasado (cerrado) | 7 | 0 | pdf 5, xlsx 2 | Jan 16, 2024 |  |
@@ -168,7 +168,7 @@ Columns: project folder (verbatim) | year | inferred type | inferred status | fi
 
 | Project folder | Year | Inferred type | Inferred status | Files | Subfolders | Main types | Latest modified | Note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 0_93 FINCA ANTIOQUIA ILUMINACION | 2021 | iluminación | pasado (cerrado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
+| 0_93 FINCA ANTIOQUIA ILUMINACION | 2021 | iluminación | pasado (cerrado) | 16 | 0 | jpg 6, ai 4, pdf 4, xlsx 2 | — |  |
 | 0_94 MODULOS BIOTECTURA PARA INTERIORISMO | 2021 | residencial | pasado (cerrado) | 11 | 3 | pdf 5, dwg 3, docx 1, dwl 1 | Jun 5, 2021 |  |
 | 0_95 APTO PAOLA | 2021 | residencial | pasado (cerrado) | 0 | 3 | — | — | También aparece como 0_ APARTAMEMTO PAOLA JIMENA (2022); posible duplicado o continuación, confirmar con la fundadora. |
 | 0_96 HOTEL PORTAL CENTRAL | 2021 | hospitalidad | pasado (cerrado) | 1 | 1 | pdf 1 | Mar 4, 2021 |  |
@@ -209,7 +209,7 @@ Columns: project folder (verbatim) | year | inferred type | inferred status | fi
 | 0_79 SODIME producciom | 2020 | comercial | pasado (cerrado) | 6 | 0 | icloud 2, pdf 2, xlsx 1, ai 1 | Jun 16, 2020 | También aparece como 05_SODIME (2026); posible duplicado o continuación, confirmar con la fundadora. |
 | 0_80 OZAOZ  jinetes del horizonte | 2020 | comercial | pasado (cerrado) | 13 | 1 | pdf 7, xlsx 3, ai 2, docx 1 | Jun 13, 2022 |  |
 | 0_82 VENTA LUMINARIA | 2020 | iluminación | pasado (cerrado) | 5 | 0 | pdf 3, xlsx 1, ai 1 | Aug 6, 2020 |  |
-| 0_83 REVERDESER | 2020 | comercial | pasado (cerrado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
+| 0_83 REVERDESER | 2020 | comercial | pasado (cerrado) | 5 | 0 | jpg 2, psd 2, jpeg 1 | — |  |
 | 0_84 INNOVAR | 2020 | comercial | pasado (cerrado) | 4 | 0 | pdf 2, ai 1, xlsx 1 | Sep 29, 2020 |  |
 | 0_85 INTERGASTRO | 2020 | comercial | pasado (cerrado) | 8 | 1 | pdf 5, xlsx 3 | Jan 12, 2021 |  |
 | 0_86 EDIFICIO AMAGA | 2020 | comercial | pasado (cerrado) | 2 | 0 | ai 1, pdf 1 | Oct 21, 2020 |  |
@@ -228,13 +228,13 @@ Columns: project folder (verbatim) | year | inferred type | inferred status | fi
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | AARON | — | comercial | pasado (cerrado) | 5 | 1 | pdf 4, xlsx 1 | Aug 22, 2023 |  |
 | BONNY JUEGO NUBE | — | comercial | pasado (cerrado) | 1 | 0 | pdf 1 | Jun 8, 2023 | También aparece como 0_107 PROYECTOS BONNY (2021) y 037 PARQUE BONNY NORIEGA (2025); posible duplicado o continuación, confirmar con la fundadora. |
-| FABI SOPETRAN | — | comercial | pasado (cerrado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
+| FABI SOPETRAN | — | comercial | pasado (cerrado) | 1 | 0 | jpeg 1 | — |  |
 | GREGORY APARTMENT | — | residencial | pasado (cerrado) | 12 | 1 | pdf 7, docx 2, ai 1, xlsx 1 | Feb 25, 2023 |  |
 | HOTEL SPA MEDELLIN | — | hospitalidad | pasado (cerrado) | 8 | 1 | pdf 5, jpg 2, indd 1 | Aug 11, 2023 |  |
 | JOE GALLINA INTERIOR | — | residencial | pasado (cerrado) | 179 | 4 | pdf 116, jfif 25, xlsx 10, docx 7 | Sep 19, 2024 | proyecto destacado, índice completo; Proyecto destacado con índice completo: 179 archivos en 58 carpetas (4 de primer nivel), rastreado 2026-09-21; archivos fechados hasta Sep 19, 2024. |
 | JOSH INTERIOR DESIGN | — | residencial | pasado (cerrado) | 2 | 0 | ai 1, pdf 1 | Jul 11, 2023 |  |
 | NATUZZI & ALUZINA | — | comercial | pasado (cerrado) | 3 | 0 | pdf 2, jpg 1 | Jun 2, 2023 |  |
-| NEW YORK HOUSE | — | residencial | pasado (cerrado) | 0 | 0 | — | — | Carpeta vacía en el rastreo. |
+| NEW YORK HOUSE | — | residencial | pasado (cerrado) | 70 | 1 | jpg 61, ai 4, heic 2, psd 1 | — |  |
 | PAMPAS ROOM STARTER | — | comercial | pasado (cerrado) | 13 | 2 | pdf 5, ai 3, xlsx 2, jpg 2 | May 27, 2024 |  |
 | PETER INTERIOR PH | — | residencial | pasado (cerrado) | 9 | 7 | pdf 4, jpg 2, docx 1, xlsx 1 | Mar 14, 2023 |  |
 | THANAL | — | comercial | pasado (cerrado) | 6 | 10 | ai 2, pdf 1, docx 1, png 1 | Jun 4, 2023 |  |
@@ -514,4 +514,5 @@ Subject CARPENTRY.pdf   (1.5 MB, Mar 13, 2024, redactado)
 
 ## Change log
 
+- 2026-09-21 (ar-06 / ar-16, Fable 5.1): deep index + served previews for the 18 folders of PROYECTOS 2026 (575 files, 413 thumbnails, 196 page renders rendered; 23.5 MB served); the 15 "empty" folders re-listed: 12 hold files, 3 stay empty; R2 extended to contratos / cotizaci* / documentación importante / consignaciones / pagos / proveedores, R3 to quotation content, one explicit client-name rename (changelog pending `archive-ar06`).
 - 2026-09-21: created from the pass-0019 crawls (inventory of 187 folders incl. the 74 the first, paginated listing had missed; deep index of JOE GALLINA INTERIOR), redaction D-059, decisions D-055..D-061 (prompt 0017, changelog 0019).

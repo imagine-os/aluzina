@@ -1,7 +1,7 @@
 {
  "source": "Dropbox shared folders shared by Justin Massion in Slack #past-projects, 2026-09-21 (prompt 0017); crawled with scripts/archive/crawl-dropbox.mjs, indexed and redacted with scripts/archive/build-index.mjs",
  "crawledAt": "2026-09-21T17:10:00Z",
- "indexedAt": "2026-09-21T17:50:04.616Z",
+ "indexedAt": "2026-09-21T21:17:52.714Z",
  "roots": [
   {
    "label": "A",
@@ -44,10 +44,10 @@
   },
   "listed": 187,
   "unlisted": [],
-  "empty": 15,
-  "childFiles": 1225,
-  "childDirs": 243,
-  "totalBytesKnown": 20153481119,
+  "empty": 3,
+  "childFiles": 1444,
+  "childDirs": 245,
+  "totalBytesKnown": 22931502969,
   "deep": {
    "joe-gallina-interior": {
     "files": 179,
@@ -56,23 +56,167 @@
     "withThumb": 25,
     "withPages": 15,
     "pages": 86
+   },
+   "alma-prana-2026": {
+    "files": 3,
+    "totalBytes": 17474458,
+    "redacted": 0,
+    "withThumb": 3,
+    "withPages": 3,
+    "pages": 3
+   },
+   "andres-y-andrea": {
+    "files": 28,
+    "totalBytes": 54110896,
+    "redacted": 26,
+    "withThumb": 1,
+    "withPages": 1,
+    "pages": 6
+   },
+   "cartagena-copetran": {
+    "files": 37,
+    "totalBytes": 161343858,
+    "redacted": 16,
+    "withThumb": 12,
+    "withPages": 9,
+    "pages": 14
+   },
+   "casa-dharma-san-pedro-de-los-milagros": {
+    "files": 5,
+    "totalBytes": 10719397,
+    "redacted": 1,
+    "withThumb": 4,
+    "withPages": 0,
+    "pages": 0
+   },
+   "decero": {
+    "files": 5,
+    "totalBytes": 8592160,
+    "redacted": 4,
+    "withThumb": 1,
+    "withPages": 1,
+    "pages": 6
+   },
+   "ecoluz-iluminacion": {
+    "files": 3,
+    "totalBytes": 351017,
+    "redacted": 3,
+    "withThumb": 0,
+    "withPages": 0,
+    "pages": 0
+   },
+   "honey-valley-luminaria": {
+    "files": 83,
+    "totalBytes": 610258921,
+    "redacted": 0,
+    "withThumb": 83,
+    "withPages": 4,
+    "pages": 10
+   },
+   "hoy": {
+    "files": 206,
+    "totalBytes": 381730985,
+    "redacted": 45,
+    "withThumb": 152,
+    "withPages": 15,
+    "pages": 61
+   },
+   "hug": {
+    "files": 12,
+    "totalBytes": 143978293,
+    "redacted": 0,
+    "withThumb": 11,
+    "withPages": 1,
+    "pages": 6
+   },
+   "lina-tabares": {
+    "files": 7,
+    "totalBytes": 1961472,
+    "redacted": 1,
+    "withThumb": 6,
+    "withPages": 0,
+    "pages": 0
+   },
+   "lina-zapata": {
+    "files": 26,
+    "totalBytes": 11473507,
+    "redacted": 0,
+    "withThumb": 26,
+    "withPages": 0,
+    "pages": 0
+   },
+   "play-set": {
+    "files": 46,
+    "totalBytes": 92626840,
+    "redacted": 0,
+    "withThumb": 37,
+    "withPages": 2,
+    "pages": 12
+   },
+   "pozo-azul": {
+    "files": 1,
+    "totalBytes": 126771,
+    "redacted": 0,
+    "withThumb": 1,
+    "withPages": 1,
+    "pages": 6
+   },
+   "roble-colonial-guatape": {
+    "files": 1,
+    "totalBytes": 31383880,
+    "redacted": 0,
+    "withThumb": 1,
+    "withPages": 1,
+    "pages": 6
+   },
+   "simon-calera": {
+    "files": 17,
+    "totalBytes": 1689396,
+    "redacted": 0,
+    "withThumb": 17,
+    "withPages": 0,
+    "pages": 0
+   },
+   "sodime": {
+    "files": 76,
+    "totalBytes": 693492565,
+    "redacted": 1,
+    "withThumb": 45,
+    "withPages": 10,
+    "pages": 28
+   },
+   "sporti": {
+    "files": 14,
+    "totalBytes": 63741102,
+    "redacted": 6,
+    "withThumb": 5,
+    "withPages": 5,
+    "pages": 10
+   },
+   "yolima-clienta": {
+    "files": 5,
+    "totalBytes": 24943821,
+    "redacted": 2,
+    "withThumb": 3,
+    "withPages": 2,
+    "pages": 10
    }
   }
  },
  "redaction": {
-  "inventoryFiles": 1225,
-  "inventoryRedacted": 200,
-  "hrefsReplaced": 347,
-  "deepFiles": 179,
-  "deepRedactedByName": 142,
-  "deepRedactedByContent": 5,
+  "inventoryFiles": 1444,
+  "inventoryRedacted": 208,
+  "hrefsReplaced": 460,
+  "deepFiles": 754,
+  "deepRedactedByName": 244,
+  "deepRedactedByContent": 8,
   "folderSegmentsRewritten": 12,
   "rules": "scripts/archive/build-index.mjs header (R1..R5), decision D-059"
  },
  "privacyCheck": {
   "ok": true,
-  "checkedInventoryEntries": 1468,
-  "checkedDeepFiles": 179,
+  "checkedInventoryEntries": 1689,
+  "checkedDeepFiles": 754,
   "personSegments": 13,
   "problems": []
  },
@@ -84,12 +228,18 @@
    "year": 2026,
    "numberPrefix": "01",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AFLK3ki7_AzMduP5tBTwQZw/PROYECTOS%202026/01_%20CARTAGENA%20COPETRAN?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
-   "childCount": 13,
-   "fileCount": 0,
-   "dirCount": 13,
-   "extensions": {},
-   "totalBytesKnown": 0,
-   "latestModified": null,
+   "childCount": 11,
+   "fileCount": 37,
+   "dirCount": 11,
+   "extensions": {
+    "pdf": 28,
+    "xlsx": 2,
+    "ai": 1,
+    "jpg": 3,
+    "jpeg": 3
+   },
+   "totalBytesKnown": 161343858,
+   "latestModified": "14 days ago",
    "children": [
     {
      "name": "00_PRIMERA PROPUESTA",
@@ -98,14 +248,6 @@
      "size": null,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALQ72GklGJVIEaUfPAI_Rmw/PROYECTOS%202026/01_%20CARTAGENA%20COPETRAN/00_PRIMERA%20PROPUESTA?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
-    },
-    {
-     "name": "01 FOTOGRAFIA Y VIDEO DEL ESPACIO",
-     "is_dir": true,
-     "ext": "",
-     "size": null,
-     "modified": null,
-     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ACsJ1k39ZlfS7ggCNNDCfeI/PROYECTOS%202026/01_%20CARTAGENA%20COPETRAN/01%20FOTOGRAFIA%20Y%20VIDEO%20DEL%20ESPACIO?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
     {
      "name": "02 PRESENTACION DE DISEÑO DEL ESPACIO",
@@ -180,14 +322,6 @@
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ADYBq3ivX-vbjwmo3WX16HY/PROYECTOS%202026/01_%20CARTAGENA%20COPETRAN/CERTIFICADOS%20Y%20GARANTIAS?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
     {
-     "name": "CONVERSACIONES LUIS",
-     "is_dir": true,
-     "ext": "",
-     "size": null,
-     "modified": null,
-     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ABR2R23IAPDld-aXp1JvHsQ/PROYECTOS%202026/01_%20CARTAGENA%20COPETRAN/CONVERSACIONES%20LUIS?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
-    },
-    {
      "name": "informes",
      "is_dir": true,
      "ext": "",
@@ -197,8 +331,9 @@
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/cartagena-copetran/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 37 archivos en 14 carpetas (11 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 14 days ago."
   },
   {
    "id": "lina-zapata",
@@ -221,7 +356,7 @@
      "name": "1de78b9211192dc4c4d4d602e2efe121.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 155955,
+     "size": 155908,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ANHBLX0Sr-QW-laYKNuTnC8/PROYECTOS%202026/02_LINA%20ZAPATA/1de78b9211192dc4c4d4d602e2efe121.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -229,7 +364,7 @@
      "name": "2f518e3dfe376857156c20b4ee3353e9.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 174797,
+     "size": 174753,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AC3hnbV3rsd7R6xGXJ_L3ks/PROYECTOS%202026/02_LINA%20ZAPATA/2f518e3dfe376857156c20b4ee3353e9.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -237,7 +372,7 @@
      "name": "4a780d1221d3f097a64b02facf6b82dc.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 61030,
+     "size": 61017,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AG3GYZwjK4U2QEwu6-RR6fY/PROYECTOS%202026/02_LINA%20ZAPATA/4a780d1221d3f097a64b02facf6b82dc.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -245,7 +380,7 @@
      "name": "5a3caba60204e172a9c231dcbe8526f3.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 111821,
+     "size": 111868,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AFLrH1ydsfJCeT20pMvCaMI/PROYECTOS%202026/02_LINA%20ZAPATA/5a3caba60204e172a9c231dcbe8526f3.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -253,7 +388,7 @@
      "name": "5f3ba6ab5fcc9002ae79fba0dc7a55ee.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 113664,
+     "size": 113692,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AL0hyc7FehJI_0obupfnKn0/PROYECTOS%202026/02_LINA%20ZAPATA/5f3ba6ab5fcc9002ae79fba0dc7a55ee.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -261,7 +396,7 @@
      "name": "006f794de59b294a5eead4103e8738f5.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 103322,
+     "size": 103361,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOlNPi6oEGr4nGMUu9AxwBE/PROYECTOS%202026/02_LINA%20ZAPATA/006f794de59b294a5eead4103e8738f5.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -269,7 +404,7 @@
      "name": "8b364581-5b35-4481-a00c-67103b5c2fb4.png",
      "is_dir": false,
      "ext": "png",
-     "size": 1782579,
+     "size": 1747730,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHIt2BTp6RJ5NrZniTFz4XM/PROYECTOS%202026/02_LINA%20ZAPATA/8b364581-5b35-4481-a00c-67103b5c2fb4.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -277,7 +412,7 @@
      "name": "47c43406dd543f01d404d420e5d24984.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 203059,
+     "size": 203037,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIV3Qt8Y9D3qBiPz027_o9I/PROYECTOS%202026/02_LINA%20ZAPATA/47c43406dd543f01d404d420e5d24984.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -285,7 +420,7 @@
      "name": "89b583d05841324b419ae799ad5c1f00.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 146739,
+     "size": 146778,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AAIRpYnTKW9Vrer9ieMzK1Y/PROYECTOS%202026/02_LINA%20ZAPATA/89b583d05841324b419ae799ad5c1f00.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -293,7 +428,7 @@
      "name": "0203e3eae3efbc91ea99370dba05a1ed.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 110694,
+     "size": 110704,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AAPcGe-0HgYP3kDZuy0nSCk/PROYECTOS%202026/02_LINA%20ZAPATA/0203e3eae3efbc91ea99370dba05a1ed.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -301,7 +436,7 @@
      "name": "352b7509bc5b28c6be336b248a21e606.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 156365,
+     "size": 156364,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ABe2On2xMxDB141qOS0WEvY/PROYECTOS%202026/02_LINA%20ZAPATA/352b7509bc5b28c6be336b248a21e606.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -309,7 +444,7 @@
      "name": "5528ae5d9a95261d583f3b65d59a3f97.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 112742,
+     "size": 112703,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AO_jhggcof29v-50x_xHJus/PROYECTOS%202026/02_LINA%20ZAPATA/5528ae5d9a95261d583f3b65d59a3f97.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -317,7 +452,7 @@
      "name": "7567d70a80fa282c5f2479dd9d122d9d.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 95846,
+     "size": 95890,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIaxPFT3drKi4iqoGYxds4M/PROYECTOS%202026/02_LINA%20ZAPATA/7567d70a80fa282c5f2479dd9d122d9d.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -325,7 +460,7 @@
      "name": "838180bce08bc712bae1f131e912df1c.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 96666,
+     "size": 96669,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AF4NcsHK791rvMEOsMR6rN8/PROYECTOS%202026/02_LINA%20ZAPATA/838180bce08bc712bae1f131e912df1c.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -333,7 +468,7 @@
      "name": "850082e8accad85be21a72bf6a08efbc.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 87859,
+     "size": 87818,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AAYlzXUfhvDu1GvLPJLGojo/PROYECTOS%202026/02_LINA%20ZAPATA/850082e8accad85be21a72bf6a08efbc.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -341,7 +476,7 @@
      "name": "908927de2ee2d42e06c238f56189f688.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 63283,
+     "size": 63304,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AKQFT9l1EbPj_z8--v2NgYs/PROYECTOS%202026/02_LINA%20ZAPATA/908927de2ee2d42e06c238f56189f688.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -349,7 +484,7 @@
      "name": "a4cbd351f93326ec136f4ca0f6fbefb1.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 51200,
+     "size": 51149,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJHJt42aDyy7YF0mnToD9sc/PROYECTOS%202026/02_LINA%20ZAPATA/a4cbd351f93326ec136f4ca0f6fbefb1.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -357,7 +492,7 @@
      "name": "a5dc557fe3f1aaddb34a90ecf8b4881b.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 185446,
+     "size": 185441,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AMU-CgYIWfv0HH1e6xT3AUs/PROYECTOS%202026/02_LINA%20ZAPATA/a5dc557fe3f1aaddb34a90ecf8b4881b.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -365,7 +500,7 @@
      "name": "b3a9cd81e0029f98e6fbfab845e243bb.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 51507,
+     "size": 51496,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AP3VGwdHX38JKkH4RctJsk8/PROYECTOS%202026/02_LINA%20ZAPATA/b3a9cd81e0029f98e6fbfab845e243bb.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -373,7 +508,7 @@
      "name": "ba2f4a2f5f353c10db2e49cefba555d9.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 166400,
+     "size": 166355,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AAza2tf2vv66_Y8cVPmRSwo/PROYECTOS%202026/02_LINA%20ZAPATA/ba2f4a2f5f353c10db2e49cefba555d9.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -381,7 +516,7 @@
      "name": "c79c753b-080f-494b-8dc6-4973c64298a8.png",
      "is_dir": false,
      "ext": "png",
-     "size": 1782579,
+     "size": 1734570,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJPqkMhAaro6ambOX47otS8/PROYECTOS%202026/02_LINA%20ZAPATA/c79c753b-080f-494b-8dc6-4973c64298a8.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -389,7 +524,7 @@
      "name": "ChatGPT Image 21 mar 2026, 12_40_16 p.m..png",
      "is_dir": false,
      "ext": "png",
-     "size": 2831155,
+     "size": 2840188,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJ5GBzm3cWSKRi_2h00mMns/PROYECTOS%202026/02_LINA%20ZAPATA/ChatGPT%20Image%2021%20mar%202026%2C%2012_40_16%20p.m..png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -397,7 +532,7 @@
      "name": "ChatGPT Image 21 mar 2026, 12_42_02 p.m..png",
      "is_dir": false,
      "ext": "png",
-     "size": 2516582,
+     "size": 2505110,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ACaDRDJk85eppeQ6NVeFU0U/PROYECTOS%202026/02_LINA%20ZAPATA/ChatGPT%20Image%2021%20mar%202026%2C%2012_42_02%20p.m..png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -405,7 +540,7 @@
      "name": "d260d00ed1a5af19260ca0d855dca675.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 163635,
+     "size": 163639,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALDjaIqUWBpY6lQFI7jAvtw/PROYECTOS%202026/02_LINA%20ZAPATA/d260d00ed1a5af19260ca0d855dca675.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -413,7 +548,7 @@
      "name": "e49983267b6362bd8abffac9e3acc3d1.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 69734,
+     "size": 69733,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALdOeDLZF_Bs0ve-2uuaqu0/PROYECTOS%202026/02_LINA%20ZAPATA/e49983267b6362bd8abffac9e3acc3d1.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -421,14 +556,15 @@
      "name": "ea2724da8a6d4b52df15fb0ccbbfc2e8.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 78848,
+     "size": 78856,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ANZtk5KMYXA8jToUcQ7FxbQ/PROYECTOS%202026/02_LINA%20ZAPATA/ea2724da8a6d4b52df15fb0ccbbfc2e8.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/lina-zapata/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 26 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta —."
   },
   {
    "id": "andres-y-andrea",
@@ -438,22 +574,16 @@
    "numberPrefix": "03",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJt17r0vH12lvyiBQQtXMK0/PROYECTOS%202026/03_ANDRES%20Y%20ANDREA?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
    "childCount": 6,
-   "fileCount": 1,
+   "fileCount": 28,
    "dirCount": 5,
    "extensions": {
-    "pdf": 1
+    "pdf": 3,
+    "jpeg": 24,
+    "zip": 1
    },
-   "totalBytesKnown": 49450844,
-   "latestModified": "4 months ago",
+   "totalBytesKnown": 54110896,
+   "latestModified": "9 days ago",
    "children": [
-    {
-     "name": "cotizacion sevicios y luminarias",
-     "is_dir": true,
-     "ext": "",
-     "size": null,
-     "modified": null,
-     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIyIqLWeo7TVBDth5y5tZAw/PROYECTOS%202026/03_ANDRES%20Y%20ANDREA/cotizacion%20sevicios%20y%20luminarias?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
-    },
     {
      "name": "CUADROS",
      "is_dir": true,
@@ -461,14 +591,6 @@
      "size": null,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGsuQ_BDjv2Nx112ivdwNag/PROYECTOS%202026/03_ANDRES%20Y%20ANDREA/CUADROS?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
-    },
-    {
-     "name": "fotos actuales",
-     "is_dir": true,
-     "ext": "",
-     "size": null,
-     "modified": null,
-     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AKBCOkyFmEFpcf5L_sqGuHE/PROYECTOS%202026/03_ANDRES%20Y%20ANDREA/fotos%20actuales?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
     {
      "name": "MAPAMUNDI",
@@ -487,6 +609,22 @@
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AAqRjr9Nejk9qqALdhDnJ8g/PROYECTOS%202026/03_ANDRES%20Y%20ANDREA/MATERIALES?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
     {
+     "name": "cotizacion sevicios y luminarias",
+     "is_dir": true,
+     "ext": "",
+     "size": null,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIyIqLWeo7TVBDth5y5tZAw/PROYECTOS%202026/03_ANDRES%20Y%20ANDREA/cotizacion%20sevicios%20y%20luminarias?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "fotos actuales",
+     "is_dir": true,
+     "ext": "",
+     "size": null,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AKBCOkyFmEFpcf5L_sqGuHE/PROYECTOS%202026/03_ANDRES%20Y%20ANDREA/fotos%20actuales?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
      "name": "Andrés y Andrea look and feel .pdf",
      "is_dir": false,
      "ext": "pdf",
@@ -496,8 +634,9 @@
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/andres-y-andrea/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 28 archivos en 5 carpetas (5 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 9 days ago."
   },
   {
    "id": "decero",
@@ -507,13 +646,13 @@
    "numberPrefix": "04",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AKYUyymzEA0zu76Zn1SpTi8/PROYECTOS%202026/04_DECERO?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
    "childCount": 4,
-   "fileCount": 2,
+   "fileCount": 5,
    "dirCount": 2,
    "extensions": {
     "ai": 1,
-    "pdf": 1
+    "pdf": 4
    },
-   "totalBytesKnown": 4246733,
+   "totalBytesKnown": 8592160,
    "latestModified": "2 months ago",
    "children": [
     {
@@ -552,8 +691,9 @@
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/decero/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 5 archivos en 3 carpetas (2 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 2 months ago."
   },
   {
    "id": "sodime",
@@ -562,12 +702,19 @@
    "year": 2026,
    "numberPrefix": "05",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ABW9OQ8hCEDyRiekTWtRt7I/PROYECTOS%202026/05_SODIME?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
-   "childCount": 2,
-   "fileCount": 0,
-   "dirCount": 2,
-   "extensions": {},
-   "totalBytesKnown": 0,
-   "latestModified": null,
+   "childCount": 3,
+   "fileCount": 76,
+   "dirCount": 3,
+   "extensions": {
+    "jpg": 1,
+    "pdf": 6,
+    "ai": 6,
+    "png": 32,
+    "heic": 23,
+    "mov": 8
+   },
+   "totalBytesKnown": 693492565,
+   "latestModified": "27 minutes ago",
    "children": [
     {
      "name": "SODIME ARTES RIONEGRO",
@@ -584,12 +731,20 @@
      "size": null,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AK3uLUB-IbfUUJS8kJhVQ4g/PROYECTOS%202026/05_SODIME/SODIME%20INSTAGRAM?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "SODIME RENOVACION MEDELLIN",
+     "is_dir": true,
+     "ext": "",
+     "size": null,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHR5NAUPT0D3kRKMJMhhTDY/PROYECTOS%202026/05_SODIME/SODIME%20RENOVACION%20MEDELLIN?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     }
    ],
    "listed": true,
-   "deepIndex": null,
+   "deepIndex": "docs/archive/projects/sodime/index.json",
    "kind": "project",
-   "note": "También aparece como 0_79 SODIME producciom (2020); posible duplicado o continuación, confirmar con la fundadora."
+   "note": "Proyecto destacado con índice completo: 76 archivos en 7 carpetas (3 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 27 minutes ago. También aparece como 0_79 SODIME producciom (2020); posible duplicado o continuación, confirmar con la fundadora."
   },
   {
    "id": "yolima-clienta",
@@ -598,17 +753,64 @@
    "year": 2026,
    "numberPrefix": "06",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIZ6f7zwjP5qIIgU_xEj5Mc/PROYECTOS%202026/06_YOLIMA%20CLIENTA?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
+   "childCount": 5,
+   "fileCount": 5,
    "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "extensions": {
+    "png": 1,
+    "pdf": 2,
+    "jpeg": 2
+   },
+   "totalBytesKnown": 24943821,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "cc094bcf-914a-4e05-aa62-eff560f66fbb.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 2070985,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AFRmC1Qlx9DqJ_9RG90-NQU/PROYECTOS%202026/06_YOLIMA%20CLIENTA/cc094bcf-914a-4e05-aa62-eff560f66fbb.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "PLANOS APTO.pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 1024306,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AKk1LlkvPv5SMwy-QT5vvTQ/PROYECTOS%202026/06_YOLIMA%20CLIENTA/PLANOS%20APTO.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Imagen de WhatsApp (redactado).jpeg",
+     "is_dir": false,
+     "ext": "jpeg",
+     "size": 89702,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIZ6f7zwjP5qIIgU_xEj5Mc/PROYECTOS%202026/06_YOLIMA%20CLIENTA?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+     "redacted": true
+    },
+    {
+     "name": "Imagen de WhatsApp (redactado).jpeg",
+     "is_dir": false,
+     "ext": "jpeg",
+     "size": 107725,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIZ6f7zwjP5qIIgU_xEj5Mc/PROYECTOS%202026/06_YOLIMA%20CLIENTA?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+     "redacted": true
+    },
+    {
+     "name": "YOLIMA APARTAMENTO Atlántica.pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 21600666,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AC3c5MPZYLLvAFn-pK5Dp9o/PROYECTOS%202026/06_YOLIMA%20CLIENTA/YOLIMA%20APARTAMENTO%20Atl%C3%A1ntica.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    }
+   ],
    "listed": true,
-   "deepIndex": null,
+   "deepIndex": "docs/archive/projects/yolima-clienta/index.json",
    "kind": "project",
-   "note": "Carpeta vacía en el rastreo."
+   "note": "Proyecto destacado con índice completo: 5 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta —."
   },
   {
    "id": "play-set",
@@ -618,11 +820,21 @@
    "numberPrefix": "07",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOCptfjKB_bAicP9vl4fBKg/PROYECTOS%202026/07_PLAY%20SET?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
    "childCount": 3,
-   "fileCount": 0,
+   "fileCount": 46,
    "dirCount": 3,
-   "extensions": {},
-   "totalBytesKnown": 0,
-   "latestModified": null,
+   "extensions": {
+    "png": 30,
+    "pdf": 1,
+    "otf": 2,
+    "ttf": 2,
+    "woff": 2,
+    "woff2": 2,
+    "zip": 1,
+    "jpg": 5,
+    "ai": 1
+   },
+   "totalBytesKnown": 92626840,
+   "latestModified": "4 months ago",
    "children": [
     {
      "name": "ARTES PLAY SET",
@@ -650,8 +862,9 @@
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/play-set/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 46 archivos en 10 carpetas (3 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 4 months ago."
   },
   {
    "id": "honey-valley-luminaria",
@@ -660,17 +873,679 @@
    "year": 2026,
    "numberPrefix": "08",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJH4_INvhuDd37jSrl-KpII/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
-   "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
-   "latestModified": null,
-   "children": [],
+   "childCount": 82,
+   "fileCount": 83,
+   "dirCount": 1,
+   "extensions": {
+    "pdf": 4,
+    "webp": 1,
+    "png": 18,
+    "jpg": 60
+   },
+   "totalBytesKnown": 610258921,
+   "latestModified": "4 months ago",
+   "children": [
+    {
+     "name": "ARTES DE CORTE",
+     "is_dir": true,
+     "ext": "",
+     "size": null,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHM4pWLz7fb4V16nnKB4bSs/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/ARTES%20DE%20CORTE?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "+HONEY VALLEY ALUZINA+.pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 31666995,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ABm6gXpXhiUeUPXPjE5YbUM/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/%2BHONEY%20VALLEY%20ALUZINA%2B.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-16 23.32.23.webp",
+     "is_dir": false,
+     "ext": "webp",
+     "size": 76470,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AC0s0X8MV0Qesk6zgKyY-08/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-16%2023.32.23.webp?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-16 23.59.25.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 3000652,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AFFS3e_JDnR8U3F4cdmm11o/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-16%2023.59.25.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-17 00.55.28.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 3331255,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AFdRXYrSHrqNeqqoVl2mvCQ/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-17%2000.55.28.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 07.43.57.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6677300,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AILB89j0MozRpTh-SDARUEk/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2007.43.57.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 07.52.29.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 295097,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGYiYBsYrOPMHvcfpPgulVY/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2007.52.29.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 08.28.39.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 393360,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHhKoHWmPk17Q7fas6yrDUY/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2008.28.39.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 08.29.38.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 2134828,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AK7Ys_bT_nPDnspcWOtSHf0/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2008.29.38.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 12.27.53.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 9969814,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIyFzQ8cQbodz_07YX98ThQ/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2012.27.53.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 12.27.58.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11172766,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AEOyfsHq8P_Ol_7zPkIRxWc/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2012.27.58.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 12.28.01.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10264304,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ADfpF2f_rWtmzXcQl3gypFE/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2012.28.01.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 12.28.03.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10169932,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALK1tJaqHD8LKOQrOPj65-A/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2012.28.03.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 12.34.00.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 8608498,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALCx7heHDVHHbm0uoZ1NyjM/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2012.34.00.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 17.53.42.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 793454,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJ-GgzIj0dJ_im1ZoW7Xy-k/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2017.53.42.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 18.08.22.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 2075554,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ABjO89j_jI3MwCjMyTvym14/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2018.08.22.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 20.52.30.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 3110547,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AP_0nSEzZbsPwznBMn5nuig/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2020.52.30.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 21.27.37.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 1521154,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AFJbuXQ2lZDIAF1jhuS55rQ/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2021.27.37.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-18 21.32.29.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 1184273,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AKhbehfIANwxNrs6toge62E/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-18%2021.32.29.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.33.59.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10051330,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AB2ONI37hCBhZ9D1o0kPi60/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.33.59.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.34.08.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 7149061,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AL6s18LTfj4lfVQxEIi_QnI/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.34.08.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.34.20.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 8952611,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/APy0s7zoo0HnUl8cMHR0FSY/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.34.20.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.35.02.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 724397,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/APVzT8Eqr40bcm3EEEyKG28/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.35.02.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.37.16.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 9584633,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AFTwklsUfT8EtaZfu0dXgHk/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.37.16.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.38.15.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 8007621,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AL7kqI2nBKaNzzhB6ltiULs/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.38.15.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.39.46-1.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 2787252,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALqxuC7Md0q9_LHv0qIlO08/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.39.46-1.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.39.46.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 2594374,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ACKUysWW6lz00cMvKJ2-nuE/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.39.46.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.39.51.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 3463300,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALVSLZpFcBg97JQJZ0Wugy8/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.39.51.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.39.56.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 3867066,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJtbx1hHtX_EXB8s0wY12qw/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.39.56.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.40.34.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 1449221,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJjkcvBY1ICIeBXUJoosaWU/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.40.34.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.41.47.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10678844,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AMjbrfZ3r26MOASRDhFj-aQ/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.41.47.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.42.02.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10912056,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/APOXXbj07Ngw0rug2Lv6HIM/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.42.02.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.42.25 (1).jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 2868265,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AMKl_qOdeF7e3e-zTNn_Nqw/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.42.25%20%281%29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.42.25.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 2868265,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGCubuo1tFaG0PafiOlT_40/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.42.25.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.42.46 (1).jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 8976790,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGtmWN3pE6mcms06Z7A6ip4/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.42.46%20%281%29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.42.46-1 (1).jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 8574622,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AG1xA6G2l8mGPiDdC0yRSaI/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.42.46-1%20%281%29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.42.46-1.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 8574622,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AC2QSoBlQaHGzbe7Q-bGDww/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.42.46-1.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.42.46.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 8976790,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOPqtp-mjh2Y6IeJDj7Ga68/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.42.46.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.43.04 (1).jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 9707082,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ABGJGjnDdHz3wctaL60VBhc/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.43.04%20%281%29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.43.04.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 9707082,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AP3nHSQDutGSSodeo0bd3no/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.43.04.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.43.27.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10952932,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIq_nVSVCQRP26r7JG9cqDI/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.43.27.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 01.43.48.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11230125,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJVedq6z3jYAcmmxO5mPqTE/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2001.43.48.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 09.22.40.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11570052,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AFzdduHrCVXsyBB6S8pc6QY/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2009.22.40.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 09.23.08.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10209981,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGZZ95rxy2eegfW3XZjQIXI/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2009.23.08.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 09.27.53.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10041666,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOH3LR03LIeJNHPlFsZ2N8Y/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2009.27.53.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 09.30.01.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 12411646,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHCDRPOiWGr2ol8dD7kIRuw/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2009.30.01.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 09.30.16.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11941139,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AEHPiqjVTuKwMQOGhdMU_9s/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2009.30.16.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 09.30.29.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11947555,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AESFLe6AE2oFIPskXFrX1Is/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2009.30.29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 09.30.47.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11776566,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AKF_JB0SB1N6x88pf8EXfSo/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2009.30.47.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-22 09.38.54.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 9711519,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHlgwv_e1Uv5TXoDxvpzVYk/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-22%2009.38.54.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-25 13.38.08.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 3448503,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AFaCt8aTzm7kmZRdJk4bDM0/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-25%2013.38.08.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-25 13.38.11.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 3457789,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALS6lPDjG0FpXUUh17legBw/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-25%2013.38.11.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-25 13.40.09.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 7765447,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOZi0Hdh8Uo1xWHx294dPC0/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-25%2013.40.09.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-25 13.44.32.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 3722224,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ANkfLRXRXYCoo0kbn_S9hQw/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-25%2013.44.32.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-28 15.06.44.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 530315,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGq8yh2jfxrd7FAbt5zW6MU/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-28%2015.06.44.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 14.31.29 (1).jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 12397450,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AEAwdrPAbg0VpGs_UcVZem0/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2014.31.29%20%281%29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 14.31.29.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 12397450,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AAuViofobRtUhCGoq1dUnzE/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2014.31.29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 14.31.33 (1).jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11615128,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOjK2hAvNoFXfC8c45yIuU4/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2014.31.33%20%281%29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 14.31.33.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11615128,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AClBamu4ZPX4pU7JA_rJWRg/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2014.31.33.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 14.31.35 (1).jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 13017622,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AD1xgOFcifUjB0MPNWb_WhE/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2014.31.35%20%281%29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 14.31.35.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 13017622,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALV6NunvkSe9IqyOVQUY63c/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2014.31.35.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 14.31.36 (1).jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 12592818,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ABbSga6M4iDMC90-Eap9oC0/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2014.31.36%20%281%29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 14.31.36.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 12592818,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALt5xyYI56ml_o7GqO4nMw4/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2014.31.36.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 14.31.38 (1).jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11740540,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGn16SYOKbnn1jDlEBaIA7A/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2014.31.38%20%281%29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 14.31.38.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11740540,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJW-dfzgVNSUNSCA5CP_rE8/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2014.31.38.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 15.23.15.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11574281,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGBFc5HlEPo04Qj8lKVHtvw/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2015.23.15.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 15.23.17.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10737949,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHAKNL7euEWCfkzPM-yYSls/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2015.23.17.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 15.23.22.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6306891,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/APNgJ8ml-cFGpHEd4p-dhHM/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2015.23.22.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 15.34.39.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10392229,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AMzYym8y9DBHe66tOkaFNMw/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2015.34.39.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 15.35.19.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11700725,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGIbGqKiNy9T88-tZvcJIkQ/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2015.35.19.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 15.35.22.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11718345,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHvQLdZ3haJmudUEpzbTs1c/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2015.35.22.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 15.35.24.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11905336,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AElzVEYIyzh_3DLYO6acvQU/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2015.35.24.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 15.35.26.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 11542841,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AALohjLjz3d_cZ_w3oqO7bQ/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2015.35.26.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-04-30 15.35.28.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 8798214,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ACPPpeLVW6NwlcDWlRDFYME/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-04-30%2015.35.28.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-05-14 12.27.57.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 2341936,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ANZQTdwRDTA24D4ViSvV0m4/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-05-14%2012.27.57.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-05-14 12.28.14.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 1359108,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AF3K3K7nc1eFTqjMgigtE3k/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-05-14%2012.28.14.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-05-14 12.28.20.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 1844952,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIjJpkWcHiyzotax5vUI3uM/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-05-14%2012.28.20.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-05-14 12.28.32.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 2201399,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AF8Jd3b5KPOZRJyIuPlxd08/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-05-14%2012.28.32.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-05-14 12.28.41.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 1471746,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AEHU6N_nFX79_tl5GVPa2Vg/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-05-14%2012.28.41.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-05-14 12.28.47.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 729695,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AB0ajWHNTLbqmmGQG0RNxHY/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-05-14%2012.28.47.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "2026-05-19 07.58.05.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 2684441,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOZ8ygtTOS6e6yM94VTtRRw/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/2026-05-19%2007.58.05.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "MANIFIESTO DE DISEÑO LUMÍNICO — ARMONÍA UNCANNY VALLEY.pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 44029,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHeIzJy9RiPd2LUxpSf4MMU/PROYECTOS%202026/08_HONEY%20VALLEY%20LUMINARIA/MANIFIESTO%20DE%20DISE%C3%91O%20LUM%C3%8DNICO%20%E2%80%94%20ARMON%C3%8DA%20UNCANNY%20VALLEY.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    }
+   ],
    "listed": true,
-   "deepIndex": null,
+   "deepIndex": "docs/archive/projects/honey-valley-luminaria/index.json",
    "kind": "project",
-   "note": "También aparece como DESARROLLO DE ILUMINACION (2024); posible duplicado o continuación, confirmar con la fundadora. Carpeta vacía en el rastreo."
+   "note": "Proyecto destacado con índice completo: 83 archivos en 1 carpetas (1 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 4 months ago. También aparece como DESARROLLO DE ILUMINACION (2024); posible duplicado o continuación, confirmar con la fundadora."
   },
   {
    "id": "lina-tabares",
@@ -679,17 +1554,79 @@
    "year": 2026,
    "numberPrefix": "09",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AH4FXhwGyJ0qVjftBFOrNtE/PROYECTOS%202026/09_LINA%20TABARES?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
+   "childCount": 7,
+   "fileCount": 7,
    "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "extensions": {
+    "png": 2,
+    "jpg": 4,
+    "jpeg": 1
+   },
+   "totalBytesKnown": 1961472,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "4653e08a-909f-43b4-a4ae-f05d8f6915a5.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 1415264,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOb1sz1ouMEFN8CRuJ5iTRw/PROYECTOS%202026/09_LINA%20TABARES/4653e08a-909f-43b4-a4ae-f05d8f6915a5.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "a5a962f327f31b5d55a7a110810b48f2.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 47261,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/APZcpJqyJzoExeWmaEwDJq0/PROYECTOS%202026/09_LINA%20TABARES/a5a962f327f31b5d55a7a110810b48f2.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "aa2ee2eeec6df744e4e0d50899df29c9.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 76924,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ANHWNLBJaqmMxoQLHpKwkXI/PROYECTOS%202026/09_LINA%20TABARES/aa2ee2eeec6df744e4e0d50899df29c9.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "c9532e5ad0b94a244da0bf3a92545252.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 117193,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AAzQi2ZY7NBOTozd-5ouiIM/PROYECTOS%202026/09_LINA%20TABARES/c9532e5ad0b94a244da0bf3a92545252.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "ChatGPT Image 14 ene 2026, 09_05_37 a.m..png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 101011,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AL9P107sURrkeSwjKRZu8lk/PROYECTOS%202026/09_LINA%20TABARES/ChatGPT%20Image%2014%20ene%202026%2C%2009_05_37%20a.m..png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "f9df52d0a110b67b7a1a8b27fd4fa481.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 136601,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALRAmMTCR8NuQs32em9jeN0/PROYECTOS%202026/09_LINA%20TABARES/f9df52d0a110b67b7a1a8b27fd4fa481.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Imagen de WhatsApp (redactado).jpeg",
+     "is_dir": false,
+     "ext": "jpeg",
+     "size": 119398,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AH4FXhwGyJ0qVjftBFOrNtE/PROYECTOS%202026/09_LINA%20TABARES?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+     "redacted": true
+    }
+   ],
    "listed": true,
-   "deepIndex": null,
+   "deepIndex": "docs/archive/projects/lina-tabares/index.json",
    "kind": "project",
-   "note": "Carpeta vacía en el rastreo."
+   "note": "Proyecto destacado con índice completo: 7 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta —."
   },
   {
    "id": "hoy",
@@ -699,11 +1636,21 @@
    "numberPrefix": "010",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ABp9jw5x30gcRZwJcAbbshs/PROYECTOS%202026/010_HOY?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
    "childCount": 13,
-   "fileCount": 0,
+   "fileCount": 206,
    "dirCount": 13,
-   "extensions": {},
-   "totalBytesKnown": 0,
-   "latestModified": null,
+   "extensions": {
+    "pdf": 24,
+    "jpeg": 41,
+    "mp4": 4,
+    "png": 98,
+    "jpg": 30,
+    "webp": 1,
+    "ai": 3,
+    "zip": 1,
+    "ttf": 4
+   },
+   "totalBytesKnown": 381730985,
+   "latestModified": "19 days ago",
    "children": [
     {
      "name": "CONTRATOS",
@@ -794,25 +1741,26 @@
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALMa4qZtHPfyDlCdvBgk98Q/PROYECTOS%202026/010_HOY/PRESENTACION?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
     {
-     "name": "propuestas",
-     "is_dir": true,
-     "ext": "",
-     "size": null,
-     "modified": null,
-     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AInhrMi8vzsefE0pA2S0F30/PROYECTOS%202026/010_HOY/propuestas?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
-    },
-    {
      "name": "VIDEOS",
      "is_dir": true,
      "ext": "",
      "size": null,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AEcaNrN6n8bXwl2YSyww6tE/PROYECTOS%202026/010_HOY/VIDEOS?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "propuestas",
+     "is_dir": true,
+     "ext": "",
+     "size": null,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AInhrMi8vzsefE0pA2S0F30/PROYECTOS%202026/010_HOY/propuestas?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/hoy/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 206 archivos en 19 carpetas (13 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 19 days ago."
   },
   {
    "id": "sporti",
@@ -822,12 +1770,17 @@
    "numberPrefix": "011",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AK2eG5n1rSVBdn3JYO-TLjQ/PROYECTOS%202026/011_SPORTI?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
    "childCount": 7,
-   "fileCount": 1,
+   "fileCount": 14,
    "dirCount": 6,
    "extensions": {
-    "png": 1
+    "png": 1,
+    "jpeg": 1,
+    "pdf": 9,
+    "html": 1,
+    "dwg": 1,
+    "mp4": 1
    },
-   "totalBytesKnown": 1918894,
+   "totalBytesKnown": 63741102,
    "latestModified": "11 days ago",
    "children": [
     {
@@ -889,8 +1842,9 @@
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/sporti/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 14 archivos en 6 carpetas (6 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 11 days ago."
   },
   {
    "id": "casa-dharma-san-pedro-de-los-milagros",
@@ -900,11 +1854,14 @@
    "numberPrefix": "013",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AIoPrryp2ZtYV-7Rx8SjvPY/PROYECTOS%202026/013_CASA%20DHARMA%20SAN%20PEDRO%20DE%20LOS%20MILAGROS?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
    "childCount": 2,
-   "fileCount": 0,
+   "fileCount": 5,
    "dirCount": 2,
-   "extensions": {},
-   "totalBytesKnown": 0,
-   "latestModified": null,
+   "extensions": {
+    "pdf": 1,
+    "jpeg": 4
+   },
+   "totalBytesKnown": 10719397,
+   "latestModified": "Last month",
    "children": [
     {
      "name": "COTIZACION",
@@ -924,8 +1881,9 @@
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/casa-dharma-san-pedro-de-los-milagros/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 5 archivos en 2 carpetas (2 de primer nivel), rastreado 2026-09-21; archivos fechados hasta Last month."
   },
   {
    "id": "roble-colonial-guatape",
@@ -953,8 +1911,9 @@
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/roble-colonial-guatape/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 1 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 11 days ago."
   },
   {
    "id": "pozo-azul",
@@ -976,14 +1935,15 @@
      "name": "Propuesta_ALUZINA_Pozo_Azul_Jorge.pdf",
      "is_dir": false,
      "ext": "pdf",
-     "size": 126771,
+     "size": 126776,
      "modified": "Last month",
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGDesuks-sbF8s1830S2wzA/PROYECTOS%202026/015_POZO%20AZUL/Propuesta_ALUZINA_Pozo_Azul_Jorge.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/pozo-azul/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 1 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta Last month."
   },
   {
    "id": "ecoluz-iluminacion",
@@ -1005,7 +1965,7 @@
      "name": "CO 22302-0 SUM ALUZINA E3.pdf",
      "is_dir": false,
      "ext": "pdf",
-     "size": 116152,
+     "size": 116155,
      "modified": "2 months ago",
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ANxh8IOFejNKiXiyGk3i-Ew/PROYECTOS%202026/016_Ecoluz%2C%20ILUMINACION/CO%2022302-0%20SUM%20ALUZINA%20E3.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1013,7 +1973,7 @@
      "name": "CO 22303-0 SUM ALUZINA E2.pdf",
      "is_dir": false,
      "ext": "pdf",
-     "size": 116634,
+     "size": 116630,
      "modified": "2 months ago",
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ACiHV2kO5YWtmY_cTnX-Iz8/PROYECTOS%202026/016_Ecoluz%2C%20ILUMINACION/CO%2022303-0%20SUM%20ALUZINA%20E2.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1021,14 +1981,15 @@
      "name": "CO 22304-0 SUM ALUZINA E1.pdf",
      "is_dir": false,
      "ext": "pdf",
-     "size": 118231,
+     "size": 118229,
      "modified": "2 months ago",
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ACkUQ4l4bMo0H6AxebGltB4/PROYECTOS%202026/016_Ecoluz%2C%20ILUMINACION/CO%2022304-0%20SUM%20ALUZINA%20E1.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     }
    ],
    "listed": true,
-   "deepIndex": null,
-   "kind": "project"
+   "deepIndex": "docs/archive/projects/ecoluz-iluminacion/index.json",
+   "kind": "project",
+   "note": "Proyecto destacado con índice completo: 3 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 2 months ago."
   },
   {
    "id": "hug",
@@ -1037,17 +1998,118 @@
    "year": 2026,
    "numberPrefix": "017",
    "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AFHVkSLchamLAZ2nGp2tZpE/PROYECTOS%202026/017_HUG?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
+   "childCount": 12,
+   "fileCount": 12,
    "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "extensions": {
+    "png": 10,
+    "pdf": 1,
+    "skp": 1
+   },
+   "totalBytesKnown": 143978293,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "Captura de pantalla 2026-09-07 203411.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 2214737,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AM5UlpzzAeZIPbFmsewuZ70/PROYECTOS%202026/017_HUG/Captura%20de%20pantalla%202026-09-07%20203411.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Captura de pantalla 2026-09-07 203526.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 2451181,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALDP0Z2UKKhMzXfEVwKxEWU/PROYECTOS%202026/017_HUG/Captura%20de%20pantalla%202026-09-07%20203526.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Captura de pantalla 2026-09-07 203551.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 2116303,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AM7flLoe9BsKFBEb-Oewev4/PROYECTOS%202026/017_HUG/Captura%20de%20pantalla%202026-09-07%20203551.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Captura de pantalla 2026-09-07 203805.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 665777,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AMr8dOuI4LYb2uA01rOxO4E/PROYECTOS%202026/017_HUG/Captura%20de%20pantalla%202026-09-07%20203805.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Captura de pantalla 2026-09-07 203822.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 1114200,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJqTnb2L-ViC8nt60NHYbSw/PROYECTOS%202026/017_HUG/Captura%20de%20pantalla%202026-09-07%20203822.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Captura de pantalla 2026-09-07 203840.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 1235067,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ANCykTsYpGpf23PNkBmu1lc/PROYECTOS%202026/017_HUG/Captura%20de%20pantalla%202026-09-07%20203840.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "CONCEPTO - HUG (2).png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 202049,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHvEFKOgVH40-hCYVUudv5w/PROYECTOS%202026/017_HUG/CONCEPTO%20-%20HUG%20%282%29.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "CONCEPTO - HUG (3).png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 127226,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ADyB1w45PPxJZfwoZPO62Hs/PROYECTOS%202026/017_HUG/CONCEPTO%20-%20HUG%20%283%29.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Diseño sin título (2).png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 241703,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AMsBNtPSniBCnWwdT6DRlKk/PROYECTOS%202026/017_HUG/Dise%C3%B1o%20sin%20t%C3%ADtulo%20%282%29.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Family Room Experience — Hotel Concept.pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 25794970,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOzXxaVQ0sSDA0CdzjiaRak/PROYECTOS%202026/017_HUG/Family%20Room%20Experience%20%E2%80%94%20Hotel%20Concept.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Planta_02.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 240162,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOmcRvAAOFaaVjZYRkUnNrc/PROYECTOS%202026/017_HUG/Planta_02.png?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    },
+    {
+     "name": "Vista Hug.skp",
+     "is_dir": false,
+     "ext": "skp",
+     "size": 107583898,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AM9FrHEjj0sndpQkWpEZvu4/PROYECTOS%202026/017_HUG/Vista%20Hug.skp?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
+    }
+   ],
    "listed": true,
-   "deepIndex": null,
+   "deepIndex": "docs/archive/projects/hug/index.json",
    "kind": "project",
-   "note": "Carpeta vacía en el rastreo."
+   "note": "Proyecto destacado con índice completo: 12 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta —."
   },
   {
    "id": "alma-prana-2026",
@@ -1069,7 +2131,7 @@
      "name": "ALMA PRANA 1.pdf",
      "is_dir": false,
      "ext": "pdf",
-     "size": 57334,
+     "size": 57331,
      "modified": "11 days ago",
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AHICBqbjaY8N9elIXJhxGds/PROYECTOS%202026/18_ALMA%20PRANA%202026/ALMA%20PRANA%201.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1077,7 +2139,7 @@
      "name": "ALMA PRANA.pdf",
      "is_dir": false,
      "ext": "pdf",
-     "size": 377764,
+     "size": 377766,
      "modified": "11 days ago",
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOONSUjVbDkTxOT01M4nn4M/PROYECTOS%202026/18_ALMA%20PRANA%202026/ALMA%20PRANA.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1091,9 +2153,9 @@
     }
    ],
    "listed": true,
-   "deepIndex": null,
+   "deepIndex": "docs/archive/projects/alma-prana-2026/index.json",
    "kind": "project",
-   "note": "También aparece como 034 ALMA PRANA (2025); posible duplicado o continuación, confirmar con la fundadora."
+   "note": "Proyecto destacado con índice completo: 3 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta 11 days ago. También aparece como 034 ALMA PRANA (2025); posible duplicado o continuación, confirmar con la fundadora."
   },
   {
    "id": "simon-calera",
@@ -1115,7 +2177,7 @@
      "name": "6d179ed7f5862741527a092908af1afe.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 145818,
+     "size": 145785,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ALsUmQ8uDUZiXcNJm5h1alA/PROYECTOS%202026/019_%20SIMON%20CALERA/6d179ed7f5862741527a092908af1afe.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1123,7 +2185,7 @@
      "name": "6db7a15dfe2d5e830fa9d2b5b81cc807.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 96563,
+     "size": 96601,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AES8kwlthvpXqJvYIAiZOy8/PROYECTOS%202026/019_%20SIMON%20CALERA/6db7a15dfe2d5e830fa9d2b5b81cc807.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1131,7 +2193,7 @@
      "name": "8b789d9e372ac4c05e587b2d4990158f.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 80589,
+     "size": 80582,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AMFi1SWwNEH6z05WTXoXyOI/PROYECTOS%202026/019_%20SIMON%20CALERA/8b789d9e372ac4c05e587b2d4990158f.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1139,7 +2201,7 @@
      "name": "49f61971d83685540376c5a9637df354.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 41882,
+     "size": 41874,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AAFW-VIwMBHwzb6xahRRkHo/PROYECTOS%202026/019_%20SIMON%20CALERA/49f61971d83685540376c5a9637df354.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1147,7 +2209,7 @@
      "name": "732069c5f982fd31c31826fa7dc5d378.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 67072,
+     "size": 67097,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AG1lQQu2nK-b_ilRdqzq6pQ/PROYECTOS%202026/019_%20SIMON%20CALERA/732069c5f982fd31c31826fa7dc5d378.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1155,7 +2217,7 @@
      "name": "910055cf4b63c6bb9ddbe28e5b65811f.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 169062,
+     "size": 169047,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ADLq8MWJg4_13SRi6PnOj8w/PROYECTOS%202026/019_%20SIMON%20CALERA/910055cf4b63c6bb9ddbe28e5b65811f.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1163,7 +2225,7 @@
      "name": "a71ce4ef90b0d9b99c561270637b5539 (1).jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 66560,
+     "size": 66556,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AEhPQLhnFF1UdBcWaG2kIrU/PROYECTOS%202026/019_%20SIMON%20CALERA/a71ce4ef90b0d9b99c561270637b5539%20%281%29.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1171,7 +2233,7 @@
      "name": "a71ce4ef90b0d9b99c561270637b5539.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 66560,
+     "size": 66556,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AMmPLAfFNVIpPHdUuvOijZI/PROYECTOS%202026/019_%20SIMON%20CALERA/a71ce4ef90b0d9b99c561270637b5539.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1179,7 +2241,7 @@
      "name": "b0bea744117a5a9702ce3601c93ff444.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 50586,
+     "size": 50588,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AN6U9ubO7YaOFSA6cM6r75k/PROYECTOS%202026/019_%20SIMON%20CALERA/b0bea744117a5a9702ce3601c93ff444.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1187,7 +2249,7 @@
      "name": "b1bb7d2ef90cf0756297ca87db03b3c5.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 136192,
+     "size": 136218,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJx_RRreQTvmvqnh0YvZGl0/PROYECTOS%202026/019_%20SIMON%20CALERA/b1bb7d2ef90cf0756297ca87db03b3c5.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1195,7 +2257,7 @@
      "name": "b25d3a39b3c19bf0bfb51f7a3b63000e.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 301568,
+     "size": 301520,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AKnt1ewutiA8F1TUDIrEAqw/PROYECTOS%202026/019_%20SIMON%20CALERA/b25d3a39b3c19bf0bfb51f7a3b63000e.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1203,7 +2265,7 @@
      "name": "dac965e37e7de6dbf6228f328665f566.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 46182,
+     "size": 46136,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ADlzaNaxATzWBBa3QJQnsoY/PROYECTOS%202026/019_%20SIMON%20CALERA/dac965e37e7de6dbf6228f328665f566.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1211,7 +2273,7 @@
      "name": "dc06872d15be467709d03d3e1736623d.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 83456,
+     "size": 83416,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AGFgmxs3Q6yJUXU-z0L4Xf0/PROYECTOS%202026/019_%20SIMON%20CALERA/dc06872d15be467709d03d3e1736623d.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1219,7 +2281,7 @@
      "name": "e9fbba27d6f2e078047ebc3540e1159f.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 177664,
+     "size": 177663,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AOlGjXtfoWsVqx1Q0GEJFsM/PROYECTOS%202026/019_%20SIMON%20CALERA/e9fbba27d6f2e078047ebc3540e1159f.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1227,7 +2289,7 @@
      "name": "f7a5ff83f9d5a358bad6ab4cf71c5eaf.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 101274,
+     "size": 101247,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AJ2sq1Dkl37ZmH0VBxnZDeA/PROYECTOS%202026/019_%20SIMON%20CALERA/f7a5ff83f9d5a358bad6ab4cf71c5eaf.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1235,7 +2297,7 @@
      "name": "f441bb0c659452ba204acb5d82328589.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 34918,
+     "size": 34944,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AC5YE6mumzJ8o7gmjmxWZ8Y/PROYECTOS%202026/019_%20SIMON%20CALERA/f441bb0c659452ba204acb5d82328589.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     },
@@ -1243,15 +2305,15 @@
      "name": "ffa9d464cb9f59ca9d4117ad9e7f5e8f.jpg",
      "is_dir": false,
      "ext": "jpg",
-     "size": 23450,
+     "size": 23476,
      "modified": null,
      "href": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/AE6Y7nzS2X3X2ajFLqugd5Q/PROYECTOS%202026/019_%20SIMON%20CALERA/ffa9d464cb9f59ca9d4117ad9e7f5e8f.jpg?rlkey=db3828bqezrux1nomqwl3xupy&dl=0"
     }
    ],
    "listed": true,
-   "deepIndex": null,
+   "deepIndex": "docs/archive/projects/simon-calera/index.json",
    "kind": "project",
-   "note": "También aparece como SIMON CALERA (2024); posible duplicado o continuación, confirmar con la fundadora."
+   "note": "Proyecto destacado con índice completo: 17 archivos en 0 carpetas (0 de primer nivel), rastreado 2026-09-21; archivos fechados hasta —. También aparece como SIMON CALERA (2024); posible duplicado o continuación, confirmar con la fundadora."
   },
   {
    "id": "diseno-grafico-ser-interior",
@@ -1543,17 +2605,36 @@
    "year": 2025,
    "numberPrefix": "07",
    "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHlaR5_W-948ELwFuSYHN7I/PROYECTOS%20ALUZINA%202025/07%20IMAGENES%20EL%20SILENCIO%20DE%20LOS%20PAJAROS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
+   "childCount": 2,
+   "fileCount": 2,
    "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "extensions": {
+    "png": 2
+   },
+   "totalBytesKnown": 491930,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "Screenshot 2024-09-06 182201.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": null,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADCx6GNLXk_Jdi1lccloO7A/PROYECTOS%20ALUZINA%202025/07%20IMAGENES%20EL%20SILENCIO%20DE%20LOS%20PAJAROS/Screenshot%202024-09-06%20182201.png?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "Screenshot 2024-09-15 110840.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 491930,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJZF991Jw0NPg-Hd5dglqwM/PROYECTOS%20ALUZINA%202025/07%20IMAGENES%20EL%20SILENCIO%20DE%20LOS%20PAJAROS/Screenshot%202024-09-15%20110840.png?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    }
+   ],
    "listed": true,
    "deepIndex": null,
    "kind": "project",
-   "note": "También aparece como CALERA EL SILENCIO DE LOS PAJAROS (2024); posible duplicado o continuación, confirmar con la fundadora. Carpeta vacía en el rastreo."
+   "note": "También aparece como CALERA EL SILENCIO DE LOS PAJAROS (2024); posible duplicado o continuación, confirmar con la fundadora."
   },
   {
    "id": "diseno-interior-juan",
@@ -1971,17 +3052,91 @@
    "year": 2025,
    "numberPrefix": "016",
    "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACz32yxUYIWnswjAzDg7VG4/PROYECTOS%20ALUZINA%202025/016%20APARTAMENTO%20VALENTIN%20RAMOZ?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
-   "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "childCount": 9,
+   "fileCount": 8,
+   "dirCount": 1,
+   "extensions": {
+    "jpg": 8
+   },
+   "totalBytesKnown": 1522791,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "SALA VALENTIN",
+     "is_dir": true,
+     "ext": "",
+     "size": null,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABVMlOhJ0AI8i2FZbkivHiI/PROYECTOS%20ALUZINA%202025/016%20APARTAMENTO%20VALENTIN%20RAMOZ/SALA%20VALENTIN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "PHOTO-2025-05-12-11-28-33.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 158208,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APsJMIfofwzPg8HEnnPEWaA/PROYECTOS%20ALUZINA%202025/016%20APARTAMENTO%20VALENTIN%20RAMOZ/PHOTO-2025-05-12-11-28-33.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "PHOTO-2025-05-12-11-29-27.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 195891,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIbsLX0ZdelvTOEJN37RE14/PROYECTOS%20ALUZINA%202025/016%20APARTAMENTO%20VALENTIN%20RAMOZ/PHOTO-2025-05-12-11-29-27.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "PHOTO-2025-05-12-11-29-58.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 186573,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHQhTl6RIKkLTUNeG6gdyzs/PROYECTOS%20ALUZINA%202025/016%20APARTAMENTO%20VALENTIN%20RAMOZ/PHOTO-2025-05-12-11-29-58.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "PHOTO-2025-05-12-11-30-18.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 227021,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADeUZeKQm1AvVD4JiN4jjZI/PROYECTOS%20ALUZINA%202025/016%20APARTAMENTO%20VALENTIN%20RAMOZ/PHOTO-2025-05-12-11-30-18.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "PHOTO-2025-05-12-11-31-17.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 118886,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIgPi6phYKDetTcpENnDdPk/PROYECTOS%20ALUZINA%202025/016%20APARTAMENTO%20VALENTIN%20RAMOZ/PHOTO-2025-05-12-11-31-17.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "PHOTO-2025-05-12-11-31-46.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 294400,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAYw36P1btuyPFndSumKMz0/PROYECTOS%20ALUZINA%202025/016%20APARTAMENTO%20VALENTIN%20RAMOZ/PHOTO-2025-05-12-11-31-46.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "PHOTO-2025-05-12-11-32-46.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 92570,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABaaOJnB6Ghnp_0p6lfONJI/PROYECTOS%20ALUZINA%202025/016%20APARTAMENTO%20VALENTIN%20RAMOZ/PHOTO-2025-05-12-11-32-46.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "PHOTO-2025-05-12-11-33-48.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 249242,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAYKnTKudpgLs9ODlASAIdo/PROYECTOS%20ALUZINA%202025/016%20APARTAMENTO%20VALENTIN%20RAMOZ/PHOTO-2025-05-12-11-33-48.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    }
+   ],
    "listed": true,
    "deepIndex": null,
-   "kind": "project",
-   "note": "Carpeta vacía en el rastreo."
+   "kind": "project"
   },
   {
    "id": "casa-german-oyuela",
@@ -4385,17 +5540,27 @@
    "year": 2024,
    "numberPrefix": null,
    "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACEEb1FzbtsGj1jCW5-JCt4/PROYECTOS%20ALUZINA%202024/ACABADOS%20Y%20FORMAS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
+   "childCount": 1,
+   "fileCount": 1,
    "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "extensions": {
+    "png": 1
+   },
+   "totalBytesKnown": 365363,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "lampara aluzina LA FERIA DISE;O.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 365363,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMgTxikWPsqm3lzl_Nsc8OU/PROYECTOS%20ALUZINA%202024/ACABADOS%20Y%20FORMAS/lampara%20aluzina%20LA%20FERIA%20DISE%3BO.png?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    }
+   ],
    "listed": true,
    "deepIndex": null,
-   "kind": "project",
-   "note": "Carpeta vacía en el rastreo."
+   "kind": "project"
   },
   {
    "id": "agartha-fest",
@@ -5344,17 +6509,114 @@
    "year": 2024,
    "numberPrefix": null,
    "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANkIWd6r06iUC0ZHWThDsLc/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
+   "childCount": 11,
+   "fileCount": 11,
    "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "extensions": {
+    "xlsx": 1,
+    "pdf": 2,
+    "jpg": 3,
+    "psd": 3,
+    "png": 2
+   },
+   "totalBytesKnown": 29834548,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "Cotización (redactado).xlsx",
+     "is_dir": false,
+     "ext": "xlsx",
+     "size": 88576,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANkIWd6r06iUC0ZHWThDsLc/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+     "redacted": true
+    },
+    {
+     "name": "Factura (redactado).pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 240026,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANkIWd6r06iUC0ZHWThDsLc/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+     "redacted": true
+    },
+    {
+     "name": "habitacion colin.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 872858,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFTZa8GSxneetX3j_S-fHOs/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN/habitacion%20colin.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "habitacion colin.psd",
+     "is_dir": false,
+     "ext": "psd",
+     "size": 17616077,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJ6NF4Hu4eVKzIP8vjA1fFc/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN/habitacion%20colin.psd?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "offfice 1.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 195994,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APUJrftg6YDnn-g_b32p7ts/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN/offfice%201.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "offfice-Recovered.psd",
+     "is_dir": false,
+     "ext": "psd",
+     "size": 3040870,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACULfxTyxf7TnSLLVppHR7Q/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN/offfice-Recovered.psd?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "offfice.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 369152,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AC_nClfs3KxhlTjXrAbtlh0/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN/offfice.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "offfice.psd",
+     "is_dir": false,
+     "ext": "psd",
+     "size": 4928307,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AN_20GJFKhv5aQuOxgGt6A0/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN/offfice.psd?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "output_0 (1).png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 1258291,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AH8T_BpbA8wI4k-dODiQEk4/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN/output_0%20%281%29.png?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "output_0.png",
+     "is_dir": false,
+     "ext": "png",
+     "size": 1153434,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIaSCwUBxs9wODkY03ztStw/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN/output_0.png?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "Factura (redactado).pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 70963,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANkIWd6r06iUC0ZHWThDsLc/PROYECTOS%20ALUZINA%202024/ESPACIO%20COLIN%20MEDELLIN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+     "redacted": true
+    }
+   ],
    "listed": true,
    "deepIndex": null,
-   "kind": "project",
-   "note": "Carpeta vacía en el rastreo."
+   "kind": "project"
   },
   {
    "id": "estela-parma",
@@ -10611,17 +11873,152 @@
    "year": 2021,
    "numberPrefix": "0",
    "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACgSuTGanrXQsoxlgUNHQ4U/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
+   "childCount": 16,
+   "fileCount": 16,
    "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "extensions": {
+    "xlsx": 2,
+    "jpg": 6,
+    "ai": 4,
+    "pdf": 4
+   },
+   "totalBytesKnown": 165167206,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "Cotización (redactado).xlsx",
+     "is_dir": false,
+     "ext": "xlsx",
+     "size": 1048576,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACgSuTGanrXQsoxlgUNHQ4U/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+     "redacted": true
+    },
+    {
+     "name": "Artboard 1-100.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 1572864,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AGibVCbo396wy5Lndgn7BPM/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/Artboard%201-100.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "Artboard 3-100.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4928307,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOzEUeW4eFP5TMV4qjsGTqk/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/Artboard%203-100.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "c3251f4c63ef2cd7f2f2810e1ffd23dd.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 38912,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AA0DI9nfPJ7cRdnuASR_slk/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/c3251f4c63ef2cd7f2f2810e1ffd23dd.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "Cotización (redactado).xlsx",
+     "is_dir": false,
+     "ext": "xlsx",
+     "size": 361165,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACgSuTGanrXQsoxlgUNHQ4U/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+     "redacted": true
+    },
+    {
+     "name": "ILUMINACION ALUZINA .ai",
+     "is_dir": false,
+     "ext": "ai",
+     "size": 52638515,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHA0jA07yi5jYgvi6R6sM5U/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/ILUMINACION%20ALUZINA%20.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "ILUMINACION ALUZINA .pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 70044877,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AA6qQSE6LJc3615PSgrYkrU/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/ILUMINACION%20ALUZINA%20.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "ILUMINACION ALUZINA 2 .pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 1363149,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABb3aQwPsI0PBLLgG6sPe8w/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/ILUMINACION%20ALUZINA%202%20.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINARIA JORGE .ai",
+     "is_dir": false,
+     "ext": "ai",
+     "size": 943718,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADFRSDC11hbOwucdtaI4PH4/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/LUMINARIA%20JORGE%20.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINARIA JORGE OPCION 1 .jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 1048576,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APV0_7fa3R8iUNQJ3JO7vSo/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/LUMINARIA%20JORGE%20OPCION%201%20.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINARIA JORGE OPCION 2 [Recovered].ai",
+     "is_dir": false,
+     "ext": "ai",
+     "size": 4089446,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABRgF2SEUgTkutz9JBOGqF8/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/LUMINARIA%20JORGE%20OPCION%202%20%20%5BRecovered%5D.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINARIA JORGE OPCION 2 .pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 943718,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AL2fCGtQPkXsus3FI5jb-rU/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/LUMINARIA%20JORGE%20OPCION%202%20.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINARIA JORGE OPCION sala finca santa fe .jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 350413,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AD2DgO9lpEnGFlm5hOHFrEU/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/LUMINARIA%20JORGE%20OPCION%20sala%20finca%20santa%20fe%20%20.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINARIA VESICA MACRAME.ai",
+     "is_dir": false,
+     "ext": "ai",
+     "size": 11848909,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AECG7bn3C99_vBcEDrlPnnI/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/LUMINARIA%20VESICA%20MACRAME.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINARIA VESICA MACRAME.pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 12373197,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APvtN6xHJl38AopQGa7CiFc/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/LUMINARIA%20VESICA%20MACRAME.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINARIA-JORGE-OPCION-1-.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 1572864,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEq4H-0eKqM5M1ysqUP_wTs/PROYECTOS%20ALUZINA%202021/0_93%20FINCA%20ANTIOQUIA%20ILUMINACION/LUMINARIA-JORGE-OPCION-1-.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    }
+   ],
    "listed": true,
    "deepIndex": null,
-   "kind": "project",
-   "note": "Carpeta vacía en el rastreo."
+   "kind": "project"
   },
   {
    "id": "modulos-biotectura-para-interiorismo",
@@ -14259,17 +15656,61 @@
    "year": 2020,
    "numberPrefix": "0",
    "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APn-P54nqLMYJxHWhj-Szio/PROYECTOS%20ALUZINA%202020/0_83%20REVERDESER?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
+   "childCount": 5,
+   "fileCount": 5,
    "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "extensions": {
+    "jpg": 2,
+    "psd": 2,
+    "jpeg": 1
+   },
+   "totalBytesKnown": 12294452,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "inovacion reverdeser.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 132301,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFWh5EyUgCS-CJjWwpFFGaM/PROYECTOS%20ALUZINA%202020/0_83%20REVERDESER/inovacion%20reverdeser.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "inovacion reverdeser.psd",
+     "is_dir": false,
+     "ext": "psd",
+     "size": 4718592,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AP1KP4-3D3Nn5kRIGqALdmI/PROYECTOS%20ALUZINA%202020/0_83%20REVERDESER/inovacion%20reverdeser.psd?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "inovaciones reverdecer 2.psd",
+     "is_dir": false,
+     "ext": "psd",
+     "size": 7130317,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AL5cXMI0SmatFxqfKgPslM4/PROYECTOS%20ALUZINA%202020/0_83%20REVERDESER/inovaciones%20reverdecer%202.psd?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "reverdecer.jpeg",
+     "is_dir": false,
+     "ext": "jpeg",
+     "size": 244634,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AO5sdxvWBW3C2zNvku1dTts/PROYECTOS%20ALUZINA%202020/0_83%20REVERDESER/reverdecer.jpeg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "REVERDECER.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 68608,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AGOccFj0o9Qeh7g3tDKVTpo/PROYECTOS%20ALUZINA%202020/0_83%20REVERDESER/REVERDECER.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    }
+   ],
    "listed": true,
    "deepIndex": null,
-   "kind": "project",
-   "note": "Carpeta vacía en el rastreo."
+   "kind": "project"
   },
   {
    "id": "innovar",
@@ -14918,17 +16359,27 @@
    "year": null,
    "numberPrefix": null,
    "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADcPSvZW-Vhxh3kPwT30Kwk/PROYECTOS%20ALUZINA%202019%202023/FABI%20SOPETRAN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
+   "childCount": 1,
+   "fileCount": 1,
    "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "extensions": {
+    "jpeg": 1
+   },
+   "totalBytesKnown": 2097152,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "qb_MNO6Z.jpeg",
+     "is_dir": false,
+     "ext": "jpeg",
+     "size": 2097152,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAgdkAP9bx62bm_rgJXtr-I/PROYECTOS%20ALUZINA%202019%202023/FABI%20SOPETRAN/qb_MNO6Z.jpeg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    }
+   ],
    "listed": true,
    "deepIndex": null,
-   "kind": "project",
-   "note": "Carpeta vacía en el rastreo."
+   "kind": "project"
   },
   {
    "id": "gregory-apartment",
@@ -15371,17 +16822,592 @@
    "year": null,
    "numberPrefix": null,
    "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AL_olC-igVG5hFyyFJYEP1Q/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
-   "childCount": 0,
-   "fileCount": 0,
-   "dirCount": 0,
-   "extensions": {},
-   "totalBytesKnown": 0,
+   "childCount": 71,
+   "fileCount": 70,
+   "dirCount": 1,
+   "extensions": {
+    "jpg": 61,
+    "ai": 4,
+    "psd": 1,
+    "heic": 2,
+    "dwg": 1,
+    "pdf": 1
+   },
+   "totalBytesKnown": 374364569,
    "latestModified": null,
-   "children": [],
+   "children": [
+    {
+     "name": "PICTURES OF SPACE",
+     "is_dir": true,
+     "ext": "",
+     "size": null,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANbtYorZ0FBGrRtV1vtjs34/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/PICTURES%20OF%20SPACE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-02-20 11.09.48.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5242880,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APoRlw0f2ERTBlTPQMNLtZ8/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-02-20%2011.09.48.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-02-20 13.13.18.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6081741,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAtVVEUE5-uiLvCD-SrHEhA/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-02-20%2013.13.18.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-02-20 13.13.32.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4823450,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOmYuWeqvkrTQKuSU33k-0k/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-02-20%2013.13.32.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-02-20 13.13.39.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5557453,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFQJnbf-Lg4t0ZumkESH_MU/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-02-20%2013.13.39.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-02-21 13.48.18.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5242880,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AGaK_GNu-kYJUt31xg7GACk/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-02-21%2013.48.18.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-02-22 16.27.00.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4928307,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACmmy_-TzqEuxGmA7d4sl6g/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-02-22%2016.27.00.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-02-22 16.27.07.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4613734,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIzSFXK262BrUro-LorQ_fI/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-02-22%2016.27.07.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-02-22 16.38.11.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5138022,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIKUVJAUSdDud3i0dXZoPcY/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-02-22%2016.38.11.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-02-25 15.05.11.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5767168,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMyVMgj04xLbwSc4x4wWhiM/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-02-25%2015.05.11.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-02-28 23.03.43.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6081741,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABoTvbFbYOPS9Yy1AFWCOM8/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-02-28%2023.03.43.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-02 11.50.42.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5347738,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AGiUSHuOUuqgmyN3yZoyhNE/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-02%2011.50.42.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-02 11.50.51.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6815744,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMqwy0qpMSeSk59RmGmAZj8/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-02%2011.50.51.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-06 00.19.14.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 3670016,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJesRAhRX2yuzPuB2uUhqiU/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-06%2000.19.14.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-06 00.20.05.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6396314,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADusIy9duZt96ZIPUqa1wRM/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-06%2000.20.05.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-06 19.54.09.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 1363149,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADqyqmyjaHoEr-j21qSADFY/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-06%2019.54.09.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-06 19.54.16.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 3565158,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AF1PgVGPPPOsFek8nTvKt8M/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-06%2019.54.16.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-09 01.11.06.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4613734,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKZBDPiYA7bZ5N8MnIzuo3Q/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-09%2001.11.06.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-09 01.15.24 (1).jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5347738,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AI0bVZYVn0juW-cNBve3kWs/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-09%2001.15.24%20%281%29.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-09 01.15.24.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5347738,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJdmRGVrwsFb-s2I5leIwxo/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-09%2001.15.24.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-09 09.28.00.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6501171,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAiwN55A37wgKpo62n9rrIc/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-09%2009.28.00.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-21 09.33.35.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 10276045,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMnd4xlPE85L7AMfwrxxw6Y/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-21%2009.33.35.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-21 09.35.10.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6291456,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOgscNm84DYvep0Tm-JicBc/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-21%2009.35.10.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.47.24.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6920602,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACXR6NN_sUAWsbV28LUyleg/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.47.24.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.47.39.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6710886,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APTGc-Of_bDmpJ1LtDBvkMw/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.47.39.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.47.53.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5138022,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADhqiSFzL2oSUwWEvLpob4U/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.47.53.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.48.12.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6710886,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABeJ1DUZZMWqOMLiHnIRMF0/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.48.12.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.48.37.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5033165,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AM-F1WGAV4N0M3qIgXl8d7M/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.48.37.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.48.51.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5452595,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AA2RQbfe1fJ_aPnuEH-sJAY/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.48.51.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.49.02.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4823450,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJEmx9ij10CgnFaK_J6f1SM/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.49.02.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.49.30.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5662310,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ALdgkdSDkI5H5nuJkjUMbC4/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.49.30.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.49.33.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5662310,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AB2aXHAVNWZ9MIx36i34-6I/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.49.33.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.49.59-1.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4194304,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABA6Y-A3-Aao_4ZOeVY99LQ/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.49.59-1.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.49.59.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 3879731,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIaAfsxZBFg9XxUCPvXzZi4/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.49.59.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.51.25.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6186598,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AF-UYVhNfhJkq8_lKsMfaZY/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.51.25.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.51.29.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6186598,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABLpYFjNfANkhEVf8teFTOE/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.51.29.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.52.07.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5976883,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AA6qLzqHt-Hkk7SyqFFSSYw/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.52.07.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.55.07.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4718592,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOvnd6b1o7vPUHz9HghTyWE/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.55.07.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.55.21.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6081741,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOleFPwdDKJq5WQFi-PTeus/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.55.21.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.55.34.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5242880,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADar3ANLufjkyFEwruZhx24/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.55.34.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.56.24.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5138022,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AK48RflWdKGWe9fBF9mAOXI/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.56.24.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.56.41.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4823450,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANlrfqZN0Sga9knv1l_YLSo/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.56.41.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.58.30.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 7235174,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOkIhGzdpVp2gJVTWA-xEEA/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.58.30.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.58.38.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 6920602,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AI3tO28njhQouVeq2G7fsO8/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.58.38.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.58.53.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4718592,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEn6Q8B3Mb-bgS-OQ7BNtXQ/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.58.53.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 14.59.54.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 4299162,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJh1JXdlCxNLLRFwbVl9gNU/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2014.59.54.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 15.08.16.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5033165,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AI6sulGcJHIsu4x5ZfzxFhM/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2015.08.16.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 15.08.21.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5033165,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMujPwIKo-UbcBQxDJt_e-w/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2015.08.21.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "2023-03-22 15.08.34.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 5033165,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIXfZQajOuQbymYVmkDR8Ac/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/2023-03-22%2015.08.34.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "Antes1.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 343962,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKA1b6hxzR3XWCcFekHpU6I/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/Antes1.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "Antes2.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 748954,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ALXb2AtpvveH6Bfhk_Nr1Xo/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/Antes2.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "COLIN OFFICE-01.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 360243,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APJa4Y82fCxMInkrhNI3aY0/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/COLIN%20OFFICE-01.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "COLIN OFFICE.ai",
+     "is_dir": false,
+     "ext": "ai",
+     "size": 656384,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADeeYmMQwhSWnMwdJSSm9UQ/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/COLIN%20OFFICE.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "colin room.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 3460301,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ALKaJqBxWQUSouQJfI2mX6w/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/colin%20room.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "habitacion 1 (1).psd",
+     "is_dir": false,
+     "ext": "psd",
+     "size": 77594624,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AH4ghA2q7RIrGrqZ6T-m4So/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/habitacion%201%20%20%281%29.psd?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "IMG_7792.heic",
+     "is_dir": false,
+     "ext": "heic",
+     "size": 1468006,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACr0D4UiH3ktmXogHHGZloI/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/IMG_7792.heic?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "IMG_9315.heic",
+     "is_dir": false,
+     "ext": "heic",
+     "size": 1153434,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACtQAbe0F8An64ADkEBhx80/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/IMG_9315.heic?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "IMG-7152.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 2831155,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEuGoApEG792ORI-x2nIPKA/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/IMG-7152.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "IMG-7153.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 2621440,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFX-dGDMal0ziGiKilrsyiw/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/IMG-7153.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "IMG-7154.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 2306867,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJ6nMYN-NumF9xH8kQtpeLI/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/IMG-7154.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "IMG-7155.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 2831155,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFS0JnEojWjqiBF6p3FZ_-0/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/IMG-7155.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "IMG-8431.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 2516582,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKDpX1BdHDBu6LSb7EZhwsw/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/IMG-8431.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINAIRE MATSER ROOM [Recovered].ai",
+     "is_dir": false,
+     "ext": "ai",
+     "size": 1782579,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMjduvAdcFWY1B5uNtx1GwI/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/LUMINAIRE%20MATSER%20ROOM%20%5BRecovered%5D.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINAIRE MATSER ROOM.ai",
+     "is_dir": false,
+     "ext": "ai",
+     "size": 1782579,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABvFPtm92r1-vLiuTq340pU/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/LUMINAIRE%20MATSER%20ROOM.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "LUMINAIRE MATSER ROOM.dwg",
+     "is_dir": false,
+     "ext": "dwg",
+     "size": 7373,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANCzD_gygU79v0aVrjG2__g/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/LUMINAIRE%20MATSER%20ROOM.dwg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "New10.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 246579,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOV0RKStX655h_Bz9znQflk/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/New10.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "New11.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 789197,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKov56LIfyTRxwbzrD-PMGw/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/New11.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "New12.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 743014,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOjYPQcM3HMQuujAOHRYmhU/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/New12.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "New13.jpg",
+     "is_dir": false,
+     "ext": "jpg",
+     "size": 307917,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMpfEJ--Htl9mFO04as25y4/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/New13.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "PUBLICACION 2023}.ai",
+     "is_dir": false,
+     "ext": "ai",
+     "size": 642765,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ALoOWHoaix8VOBkYArICbDw/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/PUBLICACION%202023%7D.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    },
+    {
+     "name": "TO MY CHOCOLATITO.pdf",
+     "is_dir": false,
+     "ext": "pdf",
+     "size": 7340032,
+     "modified": null,
+     "href": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJW2RtajZoGWeNeocp52rrc/PROYECTOS%20ALUZINA%202019%202023/NEW%20YORK%20HOUSE/TO%20MY%20CHOCOLATITO.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0"
+    }
+   ],
    "listed": true,
    "deepIndex": null,
-   "kind": "project",
-   "note": "Carpeta vacía en el rastreo."
+   "kind": "project"
   },
   {
    "id": "pampas-room-starter",

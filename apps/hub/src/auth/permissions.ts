@@ -82,6 +82,12 @@ export const PERMISSIONS = [
   'docs.read',
   /** The client comments on their own project's revision matrix (03 stage 10). */
   'own.revisions.write',
+  /**
+   * Curate the project archive (S-13, ar-09 / changelog 0021): tag archived files, set their delivery stage, pick a
+   * project cover and tag archived projects. Narrower than `assets.manage` (brand's whole asset library) and
+   * `projects.write` (creating projects): granted to `studio` and `brand`; `founder` has `*`.
+   */
+  'archive.curate',
 ] as const;
 
 export type Permission = (typeof PERMISSIONS)[number];
@@ -120,8 +126,8 @@ export const ROLE_PERMISSIONS: Record<Role, readonly string[]> = {
     'manual.read',
     'docs.read',
   ],
-  studio: ['design.read', 'projects.read', 'suppliers.read', 'spaces.read', 'tasks.own.write', 'design.develop', 'references.manage', 'materials.manage', 'plans.write', 'schedules.write', 'renders.brief', 'measurements.write', 'projects.check', 'engagements.write', 'engagements.read', 'revisionMatrix.write', 'siteReports.write', 'messages.write', 'manual.read', 'docs.read'],
-  brand: ['design.read', 'projects.read', 'spaces.read', 'spaces.write', 'tasks.own.write', 'brand.manage', 'competitions.manage', 'presentations.write', 'images.write', 'revisions.manage', 'assets.manage', 'leads.read', 'engagements.read', 'manual.read', 'docs.read'],
+  studio: ['design.read', 'projects.read', 'suppliers.read', 'spaces.read', 'tasks.own.write', 'design.develop', 'references.manage', 'materials.manage', 'plans.write', 'schedules.write', 'renders.brief', 'measurements.write', 'projects.check', 'engagements.write', 'engagements.read', 'revisionMatrix.write', 'siteReports.write', 'messages.write', 'manual.read', 'docs.read', 'archive.curate'],
+  brand: ['design.read', 'projects.read', 'spaces.read', 'spaces.write', 'tasks.own.write', 'brand.manage', 'competitions.manage', 'presentations.write', 'images.write', 'revisions.manage', 'assets.manage', 'archive.curate', 'leads.read', 'engagements.read', 'manual.read', 'docs.read'],
   marketing: ['design.read', 'projects.read', 'spaces.read', 'spaces.write', 'tasks.own.write', 'marketing.plan', 'marketing.content', 'marketing.channels', 'leads.read', 'engagements.read', 'manual.read', 'docs.read'],
   client: ['design.read', 'spaces.read', 'own.projects.read', 'own.proposals.approve', 'own.messages.write', 'own.payments.read', 'own.revisions.write', 'messages.write', 'manual.read'],
   dev: ['design.read', 'projects.read', 'spaces.read', 'spaces.write', 'spaces.admin', 'dev.tools', 'session.viewAs', 'engagements.read', 'manual.read', 'docs.read'],

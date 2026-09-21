@@ -657,6 +657,36 @@ source: gaps in ALUZINA.pdf and BROCHURE ALUZINA (1).pdf, prompt 0011
 - **Whether "Apartamento Parma Noham Ebresum" is the seeded client `cl-noam`**: `_unknown_`; the
   names are suggestive, nothing more.
 
+## Company documents in Dropbox (2023)
+
+```
+status: current
+since: 2026-09-21
+source: Dropbox folder "00 INFORMACION RELEVANTE ALUZINA 2023" (Slack, Justin Massion; ar-15, step 14); docs/archive/company/index.json
+```
+
+Justin shared a second Dropbox folder, not inside a project or a year folder: 12 files of Aluzina's own marketing, pricing and one internal market-research document, plus three files from other companies kept as design references. All 12 are indexed (`docs/archive/company/index.json`); only the five marked `public` below were rendered (thumbnail + up to 6 pages, served under `apps/hub/public/archive/company/`) and are viewable in place on G-08 ("Company documents (Dropbox 2023)"). Descriptions below are read from the rendered pages or the file name; nothing about pricing is quoted or rendered.
+
+**Aluzina's own, public (rendered, viewable on G-08)**
+- `CATALOGO ^ALUZINA^.pdf` (64 pages, 127.5 MB, May 2023) — the studio's product / capabilities catalogue for lighting and interiorismo work ("ILUMINACIÓN INTERIORISMO — Iluminar tus proyectos, Diseño by Colombian"); first 6 pages rendered by streaming the file (downloaded to a temp copy, rendered, deleted — never kept, D-058 style).
+- `BOMBILLA ALUZINOGENA .pdf` (3 pages, 46.1 MB, Jul 2023) — a one-product spec sheet for a lightbulb Aluzina sells under its own name ("Bombillo Aluzinógeno"): 15,000-hour life, E27 base, 3 W, 1000 lm, warm/dimmable.
+- `PRESENTACION DE ALUZINA y EXPERIENCIA LUZ DIRECTORA Y MARCAS Y.ai` (1 page rendered of an unknown total, 39 MB, Jul 2023) — a brand/company presentation opening on the studio's design philosophy ("El diseño... no se trata de verse bien, se trata de sentirse bien").
+- `INTEROR DESIGN PRESENTATION   .ai` (9 pages, 6 rendered, 30.1 MB, Jul 2023) — an English-language interior-design capabilities deck ("We remain the 87% of our lives in interior spaces...").
+- `MENSAJES DE IMPORTANCIA DE INTERIORISMO.ai` (3 pages, 1.34 MB, Jun 2023) — a short deck of talking points on why interior design matters ("Tu te comportas de acuerdo a tu entorno").
+
+**Aluzina's own, internal (indexed only — link and metadata, never rendered)**
+- `ALUZINA PRICE NEW YORK.pdf` (174.75 KB, Jul 2023) — Aluzina's own price list for the New York market. Contains prices: never rendered or excerpted (privacy rule extended from D-059 to any price document).
+- `LISTA DE PRECIOS COLOMBIA.pdf` (424.96 KB, Jun 2023) — Aluzina's own price list for the Colombian market. Same rule.
+- `lista de precios.pdf` (567.19 KB, file dated Jan 2022) — an earlier or undated Aluzina price list. Same rule.
+- `INTERIOR DESIGN STUDIOS MEDELLIN.pdf` (173.52 KB, Sep 2023) — reads as market research: a list of other interior design studios in Medellín, kept for internal competitive reference.
+
+**Third-party, kept as reference (indexed + Dropbox link only — no download, no preview, no excerpt)**
+- `BROCHURE DE OTRA EMPRESA COLOMBIANA DE INTERIORISMO.pdf` (16.89 MB, Aug 2023) — the brochure of another Colombian interior-design company; not Aluzina's work, copyrighted.
+- `Catalog LU7.pdf` (28.93 MB, Aug 2023) — a lighting-fixture catalogue from a third-party brand ("LU7"), likely a supplier reference; not Aluzina's work, copyrighted.
+- `FICHAS TECNICAS LAZARO ROSA VIOLAN.pdf` (1.98 MB, Jul 2023) — technical spec sheets for Lázaro Rosa-Violán, a Spanish designer/brand, kept as a design reference; not Aluzina's work, copyrighted.
+
+Seeded as `assets` rows (`kind: 'file'`, tag `empresa`) by `apps/hub/src/data/seed/company.ts` (order 75); shown on G-08 in a dedicated section below the two brand documents. `applies-to` relations to the playbook were added only where the subject is unambiguous: the two interior-design presentation decks -> service `03` (Comprehensive Interior Design). The catalogue and the bulb spec sheet were left unlinked (product material, not a service pitch) rather than guessed onto a service code.
+
 ## Change log
 - 2026-09-21: file created from MANUAL DE MARCA ALUZINA.pdf (Slack #aluzina-brand-kit, Justin Massion; prompt 0010, changelog 0014).
 - 2026-09-21: shipped in the hub (changelog 0014, D-039..D-043): tokens, `design` module D-12 / D-10 / D-13 at `/#/design`, restyle of every portal; the metal-finish entry is rendered live on D-12 (gold / silver preview); dark mode stays `draft` pending the founder.
@@ -673,3 +703,11 @@ source: gaps in ALUZINA.pdf and BROCHURE ALUZINA (1).pdf, prompt 0011
   space and one note per project, and 126 derived `relations` (`part-of`, `depicts`, `for-client`,
   `produced-by`, `references`, `applies-to` services). Placeholders named explicitly (`2024-01-01`,
   `Ubicación no publicada`, `unknown`, `budgetCop: 0`). No entry superseded.
+- 2026-09-21: appended "Company documents in Dropbox (2023)" (ar-15, step 14; model Sonnet 5): the
+  12 files of the Dropbox folder "00 INFORMACION RELEVANTE ALUZINA 2023" indexed at
+  `docs/archive/company/index.json`, classified owner (`aluzina` / `third-party`) and visibility
+  (`public` / `internal`); the 5 public Aluzina files rendered (thumbnail + up to 6 pages,
+  `apps/hub/public/archive/company/`) and shown on G-08 in a new "Company documents (Dropbox 2023)"
+  section; the 3 price lists, the market-research PDF and the 3 third-party files indexed with a
+  Dropbox link only, never rendered. Seeded as `assets` rows (`seed/company.ts`, order 75, tag
+  `empresa`); one Spanish note filed in `sp-brand-memory`. No entry superseded.

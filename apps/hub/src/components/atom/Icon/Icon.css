@@ -1,0 +1,16 @@
+/* Icon (P-07): sized from the --icon-* tokens (rem, so they follow --scale up to 4K). */
+.icon {
+  display: inline-block;
+  flex: none;
+  font-size: var(--icon-md);
+  vertical-align: -0.145em;
+}
+
+.icon--sm { font-size: var(--icon-sm); }
+.icon--md { font-size: var(--icon-md); }
+.icon--lg { font-size: var(--icon-lg); }
+.icon--xl { font-size: var(--icon-xl); }
+
+/* Tones: the ink comes from the theme, never from a hard-coded colour. */
+.icon--muted { color: var(--color-text-muted); }
+.icon--accent { color: var(--color-metal-text); }

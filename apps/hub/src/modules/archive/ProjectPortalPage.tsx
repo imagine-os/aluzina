@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
 import { useCan } from '../../auth/SessionProvider';
@@ -15,13 +15,15 @@ import { EmptyState } from '../../components/molecule/EmptyState/EmptyState';
 import { FilterBar } from '../../components/molecule/FilterBar/FilterBar';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { SearchField } from '../../components/molecule/SearchField/SearchField';
+import { TagEditor, parseTags } from '../../components/molecule/TagEditor/TagEditor';
 import { Thumb } from '../../components/molecule/Thumb/Thumb';
 import { DocumentViewer } from '../../components/organism/DocumentViewer/DocumentViewer';
 import { Drawer } from '../../components/organism/Drawer/Drawer';
-import { useTable } from '../../data/DataContext';
+import { useData, useTable } from '../../data/DataContext';
 import type { Asset, Project } from '../../data/schema';
 import {
   DELIVERY_STAGES,
+  DELIVERY_STAGE_IDS,
   FILE_TYPES,
   FILE_TYPE_LABELS,
   LIFECYCLES,
@@ -29,6 +31,7 @@ import {
   deliveryStage,
   folderLabel,
   folderNumber,
+  isDeliveryStage,
   lifecycleOf,
   pick,
   type DeliveryStage,
@@ -41,6 +44,9 @@ import type { Surface } from '../../specs/PageSpec';
 import { archivePortalSpec } from './specs';
 import { extOf, fileTypeOfAsset, formatBytes, stageOfAsset, useArchiveData, usePortfolioSet } from './model';
 import './archive.css';
+
+/** A file or project never needs more than a dozen tags; the editor locks there rather than growing a wall of chips. */
+const TAG_MAX = 12;
 
 /** Pipeline groups in delivery order (design comes before sale here: the studio draws, then quotes). */
 const GROUPS: PipelineGroup[] = DELIVERY_STAGES.reduce<PipelineGroup[]>((acc, stage) => (acc.includes(stage.pipelineGroup) ? acc : [...acc, stage.pipelineGroup]), []);
@@ -92,16 +98,21 @@ function FolderCrumbs({ path }: { path: string }) {
 /**
  * S-13 `/<surface>/archive/:projectId`: one archived project as a portal — hero, the delivery order as a
  * stage rail, every file previewable in place (by stage or in the studio's own folder order), and what the
- * project relates to. Reads only; tagging a file is a declared Placeholder (D-047).
+ * project relates to. File tags, the delivery stage and the project cover are real writes through the data
+ * provider (ar-09): one curation permission, `archive.curate` (studio, brand, founder), covers a file's tags and
+ * stage as well as the cover and the project's tags; every write carries `basedOn` so a stale edit is reported
+ * as a conflict (D-024).
  */
 export function ProjectPortalPage({ surface }: { surface: Surface }) {
   const { t, lang } = useT();
   const can = useCan();
+  const data = useData();
   const { projectId = '' } = useParams();
   const [params, setParams] = useSearchParams();
-  const { projects, filesByProject, loading } = useArchiveData();
+  const { projects, filesByProject, assetsById, loading } = useArchiveData();
   const set = usePortfolioSet();
 
+  const tagRows = useTable('tags');
   const relations = useTable('relations');
   const clients = useTable('clients');
   const spaces = useTable('spaces');
@@ -157,6 +168,34 @@ export function ProjectPortalPage({ surface }: { surface: Surface }) {
   const open = openId ? (visible.find((f) => f.id === openId) ?? realFiles.find((f) => f.id === openId) ?? null) : null;
   const openIndex = open ? visible.findIndex((f) => f.id === open.id) : -1;
 
+  /** `archive.curate` (changelog 0021) is the one permission behind file tags / stage and the project cover / tags. */
+  const canTag = can('archive.curate');
+  const canWriteProject = canTag;
+
+  /**
+   * Tags are free text (D-065): the suggestion list is the union of every tag already on a file, the tag
+   * registry's names and the delivery-stage ids, so the vocabulary converges without a closed list.
+   */
+  const tagSuggestions = useMemo(() => {
+    const out = new Set<string>();
+    for (const asset of assetsById.values()) for (const tag of asset.tags) out.add(tag);
+    for (const row of tagRows.rows) out.add(row.name);
+    for (const stage of DELIVERY_STAGE_IDS) out.add(stage);
+    for (const tag of project?.tags ?? []) out.add(tag);
+    return [...out].filter(Boolean).sort((a, b) => a.localeCompare(b));
+  }, [assetsById, tagRows.rows, project]);
+
+  // Drafts: the editor holds the pending list, the Save button writes it (one write per save, not per chip).
+  const [fileTagDraft, setFileTagDraft] = useState<string[] | null>(null);
+  const [projectTagDraft, setProjectTagDraft] = useState<string[] | null>(null);
+  useEffect(() => setFileTagDraft(null), [open?.id]);
+  useEffect(() => setProjectTagDraft(null), [projectId]);
+
+  const fileTags = fileTagDraft ?? open?.tags ?? [];
+  const fileTagsDirty = open !== null && fileTagDraft !== null && fileTagDraft.join('|') !== open.tags.join('|');
+  const projectTags = projectTagDraft ?? project?.tags ?? [];
+  const projectTagsDirty = project !== null && projectTagDraft !== null && projectTagDraft.join('|') !== project.tags.join('|');
+
   const railRef = useRef<HTMLDivElement>(null);
 
   /** Arrow keys walk the stage rail, Home / End jump; the buttons keep a normal tab stop each. */
@@ -183,6 +222,12 @@ export function ProjectPortalPage({ surface }: { surface: Surface }) {
     return same ? 'all' : stage;
   };
 
+  /**
+   * Stable so the Drawer's focus trap does not re-run on every render: an unstable `onClose` made the trap
+   * re-focus its first control after each state change, which stole focus from the tag editor mid-edit.
+   */
+  const closePreview = useCallback(() => patch({ file: null, page: null }), [patch]);
+
   const openFile = (asset: Asset | null | undefined) => {
     if (!asset) return 'no such file';
     patch({ file: asset.id, page: null });
@@ -203,6 +248,56 @@ export function ProjectPortalPage({ surface }: { surface: Surface }) {
     return url;
   };
 
+  /** A redacted or `confidencial` file is never shown as a cover (D-059): no button, and the action refuses. */
+  const isConfidential = (asset: Asset): boolean =>
+    asset.tags.includes('confidencial') || /redact/i.test(asset.title) || /redact/i.test(asset.slug);
+
+  /** Only a file that renders can be a cover: an image or a PDF whose thumbnail exists. */
+  const canBeCover = (asset: Asset): boolean => ['image', 'pdf'].includes(fileTypeOfAsset(asset)) && !isConfidential(asset);
+
+  /**
+   * Writes the file's tags through the provider with `basedOn` (D-024): a newer stored row still applies
+   * last-write-wins and the global conflict handler toasts who was overwritten (`core.data.conflict`).
+   */
+  const saveFileTags = async (asset: Asset, tags: string[]): Promise<string> => {
+    if (!canTag) return 'no permission: archive.curate is needed to tag a file';
+    const next = parseTags(tags);
+    await data.update('assets', asset.id, { tags: next }, { basedOn: asset.updated_at });
+    setFileTagDraft(null);
+    toast(t('archive.tags.saved', { name: asset.title }));
+    return `${asset.title}: ${next.join(', ') || t('archive.tags.none')}`;
+  };
+
+  const saveStage = async (asset: Asset, stage: string): Promise<string> => {
+    if (!canTag) return 'no permission: archive.curate is needed to move a file to another stage';
+    if (!isDeliveryStage(stage)) return `no such stage: ${stage}`;
+    if (stageOfAsset(asset) === stage) return `${asset.title} is already in ${stage}`;
+    await data.update('assets', asset.id, { stage }, { basedOn: asset.updated_at });
+    toast(t('archive.tags.stageSaved', { name: asset.title, stage: pick(deliveryStage(stage)?.label ?? FILE_TYPE_LABELS.other, lang) }));
+    return `${asset.title}: ${stage}`;
+  };
+
+  const saveCover = async (asset: Asset): Promise<string> => {
+    if (!canWriteProject) return 'no permission: archive.curate is needed to set the cover';
+    if (!project) return 'no project';
+    if (isConfidential(asset)) return 'a confidential file is never the cover (D-059)';
+    if (!canBeCover(asset)) return 'only an image or a PDF can be the cover';
+    if (!asset.thumbnailUrl) return 'this file has no render yet, so there is nothing to show as a cover';
+    await data.update('projects', project.id, { coverAssetId: asset.id }, { basedOn: project.updated_at });
+    toast(t('archive.tags.coverSet', { name: asset.title }));
+    return `${project.name} cover: ${asset.title}`;
+  };
+
+  const saveProjectTags = async (tags: string[]): Promise<string> => {
+    if (!canWriteProject) return 'no permission: archive.curate is needed to tag a project';
+    if (!project) return 'no project';
+    const next = parseTags(tags);
+    await data.update('projects', project.id, { tags: next }, { basedOn: project.updated_at });
+    setProjectTagDraft(null);
+    toast(t('archive.tags.projectSaved', { name: project.name }));
+    return `${project.name}: ${next.join(', ') || t('archive.tags.none')}`;
+  };
+
   const asAsset = (value: unknown): Asset | undefined => {
     const needle = String(value ?? '').toLowerCase();
     return realFiles.find((f) => f.id === value) ?? realFiles.find((f) => f.title.toLowerCase() === needle) ?? (open ?? undefined);
@@ -211,7 +306,7 @@ export function ProjectPortalPage({ surface }: { surface: Surface }) {
   useRegisterActions({
     'archive.openFile': ({ asset }) => openFile(asAsset(asset)),
     'archive.closeFile': () => {
-      patch({ file: null, page: null });
+      closePreview();
       return 'closed';
     },
     'archive.nextFile': () => step(1),
@@ -275,19 +370,39 @@ export function ProjectPortalPage({ surface }: { surface: Surface }) {
       toast(added ? t('archive.portal.added', { name: project.name }) : t('archive.portal.removed', { name: project.name }));
       return added ? 'added' : 'removed';
     },
-    // Declared and shown as a Placeholder; registered so the bus answers honestly (D-047).
-    'archive.tagFile': can('assets.manage') && (() => 'not wired yet: tag editing writes assets.tags via the provider in the next pass'),
+    // Real writes (ar-09). Registered for everyone so a person without the permission gets the refusal, not `not-live`.
+    'archive.tagFile': ({ asset, tags, tag }) => {
+      const found = asAsset(asset);
+      if (!found) return 'no such file';
+      return saveFileTags(found, parseTags(tags ?? tag));
+    },
+    'archive.setStage': ({ asset, stage }) => {
+      const found = asAsset(asset);
+      if (!found) return 'no such file';
+      return saveStage(found, String(stage ?? '').trim());
+    },
+    'archive.setCover': ({ asset }) => {
+      const found = asAsset(asset);
+      if (!found) return 'no such file';
+      return saveCover(found);
+    },
+    'archive.setProjectTags': ({ project: which, tags }) => {
+      if (which !== undefined && which !== null && String(which) !== project?.id && String(which).toLowerCase() !== project?.name.toLowerCase()) {
+        return `this page is ${project?.name ?? 'no project'}; open ${String(which)} to tag it`;
+      }
+      return saveProjectTags(parseTags(tags));
+    },
   });
 
   // Escape closes the preview even when focus never entered the Drawer body.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') patch({ file: null, page: null });
+      if (e.key === 'Escape') closePreview();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [open, patch]);
+  }, [open, closePreview]);
 
   const related = useMemo(() => {
     if (!project) return { client: null, post: null, space: null, examples: [] as Project[] };
@@ -411,10 +526,31 @@ export function ProjectPortalPage({ surface }: { surface: Surface }) {
           <p className="arc-hero__line">
             <StatusPill status={project.pipelineStatus} />
             {life && <Badge tone="info">{pick(life.label, lang)}</Badge>}
-            {project.tags.map((tag) => (
-              <Badge key={tag}>{tag}</Badge>
-            ))}
+            {!canWriteProject && project.tags.map((tag) => <Badge key={tag}>{tag}</Badge>)}
           </p>
+          {canWriteProject && (
+            <div className="arc-tags">
+              <h3 className="arc-tags__title">{t('archive.tags.projectTitle')}</h3>
+              <TagEditor
+                value={projectTags}
+                onChange={setProjectTagDraft}
+                suggestions={tagSuggestions}
+                label={t('archive.tags.projectLabel')}
+                placeholder={t('archive.tags.placeholder')}
+                addLabel={t('archive.tags.add')}
+                removeLabel={(tag) => t('archive.tags.remove', { tag })}
+                hint={t('archive.tags.hint')}
+                countLabel={(count) => (count === 1 ? t('archive.tags.countOne') : t('archive.tags.count', { count }))}
+                max={TAG_MAX}
+              />
+              <div className="arc-tags__row">
+                <Button variant="primary" disabled={!projectTagsDirty} onClick={() => void saveProjectTags(projectTags)}>
+                  {t('archive.tags.save')}
+                </Button>
+                {projectTagsDirty && <Button variant="ghost" onClick={() => setProjectTagDraft(null)}>{t('archive.tags.revert')}</Button>}
+              </div>
+            </div>
+          )}
           <div className="arc-hero__actions">
             {project.sourceFolderUrl && (
               <Button variant="primary" href={project.sourceFolderUrl} external>
@@ -518,9 +654,7 @@ export function ProjectPortalPage({ surface }: { surface: Surface }) {
               {t('archive.group.folder')}
             </ToggleButton>
           </div>
-          <Placeholder what={t('archive.files.tagWhat')}>
-            <Button>{t('archive.files.tag')}</Button>
-          </Placeholder>
+          {canTag && <span className="arc-muted arc-toolbar__note">{t('archive.tags.openToTag')}</span>}
         </FilterBar>
 
         {realFiles.length === 0 && !loading && <EmptyState title={t('archive.files.noneTitle')} description={t('archive.files.noneDesc')} glyph="▤" />}
@@ -532,7 +666,7 @@ export function ProjectPortalPage({ surface }: { surface: Surface }) {
         {visible.length > 0 && (grouping === 'folder' ? folderSections : stageSections)}
       </section>
 
-      <Drawer open={open !== null} onClose={() => patch({ file: null, page: null })} title={open?.title ?? ''}>
+      <Drawer open={open !== null} onClose={closePreview} title={open?.title ?? ''}>
         {open && (
           <>
             <p className="arc-preview__meta">
@@ -577,6 +711,54 @@ export function ProjectPortalPage({ surface }: { surface: Surface }) {
               <Button onClick={() => step(1)}>{t('archive.preview.next')}</Button>
               {openIndex >= 0 && <span className="arc-preview__position">{t('archive.preview.position', { index: openIndex + 1, total: visible.length })}</span>}
             </div>
+
+            {canTag && (
+              <section className="arc-tags" aria-labelledby="arc-file-tags-title">
+                <h3 id="arc-file-tags-title" className="arc-tags__title">
+                  {t('archive.tags.fileTitle')}
+                </h3>
+                <TagEditor
+                  value={fileTags}
+                  onChange={setFileTagDraft}
+                  suggestions={tagSuggestions}
+                  label={t('archive.tags.fileLabel')}
+                  placeholder={t('archive.tags.placeholder')}
+                  addLabel={t('archive.tags.add')}
+                  removeLabel={(tag) => t('archive.tags.remove', { tag })}
+                  hint={t('archive.tags.hint')}
+                  countLabel={(count) => (count === 1 ? t('archive.tags.countOne') : t('archive.tags.count', { count }))}
+                  max={TAG_MAX}
+                />
+                <div className="arc-tags__row">
+                  <Button variant="primary" disabled={!fileTagsDirty} onClick={() => void saveFileTags(open, fileTags)}>
+                    {t('archive.tags.save')}
+                  </Button>
+                  {fileTagsDirty && <Button variant="ghost" onClick={() => setFileTagDraft(null)}>{t('archive.tags.revert')}</Button>}
+                </div>
+                <div className="arc-tags__row">
+                  <Select
+                    className="arc-tags__stage"
+                    label={t('archive.tags.stageLabel')}
+                    value={stageOfAsset(open)}
+                    onChange={(e) => void saveStage(open, e.target.value)}
+                    options={DELIVERY_STAGES.map((stageDef) => ({ value: stageDef.id, label: pick(stageDef.label, lang) }))}
+                  />
+                  {canWriteProject && canBeCover(open) && (
+                    <div className="arc-tags__cover">
+                      {project.coverAssetId === open.id ? (
+                        <Badge tone="success">{t('archive.tags.coverIs')}</Badge>
+                      ) : open.thumbnailUrl ? (
+                        <Button onClick={() => void saveCover(open)}>{t('archive.tags.cover')}</Button>
+                      ) : (
+                        <Placeholder what={t('archive.tags.coverNoRenderWhat')}>
+                          <Button>{t('archive.tags.cover')}</Button>
+                        </Placeholder>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
           </>
         )}
       </Drawer>

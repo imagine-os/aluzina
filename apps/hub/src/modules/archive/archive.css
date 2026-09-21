@@ -435,6 +435,50 @@
   overflow-wrap: anywhere;
 }
 
+/* ---------------------------------------------------------------- tags, stage, cover (ar-09) */
+
+.arc-tags {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  min-width: 0;
+}
+
+.arc-tags__title {
+  margin: 0;
+  font-size: 0.875rem;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.arc-tags__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-2) var(--space-3);
+}
+
+.arc-tags__stage {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.arc-tags__cover {
+  display: flex;
+  align-items: center;
+  min-height: var(--target);
+}
+
+.arc-toolbar__note {
+  flex: 1 1 100%;
+  font-size: 0.875rem;
+}
+
 /* ---------------------------------------------------------------- responsive */
 
 @media (min-width: 48rem) {

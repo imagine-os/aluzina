@@ -250,6 +250,17 @@ export const tokens = {
     lg: '0 12px 32px var(--color-shadow)',
   },
 
+  /**
+   * Icon sizes (Icon atom, docs/design/icons.md), in rem so they follow `--scale` up to 4K: sm inline with
+   * text, md nav rows and card headers, lg section headers and the icon sheet, xl empty thumbnail tiles.
+   */
+  icon: {
+    sm: '1rem',
+    md: '1.25rem',
+    lg: '1.5rem',
+    xl: '2rem',
+  },
+
   /** Rule-line thickness for `hr` / `.hairline` and outline marks (the silver manual draws every line at 1 pt). */
   hairline: '1px',
 

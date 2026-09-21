@@ -1,12 +1,15 @@
 {
-  "capturedAt": "2026-09-21T17:45:23.285Z",
+  "capturedAt": "2026-09-21T21:32:40.296Z",
   "base": "http://localhost:4173/",
   "code": "S-12",
   "route": "/studio/archive",
   "shots": [
-    "en-390",
     "en-1280",
+    "en-1280-dark",
     "en-1920",
+    "en-2560",
+    "en-3840",
+    "en-390",
     "es-1280"
   ],
   "theme": "light",
@@ -52,7 +55,8 @@
             "Filters live in the query string (`?life=&year=&type=&tag=&q=&view=&set=`), so any view is a link a person can paste and an intent voice can address; the actions write the same params.",
             "A card cover is the project `coverAssetId` thumbnail when there is one; otherwise a 2x2 mosaic of `FileIcon`s for the four most common file types in the project, so a project without photography still reads as itself.",
             "The portfolio set is a list of project ids in `localStorage[\"aluzina.archive.set\"]`, shared by S-12 and S-13; \"Copy list\" writes name, year, client and source link per line through `copyText`.",
-            "File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card."
+            "File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card; the card also says how many of them carry tags.",
+            "The Tag filter's options are the live union of `projects[].tags`, so a tag saved on S-13 shows up here without a reload (D-023)."
           ],
           "components": [
             "PageHeader",
@@ -194,11 +198,11 @@
           "surface": "studio",
           "layout": [
             "PageHeader with breadcrumb (portal / Archive / project)",
-            "Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle and tag Badges, Open in Dropbox / Open in Work / Open space / Add to set",
+            "Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle Badge, the project Tags row (TagEditor for archive.curate, read-only Badges otherwise), Open in Dropbox / Open in Work / Open space / Add to set",
             "Delivery order: a stage rail from DELIVERY_STAGES grouped by pipelineGroup, each stage a button with glyph, label and file count",
-            "Files toolbar: search, stage, file type, grid | list, By stage | By folder, Placeholder \"Tag file\"",
+            "Files toolbar: search, stage, file type, grid | list, By stage | By folder (tagging lives in the preview drawer)",
             "Files by stage (or by numbered folder), each file a Thumb button that opens the preview",
-            "Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file",
+            "Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file, then \"Tags and stage\": TagEditor + Save, the delivery-stage Select and \"Set as cover\"",
             "Related: client card, the Spaces post about the project, up to six projects sharing two or more tags"
           ],
           "dataTables": [
@@ -220,7 +224,11 @@
             "Files are grouped two ways (`?group=stage|folder`): by delivery stage (`stageFor`) in pipeline order, or by the studio's own numbered folders sorted with `folderOrderKey` and labelled with `folderLabel`, which is the \"documents in order\" view. Empty numbered folders still render, muted, in the folder view so the structure is complete.",
             "The preview Drawer holds one asset at a time (`?file=<assetId>`), with Previous / Next walking the currently filtered, sorted file list, and `page` state driving the `DocumentViewer`. When nothing is previewable the viewer renders its sentence and type icon, never a blank frame.",
             "Related is three reverse queries: the client through `relations` `for-client`, the Spaces post through `spaces.aboutId` and its `filings`, and up to six other projects sharing at least two tags — the \"sets of related examples\" the studio shows a client.",
-            "Nothing is written this pass except the localStorage set; tagging a file is a declared Placeholder (D-047) because `assets.tags` has no editor yet."
+            "Tags are real writes (ar-09): the `TagEditor` holds a draft and Save writes it once through `data.update('assets', id, { tags }, { basedOn: asset.updated_at })` or on `projects`, both behind the curation permission `archive.curate` (studio, brand, founder), so one save is one row version and a stale edit raises the global D-024 conflict toast.",
+            "Tags are free text, trimmed, lower-cased and de-duplicated; the suggestion list is the live union of every file tag, the `tags` registry names and the delivery-stage ids, so new vocabulary reaches S-12's tag filter the moment it is saved (lists re-render from `subscribe`, D-023).",
+            "The delivery stage of a file is a `Select` over `DELIVERY_STAGES` that writes `assets.stage` at once: the rail, the sections and the counts move with it because they all read the same rows.",
+            "\"Set as cover\" writes `projects.coverAssetId`, offered only for an image or a PDF that already has a thumbnail; a coverable file without a render is a Placeholder saying why, and a `confidencial` or redacted file is never offered as a cover (D-059).",
+            "The portfolio set is still localStorage only; Spaces collections and PDF export are ar-10."
           ],
           "components": [
             "PageHeader",
@@ -233,6 +241,7 @@
             "SearchField",
             "Select",
             "ToggleButton",
+            "TagEditor",
             "Badge",
             "StatusPill",
             "Button",
@@ -358,11 +367,40 @@
             {
               "id": "archive.tagFile",
               "label": "Tag a file",
-              "intent": "tag the file {asset} with {tag}",
-              "permission": "assets.manage",
+              "intent": "tag the file {asset} with {tags}",
+              "permission": "archive.curate",
               "params": {
                 "asset": "id",
-                "tag": "string"
+                "tags": "string"
+              }
+            },
+            {
+              "id": "archive.setStage",
+              "label": "Move a file to a stage",
+              "intent": "move the file {asset} to the delivery stage {stage}",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id",
+                "stage": "string"
+              }
+            },
+            {
+              "id": "archive.setCover",
+              "label": "Set the project cover",
+              "intent": "use the file {asset} as the cover of this project",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.setProjectTags",
+              "label": "Tag the project",
+              "intent": "tag the project {project} with {tags}",
+              "permission": "archive.curate",
+              "params": {
+                "project": "id",
+                "tags": "string"
               }
             },
             {
@@ -421,7 +459,8 @@
             "Filters live in the query string (`?life=&year=&type=&tag=&q=&view=&set=`), so any view is a link a person can paste and an intent voice can address; the actions write the same params.",
             "A card cover is the project `coverAssetId` thumbnail when there is one; otherwise a 2x2 mosaic of `FileIcon`s for the four most common file types in the project, so a project without photography still reads as itself.",
             "The portfolio set is a list of project ids in `localStorage[\"aluzina.archive.set\"]`, shared by S-12 and S-13; \"Copy list\" writes name, year, client and source link per line through `copyText`.",
-            "File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card."
+            "File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card; the card also says how many of them carry tags.",
+            "The Tag filter's options are the live union of `projects[].tags`, so a tag saved on S-13 shows up here without a reload (D-023)."
           ],
           "components": [
             "PageHeader",
@@ -563,11 +602,11 @@
           "surface": "founder",
           "layout": [
             "PageHeader with breadcrumb (portal / Archive / project)",
-            "Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle and tag Badges, Open in Dropbox / Open in Work / Open space / Add to set",
+            "Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle Badge, the project Tags row (TagEditor for archive.curate, read-only Badges otherwise), Open in Dropbox / Open in Work / Open space / Add to set",
             "Delivery order: a stage rail from DELIVERY_STAGES grouped by pipelineGroup, each stage a button with glyph, label and file count",
-            "Files toolbar: search, stage, file type, grid | list, By stage | By folder, Placeholder \"Tag file\"",
+            "Files toolbar: search, stage, file type, grid | list, By stage | By folder (tagging lives in the preview drawer)",
             "Files by stage (or by numbered folder), each file a Thumb button that opens the preview",
-            "Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file",
+            "Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file, then \"Tags and stage\": TagEditor + Save, the delivery-stage Select and \"Set as cover\"",
             "Related: client card, the Spaces post about the project, up to six projects sharing two or more tags"
           ],
           "dataTables": [
@@ -589,7 +628,11 @@
             "Files are grouped two ways (`?group=stage|folder`): by delivery stage (`stageFor`) in pipeline order, or by the studio's own numbered folders sorted with `folderOrderKey` and labelled with `folderLabel`, which is the \"documents in order\" view. Empty numbered folders still render, muted, in the folder view so the structure is complete.",
             "The preview Drawer holds one asset at a time (`?file=<assetId>`), with Previous / Next walking the currently filtered, sorted file list, and `page` state driving the `DocumentViewer`. When nothing is previewable the viewer renders its sentence and type icon, never a blank frame.",
             "Related is three reverse queries: the client through `relations` `for-client`, the Spaces post through `spaces.aboutId` and its `filings`, and up to six other projects sharing at least two tags — the \"sets of related examples\" the studio shows a client.",
-            "Nothing is written this pass except the localStorage set; tagging a file is a declared Placeholder (D-047) because `assets.tags` has no editor yet."
+            "Tags are real writes (ar-09): the `TagEditor` holds a draft and Save writes it once through `data.update('assets', id, { tags }, { basedOn: asset.updated_at })` or on `projects`, both behind the curation permission `archive.curate` (studio, brand, founder), so one save is one row version and a stale edit raises the global D-024 conflict toast.",
+            "Tags are free text, trimmed, lower-cased and de-duplicated; the suggestion list is the live union of every file tag, the `tags` registry names and the delivery-stage ids, so new vocabulary reaches S-12's tag filter the moment it is saved (lists re-render from `subscribe`, D-023).",
+            "The delivery stage of a file is a `Select` over `DELIVERY_STAGES` that writes `assets.stage` at once: the rail, the sections and the counts move with it because they all read the same rows.",
+            "\"Set as cover\" writes `projects.coverAssetId`, offered only for an image or a PDF that already has a thumbnail; a coverable file without a render is a Placeholder saying why, and a `confidencial` or redacted file is never offered as a cover (D-059).",
+            "The portfolio set is still localStorage only; Spaces collections and PDF export are ar-10."
           ],
           "components": [
             "PageHeader",
@@ -602,6 +645,7 @@
             "SearchField",
             "Select",
             "ToggleButton",
+            "TagEditor",
             "Badge",
             "StatusPill",
             "Button",
@@ -727,11 +771,40 @@
             {
               "id": "archive.tagFile",
               "label": "Tag a file",
-              "intent": "tag the file {asset} with {tag}",
-              "permission": "assets.manage",
+              "intent": "tag the file {asset} with {tags}",
+              "permission": "archive.curate",
               "params": {
                 "asset": "id",
-                "tag": "string"
+                "tags": "string"
+              }
+            },
+            {
+              "id": "archive.setStage",
+              "label": "Move a file to a stage",
+              "intent": "move the file {asset} to the delivery stage {stage}",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id",
+                "stage": "string"
+              }
+            },
+            {
+              "id": "archive.setCover",
+              "label": "Set the project cover",
+              "intent": "use the file {asset} as the cover of this project",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.setProjectTags",
+              "label": "Tag the project",
+              "intent": "tag the project {project} with {tags}",
+              "permission": "archive.curate",
+              "params": {
+                "project": "id",
+                "tags": "string"
               }
             },
             {
@@ -790,7 +863,8 @@
             "Filters live in the query string (`?life=&year=&type=&tag=&q=&view=&set=`), so any view is a link a person can paste and an intent voice can address; the actions write the same params.",
             "A card cover is the project `coverAssetId` thumbnail when there is one; otherwise a 2x2 mosaic of `FileIcon`s for the four most common file types in the project, so a project without photography still reads as itself.",
             "The portfolio set is a list of project ids in `localStorage[\"aluzina.archive.set\"]`, shared by S-12 and S-13; \"Copy list\" writes name, year, client and source link per line through `copyText`.",
-            "File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card."
+            "File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card; the card also says how many of them carry tags.",
+            "The Tag filter's options are the live union of `projects[].tags`, so a tag saved on S-13 shows up here without a reload (D-023)."
           ],
           "components": [
             "PageHeader",
@@ -932,11 +1006,11 @@
           "surface": "brand",
           "layout": [
             "PageHeader with breadcrumb (portal / Archive / project)",
-            "Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle and tag Badges, Open in Dropbox / Open in Work / Open space / Add to set",
+            "Hero: cover Thumb, name, client, year, location, StatusPill, lifecycle Badge, the project Tags row (TagEditor for archive.curate, read-only Badges otherwise), Open in Dropbox / Open in Work / Open space / Add to set",
             "Delivery order: a stage rail from DELIVERY_STAGES grouped by pipelineGroup, each stage a button with glyph, label and file count",
-            "Files toolbar: search, stage, file type, grid | list, By stage | By folder, Placeholder \"Tag file\"",
+            "Files toolbar: search, stage, file type, grid | list, By stage | By folder (tagging lives in the preview drawer)",
             "Files by stage (or by numbered folder), each file a Thumb button that opens the preview",
-            "Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file",
+            "Preview Drawer: DocumentViewer with page controls, Download, Open at source, Copy link, Previous / Next file, then \"Tags and stage\": TagEditor + Save, the delivery-stage Select and \"Set as cover\"",
             "Related: client card, the Spaces post about the project, up to six projects sharing two or more tags"
           ],
           "dataTables": [
@@ -958,7 +1032,11 @@
             "Files are grouped two ways (`?group=stage|folder`): by delivery stage (`stageFor`) in pipeline order, or by the studio's own numbered folders sorted with `folderOrderKey` and labelled with `folderLabel`, which is the \"documents in order\" view. Empty numbered folders still render, muted, in the folder view so the structure is complete.",
             "The preview Drawer holds one asset at a time (`?file=<assetId>`), with Previous / Next walking the currently filtered, sorted file list, and `page` state driving the `DocumentViewer`. When nothing is previewable the viewer renders its sentence and type icon, never a blank frame.",
             "Related is three reverse queries: the client through `relations` `for-client`, the Spaces post through `spaces.aboutId` and its `filings`, and up to six other projects sharing at least two tags — the \"sets of related examples\" the studio shows a client.",
-            "Nothing is written this pass except the localStorage set; tagging a file is a declared Placeholder (D-047) because `assets.tags` has no editor yet."
+            "Tags are real writes (ar-09): the `TagEditor` holds a draft and Save writes it once through `data.update('assets', id, { tags }, { basedOn: asset.updated_at })` or on `projects`, both behind the curation permission `archive.curate` (studio, brand, founder), so one save is one row version and a stale edit raises the global D-024 conflict toast.",
+            "Tags are free text, trimmed, lower-cased and de-duplicated; the suggestion list is the live union of every file tag, the `tags` registry names and the delivery-stage ids, so new vocabulary reaches S-12's tag filter the moment it is saved (lists re-render from `subscribe`, D-023).",
+            "The delivery stage of a file is a `Select` over `DELIVERY_STAGES` that writes `assets.stage` at once: the rail, the sections and the counts move with it because they all read the same rows.",
+            "\"Set as cover\" writes `projects.coverAssetId`, offered only for an image or a PDF that already has a thumbnail; a coverable file without a render is a Placeholder saying why, and a `confidencial` or redacted file is never offered as a cover (D-059).",
+            "The portfolio set is still localStorage only; Spaces collections and PDF export are ar-10."
           ],
           "components": [
             "PageHeader",
@@ -971,6 +1049,7 @@
             "SearchField",
             "Select",
             "ToggleButton",
+            "TagEditor",
             "Badge",
             "StatusPill",
             "Button",
@@ -1096,11 +1175,40 @@
             {
               "id": "archive.tagFile",
               "label": "Tag a file",
-              "intent": "tag the file {asset} with {tag}",
-              "permission": "assets.manage",
+              "intent": "tag the file {asset} with {tags}",
+              "permission": "archive.curate",
               "params": {
                 "asset": "id",
-                "tag": "string"
+                "tags": "string"
+              }
+            },
+            {
+              "id": "archive.setStage",
+              "label": "Move a file to a stage",
+              "intent": "move the file {asset} to the delivery stage {stage}",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id",
+                "stage": "string"
+              }
+            },
+            {
+              "id": "archive.setCover",
+              "label": "Set the project cover",
+              "intent": "use the file {asset} as the cover of this project",
+              "permission": "archive.curate",
+              "params": {
+                "asset": "id"
+              }
+            },
+            {
+              "id": "archive.setProjectTags",
+              "label": "Tag the project",
+              "intent": "tag the project {project} with {tags}",
+              "permission": "archive.curate",
+              "params": {
+                "project": "id",
+                "tags": "string"
               }
             },
             {
@@ -1830,6 +1938,7 @@
             "PageHeader (replace document, a Placeholder)",
             "One Card per assets row of kind document: title, file name, page count and size, how many pages are records, the colours and fonts read from the file, and View / Download / Open in new tab / Share link",
             "Related section per Card: the projects its pages depict (links to the Work view) and the playbook services its pages argue for (links to the manual), read from relations",
+            "Section \"Company documents (Dropbox 2023)\": a grid of Thumb tiles (thumbnail or FileIcon, badge = pages or ext, caption = file name, owner / visibility Badges) for the 12 files of ar-15, each opening a Drawer with a DocumentViewer (served pages for the 5 rendered ones; a sentence + \"Open at source\" for the price lists and the 3 third-party files)",
             "Viewer Card: Tabs (one per document) around an <object> PDF viewer with an <iframe> and a plain-text fallback; ?page=N opens the PDF at that page",
             "Card \"Where these files live\": the files are static assets shipped with the app until file storage exists; the rows and their relations are data"
           ],
@@ -1906,6 +2015,21 @@
               "params": {
                 "doc": "enum:portfolio|brochure"
               }
+            },
+            {
+              "id": "brand.openCompanyDocument",
+              "label": "Open a company document",
+              "intent": "open the company document {asset}",
+              "permission": "brand.manage",
+              "params": {
+                "asset": "string"
+              }
+            },
+            {
+              "id": "brand.closeCompanyDocument",
+              "label": "Close the company document viewer",
+              "intent": "close the company document viewer",
+              "permission": "brand.manage"
             }
           ],
           "checkedAt": [
@@ -1919,7 +2043,8 @@
           ],
           "notes": [
             "Page count, file size, palette and fonts come from the assets row, which the seed derives from docs/brand/<doc>/index.json (prompt 0013): replacing a PDF means re-rendering the pages and updating the index, and the row follows; the static list in documents.ts is only the loading fallback (and what G-01 still lists).",
-            "The same rows are published to visitors on P-05 /portfolio; both pages keep their own DocFrame until a DocumentViewer organism lands in the library (request in docs/changelog/_pending/brand-docs.md)."
+            "The same rows are published to visitors on P-05 /portfolio; both pages keep their own DocFrame until a DocumentViewer organism lands in the library (request in docs/changelog/_pending/brand-docs.md).",
+            "The \"Company documents\" section (ar-15) reads assets rows tagged `empresa` (seed/company.ts, order 75) instead of a fixed doc list, so it grows with the next Dropbox intake without a page change."
           ]
         }
       },
@@ -7198,15 +7323,16 @@
         "permission": "spaces.read",
         "spec": {
           "code": "K-06",
-          "name": "Import from Slack",
-          "purpose": "Where the Slack export will land: the mapping from Justin's sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.",
+          "name": "Import from Slack and Asana",
+          "purpose": "Where imports land: the mapping from Justin's Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).",
           "surface": "founder",
           "navGroup": "spaces",
           "layout": [
             "PageHeader",
-            "Card: upload (Placeholder) + note that this page is read-only today",
-            "DataTable: Slack section / channel -> space (kind, posts today)",
-            "Checklist Card: what the import will do"
+            "Card: Slack upload (Placeholder) + note that this page is read-only today",
+            "Card: Asana import (the script, the generated seeds and their counts)",
+            "Checklist Card: what a Slack import will do",
+            "DataTable: Slack section / channel -> space (kind, posts today)"
           ],
           "dataTables": [
             "spaces",
@@ -7214,11 +7340,13 @@
           ],
           "logic": [
             "Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.",
-            "The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts."
+            "The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.",
+            "The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files."
           ],
           "components": [
             "PageHeader",
             "Card",
+            "KeyValue",
             "Placeholder",
             "Button",
             "DataTable",
@@ -8136,15 +8264,16 @@
         "permission": "spaces.read",
         "spec": {
           "code": "K-06",
-          "name": "Import from Slack",
-          "purpose": "Where the Slack export will land: the mapping from Justin's sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.",
+          "name": "Import from Slack and Asana",
+          "purpose": "Where imports land: the mapping from Justin's Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).",
           "surface": "ops",
           "navGroup": "spaces",
           "layout": [
             "PageHeader",
-            "Card: upload (Placeholder) + note that this page is read-only today",
-            "DataTable: Slack section / channel -> space (kind, posts today)",
-            "Checklist Card: what the import will do"
+            "Card: Slack upload (Placeholder) + note that this page is read-only today",
+            "Card: Asana import (the script, the generated seeds and their counts)",
+            "Checklist Card: what a Slack import will do",
+            "DataTable: Slack section / channel -> space (kind, posts today)"
           ],
           "dataTables": [
             "spaces",
@@ -8152,11 +8281,13 @@
           ],
           "logic": [
             "Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.",
-            "The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts."
+            "The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.",
+            "The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files."
           ],
           "components": [
             "PageHeader",
             "Card",
+            "KeyValue",
             "Placeholder",
             "Button",
             "DataTable",
@@ -9074,15 +9205,16 @@
         "permission": "spaces.read",
         "spec": {
           "code": "K-06",
-          "name": "Import from Slack",
-          "purpose": "Where the Slack export will land: the mapping from Justin's sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.",
+          "name": "Import from Slack and Asana",
+          "purpose": "Where imports land: the mapping from Justin's Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).",
           "surface": "studio",
           "navGroup": "spaces",
           "layout": [
             "PageHeader",
-            "Card: upload (Placeholder) + note that this page is read-only today",
-            "DataTable: Slack section / channel -> space (kind, posts today)",
-            "Checklist Card: what the import will do"
+            "Card: Slack upload (Placeholder) + note that this page is read-only today",
+            "Card: Asana import (the script, the generated seeds and their counts)",
+            "Checklist Card: what a Slack import will do",
+            "DataTable: Slack section / channel -> space (kind, posts today)"
           ],
           "dataTables": [
             "spaces",
@@ -9090,11 +9222,13 @@
           ],
           "logic": [
             "Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.",
-            "The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts."
+            "The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.",
+            "The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files."
           ],
           "components": [
             "PageHeader",
             "Card",
+            "KeyValue",
             "Placeholder",
             "Button",
             "DataTable",
@@ -10012,15 +10146,16 @@
         "permission": "spaces.read",
         "spec": {
           "code": "K-06",
-          "name": "Import from Slack",
-          "purpose": "Where the Slack export will land: the mapping from Justin's sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.",
+          "name": "Import from Slack and Asana",
+          "purpose": "Where imports land: the mapping from Justin's Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).",
           "surface": "brand",
           "navGroup": "spaces",
           "layout": [
             "PageHeader",
-            "Card: upload (Placeholder) + note that this page is read-only today",
-            "DataTable: Slack section / channel -> space (kind, posts today)",
-            "Checklist Card: what the import will do"
+            "Card: Slack upload (Placeholder) + note that this page is read-only today",
+            "Card: Asana import (the script, the generated seeds and their counts)",
+            "Checklist Card: what a Slack import will do",
+            "DataTable: Slack section / channel -> space (kind, posts today)"
           ],
           "dataTables": [
             "spaces",
@@ -10028,11 +10163,13 @@
           ],
           "logic": [
             "Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.",
-            "The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts."
+            "The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.",
+            "The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files."
           ],
           "components": [
             "PageHeader",
             "Card",
+            "KeyValue",
             "Placeholder",
             "Button",
             "DataTable",
@@ -10950,15 +11087,16 @@
         "permission": "spaces.read",
         "spec": {
           "code": "K-06",
-          "name": "Import from Slack",
-          "purpose": "Where the Slack export will land: the mapping from Justin's sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.",
+          "name": "Import from Slack and Asana",
+          "purpose": "Where imports land: the mapping from Justin's Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).",
           "surface": "dev",
           "navGroup": "spaces",
           "layout": [
             "PageHeader",
-            "Card: upload (Placeholder) + note that this page is read-only today",
-            "DataTable: Slack section / channel -> space (kind, posts today)",
-            "Checklist Card: what the import will do"
+            "Card: Slack upload (Placeholder) + note that this page is read-only today",
+            "Card: Asana import (the script, the generated seeds and their counts)",
+            "Checklist Card: what a Slack import will do",
+            "DataTable: Slack section / channel -> space (kind, posts today)"
           ],
           "dataTables": [
             "spaces",
@@ -10966,11 +11104,13 @@
           ],
           "logic": [
             "Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.",
-            "The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts."
+            "The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.",
+            "The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files."
           ],
           "components": [
             "PageHeader",
             "Card",
+            "KeyValue",
             "Placeholder",
             "Button",
             "DataTable",
@@ -13417,6 +13557,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -13777,6 +13942,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -14137,6 +14327,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -14497,6 +14712,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -14857,6 +15097,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -15217,6 +15482,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -15577,6 +15867,31 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -15937,6 +16252,289 @@
               "params": {
                 "project": "id"
               }
+            },
+            {
+              "id": "work.setDeliverable",
+              "label": "Set the deliverable",
+              "intent": "make the task {task} produce the deliverable {deliverable}",
+              "permission": "tasks.own.write",
+              "params": {
+                "task": "id",
+                "deliverable": "id"
+              }
+            },
+            {
+              "id": "work.toggleSubtree",
+              "label": "Collapse or expand a task",
+              "intent": "collapse the subtasks of {task}",
+              "permission": "projects.read",
+              "params": {
+                "task": "id"
+              }
+            },
+            {
+              "id": "work.newProject",
+              "label": "New project from template",
+              "intent": "start a new project from a template",
+              "permission": "projects.write"
+            }
+          ],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920,
+            2560
+          ]
+        }
+      },
+      {
+        "path": "/founder/work/new",
+        "code": "W-03",
+        "surface": "founder",
+        "status": "built",
+        "shell": "desktop",
+        "permission": "projects.write",
+        "spec": {
+          "code": "W-03",
+          "name": "New project from template",
+          "purpose": "Create a project from the founder’s own workflow instead of duplicating an Asana project by hand: choose the template, name the project and its client, keep the phases that apply, pick the zones, and the OS writes the sections and the whole task tree with owners and deliverables (D-062).",
+          "surface": "founder",
+          "navGroup": "projects",
+          "layout": [
+            "PageHeader (W-03)",
+            "Tabs: the five steps",
+            "Card per step: template / project and client / phases / zones / review",
+            "Back and Next, Create on the last step"
+          ],
+          "dataTables": [
+            "projects",
+            "sections",
+            "tasks",
+            "clients",
+            "deliverables"
+          ],
+          "roles": [
+            "founder",
+            "ops"
+          ],
+          "logic": [
+            "The template is typed data, not rows (`src/domain/templates`): `tpl-aluzina-workflow` is the merge of the founder’s two Asana template projects plus PROYECTO HOY’s kickoff section.",
+            "Zone-scoped template tasks (references per space, 3D model per space, the nine-lens deep design) are written once per chosen zone; every other task once. The review step counts what will be created before anything is written.",
+            "Create writes one `projects` row, one `sections` row per chosen phase and the tasks parents-first, each with `templateTaskId`, `deliverableId`, `ownerRole`, the team member for that role as assignee, `order` and `parentTaskId`; then it opens W-02 for the new project.",
+            "Everything is `projects.write`: the founder always, operations since this pass. Without it the review step says so and Create stays disabled while the action still answers readably (D-047)."
+          ],
+          "components": [
+            "PageHeader",
+            "Tabs",
+            "Card",
+            "Select",
+            "Input",
+            "Checkbox",
+            "Button",
+            "KeyValue",
+            "StatTile",
+            "Badge"
+          ],
+          "actions": [
+            {
+              "id": "work.selectTemplate",
+              "label": "Choose the template",
+              "intent": "use the project template {template}",
+              "permission": "projects.write",
+              "params": {
+                "template": "id"
+              }
+            },
+            {
+              "id": "work.setTemplateStep",
+              "label": "Go to a step",
+              "intent": "go to the {step} step",
+              "permission": "projects.write",
+              "params": {
+                "step": "enum:template|project|phases|zones|review"
+              }
+            },
+            {
+              "id": "work.setProjectName",
+              "label": "Name the project",
+              "intent": "call the new project {name}",
+              "permission": "projects.write",
+              "params": {
+                "name": "string"
+              }
+            },
+            {
+              "id": "work.selectClient",
+              "label": "Choose the client",
+              "intent": "the new project is for the client {client}",
+              "permission": "projects.write",
+              "params": {
+                "client": "id"
+              }
+            },
+            {
+              "id": "work.selectTemplatePhases",
+              "label": "Choose the phases",
+              "intent": "include the phases {phases}",
+              "permission": "projects.write",
+              "params": {
+                "phases": "string"
+              }
+            },
+            {
+              "id": "work.selectTemplateZones",
+              "label": "Choose the zones",
+              "intent": "include the zones {zones}",
+              "permission": "projects.write",
+              "params": {
+                "zones": "string"
+              }
+            },
+            {
+              "id": "work.addZone",
+              "label": "Add a zone",
+              "intent": "add the zone {zone} to this project",
+              "permission": "projects.write",
+              "params": {
+                "zone": "string"
+              }
+            },
+            {
+              "id": "work.createProjectFromTemplate",
+              "label": "Create the project",
+              "intent": "create the project from the template",
+              "permission": "projects.write"
+            }
+          ],
+          "checkedAt": [
+            360,
+            390,
+            768,
+            1280,
+            1920,
+            2560
+          ]
+        }
+      },
+      {
+        "path": "/ops/work/new",
+        "code": "W-03",
+        "surface": "ops",
+        "status": "built",
+        "shell": "desktop",
+        "permission": "projects.write",
+        "spec": {
+          "code": "W-03",
+          "name": "New project from template",
+          "purpose": "Create a project from the founder’s own workflow instead of duplicating an Asana project by hand: choose the template, name the project and its client, keep the phases that apply, pick the zones, and the OS writes the sections and the whole task tree with owners and deliverables (D-062).",
+          "surface": "ops",
+          "navGroup": "projects",
+          "layout": [
+            "PageHeader (W-03)",
+            "Tabs: the five steps",
+            "Card per step: template / project and client / phases / zones / review",
+            "Back and Next, Create on the last step"
+          ],
+          "dataTables": [
+            "projects",
+            "sections",
+            "tasks",
+            "clients",
+            "deliverables"
+          ],
+          "roles": [
+            "founder",
+            "ops"
+          ],
+          "logic": [
+            "The template is typed data, not rows (`src/domain/templates`): `tpl-aluzina-workflow` is the merge of the founder’s two Asana template projects plus PROYECTO HOY’s kickoff section.",
+            "Zone-scoped template tasks (references per space, 3D model per space, the nine-lens deep design) are written once per chosen zone; every other task once. The review step counts what will be created before anything is written.",
+            "Create writes one `projects` row, one `sections` row per chosen phase and the tasks parents-first, each with `templateTaskId`, `deliverableId`, `ownerRole`, the team member for that role as assignee, `order` and `parentTaskId`; then it opens W-02 for the new project.",
+            "Everything is `projects.write`: the founder always, operations since this pass. Without it the review step says so and Create stays disabled while the action still answers readably (D-047)."
+          ],
+          "components": [
+            "PageHeader",
+            "Tabs",
+            "Card",
+            "Select",
+            "Input",
+            "Checkbox",
+            "Button",
+            "KeyValue",
+            "StatTile",
+            "Badge"
+          ],
+          "actions": [
+            {
+              "id": "work.selectTemplate",
+              "label": "Choose the template",
+              "intent": "use the project template {template}",
+              "permission": "projects.write",
+              "params": {
+                "template": "id"
+              }
+            },
+            {
+              "id": "work.setTemplateStep",
+              "label": "Go to a step",
+              "intent": "go to the {step} step",
+              "permission": "projects.write",
+              "params": {
+                "step": "enum:template|project|phases|zones|review"
+              }
+            },
+            {
+              "id": "work.setProjectName",
+              "label": "Name the project",
+              "intent": "call the new project {name}",
+              "permission": "projects.write",
+              "params": {
+                "name": "string"
+              }
+            },
+            {
+              "id": "work.selectClient",
+              "label": "Choose the client",
+              "intent": "the new project is for the client {client}",
+              "permission": "projects.write",
+              "params": {
+                "client": "id"
+              }
+            },
+            {
+              "id": "work.selectTemplatePhases",
+              "label": "Choose the phases",
+              "intent": "include the phases {phases}",
+              "permission": "projects.write",
+              "params": {
+                "phases": "string"
+              }
+            },
+            {
+              "id": "work.selectTemplateZones",
+              "label": "Choose the zones",
+              "intent": "include the zones {zones}",
+              "permission": "projects.write",
+              "params": {
+                "zones": "string"
+              }
+            },
+            {
+              "id": "work.addZone",
+              "label": "Add a zone",
+              "intent": "add the zone {zone} to this project",
+              "permission": "projects.write",
+              "params": {
+                "zone": "string"
+              }
+            },
+            {
+              "id": "work.createProjectFromTemplate",
+              "label": "Create the project",
+              "intent": "create the project from the template",
+              "permission": "projects.write"
             }
           ],
           "checkedAt": [
@@ -15950,7 +16548,7 @@
         }
       }
     ],
-    "version": "0.11.0",
+    "version": "0.12.0",
     "actions": {
       "declared": [
         {
@@ -16220,11 +16818,46 @@
           "code": "S-13",
           "path": "/studio/archive/:projectId",
           "label": "Tag a file",
-          "intent": "tag the file {asset} with {tag}",
-          "permission": "assets.manage",
+          "intent": "tag the file {asset} with {tags}",
+          "permission": "archive.curate",
           "params": {
             "asset": "id",
-            "tag": "string"
+            "tags": "string"
+          }
+        },
+        {
+          "id": "archive.setStage",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Move a file to a stage",
+          "intent": "move the file {asset} to the delivery stage {stage}",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id",
+            "stage": "string"
+          }
+        },
+        {
+          "id": "archive.setCover",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Set the project cover",
+          "intent": "use the file {asset} as the cover of this project",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.setProjectTags",
+          "code": "S-13",
+          "path": "/studio/archive/:projectId",
+          "label": "Tag the project",
+          "intent": "tag the project {project} with {tags}",
+          "permission": "archive.curate",
+          "params": {
+            "project": "id",
+            "tags": "string"
           }
         },
         {
@@ -16502,11 +17135,46 @@
           "code": "S-13",
           "path": "/founder/archive/:projectId",
           "label": "Tag a file",
-          "intent": "tag the file {asset} with {tag}",
-          "permission": "assets.manage",
+          "intent": "tag the file {asset} with {tags}",
+          "permission": "archive.curate",
           "params": {
             "asset": "id",
-            "tag": "string"
+            "tags": "string"
+          }
+        },
+        {
+          "id": "archive.setStage",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Move a file to a stage",
+          "intent": "move the file {asset} to the delivery stage {stage}",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id",
+            "stage": "string"
+          }
+        },
+        {
+          "id": "archive.setCover",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Set the project cover",
+          "intent": "use the file {asset} as the cover of this project",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.setProjectTags",
+          "code": "S-13",
+          "path": "/founder/archive/:projectId",
+          "label": "Tag the project",
+          "intent": "tag the project {project} with {tags}",
+          "permission": "archive.curate",
+          "params": {
+            "project": "id",
+            "tags": "string"
           }
         },
         {
@@ -16784,11 +17452,46 @@
           "code": "S-13",
           "path": "/brand/archive/:projectId",
           "label": "Tag a file",
-          "intent": "tag the file {asset} with {tag}",
-          "permission": "assets.manage",
+          "intent": "tag the file {asset} with {tags}",
+          "permission": "archive.curate",
           "params": {
             "asset": "id",
-            "tag": "string"
+            "tags": "string"
+          }
+        },
+        {
+          "id": "archive.setStage",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Move a file to a stage",
+          "intent": "move the file {asset} to the delivery stage {stage}",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id",
+            "stage": "string"
+          }
+        },
+        {
+          "id": "archive.setCover",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Set the project cover",
+          "intent": "use the file {asset} as the cover of this project",
+          "permission": "archive.curate",
+          "params": {
+            "asset": "id"
+          }
+        },
+        {
+          "id": "archive.setProjectTags",
+          "code": "S-13",
+          "path": "/brand/archive/:projectId",
+          "label": "Tag the project",
+          "intent": "tag the project {project} with {tags}",
+          "permission": "archive.curate",
+          "params": {
+            "project": "id",
+            "tags": "string"
           }
         },
         {
@@ -17209,6 +17912,25 @@
           "params": {
             "doc": "enum:portfolio|brochure"
           }
+        },
+        {
+          "id": "brand.openCompanyDocument",
+          "code": "G-08",
+          "path": "/brand/documents",
+          "label": "Open a company document",
+          "intent": "open the company document {asset}",
+          "permission": "brand.manage",
+          "params": {
+            "asset": "string"
+          }
+        },
+        {
+          "id": "brand.closeCompanyDocument",
+          "code": "G-08",
+          "path": "/brand/documents",
+          "label": "Close the company document viewer",
+          "intent": "close the company document viewer",
+          "permission": "brand.manage"
         },
         {
           "id": "client.openProject",
@@ -23911,6 +24633,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-01",
+          "path": "/founder/work",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-01",
+          "path": "/founder/work",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-01",
+          "path": "/founder/work",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-02",
           "path": "/founder/work/:projectId",
@@ -24266,6 +25019,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-02",
+          "path": "/founder/work/:projectId",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-02",
+          "path": "/founder/work/:projectId",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-02",
+          "path": "/founder/work/:projectId",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-01",
           "path": "/ops/work",
@@ -24621,6 +25405,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-01",
+          "path": "/ops/work",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-01",
+          "path": "/ops/work",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-01",
+          "path": "/ops/work",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-02",
           "path": "/ops/work/:projectId",
@@ -24976,6 +25791,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-02",
+          "path": "/ops/work/:projectId",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-02",
+          "path": "/ops/work/:projectId",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-02",
+          "path": "/ops/work/:projectId",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-01",
           "path": "/studio/work",
@@ -25331,6 +26177,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-01",
+          "path": "/studio/work",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-01",
+          "path": "/studio/work",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-01",
+          "path": "/studio/work",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-02",
           "path": "/studio/work/:projectId",
@@ -25686,6 +26563,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-02",
+          "path": "/studio/work/:projectId",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-02",
+          "path": "/studio/work/:projectId",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-02",
+          "path": "/studio/work/:projectId",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-01",
           "path": "/brand/work",
@@ -26041,6 +26949,37 @@
           }
         },
         {
+          "id": "work.setDeliverable",
+          "code": "W-01",
+          "path": "/brand/work",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-01",
+          "path": "/brand/work",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-01",
+          "path": "/brand/work",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
           "id": "work.setView",
           "code": "W-02",
           "path": "/brand/work/:projectId",
@@ -26394,6 +27333,207 @@
           "params": {
             "project": "id"
           }
+        },
+        {
+          "id": "work.setDeliverable",
+          "code": "W-02",
+          "path": "/brand/work/:projectId",
+          "label": "Set the deliverable",
+          "intent": "make the task {task} produce the deliverable {deliverable}",
+          "permission": "tasks.own.write",
+          "params": {
+            "task": "id",
+            "deliverable": "id"
+          }
+        },
+        {
+          "id": "work.toggleSubtree",
+          "code": "W-02",
+          "path": "/brand/work/:projectId",
+          "label": "Collapse or expand a task",
+          "intent": "collapse the subtasks of {task}",
+          "permission": "projects.read",
+          "params": {
+            "task": "id"
+          }
+        },
+        {
+          "id": "work.newProject",
+          "code": "W-02",
+          "path": "/brand/work/:projectId",
+          "label": "New project from template",
+          "intent": "start a new project from a template",
+          "permission": "projects.write"
+        },
+        {
+          "id": "work.selectTemplate",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Choose the template",
+          "intent": "use the project template {template}",
+          "permission": "projects.write",
+          "params": {
+            "template": "id"
+          }
+        },
+        {
+          "id": "work.setTemplateStep",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Go to a step",
+          "intent": "go to the {step} step",
+          "permission": "projects.write",
+          "params": {
+            "step": "enum:template|project|phases|zones|review"
+          }
+        },
+        {
+          "id": "work.setProjectName",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Name the project",
+          "intent": "call the new project {name}",
+          "permission": "projects.write",
+          "params": {
+            "name": "string"
+          }
+        },
+        {
+          "id": "work.selectClient",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Choose the client",
+          "intent": "the new project is for the client {client}",
+          "permission": "projects.write",
+          "params": {
+            "client": "id"
+          }
+        },
+        {
+          "id": "work.selectTemplatePhases",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Choose the phases",
+          "intent": "include the phases {phases}",
+          "permission": "projects.write",
+          "params": {
+            "phases": "string"
+          }
+        },
+        {
+          "id": "work.selectTemplateZones",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Choose the zones",
+          "intent": "include the zones {zones}",
+          "permission": "projects.write",
+          "params": {
+            "zones": "string"
+          }
+        },
+        {
+          "id": "work.addZone",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Add a zone",
+          "intent": "add the zone {zone} to this project",
+          "permission": "projects.write",
+          "params": {
+            "zone": "string"
+          }
+        },
+        {
+          "id": "work.createProjectFromTemplate",
+          "code": "W-03",
+          "path": "/founder/work/new",
+          "label": "Create the project",
+          "intent": "create the project from the template",
+          "permission": "projects.write"
+        },
+        {
+          "id": "work.selectTemplate",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Choose the template",
+          "intent": "use the project template {template}",
+          "permission": "projects.write",
+          "params": {
+            "template": "id"
+          }
+        },
+        {
+          "id": "work.setTemplateStep",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Go to a step",
+          "intent": "go to the {step} step",
+          "permission": "projects.write",
+          "params": {
+            "step": "enum:template|project|phases|zones|review"
+          }
+        },
+        {
+          "id": "work.setProjectName",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Name the project",
+          "intent": "call the new project {name}",
+          "permission": "projects.write",
+          "params": {
+            "name": "string"
+          }
+        },
+        {
+          "id": "work.selectClient",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Choose the client",
+          "intent": "the new project is for the client {client}",
+          "permission": "projects.write",
+          "params": {
+            "client": "id"
+          }
+        },
+        {
+          "id": "work.selectTemplatePhases",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Choose the phases",
+          "intent": "include the phases {phases}",
+          "permission": "projects.write",
+          "params": {
+            "phases": "string"
+          }
+        },
+        {
+          "id": "work.selectTemplateZones",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Choose the zones",
+          "intent": "include the zones {zones}",
+          "permission": "projects.write",
+          "params": {
+            "zones": "string"
+          }
+        },
+        {
+          "id": "work.addZone",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Add a zone",
+          "intent": "add the zone {zone} to this project",
+          "permission": "projects.write",
+          "params": {
+            "zone": "string"
+          }
+        },
+        {
+          "id": "work.createProjectFromTemplate",
+          "code": "W-03",
+          "path": "/ops/work/new",
+          "label": "Create the project",
+          "intent": "create the project from the template",
+          "permission": "projects.write"
         }
       ]
     }

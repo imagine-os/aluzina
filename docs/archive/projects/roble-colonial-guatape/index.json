@@ -1,0 +1,54 @@
+{
+ "folderName": "014_ROBLE COLONIAL GUATAPE",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ACu7myzuQcQagwOHDtkD-IM/PROYECTOS%202026/014_ROBLE%20COLONIAL%20GUATAPE?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+ "crawledAt": "2026-09-21T20:48:08.016Z",
+ "indexedAt": "2026-09-21T21:17:52.593Z",
+ "fileCount": 1,
+ "totalBytes": 31383880,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/roble-colonial-guatape/",
+ "files": [
+  {
+   "path": "roble colonial.pdf",
+   "name": "roble colonial.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 31383880,
+   "modified": "11 days ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ADj7jtWQdIdHMx5RwWshO6A/PROYECTOS%202026/014_ROBLE%20COLONIAL%20GUATAPE/roble%20colonial.pdf?rlkey=db3828bqezrux1nomqwl3xupy&dl=0",
+   "downloaded": false,
+   "slug": "roble-colonial",
+   "thumb": "thumbs/roble-colonial.jpg",
+   "pages": [
+    "pages/roble-colonial-page-01.jpg",
+    "pages/roble-colonial-page-02.jpg",
+    "pages/roble-colonial-page-03.jpg",
+    "pages/roble-colonial-page-04.jpg",
+    "pages/roble-colonial-page-05.jpg",
+    "pages/roble-colonial-page-06.jpg"
+   ],
+   "pageCount": 12,
+   "textExcerpt": "ESPACIO + LUZ Estamos conectados con la inmensidad de la naturaleza, el cielo, las estrellas y entre nosotros. En el pasado Tuvimos tiempo para contemplar y apreciar estas cosas. Sin embargo, ahora pasamos la mayor parte de nuestro tiempo persiguiendo nuestros REMHWLYRV\u0003FRQ\u0003OD\u0003D\\XGD\u0003GH\u0003OD\u0003WHFQRORJtD\u0003\\\u0003QR\u0003GHMDPRV\u0003VXÀFLHQWH\u0003 tiempo para conectarnos con nuestro entorno y relajarnos. La luz y los espacios de descanso son herramientas que nos ayudan a bajar nuestra revolución y disfrutar. LO QUE HACEMOS Somos un estudio de diseño, que se dedica D\u0003OD\u0003UHÁH[LyQ\u0003GHO\u0003HVSDFLR\u000f\u0003ODV\u0003HPRFLRQHV\u0003\\\u0003HO\u0003FRPSRUWD",
+   "palette": [
+    "#110d0a",
+    "#2a2518",
+    "#3b3729",
+    "#837e74",
+    "#524d3f",
+    "#746f64"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 6,
+  "bytes": 618264,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}
