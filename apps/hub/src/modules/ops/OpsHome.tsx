@@ -28,6 +28,9 @@ export function OpsHome() {
   const { rows: alerts } = useTable('alerts', { orderBy: 'dueDate' });
   const { rows: deliveries } = useTable('deliveries', { orderBy: 'expectedDate' });
   const { rows: payments } = useTable('payments', { orderBy: 'dueDate' });
+  const { rows: changeOrders } = useTable('changeOrders');
+  const { rows: purchases } = useTable('purchases');
+  const { rows: siteReports } = useTable('siteReports', { orderBy: 'date', dir: 'desc' });
 
   const today = todayIso();
 
@@ -46,6 +49,19 @@ export function OpsHome() {
   const sum = (rows: Payment[]) => rows.reduce((n, p) => n + outstanding(p), 0);
   const nextOut = owedOut.map((p) => p.dueDate).sort()[0] ?? null;
   const nextMeetings = useMemo(() => meetings.filter((m) => m.startsAt.slice(0, 10) >= today).slice(0, 5), [meetings, today]);
+
+  /** Execution control of service E: change orders, purchasing and the site record (O-11 / O-12 / O-13). */
+  const execution = useMemo(
+    () => ({
+      coOpen: changeOrders.filter((c) => c.status === 'requested').length,
+      coTotal: changeOrders.length,
+      purchasesOpen: purchases.filter((p) => p.status !== 'installed').length,
+      purchasesInstalled: purchases.filter((p) => p.status === 'installed').length,
+      visits: siteReports.length,
+      overdueResolutions: siteReports.filter((r) => r.resolutionDue !== null && daysUntil(r.resolutionDue) < 0).length,
+    }),
+    [changeOrders, purchases, siteReports],
+  );
 
   const go = (path: string) => () => navigate(path);
 
@@ -78,6 +94,35 @@ export function OpsHome() {
         <StatTile glyph="◆" label={t('ops.home.tile.in')} value={formatCop(sum(owedIn), lang)} hint={t('ops.home.tile.inHint', { n: owedIn.filter((p) => daysUntil(p.dueDate) < 0).length })} tone="accent" onActivate={go('/ops/payments')} />
         <StatTile glyph="◇" label={t('ops.home.tile.out')} value={formatCop(sum(owedOut), lang)} hint={t('ops.home.tile.outHint', { date: formatDate(nextOut, lang) })} onActivate={go('/ops/payments')} />
       </div>
+
+      <Card title={t('ops.home.execution')} subtitle={t('ops.home.executionDesc')} padding="sm">
+        <div className="ops-tiles">
+          <StatTile
+            glyph="⇄"
+            label={t('ops.home.tile.changeOrders')}
+            value={execution.coOpen}
+            hint={t('ops.home.tile.changeOrdersHint', { n: execution.coTotal })}
+            tone={execution.coOpen > 0 ? 'warning' : 'neutral'}
+            onActivate={go('/ops/change-orders')}
+          />
+          <StatTile
+            glyph="▧"
+            label={t('ops.home.tile.purchases')}
+            value={execution.purchasesOpen}
+            hint={t('ops.home.tile.purchasesHint', { n: execution.purchasesInstalled })}
+            tone="accent"
+            onActivate={go('/ops/purchases')}
+          />
+          <StatTile
+            glyph="◉"
+            label={t('ops.home.tile.siteReports')}
+            value={execution.visits}
+            hint={t('ops.home.tile.siteReportsHint', { n: execution.overdueResolutions })}
+            tone={execution.overdueResolutions > 0 ? 'danger' : 'success'}
+            onActivate={go('/ops/site-reports')}
+          />
+        </div>
+      </Card>
 
       <div className="ops-cards ops-cards--wide">
         <Card

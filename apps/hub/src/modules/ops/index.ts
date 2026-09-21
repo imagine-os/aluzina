@@ -1,16 +1,33 @@
 import { createElement } from 'react';
 import type { RouteDef } from '../../specs/PageSpec';
 import { AlertsPage } from './AlertsPage';
+import { ChangeOrdersPage } from './ChangeOrdersPage';
 import { DeliveriesPage } from './DeliveriesPage';
 import { DocumentsPage } from './DocumentsPage';
 import { OpsHome } from './OpsHome';
 import { PaymentsPage } from './PaymentsPage';
+import { PurchasesPage } from './PurchasesPage';
 import { QuotesPage } from './QuotesPage';
 import { ReportsPage } from './ReportsPage';
 import { SchedulePage } from './SchedulePage';
+import { SiteReportsPage } from './SiteReportsPage';
 import { SuppliersPage } from './SuppliersPage';
 import { TasksPage } from './TasksPage';
-import { alertsSpec, deliveriesSpec, documentsSpec, homeSpec, paymentsSpec, quotesSpec, reportsSpec, scheduleSpec, suppliersSpec, tasksSpec } from './specs';
+import {
+  alertsSpec,
+  changeOrdersSpec,
+  deliveriesSpec,
+  documentsSpec,
+  homeSpec,
+  paymentsSpec,
+  purchasesSpec,
+  quotesSpec,
+  reportsSpec,
+  scheduleSpec,
+  siteReportsSpec,
+  suppliersSpec,
+  tasksSpec,
+} from './specs';
 
 export { strings } from './strings';
 
@@ -95,6 +112,39 @@ export const routes: RouteDef[] = [
     spec: deliveriesSpec,
     element: createElement(DeliveriesPage),
     nav: { labelKey: 'ops.nav.deliveries', order: 60, glyph: '▷' },
+  },
+  {
+    path: '/ops/change-orders',
+    code: changeOrdersSpec.code,
+    surface: 'ops',
+    status: 'built',
+    permission: 'changeOrders.manage',
+    shell: 'desktop',
+    spec: changeOrdersSpec,
+    element: createElement(ChangeOrdersPage),
+    nav: { labelKey: 'ops.nav.changeOrders', order: 60, glyph: '⇄' },
+  },
+  {
+    path: '/ops/purchases',
+    code: purchasesSpec.code,
+    surface: 'ops',
+    status: 'built',
+    permission: 'purchases.manage',
+    shell: 'desktop',
+    spec: purchasesSpec,
+    element: createElement(PurchasesPage),
+    nav: { labelKey: 'ops.nav.purchases', order: 61, glyph: '▧' },
+  },
+  {
+    path: '/ops/site-reports',
+    code: siteReportsSpec.code,
+    surface: 'ops',
+    status: 'built',
+    permission: 'siteReports.write',
+    shell: 'desktop',
+    spec: siteReportsSpec,
+    element: createElement(SiteReportsPage),
+    nav: { labelKey: 'ops.nav.siteReports', order: 62, glyph: '◉' },
   },
   {
     path: '/ops/payments',

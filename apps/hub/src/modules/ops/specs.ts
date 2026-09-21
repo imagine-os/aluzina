@@ -16,14 +16,16 @@ export const homeSpec = defineSpec({
     'Card: pending tasks (DataTable, opens O-03)',
     'Card: alerts before urgent (DataTable + acknowledge)',
     'Card: deliveries this fortnight (DataTable + confirm date)',
+    'Card "Execution control": three StatTiles opening O-11 change orders, O-12 purchasing and O-13 site reports',
     'Card: money due in and out (DataTable, opens O-07)',
   ],
-  dataTables: ['tasks', 'meetings', 'alerts', 'deliveries', 'payments', 'projects', 'suppliers'],
+  dataTables: ['tasks', 'meetings', 'alerts', 'deliveries', 'payments', 'projects', 'suppliers', 'changeOrders', 'purchases', 'siteReports'],
   roles: ['ops', 'founder'],
   logic: [
     'Tiles count live rows: tasks not done, alerts open, deliveries expected within 14 days, unpaid payments summed by direction.',
     'Acknowledging an alert writes alerts.status = acknowledged; confirming a delivery writes confirmedDate = expectedDate and status = confirmed.',
-    'Every tile and card opens the page that owns the data (O-02..O-09).',
+    'Every tile and card opens the page that owns the data (O-02..O-13).',
+    'The execution-control tiles count change orders still waiting for a decision, purchases not yet installed, and site visits with their overdue resolutions.',
   ],
   components: ['PageHeader', 'StatTile', 'Card', 'DataTable', 'StatusPill', 'Badge', 'Button', 'Placeholder'],
   actions: [
@@ -246,6 +248,111 @@ export const reportsSpec = defineSpec({
     { id: 'ops.buildReport', label: 'Format and lay out report', intent: 'lay out the report for {period}', permission: 'reports.write', params: { period: 'string' } },
     { id: 'ops.exportReport', label: 'Export PDF', intent: 'export the report for {period} as a PDF', permission: 'reports.write', params: { period: 'string' } },
     { id: 'ops.sendReport', label: 'Send to founder', intent: 'send the report for {period} to the founder', permission: 'reports.write', params: { period: 'string' } },
+  ],
+  checkedAt: WIDTHS,
+});
+
+// -------------------------------------------------------------------------------------------------
+// Execution control (service playbook E, D-033): change orders, purchasing and site reports.
+// -------------------------------------------------------------------------------------------------
+
+export const changeOrdersSpec = defineSpec({
+  code: 'O-11',
+  name: 'Change orders',
+  purpose:
+    'Change control of service E (stage 8, G-04 / G-14): any request after approval is written down with its description, reason, extra cost, extra time and approval, and an unapproved change is never executed.',
+  surface: 'ops',
+  navGroup: 'execution',
+  layout: [
+    'PageHeader (O-11) with a "New change order" primary action and the G-14 rule as a note',
+    'Four StatTiles: requested, executed, extra cost approved, extra days approved (of the selected project or of everything)',
+    'FilterBar: project Select, status Select, count, clear',
+    'DataTable of change orders: project, description, extra cost, extra days, requested by, approved on, status, with Approve / Reject / Mark executed row actions',
+    'Modal "New change order": project, description, reason, extra cost, extra days',
+    'Drawer: the order in full, a G-14 badge while it may not be executed, and the decide / execute buttons',
+  ],
+  dataTables: ['changeOrders', 'projects'],
+  roles: ['ops', 'founder'],
+  logic: [
+    'Approve writes status approved and approvedAt today; reject writes rejected and clears approvedAt; both need changeOrders.manage.',
+    'G-14: "Mark executed" is offered only for an approved order. In the drawer the button stays visible but disabled and its title names the reason, and the write itself refuses with a toast, so the rule holds however the action is called (including through the actions bus).',
+    'A new order is always created as requested, with requestedById set to the person writing it.',
+    'The totals count approved and executed orders only: a requested change has not changed the budget yet.',
+  ],
+  components: ['PageHeader', 'Button', 'StatTile', 'FilterBar', 'Select', 'Input', 'Textarea', 'DataTable', 'Modal', 'Drawer', 'KeyValue', 'StatusPill', 'Badge'],
+  actions: [
+    { id: 'ops.newChangeOrder', label: 'New change order', intent: 'record a change order on {project} for {description}', permission: 'changeOrders.manage', params: { project: 'id', description: 'string', reason: 'string', cost: 'number', days: 'number' } },
+    { id: 'ops.approveChangeOrder', label: 'Approve change order', intent: 'approve the change order {changeOrder}', permission: 'changeOrders.manage', params: { changeOrder: 'id' } },
+    { id: 'ops.rejectChangeOrder', label: 'Reject change order', intent: 'reject the change order {changeOrder}', permission: 'changeOrders.manage', params: { changeOrder: 'id' } },
+    { id: 'ops.executeChangeOrder', label: 'Mark change order executed', intent: 'mark the change order {changeOrder} as executed', permission: 'changeOrders.manage', params: { changeOrder: 'id' } },
+    { id: 'ops.filterChangeOrdersProject', label: 'Filter by project', intent: 'show the change orders of {project}', permission: 'changeOrders.manage', params: { project: 'id' } },
+  ],
+  checkedAt: WIDTHS,
+});
+
+export const purchasesSpec = defineSpec({
+  code: 'O-12',
+  name: 'Purchasing control',
+  purpose:
+    'Purchasing control of service E (stage 5, G-07): every purchase is tracked from quotation to installation through the six-status flow, with the committed spend per project set against the project budget.',
+  surface: 'ops',
+  navGroup: 'execution',
+  layout: [
+    'PageHeader (O-12) with a "New purchase" primary action and the G-07 rule as a note',
+    'Six StatTiles, one per purchase status, each with its count and its value; activating one filters the table by that status',
+    'FilterBar: search (reference, supplier), project, supplier and status Selects',
+    'DataTable of purchases: project, supplier, reference, quantity, price, date, responsible, status, with an Advance row action',
+    'One Card per project: committed spend, project budget and the share as a toned Badge',
+    'Modal "New purchase": project, supplier, reference, quantity, price, date',
+    'Drawer: the purchase in full, Advance to the next status and a Select that sets any status',
+  ],
+  dataTables: ['purchases', 'suppliers', 'projects'],
+  roles: ['ops', 'founder'],
+  logic: [
+    'Advance uses nextPurchaseStatus() over PURCHASE_STATUSES (quoted -> approved -> paid -> ordered -> received -> installed) and is hidden once the purchase is installed.',
+    'The Select in the drawer sets any status directly, because a real purchase sometimes skips a step or goes back one.',
+    'A new purchase always starts at quoted with the person writing it as responsible.',
+    '`purchases.priceCop` is the price of the whole purchase, not a unit price (that is how the seed rows read), so every total is a plain sum; the share badge turns warning above 80% of the project budget and danger above 100%.',
+  ],
+  components: ['PageHeader', 'Button', 'StatTile', 'FilterBar', 'SearchField', 'Select', 'Input', 'DataTable', 'Card', 'Modal', 'Drawer', 'KeyValue', 'StatusPill', 'Badge'],
+  actions: [
+    { id: 'ops.newPurchase', label: 'New purchase', intent: 'record a purchase of {reference} for {project}', permission: 'purchases.manage', params: { project: 'id', supplier: 'id', reference: 'string', quantity: 'number', price: 'number', date: 'date' } },
+    { id: 'ops.advancePurchase', label: 'Advance purchase', intent: 'advance the purchase {purchase} to the next status', permission: 'purchases.manage', params: { purchase: 'id' } },
+    { id: 'ops.setPurchaseStatus', label: 'Set purchase status', intent: 'set the purchase {purchase} to {status}', permission: 'purchases.manage', params: { purchase: 'id', status: 'enum:quoted|approved|paid|ordered|received|installed' } },
+    { id: 'ops.filterPurchases', label: 'Filter purchases', intent: 'show the purchases of {project} from {supplier} with status {status}', permission: 'purchases.manage', params: { project: 'id', supplier: 'id', status: 'string' } },
+  ],
+  checkedAt: WIDTHS,
+});
+
+export const siteReportsSpec = defineSpec({
+  code: 'O-13',
+  name: 'Site reports',
+  purpose:
+    'ALUZINA site control of service E (stage 7, G-08): every visit produces a written and photographic record — date, progress, notes, decisions, problems, responsible person and the date a problem must be resolved by.',
+  surface: 'ops',
+  navGroup: 'execution',
+  layout: [
+    'PageHeader (O-13) with a "New site report" primary action and the G-08 rule as a note',
+    'Four StatTiles: visits, latest progress, overdue resolutions, photographs on record',
+    'FilterBar: project Select, count, clear',
+    'One Card per report, newest first: a progress StatTile with a text bar, notes, decisions, problems, the resolution date as a toned Badge, the photograph links and the "Add photo" Placeholder',
+    'Modal "New site report": project, date, progress, resolution date, notes, decisions, problems',
+    'Drawer: the same record in full, with its photographs',
+  ],
+  dataTables: ['siteReports', 'projects'],
+  roles: ['ops', 'studio', 'founder'],
+  logic: [
+    'Reports are listed newest first and filtered by project; a resolution date in the past is flagged with a danger badge and counted in the overdue tile.',
+    'A new report records the person writing it as responsible and starts with no photographs.',
+    'Progress is stored 0-100 and rendered as a percentage plus a ten-block text bar, so it never depends on colour alone (the library has no meter atom yet).',
+    'photoUrls are plain strings: they render as external links. Adding one is a Placeholder until a file-storage seam exists.',
+  ],
+  components: ['PageHeader', 'Button', 'StatTile', 'FilterBar', 'Select', 'Input', 'Textarea', 'Card', 'EmptyState', 'Modal', 'Drawer', 'KeyValue', 'Badge', 'Placeholder'],
+  actions: [
+    { id: 'ops.newSiteReport', label: 'New site report', intent: 'record the site visit of {project} on {date}', permission: 'siteReports.write', params: { project: 'id', date: 'date', progress: 'number', notes: 'string', decisions: 'string', problems: 'string', resolutionDue: 'date' } },
+    { id: 'ops.openSiteReport', label: 'Open site report', intent: 'open the site report {report}', permission: 'siteReports.write', params: { report: 'id' } },
+    { id: 'ops.filterSiteReportsProject', label: 'Filter by project', intent: 'show the site reports of {project}', permission: 'siteReports.write', params: { project: 'id' } },
+    { id: 'ops.addSitePhoto', label: 'Add a photograph', intent: 'add a photograph to the site report {report}', permission: 'siteReports.write', params: { report: 'id' } },
   ],
   checkedAt: WIDTHS,
 });

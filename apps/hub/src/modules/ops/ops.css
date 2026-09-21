@@ -68,3 +68,26 @@
     gap: var(--space-6);
   }
 }
+
+/* --------------------------------------------------------------------------------------------
+   Execution control (O-11 change orders, O-12 purchasing, O-13 site reports)
+   -------------------------------------------------------------------------------------------- */
+
+.ops-form {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.ops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--space-3);
+  align-items: start;
+}
+
+/* One site report card: the progress tile above the written record. */
+.ops-report {
+  display: grid;
+  gap: var(--space-3);
+}

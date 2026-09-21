@@ -6,6 +6,12 @@
   align-content: start;
 }
 
+/* Grid items default to min-width:auto, which lets a wide scroller (the status board) stretch the page
+   instead of scrolling inside itself. */
+.founder-page > * {
+  min-width: 0;
+}
+
 /* Wide enough that a Colombian peso figure never breaks mid-number in a StatTile. */
 .founder-stats {
   display: grid;
@@ -67,4 +73,93 @@
 
 .founder-checklist li:last-child {
   border-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------------------------
+   A-08 Leads and the A-03 status board (playbook pipeline, D-033)
+   -------------------------------------------------------------------------------------------- */
+
+.founder-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.founder-section {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.founder-section h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.founder-form {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.founder-form__legend {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.founder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-3);
+  align-items: start;
+}
+
+/* Board bands: one Kanban per status group, each collapsible from its header button. */
+.founder-bands {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.founder-band {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.founder-band__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Move controls inside a Kanban card: status, prev / next, then the full "Move to…" Select. */
+.founder-move {
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+  min-width: 0;
+}
+
+/* A <select> is sized by its widest option; without this it would stretch the Kanban card. */
+.founder-move > * {
+  min-width: 0;
+}
+
+.founder-move__btns {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.founder-move__select {
+  width: 100%;
+  min-width: 0;
+}
+
+.founder-move__select .field__select {
+  width: 100%;
+  min-width: 0;
+  text-overflow: ellipsis;
 }

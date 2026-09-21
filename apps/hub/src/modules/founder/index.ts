@@ -3,10 +3,11 @@ import type { RouteDef } from '../../specs/PageSpec';
 import { ApprovalsPage } from './ApprovalsPage';
 import { ClientsPage } from './ClientsPage';
 import { FounderHome } from './FounderHome';
+import { LeadsPage } from './LeadsPage';
 import { PipelinePage } from './PipelinePage';
 import { ProductsPage } from './ProductsPage';
 import { ProposalsPage } from './ProposalsPage';
-import { approvalsSpec, clientsSpec, homeSpec, pipelineSpec, productsSpec, proposalsSpec, teamSpec } from './specs';
+import { approvalsSpec, clientsSpec, homeSpec, leadsSpec, pipelineSpec, productsSpec, proposalsSpec, teamSpec } from './specs';
 import { TeamPage } from './TeamPage';
 
 export { strings } from './strings';
@@ -14,7 +15,7 @@ export { strings } from './strings';
 /**
  * Founder portal, Alejandra Guerra's point of view (A-01..A-07, D-014).
  * Her roster in `docs/knowledge/team.md` maps to the pages: final approval -> A-02, creative direction and
- * sales pipeline -> A-03, quotes, graphic proposals and project PDFs -> A-04, product development and
+ * sales pipeline -> A-03 and the leads CRM -> A-08, quotes, graphic proposals and project PDFs -> A-04, product development and
  * partnerships -> A-05, client relations and negotiations -> A-06, the team and her own list -> A-07.
  */
 export const routes: RouteDef[] = [
@@ -50,6 +51,17 @@ export const routes: RouteDef[] = [
     spec: pipelineSpec,
     element: createElement(PipelinePage),
     nav: { labelKey: 'founder.nav.pipeline', order: 20, glyph: '▤' },
+  },
+  {
+    path: '/founder/leads',
+    code: leadsSpec.code,
+    surface: 'founder',
+    status: 'built',
+    permission: 'leads.manage',
+    shell: 'desktop',
+    spec: leadsSpec,
+    element: createElement(LeadsPage),
+    nav: { labelKey: 'founder.nav.leads', order: 15, glyph: '◦' },
   },
   {
     path: '/founder/proposals',
