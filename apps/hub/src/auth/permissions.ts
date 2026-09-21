@@ -52,6 +52,7 @@ export const PERMISSIONS = [
   'own.payments.read',
   // Shared
   'projects.read',
+  'suppliers.read',
   'dev.tools',
   'session.viewAs',
 ] as const;
@@ -63,6 +64,7 @@ export const ROLE_PERMISSIONS: Record<Role, readonly string[]> = {
   founder: ['*'],
   ops: [
     'projects.read',
+    'suppliers.read',
     'schedule.manage',
     'tasks.manage',
     'meetings.manage',
@@ -75,7 +77,7 @@ export const ROLE_PERMISSIONS: Record<Role, readonly string[]> = {
     'alerts.manage',
     'reports.write',
   ],
-  studio: ['projects.read', 'design.develop', 'references.manage', 'materials.manage', 'plans.write', 'schedules.write', 'renders.brief', 'measurements.write', 'projects.check'],
+  studio: ['projects.read', 'suppliers.read', 'design.develop', 'references.manage', 'materials.manage', 'plans.write', 'schedules.write', 'renders.brief', 'measurements.write', 'projects.check'],
   brand: ['projects.read', 'brand.manage', 'competitions.manage', 'presentations.write', 'images.write', 'revisions.manage', 'assets.manage'],
   client: ['own.projects.read', 'own.proposals.approve', 'own.messages.write', 'own.payments.read'],
   dev: ['projects.read', 'dev.tools', 'session.viewAs'],

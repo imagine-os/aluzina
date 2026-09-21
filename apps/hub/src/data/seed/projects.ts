@@ -106,18 +106,18 @@ export function seed({ add, users }: SeedCtx): void {
   });
 
   const tasks: Parameters<typeof add<'tasks'>>[2][] = [
-    { projectId: P.laureles, title: 'Verificar medidas cocina y estudio', ownerRole: 'studio', assigneeId: users.studio, status: 'doing', priority: 'high', dueDate: '2026-09-24', dependsOn: [] },
-    { projectId: P.laureles, title: 'Chequeo de consistencia propuesta sala', ownerRole: 'studio', assigneeId: users.studio, status: 'todo', priority: 'high', dueDate: '2026-09-28', dependsOn: ['tsk-laureles-medidas'] },
-    { projectId: P.laureles, title: 'Aprobación final propuesta sala', ownerRole: 'founder', assigneeId: users.founder, status: 'todo', priority: 'normal', dueDate: '2026-10-02', dependsOn: ['tsk-laureles-check'] },
-    { projectId: P.hoy, title: 'Comparar cotizaciones mármol recepción', ownerRole: 'ops', assigneeId: users.ops, status: 'doing', priority: 'urgent', dueDate: '2026-09-23', dependsOn: [] },
-    { projectId: P.hoy, title: 'Confirmar entrega luminarias salas de terapia', ownerRole: 'ops', assigneeId: users.ops, status: 'blocked', priority: 'high', dueDate: '2026-10-05', dependsOn: ['tsk-hoy-marmol'] },
-    { projectId: P.noam, title: 'Visita de obra: revisión carpintería cocina', ownerRole: 'studio', assigneeId: users.studio, status: 'todo', priority: 'normal', dueDate: '2026-09-26', dependsOn: [] },
-    { projectId: P.noam, title: 'Pago 2 a Ebanistería Robledo', ownerRole: 'ops', assigneeId: users.ops, status: 'todo', priority: 'high', dueDate: '2026-09-30', dependsOn: [] },
-    { projectId: P.honeyValley, title: 'Moodboard latón y vidrio ámbar', ownerRole: 'studio', assigneeId: users.studio, status: 'done', priority: 'normal', dueDate: '2026-09-12', dependsOn: [] },
-    { projectId: P.honeyValley, title: 'Presentación de la colección para concursos', ownerRole: 'brand', assigneeId: users.brand, status: 'doing', priority: 'normal', dueDate: '2026-10-15', dependsOn: ['tsk-hv-moodboard'] },
-    { projectId: P.provenza, title: 'Reunión de concepto con Grupo Provenza', ownerRole: 'founder', assigneeId: users.founder, status: 'todo', priority: 'high', dueDate: '2026-09-25', dependsOn: [] },
-    { projectId: null, title: 'Organizar carpetas de concursos 2027 por fecha de entrega', ownerRole: 'brand', assigneeId: users.brand, status: 'doing', priority: 'normal', dueDate: '2026-10-01', dependsOn: [] },
-    { projectId: null, title: 'Informe mensual de pagos y pendientes', ownerRole: 'ops', assigneeId: users.ops, status: 'todo', priority: 'normal', dueDate: '2026-09-30', dependsOn: [] },
+    { projectId: P.laureles, title: 'Verificar medidas cocina y estudio', ownerRole: 'studio', assigneeId: users.studio, status: 'doing', priority: 'high', startDate: '2026-09-17', dueDate: '2026-09-24', dependsOn: [] },
+    { projectId: P.laureles, title: 'Chequeo de consistencia propuesta sala', ownerRole: 'studio', assigneeId: users.studio, status: 'todo', priority: 'high', startDate: '2026-09-25', dueDate: '2026-09-28', dependsOn: ['tsk-laureles-medidas'] },
+    { projectId: P.laureles, title: 'Aprobación final propuesta sala', ownerRole: 'founder', assigneeId: users.founder, status: 'todo', priority: 'normal', startDate: '2026-09-29', dueDate: '2026-10-02', dependsOn: ['tsk-laureles-check'] },
+    { projectId: P.hoy, title: 'Comparar cotizaciones mármol recepción', ownerRole: 'ops', assigneeId: users.ops, status: 'doing', priority: 'urgent', startDate: '2026-09-16', dueDate: '2026-09-23', dependsOn: [] },
+    { projectId: P.hoy, title: 'Confirmar entrega luminarias salas de terapia', ownerRole: 'ops', assigneeId: users.ops, status: 'blocked', priority: 'high', startDate: '2026-09-24', dueDate: '2026-10-05', dependsOn: ['tsk-hoy-marmol'] },
+    { projectId: P.noam, title: 'Visita de obra: revisión carpintería cocina', ownerRole: 'studio', assigneeId: users.studio, status: 'todo', priority: 'normal', startDate: '2026-09-26', dueDate: '2026-09-26', dependsOn: [] },
+    { projectId: P.noam, title: 'Pago 2 a Ebanistería Robledo', ownerRole: 'ops', assigneeId: users.ops, status: 'todo', priority: 'high', startDate: '2026-09-28', dueDate: '2026-09-30', dependsOn: [] },
+    { projectId: P.honeyValley, title: 'Moodboard latón y vidrio ámbar', ownerRole: 'studio', assigneeId: users.studio, status: 'done', priority: 'normal', startDate: '2026-09-01', dueDate: '2026-09-12', dependsOn: [] },
+    { projectId: P.honeyValley, title: 'Presentación de la colección para concursos', ownerRole: 'brand', assigneeId: users.brand, status: 'doing', priority: 'normal', startDate: '2026-09-15', dueDate: '2026-10-15', dependsOn: ['tsk-hv-moodboard'] },
+    { projectId: P.provenza, title: 'Reunión de concepto con Grupo Provenza', ownerRole: 'founder', assigneeId: users.founder, status: 'todo', priority: 'high', startDate: '2026-09-22', dueDate: '2026-09-25', dependsOn: [] },
+    { projectId: null, title: 'Organizar carpetas de concursos 2027 por fecha de entrega', ownerRole: 'brand', assigneeId: users.brand, status: 'doing', priority: 'normal', startDate: '2026-09-21', dueDate: '2026-10-01', dependsOn: [] },
+    { projectId: null, title: 'Informe mensual de pagos y pendientes', ownerRole: 'ops', assigneeId: users.ops, status: 'todo', priority: 'normal', startDate: '2026-09-26', dueDate: '2026-09-30', dependsOn: [] },
   ];
   const taskIds = ['tsk-laureles-medidas', 'tsk-laureles-check', 'tsk-laureles-aprobacion', 'tsk-hoy-marmol', 'tsk-hoy-entrega', 'tsk-noam-visita', 'tsk-noam-pago2', 'tsk-hv-moodboard', 'tsk-hv-presentacion', 'tsk-provenza-concepto', 'tsk-concursos-carpetas', 'tsk-informe-pagos'];
   tasks.forEach((t, i) => add('tasks', taskIds[i], t));

@@ -177,10 +177,14 @@ async function capture(context, base, s) {
       await page.waitForSelector(s.wait, { timeout: 20_000 });
     }
     if (s.hub) {
-      // Let the lazy-loaded thumbnails inside the hub settle before the hub's own shot.
-      await page
-        .evaluate(() => Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => (i.onload = i.onerror = r))))))
-        .catch(() => {});
+      // Let the lazy-loaded thumbnails inside the hub settle before the hub's own shot. Images below the
+      // lazy-load threshold never start loading, so this wait is bounded (8 s) instead of open-ended.
+      await Promise.race([
+        page
+          .evaluate(() => Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => (i.onload = i.onerror = r))))))
+          .catch(() => {}),
+        page.waitForTimeout(8_000),
+      ]);
     }
     await page.evaluate(() => document.fonts?.ready).catch(() => {});
     await page.waitForTimeout(2_000);

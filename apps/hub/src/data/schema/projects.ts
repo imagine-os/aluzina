@@ -32,6 +32,8 @@ export interface Task extends BaseRow {
   assigneeId: Id;
   status: TaskStatus;
   priority: Priority;
+  /** Planned start; null when only the due date is known (the schedule then derives a start). */
+  startDate: ISODate | null;
   dueDate: ISODate | null;
   /** Ids of tasks that must finish first (Timeline dependency indicator). */
   dependsOn: Id[];
