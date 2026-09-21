@@ -1,0 +1,27 @@
+{
+  "extractedFrom": "https://aluzinaa.com/ (homepage, computed styles of visible elements)",
+  "fontFamilies": [
+    { "family": "DINRoundPro, sans-serif", "usageCount": 778, "role": "primary UI/body font" },
+    { "family": "\"Playfair Display\", serif", "usageCount": 10, "role": "display/heading accent font" }
+  ],
+  "topColorsByFrequency": [
+    { "color": "#09090b", "count": 344, "likelyRole": "near-black text / dark background" },
+    { "color": "#ffffff", "count": 184, "likelyRole": "white background / text-on-dark" },
+    { "color": "#18181b", "count": 102, "likelyRole": "dark surface / primary button background" },
+    { "color": "#9ca3af", "count": 64, "likelyRole": "muted gray text" },
+    { "color": "#facc15", "count": 54, "likelyRole": "accent yellow (highlights, icons)" },
+    { "color": "#111827", "count": 54, "likelyRole": "dark gray text/background" },
+    { "color": "#71717a", "count": 28, "likelyRole": "secondary muted gray" },
+    { "color": "#374151", "count": 13, "likelyRole": "dark gray text" },
+    { "color": "#f3f4f6", "count": 13, "likelyRole": "light gray background" },
+    { "color": "#fafafa", "count": 9, "likelyRole": "off-white background" }
+  ],
+  "logoImageUrl": "https://aluzinaa.com/lovable-uploads/eba5b5fe-7b92-4ae7-bda5-c4273b064afe.png",
+  "primaryButtons": {
+    "darkFilled": { "backgroundColor": "#18181b", "textColor": "#ffffff", "example": "Todas / Experiencias Lumínicas Memorables" },
+    "tealAccentChip": { "backgroundColor": "#2dd4bf", "textColor": "#042f2e", "example": "Dirección de espacio" },
+    "outlineWhite": { "backgroundColor": "#ffffff", "textColor": "#09090b", "example": "Diseño Interior que Detona Comportamientos / carousel arrows" }
+  },
+  "accentColor": "#facc15 (yellow, used for icon/highlight accents)",
+  "notes": "Design system reads as a dark, high-contrast neutral palette (near-black #09090b / #18181b surfaces, white text) built on shadcn/ui-style tokens (zinc/gray scale), with a yellow (#facc15) accent and an occasional teal chip (#2dd4bf). Typography pairs a rounded sans (DINRoundPro) for UI/body copy with Playfair Display serif for a few decorative headings."
+}

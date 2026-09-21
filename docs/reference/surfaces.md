@@ -136,6 +136,8 @@ Declared only: no actions bus runs them yet (section 2.1). Per-action rows for t
 | `npm run tokens` | `apps/hub/src/design/tokens.ts` -> `apps/hub/src/styles/tokens.css` (`node --experimental-strip-types scripts/gen-tokens.mjs`) | |
 | `npm run screenshots` | `node scripts/screenshots.mjs`: Playwright captures into `docs/screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json` | `-- --base=<url> --out=docs/screenshots --code=HUB-01 --route=/ --shots=en-390,en-1280,en-3840,es-390`; `--as=<role>` seeds `aluzina.session` with that role's demo user before load (portal pages); `--settle=<ms>` waits after the selector (Work views: 800); `--static=business-os/` captures a static page instead of a hub route (BOS codes; `--wait=<selector>` defaults to `#dc-root`; `es-*` shots click the page's EN/ES toggle when `--lang-toggle=<selector>` is given, e.g. `--lang-toggle='text="EN"'`; values may contain `=`); env `PW_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` honoured for non-localhost bases; `playwright` pinned to 1.56.1 (Chromium 1194) |
 
+Archived scrapers (not npm scripts, docs-only, changelog 0011): `docs/source/aluzinaa-archive/tools/scrape-aluzinaa.js` and `crawl-direccion.js` re-capture aluzinaa.com and direccion.aluzinaa.com (text, rendered HTML, full-page PNGs at 390 / 768 / 1280 / 1920 / 3840) into `text/`, `html/`, `shots/` next to themselves; run with `node <script>` from a folder that has `playwright` installed and Chromium at `/opt/pw-browsers/chromium`. On this sandbox Chromium needs `--disable-features=ChromeRootStoreUsed` (already passed by `scrape-aluzinaa.js`) or the proxy CA imported into NSS to trust the outbound proxy.
+
 ### 1.4b Thumbnail manifest (`/thumbs/manifest.json`, D-011)
 
 Static JSON written at deploy time next to the thumbnails; the contract a hub tool, QA script or agent can read to know what each card shows and how fresh it is:
@@ -206,6 +208,7 @@ Realtime and presence exist as the mock seam since 0008 (D-023): `subscribe` alr
 
 ## 3. Change log of this file
 
+- 2026-09-21 (changelog 0011): archived scraper scripts for the two public sites and how to re-run them (1.4).
 - 2026-09-21 (changelog 0008): W-01 / W-02 on four surfaces and D-04 in the manifest (45 routes, 400 action entries, 1.1); `aluzina.views.<userId>`, `aluzina.tabUser`, `aluzina.presence` and the two BroadcastChannels (1.2); `work.*`, `dev.openAs`, `dev.resetData`, `ops.openWork` (1.3); `--as` / `--settle` screenshot flags (1.4); `update(…, { basedOn })`, `onConflict`, `setActor`, `sections` / `comments` / `activity`, `SEED_VERSION` 3, `useWork`, `usePresence` (1.5); realtime seam status (2.4).
 - 2026-09-21 (changelog 0007): 33 portal routes in the manifest (A-01..A-07, O-01..O-10, S-01..S-09, G-01..G-07), 148 actions summarised per module (1.3), `suppliers.read`, `tasks.startDate` and `SEED_VERSION` 2 (1.5), bounded hub image wait in `npm run thumbs` (1.4).
 - 2026-09-21 (changelog 0006): seven routes in the manifest with `shell` / `permission`; `?as=<role>` contract (1.1a); `aluzina.session` and `aluzina.data` keys (1.2); portal and dev actions (1.3); DataProvider methods and entities (1.5); thumbnail codes; library as data (2.5).

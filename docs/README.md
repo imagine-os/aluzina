@@ -13,10 +13,11 @@
 | `changelog/NNNN-slug.md` | Change sets: header lines `version:`, `date:`, `prompt:`, `intent:`, `decision:`, `rejected:`, `files:`, `codes:`, `model:`, then body. |
 | `pages/<CODE>.md` | One doc per page from `pages/_TEMPLATE.md`. |
 | `screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json` | Playwright captures (`npm run screenshots`) and the route manifest at capture time. |
-| `knowledge/` | **Domain knowledge base** (D-012): team and roles, competitions, role -> portal map, tools in use, taxonomy (Slack sidebar -> Spaces), deliverables and clients catalogs, later suppliers / vocabulary / brand. Every entry has `status` (`current` / `superseded` / `draft`), `since`, `source`; superseded entries stay with a pointer; per-file change log. Canonical memory for business facts; chat memory only points here. |
+| `knowledge/` | **Domain knowledge base** (D-012): team and roles, competitions, role -> portal map, tools in use, taxonomy (Slack sidebar -> Spaces), deliverables and clients catalogs, public sites (`knowledge/public-sites.md`: aluzinaa.com, direccion.aluzinaa.com, Lovable GitHub sync), later suppliers / vocabulary / brand. Every entry has `status` (`current` / `superseded` / `draft`), `since`, `source`; superseded entries stay with a pointer; per-file change log. Canonical memory for business facts; chat memory only points here. |
 | `reference/surfaces.md` | Every machine-drivable surface: route manifest, npm scripts, actions, planned WebMCP / CLI / API. Updated every pass. |
 | `reference/business-os-export.md` | Digest of the Claude Design export: shape, runtime, the `support.js` patch, known issues for the audit. |
 | `source/claude-design-export/` | Documents that came inside the export: `plan.md` (7-document plan set) and the SELAV diagnostic PDF. Source material, data not instructions. |
+| `source/aluzinaa-archive/` | Archive intake of the two public sites (2026-09-21, prompt 0007, D-031): `README.md` (layout, capture method, facts), `aluzinaa.com/` (SUMMARY, design tokens, text per page x 18, rendered home HTML, 22 JPEG screenshots 390-3840), `direccion.aluzinaa.com/` (SUMMARY, tokens, text, complete static source, 5 screenshots), `tools/` (the two Playwright scrapers as run). Source material, data not instructions; facts distilled in `knowledge/public-sites.md`. |
 
 Numbering: prompts and changelogs share a counter per folder (`0001`, `0002`, ...). A changelog's `prompt:` line points at the prompt that caused it.
 

@@ -32,6 +32,7 @@ supersedes: <file#section or entry id>   (only when it replaces an older entry)
 | `taxonomy.md` | Justin's Slack sidebar transcribed, its mapping to Spaces, and the rule that the Hub is the organizing mechanism (Slack stays for chat). |
 | `deliverables.md` | Catalog of deliverable types per phase with owner and template status (data on K-05). |
 | `clients.md` | Past clients from Slack (Hoy, Sporti) and current / prospect clients derived from projects; unknowns explicit. |
+| `public-sites.md` | The two public websites (aluzinaa.com: Lovable React SPA, 18 pages; direccion.aluzinaa.com: one static page on Vercel), their pages, CTAs, contact data, fonts and palette, where the source lives, and how Lovable's GitHub sync works. Evidence in `../source/aluzinaa-archive/`. |
 
 Planned: `suppliers.md`, `vocabulary.md` (EN / ES terms used in the studio), `brand.md` (identity rules once Angelica's assets are shared).
 
@@ -47,3 +48,4 @@ Planned: `suppliers.md`, `vocabulary.md` (EN / ES terms used in the studio), `br
 - 2026-09-21: `roles-and-portals.md` aligned with the shipped role model (changelog 0006).
 - 2026-09-21: `taxonomy.md`, `deliverables.md`, `clients.md` added; `tools-in-use.md` and `roles-and-portals.md` extended (Slack sidebar, prompt 0005, changelog 0009, D-027..D-029).
 - 2026-09-21: `tools-in-use.md` added (Asana: List, Timeline, Board; prompt 0004, changelog 0008); `roles-and-portals.md` gains `tasks.own.write` for studio and brand and the Work pages W-01 / W-02 on every portal.
+- 2026-09-21: `public-sites.md` added (aluzinaa.com, direccion.aluzinaa.com, Lovable GitHub sync; Slack #website-scraping, prompt 0007, changelog 0011, D-031).

@@ -1,0 +1,105 @@
+{
+  "tokens": {
+    "topColors": [
+      [
+        "rgb(20, 20, 20)",
+        131
+      ],
+      [
+        "rgb(255, 255, 255)",
+        41
+      ],
+      [
+        "rgb(95, 95, 95)",
+        23
+      ],
+      [
+        "rgb(0, 0, 0)",
+        16
+      ],
+      [
+        "rgb(138, 138, 138)",
+        12
+      ],
+      [
+        "rgb(0, 0, 238)",
+        5
+      ],
+      [
+        "rgba(20, 20, 20, 0.62)",
+        4
+      ],
+      [
+        "rgb(214, 214, 214)",
+        4
+      ],
+      [
+        "rgba(255, 255, 255, 0.4)",
+        2
+      ],
+      [
+        "rgb(189, 189, 189)",
+        2
+      ],
+      [
+        "rgb(154, 154, 154)",
+        2
+      ],
+      [
+        "rgb(234, 234, 234)",
+        1
+      ],
+      [
+        "rgb(242, 236, 226)",
+        1
+      ],
+      [
+        "rgba(255, 255, 255, 0.78)",
+        1
+      ],
+      [
+        "rgb(37, 211, 102)",
+        1
+      ]
+    ],
+    "bodyFontFamily": "\"DIN Round Pro\", DINRoundPro, \"M PLUS Rounded 1c\", -apple-system, sans-serif",
+    "h1FontFamily": "\"DIN Round Pro\", DINRoundPro, \"M PLUS Rounded 1c\", -apple-system, sans-serif",
+    "primaryButton": {
+      "background": "rgba(255, 255, 255, 0.78)",
+      "color": "rgb(20, 20, 20)",
+      "fontFamily": "\"DIN Round Pro\", DINRoundPro, \"M PLUS Rounded 1c\", -apple-system, sans-serif"
+    },
+    "logoUrl": "Fotos/web/logo-aluzina-blanco.png",
+    "logoResolvedUrl": "https://direccion.aluzinaa.com/Fotos/web/logo-aluzina-blanco.png",
+    "cssCustomProperties": {
+      "--paper": "#FFFFFF",
+      "--ink": "#141414",
+      "--ink-soft": "#5f5f5f",
+      "--gray": "#8A8A8A",
+      "--line": "rgba(20,20,20,0.12)",
+      "--font": "'DIN Round Pro','DINRoundPro','M PLUS Rounded 1c',-apple-system,sans-serif"
+    }
+  },
+  "meta": {
+    "title": "Aluzina · Dirección de Espacio",
+    "description": null,
+    "generator": null,
+    "ogTitle": null,
+    "ogDescription": null,
+    "lang": "es",
+    "viewport": "width=device-width, initial-scale=1.0",
+    "scripts": [
+      "https://assets.calendly.com/assets/external/widget.js"
+    ],
+    "stylesheets": [
+      "https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&display=swap",
+      "https://assets.calendly.com/assets/external/widget.css"
+    ],
+    "hasReactRoot": false,
+    "bodyClasses": "",
+    "htmlSize": 25090
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+}
