@@ -1,0 +1,526 @@
+/* Public site (P-01..P-04). Tokens only (P-07); everything in rem so the --scale bands carry it to 4K (P-01). */
+
+.pub {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ---------------------------------------------------------------- header */
+
+.pub-head {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.pub-head__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  padding-block: var(--space-3);
+}
+
+.pub-head__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--target);
+  text-decoration: none;
+}
+
+.pub-head__mark {
+  width: 0.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, var(--color-accent), var(--color-accent-soft));
+  flex: none;
+}
+
+.pub-head__brand-text {
+  display: grid;
+}
+
+.pub-head__wordmark {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pub-head__tagline {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+}
+
+.pub-head__nav {
+  flex: 1 1 auto;
+}
+
+.pub-head__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pub-head__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  padding-inline: var(--space-2);
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+  color: var(--color-text-muted);
+}
+
+.pub-head__link:hover {
+  color: var(--color-text);
+}
+
+.pub-head__link--active {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+  font-weight: 600;
+}
+
+.pub-head__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-inline-start: auto;
+}
+
+@media (max-width: 600px) {
+  .pub-head__nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .pub-head__controls {
+    margin-inline-start: 0;
+  }
+
+  .pub-head__staff {
+    font-size: 0.875rem;
+  }
+}
+
+/* ---------------------------------------------------------------- main and footer */
+
+.pub-main {
+  flex: 1;
+  padding-block: var(--space-6) var(--space-8);
+}
+
+.pub-main__inner {
+  /* grid with a 0-min track, never flex: a flex column would refuse to shrink its items below their
+     min-content width and push the page sideways at 360 px (P-01). */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+  max-width: 72rem;
+}
+
+.pub-foot {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding-block: var(--space-5);
+  color: var(--color-text-muted);
+}
+
+.pub-foot__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.pub-foot__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  align-items: center;
+}
+
+.pub-foot__hint {
+  font-size: 0.9375rem;
+  max-width: 44rem;
+}
+
+/* ---------------------------------------------------------------- shared page pieces */
+
+.pub-hero {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 54rem;
+  padding-block: var(--space-5) var(--space-2);
+}
+
+.pub-hero__title {
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  line-height: 1.05;
+}
+
+.pub-hero__lead {
+  font-size: 1.1875rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.pub-eyebrow {
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.pub-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.pub-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+/* Grid items keep `min-width: auto` by default and would refuse to shrink below their min-content
+   width, pushing the page sideways at 360 px; every level of the page opts out (P-01). */
+.pub-main__inner > *,
+.pub-section > *,
+.pub-foot__inner > *,
+.pub-form > *,
+.pub-form__fields > * {
+  min-width: 0;
+}
+
+.pub-section__title {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: 44rem;
+}
+
+.pub-section__desc {
+  color: var(--color-text-muted);
+  max-width: 48rem;
+  font-size: 1.0625rem;
+}
+
+.pub-prose {
+  max-width: 52rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.pub-quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: 1.35;
+  max-width: 48rem;
+  margin: 0;
+  padding-inline-start: var(--space-4);
+  border-inline-start: 3px solid var(--color-accent);
+}
+
+.pub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pub-grid--two {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+}
+
+.pub-def {
+  display: grid;
+  gap: var(--space-1);
+  margin-block: var(--space-3) 0;
+}
+
+.pub-def__key {
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.pub-def__value {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.pub-card__foot {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Service cards: the ladder word takes its own line above the name, so a long word
+   ("Soul + Final Composition") never squeezes the title into one word per line. */
+.pub-grid .card__head {
+  flex-wrap: wrap-reverse;
+}
+
+.pub-grid .card__actions {
+  flex: 1 0 100%;
+}
+
+/* Numbered journey / step list */
+.pub-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: pub-step;
+}
+
+.pub-steps__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.pub-steps__n {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--color-accent);
+  flex: none;
+}
+
+.pub-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-inline-start: var(--space-5);
+  line-height: 1.6;
+}
+
+/* Expandable phase cards (P-02) */
+.pub-phases {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pub-phase {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.pub-phase__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.pub-phase__heading {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.pub-phase__n {
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.pub-phase__title {
+  font-size: 1.1875rem;
+}
+
+.pub-phase__notes {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.pub-pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: space-between;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-5);
+}
+
+/* ---------------------------------------------------------------- intake (P-03) */
+
+.pub-stepper {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.pub-stepper__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pub-stepper__current,
+.pub-stepper__todo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target);
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+}
+
+.pub-stepper__current {
+  border-color: var(--color-accent);
+  background: var(--color-surface-raised);
+  font-weight: 600;
+}
+
+.pub-stepper__todo {
+  color: var(--color-text-muted);
+  border-style: dashed;
+}
+
+.pub-progress {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.pub-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  max-width: 44rem;
+}
+
+.pub-form__fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .pub-form__fields--pairs {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.pub-form__error {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.pub-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.pub-ref {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  word-break: break-all;
+  background: var(--color-surface-raised);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  display: inline-block;
+}
+
+/* ---------------------------------------------------------------- large screens (P-01) */
+
+@media (min-width: 1920px) {
+  .pub-main__inner {
+    max-width: 84rem;
+    gap: var(--space-8);
+  }
+
+  .pub-hero {
+    max-width: 62rem;
+  }
+}
+
+/* ---------------------------------------------------------------- documents (P-05) */
+
+.pub-doc__anchor {
+  display: block;
+  scroll-margin-top: var(--space-4);
+}
+
+.pub-doc__frame {
+  width: 100%;
+  /* Tall enough to read a page on a laptop, capped so a 4K screen does not stretch one page to 2000 px. */
+  height: clamp(22rem, 68vh, 56rem);
+}
+
+.pub-doc__object {
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+/* Shown when the browser cannot render a PDF in place, and when the file is not on the server yet. */
+.pub-doc__fallback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* Colours and typefaces read from the file (data, so the swatch background is the value itself). */
+.pub-doc__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin: var(--space-2) 0 0;
+}
+
+.pub-doc__palette {
+  display: inline-flex;
+  gap: var(--space-1);
+}
+
+.pub-doc__palette-swatch {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+@media (min-width: 1920px) {
+  .pub-doc__frame {
+    height: clamp(30rem, 72vh, 76rem);
+  }
+}
