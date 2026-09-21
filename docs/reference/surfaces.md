@@ -1,6 +1,6 @@
 # Surfaces: routes, scripts, actions, MCP / CLI / API
 
-Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0008).
+Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0009).
 
 ## 1. What exists today
 
@@ -46,11 +46,17 @@ Every surface a machine (script, agent, voice controller, MCP client) can drive,
 | `/brand/assets` | G-07 | brand | built | desktop | `assets.manage` | 6 (Asset library organization) |
 | `/founder/work`, `/ops/work`, `/studio/work`, `/brand/work` | W-01 | founder / ops / studio / brand | built | desktop | `projects.read` / `tasks.manage` / `tasks.own.write` / `tasks.own.write` | 31 `work.*` per route (Work) |
 | `/<surface>/work/:projectId` (same four surfaces) | W-02 | founder / ops / studio / brand | built | desktop | as W-01 | 31 `work.*` per route (Project work) |
+| `/founder/spaces`, `/ops/spaces`, `/studio/spaces`, `/brand/spaces`, `/dev/spaces` | K-01 | founder / ops / studio / brand / dev | built | desktop | `spaces.read` | 15 `spaces.*` per route (Spaces home) |
+| `/<surface>/spaces/:spaceId` (same five surfaces) | K-02 | as K-01 | built | desktop | `spaces.read` | 15 (Space view) |
+| `/<surface>/spaces/post/:postId` | K-03 | as K-01 | built | desktop | `spaces.read` | 13 (Post) |
+| `/<surface>/spaces/graph` | K-04 | as K-01 | built | desktop | `spaces.read` | 6 (Graph; `?focus=<type>:<id>&depth=1\|2\|3\|all` in the hash query) |
+| `/<surface>/spaces/catalog` | K-05 | as K-01 | built | desktop | `spaces.read` | 5 (Catalog; `?tab=deliverables\|clients\|tools\|roles`) |
+| `/<surface>/spaces/import` | K-06 | as K-01 | built | desktop | `spaces.read` | 2 (Import from Slack) |
 | `/dev/components` | D-02 | dev | built | desktop | `dev.tools` | `dev.searchComponents`, `dev.filterTier` |
 | `/dev/specs` | D-03 | dev | built | desktop | `dev.tools` | `dev.openSpec`, `dev.filterSurface` |
 | `/dev/multiuser` | D-04 | dev | built | desktop | `dev.tools` | `dev.openAs`, `dev.resetData` |
 
-45 routes, 400 declared action entries: hub 7, founder 88 (26 portal + 62 work), ops 102 (40 portal incl. `ops.openWork` x2 + 62 work), studio 104 (42 + 62), brand 93 (31 + 62), dev 6 over 3 pages (changelog 0008). The `work.*` set is 31 distinct ids declared on eight routes. Every action id is `<module>.<verb>` with an intent phrase and, for the portals, a permission; the full list is `window.__aluzina.routes[].spec.actions` and the drawer on `/#/dev/specs`.
+75 routes, 680 declared action entries: hub 7, founder 144 (26 portal + 62 work + 56 spaces), ops 158 (40 + 62 + 56), studio 160 (42 + 62 + 56), brand 149 (31 + 62 + 56), dev 62 (6 over 3 pages + 56 spaces) (changelog 0009). The `work.*` set is 31 distinct ids declared on eight routes; the `spaces.*` set is 37 distinct ids declared on 30 routes (56 entries per surface). Every action id is `<module>.<verb>` with an intent phrase and, for the portals, a permission; the full list is `window.__aluzina.routes[].spec.actions` and the drawer on `/#/dev/specs`.
 
 Consumers: `scripts/screenshots.mjs` (writes the manifest into `docs/screenshots/<CODE>/routes.json`), `/#/dev/specs` (D-03, same data through `RoutesContext`), `scripts/thumbnails.mjs` targets; future QA and WebMCP generation.
 
@@ -81,7 +87,7 @@ Runtime resources: `/business-os/vendor/*.js` (React, ReactDOM, Babel), `/busine
 | `aluzina.theme` | `light` \| `dark` | `ThemeProvider` (action `hub.toggleTheme`) |
 | `aluzina.session` | JSON `{ userId, viewAs: role \| null, devMode }` | `SessionProvider` (`switchUser`, `viewAs`, `toggleDevMode`; actions `hub.enterAs`, `hub.switchRole`, `hub.toggleDevMode`); `userId` is a demo user id (`u-alejandra`, `u-miguel`, `u-sarai`, `u-angelica`, `u-client`, `u-dev`), default `u-dev` |
 | `aluzina.devMode` | `on` \| `off` | mirror of `session.devMode` for the pre-paint script and older tooling |
-| `aluzina.data` | JSON `{ seedVersion, tables }` | `MockProvider` (D-016): every entity table; removed and re-seeded by `reset()` or when `SEED_VERSION` changes (3 since 0008) |
+| `aluzina.data` | JSON `{ seedVersion, tables }` | `MockProvider` (D-016): every entity table (29 since 0009: + `spaces`, `posts`, `filings`, `relations`, `tags`, `clients`, `deliverables`, `tools`); removed and re-seeded by `reset()` or when `SEED_VERSION` changes (4 since 0009) |
 | `aluzina.views.<userId>` | JSON `{ views: SavedView[], last: { [scope]: ViewState } }` | Work views (D-025): named saved views and the last `{ view, filters, sort, groupBy }` per scope (`all` or a project id), per demo user |
 | `aluzina.tabUser` (sessionStorage) | demo user id | `SessionProvider`: the `?as=` user of this tab, wins over `aluzina.session.userId` on reload so two tabs stay two people (D-04) |
 | `aluzina.presence` | JSON `{ [tabId]: { tabId, userId, route, at } }` | `PresenceProvider` fallback when `BroadcastChannel` is unavailable (D-023) |
@@ -112,9 +118,10 @@ Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effecti
 | `dev.openAs` | D-04 | open a new tab as {role} | `dev.tools` | `role: enum:founder\|ops\|studio\|brand` |
 | `dev.resetData` | D-04 | reset the demo data to the seeds | `dev.tools` | – |
 | `ops.openWork` | O-02, O-03 | open the schedule / tasks in the Work views | `schedule.manage` / `tasks.manage` | – |
+| `spaces.*` (37 ids, 30 routes) | K-01..K-06 | select a space, expand / collapse, search, show archived, browse tree, create space / post, open post, filter by kind / tag / author, sort, edit description, archive, go to my role space; edit / save / pin / set status of a post, file in / remove from a space, set tags, add / remove a relation, open a related entity, comment, open link; focus the graph, set depth, toggle a kind, zoom in / out / fit, open a node; catalog tab, open template (Placeholder) / hub page / project; upload Slack export (Placeholder) | `spaces.read` (navigation, filters, comments), `spaces.write` (every write), `spaces.admin` (archive, upload) | space / post / relation / entity ids, enums (`kind`, `status`, `depth`, `tab`, `direction`), strings (`docs/pages/K-01.md`..`K-06.md`) |
 | `work.*` (31 ids, 8 routes) | W-01, W-02 | switch view, search, filter, sort, group, save / apply / delete a view, add / open / rename / assign a task, set dates / status / priority / tags / description, complete, move, select, bulk update, add / remove dependency, add / tick subtask, comment, zoom, go to today, change month, collapse group, open project | `projects.read` (read and view state, comments) or `tasks.own.write` (every write; `tasks.manage` covers it) | task / person / section / project ids, enums (`view`, `status`, `priority`, `zoom`, `by`), dates, strings (`docs/pages/W-01.md`) |
 
-Declared only: no actions bus runs them yet (section 2.1). Per-action rows for the portals live in each page doc (`docs/pages/<CODE>.md`, section Actions) and in the manifest. Permissions per role: `apps/hub/src/auth/permissions.ts` (`docs/knowledge/roles-and-portals.md`); `suppliers.read` added for studio and ops (0007).
+Declared only: no actions bus runs them yet (section 2.1). Per-action rows for the portals live in each page doc (`docs/pages/<CODE>.md`, section Actions) and in the manifest. Permissions per role: `apps/hub/src/auth/permissions.ts` (`docs/knowledge/roles-and-portals.md`); `suppliers.read` added for studio and ops (0007); `spaces.read / write / admin` and `marketing.*` added, role `marketing` (0009, D-028).
 
 ### 1.4 npm scripts (the CLI today)
 
@@ -148,6 +155,8 @@ Static JSON written at deploy time next to the thumbnails; the contract a hub to
 `code` is the page code the card carries; `path` is relative to the site root; `source` is the URL that was captured (local `127.0.0.1` URLs mean "from this build") or `placeholder` when the tile was written instead; `error` is present only for placeholders. Codes today: `BOS-01..06`, `A-01`, `O-01`, `S-01`, `G-01`, `D-02`, `D-03`, `P-00`, `D-06`, `HUB-01`. The hub reads `./thumbs/<code>.jpg?v=<buildId>` directly (`SurfaceCard` `image` prop) and does not depend on the manifest; a missing file renders the bilingual tile (`data-thumb="placeholder"`).
 
 ### 1.5 Data provider (D-016)
+
+Spaces entities (0009, D-026): `spaces` (tree by `parentId`, `aboutType / aboutId`), `posts`, `filings` (post x space), `relations` (`fromType / fromId / toType / toId / kind`; `fromType` / `toType` are entity names or `roles` / `users`), `tags`, `clients`, `deliverables`, `tools`. Same `list / get / create / update / remove / subscribe` methods; the graph and backlinks are queries over `relations` (`where: { toType, toId }`).
 
 `apps/hub/src/data/provider.ts`, mounted once by `DataContextProvider` in `App.tsx`; implementation today: `MockProvider` (`name: 'mock'`, localStorage `aluzina.data`). Every method is async so Supabase can replace it silently.
 

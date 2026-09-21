@@ -12,7 +12,7 @@ src/modules/<name>/
   <Page>.tsx      one component per page (+ <Page>.css, tokens only)
 ```
 
-Modules today: `hub` (HUB-01), `dev` (D-02 components, D-03 specs, D-04 multiuser), `founder` (A-xx), `ops` (O-xx), `studio` (S-xx), `brand` (G-xx), `work` (W-01 / W-02, the one module that mounts the same page on the four portal surfaces, D-021). `client` (C-xx) is planned.
+Modules today: `hub` (HUB-01), `dev` (D-02 components, D-03 specs, D-04 multiuser), `founder` (A-xx), `ops` (O-xx), `studio` (S-xx), `brand` (G-xx), `work` (W-01 / W-02, mounts the same page on the four portal surfaces, D-021), `spaces` (K-01..K-06, mounts on the four portals and on dev, D-026). `client` (C-xx) is planned.
 
 ## Page codes and paths
 
@@ -25,7 +25,7 @@ Modules today: `hub` (HUB-01), `dev` (D-02 components, D-03 specs, D-04 multiuse
 | client | `C-xx` | `/client/...` | `client` | `C-01` (planned) | `own.projects.read` |
 | dev | `D-xx` | `/dev/...` | `dev` | `D-02` `/dev/components` | `dev.tools` |
 
-Codes are two digits, `01` is the dashboard, then `02..` in the order you build. Taken so far: A-01..A-07, O-01..O-10, S-01..S-09, G-01..G-07 (D-018), W-01..W-02, D-02..D-04. Nav order: dashboards are `0`, Work is `5`, module pages start at `10`; the first four by order form the phone bottom nav. Use them in `spec.code`, `docs/pages/<CODE>.md`, `docs/screenshots/<CODE>/`, changelog `codes:` lines and commit bodies.
+Codes are two digits, `01` is the dashboard, then `02..` in the order you build. Taken so far: A-01..A-07, O-01..O-10, S-01..S-09, G-01..G-07 (D-018), W-01..W-02, K-01..K-06, D-02..D-04. Nav order: dashboards are `0`, Work is `5`, Spaces is `6` (its Graph / Catalog / Import are `61..63`), module pages start at `10`; the first four by order form the phone bottom nav. Use them in `spec.code`, `docs/pages/<CODE>.md`, `docs/screenshots/<CODE>/`, changelog `codes:` lines and commit bodies.
 
 ## Adding a page
 
@@ -76,7 +76,7 @@ export const routes: RouteDef[] = [
 
 ## Nav groups (`spec.navGroup`)
 
-`overview, approvals, projects, sales, schedule, suppliers, money, documents, design, references, brand, competitions, communication, alerts, reports, settings, developer, docs` (labels are `core.nav.<key>`). The DesktopShell sidebar shows the routes of the current surface grouped in this order; under 768 px the first four become the bottom nav and the rest live in the "More" drawer.
+`overview, approvals, projects, spaces, sales, schedule, suppliers, money, documents, design, references, brand, competitions, communication, alerts, reports, settings, developer, docs` (labels are `core.nav.<key>`). The DesktopShell sidebar shows the routes of the current surface grouped in this order; under 768 px the first four become the bottom nav and the rest live in the "More" drawer.
 
 ## Inside a page
 
@@ -94,7 +94,7 @@ import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 
 - **Strings** (P-13): `'<module>.<key>': { en, es }`; Spanish where you know it, English fallback otherwise. No hard-coded English in JSX.
 - **Permissions**: check with `can('<area>.<verb>')` (list in `src/auth/permissions.ts`); never compare `role`.
-- **Data**: only through `useTable / useRow / useData`. Entities and fields: `src/data/schema/*.ts`; seeds: `src/data/seed/*.ts`. Writes go by id; lists re-render from `subscribe` events, including writes made in another tab (D-023). Pass `{ basedOn: row.updated_at }` to `update` when the edit started from a row the person was looking at (D-024). Task pages should link to the Work views (`/<surface>/work`, `/<surface>/work/:projectId`) instead of building their own task UI (D-021); `useWork()` in `src/work/` is the shared task model. Do not add entities or seed files in this pass: request them.
+- **Data**: only through `useTable / useRow / useData`. Entities and fields: `src/data/schema/*.ts`; seeds: `src/data/seed/*.ts`. Writes go by id; lists re-render from `subscribe` events, including writes made in another tab (D-023). Pass `{ basedOn: row.updated_at }` to `update` when the edit started from a row the person was looking at (D-024). Task pages should link to the Work views (`/<surface>/work`, `/<surface>/work/:projectId`) instead of building their own task UI (D-021); standing information (procedures, decisions, briefs) is a post in Spaces (`/<surface>/spaces/post/:postId`) filed in the spaces it applies to, and cross-entity links are `relations` rows, not ad hoc fields (D-026); `useWork()` in `src/work/` is the shared task model. Do not add entities or seed files in this pass: request them.
 - **Components** (P-07): only from `src/components/`; every one is listed with props and a live example at `/#/dev/components`. Pages never hand-roll a table, button, input, modal, card or tooltip. Missing something? Wrap the closest thing in `Placeholder` and request the component.
 - **Placeholder** (P-09): any control that does not work yet is `<Placeholder what={t('...')}><Button>…</Button></Placeholder>`: around a `Button` / `<button>` / `<a>` the Placeholder is a span wrapper and the control stays the one tab stop (D-019); around plain content it is itself the button. A route that is not built yet renders `PageStub`. Never leave a control that silently does nothing.
 - **Actions** (P-05): every button, menu item and form submit has an entry in `spec.actions` (`<module>.<verb>`, intent phrase, permission, params). Add / remove them in the same commit as the button.

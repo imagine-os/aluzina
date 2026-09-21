@@ -28,9 +28,12 @@ supersedes: <file#section or entry id>   (only when it replaces an older entry)
 | `team.md` | The Aluzina team: roles and responsibilities as written by the founder. |
 | `competitions.md` | The 2027 competitions programme (20 entries, three projects). |
 | `roles-and-portals.md` | Map from each role to its portal, path, page-code prefix, demo user and permission strings (mirrors `apps/hub/src/auth/`). |
-| `tools-in-use.md` | The tools the team runs on today (Asana first) and what the OS must match or beat before replacing each. |
+| `tools-in-use.md` | The tools the team runs on today (Asana, Slack, ChatGPT, Lovart, Magnific, Lovable, Claude Design; Supabase / Stripe planned) and what replaces each. |
+| `taxonomy.md` | Justin's Slack sidebar transcribed, its mapping to Spaces, and the rule that the Hub is the organizing mechanism (Slack stays for chat). |
+| `deliverables.md` | Catalog of deliverable types per phase with owner and template status (data on K-05). |
+| `clients.md` | Past clients from Slack (Hoy, Sporti) and current / prospect clients derived from projects; unknowns explicit. |
 
-Planned: `clients.md`, `suppliers.md`, `vocabulary.md` (EN / ES terms used in the studio), `brand.md` (identity rules once Angelica's assets are shared).
+Planned: `suppliers.md`, `vocabulary.md` (EN / ES terms used in the studio), `brand.md` (identity rules once Angelica's assets are shared).
 
 ## How this gets used
 
@@ -42,4 +45,5 @@ Planned: `clients.md`, `suppliers.md`, `vocabulary.md` (EN / ES terms used in th
 
 - 2026-09-20: folder created with the entry convention, `team.md`, `competitions.md`, `roles-and-portals.md` (Slack #aluzina thread 2026-09-20, Justin Massion; prompt 0002, D-012).
 - 2026-09-21: `roles-and-portals.md` aligned with the shipped role model (changelog 0006).
+- 2026-09-21: `taxonomy.md`, `deliverables.md`, `clients.md` added; `tools-in-use.md` and `roles-and-portals.md` extended (Slack sidebar, prompt 0005, changelog 0009, D-027..D-029).
 - 2026-09-21: `tools-in-use.md` added (Asana: List, Timeline, Board; prompt 0004, changelog 0008); `roles-and-portals.md` gains `tasks.own.write` for studio and brand and the Work pages W-01 / W-02 on every portal.
