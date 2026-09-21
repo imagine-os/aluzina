@@ -18,7 +18,8 @@ export const homeSpec = defineSpec({
     'StatTile row (competitions with a date / unknown, presentations open, revisions in the queue, current brand assets)',
     'Card "Next deadlines": merged competitions + presentations + revisions with a due date, soonest first',
     'Card "Alerts for this role": open alerts with forRole=brand (read-only here)',
-    'Card grid: one card per section of the portal (competitions, presentations, identity, images, revisions, assets)',
+    'Card "Client documents": one row per document (portfolio, brochure) straight into the G-08 viewer',
+    'Card grid: one card per section of the portal (competitions, presentations, identity, images, revisions, documents, assets)',
   ],
   dataTables: ['competitions', 'presentations', 'revisions', 'brandAssets', 'alerts'],
   roles: ['brand', 'founder'],
@@ -31,6 +32,8 @@ export const homeSpec = defineSpec({
   components: ['PageHeader', 'StatTile', 'Card', 'DataTable', 'StatusPill', 'Badge', 'EmptyState', 'Button'],
   actions: [
     { id: 'brand.openSection', label: 'Open section', intent: 'open the {section} section of the brand portal', permission: 'brand.manage', params: { section: 'string' } },
+    { id: 'brand.viewDocument', label: 'View a document', intent: 'show the {doc} in the viewer', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
+    { id: 'brand.downloadDocument', label: 'Download a document', intent: 'download the {doc} as a PDF', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
   ],
   checkedAt: [360, 390, 768, 1280, 1920],
 });
@@ -226,4 +229,46 @@ export const assetsSpec = defineSpec({
     { id: 'brand.moveAsset', label: 'Move a file', intent: 'move {file} into {folder}', permission: 'assets.manage', params: { file: 'string', folder: 'string' } },
   ],
   checkedAt: [360, 390, 768, 1280, 1920],
+});
+
+export const documentsSpec = defineSpec({
+  code: 'G-08',
+  name: 'Brand documents',
+  purpose:
+    'The two documents the studio hands to a client - the portfolio and the brochure - readable in place and downloadable, with a link anyone can share, so nobody has to hunt for the current PDF in a chat thread.',
+  surface: 'brand',
+  navGroup: 'documents',
+  layout: [
+    'PageHeader (replace document, a Placeholder)',
+    'One Card per assets row of kind document: title, file name, page count and size, how many pages are records, the colours and fonts read from the file, and View / Download / Open in new tab / Share link',
+    'Related section per Card: the projects its pages depict (links to the Work view) and the playbook services its pages argue for (links to the manual), read from relations',
+    'Viewer Card: Tabs (one per document) around an <object> PDF viewer with an <iframe> and a plain-text fallback; ?page=N opens the PDF at that page',
+    'Card "Where these files live": the files are static assets shipped with the app until file storage exists; the rows and their relations are data',
+  ],
+  dataTables: ['assets', 'relations', 'projects'],
+  roles: ['brand', 'founder'],
+  logic: [
+    'The list is useTable(assets, { where: { kind: document, status: current } }): one row per served PDF (url, pageCount, bytes, palette, fonts), seeded from docs/brand/<doc>/index.json; the static list in documents.ts is only the fallback while the table loads.',
+    'Related = relations whose fromType is assets and fromId is one of the document\'s page rows (parentId = the document): kind depicts / references -> projects, kind applies-to -> services (registry, id = playbook code).',
+    'The files are static assets served with the app (./brand/aluzina-portfolio.pdf, ./brand/aluzina-brochure.pdf); the paths are relative so the app keeps working under the GitHub Pages sub-path.',
+    'The selected document is the ?doc= query parameter, so a viewer link is shareable and the back button works; an unknown value falls back to the portfolio.',
+    'The viewer is three deep: <object> renders the PDF, the <iframe> inside it renders when the browser has no PDF plugin, and a paragraph with a download link renders when neither works - which is also what a visitor sees if the file is missing from the server.',
+    '"View" moves focus to the viewer and scrolls to it, so the keyboard path matches the visual one (P-03).',
+    '"Share link" copies the absolute URL of the file (new URL(href, location.href)) and says so in a Toast; when the clipboard is unavailable (insecure origin) the Toast shows the URL instead of failing silently.',
+    'Download is an anchor carrying the download attribute and wearing the Button classes: the library Button has no download attribute yet (requested), and a plain href would open the PDF instead of saving it.',
+    'Replacing a document is a Placeholder: the hub has no file storage, so a new version is a commit today.',
+  ],
+  components: ['PageHeader', 'Card', 'Tabs', 'Button', 'Placeholder', 'Toast'],
+  actions: [
+    { id: 'brand.viewDocument', label: 'View a document', intent: 'show the {doc} in the viewer', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
+    { id: 'brand.downloadDocument', label: 'Download a document', intent: 'download the {doc} as a PDF', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
+    { id: 'brand.openDocumentTab', label: 'Open a document in a new tab', intent: 'open the {doc} in a new tab', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
+    { id: 'brand.shareDocumentLink', label: 'Copy the document link', intent: 'copy the link to the {doc}', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
+    { id: 'brand.replaceDocument', label: 'Replace a document', intent: 'upload a new version of the {doc}', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
+  ],
+  checkedAt: [360, 390, 768, 1280, 1920, 2560, 3840],
+  notes: [
+    'Page count, file size, palette and fonts come from the assets row, which the seed derives from docs/brand/<doc>/index.json (prompt 0013): replacing a PDF means re-rendering the pages and updating the index, and the row follows; the static list in documents.ts is only the loading fallback (and what G-01 still lists).',
+    'The same rows are published to visitors on P-05 /portfolio; both pages keep their own DocFrame until a DocumentViewer organism lands in the library (request in docs/changelog/_pending/brand-docs.md).',
+  ],
 });

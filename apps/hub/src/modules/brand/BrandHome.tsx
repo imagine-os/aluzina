@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRegisterAction } from '../../actions';
+import { Button } from '../../components/atom/Button/Button';
 import { StatusPill } from '../../components/atom/StatusPill/StatusPill';
 import { Card } from '../../components/molecule/Card/Card';
 import { EmptyState } from '../../components/molecule/EmptyState/EmptyState';
@@ -8,6 +10,7 @@ import { StatTile } from '../../components/molecule/StatTile/StatTile';
 import { useTable } from '../../data/DataContext';
 import { formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
+import { BRAND_DOCUMENTS, brandDoc, isBrandDocId, triggerDownload, type BrandDocId } from './documents';
 import { dueTone } from './helpers';
 import { homeSpec } from './specs';
 import './brand.css';
@@ -27,6 +30,7 @@ const SECTIONS = [
   { key: 'identity', to: '/brand/identity' },
   { key: 'images', to: '/brand/images' },
   { key: 'revisions', to: '/brand/revisions' },
+  { key: 'documents', to: '/brand/documents' },
   { key: 'assets', to: '/brand/assets' },
 ] as const;
 
@@ -39,6 +43,16 @@ export function BrandHome() {
   const { rows: revisions } = useTable('revisions');
   const { rows: assets } = useTable('brandAssets');
   const { rows: alerts } = useTable('alerts', { where: { forRole: 'brand', status: 'open' } });
+
+  /** The two client documents (G-08) are one row each from here; the viewer itself lives on /brand/documents. */
+  const openDocument = (doc: string) => {
+    navigate(`/brand/documents?doc=${doc}`);
+    return doc;
+  };
+  const asDoc = (value: unknown): BrandDocId => (isBrandDocId(value) ? value : 'portfolio');
+  // G-01 keeps the static list (BRAND_DOCUMENTS); G-08 and P-05 read the `assets` rows (prompt 0013).
+  useRegisterAction('brand.viewDocument', ({ doc }) => openDocument(asDoc(doc)));
+  useRegisterAction('brand.downloadDocument', ({ doc }) => triggerDownload(brandDoc(asDoc(doc))));
 
   const dated = competitions.filter((c) => c.submissionDate !== null);
   const openPresentations = presentations.filter((p) => p.status !== 'final');
@@ -149,6 +163,27 @@ export function BrandHome() {
               ))}
             </ul>
           )}
+        </Card>
+
+        <Card title={t('brand.home.documents')} subtitle={t('brand.home.documentsSub')}>
+          <ul className="brand-list">
+            {BRAND_DOCUMENTS.map((d) => (
+              <li key={d.id}>
+                <div className="brand-list__row">
+                  <div className="brand-list__main">
+                    <span className="brand-list__title">{t(`brand.documents.doc.${d.id}.title`)}</span>
+                    <span className="brand-list__meta">{t('brand.documents.pdf')}</span>
+                  </div>
+                  <Button variant="secondary" onClick={() => openDocument(d.id)} aria-label={t('brand.home.viewDocAria', { title: t(`brand.documents.doc.${d.id}.title`) })}>
+                    {t('brand.home.viewDoc')}
+                  </Button>
+                  <a className="btn btn--ghost btn--md" href={d.href} download={d.downloadName} aria-label={t('brand.documents.downloadAria', { title: t(`brand.documents.doc.${d.id}.title`) })}>
+                    {t('brand.documents.download')}
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
         </Card>
 
         <ul className="brand-grid">

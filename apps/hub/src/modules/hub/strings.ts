@@ -77,6 +77,11 @@ export const strings: StringTable = {
     en: 'the five ALUZINA services from the playbook (digital and in-person consultation, comprehensive design, execution, styling) and the intake form that opens a lead in the pipeline',
     es: 'los cinco servicios ALUZINA del playbook (consultoría digital y presencial, diseño integral, ejecución, styling) y el formulario de ingreso que abre un lead en el pipeline',
   },
+  'hub.cards.brandDocs.title': { en: 'Portfolio & brochure', es: 'Portafolio y brochure' },
+  'hub.cards.brandDocs.desc': {
+    en: 'The studio portfolio and the brochure: read them in the page, download the PDF or copy a link to send a client.',
+    es: 'El portafolio del estudio y el brochure: léelos en la página, descarga el PDF o copia un enlace para enviarle a un cliente.',
+  },
   'hub.cards.client.title': { en: 'Client app', es: 'App del cliente' },
   'hub.cards.client.desc': {
     en: 'phone-first app for the client: their project and its progress, the revision matrix to approve, messages with the studio, payment status',

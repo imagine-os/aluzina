@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRoutes } from '../../app/RoutesContext';
 import { demoUserForRole } from '../../auth/demoUsers';
 import { ROLE_META, isRoleId, type RoleId } from '../../auth/roles';
-import { useSession } from '../../auth/SessionProvider';
+import { useCan, useSession } from '../../auth/SessionProvider';
 import { BrandMark } from '../../components/atom/BrandMark/BrandMark';
 import { Shimmer } from '../../components/atom/Shimmer/Shimmer';
 import { HubHeader } from '../../components/organism/HubHeader/HubHeader';
@@ -32,12 +32,15 @@ interface SurfaceEntry {
   fallbackHref?: string;
   /** Route-derived cards that need a session switch first (the client app opens as the demo client). */
   enterAs?: RoleId;
+  /** With `enterAs`: the permission that makes the switch unnecessary (the current role can already open it). */
+  enterUnless?: string;
 }
 
 /** Product surfaces: what clients and the team use. */
 const PRODUCT_SURFACES: SurfaceEntry[] = [
   { id: 'website', code: 'P-00', key: 'website', kind: 'external', href: WEBSITE_URL },
   { id: 'services', code: 'P-01', key: 'services', kind: 'route' },
+  { id: 'brand-docs', code: 'G-08', key: 'brandDocs', kind: 'route', enterAs: 'brand', enterUnless: 'brand.manage' },
   { id: 'client', code: 'C-01', key: 'client', kind: 'route', enterAs: 'client' },
   { id: 'manual', code: 'M-01', key: 'manual', kind: 'route' },
   { id: 'docs', code: 'D-06', key: 'docs', kind: 'route', fallbackHref: `${REPO_URL}/tree/main/docs` },
@@ -86,6 +89,7 @@ const PROTOTYPE_PAGES: PrototypePage[] = [
 export function HubPage() {
   const { t } = useT();
   const { switchUser, role } = useSession();
+  const can = useCan();
   const navigate = useNavigate();
   const routes = useRoutes();
 
@@ -115,7 +119,7 @@ export function HubPage() {
     const route = routes.find((r) => r.code === s.code);
     if (!route) return s.fallbackHref ? { status: 'live', href: s.fallbackHref, external: true } : { status: 'planned' };
     const status: SurfaceStatus = route.status === 'built' ? 'live' : 'stub';
-    if (s.enterAs) {
+    if (s.enterAs && !(s.enterUnless && can(s.enterUnless))) {
       const as = s.enterAs;
       return { status, onActivate: () => { switchUser(as); navigate(route.path); } };
     }

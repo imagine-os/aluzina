@@ -1,7 +1,7 @@
 import { defineSpec } from '../../specs/PageSpec';
 
 /** Product surfaces and builder tools on the hub (pass 0013): each card names a page code and is live when a built route with that code exists. */
-export const SURFACE_IDS = ['website', 'services', 'client', 'manual', 'docs', 'spaces', 'business-os', 'design', 'plan', 'canvas', 'simulator', 'actions', 'tokens', 'testing', 'components', 'specs', 'multiuser'] as const;
+export const SURFACE_IDS = ['website', 'services', 'brand-docs', 'client', 'manual', 'docs', 'spaces', 'business-os', 'design', 'plan', 'canvas', 'simulator', 'actions', 'tokens', 'testing', 'components', 'specs', 'multiuser'] as const;
 export type SurfaceId = (typeof SURFACE_IDS)[number];
 
 /** Pages of the Claude Design export served under ./business-os/ (BOS-02..BOS-06, D-010). */
@@ -20,7 +20,7 @@ export const hubSpec = defineSpec({
     'HubHeader (brand, "Viewing as" RoleSwitcher, EN/ES, theme, dev mode)',
     'Title + subtitle',
     'Portals grid: A-01 Founder, O-01 Administration and Operations, S-01 Interior Design, G-01 Graphic Design and Communication (cards enter as the demo user; status Live / Stub read from the route manifest), C-01 Client (planned: no route)',
-    'Product surfaces grid: P-00 website (external), P-01 services and intake, C-01 client app, M-01 manual, D-06 docs (GitHub link while no route), K-01 Spaces (opens on the current role\'s surface; founder when the role has none), BOS-01 prototype; each card is live when a built route with its code is registered, else Planned (Placeholder)',
+    'Product surfaces grid: P-00 website (external), P-01 services and intake, G-08 portfolio and brochure (opens as the brand demo user when the current role cannot manage the brand), C-01 client app, M-01 manual, D-06 docs (GitHub link while no route), K-01 Spaces (opens on the current role\'s surface; founder when the role has none), BOS-01 prototype; each card is live when a built route with its code is registered, else Planned (Placeholder)',
     'Builder and dev tools grid: D-12 design system (brand guidelines; tokens D-10 and textures and effects D-13 inside), D-05 plan viewer, D-07 canvas, D-08 demo simulator, D-09 actions, D-10 tokens, D-11 testing hub, D-02 components, D-03 specs, D-04 multiuser; same route-derived status',
     'Prototype pages grid (BOS-02..06)',
     'Footer (version, repo link, dev hint)',
@@ -29,6 +29,7 @@ export const hubSpec = defineSpec({
   roles: ['public'],
   logic: [
     'A portal card calls switchUser(role) then navigates to the portal dashboard (hub.enterAs); the RoleSwitcher changes the demo user in place (hub.switchRole).',
+    'A surface behind a permission (G-08 brand documents) opens as a plain link when the current role has it and switches to the surface\'s demo user first when it does not, so the card never lands on a permission wall.',
     'Live / stub surfaces render as links or buttons; planned surfaces render through Placeholder (P-09).',
     'Surface and tool cards derive their status from the route manifest by page code (built -> Live, stub -> Stub, no route -> Planned) exactly like portal cards; only P-00, BOS-01 and Spaces are static (pass 0013).',
     'Language, theme, session (user, viewAs, dev mode) persist in localStorage (aluzina.lang / aluzina.theme / aluzina.session).',

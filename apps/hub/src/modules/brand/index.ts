@@ -1,13 +1,14 @@
 import { createElement } from 'react';
 import type { RouteDef } from '../../specs/PageSpec';
 import { AssetsPage } from './AssetsPage';
+import { DocumentsPage } from './DocumentsPage';
 import { BrandHome } from './BrandHome';
 import { CompetitionsPage } from './CompetitionsPage';
 import { IdentityPage } from './IdentityPage';
 import { ImagesPage } from './ImagesPage';
 import { PresentationsPage } from './PresentationsPage';
 import { RevisionsPage } from './RevisionsPage';
-import { assetsSpec, competitionsSpec, homeSpec, identitySpec, imagesSpec, presentationsSpec, revisionsSpec } from './specs';
+import { assetsSpec, competitionsSpec, documentsSpec, homeSpec, identitySpec, imagesSpec, presentationsSpec, revisionsSpec } from './specs';
 
 export { strings } from './strings';
 
@@ -93,5 +94,16 @@ export const routes: RouteDef[] = [
     spec: assetsSpec,
     element: createElement(AssetsPage),
     nav: { labelKey: 'brand.nav.assets', order: 60, glyph: '☷' },
+  },
+  {
+    path: '/brand/documents',
+    code: documentsSpec.code,
+    surface: 'brand',
+    status: 'built',
+    permission: 'brand.manage',
+    shell: 'desktop',
+    spec: documentsSpec,
+    element: createElement(DocumentsPage),
+    nav: { labelKey: 'brand.nav.documents', order: 70, glyph: '▩' },
   },
 ];
