@@ -6,10 +6,12 @@ import { Avatar } from '../components/atom/Avatar/Avatar';
 import { Badge } from '../components/atom/Badge/Badge';
 import { Button } from '../components/atom/Button/Button';
 import { ToggleButton } from '../components/atom/ToggleButton/ToggleButton';
+import { PresenceBar } from '../components/molecule/PresenceBar/PresenceBar';
 import { Drawer } from '../components/organism/Drawer/Drawer';
 import { RoleSwitcher } from '../components/organism/RoleSwitcher/RoleSwitcher';
 import { useTheme } from '../design/ThemeProvider';
 import { useT } from '../i18n/I18nProvider';
+import { usePresence } from '../presence/PresenceProvider';
 import type { RouteDef } from '../specs/PageSpec';
 import { navGroupOrder } from './navGroups';
 import { navRoutesFor } from './registry';
@@ -111,6 +113,7 @@ export function DesktopShell({ route, children }: { route: RouteDef; children: R
   const navRoutes = navRoutesFor(route.surface, routes);
   const portalKey = isRoleId(role) && ROLE_META[role].surface === route.surface ? ROLE_META[role].portalKey : `core.portal.${route.surface}`;
   const bottom = navRoutes.slice(0, 4);
+  const { people } = usePresence();
 
   return (
     <div className="dshell" data-surface={route.surface}>
@@ -126,6 +129,7 @@ export function DesktopShell({ route, children }: { route: RouteDef; children: R
         <span className="dshell__portal">{t(portalKey)}</span>
         <Badge tone="accent" className="dshell__role">{t(isRoleId(role) ? ROLE_META[role].labelKey : 'core.role.unknown')}</Badge>
         <div className="dshell__spacer" />
+        {people.length > 1 && <PresenceBar compact people={people} />}
         <GlobalControls compact />
         <Button className="dshell__hub-btn" variant="ghost" href="#/">
           {t('core.shell.backToHub')}

@@ -17,10 +17,14 @@ interface Stored {
   tables: Tables;
 }
 
-/** What one tab tells the others after a write. */
+/**
+ * What one tab tells the others after a write. The changed rows travel with the message because a
+ * receiving tab may still see a stale localStorage copy (DOMStorage replicates asynchronously).
+ */
 interface Broadcast {
   change: Change;
   tabId: string;
+  rows?: Partial<Record<EntityName, unknown[]>>;
 }
 
 function emptyTables(): Tables {
@@ -96,8 +100,7 @@ export class MockProvider implements DataProvider {
         this.channel = new BroadcastChannel(DATA_CHANNEL);
         this.channel.onmessage = (ev: MessageEvent<Broadcast>) => {
           if (!ev.data || ev.data.tabId === TAB_ID) return;
-          this.tables = this.load();
-          this.emit(ev.data.change);
+          this.applyRemote(ev.data);
         };
         return;
       } catch {
@@ -111,31 +114,54 @@ export class MockProvider implements DataProvider {
     });
   }
 
+  /** Apply a change made in another tab: upsert the rows it carries (or drop the removed id), then notify. */
+  private applyRemote({ change, rows }: Broadcast) {
+    if (change.kind === 'reset') {
+      this.tables = this.load();
+    } else if (change.kind === 'remove' && change.id) {
+      const list = this.tables[change.entity] as Row<EntityName>[];
+      (this.tables[change.entity] as Row<EntityName>[]) = list.filter((r) => r.id !== change.id);
+    }
+    if (rows) {
+      for (const [entity, incoming] of Object.entries(rows) as [EntityName, Row<EntityName>[]][]) {
+        const list = this.tables[entity] as Row<EntityName>[];
+        for (const row of incoming) {
+          const i = list.findIndex((r) => r.id === row.id);
+          if (i === -1) list.push(row);
+          else list[i] = row;
+        }
+        if (entity !== change.entity) this.emit({ entity, kind: 'create', id: null });
+      }
+    }
+    this.emit(change);
+  }
+
   private emit(change: Change) {
     this.listeners.get(change.entity)?.forEach((cb) => cb(change));
     this.listeners.get('*')?.forEach((cb) => cb(change));
   }
 
-  /** Persist, notify this tab, notify the other tabs. */
-  private commit(change: Change) {
+  /** Persist, notify this tab, notify the other tabs (with the rows that changed). */
+  private commit(change: Change, rows?: Broadcast['rows']) {
     this.persist();
     this.emit(change);
     try {
-      this.channel?.postMessage({ change, tabId: TAB_ID } satisfies Broadcast);
+      this.channel?.postMessage({ change, tabId: TAB_ID, rows } satisfies Broadcast);
     } catch {
       /* channel closed */
     }
   }
 
-  private logActivity<E extends EntityName>(entity: E, id: string, before: Row<E>, after: Row<E>, patch: Patch<E>) {
-    if (UNLOGGED.includes(entity)) return;
+  private logActivity<E extends EntityName>(entity: E, id: string, before: Row<E>, after: Row<E>, patch: Patch<E>): Row<'activity'>[] {
+    const added: Row<'activity'>[] = [];
+    if (UNLOGGED.includes(entity)) return added;
     const now = after.updated_at;
     const rows = this.tables.activity;
     for (const key of Object.keys(patch) as (keyof Row<E>)[]) {
       const from = before[key];
       const to = after[key];
       if (JSON.stringify(from) === JSON.stringify(to)) continue;
-      rows.push({
+      added.push({
         id: newId('act'),
         created_at: now,
         updated_at: now,
@@ -149,7 +175,9 @@ export class MockProvider implements DataProvider {
         at: now,
       });
     }
+    rows.push(...added);
     if (rows.length > ACTIVITY_LIMIT) rows.splice(0, rows.length - ACTIVITY_LIMIT);
+    return added;
   }
 
   setActor(userId: string | null): void {
@@ -169,7 +197,7 @@ export class MockProvider implements DataProvider {
     const now = new Date().toISOString();
     const row = { ...data, id, created_at: now, updated_at: now, updated_by: this.actor } as Row<E>;
     (this.tables[entity] as Row<E>[]).push(row);
-    this.commit({ entity, kind: 'create', id });
+    this.commit({ entity, kind: 'create', id }, { [entity]: [row] });
     return { ...row };
   }
 
@@ -184,9 +212,9 @@ export class MockProvider implements DataProvider {
     }
     const row = { ...before, ...patch, id, updated_at: new Date().toISOString(), updated_by: this.actor } as Row<E>;
     rows[i] = row;
-    this.logActivity(entity, id, before, row, patch);
-    this.commit({ entity, kind: 'update', id });
-    if (!UNLOGGED.includes(entity)) this.emit({ entity: 'activity', kind: 'create', id: null });
+    const activity = this.logActivity(entity, id, before, row, patch);
+    this.commit({ entity, kind: 'update', id }, activity.length ? { [entity]: [row], activity } : { [entity]: [row] });
+    if (activity.length) this.emit({ entity: 'activity', kind: 'create', id: null });
     return { ...row };
   }
 

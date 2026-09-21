@@ -35,3 +35,21 @@ export const specsSpec = defineSpec({
   ],
   checkedAt: [390, 1280],
 });
+
+export const multiuserSpec = defineSpec({
+  code: 'D-04',
+  name: 'Multiuser',
+  purpose: 'QA aid for the realtime seam (D-023): how to open two tabs as two demo users, who is present right now (presence channel) and the last 20 activity rows written by the provider, with a reset of the demo data.',
+  surface: 'dev',
+  navGroup: 'developer',
+  layout: ['PageHeader', 'Card: how to test (steps, open-as buttons, channel names, reset)', 'Card: presence (PresenceBar + DataTable)', 'Card: last 20 activity rows (DataTable)'],
+  dataTables: ['activity', 'tasks'],
+  roles: ['dev', 'founder'],
+  logic: ['Presence comes from usePresence() (BroadcastChannel aluzina-presence, 5 s heartbeat, 15 s expiry).', 'Activity is the provider log: one row per changed field per update, capped at 500 rows.', 'Reset drops aluzina.data and re-seeds; every tab receives the reset through the data channel.'],
+  components: ['PageHeader', 'Card', 'KeyValue', 'Button', 'PresenceBar', 'DataTable', 'Badge'],
+  actions: [
+    { id: 'dev.openAs', label: 'Open a tab as a role', intent: 'open a new tab as {role}', permission: 'dev.tools', params: { role: 'enum:founder|ops|studio|brand' } },
+    { id: 'dev.resetData', label: 'Reset demo data', intent: 'reset the demo data to the seeds', permission: 'dev.tools' },
+  ],
+  checkedAt: [390, 1280],
+});
