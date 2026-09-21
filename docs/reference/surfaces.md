@@ -1,6 +1,6 @@
 # Surfaces: routes, scripts, actions, MCP / CLI / API
 
-Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0014).
+Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0015).
 
 ## 1. What exists today
 
@@ -52,20 +52,28 @@ Every surface a machine (script, agent, voice controller, MCP client) can drive,
 | `/<surface>/spaces/graph` | K-04 | as K-01 | built | desktop | `spaces.read` | 6 (Graph; `?focus=<type>:<id>&depth=1\|2\|3\|all` in the hash query) |
 | `/<surface>/spaces/catalog` | K-05 | as K-01 | built | desktop | `spaces.read` | 5 (Catalog; `?tab=deliverables\|clients\|tools\|roles`) |
 | `/<surface>/spaces/import` | K-06 | as K-01 | built | desktop | `spaces.read` | 2 (Import from Slack) |
-| `/design` | D-12 | design | built | desktop | `design.read` | `design.copyToken`, `design.previewMetal` (Brand guidelines) |
+| `/design` | D-12 | design | built | desktop | `design.read` | `design.downloadManual`, `design.copyToken`, `design.previewMetal` (Brand guidelines) |
 | `/design/tokens` | D-10 | design | built | desktop | `design.read` | `design.searchTokens`, `design.copyToken` (Design tokens) |
 | `/design/effects` | D-13 | design | built | desktop | `design.read` | `design.setShimmerIntensity`, `design.toggleMotion`, `design.setTextureSize`, `design.toggleSheen` (Textures and effects) |
 | `/dev/components` | D-02 | dev | built | desktop | `dev.tools` | `dev.searchComponents`, `dev.filterTier` |
 | `/dev/specs` | D-03 | dev | built | desktop | `dev.tools` | `dev.openSpec`, `dev.filterSurface` |
 | `/dev/multiuser` | D-04 | dev | built | desktop | `dev.tools` | `dev.openAs`, `dev.resetData` |
 
-78 routes, 688 declared action entries: hub 7, design 8 (D-12 2, D-10 2, D-13 4; 7 distinct `design.*` ids), founder 144 (26 portal + 62 work + 56 spaces), ops 158 (40 + 62 + 56), studio 160 (42 + 62 + 56), brand 149 (31 + 62 + 56), dev 62 (6 over 3 pages + 56 spaces) (changelog 0014; 75 / 680 in 0009 and after the 0013 foundation). The `work.*` set is 31 distinct ids declared on eight routes; the `spaces.*` set is 37 distinct ids declared on 30 routes (56 entries per surface). Every action id is `<module>.<verb>` with an intent phrase and, for the portals, a permission; the full list is `window.__aluzina.routes[].spec.actions` and the drawer on `/#/dev/specs`.
+78 routes, 689 declared action entries: hub 7, design 9 (D-12 3, D-10 2, D-13 4; 8 distinct `design.*` ids), founder 144 (26 portal + 62 work + 56 spaces), ops 158 (40 + 62 + 56), studio 160 (42 + 62 + 56), brand 149 (31 + 62 + 56), dev 62 (6 over 3 pages + 56 spaces) (changelog 0015; 688 in 0014, 75 / 680 in 0009 and after the 0013 foundation). The `work.*` set is 31 distinct ids declared on eight routes; the `spaces.*` set is 37 distinct ids declared on 30 routes (56 entries per surface). Every action id is `<module>.<verb>` with an intent phrase and, for the portals, a permission; the full list is `window.__aluzina.routes[].spec.actions` and the drawer on `/#/dev/specs`.
 
 Consumers: `scripts/screenshots.mjs` (writes the manifest into `docs/screenshots/<CODE>/routes.json`), `/#/dev/specs` (D-03, same data through `RoutesContext`), `scripts/thumbnails.mjs` targets; future QA and WebMCP generation.
 
 #### 1.1a Session by URL: `?as=<role>`
 
 `SessionProvider` reads `as` from `location.search` (before the hash: `/?as=ops#/ops`) or from a query inside the hash (`/#/ops?as=ops`) **on first load only** and becomes that role's demo user (`founder | ops | studio | brand | client | dev`), clearing any `viewAs`. Unknown values are ignored. Used by `scripts/thumbnails.mjs` (portal and dev thumbnails), by QA scripts and for deep links; a later navigation that only changes the hash does not re-read it (reload to re-apply). The chosen user persists in `aluzina.session` like any switch.
+
+### 1.1a-bis Static assets served by the hub (not in `window.__aluzina`)
+
+| path | what | source | since |
+| --- | --- | --- | --- |
+| `/brand/MANUAL-DE-MARCA-ALUZINA.pdf` | The current brand manual PDF (silver edition, 496 KB), the target of D-12's download button and `design.downloadManual`; replaced in place when a new edition lands (dated copies in `docs/source/brand-kit/`) | `apps/hub/public/brand/` (Vite `public/`, copied verbatim into `dist/`; relative link `./brand/…` works under `base: './'`) | 0015, D-051 |
+| `/brand/*.svg` | Standalone marks for docs and OG images (`wordmark-iridescent`, `wordmark-gold`, `monogram-*`, `elements`) | `apps/hub/public/brand/` | 0014 |
+| `/fonts/DINRoundPro-*.woff2` | Licensed faces, declared by `fonts.css`, dropped in by hand (D-040); absent in the repo | `apps/hub/public/fonts/` | 0014 |
 
 ### 1.1b Static routes: Business OS prototype (not in `window.__aluzina`, D-007)
 
@@ -88,7 +96,7 @@ Runtime resources: `/business-os/vendor/*.js` (React, ReactDOM, Babel), `/busine
 | --- | --- | --- |
 | `aluzina.lang` | `en` \| `es` | `I18nProvider.setLang` (action `hub.setLang`) |
 | `aluzina.theme` | `light` \| `dark` | `ThemeProvider` (action `hub.toggleTheme`) |
-| `aluzina.metal` | `gold` \| `silver` | D-12 metal preview (action `design.previewMetal`, D-039); applied on `<html data-metal>` by `modules/design/metal.ts` on boot and on change; absent = `tokens.metalDefault` (gold). A preview only: shipping silver is a token change |
+| `aluzina.metal` | `silver` \| `gold` | D-12 metal preview (action `design.previewMetal`, D-039); applied on `<html data-metal>` by `modules/design/metal.ts` on boot and on change; absent = `tokens.metalDefault` (silver since 0015, D-050; gold is the previous edition, preview only) |
 | `aluzina.session` | JSON `{ userId, viewAs: role \| null, devMode }` | `SessionProvider` (`switchUser`, `viewAs`, `toggleDevMode`; actions `hub.enterAs`, `hub.switchRole`, `hub.toggleDevMode`); `userId` is a demo user id (`u-alejandra`, `u-miguel`, `u-sarai`, `u-angelica`, `u-client`, `u-dev`), default `u-dev` |
 | `aluzina.devMode` | `on` \| `off` | mirror of `session.devMode` for the pre-paint script and older tooling |
 | `aluzina.data` | JSON `{ seedVersion, tables }` | `MockProvider` (D-016): every entity table (36 since 0013: 29 + `leads`, `engagements`, `revisionItems`, `changeOrders`, `purchases`, `siteReports`, `messages`); removed and re-seeded by `reset()` or when `SEED_VERSION` changes (5 since 0013) |
@@ -115,8 +123,9 @@ Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effecti
 | `ops.*` (38 entries, 35 ids) | O-01..O-10 | acknowledge / resolve / reopen an alert, confirm / receive / delay a delivery, move a task, pause / activate a supplier, select / shortlist a quote, mark a payment paid or part paid, advance a document, new task / meeting / supplier / alert, request quote, format / export / send report (Placeholders) | `schedule.manage`, `tasks.manage`, `suppliers.manage`, `quotes.request`, `quotes.compare`, `deliveries.manage`, `payments.manage`, `documents.manage`, `alerts.manage`, `reports.write` | ids, dates, amounts |
 | `studio.*` (42 entries) | S-01..S-09 | send a project to check, move a reference to a board, request sample / approve / reject a material, new version / mark final a plan, review / finalise a schedule, move a render pack, tick a check item, save notes, pass / report issues, new proposal / palette / pack / check and capture controls (Placeholders) | `design.develop`, `references.manage`, `materials.manage`, `plans.write`, `schedules.write`, `renders.brief`, `projects.check`, `measurements.write` | ids, text |
 | `brand.*` (31 entries) | G-01..G-07 | edit a competition slot (name, organiser, category, submission date, project, folder, result) and advance its status, advance a presentation / revision / image set, mark an asset superseded or current, import list / open folder / request deck / upload / share / connect storage (Placeholders) | `brand.manage`, `competitions.manage`, `presentations.write`, `images.write`, `revisions.manage`, `assets.manage` | ids, text, date |
+| `design.downloadManual` | D-12 | download the brand manual PDF | `design.read` | – (live on the bus while D-12 is mounted, 0015) |
 | `design.copyToken` | D-12, D-10 | copy the value of {token} / copy the variable {token} | `design.read` | `token: string` |
-| `design.previewMetal` | D-12 | preview the brand in {metal} | `design.read` | `metal: enum:gold\|silver` |
+| `design.previewMetal` | D-12 | preview the brand in {metal} | `design.read` | `metal: enum:silver\|gold` (live on the bus while D-12 is mounted, 0015) |
 | `design.searchTokens` | D-10 | find the token {query} | `design.read` | `query: string` |
 | `design.setShimmerIntensity` | D-13 | set the shimmer intensity to {intensity} | `design.read` | `intensity: enum:0.2\|0.4\|0.6\|0.8\|1` |
 | `design.toggleMotion` | D-13 | turn the shader motion on or off | `design.read` | – |
@@ -221,6 +230,7 @@ Realtime and presence exist as the mock seam since 0008 (D-023): `subscribe` alr
 
 ## 3. Change log of this file
 
+- 2026-09-21 (changelog 0015): `design.downloadManual` on D-12 (78 routes, 689 action entries; D-12 registers `design.downloadManual` and `design.previewMetal` on the actions bus, 1.1 / 1.3); static assets table 1.1a-bis with `public/brand/MANUAL-DE-MARCA-ALUZINA.pdf` (D-051); `aluzina.metal` default is silver (D-050), `previewMetal` enum reordered `silver|gold` (1.2 / 1.3).
 - 2026-09-21 (changelog 0011): archived scraper scripts for the two public sites and how to re-run them (1.4).
 - 2026-09-21 (changelog 0013, foundation): `window.__aluzina.actions` (1.1, 1.7, 2.1: the bus exists), 36 entities and `SEED_VERSION` 5 (1.2), playbook entities and `projects.serviceCode / pipelineStatus` (1.5); routes and actions of the pass 0013 modules land with the integration.
 - 2026-09-21 (changelog 0014): the `design` surface with D-12 / D-10 / D-13 in the manifest (78 routes, 688 action entries, 1.1); `aluzina.metal` and `data-metal` (1.2); the seven `design.*` actions, `hub.openSurface` and `dev.filterSurface` enums gain `design`, `design.read` for every role (1.3); `--theme=dark` screenshot flag (1.4).

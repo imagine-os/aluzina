@@ -58,7 +58,7 @@
   text-decoration: none;
 }
 
-/* The wordmark is the brand: metal on light, iridescent on dark (set in ShellBrand). */
+/* The wordmark is the brand: iridescent in both themes since the silver edition (set in ShellBrand). */
 .dshell__brand .brand-mark {
   flex: none;
 }

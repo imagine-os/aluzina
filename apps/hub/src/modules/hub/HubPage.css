@@ -88,8 +88,8 @@
 }
 
 /*
- * Hero band: a decorative metal Shimmer behind the wordmark (iridescent on dark, metal on light, as the
- * manual pairs its white page with its gold band). The title and subtitle sit below it in the theme text
+ * Hero band: a decorative low-intensity silver Shimmer behind the iridescent wordmark (the primary logo
+ * since the silver edition, both themes). The title and subtitle sit below it in the theme text
  * colour, so no reading depends on the shader; the band is aria-hidden and degrades to the CSS gradient.
  */
 .hub-hero {
@@ -103,12 +103,12 @@
   mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
 
-/* A veil washes the finish back so the wordmark, which sits above it, keeps its own gradient. */
+/* A veil washes the finish back so the wordmark, which sits above it, keeps its own gradient (lighter veil since silver: the ramp already reads soft). */
 .hub-hero__band::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: color-mix(in srgb, var(--color-bg) 62%, transparent);
+  background: color-mix(in srgb, var(--color-bg) 48%, transparent);
   pointer-events: none;
 }
 

@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useRegisterActions } from '../../actions/useRegisterAction';
 import { GLYPH_NAMES } from '../../brand/paths';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { BrandMark } from '../../components/atom/BrandMark/BrandMark';
+import { Button } from '../../components/atom/Button/Button';
 import { Shimmer } from '../../components/atom/Shimmer/Shimmer';
 import { ToggleButton } from '../../components/atom/ToggleButton/ToggleButton';
 import { Card } from '../../components/molecule/Card/Card';
@@ -9,14 +11,14 @@ import { KeyValue } from '../../components/molecule/KeyValue/KeyValue';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { tokens, type MetalName, type ThemeName } from '../../design/tokens';
 import { useT } from '../../i18n/I18nProvider';
-import { applyMetal, currentMetal, METAL_NAMES } from './metal';
+import { applyMetal, currentMetal, isMetalName, METAL_NAMES } from './metal';
 import { CopyButton, Plate, Section } from './parts';
-import { brandSpec } from './specs';
+import { brandSpec, MANUAL_URL } from './specs';
 import './design.css';
 
-/** The manual's four printed colours, with the print data it prints beside each diamond. */
+/** The manual's four printed colours, with the print data it prints beside each diamond (silver edition). */
 const PALETTE = [
-  { key: 'gold', nameKey: 'design.brand.colors.gold', hex: tokens.brand.gold, pantone: '875 C', rgb: '152, 135, 109', cmyk: '40, 41, 59, 7', roleKey: 'design.brand.colors.rolePrimary' },
+  { key: 'silver', nameKey: 'design.brand.colors.silver', hex: tokens.brand.silver, pantone: '877 C', rgb: '192, 192, 192', cmyk: '0, 0, 0, 25', roleKey: 'design.brand.colors.rolePrimary' },
   { key: 'periwinkle', nameKey: 'design.brand.tone.periwinkle', hex: tokens.brand.periwinkle, pantone: '270 C', rgb: '194, 209, 247', cmyk: '21, 12, 0, 0', roleKey: 'design.brand.colors.roleSecondary' },
   { key: 'aqua', nameKey: 'design.brand.tone.aqua', hex: tokens.brand.aqua, pantone: '3245 C', rgb: '130, 254, 231', cmyk: '38, 0, 20, 0', roleKey: 'design.brand.colors.roleSecondary' },
   { key: 'lime', nameKey: 'design.brand.tone.lime', hex: tokens.brand.lime, pantone: '379 C', rgb: '221, 255, 121', cmyk: '16, 0, 67, 0', roleKey: 'design.brand.colors.roleSecondary' },
@@ -39,6 +41,7 @@ const WEIGHTS = [
   ['black', 900],
 ] as const;
 const GAPS = ['clearSpace', 'misuse', 'photo', 'voice', 'icons', 'grid', 'a11y', 'dark'] as const;
+const DEFECTS = ['hex', 'labels', 'rules'] as const;
 
 /** One sample card rendered inside a forced theme, so both themes are visible whatever the header says. */
 function ThemeSample({ theme }: { theme: ThemeName }) {
@@ -48,7 +51,7 @@ function ThemeSample({ theme }: { theme: ThemeName }) {
       <div className="ds-theme__inner">
         <p className="eyebrow">{t(`design.brand.themes.${theme}`)}</p>
         <Card title={t('design.brand.themes.sampleTitle')} subtitle={t('design.brand.themes.sampleMuted')} actions={<Badge tone="accent">{t('design.brand.themes.sampleBadge')}</Badge>}>
-          <BrandMark kind="wordmark" finish={theme === 'dark' ? 'iridescent' : 'metal'} size="md" />
+          <BrandMark kind="wordmark" size="md" />
           <p className="ds-theme__body">{t('design.brand.themes.sampleBody')}</p>
           <hr className="hairline" />
           <p className="ds-muted">{t('design.brand.themes.sampleMuted')}</p>
@@ -56,6 +59,18 @@ function ThemeSample({ theme }: { theme: ThemeName }) {
       </div>
     </div>
   );
+}
+
+/** Action design.downloadManual: the same file the header button links to. */
+function downloadManual() {
+  const a = document.createElement('a');
+  a.href = MANUAL_URL;
+  a.download = '';
+  a.rel = 'noreferrer';
+  document.body.append(a);
+  a.click();
+  a.remove();
+  return { url: MANUAL_URL };
 }
 
 export function BrandPage() {
@@ -68,6 +83,16 @@ export function BrandPage() {
     setMetal(name);
   };
 
+  useRegisterActions({
+    'design.downloadManual': downloadManual,
+    'design.previewMetal': (p) => {
+      const name = String(p.metal ?? '');
+      if (!isMetalName(name)) throw new Error(`unknown metal: ${name}`);
+      preview(name);
+      return { metal: name };
+    },
+  });
+
   return (
     <>
       <PageHeader
@@ -75,37 +100,80 @@ export function BrandPage() {
         title={t('design.brand.title')}
         subtitle={t('design.brand.subtitle')}
         breadcrumb={[{ label: t('core.portal.design'), to: '/design' }, { label: t('design.brand.title') }]}
+        actions={
+          <Button variant="primary" size="lg" icon="↓" href={MANUAL_URL} download="MANUAL-DE-MARCA-ALUZINA.pdf" className="ds-download">
+            {t('design.brand.manual.download')}
+          </Button>
+        }
       />
 
       <div className="ds-page">
+        <Card title={t('design.brand.manual.title')} subtitle={t('design.brand.manual.subtitle')}>
+          <KeyValue
+            columns={3}
+            items={[
+              { key: t('design.brand.manual.edition'), value: t('design.brand.manual.editionValue') },
+              { key: t('design.brand.manual.previous'), value: t('design.brand.manual.previousValue') },
+              { key: t('design.brand.manual.file'), value: <code>brand/MANUAL-DE-MARCA-ALUZINA.pdf · 496 KB</code> },
+            ]}
+          />
+        </Card>
+
         <Section eyebrow={t('design.brand.logo.eyebrow')} desc={t('design.brand.logo.desc')}>
+          <div className="ds-grid ds-grid--2">
+            <Plate caption={t('design.brand.logo.primary')}>
+              <div className="ds-tile ds-tile--stack" data-theme="light">
+                <BrandMark kind="wordmark" size="lg" label="Aluzina" />
+                <BrandMark kind="descriptor" variant="interiorismo" size="md" />
+              </div>
+            </Plate>
+            <Plate caption={t('design.brand.logo.band')}>
+              <div className="ds-tile ds-tile--wide surface-ink">
+                <BrandMark kind="wordmark" size="lg" label="Aluzina" />
+                <BrandMark kind="descriptor" size="md" label="Universo de diseño" />
+              </div>
+            </Plate>
+          </div>
           <div className="ds-grid ds-grid--2">
             <Plate caption={t('design.brand.logo.light')}>
               <div className="ds-tile" data-theme="light">
-                <BrandMark kind="wordmark" finish="metal" size="lg" label="Aluzina" />
+                <BrandMark kind="wordmark" size="lg" label="Aluzina" />
               </div>
             </Plate>
             <Plate caption={t('design.brand.logo.dark')}>
               <div className="ds-tile" data-theme="dark">
-                <BrandMark kind="wordmark" finish="iridescent" size="lg" label="Aluzina" />
+                <BrandMark kind="wordmark" size="lg" label="Aluzina" />
               </div>
             </Plate>
           </div>
-          <Plate caption={t('design.brand.logo.descriptor')}>
-            <div className="ds-tile ds-tile--wide">
-              <BrandMark kind="wordmark" finish="metal" size="md" label="Aluzina" />
-              <BrandMark kind="descriptor" size="md" label="Universo de diseño" />
-            </div>
-          </Plate>
+          <div className="ds-grid ds-grid--2">
+            <Plate caption={t('design.brand.logo.descriptorUniverso')}>
+              <div className="ds-tile ds-tile--wide">
+                <BrandMark kind="wordmark" finish="metal" size="md" label="Aluzina" />
+                <BrandMark kind="descriptor" size="md" label="Universo de diseño" />
+              </div>
+            </Plate>
+            <Plate caption={t('design.brand.logo.descriptorInteriorismo')}>
+              <div className="ds-tile ds-tile--wide" data-theme="light">
+                <BrandMark kind="wordmark" size="md" label="Aluzina" />
+                <BrandMark kind="descriptor" variant="interiorismo" size="md" />
+              </div>
+            </Plate>
+          </div>
+          <p className="ds-note">{t('design.brand.logo.descriptorNote')}</p>
           <Card title={t('design.brand.logo.rules')}>
             <ul className="ds-list">
+              <li>{t('design.brand.logo.rulePrimary')}</li>
+              <li>{t('design.brand.logo.ruleFinish')}</li>
+              <li>
+                {t('design.brand.logo.ruleLockup')} <em className="ds-house">{t('design.houseRule')}</em>
+              </li>
               <li>
                 {t('design.brand.logo.ruleMin')} <em className="ds-house">{t('design.houseRule')}</em>
               </li>
               <li>
                 {t('design.brand.logo.ruleClear')} <em className="ds-house">{t('design.houseRule')}</em>
               </li>
-              <li>{t('design.brand.logo.ruleFinish')}</li>
             </ul>
           </Card>
         </Section>
@@ -146,8 +214,16 @@ export function BrandPage() {
           </div>
           <ul className="ds-list ds-notes">
             <li>
-              <span className="ds-dot" style={{ background: tokens.brand.goldHighlight }} aria-hidden="true" />
-              {t('design.brand.colors.noteHighlight')}
+              <span className="ds-dot" style={{ background: tokens.brand.silver }} aria-hidden="true" />
+              {t('design.brand.colors.noteStaleHex')}
+            </li>
+            <li>
+              <span className="ds-dot" style={{ background: tokens.metal.silver.shade }} aria-hidden="true" />
+              {t('design.brand.colors.noteRamp')}
+            </li>
+            <li>
+              <span className="ds-dot" style={{ background: tokens.brand.black }} aria-hidden="true" />
+              {t('design.brand.colors.noteBlack')}
             </li>
             <li>
               <span className="ds-dot" style={{ background: tokens.brand.ink }} aria-hidden="true" />
@@ -165,11 +241,14 @@ export function BrandPage() {
                 {t(`design.brand.metal.${name}`)}
               </ToggleButton>
             ))}
-            {metal === 'silver' && <Badge tone="warning">{t('design.brand.metal.silverDraft')}</Badge>}
+            <Badge tone={metal === tokens.metalDefault ? 'success' : 'warning'}>
+              {t(metal === tokens.metalDefault ? 'design.brand.metal.current' : 'design.brand.metal.previous')}
+            </Badge>
           </div>
-          <Shimmer finish="metal" intensity={0.6} className="ds-band">
+          <Shimmer finish="metal" intensity={0.4} className="ds-band">
             <div className="ds-band__inner">
-              <BrandMark kind="wordmark" finish="iridescent" size="lg" label="Aluzina" />
+              <BrandMark kind="wordmark" size="lg" label="Aluzina" />
+              <BrandMark kind="descriptor" size="md" label="Universo de diseño" />
             </div>
           </Shimmer>
           <p className="ds-note">{t('design.brand.metal.note')}</p>
@@ -228,15 +307,18 @@ export function BrandPage() {
               </Plate>
             ))}
           </div>
-          <div className="ds-row">
-            <Plate caption={t('design.brand.textures.circleMetal')}>
-              <span className="ds-circle surface-metal" aria-hidden="true" />
-            </Plate>
+          <div className="ds-grid ds-grid--4">
             <Plate caption={t('design.brand.textures.circleIridescent')}>
               <span className="ds-circle surface-iridescent" aria-hidden="true" />
             </Plate>
-            <Plate caption={t('design.brand.textures.circleOutline')}>
-              <span className="ds-circle ds-circle--outline" aria-hidden="true" />
+            <Plate caption={t('design.brand.textures.circleBlack')}>
+              <span className="ds-circle" style={{ background: 'var(--brand-black)' }} aria-hidden="true" />
+            </Plate>
+            <Plate caption={t('design.brand.textures.circleMetal')}>
+              <span className="ds-circle ds-circle--disc" aria-hidden="true" />
+            </Plate>
+            <Plate caption={t('design.brand.textures.circleFlat')}>
+              <span className="ds-circle" style={{ background: 'var(--metal-base)' }} aria-hidden="true" />
             </Plate>
           </div>
           <p className="ds-note">{t('design.brand.textures.more')}</p>
@@ -247,6 +329,18 @@ export function BrandPage() {
             <ThemeSample theme="light" />
             <ThemeSample theme="dark" />
           </div>
+        </Section>
+
+        <Section eyebrow={t('design.brand.defects.eyebrow')} desc={t('design.brand.defects.desc')}>
+          <Card title={t('design.brand.defects.title')} subtitle={t('design.brand.defects.owner')}>
+            <ol className="ds-list">
+              {DEFECTS.map((d) => (
+                <li key={d}>{t(`design.brand.defects.${d}`)}</li>
+              ))}
+            </ol>
+            <hr className="hairline" />
+            <p className="ds-note">{t('design.brand.defects.open')}</p>
+          </Card>
         </Section>
 
         <Section eyebrow={t('design.brand.gaps.eyebrow')} desc={t('design.brand.gaps.desc')}>

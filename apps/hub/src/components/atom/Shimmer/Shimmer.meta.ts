@@ -6,7 +6,7 @@ export default defineMeta({
   purpose:
     'Decorative shader surface for the two brand finishes (brand-system.md section 3): a dependency-free WebGL2 canvas painting anisotropic brushed metal from the live --metal-* vars (two specular streaks that follow pointer and device tilt) or a thin-film iridescent shift across the three brand pastels. Falls back to the CSS gradient when WebGL2 is unavailable.',
   props: {
-    finish: "'metal' | 'iridescent'? – default metal; metal reads --metal-base/-highlight/-shade so it follows the gold / silver switch",
+    finish: "'metal' | 'iridescent'? – default metal; metal reads --metal-base/-highlight/-shade so it follows the silver / gold switch",
     intensity: 'number? – 0..1, strength of the streaks / interference (default 0.6)',
     motion: 'boolean? – overrides the prefers-reduced-motion default (static single frame when reduced)',
     label: 'string? – aria-label on the canvas; decorative (aria-hidden) without it',

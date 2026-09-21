@@ -21,7 +21,7 @@
   overflow: visible;
 }
 
-/* Outline finish: same hairline weight at every size (non-scaling stroke), rounded like the manual's 1.5 pt line. */
+/* Outline finish: same hairline weight at every size (non-scaling stroke), rounded; the silver manual draws every line at 1 pt. */
 .brand-mark__stroke {
   fill: none;
   stroke: var(--color-metal-text);
@@ -36,9 +36,21 @@
   stroke-width: 2px;
 }
 
-/* Descriptor lockup: slash + two wide-tracked bold caps lines, flat metal text. */
+/* Descriptor lockup: slash + two wide-tracked bold caps lines. `universo` in flat metal text (theme-safe). */
 .brand-mark--descriptor {
   color: var(--color-metal-text);
+}
+
+.brand-mark__slash {
+  stroke: currentColor;
+}
+
+/*
+ * `interiorismo`: the silver manual's new lockup under the primary logo, slash and text in periwinkle.
+ * 1.5:1 on white, so it is a logo (role="img"), never UI text (brand-system.md, house rule).
+ */
+.brand-mark--interiorismo {
+  color: var(--brand-periwinkle);
 }
 
 .brand-mark__descriptor {

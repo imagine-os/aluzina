@@ -471,3 +471,42 @@
     --brand-mark-h: 2.25rem;
   }
 }
+
+/* Logo plates (silver edition): a stacked lockup tile and the manual's black footer band. */
+.ds-tile--stack {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.ds-tile.surface-ink {
+  min-height: 9rem;
+  padding: var(--space-6) var(--space-5);
+  justify-content: space-between;
+}
+
+/* The manual's metallic disc: the silver ramp lit from the left (0deg), not the 135deg band. */
+.ds-circle--disc {
+  background: var(--gradient-metal);
+  background-image: linear-gradient(90deg, var(--metal-stop-1) 0%, var(--metal-stop-2) 22%, var(--metal-stop-3) 48%, var(--metal-stop-4) 72%, var(--metal-stop-5) 100%);
+}
+
+/* The footer band's descriptor is flat silver on black; the tile's ink text must not win over the lockup colour. */
+.ds-tile.surface-ink .brand-mark--universo {
+  color: var(--brand-silver);
+}
+
+/* The download button is a long label: let it wrap on phones instead of widening the page header. */
+.ds-download {
+  max-width: 100%;
+}
+
+.ds-download .btn__label {
+  white-space: normal;
+  text-align: left;
+}
+
+/* On a metal band (a light surface in both themes) the descriptor reads in the metal's dark end, not the theme's metal-text. */
+.ds-band__inner .brand-mark--descriptor {
+  color: var(--metal-shade);
+}

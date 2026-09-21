@@ -14,6 +14,8 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   /** Renders a link styled as a button. */
   href?: string;
   external?: boolean;
+  /** With `href`: download the target instead of navigating (`true`, or a suggested file name). */
+  download?: boolean | string;
   fullWidth?: boolean;
   /** Set when the button is icon-only, so it still has a name. */
   'aria-label'?: string;
@@ -22,7 +24,7 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
 }
 
 /** The one button (P-07): every variant is >= 44 px tall, keyboard and touch reachable, focus ring from global.css. */
-export function Button({ variant = 'secondary', size = 'md', icon, iconEnd, href, external, fullWidth, className, children, type = 'button', ...rest }: ButtonProps) {
+export function Button({ variant = 'secondary', size = 'md', icon, iconEnd, href, external, download, fullWidth, className, children, type = 'button', ...rest }: ButtonProps) {
   const cls = cx('btn', `btn--${variant}`, `btn--${size}`, fullWidth && 'btn--full', !children && 'btn--icon', className);
   const inner = (
     <>
@@ -33,7 +35,15 @@ export function Button({ variant = 'secondary', size = 'md', icon, iconEnd, href
   );
   if (href) {
     return (
-      <a className={cls} href={href} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined} aria-label={rest['aria-label']} title={rest.title}>
+      <a
+        className={cls}
+        href={href}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noreferrer' : undefined}
+        download={download === true ? '' : download || undefined}
+        aria-label={rest['aria-label']}
+        title={rest.title}
+      >
         {inner}
       </a>
     );

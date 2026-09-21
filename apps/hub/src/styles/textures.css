@@ -1,6 +1,6 @@
 /*
  * Brand textures and finishes (docs/design/brand-system.md, "Textures").
- * The four tiles approximate the manual's gold line patterns (crop-texturas-b/c): hand-written seamless
+ * The four tiles approximate the manual's flat-metal line patterns (crop-texturas-b/c): hand-written seamless
  * SVGs, black strokes, used ONLY as masks so the colour comes from the theme (`--color-hairline`) and
  * follows the gold / silver switch. Apply the `.texture-*` classes to an EMPTY decorative element
  * (a pseudo-element or an absolutely positioned div, aria-hidden): a mask hides the element's own
@@ -31,7 +31,7 @@
 .texture-circles { -webkit-mask-image: var(--texture-circles); mask-image: var(--texture-circles); --texture-size: 3rem; }
 .texture-stars { -webkit-mask-image: var(--texture-stars); mask-image: var(--texture-stars); --texture-size: 4rem; }
 
-/* Metal and iridescent surfaces: the manual's gold band and holographic fills. Ink text on both. */
+/* Metal and iridescent surfaces: the manual's metal disc and holographic fills. Ink text on both. */
 .surface-metal {
   background: var(--gradient-metal);
   color: var(--brand-ink);
@@ -41,6 +41,32 @@
   background: var(--gradient-iridescent);
   color: var(--brand-ink);
 }
+
+/*
+ * Ink band: the silver manual's footer, flat black with a thin iridescent strip above and below,
+ * carrying the iridescent wordmark and the descriptor in flat silver. Same in both themes.
+ */
+.surface-ink {
+  position: relative;
+  isolation: isolate;
+  background: var(--brand-black);
+  color: #F2F2F2;
+  --color-metal-text: var(--brand-silver);
+}
+
+.surface-ink::before,
+.surface-ink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-iridescent-x);
+  pointer-events: none;
+}
+
+.surface-ink::before { top: 0; }
+.surface-ink::after { bottom: 0; }
 
 /* Pastel wash for backgrounds behind normal text: keeps the theme's text colour readable. */
 .surface-iridescent-soft {

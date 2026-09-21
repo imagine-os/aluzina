@@ -10,26 +10,57 @@ export const strings: StringTable = {
   'design.copyFailed': { en: 'Could not copy {what}; select it and copy by hand', es: 'No se pudo copiar {what}; selecciónalo y cópialo a mano' },
   'design.houseRule': { en: '(house rule)', es: '(regla de la casa)' },
 
-  // D-12 Brand guidelines
+  // D-12 Brand guidelines (silver edition, 2026-09-21)
   'design.brand.title': { en: 'Brand guidelines', es: 'Lineamientos de marca' },
   'design.brand.subtitle': {
-    en: 'The brand manual alive inside the product: every mark, colour and finish below is the same token the app ships with, so this page cannot drift from the software.',
-    es: 'El manual de marca vivo dentro del producto: cada marca, color y acabado de abajo es el mismo token con el que se publica la app, así que esta página no puede desfasarse del software.',
+    en: 'The brand manual alive inside the product: every mark, colour and finish below is the same token the app ships with, so this page cannot drift from the software. Silver edition of 2026-09-21.',
+    es: 'El manual de marca vivo dentro del producto: cada marca, color y acabado de abajo es el mismo token con el que se publica la app, así que esta página no puede desfasarse del software. Edición plateada del 2026-09-21.',
   },
   'design.brand.source': {
-    en: 'Source: MANUAL DE MARCA ALUZINA (2026-09-21), docs/knowledge/brand.md',
-    es: 'Fuente: MANUAL DE MARCA ALUZINA (2026-09-21), docs/knowledge/brand.md',
+    en: 'Source: MANUAL DE MARCA ALUZINA, silver edition (2026-09-21), docs/knowledge/brand.md · gold edition (2026-09-21, superseded) kept in docs/source/brand-kit',
+    es: 'Fuente: MANUAL DE MARCA ALUZINA, edición plateada (2026-09-21), docs/knowledge/brand.md · edición dorada (2026-09-21, reemplazada) conservada en docs/source/brand-kit',
   },
+
+  'design.brand.manual.title': { en: 'The brand manual', es: 'El manual de marca' },
+  'design.brand.manual.subtitle': {
+    en: 'The PDF Angélica delivered, served by the hub. This page is the same manual rendered from tokens; when they disagree, fix the token or report the PDF.',
+    es: 'El PDF que entregó Angélica, servido desde el hub. Esta página es el mismo manual renderizado desde tokens; si no coinciden, corrige el token o reporta el PDF.',
+  },
+  'design.brand.manual.download': { en: 'Download the brand manual (PDF)', es: 'Descargar el manual de marca (PDF)' },
+  'design.brand.manual.edition': { en: 'Current edition', es: 'Edición vigente' },
+  'design.brand.manual.editionValue': { en: 'Silver, Pantone 877 C (2026-09-21)', es: 'Plateado, Pantone 877 C (2026-09-21)' },
+  'design.brand.manual.previous': { en: 'Previous edition', es: 'Edición anterior' },
+  'design.brand.manual.previousValue': { en: 'Gold, Pantone 875 C (2026-09-21, superseded; preview only)', es: 'Dorado, Pantone 875 C (2026-09-21, reemplazada; solo vista previa)' },
+  'design.brand.manual.file': { en: 'File', es: 'Archivo' },
 
   'design.brand.logo.eyebrow': { en: 'Logo', es: 'Logo' },
   'design.brand.logo.desc': {
-    en: 'The wordmark is drawn, not typed: high-contrast capitals with concave flare feet, no crossbar on the A. Gold gradient on light, iridescent on dark, exactly as the manual pairs a white page with its gold band.',
-    es: 'El logotipo está dibujado, no escrito: mayúsculas de alto contraste con remates cóncavos y la A sin travesaño. Degradado dorado sobre claro, iridiscente sobre oscuro, igual que el manual combina la página blanca con su banda dorada.',
+    en: 'The wordmark is drawn, not typed: high-contrast capitals with concave flare feet, no crossbar on the A. Since the silver edition the primary logo is the iridescent wordmark on white, in both themes; the manual closes with it on a black band.',
+    es: 'El logotipo está dibujado, no escrito: mayúsculas de alto contraste con remates cóncavos y la A sin travesaño. Desde la edición plateada el logo primario es el logotipo iridiscente sobre blanco, en ambos temas; el manual cierra con él sobre una banda negra.',
   },
-  'design.brand.logo.light': { en: 'Light: metal wordmark', es: 'Claro: logotipo metálico' },
+  'design.brand.logo.primary': { en: 'Primary: iridescent wordmark on white with the new lockup', es: 'Primario: logotipo iridiscente sobre blanco con el nuevo bloque' },
+  'design.brand.logo.band': { en: 'Footer band: flat black, iridescent strips, descriptor in silver', es: 'Banda de pie: negro plano, franjas iridiscentes, descriptor en plata' },
+  'design.brand.logo.light': { en: 'Light: iridescent wordmark', es: 'Claro: logotipo iridiscente' },
   'design.brand.logo.dark': { en: 'Dark: iridescent wordmark', es: 'Oscuro: logotipo iridiscente' },
-  'design.brand.logo.descriptor': { en: 'Descriptor lockup', es: 'Bloque con descriptor' },
+  'design.brand.logo.descriptorUniverso': { en: 'Descriptor "UNIVERSO DE DISEÑO", flat silver (metal wordmark shown)', es: 'Descriptor "UNIVERSO DE DISEÑO", plata plana (logotipo metálico de muestra)' },
+  'design.brand.logo.descriptorInteriorismo': { en: 'Lockup "INTERIORISMO / ILUMINACIÓN", periwinkle', es: 'Bloque "INTERIORISMO / ILUMINACIÓN", lavanda' },
+  'design.brand.logo.descriptorNote': {
+    en: 'Two descriptors coexist in the silver manual: the LOGO section prints INTERIORISMO / ILUMINACIÓN, the DESCRIPTOR section and the footer keep UNIVERSO DE DISEÑO. Which one is primary is an open question for Justin and Angélica (D-052); BrandMark renders both.',
+    es: 'En el manual plateado coexisten dos descriptores: la sección LOGO imprime INTERIORISMO / ILUMINACIÓN, la sección DESCRIPTOR y el pie conservan UNIVERSO DE DISEÑO. Cuál es el primario es una pregunta abierta para Justin y Angélica (D-052); BrandMark renderiza ambos.',
+  },
   'design.brand.logo.rules': { en: 'Rules', es: 'Reglas' },
+  'design.brand.logo.rulePrimary': {
+    en: 'The primary logo is the iridescent wordmark on white, in light and dark. The metal wordmark (finish="metal", now silver) was the previous edition\'s primary and stays available for metal surfaces.',
+    es: 'El logo primario es el logotipo iridiscente sobre blanco, en claro y oscuro. El logotipo metálico (finish="metal", ahora plateado) era el primario de la edición anterior y sigue disponible para superficies metálicas.',
+  },
+  'design.brand.logo.ruleFinish': {
+    en: 'Silver is never a fill for controls. The metal is the white-to-#4D4D4D ramp on marks and discs; flat #C0C0C0 is for outlines (1 pt), the monogram foot, descriptor text and the line patterns.',
+    es: 'El plateado nunca es relleno de controles. El metal es la rampa de blanco a #4D4D4D en marcas y discos; el #C0C0C0 plano es para contornos (1 pt), el pie del monograma, el texto del descriptor y los patrones de línea.',
+  },
+  'design.brand.logo.ruleLockup': {
+    en: 'The periwinkle INTERIORISMO / ILUMINACIÓN lockup is a logo, not UI text: 1.5:1 on white. It renders as an image with a name and never labels a control.',
+    es: 'El bloque lavanda INTERIORISMO / ILUMINACIÓN es un logo, no texto de interfaz: 1.5:1 sobre blanco. Se renderiza como imagen con nombre y nunca etiqueta un control.',
+  },
   'design.brand.logo.ruleMin': {
     en: 'Minimum height: size sm (1.25 rem). Below that the flare feet close up.',
     es: 'Altura mínima: tamaño sm (1.25 rem). Por debajo, los remates se cierran.',
@@ -38,15 +69,11 @@ export const strings: StringTable = {
     en: 'Clear space: the width of the A\'s foot on every side.',
     es: 'Área de respeto: el ancho del pie de la A en cada lado.',
   },
-  'design.brand.logo.ruleFinish': {
-    en: 'Never a flat gold fill: gold is a gradient. Flat gold is only for outlines and descriptor text.',
-    es: 'Nunca un relleno dorado plano: el dorado es un degradado. El dorado plano es solo para contornos y el texto del descriptor.',
-  },
 
   'design.brand.monogram.eyebrow': { en: 'Monogram', es: 'Monograma' },
   'design.brand.monogram.desc': {
-    en: 'The A alone: a leaning stem in one secondary colour and a small foot that stays flat gold. The manual prints three variants.',
-    es: 'La A sola: un asta inclinada en un color secundario y un pie pequeño que siempre es dorado plano. El manual imprime tres variantes.',
+    en: 'The A alone: a leaning stem in one secondary colour and a small foot that stays flat silver (#C0C0C0). The manual prints three variants.',
+    es: 'La A sola: un asta inclinada en un color secundario y un pie pequeño que siempre es plata plana (#C0C0C0). El manual imprime tres variantes.',
   },
   'design.brand.tone.periwinkle': { en: 'Periwinkle', es: 'Azul lavanda' },
   'design.brand.tone.aqua': { en: 'Aqua', es: 'Aguamarina' },
@@ -56,17 +83,26 @@ export const strings: StringTable = {
 
   'design.brand.colors.eyebrow': { en: 'Colors', es: 'Colores' },
   'design.brand.colors.desc': {
-    en: 'Four printed colours and nothing else: one metallic primary and three pastel secondaries. The pastels are fills and tints, never text.',
-    es: 'Cuatro colores impresos y nada más: un primario metálico y tres secundarios pastel. Los pasteles son rellenos y tintes, nunca texto.',
+    en: 'Four printed colours and nothing else: one metallic primary, now silver, and three pastel secondaries. The pastels are fills and tints, never text.',
+    es: 'Cuatro colores impresos y nada más: un primario metálico, ahora plateado, y tres secundarios pastel. Los pasteles son rellenos y tintes, nunca texto.',
   },
   'design.brand.colors.role': { en: 'Role', es: 'Función' },
   'design.brand.colors.rolePrimary': { en: 'Primary, metallic', es: 'Primario, metálico' },
   'design.brand.colors.roleSecondary': { en: 'Secondary, fills and tints', es: 'Secundario, rellenos y tintes' },
-  'design.brand.colors.gold': { en: 'Gold / Bronze', es: 'Dorado / Bronce' },
+  'design.brand.colors.silver': { en: 'Silver', es: 'Plateado' },
+  'design.brand.colors.gold': { en: 'Gold / Bronze (previous edition)', es: 'Dorado / Bronce (edición anterior)' },
   'design.brand.colors.hex': { en: 'HEX', es: 'HEX' },
-  'design.brand.colors.noteHighlight': {
-    en: 'Highlight #F1D7AA is not a palette colour: it is the bright band decoded from the gold gradient.',
-    es: 'El brillo #F1D7AA no es un color de la paleta: es la banda clara decodificada del degradado dorado.',
+  'design.brand.colors.noteStaleHex': {
+    en: 'The hex printed under the silver swatch in the PDF still reads #98876D, a leftover of the gold edition. RGB 192, 192, 192 and CMYK 0, 0, 0, 25 are right and every silver shape in the file is #C0C0C0, so #C0C0C0 is the token.',
+    es: 'El hex impreso bajo la muestra plateada en el PDF todavía dice #98876D, un resto de la edición dorada. RGB 192, 192, 192 y CMYK 0, 0, 0, 25 son correctos y cada forma plateada del archivo es #C0C0C0, así que #C0C0C0 es el token.',
+  },
+  'design.brand.colors.noteRamp': {
+    en: 'The metallic ramp runs from white to #4D4D4D (#FFFFFF, #E0E0E0, #999999, #4D4D4D): a smooth gradient, no bands. #C0C0C0 itself is not a stop.',
+    es: 'La rampa metálica va del blanco al #4D4D4D (#FFFFFF, #E0E0E0, #999999, #4D4D4D): un degradado continuo, sin bandas. El #C0C0C0 no es un punto de la rampa.',
+  },
+  'design.brand.colors.noteBlack': {
+    en: 'Flat black #000000 is new in the silver edition: the footer band and one texture disc. In the app it is .surface-ink and stays black in both themes.',
+    es: 'El negro plano #000000 es nuevo en la edición plateada: la banda de pie y un disco de textura. En la app es .surface-ink y sigue negro en ambos temas.',
   },
   'design.brand.colors.noteInk': {
     en: 'Ink #231F20 carries every caption in the manual and every piece of text on a metal or iridescent surface here.',
@@ -79,30 +115,28 @@ export const strings: StringTable = {
 
   'design.brand.metal.eyebrow': { en: 'Metal finish', es: 'Acabado metálico' },
   'design.brand.metal.desc': {
-    en: 'Gold today, silver ready. The metal is one token group, so the whole system changes finish without a redesign.',
-    es: 'Dorado hoy, plateado listo. El metal es un solo grupo de tokens, así que todo el sistema cambia de acabado sin rediseñar nada.',
+    en: 'Silver, current edition (2026-09-21). Gold, previous edition, superseded; preview only. The metal is one token group, so the whole system changed finish in one line.',
+    es: 'Plateado, edición vigente (2026-09-21). Dorado, edición anterior, reemplazada; solo vista previa. El metal es un solo grupo de tokens, así que todo el sistema cambió de acabado en una línea.',
   },
   'design.brand.metal.preview': { en: 'Preview finish', es: 'Previsualizar acabado' },
-  'design.brand.metal.gold': { en: 'Gold', es: 'Dorado' },
+  'design.brand.metal.gold': { en: 'Gold (previous edition)', es: 'Dorado (edición anterior)' },
   'design.brand.metal.silver': { en: 'Silver', es: 'Plateado' },
+  'design.brand.metal.current': { en: 'Current edition', es: 'Edición vigente' },
+  'design.brand.metal.previous': { en: 'Previous edition, preview only', es: 'Edición anterior, solo vista previa' },
   'design.brand.metal.note': {
-    en: 'This toggle is a preview: it sets <html data-metal> and remembers it in aluzina.metal on this device. The real switch is one line, tokens.metalDefault = \'silver\' followed by npm run tokens; the gold-tinted accent, hairline and metal-text colours are re-derived in the same change.',
-    es: 'Este interruptor es una vista previa: cambia <html data-metal> y lo recuerda en aluzina.metal en este dispositivo. El cambio real es una línea, tokens.metalDefault = \'silver\' seguido de npm run tokens; los colores accent, hairline y metal-text con matiz dorado se rederivan en el mismo cambio.',
-  },
-  'design.brand.metal.silverDraft': {
-    en: 'Silver values are provisional (Pantone 877 C candidate) until the founder confirms them.',
-    es: 'Los valores del plateado son provisionales (candidato Pantone 877 C) hasta que la fundadora los confirme.',
+    en: 'This toggle is a preview: it sets <html data-metal> and remembers it in aluzina.metal on this device. The real switch happened in tokens.ts (metalDefault = \'silver\', D-050) with the neutral greys re-derived for both themes; every --metal-*, --metal-stop-* and --gradient-metal* follows it.',
+    es: 'Este interruptor es una vista previa: cambia <html data-metal> y lo recuerda en aluzina.metal en este dispositivo. El cambio real ocurrió en tokens.ts (metalDefault = \'silver\', D-050) con los grises neutros rederivados para ambos temas; cada --metal-*, --metal-stop-* y --gradient-metal* lo sigue.',
   },
 
   'design.brand.gradients.eyebrow': { en: 'Gradients', es: 'Degradados' },
   'design.brand.gradients.desc': {
-    en: 'Two gradients, five tokens. The metal one follows the finish switch; the iridescent one is always the three pastels in order.',
-    es: 'Dos degradados, cinco tokens. El metálico sigue el interruptor de acabado; el iridiscente siempre son los tres pasteles en orden.',
+    en: 'Two gradients, five tokens. The metal one follows the finish switch; the iridescent one is always the three pastels in order and is byte-identical in both editions.',
+    es: 'Dos degradados, cinco tokens. El metálico sigue el interruptor de acabado; el iridiscente siempre son los tres pasteles en orden y es idéntico en ambas ediciones.',
   },
-  'design.brand.gradients.metal': { en: 'Metal: the brushed band, two highlight streaks', es: 'Metálico: la banda cepillada, dos destellos' },
+  'design.brand.gradients.metal': { en: 'Metal: the silver ramp, white to #4D4D4D, one smooth sweep', es: 'Metálico: la rampa plateada, de blanco a #4D4D4D, un solo barrido continuo' },
   'design.brand.gradients.metalSoft': { en: 'Metal soft: 30% into the surface, for text on top', es: 'Metálico suave: 30% sobre la superficie, para texto encima' },
   'design.brand.gradients.iridescent': { en: 'Iridescent: periwinkle, aqua, lime, top to bottom', es: 'Iridiscente: lavanda, aguamarina, lima, de arriba abajo' },
-  'design.brand.gradients.iridescentX': { en: 'Iridescent across: the footer wordmark band', es: 'Iridiscente horizontal: la banda del logotipo en el pie' },
+  'design.brand.gradients.iridescentX': { en: 'Iridescent across: the footer wordmark and the band strips', es: 'Iridiscente horizontal: el logotipo del pie y las franjas de la banda' },
   'design.brand.gradients.iridescentSoft': { en: 'Iridescent soft: 35% into the surface, theme text', es: 'Iridiscente suave: 35% sobre la superficie, texto del tema' },
 
   'design.brand.type.eyebrow': { en: 'Typography', es: 'Tipografía' },
@@ -128,28 +162,29 @@ export const strings: StringTable = {
 
   'design.brand.elements.eyebrow': { en: 'Elements', es: 'Elementos' },
   'design.brand.elements.desc': {
-    en: 'Five alchemical themes and three verticals, all thin gold outline. They label sections; they never become buttons.',
-    es: 'Cinco temas alquímicos y tres verticales, todos en contorno dorado fino. Etiquetan secciones; nunca se vuelven botones.',
+    en: 'Five alchemical themes and three verticals, all in a thin flat-silver outline (1 pt in the manual). They label sections; they never become buttons.',
+    es: 'Cinco temas alquímicos y tres verticales, todos en contorno fino de plata plana (1 pt en el manual). Etiquetan secciones; nunca se vuelven botones.',
   },
 
   'design.brand.textures.eyebrow': { en: 'Textures', es: 'Texturas' },
   'design.brand.textures.desc': {
-    en: 'Four seamless line patterns and three circles. Patterns are masks, so they take their colour from the theme and follow the metal switch.',
-    es: 'Cuatro patrones de línea continuos y tres círculos. Los patrones son máscaras, así que toman el color del tema y siguen el cambio de metal.',
+    en: 'Four seamless line patterns and four discs. Patterns are masks, so they take their colour from the theme and follow the metal switch; the discs are the manual\'s four finishes.',
+    es: 'Cuatro patrones de línea continuos y cuatro discos. Los patrones son máscaras, así que toman el color del tema y siguen el cambio de metal; los discos son los cuatro acabados del manual.',
   },
   'design.brand.textures.lattice': { en: 'Lattice', es: 'Retícula' },
   'design.brand.textures.chevron': { en: 'Chevron wave', es: 'Onda de galones' },
   'design.brand.textures.circles': { en: 'Circle and star', es: 'Círculo y estrella' },
   'design.brand.textures.stars': { en: 'Sparkles', es: 'Destellos' },
-  'design.brand.textures.circleMetal': { en: 'Metal circle', es: 'Círculo metálico' },
-  'design.brand.textures.circleIridescent': { en: 'Iridescent circle', es: 'Círculo iridiscente' },
-  'design.brand.textures.circleOutline': { en: 'Outline circle', es: 'Círculo en contorno' },
+  'design.brand.textures.circleIridescent': { en: 'Iridescent disc', es: 'Disco iridiscente' },
+  'design.brand.textures.circleBlack': { en: 'Black disc (new)', es: 'Disco negro (nuevo)' },
+  'design.brand.textures.circleMetal': { en: 'Metallic silver disc, lit from the left', es: 'Disco plateado metálico, iluminado desde la izquierda' },
+  'design.brand.textures.circleFlat': { en: 'Flat silver disc #C0C0C0', es: 'Disco plata plana #C0C0C0' },
   'design.brand.textures.more': { en: 'The shader versions of both finishes live on Textures and effects (D-13).', es: 'Las versiones con shader de ambos acabados están en Texturas y efectos (D-13).' },
 
   'design.brand.themes.eyebrow': { en: 'Light and dark', es: 'Claro y oscuro' },
   'design.brand.themes.desc': {
-    en: 'The manual only prints white pages, so dark is ours: a warm near-black, the same gold hue, lifted metal text and the iridescent wordmark. Both themes are checked on every page; dark is not an inversion filter.',
-    es: 'El manual solo imprime páginas blancas, así que el oscuro es nuestro: un casi negro cálido, el mismo matiz dorado, texto metálico más claro y el logotipo iridiscente. Ambos temas se revisan en cada página; el oscuro no es un filtro de inversión.',
+    en: 'The manual prints white pages and one black band, so dark is ours: a neutral near-black, silver outlines that lift to #C0C0C0 as text, and the same iridescent wordmark as light. Both themes are checked on every page; dark is not an inversion filter.',
+    es: 'El manual imprime páginas blancas y una banda negra, así que el oscuro es nuestro: un casi negro neutro, contornos plateados que suben a #C0C0C0 como texto y el mismo logotipo iridiscente que el claro. Ambos temas se revisan en cada página; el oscuro no es un filtro de inversión.',
   },
   'design.brand.themes.light': { en: 'Light', es: 'Claro' },
   'design.brand.themes.dark': { en: 'Dark', es: 'Oscuro' },
@@ -160,6 +195,30 @@ export const strings: StringTable = {
   },
   'design.brand.themes.sampleBadge': { en: 'Accent', es: 'Acento' },
   'design.brand.themes.sampleMuted': { en: 'Muted caption', es: 'Leyenda apagada' },
+
+  'design.brand.defects.eyebrow': { en: 'Manual export defects to fix', es: 'Defectos de exportación del manual por corregir' },
+  'design.brand.defects.desc': {
+    en: 'Found while decoding the silver PDF. Reported, not reproduced: the app follows the intent, the PDF needs a re-export (D-052).',
+    es: 'Detectados al decodificar el PDF plateado. Se reportan, no se reproducen: la app sigue la intención, el PDF necesita reexportarse (D-052).',
+  },
+  'design.brand.defects.title': { en: 'Three things in the PDF', es: 'Tres cosas en el PDF' },
+  'design.brand.defects.owner': { en: 'For Angélica (graphic design)', es: 'Para Angélica (diseño gráfico)' },
+  'design.brand.defects.hex': {
+    en: 'The hex printed under the silver swatch still reads #98876D (gold). RGB 192, 192, 192 is right; the line should read #C0C0C0.',
+    es: 'El hex impreso bajo la muestra plateada todavía dice #98876D (dorado). RGB 192, 192, 192 es correcto; la línea debería decir #C0C0C0.',
+  },
+  'design.brand.defects.labels': {
+    en: 'The PRODUCTOS / ESPACIOS / ARTE labels are still gold #98876D; every other silver text moved to #C0C0C0.',
+    es: 'Las etiquetas PRODUCTOS / ESPACIOS / ARTE siguen en dorado #98876D; el resto del texto plateado pasó a #C0C0C0.',
+  },
+  'design.brand.defects.rules': {
+    en: 'The six section rules, both DESCRIPTOR slashes and the footer slash are zero-width fills with no stroke, so they render invisible. They need a 1 pt stroke.',
+    es: 'Las seis líneas de sección, las dos diagonales del DESCRIPTOR y la del pie son rellenos de ancho cero sin trazo, así que no se ven. Necesitan un trazo de 1 pt.',
+  },
+  'design.brand.defects.open': {
+    en: 'Open question, not a defect: the manual now carries two descriptors (INTERIORISMO / ILUMINACIÓN under the logo, UNIVERSO DE DISEÑO in the DESCRIPTOR section and the footer). Justin and Angélica decide which is primary.',
+    es: 'Pregunta abierta, no defecto: el manual ahora lleva dos descriptores (INTERIORISMO / ILUMINACIÓN bajo el logo, UNIVERSO DE DISEÑO en la sección DESCRIPTOR y el pie). Justin y Angélica deciden cuál es el primario.',
+  },
 
   'design.brand.gaps.eyebrow': { en: 'What the manual does not define', es: 'Lo que el manual no define' },
   'design.brand.gaps.desc': {
@@ -173,7 +232,7 @@ export const strings: StringTable = {
   'design.brand.gaps.icons': { en: 'Iconography beyond the eight glyphs', es: 'Iconografía más allá de los ocho glifos' },
   'design.brand.gaps.grid': { en: 'Layout grid values', es: 'Valores de retícula de maquetación' },
   'design.brand.gaps.a11y': { en: 'Accessibility rules (ours: WCAG AA on every text token)', es: 'Reglas de accesibilidad (las nuestras: WCAG AA en cada token de texto)' },
-  'design.brand.gaps.dark': { en: 'Dark mode (ours, inferred, pending confirmation)', es: 'Modo oscuro (nuestro, inferido, pendiente de confirmación)' },
+  'design.brand.gaps.dark': { en: 'Dark mode beyond the black footer band (ours, inferred, pending confirmation)', es: 'Modo oscuro más allá de la banda negra del pie (nuestro, inferido, pendiente de confirmación)' },
 
   // D-10 Tokens
   'design.tokens.title': { en: 'Design tokens', es: 'Tokens de diseño' },
@@ -226,6 +285,7 @@ export const strings: StringTable = {
     es: 'Ambos acabados siempre se emiten: :root recibe el predeterminado y :root[data-metal="…"] contiene cada uno.',
   },
   'design.tokens.default': { en: 'default', es: 'predeterminado' },
+  'design.tokens.previous': { en: 'previous edition', es: 'edición anterior' },
   'design.tokens.gradients': { en: 'Gradients', es: 'Degradados' },
   'design.tokens.type': { en: 'Type', es: 'Tipografía' },
   'design.tokens.weights': { en: 'Weights', es: 'Pesos' },
@@ -259,8 +319,8 @@ export const strings: StringTable = {
   },
   'design.effects.shimmer': { en: 'Shimmer, the shader surface', es: 'Shimmer, la superficie con shader' },
   'design.effects.shimmerDesc': {
-    en: 'A WebGL2 canvas with no dependencies. Metal is anisotropic brushed metal with two specular streaks that follow the pointer, the pen, the touch and, on a phone, the tilt; iridescent is a thin-film shift over the three pastels. It reads the --metal-* variables, so it follows theme and the gold / silver switch, and it falls back to the CSS gradient when WebGL2 is missing.',
-    es: 'Un lienzo WebGL2 sin dependencias. El metálico es metal cepillado anisotrópico con dos destellos especulares que siguen el puntero, el lápiz, el toque y, en un teléfono, la inclinación; el iridiscente es un desplazamiento de película delgada sobre los tres pasteles. Lee las variables --metal-*, así que sigue el tema y el cambio dorado / plateado, y cae al degradado CSS cuando no hay WebGL2.',
+    en: 'A WebGL2 canvas with no dependencies. Metal is anisotropic brushed metal with two specular streaks that follow the pointer, the pen, the touch and, on a phone, the tilt; iridescent is a thin-film shift over the three pastels. It reads the --metal-* variables, so it follows theme and the silver / gold switch, and it falls back to the CSS gradient when WebGL2 is missing.',
+    es: 'Un lienzo WebGL2 sin dependencias. El metálico es metal cepillado anisotrópico con dos destellos especulares que siguen el puntero, el lápiz, el toque y, en un teléfono, la inclinación; el iridiscente es un desplazamiento de película delgada sobre los tres pasteles. Lee las variables --metal-*, así que sigue el tema y el cambio plateado / dorado, y cae al degradado CSS cuando no hay WebGL2.',
   },
   'design.effects.bandMetal': { en: 'Metal band', es: 'Banda metálica' },
   'design.effects.bandIridescent': { en: 'Iridescent band', es: 'Banda iridiscente' },

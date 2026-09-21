@@ -7,7 +7,6 @@ import { BrandMark } from '../../components/atom/BrandMark/BrandMark';
 import { Shimmer } from '../../components/atom/Shimmer/Shimmer';
 import { HubHeader } from '../../components/organism/HubHeader/HubHeader';
 import { SurfaceCard, type SurfaceStatus } from '../../components/molecule/SurfaceCard/SurfaceCard';
-import { useTheme } from '../../design/ThemeProvider';
 import { useT } from '../../i18n/I18nProvider';
 import { PORTAL_ROLES, type PrototypePageId, type SurfaceId } from './specs';
 import './HubPage.css';
@@ -87,7 +86,6 @@ const PROTOTYPE_PAGES: PrototypePage[] = [
 export function HubPage() {
   const { t } = useT();
   const { switchUser, role } = useSession();
-  const { theme } = useTheme();
   const navigate = useNavigate();
   const routes = useRoutes();
 
@@ -161,7 +159,7 @@ export function HubPage() {
           <section className="hub-hero">
             <Shimmer finish="metal" intensity={0.35} className="hub-hero__band">
               <div className="hub-hero__band-inner">
-                <BrandMark kind="wordmark" finish={theme === 'dark' ? 'iridescent' : 'metal'} size="xl" />
+                <BrandMark kind="wordmark" finish="iridescent" size="xl" />
               </div>
             </Shimmer>
             <h1 className="hub-hero__title">{t('hub.title')}</h1>

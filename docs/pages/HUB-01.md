@@ -12,12 +12,12 @@ Entry point to every surface of the Aluzina Business OS for Justin, the owner, t
 
 ## Screenshots
 
-`docs/screenshots/HUB-01/en-390.jpg`, `en-1280.jpg`, `en-1920.jpg`, `en-3840.jpg`, `es-390.jpg` (light) and `en-390-dark.jpg`, `en-1280-dark.jpg` (dark), all recaptured from the local 0.8.0 preview with the brand restyle and the Shimmer hero band (changelog 0014; dev mode off, Rubik unreachable in the sandbox so text renders in the system fallback), plus `routes.json` (manifest at capture time, 78 routes).
+`docs/screenshots/HUB-01/en-390.jpg`, `en-1280.jpg`, `en-1920.jpg`, `en-3840.jpg`, `es-390.jpg` (light) and `en-390-dark.jpg`, `en-1280-dark.jpg` (dark), all recaptured from the local 0.9.0 preview with the silver edition (neutral greys, iridescent wordmark in both themes, silver hero band; changelog 0015; dev mode off, Rubik unreachable in the sandbox so text renders in the system fallback), plus `routes.json` (manifest at capture time, 78 routes, 689 action entries).
 
 ## Layout (top to bottom)
 
-1. `HubHeader`: `BrandMark` wordmark (metal on light, iridescent on dark, changelog 0014); `RoleSwitcher` ("Viewing as", native select of the six demo users); controls: language (shows the *other* language, EN/ES), theme (Light / Dark, `aria-pressed`), dev mode (Dev on / Dev off, `aria-pressed`).
-2. Hero: a decorative `aria-hidden` `Shimmer` metal band carrying the wordmark (D-034), then h1 "Aluzina Business OS" and the one-line subtitle in theme text below it.
+1. `HubHeader`: `BrandMark` wordmark (iridescent in both themes since the silver edition, changelog 0015, D-050); `RoleSwitcher` ("Viewing as", native select of the six demo users); controls: language (shows the *other* language, EN/ES), theme (Light / Dark, `aria-pressed`), dev mode (Dev on / Dev off, `aria-pressed`).
+2. Hero: a decorative `aria-hidden` `Shimmer` metal band (silver, intensity 0.35, veiled 48% by the theme bg in light / 30% in dark) carrying the iridescent wordmark (D-034, D-050), then h1 "Aluzina Business OS" and the one-line subtitle in theme text below it.
 2b. **Portals** grid: A-01 Founder (Alejandra Guerra), O-01 Administration and Operations (Miguel), S-01 Interior Design (Sarai), G-01 Graphic Design and Communication (Angélica) as cards whose status (Live / Stub) is read from the registered dashboard route (button: "Enter as <name> →"), C-01 Client portal (planned, Placeholder). Each with its deploy-time thumbnail.
 3. Product surfaces grid (`auto-fill, minmax(18rem, 1fr)`, pass 0013): P-00 Public website (external), P-01 Services and intake, C-01 Client app, M-01 Ops manual, D-06 Docs (GitHub link while no route), K-01 Spaces, BOS-01 prototype; status derived from the route manifest by code (built -> Live, stub -> Stub, no route -> Planned). Each card starts with a 16 / 10 thumbnail (`./thumbs/<code>.jpg`, 640 x 400) or the bilingual "No preview yet" tile.
 3a. Builder and dev tools grid: D-12 Design system (live, `#/design`, changelog 0014), D-05 plan viewer, D-07 canvas, D-08 demo simulator, D-09 actions, D-10 Tokens (live, `#/design/tokens`), D-11 testing hub, D-02 components, D-03 specs, D-04 multiuser; same route-derived status.

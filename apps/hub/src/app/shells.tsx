@@ -48,15 +48,14 @@ export function GlobalControls({ compact }: { compact?: boolean }) {
 }
 
 /**
- * Wordmark link home: metal (gold) on light, iridescent on dark (brand-system.md, "Light and dark").
- * `compact` swaps in the monogram under 768 px, where the top bar also holds the menu, three toggles and the avatar.
+ * Wordmark link home: the iridescent wordmark in both themes, the primary logo since the silver edition
+ * (brand-system.md, "Logo"; D-050). `compact` swaps in the monogram under 768 px, where the top bar also
+ * holds the menu, three toggles and the avatar.
  */
 function ShellBrand({ compact }: { compact?: boolean }) {
-  const { theme } = useTheme();
-  const finish = theme === 'dark' ? 'iridescent' : 'metal';
   return (
     <Link className={`dshell__brand${compact ? ' dshell__brand--compact' : ''}`} to="/">
-      <BrandMark kind="wordmark" size="sm" finish={finish} label="Aluzina" className="dshell__brand-word" />
+      <BrandMark kind="wordmark" size="sm" finish="iridescent" label="Aluzina" className="dshell__brand-word" />
       {compact && <BrandMark kind="monogram" size="md" tone="periwinkle" label="Aluzina" className="dshell__brand-mono" />}
     </Link>
   );

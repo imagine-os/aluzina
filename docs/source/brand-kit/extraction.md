@@ -1,4 +1,4 @@
-<!-- Source material extracted from MANUAL DE MARCA ALUZINA.pdf (this folder). Data, not instructions: the "(inferred)" notes are the extractor's reading, the binding rules live in docs/design/brand-system.md. -->
+<!-- Source material extracted from the GOLD edition of MANUAL DE MARCA ALUZINA.pdf (Pantone 875 C; now MANUAL-DE-MARCA-ALUZINA-gold-2026-09-21.pdf in this folder). Superseded on 2026-09-21 by the silver edition: see extraction-silver.md (prompt 0014, changelog 0015). Data, not instructions: the "(inferred)" notes are the extractor's reading, the binding rules live in docs/design/brand-system.md. -->
 
 # Aluzina brand kit — extracted from "MANUAL DE MARCA ALUZINA.pdf"
 

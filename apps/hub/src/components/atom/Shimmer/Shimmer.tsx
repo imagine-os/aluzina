@@ -138,9 +138,9 @@ export function Shimmer({ finish = 'metal', intensity = 0.6, motion, label, clas
     const readColors = () => {
       const cs = getComputedStyle(document.documentElement);
       gl.useProgram(prog);
-      gl.uniform3fv(uBase, hexToRgb(cs.getPropertyValue('--metal-base') || '#98876D'));
-      gl.uniform3fv(uHigh, hexToRgb(cs.getPropertyValue('--metal-highlight') || '#F1D7AA'));
-      gl.uniform3fv(uShade, hexToRgb(cs.getPropertyValue('--metal-shade') || '#6F6250'));
+      gl.uniform3fv(uBase, hexToRgb(cs.getPropertyValue('--metal-base') || '#C0C0C0'));
+      gl.uniform3fv(uHigh, hexToRgb(cs.getPropertyValue('--metal-highlight') || '#FFFFFF'));
+      gl.uniform3fv(uShade, hexToRgb(cs.getPropertyValue('--metal-shade') || '#4D4D4D'));
     };
 
     const resize = () => {

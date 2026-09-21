@@ -11,6 +11,7 @@ export default defineMeta({
     iconEnd: 'ReactNode? – after the label',
     href: 'string? – renders an <a> styled as a button',
     external: 'boolean? – new tab + rel=noreferrer',
+    download: 'boolean | string? – with href, downloads the target (true, or a suggested file name) instead of navigating',
     fullWidth: 'boolean?',
     'aria-label': 'string – required when icon-only',
     '...rest': 'native button attributes (onClick, disabled, type, title)',

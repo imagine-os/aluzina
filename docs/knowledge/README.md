@@ -35,7 +35,7 @@ supersedes: <file#section or entry id>   (only when it replaces an older entry)
 | `public-sites.md` | The two public websites (aluzinaa.com: Lovable React SPA, 18 pages; direccion.aluzinaa.com: one static page on Vercel), their pages, CTAs, contact data, fonts and palette, where the source lives, and how Lovable's GitHub sync works. Evidence in `../source/aluzinaa-archive/`. |
 | `social-channels.md` | Aluzina's public social presence (Instagram handle unresolved: `aluzina.espacios` vs `@aluzinaa`), other public pages, the 2026-09-21 homepage snapshot (luminaires, process, stats); `draft` until the founder confirms. |
 | `service-playbook.md` | Full transcription of the founder's Service Delivery Playbook v1.0: five services with every phase / stage and item, client journey, lead intake and qualification, service ladder, governance rules, roles, operational assets, the 15-status pipeline and the KPI layer (mirrored as data in `apps/hub/src/domain/playbook.ts`, D-041). |
-| `brand.md` | Identity, logo/monogram, color, gradients, typography, graphic elements, metal finish and dark mode from the ALUZINA brand manual; gaps the manual doesn't define. |
+| `brand.md` | Identity, logo/monogram, color, gradients, typography, graphic elements, metal finish and dark mode from the ALUZINA brand manual, silver edition (2026-09-21) with the gold edition kept as superseded entries; the manual's export defects to report; gaps the manual doesn't define. |
 
 Planned: `suppliers.md`, `vocabulary.md` (EN / ES terms used in the studio).
 
@@ -55,3 +55,4 @@ Planned: `suppliers.md`, `vocabulary.md` (EN / ES terms used in the studio).
 - 2026-09-21: `social-channels.md` added as `draft` after the first #social-scraping intake (Slack #social-scraping 2026-09-21, Justin Massion; prompt 0008, changelog 0012, D-040).
 - 2026-09-21: `service-playbook.md` added from the PDF Justin shared (ALUZINA Operating System – Service Delivery Playbook v1.0, Alejandra Guerra; prompt 0009, changelog 0013, D-041); `roles-and-portals.md` gains the pass 0013 permissions; `deliverables.md` points at the playbook's status architecture.
 - 2026-09-21: `brand.md` added from the ALUZINA brand manual (Slack #aluzina-brand-kit, Justin Massion; prompt 0010, changelog 0014).
+- 2026-09-21: `brand.md` moved to the silver edition of the manual: gold entries superseded in place, silver entries and an export-defects section added (Slack #aluzina-brand-kit, Justin Massion; prompt 0014, changelog 0015, D-050..D-052).

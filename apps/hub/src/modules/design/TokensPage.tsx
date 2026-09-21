@@ -227,8 +227,8 @@ export function TokensPage() {
     { key: 'active', header: t('design.tokens.bandActive'), render: (b) => (b.minWidth === activeBand.minWidth ? <Badge tone="success" dot>{t('design.tokens.bandActive')}</Badge> : null) },
   ];
 
-  const gradientOf = (m: MetalName) =>
-    `linear-gradient(135deg, ${tokens.metal[m].base} 0%, ${tokens.metal[m].highlight} 22%, ${tokens.metal[m].base} 48%, ${tokens.metal[m].highlight} 72%, ${tokens.metal[m].base} 100%)`;
+  /** Each metal's own gradient as decoded from its manual edition (emitted as --gradient-metal inside :root[data-metal]). */
+  const gradientOf = (m: MetalName) => tokens.metal[m].gradient;
 
   return (
     <>
@@ -297,7 +297,9 @@ export function TokensPage() {
                   key={m}
                   caption={
                     <>
-                      <strong>{m}</strong> {m === tokens.metalDefault && <Badge tone="accent">{t('design.tokens.default')}</Badge>} <code>{tokens.metal[m].base}</code> <code>{tokens.metal[m].highlight}</code> <code>{tokens.metal[m].shade}</code>
+                      <strong>{m}</strong>{' '}
+                      {m === tokens.metalDefault ? <Badge tone="accent">{t('design.tokens.default')}</Badge> : <Badge tone="neutral">{t('design.tokens.previous')}</Badge>} <code>{tokens.metal[m].base}</code>{' '}
+                      <code>{tokens.metal[m].highlight}</code> <code>{tokens.metal[m].shade}</code>
                     </>
                   }
                 >
