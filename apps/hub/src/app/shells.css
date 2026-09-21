@@ -1,0 +1,320 @@
+/* Shells: DesktopShell (portals, dev, docs) and PhoneShell (client). Tokens only; --scale bands handle 1920+. */
+.shell-skip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  left: var(--space-3);
+  top: -100%;
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+}
+
+.shell-skip:focus {
+  top: var(--space-3);
+}
+
+.shell-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Desktop shell ---------------------------------------------------------- */
+.dshell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.dshell__top {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 4rem;
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.dshell__menu-btn {
+  display: none;
+}
+
+.dshell__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target);
+  min-width: var(--target);
+  color: inherit;
+  text-decoration: none;
+}
+
+.dshell__mark {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--color-accent-soft), var(--color-accent) 70%);
+  flex: none;
+}
+
+.dshell__brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 1.125rem;
+}
+
+.dshell__portal {
+  font-weight: 500;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--color-border);
+}
+
+.dshell__role {
+  white-space: nowrap;
+}
+
+.dshell__spacer {
+  flex: 1;
+}
+
+.dshell__user {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--target);
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+
+.dshell__body {
+  display: grid;
+  grid-template-columns: 16rem minmax(0, 1fr);
+  flex: 1;
+}
+
+.dshell__side {
+  position: sticky;
+  top: 4rem;
+  align-self: start;
+  max-height: calc(100dvh - 4rem);
+  overflow-y: auto;
+  padding: var(--space-4) var(--space-3);
+  border-right: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.dshell__main {
+  min-width: 0;
+  padding: var(--space-5) var(--space-4) var(--space-8);
+}
+
+.dshell__main:focus {
+  outline: none;
+}
+
+.dshell__content {
+  max-width: 100rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .dshell__main {
+    padding: var(--space-6) var(--space-6) var(--space-8);
+  }
+}
+
+/* Sidebar / drawer nav */
+.shell-nav__group + .shell-nav__group {
+  margin-top: var(--space-4);
+}
+
+.shell-nav__group-title {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 0 var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.shell-nav__list {
+  display: grid;
+  gap: 0.125rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.shell-nav__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--target);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.shell-nav__link:hover {
+  background: var(--color-surface-raised);
+}
+
+.shell-nav__link--active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-text);
+}
+
+.shell-nav__glyph {
+  width: 1.5rem;
+  text-align: center;
+  color: var(--color-accent);
+}
+
+.shell-nav__label {
+  flex: 1;
+}
+
+/* Bottom nav (phones) */
+.dshell__bottom {
+  display: none;
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.dshell__bottom-link {
+  display: grid;
+  justify-items: center;
+  gap: 0.125rem;
+  min-height: calc(var(--target) + var(--space-2));
+  padding: var(--space-2) var(--space-1);
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: 0.75rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dshell__bottom-link > span:first-child {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.dshell__bottom-link--active {
+  color: var(--color-accent-text);
+  background: var(--color-accent-soft);
+}
+
+.shell-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.shell-user__name {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.shell-user__role {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+@media (max-width: 767.98px) {
+  .dshell__menu-btn {
+    display: inline-flex;
+  }
+
+  .dshell__portal,
+  .dshell__hub-btn,
+  .dshell__role,
+  .dshell__brand-name {
+    display: none;
+  }
+
+  .dshell__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dshell__side {
+    display: none;
+  }
+
+  .dshell__bottom {
+    display: grid;
+  }
+
+  .dshell__top .shell-controls .toggle-btn {
+    padding-inline: var(--space-2);
+  }
+}
+
+@media (min-width: 1920px) {
+  .dshell__body {
+    grid-template-columns: 18rem minmax(0, 1fr);
+  }
+}
+
+/* Phone shell (client app) ---------------------------------------------- */
+.pshell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  border-inline: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.pshell__top {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: 3.5rem;
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.pshell__main {
+  flex: 1;
+  padding: var(--space-4);
+}
+
+.pshell__bottom {
+  display: grid;
+}

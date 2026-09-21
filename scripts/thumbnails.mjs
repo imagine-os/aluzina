@@ -35,7 +35,7 @@ const THUMB = { width: 640, height: 400, quality: 80 };
 const DC_ROOT = '#dc-root';
 
 /**
- * Every surface the hub links to (mirrors SURFACES + PROTOTYPE_PAGES in apps/hub/src/modules/hub/HubPage.tsx).
+ * Every surface the hub links to (mirrors PORTALS + SURFACES + PROTOTYPE_PAGES in apps/hub/src/modules/hub/HubPage.tsx).
  * `wait`: selector that must render before the shot; `dc: true` waits for the Claude Design runtime
  * to fill #dc-root; `external: true` is best effort (falls back to a placeholder tile).
  * HUB-01 is captured last so its own thumbnail shows the freshly written thumbnails.
@@ -47,6 +47,14 @@ const SURFACES = [
   { code: 'BOS-04', path: 'business-os/cyber-bridge-deck.html', dc: true },
   { code: 'BOS-05', path: 'business-os/image-generation-plan.html', dc: true },
   { code: 'BOS-06', path: 'business-os/lod-ladder.html', dc: true },
+  // Portal dashboards and dev tools (D-014): `?as=<role>` before the hash selects that demo user on first load
+  // (SessionProvider contract, docs/reference/surfaces.md 1.2b); `.dshell__main` is the DesktopShell content area.
+  { code: 'A-01', path: '?as=founder#/founder', wait: '.dshell__main' },
+  { code: 'O-01', path: '?as=ops#/ops', wait: '.dshell__main' },
+  { code: 'S-01', path: '?as=studio#/studio', wait: '.dshell__main' },
+  { code: 'G-01', path: '?as=brand#/brand', wait: '.dshell__main' },
+  { code: 'D-02', path: '?as=dev#/dev/components', wait: '.dshell__main' },
+  { code: 'D-03', path: '?as=dev#/dev/specs', wait: '.dshell__main' },
   { code: 'P-00', url: 'https://aluzinaa.com/', external: true, wait: 'body' },
   { code: 'D-06', url: 'https://github.com/imagine-os/aluzina/tree/main/docs', external: true, wait: 'main' },
   { code: 'HUB-01', path: '#/', wait: '.surface-card__thumb', hub: true },

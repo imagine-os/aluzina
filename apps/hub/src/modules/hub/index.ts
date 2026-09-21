@@ -6,5 +6,5 @@ import { hubSpec } from './specs';
 export { strings } from './strings';
 
 export const routes: RouteDef[] = [
-  { path: '/', code: hubSpec.code, surface: 'hub', status: 'built', element: createElement(HubPage), spec: hubSpec },
+  { path: '/', code: hubSpec.code, surface: 'hub', status: 'built', shell: 'bare', element: createElement(HubPage), spec: hubSpec },
 ];

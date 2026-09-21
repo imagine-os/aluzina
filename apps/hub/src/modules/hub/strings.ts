@@ -21,8 +21,41 @@ export const strings: StringTable = {
   'hub.section.surfaces': { en: 'Surfaces', es: 'Superficies' },
   'hub.status.live': { en: 'Live', es: 'Activo' },
   'hub.status.planned': { en: 'Planned', es: 'Planeado' },
+  'hub.status.stub': { en: 'Stub', es: 'Borrador' },
   'hub.cta.open': { en: 'Open', es: 'Abrir' },
   'hub.cta.visit': { en: 'Visit site', es: 'Visitar sitio' },
+  'hub.cta.enterAs': { en: 'Enter as {name}', es: 'Entrar como {name}' },
+
+  'hub.section.portals': { en: 'Portals', es: 'Portales' },
+  'hub.section.portalsDesc': {
+    en: 'One view of the system per role. Entering a portal switches the demo user; identity is mocked, permissions are real.',
+    es: 'Una vista del sistema por rol. Entrar a un portal cambia el usuario demo; la identidad es simulada, los permisos son reales.',
+  },
+  'hub.portals.founder.title': { en: 'Founder', es: 'Fundadora' },
+  'hub.portals.founder.desc': {
+    en: 'Alejandra Guerra: approvals queue, pipeline and sales, client quotes and graphic proposals, project PDFs, partnerships, product development',
+    es: 'Alejandra Guerra: cola de aprobaciones, pipeline y ventas, cotizaciones y propuestas gráficas, PDFs de proyecto, alianzas, desarrollo de producto',
+  },
+  'hub.portals.ops.title': { en: 'Administration and Operations', es: 'Administración y Operaciones' },
+  'hub.portals.ops.desc': {
+    en: 'Miguel: schedule, pending tasks, meetings, suppliers and follow-ups, quotes and comparisons, deliveries, payments and who owes what, alerts before urgent',
+    es: 'Miguel: cronograma, tareas pendientes, reuniones, proveedores y seguimiento, cotizaciones y comparativos, entregas, pagos y quién debe qué, alertas antes de lo urgente',
+  },
+  'hub.portals.studio.title': { en: 'Interior Design', es: 'Diseño Interior' },
+  'hub.portals.studio.desc': {
+    en: 'Sarai: design proposals per project, references, mood boards and palettes, plans, furniture and material schedules, render packs, measurements, consistency check',
+    es: 'Sarai: propuestas de diseño por proyecto, referencias, moodboards y paletas, planos, cuadros de mobiliario y materiales, paquetes de render, medidas, chequeo de consistencia',
+  },
+  'hub.portals.brand.title': { en: 'Graphic Design and Communication', es: 'Diseño Gráfico y Comunicación' },
+  'hub.portals.brand.desc': {
+    en: 'Angélica: competitions calendar (20 entries in 2027), sales presentations, brand identity, client image sets, graphic revisions queue, asset library',
+    es: 'Angélica: calendario de concursos (20 en 2027), presentaciones de ventas, identidad de marca, imágenes para clientes, cola de revisiones gráficas, biblioteca de activos',
+  },
+  'hub.portals.client.title': { en: 'Client portal', es: 'Portal del cliente' },
+  'hub.portals.client.desc': {
+    en: 'opens the client-facing app: their projects, proposals and PDFs to review, approvals, messages, payment status; phone-first',
+    es: 'abre la app para clientes: sus proyectos, propuestas y PDFs por revisar, aprobaciones, mensajes, estado de pagos; pensada para el celular',
+  },
 
   'hub.cards.businessOs.title': { en: 'Business OS prototype', es: 'Prototipo Business OS' },
   'hub.cards.businessOs.desc': {
@@ -33,16 +66,6 @@ export const strings: StringTable = {
   'hub.cards.website.desc': {
     en: 'aluzinaa.com, the studio site built in Lovable: interior design, emotional lighting and neurointeriorism in Medellín',
     es: 'aluzinaa.com, el sitio del estudio hecho en Lovable: diseño interior, iluminación emocional y neurointeriorismo en Medellín',
-  },
-  'hub.cards.customer.title': { en: 'Customer app', es: 'App para clientes' },
-  'hub.cards.customer.desc': {
-    en: 'opens the client-facing app: projects, proposals, approvals and messages, phone-first',
-    es: 'abre la app para clientes: proyectos, propuestas, aprobaciones y mensajes, pensada para el celular',
-  },
-  'hub.cards.staff.title': { en: 'Staff / admin dashboard', es: 'Panel de equipo y administración' },
-  'hub.cards.staff.desc': {
-    en: 'opens the studio dashboard: pipeline, projects, suppliers, luminaires, billing and settings',
-    es: 'abre el panel del estudio: pipeline, proyectos, proveedores, luminarias, facturación y configuración',
   },
   'hub.cards.docs.title': { en: 'Docs', es: 'Documentación' },
   'hub.cards.docs.desc': {
@@ -56,8 +79,8 @@ export const strings: StringTable = {
   },
   'hub.cards.dev.title': { en: 'Dev tools', es: 'Herramientas de desarrollo' },
   'hub.cards.dev.desc': {
-    en: 'opens the builder tools: tokens, components, specs, actions, routes, plan viewer, canvas and demo simulator',
-    es: 'abre las herramientas de construcción: tokens, componentes, especificaciones, acciones, rutas, visor del plan, lienzo y simulador de demo',
+    en: 'the builder tools: component library (D-02) and page specs (D-03) today; tokens, actions, plan viewer, canvas and demo simulator next',
+    es: 'las herramientas de construcción: biblioteca de componentes (D-02) y especificaciones de página (D-03) hoy; tokens, acciones, visor del plan, lienzo y simulador después',
   },
 
   'hub.section.prototypePages': { en: 'Prototype pages', es: 'Páginas del prototipo' },
