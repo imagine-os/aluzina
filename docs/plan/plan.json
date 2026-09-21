@@ -463,14 +463,28 @@
       "id": "pass-0013-screenshots",
       "title": "Live screenshots of the new pages at 390 / 1280 / 1920 EN + ES",
       "step": "13",
-      "status": "doing",
+      "status": "done",
       "model": "Sonnet 5",
       "codes": [
         "P-01",
+        "P-02",
         "P-03",
+        "P-04",
         "P-05",
         "C-01",
+        "C-02",
+        "C-03",
+        "C-04",
+        "C-05",
+        "C-06",
         "M-01",
+        "M-02",
+        "M-03",
+        "M-04",
+        "M-05",
+        "M-06",
+        "M-07",
+        "M-08",
         "D-05",
         "D-06",
         "D-07",
@@ -479,6 +493,7 @@
         "D-11",
         "D-14",
         "D-15",
+        "A-03",
         "A-08",
         "O-11",
         "O-12",
@@ -486,22 +501,25 @@
         "S-10",
         "S-11",
         "G-08",
-        "K-04"
+        "K-04",
+        "HUB-01"
       ],
       "dependsOn": [
         "pass-0013-integration"
-      ]
+      ],
+      "changelog": "0016"
     },
     {
       "id": "pass-0013-spanish",
       "title": "Spanish fill over the new strings tables and the playbook translations",
       "step": "13",
-      "status": "doing",
+      "status": "done",
       "model": "Sonnet 5",
       "codes": [],
       "dependsOn": [
         "pass-0013-integration"
-      ]
+      ],
+      "changelog": "0016"
     },
     {
       "id": "R1",
