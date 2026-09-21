@@ -3,7 +3,7 @@ import { cx } from '../../../design/cx';
 import type { Task } from '../../../data/schema';
 import { useT } from '../../../i18n/I18nProvider';
 import { useWorkLabels } from '../../../work/labels';
-import { isOverdue, sortTasks, type SortBy, type TimelineZoom, type WorkContext, type WorkGroup } from '../../../work/model';
+import { childCounts, isOverdue, sortTasks, topLevel, type SortBy, type TimelineZoom, type WorkContext, type WorkGroup } from '../../../work/model';
 import { Avatar } from '../../atom/Avatar/Avatar';
 import { Badge, type Tone } from '../../atom/Badge/Badge';
 import { Button } from '../../atom/Button/Button';
@@ -41,6 +41,8 @@ interface TaskRow {
   end: number;
   milestone: boolean;
   tone: Tone;
+  /** Nested tasks under this one (D-062); they have no bar of their own. */
+  children: number;
 }
 interface GroupRow {
   kind: 'group';
@@ -86,9 +88,11 @@ export function WorkTimeline({ label, groups, ctx, sort, zoom, onZoom, onOpen }:
   const rootRef = useRef<HTMLDivElement>(null);
 
   const { rows, lo, days, undated, months, ticks, todayIdx } = useMemo(() => {
+    // Only top-level tasks get a bar (D-062); a parent's bar names how many children it carries.
+    const kids = childCounts(groups.flatMap((g) => g.tasks));
     const dated: Task[] = [];
     let undatedCount = 0;
-    for (const g of groups) for (const x of g.tasks) (x.dueDate || x.startDate ? dated : (undatedCount += 1, [])).push(x);
+    for (const g of groups) for (const x of topLevel(g.tasks)) (x.dueDate || x.startDate ? dated : (undatedCount += 1, [])).push(x);
     const todayMs = toMs(ctx.today);
     let loMs = todayMs - 7 * DAY;
     let hiMs = todayMs + 14 * DAY;
@@ -107,12 +111,12 @@ export function WorkTimeline({ label, groups, ctx, sort, zoom, onZoom, onOpen }:
 
     const rows: Row[] = [];
     for (const g of groups) {
-      const list = sortTasks(g.tasks, sort, ctx).filter((x) => x.dueDate || x.startDate);
+      const list = sortTasks(topLevel(g.tasks), sort, ctx).filter((x) => x.dueDate || x.startDate);
       if (list.length === 0) continue;
       const taskRows: TaskRow[] = list.map((x) => {
         const start = idx(x.startDate ?? x.dueDate!);
         const end = Math.max(start, idx(x.dueDate ?? x.startDate!));
-        return { kind: 'task', task: x, start, end, milestone: !x.startDate || x.startDate === x.dueDate, tone: toneOf(x, ctx.today) };
+        return { kind: 'task', task: x, start, end, milestone: !x.startDate || x.startDate === x.dueDate, tone: toneOf(x, ctx.today), children: kids[x.id] ?? 0 };
       });
       rows.push({ kind: 'group', group: g, start: Math.min(...taskRows.map((r) => r.start)), end: Math.max(...taskRows.map((r) => r.end)) });
       rows.push(...taskRows);
@@ -195,10 +199,17 @@ export function WorkTimeline({ label, groups, ctx, sort, zoom, onZoom, onOpen }:
 
   const barLabel = (r: TaskRow) =>
     r.milestone
-      ? t('core.work.timelineMilestone', { title: r.task.title, date: labels.date(r.task.dueDate ?? r.task.startDate) })
-      : t('core.work.timelineBar', { title: r.task.title, start: labels.date(r.task.startDate), end: labels.date(r.task.dueDate) });
+      ? t('core.work.timelineMilestone', { title: r.task.title || t('core.work.untitled'), date: labels.date(r.task.dueDate ?? r.task.startDate) })
+      : t('core.work.timelineBar', { title: r.task.title || t('core.work.untitled'), start: labels.date(r.task.startDate), end: labels.date(r.task.dueDate) });
 
-  if (rows.length === 0) return <EmptyState title={t('core.work.empty')} description={t('core.work.noDates', { n: undated })} glyph="▭" />;
+  // Nothing dated is not the same as nothing matching: an imported project starts with no dates at all.
+  if (rows.length === 0) {
+    return undated > 0 ? (
+      <EmptyState title={t('core.work.noDatesTitle')} description={`${t('core.work.noDates', { n: undated })}. ${t('core.work.noDatesHint')}`} glyph="▭" />
+    ) : (
+      <EmptyState title={t('core.work.empty')} description={t('core.work.emptyHint')} glyph="▭" />
+    );
+  }
 
   const toolbar = (
     <div className="work-tl__bar-row">
@@ -235,8 +246,9 @@ export function WorkTimeline({ label, groups, ctx, sort, zoom, onZoom, onOpen }:
             ) : (
               <li key={r.task.id} className="work-tl__mini-row">
                 <div className="work-tl__mini-label">
-                  <span className="work-tl__name">{r.task.title}</span>
+                  <span className="work-tl__name">{r.task.title || t('core.work.untitled')}</span>
                   <span className="work-tl__dates">{r.milestone ? labels.date(r.task.dueDate ?? r.task.startDate) : `${labels.date(r.task.startDate)} – ${labels.date(r.task.dueDate)}`} · {labels.person(r.task.assigneeId)}</span>
+                  {r.children > 0 && <span className="work-tl__deps-text">{t('core.work.childCountLabel', { n: r.children })}</span>}
                   {r.task.dependsOn.length > 0 && <span className="work-tl__deps-text">↳ {t('core.work.dependsOnCount', { n: r.task.dependsOn.length })}</span>}
                 </div>
                 <div className="work-tl__mini-track">
@@ -302,13 +314,16 @@ export function WorkTimeline({ label, groups, ctx, sort, zoom, onZoom, onOpen }:
                   <div className="work-tl__left">
                     <Avatar size="sm" name={labels.person(r.task.assigneeId)} initials={ctx.people.find((p) => p.id === r.task.assigneeId)?.initials} />
                     <span className="work-tl__left-text">
-                      <span className="work-tl__name">{r.task.title}</span>
-                      <span className="work-tl__dates">{r.milestone ? labels.date(r.task.dueDate ?? r.task.startDate) : `${labels.date(r.task.startDate)} – ${labels.date(r.task.dueDate)}`}</span>
+                      <span className="work-tl__name">{r.task.title || t('core.work.untitled')}</span>
+                      <span className="work-tl__dates">
+                        {r.milestone ? labels.date(r.task.dueDate ?? r.task.startDate) : `${labels.date(r.task.startDate)} – ${labels.date(r.task.dueDate)}`}
+                        {r.children > 0 && ` · ${t('core.work.childCountLabel', { n: r.children })}`}
+                      </span>
                     </span>
                   </div>
                   <div className="work-tl__track">
                     <button type="button" className={cx('work-tl__bar', `work-tl__bar--${r.tone}`, r.milestone && 'work-tl__bar--milestone')} style={{ left: x(r.start), width: r.milestone ? undefined : x(r.end - r.start + 1) }} aria-label={barLabel(r)} data-row={i} onClick={() => onOpen(r.task)} title={barLabel(r)}>
-                      <span className="work-tl__fill">{!r.milestone && <span className="work-tl__fill-text">{r.task.title}</span>}</span>
+                      <span className="work-tl__fill">{!r.milestone && <span className="work-tl__fill-text">{r.task.title || t('core.work.untitled')}</span>}</span>
                     </button>
                   </div>
                 </div>

@@ -116,3 +116,21 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Nesting breadcrumb and the imported-row note (D-062). */
+.task-detail__crumbs {
+  margin: 0;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.task-detail__imported {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.task-detail__wide {
+  grid-column: 1 / -1;
+}

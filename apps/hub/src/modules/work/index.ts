@@ -1,6 +1,7 @@
 import { createElement } from 'react';
 import type { RouteDef, Surface } from '../../specs/PageSpec';
-import { projectWorkSpec, workSpec } from './specs';
+import { NewProjectPage } from './NewProjectPage';
+import { newProjectSpec, projectWorkSpec, workSpec } from './specs';
 import { WorkPage } from './WorkPage';
 
 export { strings } from './strings';
@@ -18,6 +19,9 @@ const SURFACES: { surface: Surface; permission: string }[] = [
   { surface: 'brand', permission: 'tasks.own.write' },
 ];
 
+/** W-03 creates projects, so it only mounts where someone may (`projects.write`: founder and ops, D-062). */
+const NEW_PROJECT_SURFACES: Surface[] = ['founder', 'ops'];
+
 export const routes: RouteDef[] = SURFACES.flatMap(({ surface, permission }) => {
   const list = workSpec(surface);
   const project = projectWorkSpec(surface);
@@ -25,4 +29,10 @@ export const routes: RouteDef[] = SURFACES.flatMap(({ surface, permission }) => 
     { path: `/${surface}/work`, code: list.code, surface, status: 'built', permission, shell: 'desktop', spec: list, element: createElement(WorkPage, { surface }), nav: { labelKey: 'work.nav.work', order: 5, glyph: '▥' } },
     { path: `/${surface}/work/:projectId`, code: project.code, surface, status: 'built', permission, shell: 'desktop', spec: project, element: createElement(WorkPage, { surface }) },
   ] satisfies RouteDef[];
-});
+}).concat(
+  // `/work/new` is a static segment, so react-router ranks it above `/work/:projectId` (D-062).
+  NEW_PROJECT_SURFACES.map((surface) => {
+    const spec = newProjectSpec(surface);
+    return { path: `/${surface}/work/new`, code: spec.code, surface, status: 'built', permission: 'projects.write', shell: 'desktop', spec, element: createElement(NewProjectPage, { surface }) } satisfies RouteDef;
+  }),
+);

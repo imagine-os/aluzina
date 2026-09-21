@@ -92,6 +92,8 @@ export const ROLE_PERMISSIONS: Record<Role, readonly string[]> = {
   ops: [
     'design.read',
     'projects.read',
+    /** Operations sets a new project up from the template (W-03, D-062); the founder still owns approvals. */
+    'projects.write',
     'suppliers.read',
     'spaces.read',
     'spaces.write',

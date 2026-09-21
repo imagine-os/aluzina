@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { cx } from '../../../design/cx';
 import { useT } from '../../../i18n/I18nProvider';
-import { activeFilterCount, DUE_WINDOWS, EMPTY_FILTERS, GROUP_BYS, PRIORITIES, SORT_BYS, STATUSES, WORK_VIEWS, type WorkFilters, type WorkPerson, type WorkView } from '../../../work/model';
+import { activeFilterCount, DUE_WINDOWS, EMPTY_FILTERS, GROUP_BYS, PRIORITIES, SORT_BYS, STATUSES, WORK_VIEWS, type WorkDeliverable, type WorkFilters, type WorkPerson, type WorkView } from '../../../work/model';
 import type { SavedView, ViewState } from '../../../work/views';
 import { Badge } from '../../atom/Badge/Badge';
 import { Button } from '../../atom/Button/Button';
@@ -23,6 +23,8 @@ export interface WorkHeaderProps {
   people: WorkPerson[];
   projects: { id: string; name: string }[];
   tags: string[];
+  /** Deliverable catalog for the deliverable filter (D-062). */
+  deliverables?: WorkDeliverable[];
   /** Hide the project filter on a single-project page. */
   showProjectFilter?: boolean;
   onAddTask?: () => void;
@@ -36,10 +38,10 @@ export interface WorkHeaderProps {
 
 /**
  * The toolbar every Work view shares (D-021): view tabs with counts, search, a filters panel (assignee,
- * status, priority, due window, tag, project), sort, group-by, saved views (D-025) and "Add task".
+ * status, priority, due window, tag, project, deliverable), sort, group-by, saved views (D-025) and "Add task".
  * Everything is a library control >= 44 px; the tab list moves with arrow keys (Tabs).
  */
-export function WorkHeader({ label, state, onChange, counts, people, projects, tags, showProjectFilter = true, onAddTask, savedViews = [], onSaveView, onApplyView, onDeleteView, aside }: WorkHeaderProps) {
+export function WorkHeader({ label, state, onChange, counts, people, projects, tags, deliverables = [], showProjectFilter = true, onAddTask, savedViews = [], onSaveView, onApplyView, onDeleteView, aside }: WorkHeaderProps) {
   const { t } = useT();
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -113,6 +115,9 @@ export function WorkHeader({ label, state, onChange, counts, people, projects, t
         <Select className="work-header__select" label={t('core.work.filter.tag')} value={state.filters.tag} onChange={(e) => setFilter('tag', e.target.value)} options={[{ value: '', label: t('core.work.filter.any') }, ...tags.map((g) => ({ value: g, label: g }))]} />
         {showProjectFilter && (
           <Select className="work-header__select" label={t('core.work.filter.project')} value={state.filters.project} onChange={(e) => setFilter('project', e.target.value)} options={[{ value: '', label: t('core.work.filter.any') }, ...projects.map((p) => ({ value: p.id, label: p.name })), { value: 'none', label: t('core.work.noProject') }]} />
+        )}
+        {deliverables.length > 0 && (
+          <Select className="work-header__select" label={t('core.work.filter.deliverable')} value={state.filters.deliverable} onChange={(e) => setFilter('deliverable', e.target.value)} options={[{ value: '', label: t('core.work.filter.any') }, ...deliverables.map((d) => ({ value: d.id, label: d.name })), { value: 'none', label: t('core.work.noDeliverable') }]} />
         )}
         <Checkbox label={t('core.work.filter.showDone')} checked={state.filters.showDone} onChange={(e) => setFilter('showDone', e.target.checked)} />
         {active > 0 && (

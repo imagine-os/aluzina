@@ -3,9 +3,12 @@ import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
 import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 import { Card } from '../../components/molecule/Card/Card';
+import { KeyValue } from '../../components/molecule/KeyValue/KeyValue';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { DataTable, type Column } from '../../components/organism/DataTable/DataTable';
 import { useTable } from '../../data/DataContext';
+import { HOY_SOURCE, HOY_SECTIONS, HOY_TASKS } from '../../data/seed/asana/hoy';
+import { PORTFOLIO_JOBS, PORTFOLIO_SOURCE } from '../../data/seed/asana/portfolio';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';
 import { postCountsBySpace, slugify } from './model';
@@ -73,6 +76,19 @@ export function ImportPage({ surface }: { surface: Surface }) {
       <div className="spaces-import">
         <Card title={t('spaces.import.uploadTitle')} subtitle={t('spaces.import.uploadSubtitle')} actions={<Placeholder what={t('spaces.import.uploadWhat')}><Button variant="primary" icon="⇥">{t('spaces.import.upload')}</Button></Placeholder>}>
           <p className="spaces-muted">{t('spaces.import.readOnly')}</p>
+        </Card>
+
+        <Card title={t('spaces.import.asanaTitle')} subtitle={t('spaces.import.asanaSubtitle')}>
+          <p className="spaces-muted">{t('spaces.import.asanaScript')}</p>
+          <KeyValue
+            columns={1}
+            items={[
+              { key: t('spaces.import.asanaHoy'), value: t('spaces.import.asanaHoyValue', { tasks: HOY_TASKS.length, sections: HOY_SECTIONS.length, linked: HOY_TASKS.filter((x) => x.deliverableId).length }) },
+              { key: t('spaces.import.asanaPortfolio'), value: t('spaces.import.asanaPortfolioValue', { jobs: PORTFOLIO_JOBS.length }) },
+              { key: t('spaces.import.asanaSources'), value: <code className="spaces-muted">{HOY_SOURCE}<br />{PORTFOLIO_SOURCE}</code> },
+            ]}
+          />
+          <p className="spaces-muted">{t('spaces.import.asanaReadOnly')}</p>
         </Card>
 
         <Card title={t('spaces.import.checklistTitle')} subtitle={t('spaces.import.checklistSubtitle')}>

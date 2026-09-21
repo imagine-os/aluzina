@@ -166,3 +166,12 @@
     flex-basis: 22rem;
   }
 }
+
+/* Same as the list: a long deliverable name wraps inside the badge instead of widening the card (D-062). */
+.work-card__tags .badge {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: start;
+}

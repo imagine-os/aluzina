@@ -176,14 +176,18 @@ export function catalogSpec(surface: Surface): PageSpec {
 export function importSpec(surface: Surface): PageSpec {
   return defineSpec({
     code: 'K-06',
-    name: 'Import from Slack',
-    purpose: 'Where the Slack export will land: the mapping from Justin\'s sidebar (sections and channels) to the seeded spaces, and the checklist of what a real import does; the upload is a Placeholder until an export exists.',
+    name: 'Import from Slack and Asana',
+    purpose: 'Where imports land: the mapping from Justin\'s Slack sidebar (sections and channels) to the seeded spaces with the checklist of what a real import does, and what the Asana CSV import already produced. The Slack upload is a Placeholder until an export exists; the Asana import is a repository script (D-062).',
     surface,
     navGroup: 'spaces',
-    layout: ['PageHeader', 'Card: upload (Placeholder) + note that this page is read-only today', 'DataTable: Slack section / channel -> space (kind, posts today)', 'Checklist Card: what the import will do'],
+    layout: ['PageHeader', 'Card: Slack upload (Placeholder) + note that this page is read-only today', 'Card: Asana import (the script, the generated seeds and their counts)', 'Checklist Card: what a Slack import will do', 'DataTable: Slack section / channel -> space (kind, posts today)'],
     dataTables: ['spaces', 'filings'],
-    logic: ['Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.', 'The checklist is the contract for the import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.'],
-    components: ['PageHeader', 'Card', 'Placeholder', 'Button', 'DataTable', 'Badge'],
+    logic: [
+      'Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.',
+      'The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.',
+      'The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files.',
+    ],
+    components: ['PageHeader', 'Card', 'KeyValue', 'Placeholder', 'Button', 'DataTable', 'Badge'],
     actions: IMPORT_ACTIONS,
     ...COMMON,
   });

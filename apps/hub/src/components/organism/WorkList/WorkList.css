@@ -145,6 +145,61 @@
   min-width: 0;
 }
 
+/* Nesting (D-062): one indent step per generation, capped so a five-deep Asana tree still fits 360 px. */
+.work-row--child .work-row__main {
+  padding-inline-start: min(calc(var(--depth, 0) * var(--space-4)), 6rem);
+}
+
+.work-row__tree {
+  display: flex;
+  /* A wrapped title keeps the twisty on its first line, not floating in the middle of the block. */
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+/* The twisty is a real 44 px target next to the title, never a hover affordance. */
+.work-row__twisty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 1.5rem;
+  min-width: 1.5rem;
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.work-row__twisty--leaf {
+  cursor: default;
+}
+
+.work-row__title--untitled {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* A long deliverable name ("Furniture and elements schedule") wraps inside the badge instead of
+   pushing out of a 390 px card; `.badge` is nowrap by default. */
+.work-row__deliverable {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.work-row__deliverable .badge {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: start;
+}
+
 .work-row__title-wrap {
   display: flex;
   align-items: center;
@@ -303,6 +358,11 @@
 
   .work-row__done { grid-area: done; }
   .work-row__main { grid-area: main; }
+
+  /* Cards keep the nesting readable without eating the title's width. */
+  .work-row--child .work-row__main {
+    padding-inline-start: min(calc(var(--depth, 0) * var(--space-2)), 2.5rem);
+  }
   .work-row__open { grid-area: open; }
   .work-row__select { grid-area: select; }
 

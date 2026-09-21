@@ -3,7 +3,7 @@ import { cx } from '../../../design/cx';
 import type { Task } from '../../../data/schema';
 import { useT } from '../../../i18n/I18nProvider';
 import { useWorkLabels } from '../../../work/labels';
-import { blockedBy, dueToneOf, PRIORITY_TONES, sortTasks, subtaskProgress, type SortBy, type WorkContext, type WorkGroup } from '../../../work/model';
+import { blockedBy, childCounts, deliverableOf, dueToneOf, PRIORITY_TONES, sortTasks, subtaskProgress, topLevel, type SortBy, type WorkContext, type WorkGroup } from '../../../work/model';
 import { Avatar } from '../../atom/Avatar/Avatar';
 import { Badge } from '../../atom/Badge/Badge';
 import { Button } from '../../atom/Button/Button';
@@ -27,14 +27,18 @@ export interface WorkBoardProps {
 
 /**
  * Asana-style board (D-021): columns are the groups, cards carry assignee, due date (overdue tone),
- * priority dot, tags, dependency and comment indicators. Cards move with a "Move to…" select and the
+ * priority dot, tags, deliverable badge, dependency and comment indicators. Only **top-level** tasks get a
+ * card (D-062); a parent shows how many children it has and the List is where the tree is worked.
+ * Cards move with a "Move to…" select and the
  * prev / next buttons, never drag-only (P-03); each column has an inline "Add task" and a WIP count.
  * Columns scroll horizontally and snap on phones.
  */
 export function WorkBoard({ label, groups, ctx, sort, canEdit, canAdd, onOpen, onMove, onAdd }: WorkBoardProps) {
   const { t } = useT();
   const labels = useWorkLabels(ctx.people);
-  const byId = useMemo(() => new Map(groups.flatMap((g) => g.tasks).map((x) => [x.id, x])), [groups]);
+  const all = useMemo(() => groups.flatMap((g) => g.tasks), [groups]);
+  const byId = useMemo(() => new Map(all.map((x) => [x.id, x])), [all]);
+  const kids = useMemo(() => childCounts(all), [all]);
   const [adding, setAdding] = useState<string | null>(null);
   const [newTitle, setNewTitle] = useState('');
 
@@ -50,7 +54,7 @@ export function WorkBoard({ label, groups, ctx, sort, canEdit, canAdd, onOpen, o
       {groups.map((g, ci) => {
         const prev = groups[ci - 1];
         const next = groups[ci + 1];
-        const cards = sortTasks(g.tasks, sort, ctx);
+        const cards = sortTasks(topLevel(g.tasks), sort, ctx);
         return (
           <section key={g.id} className="work-col" aria-labelledby={`wcol-${g.id}`}>
             <header className="work-col__head">
@@ -64,12 +68,15 @@ export function WorkBoard({ label, groups, ctx, sort, canEdit, canAdd, onOpen, o
                 const sub = subtaskProgress(task);
                 const comments = ctx.commentCounts[task.id] ?? 0;
                 const person = ctx.people.find((p) => p.id === task.assigneeId);
+                const deliverable = deliverableOf(task, ctx);
+                const children = kids[task.id] ?? 0;
                 return (
                   <li key={task.id} className={cx('work-card', task.status === 'done' && 'work-card--done', task.status === 'blocked' && 'work-card--blocked')}>
-                    <button type="button" className="work-card__main" onClick={() => onOpen(task)} aria-label={t('core.work.open', { title: task.title })}>
-                      <span className="work-card__title">{task.title}</span>
-                      {task.tags.length > 0 && (
+                    <button type="button" className="work-card__main" onClick={() => onOpen(task)} aria-label={t('core.work.open', { title: task.title || t('core.work.untitled') })}>
+                      <span className="work-card__title">{task.title || t('core.work.untitled')}</span>
+                      {(deliverable || task.tags.length > 0) && (
                         <span className="work-card__tags">
+                          {deliverable && <Badge tone="success">▣ {deliverable.name}</Badge>}
                           {task.tags.map((tag) => (
                             <Badge key={tag}>{tag}</Badge>
                           ))}
@@ -79,6 +86,7 @@ export function WorkBoard({ label, groups, ctx, sort, canEdit, canAdd, onOpen, o
                         <Avatar size="sm" name={labels.person(task.assigneeId)} initials={person?.initials} />
                         {task.dueDate && <Badge tone={dueToneOf(task, ctx.today)}>{labels.date(task.dueDate)}</Badge>}
                         <Badge tone={PRIORITY_TONES[task.priority]} dot>{labels.priority(task.priority)}</Badge>
+                        {children > 0 && <span className="work-card__ind" title={t('core.work.childCountLabel', { n: children })}>{t('core.work.childCount', { n: children })}</span>}
                         {sub.total > 0 && <span className="work-card__ind">☑ {sub.done}/{sub.total}</span>}
                         {task.dependsOn.length > 0 && <span className={cx('work-card__ind', waiting.length > 0 && 'work-card__ind--warn')}>↳ {task.dependsOn.length}</span>}
                         {comments > 0 && <span className="work-card__ind">✎ {comments}</span>}
@@ -88,7 +96,7 @@ export function WorkBoard({ label, groups, ctx, sort, canEdit, canAdd, onOpen, o
                       <div className="work-card__moves">
                         <Select
                           className="work-inline work-card__move"
-                          label={t('core.work.moveCard', { title: task.title })}
+                          label={t('core.work.moveCard', { title: task.title || t('core.work.untitled') })}
                           hideLabel
                           value=""
                           onChange={(e) => {
@@ -97,8 +105,8 @@ export function WorkBoard({ label, groups, ctx, sort, canEdit, canAdd, onOpen, o
                           }}
                           options={[{ value: '', label: t('core.work.moveTo') }, ...groups.filter((x) => x.id !== g.id).map((x) => ({ value: x.id, label: x.label }))]}
                         />
-                        <Button size="sm" variant="ghost" icon="◀" aria-label={t('core.kanban.moveTo', { title: task.title, column: prev?.label ?? '' })} disabled={!prev} onClick={() => prev && onMove(task, prev)} />
-                        <Button size="sm" variant="ghost" icon="▶" aria-label={t('core.kanban.moveTo', { title: task.title, column: next?.label ?? '' })} disabled={!next} onClick={() => next && onMove(task, next)} />
+                        <Button size="sm" variant="ghost" icon="◀" aria-label={t('core.kanban.moveTo', { title: task.title || t('core.work.untitled'), column: prev?.label ?? '' })} disabled={!prev} onClick={() => prev && onMove(task, prev)} />
+                        <Button size="sm" variant="ghost" icon="▶" aria-label={t('core.kanban.moveTo', { title: task.title || t('core.work.untitled'), column: next?.label ?? '' })} disabled={!next} onClick={() => next && onMove(task, next)} />
                       </div>
                     )}
                   </li>

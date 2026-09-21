@@ -5,7 +5,7 @@ import { useData, useRow, useTable } from '../../../data/DataContext';
 import type { Priority, Task, TaskStatus } from '../../../data/schema';
 import { useT } from '../../../i18n/I18nProvider';
 import { useWorkLabels } from '../../../work/labels';
-import { PRIORITIES, PRIORITY_TONES, STATUSES, wouldCycle, type WorkContext } from '../../../work/model';
+import { ancestorTitles, PRIORITIES, PRIORITY_TONES, STATUSES, wouldCycle, type WorkContext } from '../../../work/model';
 import { Avatar } from '../../atom/Avatar/Avatar';
 import { Badge } from '../../atom/Badge/Badge';
 import { Button } from '../../atom/Button/Button';
@@ -23,7 +23,7 @@ export interface TaskDetailDrawerProps {
   taskId: string | null;
   onClose: () => void;
   canEdit: (task: Task) => boolean;
-  ctx: Pick<WorkContext, 'sections' | 'projects' | 'people' | 'today'>;
+  ctx: Pick<WorkContext, 'sections' | 'projects' | 'people' | 'deliverables' | 'today'>;
   /** Every task the dependency picker may offer (same project). */
   allTasks: Task[];
 }
@@ -41,13 +41,16 @@ const FIELD_KEYS: Record<string, string> = {
   subtasks: 'core.work.subtasks',
   dependsOn: 'core.work.dependencies',
   completedAt: 'core.work.completed',
+  deliverableId: 'core.work.detail.deliverable',
+  parentTaskId: 'core.work.detail.parent',
 };
 
 /**
  * The task drawer (D-021): title, description, section, assignee, start / due dates, status, priority,
- * tags, dependencies (cycle-safe), subtasks, comments thread (`comments` entity), activity trail
- * (`activity` entity) and "Mark complete". Every write goes through the DataProvider with `basedOn`
- * so a newer row from another tab is reported (D-024); read-only for people without edit rights.
+ * tags, the deliverable it produces, dependencies (cycle-safe), subtasks, comments thread (`comments`
+ * entity), activity trail (`activity` entity) and "Mark complete". A nested task names its ancestors as a
+ * breadcrumb and an imported one names its Asana id (D-062). Every write goes through the DataProvider with
+ * `basedOn` so a newer row from another tab is reported (D-024); read-only for people without edit rights.
  */
 export function TaskDetailDrawer({ taskId, onClose, canEdit, ctx, allTasks }: TaskDetailDrawerProps) {
   const { t, lang } = useT();
@@ -69,6 +72,7 @@ export function TaskDetailDrawer({ taskId, onClose, canEdit, ctx, allTasks }: Ta
   const editable = task ? canEdit(task) : false;
   const sections = useMemo(() => ctx.sections.filter((s) => (task ? s.projectId === task.projectId : false)), [ctx.sections, task]);
   const project = task?.projectId ? ctx.projects.find((p) => p.id === task.projectId) : undefined;
+  const ancestors = useMemo(() => (task ? ancestorTitles(task, byId) : []), [task, byId]);
 
   const patch = async (p: Partial<Task>) => {
     if (!task) return;
@@ -114,6 +118,8 @@ export function TaskDetailDrawer({ taskId, onClose, canEdit, ctx, allTasks }: Ta
     if (field === 'priority') return labels.priority(v as Priority);
     if (field === 'assigneeId') return labels.person(v);
     if (field === 'sectionId') return ctx.sections.find((s) => s.id === v)?.name ?? v;
+    if (field === 'deliverableId') return ctx.deliverables.find((d) => d.id === v)?.name ?? v;
+    if (field === 'parentTaskId') return byId.get(v)?.title || v;
     if (field === 'startDate' || field === 'dueDate' || field === 'completedAt') return labels.date(v);
     return v;
   };
@@ -122,7 +128,7 @@ export function TaskDetailDrawer({ taskId, onClose, canEdit, ctx, allTasks }: Ta
     <Drawer
       open={taskId !== null}
       onClose={onClose}
-      title={task?.title ?? '…'}
+      title={task ? task.title || t('core.work.untitled') : '…'}
       footer={
         task &&
         editable && (
@@ -140,6 +146,20 @@ export function TaskDetailDrawer({ taskId, onClose, canEdit, ctx, allTasks }: Ta
             {project && <Badge tone="accent">{project.name}</Badge>}
             {task.completedAt && <span className="task-detail__muted">{t('core.work.detail.completedAt', { date: labels.date(task.completedAt) })}</span>}
           </div>
+          {ancestors.length > 0 && (
+            <p className="task-detail__crumbs">
+              <span className="task-detail__muted">{t('core.work.detail.parent')}: </span>
+              {ancestors.map((title, i) => (
+                <span key={`${title}-${i}`}>
+                  {i > 0 && <span aria-hidden="true"> › </span>}
+                  {title || t('core.work.untitled')}
+                </span>
+              ))}
+              <span aria-hidden="true"> › </span>
+              <strong>{task.title || t('core.work.untitled')}</strong>
+            </p>
+          )}
+          {task.externalId && <p className="task-detail__imported">{t('core.work.detail.imported', { id: task.externalId })}</p>}
           {!editable && <p className="task-detail__readonly">{t('core.work.detail.readOnly')}</p>}
 
           {editable ? (
@@ -155,6 +175,7 @@ export function TaskDetailDrawer({ taskId, onClose, canEdit, ctx, allTasks }: Ta
             <Input type="date" label={t('core.work.detail.due')} value={task.dueDate ?? ''} readOnly={!editable} onChange={(e) => patch({ dueDate: e.target.value || null })} />
             <Select label={t('core.work.detail.status')} value={task.status} disabled={!editable} onChange={(e) => setStatus(e.target.value as TaskStatus)} options={STATUSES.map((s) => ({ value: s, label: labels.status(s) }))} />
             <Select label={t('core.work.detail.priority')} value={task.priority} disabled={!editable} onChange={(e) => patch({ priority: e.target.value as Priority })} options={PRIORITIES.map((p) => ({ value: p, label: labels.priority(p) }))} />
+            <Select className="task-detail__wide" label={t('core.work.detail.deliverable')} value={task.deliverableId ?? ''} disabled={!editable} onChange={(e) => patch({ deliverableId: e.target.value || null })} options={[{ value: '', label: t('core.work.noDeliverable') }, ...ctx.deliverables.map((d) => ({ value: d.id, label: d.name }))]} />
           </div>
 
           <Input label={t('core.work.detail.tags')} value={draft.tags} readOnly={!editable} onChange={(e) => setDraft((d) => ({ ...d, tags: e.target.value }))} onBlur={() => { const tags = draft.tags.split(',').map((x) => x.trim()).filter(Boolean); if (tags.join('|') !== task.tags.join('|')) patch({ tags }); }} />

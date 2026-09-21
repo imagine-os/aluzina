@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRegisterActions } from '../../actions';
 import { useSession } from '../../auth/SessionProvider';
 import { Button } from '../../components/atom/Button/Button';
 import { Select } from '../../components/atom/Select/Select';
@@ -18,7 +19,7 @@ import { useT } from '../../i18n/I18nProvider';
 import { usePresence } from '../../presence/PresenceProvider';
 import type { Surface } from '../../specs/PageSpec';
 import { useWorkLabels } from '../../work/labels';
-import { allTags, EMPTY_FILTERS, filterTasks, groupTasks, type TimelineZoom, type WorkGroup } from '../../work/model';
+import { allTags, EMPTY_FILTERS, filterTasks, groupTasks, topLevel, type TimelineZoom, type WorkGroup } from '../../work/model';
 import { useWork } from '../../work/useWork';
 import { DEFAULT_VIEW_STATE, loadLastState, loadSavedViews, newViewId, saveLastState, saveSavedViews, type SavedView, type ViewState } from '../../work/views';
 import { projectWorkSpec, workSpec } from './specs';
@@ -46,11 +47,14 @@ export function WorkPage({ surface }: { surface: Surface }) {
   const navigate = useNavigate();
   const { projectId: routeProjectId } = useParams();
   const projectId = routeProjectId ?? null;
-  const { user, role } = useSession();
+  const { user, role, can } = useSession();
   const work = useWork(projectId);
   const labels = useWorkLabels(work.people);
   const { people } = usePresence();
   const scope = projectId ?? 'all';
+  const home = `/${surface}`;
+  // W-03 only exists on the surfaces whose role may create projects (`projects.write`, D-062).
+  const canCreateProject = can('projects.write') && (surface === 'founder' || surface === 'ops');
 
   const [state, setState] = useState<ViewState>(() => loadLastState(user.id, scope) ?? roleDefault(role, user.id));
   const [savedViews, setSavedViews] = useState<SavedView[]>(() => loadSavedViews(user.id));
@@ -67,7 +71,9 @@ export function WorkPage({ surface }: { surface: Surface }) {
   const project = projectId ? work.ctx.projects.find((p) => p.id === projectId) : undefined;
   const filtered = useMemo(() => filterTasks(work.tasks, state.filters, work.today), [work.tasks, state.filters, work.today]);
   const groups = useMemo(() => groupTasks(filtered, state.groupBy, work.ctx, labels.groups), [filtered, state.groupBy, work.ctx, labels.groups]);
-  const dated = filtered.filter((x) => x.dueDate || x.startDate).length;
+  // The Board and the Timeline only show top-level tasks (D-062), so their tab counts say so too.
+  const roots = useMemo(() => topLevel(filtered), [filtered]);
+  const dated = roots.filter((x) => x.dueDate || x.startDate).length;
   const tags = useMemo(() => allTags(work.tasks), [work.tasks]);
   const change = useCallback((next: Partial<ViewState>) => setState((s) => ({ ...s, ...next })), []);
 
@@ -112,8 +118,23 @@ export function WorkPage({ surface }: { surface: Surface }) {
     toast(t('work.viewDeleted'));
   };
 
+  // The Work views declare 31 `work.*` actions and register none since 0008 (the bus landed in 0013);
+  // the two this pass adds are wired here so at least the new ones answer (P-05, D-047). Backlog card.
+  useRegisterActions({
+    'work.newProject': canCreateProject ? () => { navigate(`${home}/work/new`); return 'opened W-03'; } : false,
+    'work.setDeliverable': work.canAdd
+      ? async ({ task, deliverable }) => {
+          const row = work.tasks.find((x) => x.id === String(task));
+          if (!row) return `unknown task: ${String(task)}`;
+          const id = String(deliverable ?? '');
+          if (id && !work.ctx.deliverables.some((d) => d.id === id)) return `unknown deliverable: ${id}`;
+          await work.patch(row, { deliverableId: id || null });
+          return `${row.title}: ${id || 'no deliverable'}`;
+        }
+      : false,
+  });
+
   const spec = projectId ? projectWorkSpec(surface) : workSpec(surface);
-  const home = `/${surface}`;
   const title = project?.name ?? t('work.title');
   const openCount = work.tasks.filter((x) => x.status !== 'done').length;
 
@@ -139,7 +160,14 @@ export function WorkPage({ surface }: { surface: Surface }) {
           project ? (
             <Button href={`#${home}/work`} icon="‹">{t('work.allWork')}</Button>
           ) : (
-            <Select className="work-page__project" label={t('work.openProject')} hideLabel value="" onChange={(e) => e.target.value && navigate(`${home}/work/${e.target.value}`)} options={[{ value: '', label: t('work.openProject') }, ...work.ctx.projects.map((p) => ({ value: p.id, label: p.name }))]} />
+            <>
+              <Select className="work-page__project" label={t('work.openProject')} hideLabel value="" onChange={(e) => e.target.value && navigate(`${home}/work/${e.target.value}`)} options={[{ value: '', label: t('work.openProject') }, ...work.ctx.projects.map((p) => ({ value: p.id, label: p.name }))]} />
+              {canCreateProject && (
+                <Button variant="primary" icon="+" href={`#${home}/work/new`}>
+                  {t('work.new.open')}
+                </Button>
+              )}
+            </>
           )
         }
       />
@@ -148,10 +176,11 @@ export function WorkPage({ surface }: { surface: Surface }) {
         label={title}
         state={state}
         onChange={change}
-        counts={{ list: filtered.length, board: filtered.length, timeline: dated, calendar: filtered.filter((x) => x.dueDate).length }}
+        counts={{ list: filtered.length, board: roots.length, timeline: dated, calendar: filtered.filter((x) => x.dueDate).length }}
         people={work.people}
         projects={work.ctx.projects}
         tags={tags}
+        deliverables={work.ctx.deliverables}
         showProjectFilter={!projectId}
         onAddTask={work.canAdd ? () => add(null, t('core.work.newTaskTitle')) : undefined}
         savedViews={savedViews}

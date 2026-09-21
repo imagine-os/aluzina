@@ -3,7 +3,7 @@ import { cx } from '../../../design/cx';
 import type { Priority, Task, TaskStatus } from '../../../data/schema';
 import { useT } from '../../../i18n/I18nProvider';
 import { useWorkLabels } from '../../../work/labels';
-import { blockedBy, dueToneOf, PRIORITIES, PRIORITY_TONES, sortTasks, STATUSES, subtaskProgress, type SortBy, type WorkContext, type WorkGroup } from '../../../work/model';
+import { blockedBy, deliverableOf, dueToneOf, nestRows, PRIORITIES, PRIORITY_TONES, STATUSES, subtaskProgress, type SortBy, type WorkContext, type WorkGroup } from '../../../work/model';
 import { Avatar } from '../../atom/Avatar/Avatar';
 import { Badge } from '../../atom/Badge/Badge';
 import { Button } from '../../atom/Button/Button';
@@ -37,6 +37,8 @@ const ROW = '.work-row:not(.work-row--add)';
 /**
  * Asana-style list (D-021): collapsible groups, rows with inline title, assignee, due date, status and
  * priority editors, tags, subtask / dependency / comment indicators, multi-select with a bulk bar.
+ * Nested tasks (`parentTaskId`, D-062) render indented under their parent, each parent with a chevron that
+ * collapses its subtree, and a task whose deliverable is set carries a deliverable badge.
  * Keyboard on a focused row: arrows move, Enter opens, Space toggles complete, Shift+Space selects,
  * Shift+arrows extend the selection. Under 768 px each row becomes a card. Nothing is hover-only (P-03).
  */
@@ -45,6 +47,7 @@ export function WorkList({ label, groups, ctx, sort, canEdit, canAdd, onOpen, on
   const labels = useWorkLabels(ctx.people);
   const rootRef = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
+  const [collapsedTasks, setCollapsedTasks] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [adding, setAdding] = useState<string | null>(null);
   const [newTitle, setNewTitle] = useState('');
@@ -54,6 +57,14 @@ export function WorkList({ label, groups, ctx, sort, canEdit, canAdd, onOpen, on
 
   const toggleGroup = (id: string) =>
     setCollapsed((s) => {
+      const n = new Set(s);
+      if (n.has(id)) n.delete(id);
+      else n.add(id);
+      return n;
+    });
+
+  const toggleTask = (id: string) =>
+    setCollapsedTasks((s) => {
       const n = new Set(s);
       if (n.has(id)) n.delete(id);
       else n.add(id);
@@ -142,7 +153,7 @@ export function WorkList({ label, groups, ctx, sort, canEdit, canAdd, onOpen, on
 
       {groups.map((g) => {
         const open = !collapsed.has(g.id);
-        const list = sortTasks(g.tasks, sort, ctx);
+        const rows = nestRows(g.tasks, sort, ctx, (id) => collapsedTasks.has(id));
         return (
           <section key={g.id} className="work-group" aria-labelledby={`wg-${g.id}`}>
             <h3 className="work-group__head">
@@ -154,30 +165,54 @@ export function WorkList({ label, groups, ctx, sort, canEdit, canAdd, onOpen, on
             </h3>
             {open && (
               <ul className="work-list__rows">
-                {list.map((task) => {
+                {rows.map(({ task, depth, children, collapsed: childrenHidden }) => {
                   const editable = canEdit(task);
                   const done = task.status === 'done';
                   const waiting = blockedBy(task, byId);
                   const sub = subtaskProgress(task);
                   const comments = ctx.commentCounts[task.id] ?? 0;
                   const project = showProject ? ctx.projects.find((p) => p.id === task.projectId)?.name : undefined;
+                  const deliverable = deliverableOf(task, ctx);
                   return (
                     <li
                       key={task.id}
                       data-id={task.id}
-                      className={cx('work-row', done && 'work-row--done', selected.has(task.id) && 'work-row--selected', !editable && 'work-row--readonly')}
+                      data-depth={depth}
+                      style={depth > 0 ? ({ '--depth': depth } as React.CSSProperties) : undefined}
+                      className={cx('work-row', depth > 0 && 'work-row--child', done && 'work-row--done', selected.has(task.id) && 'work-row--selected', !editable && 'work-row--readonly')}
                       tabIndex={0}
-                      aria-label={t('core.work.rowLabel', { title: task.title, status: labels.status(task.status), assignee: labels.person(task.assigneeId), due: labels.date(task.dueDate) })}
+                      aria-label={t('core.work.rowLabel', { title: task.title || t('core.work.untitled'), status: labels.status(task.status), assignee: labels.person(task.assigneeId), due: labels.date(task.dueDate) })}
                       onKeyDown={(e) => onRowKey(e, task)}
                     >
                       <span className="work-row__select">
-                        <Checkbox label={t('core.work.select', { title: task.title })} checked={selected.has(task.id)} onChange={(e) => toggleSelect(task.id, e.target.checked)} />
+                        <Checkbox label={t('core.work.select', { title: task.title || t('core.work.untitled') })} checked={selected.has(task.id)} onChange={(e) => toggleSelect(task.id, e.target.checked)} />
                       </span>
-                      <Button className={cx('work-row__done', done && 'work-row__done--on')} variant="ghost" icon={done ? '✓' : '○'} aria-pressed={done} aria-label={t(done ? 'core.work.reopen' : 'core.work.complete', { title: task.title })} disabled={!editable} onClick={() => onToggleComplete(task)} />
+                      <Button className={cx('work-row__done', done && 'work-row__done--on')} variant="ghost" icon={done ? '✓' : '○'} aria-pressed={done} aria-label={t(done ? 'core.work.reopen' : 'core.work.complete', { title: task.title || t('core.work.untitled') })} disabled={!editable} onClick={() => onToggleComplete(task)} />
                       <div className="work-row__main">
-                        <TitleCell task={task} editable={editable} onOpen={() => onOpen(task)} onSave={(title) => onPatch(task, { title })} />
+                        <div className="work-row__tree">
+                          {children > 0 ? (
+                            <button
+                              type="button"
+                              className="work-row__twisty"
+                              aria-expanded={!childrenHidden}
+                              aria-label={t(childrenHidden ? 'core.work.expandTask' : 'core.work.collapseTask', { title: task.title || t('core.work.untitled') })}
+                              onClick={() => toggleTask(task.id)}
+                            >
+                              <span aria-hidden="true">{childrenHidden ? '▸' : '▾'}</span>
+                            </button>
+                          ) : (
+                            <span className="work-row__twisty work-row__twisty--leaf" aria-hidden="true" />
+                          )}
+                          <TitleCell task={task} editable={editable} onOpen={() => onOpen(task)} onSave={(title) => onPatch(task, { title })} />
+                        </div>
                         <div className="work-row__meta">
                           {project && <span className="work-row__project">{project}</span>}
+                          {deliverable && (
+                            <span className="work-row__deliverable" aria-label={t('core.work.deliverable', { name: deliverable.name })}>
+                              <Badge tone="success">▣ {deliverable.name}</Badge>
+                            </span>
+                          )}
+                          {children > 0 && <span className="work-row__ind" title={t('core.work.childCountLabel', { n: children })}>{t('core.work.childCount', { n: children })}</span>}
                           <span className="work-row__priority-inline"><Badge tone={PRIORITY_TONES[task.priority]} dot>{labels.priority(task.priority)}</Badge></span>
                           {task.tags.map((tag) => (
                             <Badge key={tag}>{tag}</Badge>
@@ -220,7 +255,7 @@ export function WorkList({ label, groups, ctx, sort, canEdit, canAdd, onOpen, on
                           <Badge tone={PRIORITY_TONES[task.priority]} dot>{labels.priority(task.priority)}</Badge>
                         )}
                       </div>
-                      <Button className="work-row__open" variant="ghost" icon="›" aria-label={t('core.work.open', { title: task.title })} onClick={() => onOpen(task)} />
+                      <Button className="work-row__open" variant="ghost" icon="›" aria-label={t('core.work.open', { title: task.title || t('core.work.untitled') })} onClick={() => onOpen(task)} />
                     </li>
                   );
                 })}
@@ -277,7 +312,7 @@ function TitleCell({ task, editable, onOpen, onSave }: { task: Task; editable: b
     return (
       <Input
         className="work-inline work-row__title-input"
-        label={t('core.work.editTitle', { title: task.title })}
+        label={t('core.work.editTitle', { title: task.title || t('core.work.untitled') })}
         hideLabel
         value={value}
         autoFocus
@@ -297,10 +332,10 @@ function TitleCell({ task, editable, onOpen, onSave }: { task: Task; editable: b
   }
   return (
     <span className="work-row__title-wrap">
-      <button type="button" className="work-row__title" onClick={onOpen}>
-        {task.title}
+      <button type="button" className={cx('work-row__title', !task.title && 'work-row__title--untitled')} onClick={onOpen}>
+        {task.title || t('core.work.untitled')}
       </button>
-      {editable && <Button variant="ghost" size="sm" icon="✎" className="work-row__edit" aria-label={t('core.work.editTitle', { title: task.title })} onClick={() => { setValue(task.title); setEditing(true); }} />}
+      {editable && <Button variant="ghost" size="sm" icon="✎" className="work-row__edit" aria-label={t('core.work.editTitle', { title: task.title || t('core.work.untitled') })} onClick={() => { setValue(task.title); setEditing(true); }} />}
     </span>
   );
 }

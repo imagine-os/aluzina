@@ -35,6 +35,21 @@ export const WORK_ACTIONS: ActionDef[] = [
   { id: 'work.changeMonth', label: 'Change month', intent: 'show the calendar for {month}', permission: 'projects.read', params: { month: 'string' } },
   { id: 'work.toggleGroup', label: 'Collapse or expand group', intent: 'collapse the section {group}', permission: 'projects.read', params: { group: 'id' } },
   { id: 'work.openProject', label: 'Open project work', intent: 'open the work of the project {project}', permission: 'projects.read', params: { project: 'id' } },
+  { id: 'work.setDeliverable', label: 'Set the deliverable', intent: 'make the task {task} produce the deliverable {deliverable}', permission: 'tasks.own.write', params: { task: 'id', deliverable: 'id' } },
+  { id: 'work.toggleSubtree', label: 'Collapse or expand a task', intent: 'collapse the subtasks of {task}', permission: 'projects.read', params: { task: 'id' } },
+  { id: 'work.newProject', label: 'New project from template', intent: 'start a new project from a template', permission: 'projects.write' },
+];
+
+/** W-03 only (D-062): the five steps of "create a project from a template" and the write itself. */
+export const NEW_PROJECT_ACTIONS: ActionDef[] = [
+  { id: 'work.selectTemplate', label: 'Choose the template', intent: 'use the project template {template}', permission: 'projects.write', params: { template: 'id' } },
+  { id: 'work.setTemplateStep', label: 'Go to a step', intent: 'go to the {step} step', permission: 'projects.write', params: { step: 'enum:template|project|phases|zones|review' } },
+  { id: 'work.setProjectName', label: 'Name the project', intent: 'call the new project {name}', permission: 'projects.write', params: { name: 'string' } },
+  { id: 'work.selectClient', label: 'Choose the client', intent: 'the new project is for the client {client}', permission: 'projects.write', params: { client: 'id' } },
+  { id: 'work.selectTemplatePhases', label: 'Choose the phases', intent: 'include the phases {phases}', permission: 'projects.write', params: { phases: 'string' } },
+  { id: 'work.selectTemplateZones', label: 'Choose the zones', intent: 'include the zones {zones}', permission: 'projects.write', params: { zones: 'string' } },
+  { id: 'work.addZone', label: 'Add a zone', intent: 'add the zone {zone} to this project', permission: 'projects.write', params: { zone: 'string' } },
+  { id: 'work.createProjectFromTemplate', label: 'Create the project', intent: 'create the project from the template', permission: 'projects.write' },
 ];
 
 const COMPONENTS = ['PageHeader', 'WorkHeader', 'WorkList', 'WorkBoard', 'WorkTimeline', 'WorkCalendar', 'TaskDetailDrawer', 'PresenceBar', 'Select', 'Button', 'Badge', 'StatusPill', 'Avatar'];
@@ -61,6 +76,28 @@ export function workSpec(surface: Surface): PageSpec {
     logic: LOGIC,
     components: COMPONENTS,
     actions: WORK_ACTIONS,
+    checkedAt: WIDTHS,
+  });
+}
+
+export function newProjectSpec(surface: Surface): PageSpec {
+  return defineSpec({
+    code: 'W-03',
+    name: 'New project from template',
+    purpose: 'Create a project from the founder\u2019s own workflow instead of duplicating an Asana project by hand: choose the template, name the project and its client, keep the phases that apply, pick the zones, and the OS writes the sections and the whole task tree with owners and deliverables (D-062).',
+    surface,
+    navGroup: 'projects',
+    layout: ['PageHeader (W-03)', 'Tabs: the five steps', 'Card per step: template / project and client / phases / zones / review', 'Back and Next, Create on the last step'],
+    dataTables: ['projects', 'sections', 'tasks', 'clients', 'deliverables'],
+    roles: ['founder', 'ops'],
+    logic: [
+      'The template is typed data, not rows (`src/domain/templates`): `tpl-aluzina-workflow` is the merge of the founder\u2019s two Asana template projects plus PROYECTO HOY\u2019s kickoff section.',
+      'Zone-scoped template tasks (references per space, 3D model per space, the nine-lens deep design) are written once per chosen zone; every other task once. The review step counts what will be created before anything is written.',
+      'Create writes one `projects` row, one `sections` row per chosen phase and the tasks parents-first, each with `templateTaskId`, `deliverableId`, `ownerRole`, the team member for that role as assignee, `order` and `parentTaskId`; then it opens W-02 for the new project.',
+      'Everything is `projects.write`: the founder always, operations since this pass. Without it the review step says so and Create stays disabled while the action still answers readably (D-047).',
+    ],
+    components: ['PageHeader', 'Tabs', 'Card', 'Select', 'Input', 'Checkbox', 'Button', 'KeyValue', 'StatTile', 'Badge'],
+    actions: NEW_PROJECT_ACTIONS,
     checkedAt: WIDTHS,
   });
 }
