@@ -88,6 +88,10 @@ export function useApprovals() {
         subtasks: [],
         completedAt: null,
         order: 0,
+        parentTaskId: null,
+        deliverableId: null,
+        externalId: null,
+        templateTaskId: null,
       });
       toast(t('founder.approvals.rejected', { project: project.name }));
     },
@@ -116,6 +120,10 @@ export function useApprovals() {
         subtasks: [],
         completedAt: null,
         order: 0,
+        parentTaskId: null,
+        deliverableId: null,
+        externalId: null,
+        templateTaskId: null,
       });
       toast(t('founder.approvals.commented'));
     },

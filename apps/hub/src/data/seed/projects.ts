@@ -10,12 +10,7 @@ export const SECTION_IDS = {
   laurelesDocs: 'sec-laureles-docs',
   laurelesCompras: 'sec-laureles-compras',
   laurelesObra: 'sec-laureles-obra',
-  hoyBrief: 'sec-hoy-brief',
-  hoyConcepto: 'sec-hoy-concepto',
-  hoyDesarrollo: 'sec-hoy-desarrollo',
-  hoyDocs: 'sec-hoy-docs',
-  hoyCompras: 'sec-hoy-compras',
-  hoyObra: 'sec-hoy-obra',
+  // HOY's sections come from the Asana import (seed/asana.ts, D-056), not from here.
   noamDiseno: 'sec-noam-diseno',
   noamDocs: 'sec-noam-docs',
   noamCompras: 'sec-noam-compras',
@@ -40,6 +35,10 @@ export const TASK_DEFAULTS = {
   subtasks: [] as { id: string; label: string; done: boolean }[],
   completedAt: null as string | null,
   order: 0,
+  parentTaskId: null as string | null,
+  deliverableId: null as string | null,
+  externalId: null as string | null,
+  templateTaskId: null as string | null,
 };
 
 export const PROJECT_IDS = {
@@ -91,7 +90,7 @@ export function seed({ add, users }: SeedCtx): void {
     startDate: '2026-03-02',
     dueDate: '2027-02-28',
     location: 'El Poblado, Medellín',
-    summary: 'Centro de bienestar: recepción, salas de terapia, zona húmeda; neurointeriorismo y escenas de luz por ritual.',
+    summary: 'Centro de bienestar: recepción, salas de terapia, zona húmeda; neurointeriorismo y escenas de luz por ritual. Tareas importadas de Asana PROYECTO HOY (creado 2026-05-29); siguen siendo las zonas y los proveedores de la plantilla, pendiente la adaptación de la fundadora. — Tasks imported from Asana PROYECTO HOY (created 2026-05-29); still the template\'s zones and vendors, pending the founder\'s adaptation.',
     tags: [],
     coverAssetId: null,
     year: null,
@@ -190,12 +189,6 @@ export function seed({ add, users }: SeedCtx): void {
     [S.laurelesDocs, P.laureles, 'Documentación'],
     [S.laurelesCompras, P.laureles, 'Compras y proveedores'],
     [S.laurelesObra, P.laureles, 'Obra e instalación'],
-    [S.hoyBrief, P.hoy, 'Brief y neurointeriorismo'],
-    [S.hoyConcepto, P.hoy, 'Concepto y escenas de luz'],
-    [S.hoyDesarrollo, P.hoy, 'Desarrollo de diseño'],
-    [S.hoyDocs, P.hoy, 'Documentación'],
-    [S.hoyCompras, P.hoy, 'Compras y proveedores'],
-    [S.hoyObra, P.hoy, 'Obra'],
     [S.noamDiseno, P.noam, 'Diseño'],
     [S.noamDocs, P.noam, 'Documentación'],
     [S.noamCompras, P.noam, 'Compras y proveedores'],
@@ -221,8 +214,6 @@ export function seed({ add, users }: SeedCtx): void {
     { ...TASK_DEFAULTS, projectId: P.laureles, sectionId: S.laurelesDesarrollo, title: 'Verificar medidas cocina y estudio', ownerRole: 'studio', assigneeId: users.studio, status: 'doing', priority: 'high', startDate: '2026-09-17', dueDate: '2026-09-24', dependsOn: ['tsk-laureles-propuesta'], tags: ['medidas'], order: 1, description: 'Confirmar en sitio las medidas de cocina y estudio antes del chequeo de consistencia.', subtasks: [{ id: 'st-1', label: 'Cocina: alturas de mesón y muebles altos', done: true }, { id: 'st-2', label: 'Estudio: vano de ventana y puntos eléctricos', done: false }] },
     { ...TASK_DEFAULTS, projectId: P.laureles, sectionId: S.laurelesDesarrollo, title: 'Chequeo de consistencia propuesta sala', ownerRole: 'studio', assigneeId: users.studio, status: 'todo', priority: 'high', startDate: '2026-09-25', dueDate: '2026-09-28', dependsOn: ['tsk-laureles-medidas'], tags: ['revisión'], order: 2 },
     { ...TASK_DEFAULTS, projectId: P.laureles, sectionId: S.laurelesDesarrollo, title: 'Aprobación final propuesta sala', ownerRole: 'founder', assigneeId: users.founder, status: 'todo', priority: 'normal', startDate: '2026-09-29', dueDate: '2026-10-02', dependsOn: ['tsk-laureles-check'], tags: ['aprobación'], order: 3 },
-    { ...TASK_DEFAULTS, projectId: P.hoy, sectionId: S.hoyCompras, title: 'Comparar cotizaciones mármol recepción', ownerRole: 'ops', assigneeId: users.ops, status: 'doing', priority: 'urgent', startDate: '2026-09-16', dueDate: '2026-09-23', dependsOn: [], tags: ['proveedores', 'cotizaciones'], order: 0, description: 'Tres cotizaciones recibidas (Mármoles de Antioquia, Piedras del Norte, Granitos Medellín). Comparar precio, plazo y muestra.', subtasks: [{ id: 'st-1', label: 'Pedir muestra a Mármoles de Antioquia', done: true }, { id: 'st-2', label: 'Confirmar plazo de Piedras del Norte', done: false }, { id: 'st-3', label: 'Armar comparativo para Alejandra', done: false }] },
-    { ...TASK_DEFAULTS, projectId: P.hoy, sectionId: S.hoyCompras, title: 'Confirmar entrega luminarias salas de terapia', ownerRole: 'ops', assigneeId: users.ops, status: 'blocked', priority: 'high', startDate: '2026-09-24', dueDate: '2026-10-05', dependsOn: ['tsk-hoy-marmol'], tags: ['proveedores', 'iluminación'], order: 1, description: 'Bloqueada hasta cerrar el mármol: la fecha de instalación depende de la obra de recepción.' },
     { ...TASK_DEFAULTS, projectId: P.noam, sectionId: S.noamObra, title: 'Visita de obra: revisión carpintería cocina', ownerRole: 'studio', assigneeId: users.studio, status: 'todo', priority: 'normal', startDate: null, dueDate: '2026-09-26', dependsOn: ['tsk-noam-inst-carpinteria'], tags: ['obra'], order: 2 },
     { ...TASK_DEFAULTS, projectId: P.noam, sectionId: S.noamCompras, title: 'Pago 2 a Ebanistería Robledo', ownerRole: 'ops', assigneeId: users.ops, status: 'todo', priority: 'high', startDate: '2026-09-28', dueDate: '2026-09-30', dependsOn: ['tsk-noam-fabricacion'], tags: ['pagos'], order: 3 },
     { ...TASK_DEFAULTS, projectId: P.honeyValley, sectionId: S.hvConcepto, title: 'Moodboard latón y vidrio ámbar', ownerRole: 'studio', assigneeId: users.studio, status: 'done', priority: 'normal', startDate: '2026-09-01', dueDate: '2026-09-12', dependsOn: [], tags: ['concepto', 'iluminación'], order: 0, completedAt: '2026-09-11' },
@@ -231,7 +222,7 @@ export function seed({ add, users }: SeedCtx): void {
     { ...TASK_DEFAULTS, projectId: null, sectionId: S.studioMarca, title: 'Organizar carpetas de concursos 2027 por fecha de entrega', ownerRole: 'brand', assigneeId: users.brand, status: 'doing', priority: 'normal', startDate: '2026-09-21', dueDate: '2026-10-01', dependsOn: [], tags: ['concurso'], order: 0 },
     { ...TASK_DEFAULTS, projectId: null, sectionId: S.studioAdmin, title: 'Informe mensual de pagos y pendientes', ownerRole: 'ops', assigneeId: users.ops, status: 'todo', priority: 'normal', startDate: '2026-09-26', dueDate: '2026-09-30', dependsOn: [], tags: ['informes', 'pagos'], order: 0 },
   ];
-  const taskIds = ['tsk-laureles-medidas', 'tsk-laureles-check', 'tsk-laureles-aprobacion', 'tsk-hoy-marmol', 'tsk-hoy-entrega', 'tsk-noam-visita', 'tsk-noam-pago2', 'tsk-hv-moodboard', 'tsk-hv-presentacion', 'tsk-provenza-concepto', 'tsk-concursos-carpetas', 'tsk-informe-pagos'];
+  const taskIds = ['tsk-laureles-medidas', 'tsk-laureles-check', 'tsk-laureles-aprobacion', 'tsk-noam-visita', 'tsk-noam-pago2', 'tsk-hv-moodboard', 'tsk-hv-presentacion', 'tsk-provenza-concepto', 'tsk-concursos-carpetas', 'tsk-informe-pagos'];
   tasks.forEach((t, i) => add('tasks', taskIds[i], t));
 
   add('meetings', 'mtg-provenza-concepto', { title: 'Concepto Café Provenza', projectId: P.provenza, kind: 'client', startsAt: '2026-09-25T09:00:00-05:00', endsAt: '2026-09-25T10:30:00-05:00', location: 'Provenza, El Poblado', attendeeIds: [users.founder, users.studio], notes: 'Llevar referencias de barra y terraza.' });

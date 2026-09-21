@@ -76,20 +76,8 @@ export function seed({ add, users }: SeedCtx): void {
     { id: 'tsk-laureles-instalacion', project: P.laureles, section: S.laurelesObra, title: 'Instalación eléctrica y luminarias', role: 'ops', assignee: U.ops, status: 'todo', start: '2026-11-23', due: '2026-12-08', deps: ['tsk-laureles-carpinteria'], tags: ['obra', 'iluminación'], order: 0 },
     { id: 'tsk-laureles-entrega', project: P.laureles, section: S.laurelesObra, title: 'Entrega Casa Laureles', role: 'founder', assignee: U.founder, status: 'todo', priority: 'high', start: null, due: '2026-12-15', deps: ['tsk-laureles-instalacion'], tags: ['entrega', 'cliente'], order: 1 },
 
-    // ---- HOY Wellness Center: 2026-03-02 -> 2027-02-28 -----------------------------------------
-    { id: 'tsk-hoy-brief', project: P.hoy, section: S.hoyBrief, title: 'Brief y estudio de rituales por sala', role: 'founder', assignee: U.founder, status: 'done', start: '2026-03-02', due: '2026-03-27', tags: ['cliente', 'concepto'], order: 0 },
-    { id: 'tsk-hoy-concepto', project: P.hoy, section: S.hoyConcepto, title: 'Concepto y escenas de luz por ritual', role: 'founder', assignee: U.founder, status: 'done', start: '2026-04-06', due: '2026-05-15', deps: ['tsk-hoy-brief'], tags: ['concepto', 'iluminación'], order: 0 },
-    { id: 'tsk-hoy-recepcion', project: P.hoy, section: S.hoyDesarrollo, title: 'Propuesta recepción y zona húmeda', role: 'studio', assignee: U.studio, status: 'done', start: '2026-05-18', due: '2026-07-31', deps: ['tsk-hoy-concepto'], tags: ['propuesta'], order: 0 },
-    { id: 'tsk-hoy-terapia', project: P.hoy, section: S.hoyDesarrollo, title: 'Propuesta salas de terapia', role: 'studio', assignee: U.studio, status: 'done', start: '2026-08-03', due: '2026-08-28', deps: ['tsk-hoy-concepto'], tags: ['propuesta'], order: 1 },
-    { id: 'tsk-hoy-planos-recepcion', project: P.hoy, section: S.hoyDocs, title: 'Planos de recepción', role: 'studio', assignee: U.studio, status: 'doing', start: '2026-09-01', due: '2026-09-30', deps: ['tsk-hoy-recepcion'], tags: ['documentación'], order: 0, subtasks: [{ label: 'Planta de pisos y mármol', done: true }, { label: 'Cielo raso y luminarias', done: false }, { label: 'Detalle de mostrador', done: false }] },
-    { id: 'tsk-hoy-acabados', project: P.hoy, section: S.hoyDocs, title: 'Cuadro de acabados zona húmeda', role: 'studio', assignee: U.studio, status: 'doing', start: '2026-09-14', due: '2026-10-09', deps: ['tsk-hoy-recepcion'], tags: ['documentación'], order: 1 },
-    { id: 'tsk-hoy-aprobacion', project: P.hoy, section: S.hoyDocs, title: 'Aprobación documentación fase 1', role: 'founder', assignee: U.founder, status: 'todo', priority: 'high', start: '2026-09-22', due: '2026-09-27', deps: ['tsk-hoy-planos-recepcion'], tags: ['aprobación'], order: 2 },
-    { id: 'tsk-hoy-docs-final', project: P.hoy, section: S.hoyDocs, title: 'Documentación final para obra', role: 'studio', assignee: U.studio, status: 'todo', start: '2026-10-12', due: '2026-10-30', deps: ['tsk-hoy-aprobacion', 'tsk-hoy-acabados'], tags: ['documentación'], order: 3 },
-    { id: 'tsk-hoy-pedido-marmol', project: P.hoy, section: S.hoyCompras, title: 'Pedido de mármol recepción', role: 'ops', assignee: U.ops, status: 'todo', priority: 'high', start: '2026-09-28', due: '2026-10-02', deps: ['tsk-hoy-marmol'], tags: ['proveedores'], order: 2 },
-    { id: 'tsk-hoy-sanitarios', project: P.hoy, section: S.hoyCompras, title: 'Cotizar sanitarios y grifería zona húmeda', role: 'ops', assignee: U.ops, status: 'todo', start: '2026-10-05', due: '2026-10-23', deps: ['tsk-hoy-acabados'], tags: ['proveedores', 'cotizaciones'], order: 3 },
-    { id: 'tsk-hoy-inicio-obra', project: P.hoy, section: S.hoyObra, title: 'Inicio de obra recepción', role: 'ops', assignee: U.ops, status: 'todo', start: null, due: '2026-11-02', deps: ['tsk-hoy-pedido-marmol', 'tsk-hoy-docs-final'], tags: ['obra'], order: 0 },
-    { id: 'tsk-hoy-inst-luminarias', project: P.hoy, section: S.hoyObra, title: 'Instalación luminarias salas de terapia', role: 'ops', assignee: U.ops, status: 'todo', start: '2026-11-16', due: '2026-12-04', deps: ['tsk-hoy-entrega', 'tsk-hoy-inicio-obra'], tags: ['obra', 'iluminación'], order: 1 },
-    { id: 'tsk-hoy-entrega-fase1', project: P.hoy, section: S.hoyObra, title: 'Entrega fase 1 HOY', role: 'founder', assignee: U.founder, status: 'todo', priority: 'high', start: null, due: '2027-02-26', deps: ['tsk-hoy-inst-luminarias'], tags: ['entrega', 'cliente'], order: 2 },
+
+    // HOY Wellness Center's tasks are the Asana import (seed/asana.ts, D-056); nothing is seeded here.
 
     // ---- Noam Residential: 2026-01-19 -> 2026-11-30 --------------------------------------------
     { id: 'tsk-noam-propuesta', project: P.noam, section: S.noamDiseno, title: 'Propuesta integral del apartamento', role: 'studio', assignee: U.studio, status: 'done', start: '2026-01-19', due: '2026-03-13', tags: ['propuesta'], order: 0 },
@@ -119,8 +107,6 @@ export function seed({ add, users }: SeedCtx): void {
 
   // Comments (D-022) on the tasks the team is discussing this week.
   const comments: [string, string, string, string][] = [
-    ['cmt-hoy-marmol-1', 'tsk-hoy-marmol', U.ops, 'Mármoles de Antioquia manda la muestra el 23; Piedras del Norte aún no confirma plazo.'],
-    ['cmt-hoy-marmol-2', 'tsk-hoy-marmol', U.founder, 'Prioriza la veta más clara para recepción; el precio decide entre los dos primeros.'],
     ['cmt-laureles-medidas-1', 'tsk-laureles-medidas', U.studio, 'Cocina medida; el estudio queda para el jueves con la familia.'],
     ['cmt-noam-pago2-1', 'tsk-noam-pago2', U.ops, 'El pago sale cuando Sarai confirme la visita del 26.'],
     ['cmt-laureles-propuesta-1', 'tsk-laureles-propuesta', U.founder, 'Revisa la altura del muro TV con las medidas nuevas antes del chequeo.'],
@@ -129,8 +115,6 @@ export function seed({ add, users }: SeedCtx): void {
 
   // A short activity trail so the drawer and D-04 show history from the first load.
   const activity: [string, string, string, string, string | null, string | null][] = [
-    ['act-seed-1', 'tsk-hoy-marmol', U.ops, 'status', 'todo', 'doing'],
-    ['act-seed-2', 'tsk-hoy-entrega', U.ops, 'status', 'todo', 'blocked'],
     ['act-seed-3', 'tsk-laureles-medidas', U.studio, 'status', 'todo', 'doing'],
     ['act-seed-4', 'tsk-hv-moodboard', U.studio, 'status', 'doing', 'done'],
   ];

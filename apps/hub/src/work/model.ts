@@ -33,13 +33,15 @@ export interface WorkFilters {
   due: DueWindow;
   tag: string;
   project: string;
+  /** Deliverable type the task produces (`deliverables` catalog id); `'none'` = tasks with no deliverable (D-055). */
+  deliverable: string;
   showDone: boolean;
 }
 
-export const EMPTY_FILTERS: WorkFilters = { q: '', assignee: '', status: '', priority: '', due: '', tag: '', project: '', showDone: true };
+export const EMPTY_FILTERS: WorkFilters = { q: '', assignee: '', status: '', priority: '', due: '', tag: '', project: '', deliverable: '', showDone: true };
 
 export function activeFilterCount(f: WorkFilters): number {
-  return [f.assignee, f.status, f.priority, f.due, f.tag, f.project].filter(Boolean).length + (f.showDone ? 0 : 1);
+  return [f.assignee, f.status, f.priority, f.due, f.tag, f.project, f.deliverable].filter(Boolean).length + (f.showDone ? 0 : 1);
 }
 
 export interface WorkPerson {
@@ -48,11 +50,19 @@ export interface WorkPerson {
   initials?: string;
 }
 
+/** Deliverable type a task produces, as the views need it (`deliverables` catalog, D-055). */
+export interface WorkDeliverable {
+  id: string;
+  name: string;
+}
+
 /** Everything a view needs besides the tasks themselves. */
 export interface WorkContext {
   sections: Section[];
   projects: Project[];
   people: WorkPerson[];
+  /** The deliverable catalog, for the badges and the drawer's Select (D-055). */
+  deliverables: WorkDeliverable[];
   /** Comment count per task id. */
   commentCounts: Record<string, number>;
   /** `YYYY-MM-DD`. */
@@ -118,6 +128,7 @@ export function filterTasks(tasks: Task[], f: WorkFilters, today: string): Task[
     if (f.priority && x.priority !== f.priority) return false;
     if (f.tag && !x.tags.includes(f.tag)) return false;
     if (f.project && (f.project === 'none' ? x.projectId !== null : x.projectId !== f.project)) return false;
+    if (f.deliverable && (f.deliverable === 'none' ? x.deliverableId !== null : x.deliverableId !== f.deliverable)) return false;
     if (f.due) {
       const w = dueWindowOf(x, today);
       if (f.due === 'week' && !(w === 'today' || w === 'week')) return false;
@@ -213,6 +224,75 @@ export function groupTasks(tasks: Task[], groupBy: GroupBy, ctx: WorkContext, la
     else push('none', () => ({ label: labels.noProject }), x);
   }
   return groups.filter((g) => g.tasks.length > 0);
+}
+
+/** ---- Nesting (D-055): `parentTaskId` is the real tree; `subtasks` stays the lightweight checklist. ---- */
+
+/** How many children each task has inside `tasks`. */
+export function childCounts(tasks: Task[]): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const x of tasks) if (x.parentTaskId) out[x.parentTaskId] = (out[x.parentTaskId] ?? 0) + 1;
+  return out;
+}
+
+/** The tasks of a set whose parent is not in the same set: what the Board and Timeline show. */
+export function topLevel(tasks: Task[]): Task[] {
+  const ids = new Set(tasks.map((x) => x.id));
+  return tasks.filter((x) => !x.parentTaskId || !ids.has(x.parentTaskId));
+}
+
+export interface NestedRow {
+  task: Task;
+  /** 0 for a root of the set, +1 per generation. */
+  depth: number;
+  /** Children inside the same set. */
+  children: number;
+  /** True when this row has children and they are hidden. */
+  collapsed: boolean;
+}
+
+/**
+ * Parent-first rows for the List: roots (whose parent is filtered out or absent) sorted by `sort`, each
+ * followed by its descendants, indented. `isCollapsed` hides a subtree without dropping the parent row.
+ */
+export function nestRows(tasks: Task[], sort: SortBy, ctx: WorkContext, isCollapsed: (id: string) => boolean = () => false): NestedRow[] {
+  const ids = new Set(tasks.map((x) => x.id));
+  const kids = new Map<string, Task[]>();
+  for (const x of tasks) {
+    if (!x.parentTaskId || !ids.has(x.parentTaskId)) continue;
+    const list = kids.get(x.parentTaskId) ?? [];
+    list.push(x);
+    kids.set(x.parentTaskId, list);
+  }
+  const out: NestedRow[] = [];
+  const walk = (list: Task[], depth: number) => {
+    for (const task of sortTasks(list, sort, ctx)) {
+      const children = kids.get(task.id) ?? [];
+      const collapsed = children.length > 0 && isCollapsed(task.id);
+      out.push({ task, depth, children: children.length, collapsed });
+      if (children.length > 0 && !collapsed) walk(children, depth + 1);
+    }
+  };
+  walk(topLevel(tasks), 0);
+  return out;
+}
+
+/** Ancestor titles of a task, outermost first (the drawer breadcrumb "parent \u203a child"). */
+export function ancestorTitles(task: Task, byId: Map<string, Task>): string[] {
+  const out: string[] = [];
+  let cur = task.parentTaskId ? byId.get(task.parentTaskId) : undefined;
+  const seen = new Set([task.id]);
+  while (cur && !seen.has(cur.id)) {
+    out.unshift(cur.title);
+    seen.add(cur.id);
+    cur = cur.parentTaskId ? byId.get(cur.parentTaskId) : undefined;
+  }
+  return out;
+}
+
+/** The deliverable a task produces, or undefined. */
+export function deliverableOf(task: Task, ctx: Pick<WorkContext, 'deliverables'>): WorkDeliverable | undefined {
+  return task.deliverableId ? ctx.deliverables.find((d) => d.id === task.deliverableId) : undefined;
 }
 
 /** Tasks this one still waits for (dependencies not done). */

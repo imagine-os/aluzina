@@ -24,15 +24,18 @@ export function useWork(projectId: string | null) {
   const { rows: sections } = useTable('sections', projectId ? { where: { projectId }, orderBy: 'order' } : { orderBy: 'order' });
   const { rows: projects } = useTable('projects', { orderBy: 'name' });
   const { rows: comments } = useTable('comments', { where: { entity: 'tasks' } });
+  const { rows: deliverableRows } = useTable('deliverables', { orderBy: 'name' });
   const today = todayIso();
 
   const people = useMemo<WorkPerson[]>(() => DEMO_USERS.filter((u) => TEAM_ROLES.includes(u.role)).map((u) => ({ id: u.id, name: u.name, initials: u.initials })), []);
 
+  const deliverables = useMemo(() => deliverableRows.map((d) => ({ id: d.id, name: d.name })), [deliverableRows]);
+
   const ctx = useMemo<WorkContext>(() => {
     const commentCounts: Record<string, number> = {};
     for (const c of comments) commentCounts[c.entityId] = (commentCounts[c.entityId] ?? 0) + 1;
-    return { sections, projects, people, commentCounts, today };
-  }, [sections, projects, people, comments, today]);
+    return { sections, projects, people, deliverables, commentCounts, today };
+  }, [sections, projects, people, deliverables, comments, today]);
 
   const manage = can('tasks.manage');
   const own = can('tasks.own.write');
@@ -44,7 +47,7 @@ export function useWork(projectId: string | null) {
   const toggleComplete = useCallback((task: Task) => patch(task, statusPatch(task.status === 'done' ? 'todo' : 'done', today)), [patch, today]);
 
   const addTask = useCallback(
-    (input: { title: string; projectId?: string | null; sectionId?: string | null; status?: TaskStatus; assigneeId?: string }) => {
+    (input: { title: string; projectId?: string | null; sectionId?: string | null; status?: TaskStatus; assigneeId?: string; parentTaskId?: string | null }) => {
       const pid = input.projectId === undefined ? projectId : input.projectId;
       const siblings = tasks.filter((x) => x.sectionId === (input.sectionId ?? null));
       return data.create('tasks', {
@@ -64,6 +67,10 @@ export function useWork(projectId: string | null) {
         subtasks: [],
         completedAt: null,
         order: siblings.reduce((m, x) => Math.max(m, x.order), -1) + 1,
+        parentTaskId: input.parentTaskId ?? null,
+        deliverableId: null,
+        externalId: null,
+        templateTaskId: null,
       });
     },
     [data, projectId, tasks, user.id, user.role],

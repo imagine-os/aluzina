@@ -22,7 +22,7 @@ export const SAMPLE_SECTIONS: Section[] = [
   { ...base, id: 'sec-c', projectId: 'prj-laureles', name: 'Compras y proveedores', order: 2 },
 ];
 
-const task = (id: string, sectionId: string, title: string, assigneeId: string, status: Task['status'], priority: Task['priority'], startDate: string | null, dueDate: string | null, dependsOn: string[] = [], tags: string[] = []): Task => ({
+const task = (id: string, sectionId: string, title: string, assigneeId: string, status: Task['status'], priority: Task['priority'], startDate: string | null, dueDate: string | null, dependsOn: string[] = [], tags: string[] = [], extra: Partial<Task> = {}): Task => ({
   ...base,
   id,
   projectId: 'prj-laureles',
@@ -41,6 +41,11 @@ const task = (id: string, sectionId: string, title: string, assigneeId: string, 
   subtasks: id === 't1' ? [{ id: 's1', label: 'Cocina', done: true }, { id: 's2', label: 'Estudio', done: false }] : [],
   completedAt: status === 'done' ? dueDate : null,
   order: 0,
+  parentTaskId: null,
+  deliverableId: null,
+  externalId: null,
+  templateTaskId: null,
+  ...extra,
 });
 
 export const SAMPLE_TASKS: Task[] = [
@@ -51,13 +56,22 @@ export const SAMPLE_TASKS: Task[] = [
   task('t4', 'sec-a', 'Presentación a la familia', 'u-alejandra', 'todo', 'normal', null, '2026-10-03', ['t3'], ['cliente']),
   task('t5', 'sec-b', 'Planos de iluminación zonas sociales', 'u-sarai', 'todo', 'normal', '2026-10-05', '2026-10-23', ['t3'], ['iluminación']),
   task('t6', 'sec-c', 'Cotizar luminarias sala', 'u-miguel', 'blocked', 'urgent', '2026-09-10', '2026-09-19', ['t5'], ['proveedores']),
-  task('t7', 'sec-c', 'Moodboard zonas sociales', 'u-sarai', 'done', 'normal', '2026-07-20', '2026-08-05'),
+  task('t7', 'sec-c', 'Moodboard zonas sociales', 'u-sarai', 'done', 'normal', '2026-07-20', '2026-08-05', [], [], { deliverableId: 'del-mood-board' }),
+  // Nested children (D-055): the List indents them under t5, the Board shows t5 with a child count.
+  task('t5a', 'sec-b', 'Plano eléctrico', 'u-sarai', 'todo', 'normal', '2026-10-05', '2026-10-14', [], [], { parentTaskId: 't5', deliverableId: 'del-lighting-plan' }),
+  task('t5b', 'sec-b', 'Cuadro de luminarias por espacio', 'u-sarai', 'todo', 'normal', '2026-10-14', '2026-10-23', [], [], { parentTaskId: 't5' }),
+];
+
+export const SAMPLE_DELIVERABLES = [
+  { id: 'del-mood-board', name: 'Mood board' },
+  { id: 'del-lighting-plan', name: 'Lighting plan' },
 ];
 
 export const SAMPLE_CONTEXT: WorkContext = {
   sections: SAMPLE_SECTIONS,
   projects: SAMPLE_PROJECTS,
   people: SAMPLE_PEOPLE,
+  deliverables: SAMPLE_DELIVERABLES,
   commentCounts: { t1: 2, t6: 1 },
   today: '2026-09-21',
 };

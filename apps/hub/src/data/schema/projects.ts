@@ -75,6 +75,14 @@ export interface Task extends BaseRow {
   completedAt: ISODate | null;
   /** Manual order inside the section (lower first). */
   order: number;
+  /** Real nesting (D-055): the task this one hangs under, null at the top level. `subtasks` stays the lightweight checklist. */
+  parentTaskId: Id | null;
+  /** The deliverable type (`deliverables` catalog) this task produces; null when it produces nothing on its own. */
+  deliverableId: Id | null;
+  /** Where the row came from outside the OS, e.g. `asana:1215258003746641`; null for rows born here. */
+  externalId: string | null;
+  /** `TemplateTask.id` this row was generated from (`domain/templates`), null when it was not. */
+  templateTaskId: string | null;
 }
 
 /** Comment thread on any row (D-022): `entity` is the table name, `entityId` the row. */
