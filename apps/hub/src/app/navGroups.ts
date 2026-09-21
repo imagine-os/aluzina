@@ -7,6 +7,7 @@ export const NAV_GROUPS = [
   'overview',
   'approvals',
   'projects',
+  'spaces',
   'sales',
   'schedule',
   'suppliers',

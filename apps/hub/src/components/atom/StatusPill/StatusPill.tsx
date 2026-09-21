@@ -9,6 +9,8 @@ export const STATUS_TONES: Record<string, Tone> = {
   todo: 'neutral', draft: 'neutral', requested: 'neutral', pending: 'neutral', proposed: 'neutral', briefing: 'neutral', slot: 'neutral', trial: 'neutral', stub: 'neutral', open: 'neutral', info: 'neutral',
   blocked: 'warning', 'awaiting-founder': 'warning', due: 'warning', delayed: 'warning', issues: 'warning', 'changes-requested': 'warning', paused: 'warning', warning: 'warning', superseded: 'warning',
   overdue: 'danger', rejected: 'danger', urgent: 'danger',
+  // Spaces catalogs (K-05): posts, deliverables, tools, clients
+  published: 'success', archived: 'neutral', defined: 'neutral', 'template-ready': 'accent', automated: 'success', 'in-use': 'accent', evaluating: 'neutral', 'to-replace': 'warning', replaced: 'success', planned: 'neutral', past: 'neutral', prospect: 'info',
 };
 
 export interface StatusPillProps {

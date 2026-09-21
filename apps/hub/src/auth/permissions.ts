@@ -50,6 +50,14 @@ export const PERMISSIONS = [
   'own.proposals.approve',
   'own.messages.write',
   'own.payments.read',
+  // Marketing strategist (Slack "marketing-strategist", D-028): portal M-xx planned, lands on Spaces in the brand surface
+  'marketing.plan',
+  'marketing.content',
+  'marketing.channels',
+  // Spaces (K-xx, D-026): read for every role, write for the roles that publish, admin (archive / move) founder + dev
+  'spaces.read',
+  'spaces.write',
+  'spaces.admin',
   // Shared
   'projects.read',
   /** Edit the tasks assigned to me or created by me, read every task (Work views W-01 / W-02, D-020). `tasks.manage` covers all. */
@@ -67,6 +75,8 @@ export const ROLE_PERMISSIONS: Record<Role, readonly string[]> = {
   ops: [
     'projects.read',
     'suppliers.read',
+    'spaces.read',
+    'spaces.write',
     'schedule.manage',
     'tasks.manage',
     'meetings.manage',
@@ -79,10 +89,11 @@ export const ROLE_PERMISSIONS: Record<Role, readonly string[]> = {
     'alerts.manage',
     'reports.write',
   ],
-  studio: ['projects.read', 'suppliers.read', 'tasks.own.write', 'design.develop', 'references.manage', 'materials.manage', 'plans.write', 'schedules.write', 'renders.brief', 'measurements.write', 'projects.check'],
-  brand: ['projects.read', 'tasks.own.write', 'brand.manage', 'competitions.manage', 'presentations.write', 'images.write', 'revisions.manage', 'assets.manage'],
-  client: ['own.projects.read', 'own.proposals.approve', 'own.messages.write', 'own.payments.read'],
-  dev: ['projects.read', 'dev.tools', 'session.viewAs'],
+  studio: ['projects.read', 'suppliers.read', 'spaces.read', 'tasks.own.write', 'design.develop', 'references.manage', 'materials.manage', 'plans.write', 'schedules.write', 'renders.brief', 'measurements.write', 'projects.check'],
+  brand: ['projects.read', 'spaces.read', 'spaces.write', 'tasks.own.write', 'brand.manage', 'competitions.manage', 'presentations.write', 'images.write', 'revisions.manage', 'assets.manage'],
+  marketing: ['projects.read', 'spaces.read', 'spaces.write', 'tasks.own.write', 'marketing.plan', 'marketing.content', 'marketing.channels'],
+  client: ['spaces.read', 'own.projects.read', 'own.proposals.approve', 'own.messages.write', 'own.payments.read'],
+  dev: ['projects.read', 'spaces.read', 'spaces.write', 'spaces.admin', 'dev.tools', 'session.viewAs'],
 };
 
 export function hasPermission(role: Role, permission: string): boolean {

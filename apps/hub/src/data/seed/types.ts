@@ -7,7 +7,7 @@ export const SEED_AT = '2026-09-20T12:00:00.000Z';
 export interface SeedCtx {
   add<E extends EntityName>(entity: E, id: string, row: NewRow<E>): void;
   /** Demo user ids (src/auth/demoUsers.ts). */
-  users: { founder: string; ops: string; studio: string; brand: string; client: string; dev: string };
+  users: { founder: string; ops: string; studio: string; brand: string; marketing: string; client: string; dev: string };
 }
 
 export interface SeedModule {
