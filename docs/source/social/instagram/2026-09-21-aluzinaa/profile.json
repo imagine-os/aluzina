@@ -1,0 +1,32 @@
+{
+  "username": "aluzinaa",
+  "profile_url": "https://www.instagram.com/aluzinaa/",
+  "captured_at": "2026-09-21T04:37:15Z",
+  "capture_status": "NOT_CAPTURED",
+  "capture_status_detail": "Single permitted Playwright attempt at 2026-09-21T04:36:32Z was answered by Instagram with HTTP 429 and a redirect to /accounts/login/?next=%2Faluzinaa%2F&is_from_rle; stopped immediately, no retry, no login. All fields below are null because nothing was observed.",
+  "full_name": null,
+  "biography": null,
+  "external_urls": [],
+  "follower_count": null,
+  "following_count": null,
+  "post_count": null,
+  "is_business": null,
+  "category": null,
+  "is_private": null,
+  "is_verified": null,
+  "profile_pic_url": null,
+  "profile_pic_local": null,
+  "probe_log": [
+    "2026-09-21T04:15:45Z 302 https://www.instagram.com/accounts/login/?next=https%3A%2F%2Fwww.instagram.com%2Faluzinaa%2F&is_from_rle 0",
+    "2026-09-21T04:26:04Z 302 https://www.instagram.com/accounts/login/?next=https%3A%2F%2Fwww.instagram.com%2Faluzinaa%2F&is_from_rle 0",
+    "2026-09-21T04:36:09Z 200  626068"
+  ],
+  "why_this_handle": "https://aluzinaa.com/ (company website) links to this profile with the texts 'Síguenos' and 'Ver Instagram'; WebSearch results title it 'ALUZINA (@aluzinaa) • Instagram photos and videos'.",
+  "unverified_search_snippet": {
+    "full_name": "ALUZINA",
+    "followers_text": "21K followers",
+    "following_text": "2,903 following",
+    "posts_text": "450 posts",
+    "note": "search-engine snippet text only; not observed on Instagram in this session; may be stale"
+  }
+}

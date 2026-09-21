@@ -17,9 +17,9 @@
   "profile_pic_url": null,
   "profile_pic_local": null,
   "username_resolution_evidence": {
-    "summary": "Instagram's own server-rendered HTML shell for /aluzina.espacios/ (fetched unauthenticated, HTTP 200, 626 KB, 2026-09-21T04:01Z) carries polarisRouteConfig.pageID = 'httpErrorPage', root component 'PolarisErrorRoot', props page_type 'PROFILE' and show_lox_redesigned_404_page = true. That is the shell Instagram serves for a profile URL it cannot resolve. A same-session control fetch of a known-live profile could not be completed because Instagram began answering 429 to every request from this egress (see README). Treat 'username does not exist / was renamed' as the leading but not fully confirmed explanation.",
-    "instagram_shell_pageID": "httpErrorPage",
-    "instagram_shell_root": "PolarisErrorRoot",
+    "summary": "CORRECTED 2026-09-21T04:40Z: the 'httpErrorPage'/'PolarisErrorRoot' shell first read as a 404 signal is NOT evidence about the username; the certainly-live profile /aluzinaa/ returned the identical shell (aluzinaa/raw/control_aluzinaa_shell.html, HTTP 200, 04:36:09Z). Instagram serves that shell to any unauthenticated datacenter client here. Remaining evidence that aluzina.espacios is not the live handle is circumstantial: the company website links only to @aluzinaa, search engines index no instagram.com/aluzina.espacios page, and the one mirror that rendered showed zero counts with a generic 'does not exist' string.",
+    "instagram_shell_pageID": "httpErrorPage (also returned for the live /aluzinaa/ profile; not diagnostic)",
+    "instagram_shell_root": "PolarisErrorRoot (also returned for the live /aluzinaa/ profile; not diagnostic)",
     "mirror_insta_stories_viewer_com": "Page for aluzina.espacios rendered 0 Posts / 0 Followers / 0 Following and the string 'An account with this login does not exist' (the page also contains its other generic error strings, so it is weak evidence on its own).",
     "search_engines": "WebSearch (two queries) and a Bing \"aluzina.espacios\" site:instagram.com query returned no instagram.com/aluzina.espacios result (Bing returned 7 unrelated non-instagram pages). DuckDuckGo answered with a bot-challenge page (HTTP 202), no data. All Instagram results WebSearch returned for the company point to instagram.com/aluzinaa.",
     "company_website": "https://aluzinaa.com/ links only to https://www.instagram.com/aluzinaa/ (link texts 'Síguenos', 'Ver Instagram'); see bio_link_site.json.",
@@ -28,7 +28,7 @@
   "likely_actual_account": {
     "username": "aluzinaa",
     "url": "https://www.instagram.com/aluzinaa/",
-    "note": "NOT captured either (Instagram answered 429 to the WebFetch and curl attempts). Figures below are search-engine snippet text only, unverified against Instagram, and may be stale.",
+    "note": "NOT captured: see aluzinaa/README.md. Probes 302, 302, 200; the single permitted Playwright attempt at 04:36:32Z got 429 + login redirect. Figures below are search-engine snippet text only, unverified and possibly stale.",
     "snippet_full_name": "ALUZINA",
     "snippet_follower_count_text": "21K followers",
     "snippet_following_count_text": "2,903 following",

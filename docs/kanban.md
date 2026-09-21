@@ -36,7 +36,7 @@ One card per line. Steps refer to `build-plan.md`. Model per card in parentheses
 
 ## Doing
 
-- Social intake (Instagram): first public capture blocked by login wall / 429; handle question and Instagram data export requested from Justin in #social-scraping; retry against @aluzinaa pending (Fable 5.1; changelog 0012, D-032)
+- Social intake (Instagram): public capture of aluzina.espacios blocked by login wall / 429, and the one permitted retry against @aluzinaa also blocked (429; the error-shell evidence was withdrawn, D-038); intake now waits on Justin's handle confirmation or Instagram data export in #social-scraping (Fable 5.1; changelog 0012 + correction, D-032, D-038)
 - Pass 0013: playbook into the product + Hub bundle (foundation Fable 5.1; modules Opus 5; QA Sonnet 5): prompt 0009, `knowledge/service-playbook.md`, `domain/playbook.ts`, entities `leads / engagements / revisionItems / changeOrders / purchases / siteReports / messages` (SEED_VERSION 5), permissions, nav groups `intake / execution / quality / manual`, actions bus + `window.__aluzina.actions`, `docs/plan/plan.json` + `@docs` alias, route-derived hub cards (P-01, C-01, M-01, D-05..D-11), D-033..D-037 — foundation done; modules public / client / crm / manual / docs / devtools / qa next, then integration, screenshots, Spanish fill (changelog 0013)
 - Live screenshots of the 33 portal pages at 390 / 1280 EN (+ 1280 ES per dashboard) after the 0007 deploy (Fable 5.1) — in progress
 - Step 2: audit the export against P-01..P-15: en/es toggle, responsive matrix, inputs, placeholders, actions registry; write `docs/reference/business-os-audit.md` (Fable 5.1, Sonnet 5) — next

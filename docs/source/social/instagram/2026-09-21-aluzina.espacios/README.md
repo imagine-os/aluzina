@@ -35,9 +35,9 @@
 
 ## Caveat that matters most
 
-There is strong, but not conclusively confirmed, evidence that **`aluzina.espacios` is not a live Instagram username** and that the business account is **`@aluzinaa`**:
+**Correction (04:40Z, after the follow-up capture in `aluzinaa/`):** the `httpErrorPage` / `PolarisErrorRoot` shell is what Instagram serves to any unauthenticated datacenter client here. The identical shell came back for the certainly-live profile `/aluzinaa/` (`aluzinaa/raw/control_aluzinaa_shell.html`, HTTP 200, 04:36:09Z), so point 1 below is **withdrawn** as evidence. What remains is circumstantial but consistent: **`aluzina.espacios` is probably not the live handle** and the business account is **`@aluzinaa`**:
 
-1. Instagram's own server-rendered shell for `/aluzina.espacios/` is the error/404 route (`httpErrorPage`, `PolarisErrorRoot`), whereas a resolvable profile normally embeds the profile route config. The same-session control comparison against a known-live profile could not be completed because Instagram began rate-limiting this egress (429) before it ran.
+1. ~~Instagram's shell for `/aluzina.espacios/` is the error route (`httpErrorPage`, `PolarisErrorRoot`).~~ Withdrawn: the live `/aluzinaa/` profile returned the same shell (see correction above). This marker says nothing about whether the username exists.
 2. The company website https://aluzinaa.com/ links only to `instagram.com/aluzinaa` ("Síguenos", "Ver Instagram").
 3. WebSearch and Bing return no `instagram.com/aluzina.espacios` page at all (DuckDuckGo could not be queried, bot challenge), and WebSearch returns `instagram.com/aluzinaa` for the company.
 4. The one mirror that rendered anything for `aluzina.espacios` showed zero counts and "An account with this login does not exist" (weak on its own).
@@ -49,6 +49,10 @@ The account `@aluzinaa` was **not** captured either (429 on every route as well)
 - instagram.com: 400 (API schema error), 401 (`require_login`, "wait a few minutes"), 429 + login redirect (`is_from_rle`) for both headless Chromium and curl, and 429 for Anthropic's WebFetch fetcher. The 429 applied to control usernames too, so it is egress-level rate limiting, not specific to this profile.
 - Mirrors: Cloudflare JS challenges (403), blocked pages (451 / `/blocked`), proxy CONNECT 502 for two hosts, WebSocket-only rendering (dumpor family) which this proxy cannot carry.
 - Environment: Chromium initially distrusted the proxy CA; fixed properly via NSS (`certutil`, installed with `apt-get install libnss3-tools`).
+
+## Follow-up capture of @aluzinaa
+
+See `aluzinaa/README.md`: three 10-minute probes (302, 302, then 200 at 04:36:09Z), then the one permitted headless-browser attempt at 04:36:32Z, which Instagram answered with 429 + login redirect. Nothing captured for that handle either.
 
 ## Suggested next steps (not done, out of scope)
 
