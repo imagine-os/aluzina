@@ -8,7 +8,7 @@
 
 ## Purpose
 
-Entry point to every surface of the Aluzina Business OS for Justin, the owner, testers and agents. Since changelog 0006 it opens the **portals**: one card per role (Founder A-01, Administration and Operations O-01, Interior Design S-01, Graphic Design and Communication G-01; Client C-01 planned) that switches the demo user and enters that portal (D-014, D-015), plus a "Viewing as" role switcher in the header. It still links the live surfaces (the Business OS prototype and its five pages, the owner's Lovable site, the repo docs, the dev tools) and announces the planned ones; every card carries a thumbnail of the page it opens, regenerated on each deploy (D-011). Later it gains the demo simulator, canvas and plan viewer (build plan step 4).
+Entry point to every surface of the Aluzina Business OS for Justin, the owner, testers and agents. Since changelog 0006 it opens the **portals**: one card per role (Founder A-01, Administration and Operations O-01, Interior Design S-01, Graphic Design and Communication G-01; Client C-01 planned) that switches the demo user and enters that portal (D-014, D-015), plus a "Viewing as" role switcher in the header. It still links the live surfaces (the Business OS prototype and its five pages, the owner's Lovable site, the repo docs, the dev tools) and announces the planned ones; every card carries a thumbnail of the page it opens, regenerated on each deploy (D-011). Since changelog 0013 every card in the three sections (Portals, Product surfaces, Builder and dev tools) is live, its status derived from the route manifest by page code.
 
 ## Screenshots
 
@@ -18,13 +18,12 @@ Entry point to every surface of the Aluzina Business OS for Justin, the owner, t
 
 1. `HubHeader`: `BrandMark` wordmark (iridescent in both themes since the silver edition, changelog 0015, D-050); `RoleSwitcher` ("Viewing as", native select of the six demo users); controls: language (shows the *other* language, EN/ES), theme (Light / Dark, `aria-pressed`), dev mode (Dev on / Dev off, `aria-pressed`).
 2. Hero: a decorative `aria-hidden` `Shimmer` metal band (silver, intensity 0.35, veiled 48% by the theme bg in light / 30% in dark) carrying the iridescent wordmark (D-034, D-050), then h1 "Aluzina Business OS" and the one-line subtitle in theme text below it.
-2b. **Portals** grid: A-01 Founder (Alejandra Guerra), O-01 Administration and Operations (Miguel), S-01 Interior Design (Sarai), G-01 Graphic Design and Communication (Angélica) as cards whose status (Live / Stub) is read from the registered dashboard route (button: "Enter as <name> →"), C-01 Client portal (planned, Placeholder). Each with its deploy-time thumbnail.
-3. Product surfaces grid (`auto-fill, minmax(18rem, 1fr)`, pass 0013): P-00 Public website (external), P-01 Services and intake, C-01 Client app, M-01 Ops manual, D-06 Docs (GitHub link while no route), K-01 Spaces, BOS-01 prototype; status derived from the route manifest by code (built -> Live, stub -> Stub, no route -> Planned). Each card starts with a 16 / 10 thumbnail (`./thumbs/<code>.jpg`, 640 x 400) or the bilingual "No preview yet" tile.
-3a. Builder and dev tools grid: D-12 Design system (live, `#/design`, changelog 0014), D-05 plan viewer, D-07 canvas, D-08 demo simulator, D-09 actions, D-10 Tokens (live, `#/design/tokens`), D-11 testing hub, D-02 components, D-03 specs, D-04 multiuser; same route-derived status.
-3b. **Product surfaces** grid also carries `G-08` **Portfolio & brochure** (pass 0013): route-derived status like the other cards; it opens `#/brand/documents`, and because that route is guarded by `brand.manage` the card switches to the brand demo user first when the current role does not have it (`enterUnless` on the surface entry), so the card never lands on a permission wall.
-3b. Prototype pages grid (`minmax(15rem, 1fr)`): BOS-02 ALUZINA Home, BOS-03 Cyber Bridge, BOS-04 Cyber Bridge Deck, BOS-05 Image Generation Plan, BOS-06 LOD Ladder, each with its thumbnail.
-4. Footer: version, "Source on GitHub", dev-mode hint.
-5. Dev mode only: SpecChip `HUB-01` bottom-right; panel (Ctrl+. or chip) listing actions, permission, params, verified widths.
+3. **Portals** grid: A-01 Founder (Alejandra Guerra), O-01 Administration and Operations (Miguel), S-01 Interior Design (Sarai), G-01 Graphic Design and Communication (Angélica) as cards whose status (Live / Stub) is read from the registered dashboard route (button: "Enter as <name> →"), C-01 Client app (live since 0013, opens `#/client` as the demo client). Each with its deploy-time thumbnail.
+4. **Product surfaces** grid (`auto-fill, minmax(18rem, 1fr)`; status derived from the route manifest by code: built -> Live, stub -> Stub, no route -> Planned): P-00 Public website (external, aluzinaa.com), P-01 Services and intake (`#/services`, 0013), G-08 Portfolio & brochure (`#/brand/documents`; switches to the brand demo user when the current role lacks `brand.manage`, `enterUnless`, so the card never lands on a permission wall), C-01 Client app (`#/client`), M-01 Ops manual (`#/manual`), D-06 Docs (`#/docs`, the in-app viewer since 0013; GitHub link while no route), K-01 Spaces (opens on the current role's surface; founder when the role has none), BOS-01 Business OS prototype. Each card starts with a 16 / 10 thumbnail (`./thumbs/<code>.jpg`, 640 x 400) or the bilingual "No preview yet" tile.
+5. **Builder and dev tools** grid (same route-derived status): D-12 Design system (`#/design`, 0014), D-05 Plan viewer, D-07 Canvas, D-08 Demo simulator, D-09 Actions, D-10 Tokens (`#/design/tokens`; the dev contrast view is D-14 `#/dev/tokens`, reached from the dev sidebar), D-11 Testing hub, D-02 Components, D-03 Specs, D-04 Multiuser; every card opens as the dev demo user.
+6. Prototype pages grid (`minmax(15rem, 1fr)`): BOS-02 ALUZINA Home, BOS-03 Cyber Bridge, BOS-04 Cyber Bridge Deck, BOS-05 Image Generation Plan, BOS-06 LOD Ladder, each with its thumbnail.
+7. Footer: version, "Source on GitHub", dev-mode hint.
+8. Dev mode only: SpecChip `HUB-01` bottom-right; panel (Ctrl+. or chip) listing actions, permission, params, verified widths.
 
 ## Data
 
@@ -54,7 +53,7 @@ None.
 | `hub.toggleTheme` | Toggle theme | switch between light and dark | – | – |
 | `hub.toggleDevMode` | Toggle developer mode | turn developer mode on or off | `dev.tools` | – |
 
-No actions bus yet: the manifest declares them; nothing runs them by id (step 7).
+Every hub action is registered on the actions bus while the page is mounted (D-036); `window.__aluzina.actions.run('hub.enterAs', { role: 'ops' })` enters the ops portal.
 
 ## Components
 
@@ -62,7 +61,7 @@ No actions bus yet: the manifest declares them; nothing runs them by id (step 7)
 
 ## Real vs mock / placeholder
 
-Real: language, theme, dev mode, the role switcher and the four portal entries (they switch the session and open guarded routes; the dashboards themselves are stubs until 9b), the nine live links (BOS-01..06, P-00, D-06, D-02), the manifest, the thumbnails (real screenshots of the deployed build; P-00 and D-06 are captured from the internet and fall back to the tile when unreachable). Placeholder: Client portal, Ops manual (2 `data-placeholder` elements, each with the tile).
+Real (0013): language, theme, dev mode, the role switcher, the five portal entries (four dashboards + the client app), every product-surface card (P-01, G-08, C-01, M-01, D-06, K-01, BOS-01 are built routes) and every builder-tool card (D-12, D-05, D-07, D-08, D-09, D-10, D-11, D-02, D-03, D-04), the manifest, the thumbnails (real screenshots of the deployed build; P-00 is captured from the internet and falls back to the tile when unreachable). Placeholder: none left on the hub; a card returns to Planned automatically if its route disappears.
 
 ## Responsive and input check (P-01, P-03)
 

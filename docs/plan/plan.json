@@ -1,5 +1,5 @@
 {
-  "version": "0.8.0",
+  "version": "0.10.0",
   "updatedAt": "2026-09-21",
   "source": "docs/build-plan.md (steps 0-13, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -68,37 +68,43 @@
     },
     {
       "id": "step-4",
-      "title": "Hub tools: spec inspector, demo simulator, canvas, plan viewer, /dev/actions, /dev/tokens (in 13)",
+      "title": "Hub tools (done via pass 0013): D-05 plan viewer, D-07 canvas, D-08 demo simulator, D-09 actions, D-14 dev tokens, D-11 testing hub; D-10 design tokens in the design module (0014)",
       "step": "4",
-      "status": "doing",
+      "status": "done",
       "model": "Fable 5.1, Opus 5",
       "codes": [
         "D-05",
         "D-07",
         "D-08",
         "D-09",
+        "D-14",
+        "D-11",
         "D-10"
       ],
       "dependsOn": [
         "step-9a"
-      ]
+      ],
+      "changelog": "0013"
     },
     {
       "id": "step-5",
-      "title": "Surfaces: client app C-xx, in-app docs, ops manual, client proposal view, public P-xx (in 13)",
+      "title": "Surfaces (done via pass 0013): client app C-01..C-06, in-app docs D-06 / D-15, ops manual M-01..M-08, public P-01..P-05; open: client proposal view (step-5-proposal)",
       "step": "5",
-      "status": "doing",
+      "status": "done",
       "model": "Opus 5, Fable 5.1",
       "codes": [
         "C-01",
         "M-01",
         "D-06",
-        "P-01"
+        "D-15",
+        "P-01",
+        "P-05"
       ],
       "dependsOn": [
         "step-9a",
         "step-12"
-      ]
+      ],
+      "changelog": "0013"
     },
     {
       "id": "step-6",
@@ -255,12 +261,13 @@
     },
     {
       "id": "step-13",
-      "title": "Pass 0013: the service playbook into the product + the Hub bundle (foundation, seven modules, integration, QA)",
+      "title": "Pass 0013: the service playbook into the product + the Hub bundle (foundation, twelve workers, integration; screenshots and Spanish fill follow)",
       "step": "13",
-      "status": "doing",
+      "status": "done",
       "model": "Fable 5.1, Opus 5, Sonnet 5",
       "codes": [
         "P-01",
+        "P-05",
         "C-01",
         "M-01",
         "D-05",
@@ -268,19 +275,27 @@
         "D-07",
         "D-08",
         "D-09",
-        "D-10",
+        "D-14",
         "D-11",
+        "D-15",
+        "A-08",
+        "O-11",
+        "S-10",
+        "S-11",
+        "G-08",
+        "K-04",
         "HUB-01"
       ],
       "dependsOn": [
         "step-12"
-      ]
+      ],
+      "changelog": "0013"
     },
     {
       "id": "pass-0013-foundation",
       "title": "Foundation: prompt 0009, knowledge/service-playbook.md, domain/playbook.ts, entities leads / engagements / revisionItems / changeOrders / purchases / siteReports / messages, permissions, nav groups, actions bus, plan.json, hub cards, D-033..D-037",
       "step": "13",
-      "status": "doing",
+      "status": "done",
       "model": "Fable 5.1",
       "codes": [
         "HUB-01"
@@ -288,116 +303,146 @@
       "dependsOn": [
         "step-12"
       ],
-      "owner": "foundation"
+      "owner": "foundation",
+      "changelog": "0013"
     },
     {
       "id": "pass-0013-public",
       "title": "Module public: services pages from SERVICES + intake flow writing leads (P-01..)",
       "step": "13",
-      "status": "next",
+      "status": "done",
       "model": "Opus 5",
       "codes": [
-        "P-01"
+        "P-01",
+        "P-02",
+        "P-03",
+        "P-04",
+        "P-05"
       ],
       "dependsOn": [
         "pass-0013-foundation"
       ],
-      "owner": "public"
+      "owner": "public",
+      "changelog": "0013"
     },
     {
       "id": "pass-0013-client",
       "title": "Module client: client app on PhoneShell (own projects, engagement progress, revision matrix, messages, payments read) C-01..",
       "step": "13",
-      "status": "next",
+      "status": "done",
       "model": "Opus 5",
       "codes": [
-        "C-01"
+        "C-01",
+        "C-02",
+        "C-03",
+        "C-04",
+        "C-05",
+        "C-06"
       ],
       "dependsOn": [
         "pass-0013-foundation"
       ],
-      "owner": "client"
+      "owner": "client",
+      "changelog": "0013"
     },
     {
       "id": "pass-0013-crm",
-      "title": "CRM pipeline on the playbook statuses + studio revision matrix and service checklists (founder / ops / studio pages)",
+      "title": "CRM pipeline on the playbook statuses (A-08 leads, A-03 rework, O-11..O-13 execution control) + studio service checklist S-10 and revision matrix S-11",
       "step": "13",
-      "status": "next",
+      "status": "done",
       "model": "Opus 5",
       "codes": [
         "A-03",
-        "S-02"
+        "A-08",
+        "O-11",
+        "O-12",
+        "O-13",
+        "S-10",
+        "S-11"
       ],
       "dependsOn": [
         "pass-0013-foundation"
       ],
-      "owner": "crm"
+      "owner": "crm",
+      "changelog": "0013"
     },
     {
       "id": "pass-0013-manual",
       "title": "Module manual: bilingual ops manual from the playbook (M-01..)",
       "step": "13",
-      "status": "next",
+      "status": "done",
       "model": "Opus 5",
       "codes": [
-        "M-01"
+        "M-01",
+        "M-02",
+        "M-03",
+        "M-04",
+        "M-05",
+        "M-06",
+        "M-07",
+        "M-08"
       ],
       "dependsOn": [
         "pass-0013-foundation"
       ],
-      "owner": "manual"
+      "owner": "manual",
+      "changelog": "0013"
     },
     {
       "id": "pass-0013-docs",
       "title": "Module docs: in-app docs viewer over the repo docs (D-06)",
       "step": "13",
-      "status": "next",
+      "status": "done",
       "model": "Opus 5",
       "codes": [
-        "D-06"
+        "D-06",
+        "D-15"
       ],
       "dependsOn": [
         "pass-0013-foundation"
       ],
-      "owner": "docs"
+      "owner": "docs",
+      "changelog": "0013"
     },
     {
       "id": "pass-0013-devtools",
       "title": "Dev tools: plan viewer D-05 (kanban / list / timeline from plan.json), canvas D-07, demo simulator D-08, actions D-09, tokens D-10",
       "step": "13",
-      "status": "next",
+      "status": "done",
       "model": "Opus 5",
       "codes": [
         "D-05",
         "D-07",
-        "D-08",
-        "D-09",
-        "D-10"
+        "D-08"
       ],
       "dependsOn": [
         "pass-0013-foundation"
       ],
-      "owner": "devtools"
+      "owner": "devtools",
+      "changelog": "0013"
     },
     {
       "id": "pass-0013-qa",
-      "title": "Module qa: testing hub D-11 (QA matrix, smoke, placeholder counts)",
+      "title": "Module qa: D-09 actions registry, D-14 design tokens with contrast, D-11 testing hub (QA matrix, specCompleteness, placeholder counts)",
       "step": "13",
-      "status": "next",
+      "status": "done",
       "model": "Opus 5",
       "codes": [
+        "D-09",
+        "D-14",
         "D-11"
       ],
       "dependsOn": [
         "pass-0013-foundation"
       ],
-      "owner": "qa"
+      "owner": "qa",
+      "changelog": "0013"
     },
     {
       "id": "pass-0013-integration",
-      "title": "Integration: merge _pending drafts, shared fixes, changelog 0013, version 0.8.0, build green, deploy",
+      "title": "Integration: twelve _pending drafts merged, shared library fixes, changelog 0013, version 0.10.0, rebase onto 0014 / 0015, build green, smoke over 113 routes, deploy",
       "step": "13",
-      "status": "next",
+      "status": "done",
       "model": "Fable 5.1",
       "codes": [
         "HUB-01"
@@ -411,16 +456,19 @@
         "pass-0013-devtools",
         "pass-0013-qa"
       ],
-      "owner": "integration"
+      "owner": "integration",
+      "changelog": "0013"
     },
     {
       "id": "pass-0013-screenshots",
       "title": "Live screenshots of the new pages at 390 / 1280 / 1920 EN + ES",
       "step": "13",
-      "status": "next",
+      "status": "doing",
       "model": "Sonnet 5",
       "codes": [
         "P-01",
+        "P-03",
+        "P-05",
         "C-01",
         "M-01",
         "D-05",
@@ -428,8 +476,17 @@
         "D-07",
         "D-08",
         "D-09",
-        "D-10",
-        "D-11"
+        "D-11",
+        "D-14",
+        "D-15",
+        "A-08",
+        "O-11",
+        "O-12",
+        "O-13",
+        "S-10",
+        "S-11",
+        "G-08",
+        "K-04"
       ],
       "dependsOn": [
         "pass-0013-integration"
@@ -439,7 +496,7 @@
       "id": "pass-0013-spanish",
       "title": "Spanish fill over the new strings tables and the playbook translations",
       "step": "13",
-      "status": "next",
+      "status": "doing",
       "model": "Sonnet 5",
       "codes": [],
       "dependsOn": [
@@ -462,9 +519,9 @@
     },
     {
       "id": "R2",
-      "title": "CRM: clients + leads, pipeline stages, follow-ups; extends A-06 and K-05 Clients (pipeline lands in 13)",
+      "title": "CRM: first pages done in 0013 (A-08, A-03, O-11..O-13); open: follow-ups (D-020), A-06 / K-05 Clients on leads, leads.read views",
       "step": "R2",
-      "status": "backlog",
+      "status": "doing",
       "model": "Opus 5",
       "codes": [
         "A-03",
@@ -782,7 +839,7 @@
     },
     {
       "id": "kb-await-public",
-      "title": "Awaiting Justin: does the public site join the OS as P-xx or stay linked (P-00)? Interim: services + intake ship inside the OS (D-035)",
+      "title": "Awaiting Justin: does the public site join the OS as the P-xx module live at /#/services (P-01..P-05) or stay linked (P-00)?",
       "step": "5",
       "status": "backlog",
       "model": "Justin",
@@ -794,10 +851,10 @@
     },
     {
       "id": "kb-screenshots-0007",
-      "title": "Live screenshots of the 33 portal pages at 390 / 1280 EN (+ 1280 ES per dashboard) after the 0007 deploy",
+      "title": "Live screenshots of the 33 portal pages at 390 / 1280 EN (+ 1280 ES per dashboard); folded into the 0013 screenshot pass",
       "step": "9c",
-      "status": "doing",
-      "model": "Fable 5.1",
+      "status": "next",
+      "model": "Sonnet 5",
       "codes": [
         "A-01",
         "O-01",
@@ -805,7 +862,7 @@
         "G-01"
       ],
       "dependsOn": [
-        "step-9c"
+        "pass-0013-integration"
       ]
     },
     {
@@ -862,6 +919,276 @@
         "step-1"
       ],
       "changelog": "0004"
+    },
+    {
+      "id": "pass-0013-graph",
+      "title": "K-04 graph in five views on the graph gallery techniques, three.js lazy 3D view, system imagery (prompt 0012, D-053)",
+      "step": "13",
+      "status": "done",
+      "model": "Opus 5",
+      "codes": [
+        "K-04"
+      ],
+      "dependsOn": [
+        "pass-0013-foundation"
+      ],
+      "changelog": "0013"
+    },
+    {
+      "id": "pass-0013-brand-docs",
+      "title": "Portfolio and brochure: served PDFs, 56 page renders as visual memory, knowledge/brand.md part B, G-08 brand documents page, P-05, hub card (prompt 0011, D-049)",
+      "step": "13",
+      "status": "done",
+      "model": "Opus 5",
+      "codes": [
+        "G-08",
+        "P-05",
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "pass-0013-foundation"
+      ],
+      "changelog": "0013"
+    },
+    {
+      "id": "pass-0013-brand-data",
+      "title": "Brand documents as relational rows: assets entity, portfolio projects, clients, Spaces > Portfolio, 126 relations, services registry, depicts kind (prompt 0013, D-044..D-046)",
+      "step": "13",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "G-08",
+        "P-05",
+        "K-02",
+        "K-04"
+      ],
+      "dependsOn": [
+        "pass-0013-brand-docs"
+      ],
+      "changelog": "0013"
+    },
+    {
+      "id": "step-5-proposal",
+      "title": "Client proposal view of the full stack (the one step-5 surface still open)",
+      "step": "5",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "P-01",
+        "C-01"
+      ],
+      "dependsOn": [
+        "step-5"
+      ]
+    },
+    {
+      "id": "kb-0013-document-viewer",
+      "title": "DocumentViewer organism taking an Asset row (object -> iframe -> sentence, download, page fallback) replacing the G-08 / P-05 hand-rolled frame",
+      "step": "13",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "G-08",
+        "P-05"
+      ],
+      "dependsOn": [
+        "pass-0013-integration"
+      ]
+    },
+    {
+      "id": "kb-0013-components",
+      "title": "Library components requested by pass 0013: Stepper / FormStep, Accordion, ProgressBar / Meter, Checklist, MessageBubble / Thread, Swatch, Tooltip, ParamForm, DeviceFrame, ZoomStage, DependencyLane, Slider; Markdown heading ids + linkResolver",
+      "step": "13",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "P-03",
+        "C-01",
+        "C-02",
+        "S-10",
+        "O-13",
+        "D-09",
+        "D-14",
+        "D-05",
+        "D-07",
+        "D-08",
+        "K-04"
+      ],
+      "dependsOn": [
+        "pass-0013-integration"
+      ]
+    },
+    {
+      "id": "kb-0013-file-storage",
+      "title": "File-storage seam on the DataProvider (put(file) -> url): O-13 photos, G-08 replace document, intake floor plans, O-08 documents",
+      "step": "13",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "O-13",
+        "G-08",
+        "P-03",
+        "O-08"
+      ],
+      "dependsOn": [
+        "kb-data-version"
+      ]
+    },
+    {
+      "id": "kb-0013-governance",
+      "title": "useGovernance() / canEnter(project, status) in src/domain shared by S-10 / A-03 / O-11; GovernanceRule.pageCode[]; Work views migrate phase -> pipelineStatus then drop phase (D-048)",
+      "step": "13",
+      "status": "next",
+      "model": "Fable 5.1",
+      "codes": [
+        "A-03",
+        "S-10",
+        "O-11",
+        "W-01"
+      ],
+      "dependsOn": [
+        "pass-0013-integration"
+      ]
+    },
+    {
+      "id": "kb-0013-leads-policy",
+      "title": "leads row-level policy for anonymous visitors + rate limiting before /start goes on a public domain; leads.read view for brand / marketing",
+      "step": "13",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "P-03",
+        "A-08"
+      ],
+      "dependsOn": [
+        "kb-data-version"
+      ]
+    },
+    {
+      "id": "kb-0013-client-fields",
+      "title": "documents.clientVisible, own.brief.write, unread badge on the client bottom nav, client sign-off on change orders (clientApprovedAt), purchases.quoteId",
+      "step": "13",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "C-02",
+        "C-04",
+        "C-06",
+        "O-11",
+        "O-12"
+      ],
+      "dependsOn": [
+        "pass-0013-integration"
+      ]
+    },
+    {
+      "id": "kb-0013-feedback",
+      "title": "feedback entity + FeedbackButton (P-08): D-11 File a bug becomes real",
+      "step": "7",
+      "status": "next",
+      "model": "Fable 5.1",
+      "codes": [
+        "D-11"
+      ],
+      "dependsOn": [
+        "pass-0013-integration"
+      ]
+    },
+    {
+      "id": "kb-0013-webmcp",
+      "title": "WebMCP tool generation from window.__aluzina.actions.declared (paramSchema / toolJson move to src/actions); postMessage seam for D-08",
+      "step": "7",
+      "status": "next",
+      "model": "Fable 5.1",
+      "codes": [
+        "D-09",
+        "D-08"
+      ],
+      "dependsOn": [
+        "pass-0013-integration"
+      ]
+    },
+    {
+      "id": "kb-graph-label-collisions",
+      "title": "Graph views: label collision pass (hide / stagger by zoom), focus-neighbourhood framing in 3D, node cap re-check after a Slack import",
+      "step": "12",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "K-04"
+      ],
+      "dependsOn": [
+        "pass-0013-graph"
+      ]
+    },
+    {
+      "id": "kb-graph-thumb-codes",
+      "title": "pageCode as data on deliverables / tools; K-0x routes in scripts/thumbnails.mjs",
+      "step": "12",
+      "status": "next",
+      "model": "Sonnet 5",
+      "codes": [
+        "K-04",
+        "K-05"
+      ],
+      "dependsOn": [
+        "pass-0013-graph"
+      ]
+    },
+    {
+      "id": "kb-0013-tokens-pages",
+      "title": "D-14 dev tokens (contrast view) vs D-10 design tokens: one page or a clear split",
+      "step": "4",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "D-10",
+        "D-14"
+      ],
+      "dependsOn": [
+        "pass-0013-integration"
+      ]
+    },
+    {
+      "id": "kb-0013-qa-followups",
+      "title": "QA follow-ups: shadow elevations onto the 0014 shadow tokens, specCompleteness checkedAt threshold to seven widths, D-05 swimlane compact mode, S-11 / D-11 wide tables 768..1500, Spanish review of domain/playbook.ts with the founder",
+      "step": "13",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "D-05",
+        "D-11",
+        "S-11"
+      ],
+      "dependsOn": [
+        "pass-0013-integration"
+      ]
+    },
+    {
+      "id": "kb-0013-assets-followups",
+      "title": "K-05 catalog tab for assets; G-01 documents row from assets; brochure-only names as projects (founder decides)",
+      "step": "13",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "K-05",
+        "G-01"
+      ],
+      "dependsOn": [
+        "pass-0013-brand-data"
+      ]
+    },
+    {
+      "id": "kb-await-brand-era",
+      "title": "Awaiting founder: which brand era is current (portfolio Universo de Diseno vs brochure Interiorismo / Iluminacion); playbook services vs brochure trades; product line = Honey Valley?",
+      "step": "13",
+      "status": "backlog",
+      "model": "Justin",
+      "codes": [
+        "G-08",
+        "P-05"
+      ],
+      "dependsOn": []
     }
   ]
 }

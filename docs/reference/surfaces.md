@@ -1,6 +1,6 @@
 # Surfaces: routes, scripts, actions, MCP / CLI / API
 
-Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0015).
+Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0013 integration, after 0014 and 0015).
 
 ## 1. What exists today
 
@@ -58,8 +58,38 @@ Every surface a machine (script, agent, voice controller, MCP client) can drive,
 | `/dev/components` | D-02 | dev | built | desktop | `dev.tools` | `dev.searchComponents`, `dev.filterTier` |
 | `/dev/specs` | D-03 | dev | built | desktop | `dev.tools` | `dev.openSpec`, `dev.filterSurface` |
 | `/dev/multiuser` | D-04 | dev | built | desktop | `dev.tools` | `dev.openAs`, `dev.resetData` |
+| `/dev/plan` | D-05 | dev | built | desktop | `dev.tools` | 7 `tools.*` (Plan viewer) |
+| `/dev/canvas` | D-07 | dev | built | desktop | `dev.tools` | 6 `tools.*` (Canvas) |
+| `/dev/simulator` | D-08 | dev | built | desktop | `dev.tools` | 7 `tools.*` (Demo simulator) |
+| `/dev/actions` | D-09 | dev | built | desktop | `dev.tools` | 7 `qa.*` (Actions registry: declared vs live, run, WebMCP JSON) |
+| `/dev/tokens` | D-14 | dev | built | desktop | `dev.tools` | 4 `qa.*` (Design tokens with contrast) |
+| `/dev/testing` | D-11 | dev | built | desktop | `dev.tools` | 5 `qa.*` (Testing hub) |
+| `/docs` | D-06 | docs | built | desktop | `docs.read` | 4 `docs.*` (Documentation) |
+| `/docs/*` | D-15 | docs | built | desktop | `docs.read` | 4 `docs.*` (Document: `#/docs/<path>`) |
+| `/manual` | M-01 | manual | built | desktop | `manual.read` | 3 `manual.*` (Overview) |
+| `/manual/commercial` | M-02 | manual | built | desktop | `manual.read` | 5 (Commercial process; `?s=<section>`) |
+| `/manual/services/<slug>` (x 5) | M-03..M-07 | manual | built | desktop | `manual.read` | 3 each (one page per service) |
+| `/manual/governance` | M-08 | manual | built | desktop | `manual.read` | 4 (Governance, statuses, roles, assets, KPIs) |
+| `/client` | C-01 | client | built | phone | `own.projects.read` | 4 `client.*` (Client home) |
+| `/client/projects/:projectId` | C-02 | client | built | phone | `own.projects.read` | 2 (Project) |
+| `/client/approvals` | C-03 | client | built | phone | `own.projects.read` | 4 (Approvals and revision matrix) |
+| `/client/messages` | C-04 | client | built | phone | `own.projects.read` | 3 (Messages) |
+| `/client/payments` | C-05 | client | built | phone | `own.payments.read` | 1 (Payments) |
+| `/client/brief` | C-06 | client | built | phone | `own.projects.read` | 2 (Strategic brief) |
+| `/services` | P-01 | public | built | bare | – | 4 `public.*` (Services) |
+| `/services/:slug` | P-02 | public | built | bare | – | 4 (Service; slugs, `?service=` accepts code or slug) |
+| `/start` | P-03 | public | built | bare | – | 7 (Intake; writes `leads`) |
+| `/method` | P-04 | public | built | bare | – | 3 (Method) |
+| `/portfolio` | P-05 | public | built | bare | – | 5 (Portfolio and brochure; `?doc=portfolio\|brochure`) |
+| `/founder/leads` | A-08 | founder | built | desktop | `leads.manage` | 10 (Leads) |
+| `/ops/change-orders` | O-11 | ops | built | desktop | `changeOrders.manage` | 5 (Change orders) |
+| `/ops/purchases` | O-12 | ops | built | desktop | `purchases.manage` | 4 (Purchasing control) |
+| `/ops/site-reports` | O-13 | ops | built | desktop | `siteReports.write` | 4 (Site reports) |
+| `/studio/checklist`, `/studio/checklist/:projectId` | S-10 | studio | built | desktop | `engagements.write` | 8 (Service checklist) |
+| `/studio/revisions` | S-11 | studio | built | desktop | `revisionMatrix.write` | 7 (Revision matrix) |
+| `/brand/documents` | G-08 | brand | built | desktop | `brand.manage` | 5 (Brand documents; `?doc=<slug>&page=N`) |
 
-78 routes, 689 declared action entries: hub 7, design 9 (D-12 3, D-10 2, D-13 4; 8 distinct `design.*` ids), founder 144 (26 portal + 62 work + 56 spaces), ops 158 (40 + 62 + 56), studio 160 (42 + 62 + 56), brand 149 (31 + 62 + 56), dev 62 (6 over 3 pages + 56 spaces) (changelog 0015; 688 in 0014, 75 / 680 in 0009 and after the 0013 foundation). The `work.*` set is 31 distinct ids declared on eight routes; the `spaces.*` set is 37 distinct ids declared on 30 routes (56 entries per surface). Every action id is `<module>.<verb>` with an intent phrase and, for the portals, a permission; the full list is `window.__aluzina.routes[].spec.actions` and the drawer on `/#/dev/specs`.
+113 routes, 876 declared action entries (changelog 0013 integration; 78 / 689 after 0015, 75 / 680 in 0009): hub 1 route, founder 16, ops 21, studio 20, brand 16, client 6, public 5, manual 8, docs 2, design 3 (9 entries, 8 `design.*` ids incl. `design.downloadManual`, 0015), dev 15. New in 0013: `tools.*` (20 ids, D-05 / D-07 / D-08), `qa.*` (16, D-09 / D-14 / D-11), `manual.*` (8 over 8 routes), `docs.*` (4 on 2 routes), `client.*` (11), `public.*` (P-01..P-05 incl. the shared `public.openWebsite` / `public.openHub`), `founder.*` +10 on A-08 and A-03 rewritten to 6, `ops.*` +13 (O-11 5, O-12 4, O-13 4) + O-01, `studio.*` +17 (S-10 8, S-11 7, S-01 2), `brand.*` +7 (G-08 5, G-01 2), `spaces.*` +4 on K-04 (10 per graph route, 5 routes). The `work.*` set is 31 distinct ids on eight routes; the `spaces.*` set is 41 distinct ids on 30 routes. Every action id is `<module>.<verb>` with an intent phrase and, for guarded pages, a permission; the full list is `window.__aluzina.routes[].spec.actions`, the drawer on `/#/dev/specs` and the registry on `/#/dev/actions` (D-09).
 
 Consumers: `scripts/screenshots.mjs` (writes the manifest into `docs/screenshots/<CODE>/routes.json`), `/#/dev/specs` (D-03, same data through `RoutesContext`), `scripts/thumbnails.mjs` targets; future QA and WebMCP generation.
 
@@ -99,7 +129,9 @@ Runtime resources: `/business-os/vendor/*.js` (React, ReactDOM, Babel), `/busine
 | `aluzina.metal` | `silver` \| `gold` | D-12 metal preview (action `design.previewMetal`, D-039); applied on `<html data-metal>` by `modules/design/metal.ts` on boot and on change; absent = `tokens.metalDefault` (silver since 0015, D-050; gold is the previous edition, preview only) |
 | `aluzina.session` | JSON `{ userId, viewAs: role \| null, devMode }` | `SessionProvider` (`switchUser`, `viewAs`, `toggleDevMode`; actions `hub.enterAs`, `hub.switchRole`, `hub.toggleDevMode`); `userId` is a demo user id (`u-alejandra`, `u-miguel`, `u-sarai`, `u-angelica`, `u-client`, `u-dev`), default `u-dev` |
 | `aluzina.devMode` | `on` \| `off` | mirror of `session.devMode` for the pre-paint script and older tooling |
-| `aluzina.data` | JSON `{ seedVersion, tables }` | `MockProvider` (D-016): every entity table (36 since 0013: 29 + `leads`, `engagements`, `revisionItems`, `changeOrders`, `purchases`, `siteReports`, `messages`); removed and re-seeded by `reset()` or when `SEED_VERSION` changes (5 since 0013) |
+| `aluzina.data` | JSON `{ seedVersion, tables }` | `MockProvider` (D-016): every entity table (37 since 0013: 29 + `leads`, `engagements`, `revisionItems`, `changeOrders`, `purchases`, `siteReports`, `messages` + `assets`); removed and re-seeded by `reset()` or when `SEED_VERSION` changes (6 since 0013) |
+| `aluzina.graphView` | `objects3d` \| `lanes` \| `radial` \| `map` \| `force2d` | K-04 view switcher (action `spaces.switchGraphView`, D-053); absent = 3D objects (2D fallback without WebGL or with reduced motion) |
+| `aluzina.public.intake` (sessionStorage) | JSON of the intake draft (answers per step, current step) | P-03 `/start`: survives a reload, cleared when the `leads` row is written |
 | `aluzina.views.<userId>` | JSON `{ views: SavedView[], last: { [scope]: ViewState } }` | Work views (D-025): named saved views and the last `{ view, filters, sort, groupBy }` per scope (`all` or a project id), per demo user |
 | `aluzina.tabUser` (sessionStorage) | demo user id | `SessionProvider`: the `?as=` user of this tab, wins over `aluzina.session.userId` on reload so two tabs stay two people (D-04) |
 | `aluzina.presence` | JSON `{ [tabId]: { tabId, userId, route, at } }` | `PresenceProvider` fallback when `BroadcastChannel` is unavailable (D-023) |
@@ -131,6 +163,17 @@ Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effecti
 | `design.toggleMotion` | D-13 | turn the shader motion on or off | `design.read` | – |
 | `design.setTextureSize` | D-13 | set the texture tile size to {size} | `design.read` | `size: enum:1.5rem\|2.5rem\|4rem\|6rem` |
 | `design.toggleSheen` | D-13 | turn the sheen sweep on or off on the sample band | `design.read` | – |
+| `tools.*` (20 ids) | D-05, D-07, D-08 | switch / search / filter the plan (status, model, step), open a task, move a task (Placeholder: answers where the repo edit belongs); zoom / fit / filter / search the canvas, open a page; simulate route / role / language / theme, open a frame in a tab, toggle frame sync, apply a preset | `dev.tools` | task / route ids, enums (`view`, `status`, `model`, `step`, `surface`, `zoom`, `role`, `lang`, `theme`, `preset`) |
+| `qa.*` (16 ids) | D-09, D-14, D-11 | search / filter / open an action, run it with params, copy its WebMCP tool JSON, export all; search / filter tokens by group, copy a token, edit token (Placeholder); filter the QA matrix by surface / status, open a page at 390 / 1280 / 1920 as the right role, load the screenshot manifest (Placeholder), file a bug (Placeholder) | `dev.tools` | action ids, `params` object, token names, enums (`group`, `surface`, `width`) |
+| `manual.*` (8 ids) | M-01..M-08 | open a service, open a section (`?s=`), jump to a phase, print, route a client through the qualification questions (`routeService()`), create lead (Placeholder -> A-08), open the enforcing page of a rule, open the KPI dashboard (Placeholder) | `manual.read` | service codes / slugs, phase ids, section keys, answers |
+| `docs.*` (4 ids) | D-06, D-15 | open a document (`#/docs/<path>`), search the docs, open on GitHub, collapse a folder | `docs.read` | `path: string`, `query: string`, `folder: string` |
+| `client.*` (11 ids) | C-01..C-06 | open project / approvals / messages / payments / brief, add a revision comment (`revisionItems` row), decide an item, approve for execution (G-06 gate), send a message, mark read, save the brief, pay online (Placeholder, D-035) | `own.projects.read` (navigation), `own.revisions.write`, `own.proposals.approve`, `own.messages.write` / `messages.write`, `own.payments.read` | project / item / message ids, text |
+| `public.*` (P-01..P-05) | public | open a service by slug, start the intake (`?service=` code or slug), next / back / answer a step, submit (writes `leads`), reserve a deposit (Placeholder), open the website, open the hub, view / download / open a document | – (public) | slugs, step keys, answers, `doc: enum:portfolio\|brochure` |
+| `founder.*` (+10 on A-08, A-03 -> 6) | A-08, A-03 | new lead (real since 0013), qualify, suggest service (`routeService()`), set requested service, assign owner, set lead status, filter / search, convert lead to project (+ engagement), open in Work; move pipeline status (G-06 / G-12 gate in the write), toggle a band, open leads, move project (legacy `phase`), open project, set creative direction | `leads.manage`, `projects.write`, `projects.read` | lead / project / user ids, `status: enum:<15 pipeline ids>`, answers |
+| `ops.*` (+13) | O-01, O-11, O-12, O-13 | create / approve / reject / execute a change order (G-14 in the write), create / advance / set status of a purchase (`PURCHASE_STATUSES`), filter, create a site report, add photo (Placeholder), open the execution pages | `changeOrders.manage`, `purchases.manage`, `siteReports.write`, `schedule.manage` | ids, amounts (COP), days, dates, progress 0-100 |
+| `studio.*` (+17) | S-01, S-10, S-11 | select project, tick a checklist item (`engagements.checks`), complete / advance a phase, toggle a phase, open the brief, open a stage page, send to procurement (G-06 / G-12 gate); select project, filter, add / edit / decide a revision item, resolve as adjustment, export CSV, send to client (Placeholder) | `engagements.write`, `revisionMatrix.write`, `design.develop` | project / engagement / item ids, `checkKey` strings, `status: enum:approved\|approved-with-adjustments\|revision`, text |
+| `brand.*` (+7) | G-01, G-08 | view / download / open in tab / share link / replace (Placeholder) a document | `brand.manage` | `doc: enum:portfolio\|brochure`, `page: number` |
+| `spaces.*` (+4 on K-04) | K-04 | switch graph view (`spaces.switchGraphView`), auto-rotate the 3D scene, reset the camera, show all nodes beyond the cap (plus the six 0009 graph actions: focus, depth, kind filter, zoom, fit, open) | `spaces.read` | `view: enum:objects3d\|lanes\|radial\|map\|force2d`, node ids |
 | `dev.searchComponents` | D-02 | find the component {query} | `dev.tools` | `query: string` |
 | `dev.filterTier` | D-02 | show only {tier} components | `dev.tools` | `tier: enum:all\|atom\|molecule\|organism\|template` |
 | `dev.openSpec` | D-03 | show the spec of page {code} | `dev.tools` | `code: string` |
@@ -141,7 +184,7 @@ Mirrored onto `<html>` as `lang`, `data-theme`, `data-dev`, `data-role` (effecti
 | `spaces.*` (37 ids, 30 routes) | K-01..K-06 | select a space, expand / collapse, search, show archived, browse tree, create space / post, open post, filter by kind / tag / author, sort, edit description, archive, go to my role space; edit / save / pin / set status of a post, file in / remove from a space, set tags, add / remove a relation, open a related entity, comment, open link; focus the graph, set depth, toggle a kind, zoom in / out / fit, open a node; catalog tab, open template (Placeholder) / hub page / project; upload Slack export (Placeholder) | `spaces.read` (navigation, filters, comments), `spaces.write` (every write), `spaces.admin` (archive, upload) | space / post / relation / entity ids, enums (`kind`, `status`, `depth`, `tab`, `direction`), strings (`docs/pages/K-01.md`..`K-06.md`) |
 | `work.*` (31 ids, 8 routes) | W-01, W-02 | switch view, search, filter, sort, group, save / apply / delete a view, add / open / rename / assign a task, set dates / status / priority / tags / description, complete, move, select, bulk update, add / remove dependency, add / tick subtask, comment, zoom, go to today, change month, collapse group, open project | `projects.read` (read and view state, comments) or `tasks.own.write` (every write; `tasks.manage` covers it) | task / person / section / project ids, enums (`view`, `status`, `priority`, `zoom`, `by`), dates, strings (`docs/pages/W-01.md`) |
 
-Declared only: no actions bus runs them yet (section 2.1). Per-action rows for the portals live in each page doc (`docs/pages/<CODE>.md`, section Actions) and in the manifest. Permissions per role: `apps/hub/src/auth/permissions.ts` (`docs/knowledge/roles-and-portals.md`); `suppliers.read` added for studio and ops (0007); `spaces.read / write / admin` and `marketing.*` added, role `marketing` (0009, D-028); `design.read` for every role (0014, D-041).
+Every page registers its declared actions while mounted (D-036); Placeholder controls register too and answer `not wired yet: …` (D-047), so `window.__aluzina.actions.run(id)` never silently succeeds on an unbuilt control. Per-action rows for the portals live in each page doc (`docs/pages/<CODE>.md`, section Actions) and in the manifest. Permissions per role: `apps/hub/src/auth/permissions.ts` (`docs/knowledge/roles-and-portals.md`); `suppliers.read` added for studio and ops (0007); `spaces.read / write / admin` and `marketing.*` added, role `marketing` (0009, D-028); `design.read` for every role (0014, D-041).
 
 ### 1.4 npm scripts (the CLI today)
 
@@ -149,7 +192,7 @@ Declared only: no actions bus runs them yet (section 2.1). Per-action rows for t
 | --- | --- | --- |
 | `npm run dev` | Vite dev server for the hub, `http://localhost:5173/#/` | |
 | `npm run build` | `npm run build -w @aluzina/hub` (= `tokens` + `tsc --noEmit` + `vite build` -> repo-root `dist/`) `&& node scripts/copy-static.mjs`; must be green before every push | |
-| `npm run thumbs` | `node scripts/thumbnails.mjs`: serves `dist/` on `127.0.0.1:4180` (Node `http`), screenshots every hub-linked surface (incl. portal dashboards A-01 / O-01 / S-01 / G-01 and dev pages D-02 / D-03 through `?as=<role>`, section 1.1a) with Playwright Chromium (1280 x 800 -> 640 x 400 JPEG q80) into `dist/thumbs/<code>.jpg` and writes `dist/thumbs/manifest.json`; CI step after `npm run build`, never part of the build (D-011). Blocks mp4 / webm, never waits for `networkidle`, 45 s per page (the hub's own wait for its lazy thumbnails is bounded to 8 s), failures write the placeholder tile and are recorded in the manifest (`source: "placeholder"`, `error`). Externals (P-00, D-06) are best effort. | `-- --dist=dist --port=4180 --only=HUB-01,BOS-01 --skip-external`; env `PW_EXECUTABLE` / `PLAYWRIGHT_CHROMIUM_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` used only for the external captures |
+| `npm run thumbs` | `node scripts/thumbnails.mjs`: serves `dist/` on `127.0.0.1:4180` (Node `http`), screenshots every hub-linked surface (portal dashboards A-01 / O-01 / S-01 / G-01, K-01, design D-12, dev D-02 / D-03 and, since 0013, D-05 / D-07 / D-08 / D-09 / D-11 / D-14 / D-15 / D-06 as dev, M-01 as ops, C-01 as client, P-01 / P-05 public, G-08 as brand, A-08 as founder, O-11 as ops, S-10 / S-11 as studio, K-04 as founder, through `?as=<role>`, section 1.1a; Chromium runs with `--use-gl=swiftshader --enable-unsafe-swiftshader` so the K-04 3D view and the Shimmer render headless) with Playwright Chromium (1280 x 800 -> 640 x 400 JPEG q80) into `dist/thumbs/<code>.jpg` and writes `dist/thumbs/manifest.json`; CI step after `npm run build`, never part of the build (D-011). Blocks mp4 / webm, never waits for `networkidle`, 45 s per page (the hub's own wait for its lazy thumbnails is bounded to 8 s), failures write the placeholder tile and are recorded in the manifest (`source: "placeholder"`, `error`). Externals (P-00, D-06) are best effort. | `-- --dist=dist --port=4180 --only=HUB-01,BOS-01 --skip-external`; env `PW_EXECUTABLE` / `PLAYWRIGHT_CHROMIUM_EXECUTABLE` (default `/opt/pw-browsers/chromium` when present), `HTTPS_PROXY` used only for the external captures |
 | `npm run copy:static` | `node scripts/copy-static.mjs`: copies `apps/business-os/` (minus READMEs) into `dist/business-os/`, writes `dist/.nojekyll`; needs `dist/index.html` first | |
 | `npm run preview` | serve `dist/` on :4173 | |
 | `npm run typecheck` | `tsc --noEmit` in the hub | |
@@ -174,7 +217,7 @@ Static JSON written at deploy time next to the thumbnails; the contract a hub to
 }
 ```
 
-`code` is the page code the card carries; `path` is relative to the site root; `source` is the URL that was captured (local `127.0.0.1` URLs mean "from this build") or `placeholder` when the tile was written instead; `error` is present only for placeholders. Codes today: `BOS-01..06`, `A-01`, `O-01`, `S-01`, `G-01`, `D-02`, `D-03`, `P-00`, `D-06`, `HUB-01`. The hub reads `./thumbs/<code>.jpg?v=<buildId>` directly (`SurfaceCard` `image` prop) and does not depend on the manifest; a missing file renders the bilingual tile (`data-thumb="placeholder"`).
+`code` is the page code the card carries; `path` is relative to the site root; `source` is the URL that was captured (local `127.0.0.1` URLs mean "from this build") or `placeholder` when the tile was written instead; `error` is present only for placeholders. Codes today (36): `BOS-01..06`, `A-01`, `O-01`, `S-01`, `G-01`, `K-01`, `D-12`, `D-02`, `D-03`, `D-05`, `D-07`, `D-08`, `D-09`, `D-11`, `D-14`, `D-15`, `D-06` (the in-app docs since 0013, no longer the GitHub capture), `M-01`, `C-01`, `P-01`, `P-05`, `G-08`, `A-08`, `O-11`, `S-10`, `S-11`, `K-04`, `P-00` (external), `HUB-01`. The hub reads `./thumbs/<code>.jpg?v=<buildId>` directly (`SurfaceCard` `image` prop) and does not depend on the manifest; a missing file renders the bilingual tile (`data-thumb="placeholder"`).
 
 ### 1.5 Data provider (D-016)
 
@@ -206,13 +249,13 @@ Entities (`src/data/schema/index.ts`, all rows carry `id, created_at, updated_at
 
 ### 1.7 MCP / WebMCP
 
-**No MCP server yet.** The in-page seam exists: `window.__aluzina.actions.run(id, params)` (section 2.1). A WebMCP tool list is `window.__aluzina.actions.declared` (one entry per route x action: `{ id, code, path, label, intent, permission?, params? }`).
+**No MCP server yet.** The in-page seam is live: `window.__aluzina.actions = { run, list, declared }` (D-036): `run(id, params)` drives whatever page is mounted, `list()` is what is live now, `declared` the tool list (one entry per route x action: `{ id, code, path, label, intent, permission?, params? }`). **D-09 `/#/dev/actions` is the WebMCP surface today**: it joins declared vs live, generates the input form from `params`, runs actions, and exports each as a WebMCP tool JSON (`name = id`, `description = intent`, `inputSchema` from `paramSchema()`) or all of them at once; `paramSchema()` / `toolJson()` in `modules/qa/ActionsPage.tsx` are the canonical mapping until the generator moves to `src/actions/`.
 
 ## 2. Planned
 
 ### 2.1 Actions bus -> WebMCP tools (P-05, D-036)
 
-**Bus exists (0013)**: `apps/hub/src/actions/bus.ts`: `registerAction(id, handler) => unsubscribe`, `runAction(id, params) => Promise<{ ok, result?, error? }>` (`error: 'not-live'` when no page has the action mounted), `listLiveActions()`, `isActionLive(id)`, `subscribeLiveActions(cb)`, `declaredActions(routes)`, `declaredActionIndex(routes)`; hooks `useRegisterAction(id, handler)`, `useRegisterActions({ id: handler })`, `useLiveActions()` (`src/actions/useRegisterAction.ts`). Published as `window.__aluzina.actions = { run, list, declared }`. Pages register their declared actions while mounted (module contract); `/#/dev/actions` (D-09, pass 0013) lists declared vs live and runs them. **Planned**: WebMCP tools generated one per action (`name = id`, `description = intent`, `inputSchema` from `params`), permission-checked through `can()`; the voice controller speaks the same intents.
+**Bus exists (0013)**: `apps/hub/src/actions/bus.ts`: `registerAction(id, handler) => unsubscribe`, `runAction(id, params) => Promise<{ ok, result?, error? }>` (`error: 'not-live'` when no page has the action mounted), `listLiveActions()`, `isActionLive(id)`, `subscribeLiveActions(cb)`, `declaredActions(routes)`, `declaredActionIndex(routes)`; hooks `useRegisterAction(id, handler)`, `useRegisterActions({ id: handler })`, `useLiveActions()` (`src/actions/useRegisterAction.ts`). Published as `window.__aluzina.actions = { run, list, declared }`. Pages register their declared actions while mounted (module contract, D-047 for Placeholders); `/#/dev/actions` (D-09, built in 0013) lists declared vs live, runs them and exports tool JSON. **Planned**: WebMCP tools generated one per action (`name = id`, `description = intent`, `inputSchema` from `params`), permission-checked through `can()`; the voice controller speaks the same intents.
 
 ### 2.2 CLI
 
@@ -232,6 +275,7 @@ Realtime and presence exist as the mock seam since 0008 (D-023): `subscribe` alr
 
 ## 3. Change log of this file
 
+- 2026-09-21 (changelog 0013, integration): 35 new routes in the manifest (113 routes, 876 action entries, 1.1): tools D-05 / D-07 / D-08, qa D-09 / D-14 / D-11, docs D-06 / D-15, manual M-01..M-08, client C-01..C-06, public P-01..P-05, A-08, O-11..O-13, S-10 / S-11, G-08; `aluzina.data` 37 entities / `SEED_VERSION` 6, `aluzina.graphView`, `aluzina.public.intake` (1.2); action families `tools.* qa.* manual.* docs.* client.* public.*` and the new `founder.* ops.* studio.* brand.* spaces.*` ids, Placeholder actions registered (1.3); 21 thumbnail targets + SwiftShader (1.4, 1.4b); the bus and D-09 as the WebMCP surface (1.7, 2.1).
 - 2026-09-21 (changelog 0015): `design.downloadManual` on D-12 (78 routes, 689 action entries; D-12 registers `design.downloadManual` and `design.previewMetal` on the actions bus, 1.1 / 1.3); static assets table 1.1a-bis with `public/brand/MANUAL-DE-MARCA-ALUZINA.pdf` (D-051); `aluzina.metal` default is silver (D-050), `previewMetal` enum reordered `silver|gold` (1.2 / 1.3).
 - 2026-09-21 (changelog 0011): archived scraper scripts for the two public sites and how to re-run them (1.4).
 - 2026-09-21 (changelog 0013, foundation): `window.__aluzina.actions` (1.1, 1.7, 2.1: the bus exists), 36 entities and `SEED_VERSION` 5 (1.2), playbook entities and `projects.serviceCode / pipelineStatus` (1.5); routes and actions of the pass 0013 modules land with the integration.
