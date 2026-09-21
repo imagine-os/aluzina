@@ -54,6 +54,7 @@ export const scheduleSpec = defineSpec({
     { id: 'ops.viewScheduleItem', label: 'Open schedule item', intent: 'show the detail of {item} in the schedule', permission: 'schedule.manage', params: { item: 'id' } },
     { id: 'ops.changeMonth', label: 'Change month', intent: 'show the calendar for {month}', permission: 'schedule.manage', params: { month: 'string' } },
     { id: 'ops.scheduleMeeting', label: 'Schedule a meeting', intent: 'schedule a meeting with {who} on {date}', permission: 'meetings.manage', params: { who: 'string', date: 'date' } },
+    { id: 'ops.openWork', label: 'Open in Work', intent: 'open the schedule in the Work timeline', permission: 'schedule.manage' },
   ],
   checkedAt: WIDTHS,
 });
@@ -78,6 +79,7 @@ export const tasksSpec = defineSpec({
     { id: 'ops.completeTask', label: 'Mark task done', intent: 'mark the task {task} as done', permission: 'tasks.manage', params: { task: 'id' } },
     { id: 'ops.viewTask', label: 'Open task', intent: 'show the task {task}', permission: 'tasks.manage', params: { task: 'id' } },
     { id: 'ops.newTask', label: 'New task', intent: 'create a task called {title}', permission: 'tasks.manage', params: { title: 'string' } },
+    { id: 'ops.openWork', label: 'Open in Work', intent: 'open the tasks in the Work views', permission: 'tasks.manage' },
   ],
   checkedAt: WIDTHS,
 });

@@ -87,9 +87,12 @@ export function TasksPage() {
         subtitle={t('ops.tasks.subtitle')}
         breadcrumb={[{ label: t('ops.nav.home'), to: '/ops' }, { label: t('ops.tasks.title') }]}
         actions={
-          <Placeholder what={t('ops.tasks.newWhat')}>
-            <Button variant="primary">{t('ops.tasks.new')}</Button>
-          </Placeholder>
+          <>
+            <Button href="#/ops/work" icon="▥">{t('ops.common.openInWork')}</Button>
+            <Placeholder what={t('ops.tasks.newWhat')}>
+              <Button variant="primary">{t('ops.tasks.new')}</Button>
+            </Placeholder>
+          </>
         }
       />
 

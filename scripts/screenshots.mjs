@@ -1,5 +1,7 @@
 // Playwright captures of the hub into docs/screenshots/<CODE>/<lang>-<width>.jpg plus routes.json.
 // Usage: node scripts/screenshots.mjs [--base=https://imagine-os.github.io/aluzina/] [--out=docs/screenshots] [--shots=en-390,en-1280,en-3840,es-390]
+//        Portal page as a demo user: --as=ops (founder | ops | studio | brand | client | dev) seeds aluzina.session before load (same as ?as=, section 1.1a of surfaces.md).
+//        Wait for the page to settle: --settle=<ms> after the selector appears (Work views: 800).
 //        Static page (Business OS bundle): --static=business-os/ --code=BOS-01 [--lang-toggle="button:text-is('EN')"] [--wait=#dc-root]
 //        For static pages `es-*` shots click --lang-toggle after render (the bundle keeps its own language state).
 // Chromium is preinstalled at /opt/pw-browsers in our containers; never run `playwright install`.
@@ -23,6 +25,9 @@ const staticPath = args.static; // e.g. business-os/ -> captures base + staticPa
 const langToggle = args['lang-toggle'];
 const waitFor = args.wait ?? (staticPath ? '#dc-root' : 'h1');
 const shots = (args.shots ?? 'en-390,en-1280,en-3840,es-390').split(',');
+const asRole = args.as; // demo user id per role (apps/hub/src/auth/demoUsers.ts)
+const USER_BY_ROLE = { founder: 'u-alejandra', ops: 'u-miguel', studio: 'u-sarai', brand: 'u-angelica', client: 'u-client', dev: 'u-dev' };
+const settle = Number(args.settle ?? 0);
 const heights = { 390: 900, 1280: 900, 3840: 2160 };
 
 // Prefer the preinstalled Chromium when present; override with PW_EXECUTABLE.
@@ -44,12 +49,13 @@ for (const shot of shots) {
   const height = heights[width] ?? 900;
   const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1, colorScheme: 'light' });
   await context.addInitScript(
-    ([l]) => {
+    ([l, userId]) => {
       localStorage.setItem('aluzina.lang', l);
       localStorage.setItem('aluzina.theme', 'light');
       localStorage.setItem('aluzina.devMode', 'off');
+      if (userId) localStorage.setItem('aluzina.session', JSON.stringify({ userId, viewAs: null, devMode: false }));
     },
-    [lang],
+    [lang, asRole ? USER_BY_ROLE[asRole] ?? null : null],
   );
   const page = await context.newPage();
   const target = staticPath ? `${base}${staticPath}` : `${base}#${route}`;
@@ -64,6 +70,7 @@ for (const shot of shots) {
     await page.waitForTimeout(600);
   }
   await page.evaluate(() => document.fonts?.ready);
+  if (settle > 0) await page.waitForTimeout(settle);
   const file = join(outDir, `${shot}.jpg`);
   await page.screenshot({ path: file, type: 'jpeg', quality: 80, fullPage: false });
   manifest ??= await page.evaluate(() => window.__aluzina ?? null);

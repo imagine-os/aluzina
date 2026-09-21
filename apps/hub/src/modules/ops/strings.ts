@@ -43,6 +43,7 @@ export const strings: StringTable = {
   'ops.common.empty': { en: 'Nothing here yet', es: 'Aún no hay nada aquí' },
   'ops.common.role': { en: 'Team role', es: 'Rol del equipo' },
   'ops.common.mine': { en: 'Only mine (Miguel)', es: 'Solo lo mío (Miguel)' },
+  'ops.common.openInWork': { en: 'Open in Work', es: 'Abrir en Trabajo' },
 
   // O-01 dashboard
   'ops.home.title': { en: 'Operations dashboard', es: 'Panel de operaciones' },

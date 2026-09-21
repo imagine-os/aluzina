@@ -1,0 +1,20 @@
+.work-page {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+/* Grid items default to min-width:auto; the board and timeline must scroll inside themselves, never widen the page. */
+.work-page > * {
+  min-width: 0;
+}
+
+.work-page__project .field__select {
+  min-width: 14rem;
+}
+
+@media (min-width: 1920px) {
+  .work-page {
+    gap: var(--space-6);
+  }
+}

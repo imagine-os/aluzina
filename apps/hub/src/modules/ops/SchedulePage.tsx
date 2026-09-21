@@ -135,9 +135,12 @@ export function SchedulePage() {
         subtitle={t('ops.schedule.subtitle')}
         breadcrumb={[{ label: t('ops.nav.home'), to: '/ops' }, { label: t('ops.schedule.title') }]}
         actions={
-          <Placeholder what={t('ops.schedule.newMeetingWhat')}>
-            <Button variant="primary">{t('ops.schedule.newMeeting')}</Button>
-          </Placeholder>
+          <>
+            <Button href="#/ops/work" icon="▥">{t('ops.common.openInWork')}</Button>
+            <Placeholder what={t('ops.schedule.newMeetingWhat')}>
+              <Button variant="primary">{t('ops.schedule.newMeeting')}</Button>
+            </Placeholder>
+          </>
         }
       />
 
