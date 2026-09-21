@@ -99,8 +99,19 @@ unconfirmed). City and contact stay `null`. The twenty **brochure** names are st
 the Spaces note `post-brochure-clients` and in the table above. Details in
 [`brand.md#portfolio-projects-as-records`](brand.md#portfolio-projects-as-records).
 
+## Active jobs Sep-Dec 2026 (Asana portfolio board; appended, not reconciled)
+
+```
+status: current
+since: 2026-09-21
+source: Asana export PROYECTOS ALUZINA SEPTIEMBRE-DICIEMBRE 2026 (prompt 0015); details in `asana-conventions.md`
+```
+
+The founder's quarter board has sections **SPORTI** (pintura, techo caña brava, pedido de Temu), **BOSQUES DE LA CONCHA** (techo en estructura metálica, pergolite, instalación de iluminación) and **SODIME** (página web, brillar piso, pintura y electricidad, mobiliario, redes sociales / Instagram), so Sporti and Sodime are active clients in Sep-Dec 2026 and Bosques de la Concha is a client not listed above (kind `_unknown_`; city not stated). Rows above are unchanged. PROYECTO HOY is an active Asana project (all tasks created 2026-05-29); whether it is `cl-hoy` HOY Wellness Center is an open question (`asana-conventions.md`).
+
 ## Change log
 
 - 2026-09-21: created with Hoy and Sporti (Slack), four clients derived from projects; six rows seeded, `for-client` relations project -> client (prompt 0005, changelog 0009, D-029).
 - 2026-09-21: appended "Named in Aluzina's own marketing material" - 20 clients from brochure p. 2 (10 comercial, 10 residencial) and the portfolio's Club Unión and Terminal Norte, each with a stable slug; Coassist, Sodime and Brewhouse cervecería flagged as appearing in both documents; possible `cl-noam` overlap flagged as unconfirmed. Nothing above changed or removed (prompt 0011, changelog 0013; model Opus 5).
 - 2026-09-21: six portfolio clients seeded as `clients` rows (`cl-brewhouse`, `cl-club-union`, `cl-sodime`, `cl-terminal-norte`, `cl-coassist`, `cl-gahia`, all `past`) with `for-client` relations to the new `prj-pf-*` projects; the brochure's twenty names remain unseeded. Nothing above changed or removed (prompt 0013, changelog 0013; model Fable 5.1).
+- 2026-09-21: `asana-conventions.md` added from six Asana CSV exports (Slack #import-asana, Justin Massion; prompt 0015, changelog 0017, D-054); `tools-in-use.md` Asana entry extended, `clients.md` gains the Sep-Dec 2026 active-jobs note, `deliverables.md` gains a pointer.

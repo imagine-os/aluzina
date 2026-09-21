@@ -15,6 +15,7 @@ source: Slack #aluzina, 2026-09-21 01:47 UTC, Justin Massion (prompt 0004)
 - Justin's instruction: integrate those views "beautifully" into the multiuser system, "especially for project management type of uses".
 - Consequence for the OS: the Work views (W-01 / W-02, changelog 0008, D-021) must **match or beat** Asana's List, Timeline and Board for the team's daily use: sections, assignee, due dates, dependencies, subtasks, comments, saved views, keyboard, live updates. Calendar is added because the schedule (O-02) already had one.
 - Unknown: which Asana plan, whether projects / sections / custom fields exist there that should be imported, and whether Asana stays for anything once the OS covers it (`_unknown_`, ask Justin before an import).
+- Update 2026-09-21 (prompt 0015): six projects exported; sections, custom fields and de facto template projects (one per language) exist and are described in `asana-conventions.md`. The "which projects / sections / custom fields exist" part of the unknown above is answered; plan and whether Asana stays remain `_unknown_`.
 
 ## Other tools
 
@@ -52,3 +53,4 @@ Unknown: plans and costs per tool, who holds each account, what else the team pa
 
 - 2026-09-21: file created with the Asana entry (Slack #aluzina 2026-09-21 01:47 UTC, Justin Massion; prompt 0004, changelog 0008).
 - 2026-09-21: ChatGPT, Lovart, Magnific, Slack, Lovable, Claude Design, Supabase, Stripe added with status and replaced-by (Slack sidebar, prompt 0005, changelog 0009, D-029, D-030); the "Other tools" draft is superseded.
+- 2026-09-21: Asana entry extended with the six-export intake (Slack #import-asana, Justin Massion; prompt 0015, changelog 0017, D-054); see `asana-conventions.md`.

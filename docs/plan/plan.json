@@ -1207,6 +1207,20 @@
         "P-05"
       ],
       "dependsOn": []
+    },
+    {
+      "id": "kb-asana-importer",
+      "title": "Asana CSV importer behind K-06",
+      "step": "12",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "K-06"
+      ],
+      "dependsOn": [
+        "step-12"
+      ],
+      "changelog": "0017"
     }
   ]
 }

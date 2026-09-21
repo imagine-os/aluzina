@@ -60,7 +60,18 @@ The founder's playbook defines the service phases and stages that produce these 
 - `_unknown_`: which deliverables the founder actually hands over per project type today, their real durations, and whether lighting deliverables are separate documents or part of the drawings set.
 - `_unknown_`: document templates (InDesign / PDF) that exist outside the Hub; "Open template" on K-05 is a Placeholder until they are catalogued.
 
+## Documents implied by the Asana exports (pointer)
+
+```
+status: current
+since: 2026-09-21
+source: asana-conventions.md (prompt 0015)
+```
+
+The table "Documents the data says the OS can generate" in `asana-conventions.md` maps eleven moments of the founder's Asana workflow to documents and to the pages above; candidate rows for this catalog: cotización Excel generator, RFQ packet per trade, vendor job sheet, acta de entrega y correcciones, NDA proveedor, process-progress slide.
+
 ## Change log
 
 - 2026-09-21: created from Justin's four channels plus 21 proposed types; 25 rows seeded, K-05 renders them (prompt 0005, changelog 0009, D-029).
 - 2026-09-21: pointer to the playbook's status architecture and per-service delivery lists (`service-playbook.md`, prompt 0009, changelog 0013).
+- 2026-09-21: pointer to `asana-conventions.md`'s document-generation table added (prompt 0015, changelog 0017, D-054).
