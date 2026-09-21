@@ -1,0 +1,61 @@
+.drawer__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  background: rgb(0 0 0 / 0.5);
+}
+
+.drawer {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 0 3rem rgb(0 0 0 / 0.3);
+  max-width: 100%;
+}
+
+.drawer--right,
+.drawer--left {
+  width: min(28rem, 100%);
+  height: 100dvh;
+}
+
+.drawer--right { margin-left: auto; border-left: 1px solid var(--color-border); }
+.drawer--left { margin-right: auto; border-right: 1px solid var(--color-border); }
+
+.drawer--bottom {
+  width: 100%;
+  max-height: 85dvh;
+  margin-top: auto;
+  border-top: 1px solid var(--color-border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.drawer__title {
+  font-size: 1.25rem;
+}
+
+.drawer__body {
+  flex: 1;
+  padding: var(--space-5);
+  overflow: auto;
+}
+
+.drawer__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--color-border);
+}

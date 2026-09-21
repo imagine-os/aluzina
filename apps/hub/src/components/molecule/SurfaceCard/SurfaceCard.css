@@ -134,3 +134,16 @@
 :root[data-theme='dark'] .surface-card__thumb img {
   filter: brightness(0.92);
 }
+
+/* Button variant (portal cards): same look as the link. */
+button.surface-card {
+  width: 100%;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.surface-card__status--stub {
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}

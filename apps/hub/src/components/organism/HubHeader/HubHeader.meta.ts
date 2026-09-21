@@ -3,8 +3,8 @@ import { defineMeta } from '../../../design/meta';
 export default defineMeta({
   name: 'HubHeader',
   tier: 'organism',
-  purpose: 'Hub header: brand mark and the language / theme / dev-mode toggles.',
+  purpose: 'Hub header: brand, "Viewing as" RoleSwitcher and the global controls (language, theme, dev mode).',
   props: {},
-  a11y: ['controls grouped in a <nav> with an accessible name', 'each toggle is a 44 px ToggleButton with a full aria-label', 'wraps at phone width, no horizontal scroll'],
+  a11y: ['brand is a link to #/', 'controls are ToggleButtons with aria-pressed and a native Select', 'wraps at phone width'],
   usages: ['HubPage'],
 });

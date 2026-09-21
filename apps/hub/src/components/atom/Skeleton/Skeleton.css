@@ -1,0 +1,27 @@
+.skeleton {
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.skeleton__bar {
+  display: block;
+  height: 1em;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, var(--color-border) 25%, var(--color-surface-raised) 50%, var(--color-border) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton__bar--circle {
+  border-radius: 50%;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton__bar { animation: none; }
+}

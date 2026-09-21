@@ -1,0 +1,16 @@
+.role-switcher {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.role-switcher .field {
+  flex: 1;
+  min-width: 12rem;
+}
+
+.role-switcher--compact .field {
+  min-width: 10rem;
+  max-width: 18rem;
+}

@@ -3,7 +3,8 @@ import { Placeholder } from '../../atom/Placeholder/Placeholder';
 import { useT } from '../../../i18n/I18nProvider';
 import './SurfaceCard.css';
 
-export type SurfaceStatus = 'live' | 'planned';
+/** `stub`: the route exists and opens, but the page is a PageStub (portal cards before their module lands). */
+export type SurfaceStatus = 'live' | 'stub' | 'planned';
 
 interface SurfaceCardProps {
   code: string;
@@ -11,9 +12,11 @@ interface SurfaceCardProps {
   description: string;
   status: SurfaceStatus;
   statusLabel: string;
-  /** Present only when the surface is live. */
+  /** Present when the surface opens as a link. */
   href?: string;
   external?: boolean;
+  /** Alternative to href: the card is a button (portal cards switch the session user, then navigate). */
+  onActivate?: () => void;
   ctaLabel?: string;
   /**
    * Thumbnail of the page the card opens (`./thumbs/<code>.jpg`, generated at deploy time, D-011).
@@ -65,10 +68,17 @@ function Body({ code, title, description, status, statusLabel, ctaLabel, image }
   );
 }
 
-/** One card per surface in the hub grid. Live -> link; planned -> Placeholder (P-09). */
+/** One card per surface in the hub grid. Live / stub -> link or button; planned -> Placeholder (P-09). */
 export function SurfaceCard(props: SurfaceCardProps) {
-  const { href, external, status, description } = props;
-  if (status === 'live' && href) {
+  const { href, external, onActivate, status, description } = props;
+  if (status !== 'planned' && onActivate) {
+    return (
+      <button type="button" className="surface-card surface-card--live" data-surface-code={props.code} onClick={onActivate}>
+        <Body {...props} />
+      </button>
+    );
+  }
+  if (status !== 'planned' && href) {
     return (
       <a className="surface-card surface-card--live" href={href} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>
         <Body {...props} />

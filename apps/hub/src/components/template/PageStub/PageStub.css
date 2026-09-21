@@ -1,0 +1,21 @@
+.page-stub__note {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.page-stub__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-stub__card {
+  border-radius: var(--radius-lg);
+}
+
+.page-stub__card .card {
+  height: 100%;
+}
