@@ -1,0 +1,70 @@
+/* Operations portal pages (O-01..O-10). Tokens only; no fixed pixel widths. */
+
+.ops-stack {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+/* Grid items default to min-width:auto, which lets a wide scroller (Kanban, Timeline) stretch the
+   page instead of scrolling inside itself. */
+.ops-stack > * {
+  min-width: 0;
+}
+
+.ops-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-3);
+}
+
+.ops-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 26rem), 1fr));
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.ops-cards--wide {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 34rem), 1fr));
+}
+
+.ops-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.ops-note {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.ops-filter-field {
+  min-width: min(100%, 12rem);
+}
+
+.ops-drawer-section {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.ops-drawer-section h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.ops-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (min-width: 1920px) {
+  .ops-stack {
+    gap: var(--space-6);
+  }
+}
