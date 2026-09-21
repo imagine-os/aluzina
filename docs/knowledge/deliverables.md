@@ -45,6 +45,21 @@ The catalog is **data**: `deliverables` rows in `apps/hub/src/data/seed/spaces.t
 
 Dependencies seeded as relations (`depends-on`): contract -> proposal; furniture selection -> furniture schedule; lighting plan -> lighting concept; purchase orders -> budget and quote comparison; handover package -> punch list; final presentation -> render pack.
 
+## Added from the Asana workflow (2026-09-21, changelog 0020, D-062)
+
+```
+status: current
+since: 2026-09-21
+source: the founder's COTIZACION step 2 and the PROYECTO HOY kickoff section (asana-conventions.md); needed because the project template links tasks to deliverables
+```
+
+| Deliverable | Phase | Owner | Template today | Status | Days |
+| --- | --- | --- | --- | --- | --- |
+| RFQ packet per trade | procurement | ops | O-04 quotes | defined | 5 |
+| Invoice | lead | ops | O-07 payments | defined | 1 |
+
+**RFQ packet per trade** is `2. Contactar los proveedores de cada elemento de obra con las especificaciones de diseno` made explicit: the design specifications packaged once per trade, for her sixteen (demolition, plumber, electrician, ceiling, floor, cement and drywall, plating, dry wall, installation of elements, windows and doors, closings, wallpaper and paint, online buying, lighting installation, wood and furniture, metalwork), so every provider quotes the same scope. **Invoice** is `FACTURACION`, which the HOY kickoff section puts next to `CONTRATO`: the design-fee instalments and the monthly execution administration each need one. Both are seeded rows (27 in total) and both are linked from `tpl-aluzina-workflow`.
+
 ## Status architecture (pointer)
 
 ```
@@ -75,3 +90,4 @@ The table "Documents the data says the OS can generate" in `asana-conventions.md
 - 2026-09-21: created from Justin's four channels plus 21 proposed types; 25 rows seeded, K-05 renders them (prompt 0005, changelog 0009, D-029).
 - 2026-09-21: pointer to the playbook's status architecture and per-service delivery lists (`service-playbook.md`, prompt 0009, changelog 0013).
 - 2026-09-21: pointer to `asana-conventions.md`'s document-generation table added (prompt 0015, changelog 0017, D-054).
+- 2026-09-21: two rows added from the Asana workflow, **RFQ packet per trade** and **Invoice** (27 seeded rows); 21 task-to-deliverable links now live in the project template `apps/hub/src/domain/templates/aluzina-workflow.ts` and 19 in the imported PROYECTO HOY tree, so `tasks.deliverableId` is the first real use of this catalog outside K-05 (prompt 0017, changelog 0020, D-062).

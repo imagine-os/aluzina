@@ -1,5 +1,5 @@
 {
-  "version": "0.11.0",
+  "version": "0.12.0",
   "updatedAt": "2026-09-21",
   "source": "docs/build-plan.md (steps 0-14, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -1210,17 +1210,20 @@
     },
     {
       "id": "kb-asana-importer",
-      "title": "Asana CSV importer behind K-06",
+      "title": "Asana into the Work module: nesting, deliverables, project template (W-03) and the CSV importer",
       "step": "12",
-      "status": "backlog",
-      "model": "Opus 5",
+      "status": "done",
+      "model": "Fable 5.1, Opus 5",
       "codes": [
+        "W-01",
+        "W-02",
+        "W-03",
         "K-06"
       ],
       "dependsOn": [
         "step-12"
       ],
-      "changelog": "0017"
+      "changelog": "0020"
     },
     {
       "id": "ar-01",
@@ -1469,6 +1472,60 @@
       ],
       "dependsOn": [
         "ar-05"
+      ]
+    },
+    {
+      "id": "kb-0020-template-editor",
+      "title": "Project template editor in the product: a second (commercial) template, editing in the product, durations per task so a created project has a populated timeline",
+      "step": "12",
+      "status": "backlog",
+      "model": "Fable 5.1, Opus 5",
+      "codes": [
+        "W-03"
+      ],
+      "dependsOn": [
+        "kb-asana-importer"
+      ]
+    },
+    {
+      "id": "kb-0020-vendor-jobs",
+      "title": "Portfolio vendor jobs onto O-12: purchases.profitAluzina, purchases.aluzinaResponsibility and payment rows for the 18 parsed jobs",
+      "step": "12",
+      "status": "backlog",
+      "model": "Fable 5.1, Opus 5",
+      "codes": [
+        "O-12",
+        "C-05"
+      ],
+      "dependsOn": [
+        "kb-asana-importer"
+      ]
+    },
+    {
+      "id": "kb-0020-hoy-adaptation",
+      "title": "Awaiting founder: is PROYECTO HOY the HOY Wellness Center and are ZONE 1..11 its spaces? Then prune the 2023 residue from the seeded tree and drop the flag in the project summary",
+      "step": "12",
+      "status": "backlog",
+      "model": "Justin",
+      "codes": [
+        "W-02"
+      ],
+      "dependsOn": [
+        "kb-asana-importer"
+      ]
+    },
+    {
+      "id": "kb-0020-work-actions",
+      "title": "Register the 31 pre-0020 work.* actions on W-01 / W-02 so every declared action is runnable (P-05, D-047)",
+      "step": "12",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "W-01",
+        "W-02"
+      ],
+      "dependsOn": [
+        "kb-asana-importer"
       ]
     }
   ]

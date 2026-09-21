@@ -1,8 +1,8 @@
 {
-  "capturedAt": "2026-09-21T18:58:36.955Z",
+  "capturedAt": "2026-09-21T18:58:08.665Z",
   "base": "http://localhost:4173/",
-  "code": "W-01",
-  "route": "/ops/work",
+  "code": "W-03",
+  "route": "/founder/work/new",
   "shots": [
     "en-1280",
     "en-390",
