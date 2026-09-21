@@ -1,12 +1,12 @@
 # Surfaces: routes, scripts, actions, MCP / CLI / API
 
-Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0009).
+Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0013 foundation).
 
 ## 1. What exists today
 
 ### 1.1 Route manifest (in the running app)
 
-`apps/hub/src/app/manifest.ts` publishes `window.__aluzina = { routes, version }` on load. Each entry: `{ path, code, surface, status: 'built' | 'stub', shell: 'desktop' | 'phone' | 'bare', permission?, spec }` where `spec` is the full `PageSpec` (`apps/hub/src/specs/PageSpec.ts`: code, name, purpose, surface, navGroup?, layout, dataTables, roles, logic, components, actions, checkedAt, notes). Routing is HashRouter, so every page is `/#/<path>`. Routes come from `src/modules/*/index.ts` through the registry (D-014); `permission` is what `RequireRole` checks (D-015).
+`apps/hub/src/app/manifest.ts` publishes `window.__aluzina = { routes, version, actions }` on load (`actions`: section 2.1, live since 0013). Each entry: `{ path, code, surface, status: 'built' | 'stub', shell: 'desktop' | 'phone' | 'bare', permission?, spec }` where `spec` is the full `PageSpec` (`apps/hub/src/specs/PageSpec.ts`: code, name, purpose, surface, navGroup?, layout, dataTables, roles, logic, components, actions, checkedAt, notes). Routing is HashRouter, so every page is `/#/<path>`. Routes come from `src/modules/*/index.ts` through the registry (D-014); `permission` is what `RequireRole` checks (D-015).
 
 | path | code | surface | status | shell | permission | actions (page) |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -87,7 +87,7 @@ Runtime resources: `/business-os/vendor/*.js` (React, ReactDOM, Babel), `/busine
 | `aluzina.theme` | `light` \| `dark` | `ThemeProvider` (action `hub.toggleTheme`) |
 | `aluzina.session` | JSON `{ userId, viewAs: role \| null, devMode }` | `SessionProvider` (`switchUser`, `viewAs`, `toggleDevMode`; actions `hub.enterAs`, `hub.switchRole`, `hub.toggleDevMode`); `userId` is a demo user id (`u-alejandra`, `u-miguel`, `u-sarai`, `u-angelica`, `u-client`, `u-dev`), default `u-dev` |
 | `aluzina.devMode` | `on` \| `off` | mirror of `session.devMode` for the pre-paint script and older tooling |
-| `aluzina.data` | JSON `{ seedVersion, tables }` | `MockProvider` (D-016): every entity table (29 since 0009: + `spaces`, `posts`, `filings`, `relations`, `tags`, `clients`, `deliverables`, `tools`); removed and re-seeded by `reset()` or when `SEED_VERSION` changes (4 since 0009) |
+| `aluzina.data` | JSON `{ seedVersion, tables }` | `MockProvider` (D-016): every entity table (36 since 0013: 29 + `leads`, `engagements`, `revisionItems`, `changeOrders`, `purchases`, `siteReports`, `messages`); removed and re-seeded by `reset()` or when `SEED_VERSION` changes (5 since 0013) |
 | `aluzina.views.<userId>` | JSON `{ views: SavedView[], last: { [scope]: ViewState } }` | Work views (D-025): named saved views and the last `{ view, filters, sort, groupBy }` per scope (`all` or a project id), per demo user |
 | `aluzina.tabUser` (sessionStorage) | demo user id | `SessionProvider`: the `?as=` user of this tab, wins over `aluzina.session.userId` on reload so two tabs stay two people (D-04) |
 | `aluzina.presence` | JSON `{ [tabId]: { tabId, userId, route, at } }` | `PresenceProvider` fallback when `BroadcastChannel` is unavailable (D-023) |
@@ -158,6 +158,8 @@ Static JSON written at deploy time next to the thumbnails; the contract a hub to
 
 ### 1.5 Data provider (D-016)
 
+Playbook entities (0013, D-034; vocabulary in `src/domain/playbook.ts`, D-033): `leads` (`status` = `lead-new | lead-qualified | proposal-sent | contracted`, `channel`, `requestedService` / `suggestedService`, `qualification[questionKey]`, `source: public-intake | manual | import`), `engagements` (`projectId`, `serviceCode`, `currentPhaseId`, `checks[\`${phaseId}:${itemIndex}\`]`, `brief`, `status: started | in-progress | delivered | closed`), `revisionItems` (`status: approved | approved-with-adjustments | revision`, `source: client | studio | founder`), `changeOrders` (`status: requested | approved | rejected | executed`), `purchases` (`status: quoted | approved | paid | ordered | received | installed`), `siteReports` (`progress` 0-100, `photoUrls[]`), `messages` (`projectId`, `authorId`, `body`, `at`, `readBy[]`). `projects` gain `serviceCode` (`01 | 02 | 03 | E | 04 | null`) and `pipelineStatus` (15 ids). `SEED_VERSION` 5.
+
 Spaces entities (0009, D-026): `spaces` (tree by `parentId`, `aboutType / aboutId`), `posts`, `filings` (post x space), `relations` (`fromType / fromId / toType / toId / kind`; `fromType` / `toType` are entity names or `roles` / `users`), `tags`, `clients`, `deliverables`, `tools`. Same `list / get / create / update / remove / subscribe` methods; the graph and backlinks are queries over `relations` (`where: { toType, toId }`).
 
 `apps/hub/src/data/provider.ts`, mounted once by `DataContextProvider` in `App.tsx`; implementation today: `MockProvider` (`name: 'mock'`, localStorage `aluzina.data`). Every method is async so Supabase can replace it silently.
@@ -182,13 +184,13 @@ Entities (`src/data/schema/index.ts`, all rows carry `id, created_at, updated_at
 
 ### 1.7 MCP / WebMCP
 
-**None yet.** See section 2.
+**No MCP server yet.** The in-page seam exists: `window.__aluzina.actions.run(id, params)` (section 2.1). A WebMCP tool list is `window.__aluzina.actions.declared` (one entry per route x action: `{ id, code, path, label, intent, permission?, params? }`).
 
 ## 2. Planned
 
-### 2.1 Actions manifest -> WebMCP tools (P-05)
+### 2.1 Actions bus -> WebMCP tools (P-05, D-036)
 
-Pages register `run(id, params)` handlers on an actions bus while mounted; `/#/dev/actions` lists every action with page, permission and whether a handler is live; WebMCP tools are generated one per action (`name = id`, `description = intent`, `inputSchema` from `params`), permission-checked through `can()`. Voice control speaks the same intents.
+**Bus exists (0013)**: `apps/hub/src/actions/bus.ts`: `registerAction(id, handler) => unsubscribe`, `runAction(id, params) => Promise<{ ok, result?, error? }>` (`error: 'not-live'` when no page has the action mounted), `listLiveActions()`, `isActionLive(id)`, `subscribeLiveActions(cb)`, `declaredActions(routes)`, `declaredActionIndex(routes)`; hooks `useRegisterAction(id, handler)`, `useRegisterActions({ id: handler })`, `useLiveActions()` (`src/actions/useRegisterAction.ts`). Published as `window.__aluzina.actions = { run, list, declared }`. Pages register their declared actions while mounted (module contract); `/#/dev/actions` (D-09, pass 0013) lists declared vs live and runs them. **Planned**: WebMCP tools generated one per action (`name = id`, `description = intent`, `inputSchema` from `params`), permission-checked through `can()`; the voice controller speaks the same intents.
 
 ### 2.2 CLI
 
@@ -209,6 +211,7 @@ Realtime and presence exist as the mock seam since 0008 (D-023): `subscribe` alr
 ## 3. Change log of this file
 
 - 2026-09-21 (changelog 0011): archived scraper scripts for the two public sites and how to re-run them (1.4).
+- 2026-09-21 (changelog 0013, foundation): `window.__aluzina.actions` (1.1, 1.7, 2.1: the bus exists), 36 entities and `SEED_VERSION` 5 (1.2), playbook entities and `projects.serviceCode / pipelineStatus` (1.5); routes and actions of the pass 0013 modules land with the integration.
 - 2026-09-21 (changelog 0008): W-01 / W-02 on four surfaces and D-04 in the manifest (45 routes, 400 action entries, 1.1); `aluzina.views.<userId>`, `aluzina.tabUser`, `aluzina.presence` and the two BroadcastChannels (1.2); `work.*`, `dev.openAs`, `dev.resetData`, `ops.openWork` (1.3); `--as` / `--settle` screenshot flags (1.4); `update(…, { basedOn })`, `onConflict`, `setActor`, `sections` / `comments` / `activity`, `SEED_VERSION` 3, `useWork`, `usePresence` (1.5); realtime seam status (2.4).
 - 2026-09-21 (changelog 0007): 33 portal routes in the manifest (A-01..A-07, O-01..O-10, S-01..S-09, G-01..G-07), 148 actions summarised per module (1.3), `suppliers.read`, `tasks.startDate` and `SEED_VERSION` 2 (1.5), bounded hub image wait in `npm run thumbs` (1.4).
 - 2026-09-21 (changelog 0006): seven routes in the manifest with `shell` / `permission`; `?as=<role>` contract (1.1a); `aluzina.session` and `aluzina.data` keys (1.2); portal and dev actions (1.3); DataProvider methods and entities (1.5); thumbnail codes; library as data (2.5).

@@ -34,6 +34,7 @@ supersedes: <file#section or entry id>   (only when it replaces an older entry)
 | `clients.md` | Past clients from Slack (Hoy, Sporti) and current / prospect clients derived from projects; unknowns explicit. |
 | `public-sites.md` | The two public websites (aluzinaa.com: Lovable React SPA, 18 pages; direccion.aluzinaa.com: one static page on Vercel), their pages, CTAs, contact data, fonts and palette, where the source lives, and how Lovable's GitHub sync works. Evidence in `../source/aluzinaa-archive/`. |
 | `social-channels.md` | Aluzina's public social presence (Instagram handle unresolved: `aluzina.espacios` vs `@aluzinaa`), other public pages, the 2026-09-21 homepage snapshot (luminaires, process, stats); `draft` until the founder confirms. |
+| `service-playbook.md` | Full transcription of the founder's Service Delivery Playbook v1.0: five services with every phase / stage and item, client journey, lead intake and qualification, service ladder, governance rules, roles, operational assets, the 15-status pipeline and the KPI layer (mirrored as data in `apps/hub/src/domain/playbook.ts`, D-033). |
 
 Planned: `suppliers.md`, `vocabulary.md` (EN / ES terms used in the studio), `brand.md` (identity rules once Angelica's assets are shared).
 
@@ -51,3 +52,4 @@ Planned: `suppliers.md`, `vocabulary.md` (EN / ES terms used in the studio), `br
 - 2026-09-21: `tools-in-use.md` added (Asana: List, Timeline, Board; prompt 0004, changelog 0008); `roles-and-portals.md` gains `tasks.own.write` for studio and brand and the Work pages W-01 / W-02 on every portal.
 - 2026-09-21: `public-sites.md` added (aluzinaa.com, direccion.aluzinaa.com, Lovable GitHub sync; Slack #website-scraping, prompt 0007, changelog 0011, D-031).
 - 2026-09-21: `social-channels.md` added as `draft` after the first #social-scraping intake (Slack #social-scraping 2026-09-21, Justin Massion; prompt 0008, changelog 0012, D-032).
+- 2026-09-21: `service-playbook.md` added from the PDF Justin shared (ALUZINA Operating System – Service Delivery Playbook v1.0, Alejandra Guerra; prompt 0009, changelog 0013, D-033); `roles-and-portals.md` gains the pass 0013 permissions; `deliverables.md` points at the playbook's status architecture.

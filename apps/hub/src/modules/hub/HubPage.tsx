@@ -15,23 +15,45 @@ export const WEBSITE_URL = 'https://aluzinaa.com';
 /** Deploy-time thumbnails (scripts/thumbnails.mjs, D-011); the build id busts the Pages cache on every deploy. */
 const thumb = (code: string) => `./thumbs/${code}.jpg?v=${__BUILD_ID__}`;
 
+/**
+ * A card on the Product surfaces or Builder and dev tools grids (pass 0013). `route`: live when a built route
+ * with `code` is registered (its path is the href), stub when the route is a stub, planned otherwise, exactly
+ * like portal cards; `fallbackHref` keeps a planned surface reachable outside the app (docs on GitHub).
+ * `static`: always live at `href`. `external`: a site outside the OS.
+ */
 interface SurfaceEntry {
   id: SurfaceId;
   code: string;
   key: string;
-  status: SurfaceStatus;
+  kind: 'route' | 'static' | 'external';
   href?: string;
-  external?: boolean;
+  fallbackHref?: string;
+  /** Route-derived cards that need a session switch first (the client app opens as the demo client). */
+  enterAs?: RoleId;
 }
 
-/** Order of the surface grid. Flip `status` and add `href` when a surface goes live (D-003). */
-const SURFACES: SurfaceEntry[] = [
-  { id: 'spaces', code: 'K-01', key: 'spaces', status: 'live', href: '#/founder/spaces' },
-  { id: 'business-os', code: 'BOS-01', key: 'businessOs', status: 'live', href: './business-os/' },
-  { id: 'website', code: 'P-00', key: 'website', status: 'live', href: WEBSITE_URL, external: true },
-  { id: 'docs', code: 'D-06', key: 'docs', status: 'live', href: `${REPO_URL}/tree/main/docs`, external: true },
-  { id: 'manual', code: 'M-xx', key: 'manual', status: 'planned' },
-  { id: 'dev', code: 'D-02', key: 'dev', status: 'live', href: '#/dev/components' },
+/** Product surfaces: what clients and the team use. */
+const PRODUCT_SURFACES: SurfaceEntry[] = [
+  { id: 'website', code: 'P-00', key: 'website', kind: 'external', href: WEBSITE_URL },
+  { id: 'services', code: 'P-01', key: 'services', kind: 'route' },
+  { id: 'client', code: 'C-01', key: 'client', kind: 'route', enterAs: 'client' },
+  { id: 'manual', code: 'M-01', key: 'manual', kind: 'route' },
+  { id: 'docs', code: 'D-06', key: 'docs', kind: 'route', fallbackHref: `${REPO_URL}/tree/main/docs` },
+  { id: 'spaces', code: 'K-01', key: 'spaces', kind: 'static', href: '#/founder/spaces' },
+  { id: 'business-os', code: 'BOS-01', key: 'businessOs', kind: 'static', href: './business-os/' },
+];
+
+/** Builder and dev tools: how the system is built and checked (D-xx). */
+const TOOL_SURFACES: SurfaceEntry[] = [
+  { id: 'plan', code: 'D-05', key: 'plan', kind: 'route' },
+  { id: 'canvas', code: 'D-07', key: 'canvas', kind: 'route' },
+  { id: 'simulator', code: 'D-08', key: 'simulator', kind: 'route' },
+  { id: 'actions', code: 'D-09', key: 'actions', kind: 'route' },
+  { id: 'tokens', code: 'D-10', key: 'tokens', kind: 'route' },
+  { id: 'testing', code: 'D-11', key: 'testing', kind: 'route' },
+  { id: 'components', code: 'D-02', key: 'components', kind: 'route' },
+  { id: 'specs', code: 'D-03', key: 'specs', kind: 'route' },
+  { id: 'multiuser', code: 'D-04', key: 'multiuser', kind: 'route' },
 ];
 
 interface PortalEntry {
@@ -75,7 +97,48 @@ export function HubPage() {
     const surface = isRoleId(role) ? ROLE_META[role].surface : 'founder';
     return routes.some((r) => r.path === `/${surface}/spaces`) ? `#/${surface}/spaces` : '#/founder/spaces';
   })();
-  const hrefFor = (s: SurfaceEntry) => (s.id === 'spaces' ? spacesHref : s.href);
+
+  interface ResolvedSurface {
+    status: SurfaceStatus;
+    href?: string;
+    external?: boolean;
+    onActivate?: () => void;
+  }
+
+  /** Card state from the manifest (route-derived by page code) or from the static entry; never hard-coded per card. */
+  const resolve = (s: SurfaceEntry): ResolvedSurface => {
+    if (s.kind === 'external') return { status: 'live', href: s.href, external: true };
+    if (s.kind === 'static') return { status: 'live', href: s.id === 'spaces' ? spacesHref : s.href };
+    const route = routes.find((r) => r.code === s.code);
+    if (!route) return s.fallbackHref ? { status: 'live', href: s.fallbackHref, external: true } : { status: 'planned' };
+    const status: SurfaceStatus = route.status === 'built' ? 'live' : 'stub';
+    if (s.enterAs) {
+      const as = s.enterAs;
+      return { status, onActivate: () => { switchUser(as); navigate(route.path); } };
+    }
+    return { status, href: `#${route.path}` };
+  };
+
+  const surfaceCard = (s: SurfaceEntry) => {
+    const r = resolve(s);
+    const cta = r.status === 'planned' ? undefined : t(r.external && s.kind === 'external' ? 'hub.cta.visit' : 'hub.cta.open');
+    return (
+      <li key={s.id} data-surface={s.id} data-surface-status={r.status}>
+        <SurfaceCard
+          code={s.code}
+          title={t(`hub.cards.${s.key}.title`)}
+          description={t(`hub.cards.${s.key}.desc`)}
+          status={r.status}
+          statusLabel={statusLabel(r.status)}
+          href={r.href}
+          external={r.external}
+          onActivate={r.onActivate}
+          ctaLabel={cta}
+          image={r.status === 'live' ? thumb(s.code) : undefined}
+        />
+      </li>
+    );
+  };
 
   const statusLabel = (s: SurfaceStatus) => t(s === 'live' ? 'hub.status.live' : s === 'stub' ? 'hub.status.stub' : 'hub.status.planned');
 
@@ -125,25 +188,18 @@ export function HubPage() {
 
           <section className="hub-group" aria-labelledby="hub-surfaces">
             <h2 id="hub-surfaces" className="hub-group__title">
-              {t('hub.section.surfaces')}
+              {t('hub.section.product')}
             </h2>
-            <ul className="hub-grid">
-              {SURFACES.map((s) => (
-                <li key={s.id} data-surface={s.id}>
-                  <SurfaceCard
-                    code={s.code}
-                    title={t(`hub.cards.${s.key}.title`)}
-                    description={t(`hub.cards.${s.key}.desc`)}
-                    status={s.status}
-                    statusLabel={statusLabel(s.status)}
-                    href={hrefFor(s)}
-                    external={s.external}
-                    ctaLabel={s.status === 'live' ? t(s.id === 'website' ? 'hub.cta.visit' : 'hub.cta.open') : undefined}
-                    image={s.status === 'live' ? thumb(s.code) : undefined}
-                  />
-                </li>
-              ))}
-            </ul>
+            <p className="hub-group__desc">{t('hub.section.productDesc')}</p>
+            <ul className="hub-grid">{PRODUCT_SURFACES.map(surfaceCard)}</ul>
+          </section>
+
+          <section className="hub-group" aria-labelledby="hub-tools">
+            <h2 id="hub-tools" className="hub-group__title">
+              {t('hub.section.tools')}
+            </h2>
+            <p className="hub-group__desc">{t('hub.section.toolsDesc')}</p>
+            <ul className="hub-grid">{TOOL_SURFACES.map(surfaceCard)}</ul>
           </section>
 
           <section className="hub-group" aria-labelledby="hub-prototype-pages">

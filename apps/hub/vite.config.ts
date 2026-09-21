@@ -1,6 +1,10 @@
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+
+const repoRoot = fileURLToPath(new URL('../../', import.meta.url));
+const docsDir = fileURLToPath(new URL('../../docs', import.meta.url));
 
 const rootPkg = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf8')) as { version: string };
 
@@ -9,6 +13,9 @@ const rootPkg = JSON.parse(readFileSync(new URL('../../package.json', import.met
 export default defineConfig({
   plugins: [react()],
   base: './',
+  // `@docs/*` imports repo docs into the app (docs/plan/plan.json for the PM viewer, D-037); mirrored in tsconfig `paths`.
+  resolve: { alias: { '@docs': docsDir } },
+  server: { fs: { allow: [repoRoot] } },
   define: {
     __APP_VERSION__: JSON.stringify(rootPkg.version),
     __BUILD_ID__: JSON.stringify(Date.now().toString(36)),

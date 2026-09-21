@@ -1,3 +1,4 @@
+import type { PipelineStatusId, ServiceCode } from '../../domain/playbook';
 import type { BaseRow, CentsCop, Id, ISODate } from './base';
 
 export type ProjectType = 'residential' | 'commercial' | 'hospitality' | 'wellness' | 'lighting-product';
@@ -11,7 +12,12 @@ export interface Project extends BaseRow {
   client: string;
   clientUserId: Id | null;
   type: ProjectType;
+  /** Older seven-phase vocabulary, kept for the Work views until they migrate to `pipelineStatus` (D-033). */
   phase: ProjectPhase;
+  /** The playbook service being delivered (D-033); null for internal projects (own collection). */
+  serviceCode: ServiceCode | null;
+  /** Position in the 15-status architecture (`PIPELINE_STATUSES`, from `contracted` on). */
+  pipelineStatus: PipelineStatusId;
   creativeDirection: CreativeDirectionStatus;
   approval: ApprovalStatus;
   leadDesignerId: Id;

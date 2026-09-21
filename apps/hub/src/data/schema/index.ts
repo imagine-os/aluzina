@@ -1,6 +1,7 @@
 import type { BrandAsset, Competition, Presentation, Revision } from './brand';
 import type { Delivery, Document, Payment, Quote, Supplier } from './operations';
 import type { Activity, Alert, Comment, Meeting, Project, Section, Task } from './projects';
+import type { ChangeOrder, Engagement, Lead, Message, Purchase, RevisionItem, SiteReport } from './services';
 import type { Client, Deliverable, Filing, Post, Relation, Space, Tag, Tool } from './spaces';
 import type { ConsistencyCheck, Material, Reference, RenderPack, Schedule } from './studio';
 
@@ -8,6 +9,7 @@ export * from './base';
 export * from './brand';
 export * from './operations';
 export * from './projects';
+export * from './services';
 export * from './spaces';
 export * from './studio';
 
@@ -42,6 +44,13 @@ export interface EntityMap {
   clients: Client;
   deliverables: Deliverable;
   tools: Tool;
+  leads: Lead;
+  engagements: Engagement;
+  revisionItems: RevisionItem;
+  changeOrders: ChangeOrder;
+  purchases: Purchase;
+  siteReports: SiteReport;
+  messages: Message;
 }
 
 export type EntityName = keyof EntityMap;
@@ -76,4 +85,11 @@ export const ENTITIES: readonly EntityName[] = [
   'clients',
   'deliverables',
   'tools',
+  'leads',
+  'engagements',
+  'revisionItems',
+  'changeOrders',
+  'purchases',
+  'siteReports',
+  'messages',
 ];

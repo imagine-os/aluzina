@@ -13,7 +13,7 @@ export const SAMPLE_PEOPLE: WorkPerson[] = [
 ];
 
 export const SAMPLE_PROJECTS: Project[] = [
-  { ...base, id: 'prj-laureles', name: 'Casa Laureles', client: 'Familia Restrepo', clientUserId: null, type: 'residential', phase: 'development', creativeDirection: 'set', approval: 'in-check', leadDesignerId: 'u-sarai', budgetCop: 185_000_000, startDate: '2026-07-06', dueDate: '2026-12-15', location: 'Laureles', summary: '' },
+  { ...base, id: 'prj-laureles', name: 'Casa Laureles', client: 'Familia Restrepo', clientUserId: null, type: 'residential', phase: 'development', serviceCode: '03', pipelineStatus: 'design-development', creativeDirection: 'set', approval: 'in-check', leadDesignerId: 'u-sarai', budgetCop: 185_000_000, startDate: '2026-07-06', dueDate: '2026-12-15', location: 'Laureles', summary: '' },
 ];
 
 export const SAMPLE_SECTIONS: Section[] = [

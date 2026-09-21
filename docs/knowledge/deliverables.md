@@ -45,6 +45,16 @@ The catalog is **data**: `deliverables` rows in `apps/hub/src/data/seed/spaces.t
 
 Dependencies seeded as relations (`depends-on`): contract -> proposal; furniture selection -> furniture schedule; lighting plan -> lighting concept; purchase orders -> budget and quote comparison; handover package -> punch list; final presentation -> render pack.
 
+## Status architecture (pointer)
+
+```
+status: current
+since: 2026-09-21
+source: service-playbook.md (prompt 0009)
+```
+
+The founder's playbook defines the service phases and stages that produce these deliverables (01 Creative Digital Consultation, 02 In-Person Consultation, 03 Comprehensive Interior Design with 19 stages, E Execution, 04 Interior Styling) and a 15-status pipeline (`LEAD - NEW` … `FOLLOW-UP`, ids in `service-playbook.md`). The `phase` column here keeps the older seven phases until the catalog is re-keyed to the playbook stages; the final delivery lists per service (01 phase 8, 02 phase 8, 03 stage 19, E stage 10, 04 phase 8) are the authoritative deliverable sets per service.
+
 ## Unknown
 
 - `_unknown_`: which deliverables the founder actually hands over per project type today, their real durations, and whether lighting deliverables are separate documents or part of the drawings set.
@@ -53,3 +63,4 @@ Dependencies seeded as relations (`depends-on`): contract -> proposal; furniture
 ## Change log
 
 - 2026-09-21: created from Justin's four channels plus 21 proposed types; 25 rows seeded, K-05 renders them (prompt 0005, changelog 0009, D-029).
+- 2026-09-21: pointer to the playbook's status architecture and per-service delivery lists (`service-playbook.md`, prompt 0009, changelog 0013).

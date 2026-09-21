@@ -57,6 +57,41 @@ export const strings: StringTable = {
     es: 'abre la app para clientes: sus proyectos, propuestas y PDFs por revisar, aprobaciones, mensajes, estado de pagos; pensada para el celular',
   },
 
+  'hub.section.product': { en: 'Product surfaces', es: 'Superficies del producto' },
+  'hub.section.productDesc': {
+    en: 'What clients and the team use: the public site and the services intake, the client app, the manual, the docs, Spaces and the prototype.',
+    es: 'Lo que usan clientes y equipo: el sitio público y el ingreso de servicios, la app del cliente, el manual, la documentación, Espacios y el prototipo.',
+  },
+  'hub.section.tools': { en: 'Builder and dev tools', es: 'Herramientas de construcción y desarrollo' },
+  'hub.section.toolsDesc': {
+    en: 'How the system is built and checked: plan viewer, canvas, demo simulator, actions, tokens, testing hub, components, specs, multiuser.',
+    es: 'Cómo se construye y se verifica el sistema: visor del plan, lienzo, simulador, acciones, tokens, centro de pruebas, componentes, especificaciones, multiusuario.',
+  },
+  'hub.cards.website.title': { en: 'Public website', es: 'Sitio web público' },
+  'hub.cards.website.desc': {
+    en: 'aluzinaa.com, the studio site built in Lovable: interior design, emotional lighting and neurointeriorism in Medellín',
+    es: 'aluzinaa.com, el sitio del estudio hecho en Lovable: diseño interior, iluminación emocional y neurointeriorismo en Medellín',
+  },
+  'hub.cards.services.title': { en: 'Services and intake', es: 'Servicios e ingreso' },
+  'hub.cards.services.desc': {
+    en: 'the five ALUZINA services from the playbook (digital and in-person consultation, comprehensive design, execution, styling) and the intake form that opens a lead in the pipeline',
+    es: 'los cinco servicios ALUZINA del playbook (consultoría digital y presencial, diseño integral, ejecución, styling) y el formulario de ingreso que abre un lead en el pipeline',
+  },
+  'hub.cards.client.title': { en: 'Client app', es: 'App del cliente' },
+  'hub.cards.client.desc': {
+    en: 'phone-first app for the client: their project and its progress, the revision matrix to approve, messages with the studio, payment status',
+    es: 'app pensada para el celular del cliente: su proyecto y su avance, la matriz de revisión por aprobar, mensajes con el estudio, estado de pagos',
+  },
+  'hub.cards.manual.title': { en: 'Ops manual', es: 'Manual de operaciones' },
+  'hub.cards.manual.desc': {
+    en: 'the bilingual operations manual: the service playbook phase by phase, governance rules, roles and how each portal runs them',
+    es: 'el manual de operaciones bilingüe: el playbook de servicios fase por fase, reglas de gobierno, roles y cómo cada portal las ejecuta',
+  },
+  'hub.cards.docs.title': { en: 'Docs', es: 'Documentación' },
+  'hub.cards.docs.desc': {
+    en: 'the repository docs in the app: principles, brief, build plan, decisions, kanban, prompts, changelog, knowledge base and page docs',
+    es: 'la documentación del repositorio dentro de la app: principios, brief, plan de construcción, decisiones, kanban, prompts, changelog, base de conocimiento y fichas de página',
+  },
   'hub.cards.spaces.title': { en: 'Spaces', es: 'Espacios' },
   'hub.cards.spaces.desc': {
     en: 'The Hub\'s own organizer replacing the Slack sidebar: spaces without depth limit, posts filed in many places at once, relations between anything, a graph and the catalogs (deliverables, clients, tools, roles).',
@@ -67,25 +102,50 @@ export const strings: StringTable = {
     en: 'the Claude Design prototype of the Aluzina operations system: cockpit, stations, work views, QC, media, design system, docs; EN/ES toggle inside',
     es: 'el prototipo de Claude Design del sistema operativo de Aluzina: cabina, estaciones, vistas de trabajo, QC, medios, sistema de diseño, docs; con cambio EN/ES adentro',
   },
-  'hub.cards.website.title': { en: 'Public website', es: 'Sitio web público' },
-  'hub.cards.website.desc': {
-    en: 'aluzinaa.com, the studio site built in Lovable: interior design, emotional lighting and neurointeriorism in Medellín',
-    es: 'aluzinaa.com, el sitio del estudio hecho en Lovable: diseño interior, iluminación emocional y neurointeriorismo en Medellín',
+  'hub.cards.plan.title': { en: 'Plan viewer', es: 'Visor del plan' },
+  'hub.cards.plan.desc': {
+    en: 'the development plan from docs/plan/plan.json as kanban, list and timeline with dependencies; tasks bound by dependencies, not dates, with the model per task',
+    es: 'el plan de desarrollo de docs/plan/plan.json como kanban, lista y cronograma con dependencias; tareas atadas a dependencias, no a fechas, con el modelo por tarea',
   },
-  'hub.cards.docs.title': { en: 'Docs', es: 'Documentación' },
-  'hub.cards.docs.desc': {
-    en: 'the repository docs: principles, brief, build plan, decisions, kanban, prompts, changelog and page docs',
-    es: 'la documentación del repositorio: principios, brief, plan de construcción, decisiones, kanban, prompts, changelog y fichas de página',
+  'hub.cards.canvas.title': { en: 'Canvas', es: 'Lienzo' },
+  'hub.cards.canvas.desc': {
+    en: 'every page of the system laid out on one zoomable canvas, grouped by surface, with its code, status and thumbnail',
+    es: 'todas las páginas del sistema sobre un lienzo con zoom, agrupadas por superficie, con su código, estado y miniatura',
   },
-  'hub.cards.manual.title': { en: 'Ops manual', es: 'Manual de operaciones' },
-  'hub.cards.manual.desc': {
-    en: 'opens the bilingual operations manual for running the studio in person and in software',
-    es: 'abre el manual de operaciones bilingüe para dirigir el estudio en persona y en el software',
+  'hub.cards.simulator.title': { en: 'Demo simulator', es: 'Simulador de demo' },
+  'hub.cards.simulator.desc': {
+    en: 'phone and desktop frames side by side showing any page as any role, for demos and for checking the matrix',
+    es: 'marcos de celular y escritorio lado a lado mostrando cualquier página como cualquier rol, para demos y para revisar la matriz',
   },
-  'hub.cards.dev.title': { en: 'Dev tools', es: 'Herramientas de desarrollo' },
-  'hub.cards.dev.desc': {
-    en: 'the builder tools: component library (D-02) and page specs (D-03) today; tokens, actions, plan viewer, canvas and demo simulator next',
-    es: 'las herramientas de construcción: biblioteca de componentes (D-02) y especificaciones de página (D-03) hoy; tokens, acciones, visor del plan, lienzo y simulador después',
+  'hub.cards.actions.title': { en: 'Actions', es: 'Acciones' },
+  'hub.cards.actions.desc': {
+    en: 'the actions registry: every declared action with page, intent, permission and params, whether a handler is live, and a runner (the WebMCP and voice vocabulary)',
+    es: 'el registro de acciones: cada acción declarada con página, intención, permiso y parámetros, si tiene un manejador activo, y un ejecutor (el vocabulario de WebMCP y voz)',
+  },
+  'hub.cards.tokens.title': { en: 'Tokens', es: 'Tokens' },
+  'hub.cards.tokens.desc': {
+    en: 'the design tokens as data: colours, type, spacing, radii, shadows and the scale bands, in light and dark',
+    es: 'los tokens de diseño como datos: colores, tipografía, espaciado, radios, sombras y las bandas de escala, en claro y oscuro',
+  },
+  'hub.cards.testing.title': { en: 'Testing hub', es: 'Centro de pruebas' },
+  'hub.cards.testing.desc': {
+    en: 'the QA view: responsive matrix per page, placeholder counts, checked widths, strings coverage and the smoke results',
+    es: 'la vista de QA: matriz responsive por página, conteo de placeholders, anchos verificados, cobertura de textos y resultados del smoke',
+  },
+  'hub.cards.components.title': { en: 'Components', es: 'Componentes' },
+  'hub.cards.components.desc': {
+    en: 'the component library rendered from its metas with a live example per component (atom, molecule, organism, template)',
+    es: 'la biblioteca de componentes renderizada desde sus metas con un ejemplo vivo por componente (átomo, molécula, organismo, plantilla)',
+  },
+  'hub.cards.specs.title': { en: 'Page specs', es: 'Especificaciones de página' },
+  'hub.cards.specs.desc': {
+    en: 'every page spec: purpose, layout, data tables, roles, logic, components, actions, checked widths and completeness',
+    es: 'cada especificación de página: propósito, layout, tablas, roles, lógica, componentes, acciones, anchos verificados y completitud',
+  },
+  'hub.cards.multiuser.title': { en: 'Multiuser', es: 'Multiusuario' },
+  'hub.cards.multiuser.desc': {
+    en: 'open the system as two people in two tabs and watch realtime, presence and conflicts happen',
+    es: 'abre el sistema como dos personas en dos pestañas y observa el tiempo real, la presencia y los conflictos',
   },
 
   'hub.section.prototypePages': { en: 'Prototype pages', es: 'Páginas del prototipo' },

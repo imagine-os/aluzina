@@ -11,6 +11,9 @@ export const STATUS_TONES: Record<string, Tone> = {
   overdue: 'danger', rejected: 'danger', urgent: 'danger',
   // Spaces catalogs (K-05): posts, deliverables, tools, clients
   published: 'success', archived: 'neutral', defined: 'neutral', 'template-ready': 'accent', automated: 'success', 'in-use': 'accent', evaluating: 'neutral', 'to-replace': 'warning', replaced: 'success', planned: 'neutral', past: 'neutral', prospect: 'info',
+  // Service playbook (D-033): pipeline statuses, validation, purchases, change orders, engagements
+  'lead-new': 'neutral', 'lead-qualified': 'info', 'proposal-sent': 'accent', contracted: 'success', concept: 'accent', 'design-development': 'accent', 'client-review': 'warning', procurement: 'accent', 'in-construction': 'accent', 'punch-list': 'warning', closed: 'neutral', 'follow-up': 'info',
+  'approved-with-adjustments': 'warning', revision: 'danger', quoted: 'neutral', ordered: 'accent', installed: 'success', executed: 'success', started: 'neutral',
 };
 
 export interface StatusPillProps {

@@ -1,0 +1,867 @@
+{
+  "version": "0.8.0",
+  "updatedAt": "2026-09-21",
+  "source": "docs/build-plan.md (steps 0-13, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
+  "statuses": [
+    "done",
+    "doing",
+    "next",
+    "backlog"
+  ],
+  "tasks": [
+    {
+      "id": "step-0",
+      "title": "Scaffold + Pages: monorepo, HUB-01, tokens, i18n, Placeholder, dev mode, actions manifest, Pages workflow, docs tree, live screenshots",
+      "step": "0",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "HUB-01"
+      ],
+      "dependsOn": [],
+      "changelog": "0001"
+    },
+    {
+      "id": "step-1",
+      "title": "Ingest the Claude Design export into apps/business-os, mount under the hub, record its structure",
+      "step": "1",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "BOS-01",
+        "BOS-02",
+        "BOS-03",
+        "BOS-04",
+        "BOS-05",
+        "BOS-06"
+      ],
+      "dependsOn": [
+        "step-0"
+      ],
+      "changelog": "0003"
+    },
+    {
+      "id": "step-2",
+      "title": "Audit the export against P-01..P-15; write docs/reference/business-os-audit.md",
+      "step": "2",
+      "status": "next",
+      "model": "Fable 5.1, Sonnet 5",
+      "codes": [
+        "BOS-01"
+      ],
+      "dependsOn": [
+        "step-1"
+      ]
+    },
+    {
+      "id": "step-3",
+      "title": "Module split + PageSpecs + page docs + screenshots for the export; qa:responsive and strings-coverage check",
+      "step": "3",
+      "status": "backlog",
+      "model": "Opus 5, Sonnet 5, Fable 5.1",
+      "codes": [
+        "BOS-01"
+      ],
+      "dependsOn": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "step-4",
+      "title": "Hub tools: spec inspector, demo simulator, canvas, plan viewer, /dev/actions, /dev/tokens (in 13)",
+      "step": "4",
+      "status": "doing",
+      "model": "Fable 5.1, Opus 5",
+      "codes": [
+        "D-05",
+        "D-07",
+        "D-08",
+        "D-09",
+        "D-10"
+      ],
+      "dependsOn": [
+        "step-9a"
+      ]
+    },
+    {
+      "id": "step-5",
+      "title": "Surfaces: client app C-xx, in-app docs, ops manual, client proposal view, public P-xx (in 13)",
+      "step": "5",
+      "status": "doing",
+      "model": "Opus 5, Fable 5.1",
+      "codes": [
+        "C-01",
+        "M-01",
+        "D-06",
+        "P-01"
+      ],
+      "dependsOn": [
+        "step-9a",
+        "step-12"
+      ]
+    },
+    {
+      "id": "step-6",
+      "title": "Spanish fill pass over every strings table",
+      "step": "6",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [],
+      "dependsOn": [
+        "step-9b"
+      ]
+    },
+    {
+      "id": "step-7",
+      "title": "Data provider seam (rest): feedback table + FeedbackButton, WebMCP generation from the manifest",
+      "step": "7",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [],
+      "dependsOn": [
+        "step-9a",
+        "pass-0013-foundation"
+      ]
+    },
+    {
+      "id": "step-8",
+      "title": "Multiplayer / realtime: plan doc, version column, offline queue, realtime subscriptions",
+      "step": "8",
+      "status": "backlog",
+      "model": "Fable 5.1, Opus 5",
+      "codes": [],
+      "dependsOn": [
+        "step-7",
+        "step-10"
+      ]
+    },
+    {
+      "id": "step-9a",
+      "title": "Portal foundation: auth, registry, shells, DataProvider + MockProvider, component library, D-02 / D-03, hub Portals",
+      "step": "9a",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "HUB-01",
+        "D-02",
+        "D-03",
+        "A-01",
+        "O-01",
+        "S-01",
+        "G-01"
+      ],
+      "dependsOn": [
+        "step-0"
+      ],
+      "changelog": "0006"
+    },
+    {
+      "id": "step-9b",
+      "title": "Four portal modules in parallel: Founder A-xx, Operations O-xx, Studio S-xx, Brand G-xx",
+      "step": "9b",
+      "status": "done",
+      "model": "Opus 5",
+      "codes": [
+        "A-01",
+        "O-01",
+        "S-01",
+        "G-01"
+      ],
+      "dependsOn": [
+        "step-9a"
+      ],
+      "changelog": "0007"
+    },
+    {
+      "id": "step-9c",
+      "title": "Integration of the portal pass: Placeholder wrapper, shared fixes, smoke over 36 routes, live screenshots",
+      "step": "9c",
+      "status": "done",
+      "model": "Fable 5.1, Sonnet 5",
+      "codes": [
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "step-9b"
+      ],
+      "changelog": "0007"
+    },
+    {
+      "id": "step-10",
+      "title": "Asana-style Work views W-01 / W-02, sections / comments / activity, cross-tab realtime and presence, D-04",
+      "step": "10",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "W-01",
+        "W-02",
+        "D-04"
+      ],
+      "dependsOn": [
+        "step-9c"
+      ],
+      "changelog": "0008"
+    },
+    {
+      "id": "step-11",
+      "title": "Client portal + realtime provider: Supabase Realtime / Presence adapters, version column, views table, pointer drag",
+      "step": "11",
+      "status": "backlog",
+      "model": "Opus 5, Fable 5.1",
+      "codes": [
+        "C-01",
+        "W-01",
+        "W-02"
+      ],
+      "dependsOn": [
+        "step-10",
+        "pass-0013-client"
+      ]
+    },
+    {
+      "id": "step-12",
+      "title": "Spaces: the Hub's relational organizer replacing the Slack sidebar, K-01..K-06, catalogs, knowledge docs",
+      "step": "12",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "K-01",
+        "K-02",
+        "K-03",
+        "K-04",
+        "K-05",
+        "K-06",
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "step-10"
+      ],
+      "changelog": "0009"
+    },
+    {
+      "id": "qa-0010",
+      "title": "QA fixes: 44px targets and 16px fonts from the Work views matrix",
+      "step": "10",
+      "status": "done",
+      "model": "Sonnet 5",
+      "codes": [
+        "W-01",
+        "W-02"
+      ],
+      "dependsOn": [
+        "step-10"
+      ],
+      "changelog": "0010"
+    },
+    {
+      "id": "step-13",
+      "title": "Pass 0013: the service playbook into the product + the Hub bundle (foundation, seven modules, integration, QA)",
+      "step": "13",
+      "status": "doing",
+      "model": "Fable 5.1, Opus 5, Sonnet 5",
+      "codes": [
+        "P-01",
+        "C-01",
+        "M-01",
+        "D-05",
+        "D-06",
+        "D-07",
+        "D-08",
+        "D-09",
+        "D-10",
+        "D-11",
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "step-12"
+      ]
+    },
+    {
+      "id": "pass-0013-foundation",
+      "title": "Foundation: prompt 0009, knowledge/service-playbook.md, domain/playbook.ts, entities leads / engagements / revisionItems / changeOrders / purchases / siteReports / messages, permissions, nav groups, actions bus, plan.json, hub cards, D-033..D-037",
+      "step": "13",
+      "status": "doing",
+      "model": "Fable 5.1",
+      "codes": [
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "step-12"
+      ],
+      "owner": "foundation"
+    },
+    {
+      "id": "pass-0013-public",
+      "title": "Module public: services pages from SERVICES + intake flow writing leads (P-01..)",
+      "step": "13",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "P-01"
+      ],
+      "dependsOn": [
+        "pass-0013-foundation"
+      ],
+      "owner": "public"
+    },
+    {
+      "id": "pass-0013-client",
+      "title": "Module client: client app on PhoneShell (own projects, engagement progress, revision matrix, messages, payments read) C-01..",
+      "step": "13",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "C-01"
+      ],
+      "dependsOn": [
+        "pass-0013-foundation"
+      ],
+      "owner": "client"
+    },
+    {
+      "id": "pass-0013-crm",
+      "title": "CRM pipeline on the playbook statuses + studio revision matrix and service checklists (founder / ops / studio pages)",
+      "step": "13",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "A-03",
+        "S-02"
+      ],
+      "dependsOn": [
+        "pass-0013-foundation"
+      ],
+      "owner": "crm"
+    },
+    {
+      "id": "pass-0013-manual",
+      "title": "Module manual: bilingual ops manual from the playbook (M-01..)",
+      "step": "13",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "M-01"
+      ],
+      "dependsOn": [
+        "pass-0013-foundation"
+      ],
+      "owner": "manual"
+    },
+    {
+      "id": "pass-0013-docs",
+      "title": "Module docs: in-app docs viewer over the repo docs (D-06)",
+      "step": "13",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "D-06"
+      ],
+      "dependsOn": [
+        "pass-0013-foundation"
+      ],
+      "owner": "docs"
+    },
+    {
+      "id": "pass-0013-devtools",
+      "title": "Dev tools: plan viewer D-05 (kanban / list / timeline from plan.json), canvas D-07, demo simulator D-08, actions D-09, tokens D-10",
+      "step": "13",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "D-05",
+        "D-07",
+        "D-08",
+        "D-09",
+        "D-10"
+      ],
+      "dependsOn": [
+        "pass-0013-foundation"
+      ],
+      "owner": "devtools"
+    },
+    {
+      "id": "pass-0013-qa",
+      "title": "Module qa: testing hub D-11 (QA matrix, smoke, placeholder counts)",
+      "step": "13",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "D-11"
+      ],
+      "dependsOn": [
+        "pass-0013-foundation"
+      ],
+      "owner": "qa"
+    },
+    {
+      "id": "pass-0013-integration",
+      "title": "Integration: merge _pending drafts, shared fixes, changelog 0013, version 0.8.0, build green, deploy",
+      "step": "13",
+      "status": "next",
+      "model": "Fable 5.1",
+      "codes": [
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "pass-0013-public",
+        "pass-0013-client",
+        "pass-0013-crm",
+        "pass-0013-manual",
+        "pass-0013-docs",
+        "pass-0013-devtools",
+        "pass-0013-qa"
+      ],
+      "owner": "integration"
+    },
+    {
+      "id": "pass-0013-screenshots",
+      "title": "Live screenshots of the new pages at 390 / 1280 / 1920 EN + ES",
+      "step": "13",
+      "status": "next",
+      "model": "Sonnet 5",
+      "codes": [
+        "P-01",
+        "C-01",
+        "M-01",
+        "D-05",
+        "D-06",
+        "D-07",
+        "D-08",
+        "D-09",
+        "D-10",
+        "D-11"
+      ],
+      "dependsOn": [
+        "pass-0013-integration"
+      ]
+    },
+    {
+      "id": "pass-0013-spanish",
+      "title": "Spanish fill over the new strings tables and the playbook translations",
+      "step": "13",
+      "status": "next",
+      "model": "Sonnet 5",
+      "codes": [],
+      "dependsOn": [
+        "pass-0013-integration"
+      ]
+    },
+    {
+      "id": "R1",
+      "title": "Comms: channels and DMs on Spaces, presence, mentions, notifications; transport integrations later",
+      "step": "R1",
+      "status": "backlog",
+      "model": "Fable 5.1, Opus 5",
+      "codes": [
+        "K-01"
+      ],
+      "dependsOn": [
+        "step-12",
+        "step-11"
+      ]
+    },
+    {
+      "id": "R2",
+      "title": "CRM: clients + leads, pipeline stages, follow-ups; extends A-06 and K-05 Clients (pipeline lands in 13)",
+      "step": "R2",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "A-03",
+        "A-06",
+        "K-05"
+      ],
+      "dependsOn": [
+        "step-12",
+        "pass-0013-crm"
+      ]
+    },
+    {
+      "id": "R3",
+      "title": "Documents and e-sign: templates as first-class assets, generation from data, approval chain, versions",
+      "step": "R3",
+      "status": "backlog",
+      "model": "Fable 5.1, Opus 5",
+      "codes": [
+        "O-08",
+        "A-04"
+      ],
+      "dependsOn": [
+        "step-12",
+        "R2"
+      ]
+    },
+    {
+      "id": "R4",
+      "title": "Drafting / CAD viewer and render pipeline (S-05, S-07)",
+      "step": "R4",
+      "status": "backlog",
+      "model": "Fable 5.1, Opus 5",
+      "codes": [
+        "S-05",
+        "S-07"
+      ],
+      "dependsOn": [
+        "step-12"
+      ]
+    },
+    {
+      "id": "R5",
+      "title": "Research assistant over the actions registry and the knowledge base",
+      "step": "R5",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [],
+      "dependsOn": [
+        "pass-0013-foundation",
+        "step-12"
+      ]
+    },
+    {
+      "id": "R6",
+      "title": "Finance: invoices, payments, who-owes-what, payroll (Stripe)",
+      "step": "R6",
+      "status": "backlog",
+      "model": "Fable 5.1, Opus 5",
+      "codes": [
+        "O-07"
+      ],
+      "dependsOn": [
+        "R2"
+      ]
+    },
+    {
+      "id": "R7",
+      "title": "Public website builder: pages from Spaces posts + case studies, brand kit tokens, publish to Pages",
+      "step": "R7",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "P-01"
+      ],
+      "dependsOn": [
+        "step-12",
+        "R3",
+        "pass-0013-public"
+      ]
+    },
+    {
+      "id": "R8",
+      "title": "Marketing production and scheduler: content calendar, review through G-06, scheduler, metrics",
+      "step": "R8",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "G-06"
+      ],
+      "dependsOn": [
+        "R1",
+        "R7"
+      ]
+    },
+    {
+      "id": "R9",
+      "title": "Integrations layer: Slack export, Asana, Google Drive / Calendar behind one seam",
+      "step": "R9",
+      "status": "backlog",
+      "model": "Fable 5.1, Sonnet 5",
+      "codes": [
+        "K-06"
+      ],
+      "dependsOn": [
+        "step-12",
+        "R1"
+      ]
+    },
+    {
+      "id": "R10",
+      "title": "Archive intake: website, social and Drive ingestion into Spaces posts + repo files",
+      "step": "R10",
+      "status": "backlog",
+      "model": "Fable 5.1, Sonnet 5",
+      "codes": [
+        "K-06"
+      ],
+      "dependsOn": [
+        "step-12"
+      ]
+    },
+    {
+      "id": "kb-spaces-followups",
+      "title": "Spaces follow-ups: Slack export import behind K-06, move / reorder UI, tag editor, visibility enforcement, post versions, file posts, 4K captures",
+      "step": "12",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "K-06",
+        "K-02",
+        "K-04"
+      ],
+      "dependsOn": [
+        "step-12"
+      ]
+    },
+    {
+      "id": "kb-marketing-portal",
+      "title": "Marketing portal for the marketing role (today lands on /brand/spaces)",
+      "step": "5",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "G-01"
+      ],
+      "dependsOn": [
+        "step-12"
+      ]
+    },
+    {
+      "id": "kb-d020-data",
+      "title": "D-020 data layer (rest): partnerships, products, goals, followUps, comparisonGroups, scheduleItems, measurements, images + file storage; image url fields",
+      "step": "7",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [],
+      "dependsOn": [
+        "step-9c"
+      ]
+    },
+    {
+      "id": "kb-work-followups",
+      "title": "Step 11 Work follow-ups: pointer drag, section management UI, views table, 4K and dark captures, Open in Work links",
+      "step": "11",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "W-01",
+        "W-02"
+      ],
+      "dependsOn": [
+        "step-10"
+      ]
+    },
+    {
+      "id": "kb-alert-generation",
+      "title": "D-020 alert generation: one rule raising / resolving alerts from payments, quotes, deliveries and competition deadlines",
+      "step": "9c",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "O-09"
+      ],
+      "dependsOn": [
+        "step-9c"
+      ]
+    },
+    {
+      "id": "kb-seeds-more",
+      "title": "D-020 seeds: more plan / spec documents; competition rows when the 2027 list arrives",
+      "step": "9c",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "O-08",
+        "G-02"
+      ],
+      "dependsOn": [
+        "step-9c"
+      ]
+    },
+    {
+      "id": "kb-request-flow",
+      "title": "D-020 product: shared request flow into the brand queue, report templates for O-10, code-split per module",
+      "step": "9c",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "G-06",
+        "O-10"
+      ],
+      "dependsOn": [
+        "step-9c"
+      ]
+    },
+    {
+      "id": "kb-portal-polish",
+      "title": "Portal polish: 1920 / 2560 / 3840 captures of every portal page, dark pass, checkedAt to the full matrix",
+      "step": "9c",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "A-01",
+        "O-01",
+        "S-01",
+        "G-01"
+      ],
+      "dependsOn": [
+        "step-9c"
+      ]
+    },
+    {
+      "id": "kb-media-budget",
+      "title": "Media budget: convert apps/business-os world PNGs (93 MB) to webp once the audit says which are kept",
+      "step": "2",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "BOS-01"
+      ],
+      "dependsOn": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "kb-alert-pattern",
+      "title": "Alert pattern across portals: before-urgent + deadlines from alerts with a lead-time rule, per role",
+      "step": "9c",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "O-09",
+        "G-02"
+      ],
+      "dependsOn": [
+        "step-9c"
+      ]
+    },
+    {
+      "id": "kb-data-version",
+      "title": "Data: version column + conflict UI, CompanyOsProvider stub, Supabase adapter behind DataProvider",
+      "step": "8",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [],
+      "dependsOn": [
+        "step-10"
+      ]
+    },
+    {
+      "id": "kb-library-dark",
+      "title": "Component library follow-ups: dark-theme pass over every example, FeedbackButton (P-08)",
+      "step": "7",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "D-02"
+      ],
+      "dependsOn": [
+        "step-9a"
+      ]
+    },
+    {
+      "id": "kb-knowledge-gaps",
+      "title": "Knowledge: competitions list, team surnames and languages, Hoy confirmation, Sporti, client contacts, deliverable durations",
+      "step": "12",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [],
+      "dependsOn": [
+        "step-12"
+      ]
+    },
+    {
+      "id": "kb-thumbs-dark",
+      "title": "Hub thumbnails: dark variant and 2x tiles for 4K",
+      "step": "0",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "step-0"
+      ]
+    },
+    {
+      "id": "kb-await-lang",
+      "title": "Awaiting Justin: default language en vs es (D-004)",
+      "step": "0",
+      "status": "backlog",
+      "model": "Justin",
+      "codes": [],
+      "dependsOn": []
+    },
+    {
+      "id": "kb-await-public",
+      "title": "Awaiting Justin: does the public site join the OS as P-xx or stay linked (P-00)? Interim: services + intake ship inside the OS (D-035)",
+      "step": "5",
+      "status": "backlog",
+      "model": "Justin",
+      "codes": [
+        "P-00",
+        "P-01"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "kb-screenshots-0007",
+      "title": "Live screenshots of the 33 portal pages at 390 / 1280 EN (+ 1280 ES per dashboard) after the 0007 deploy",
+      "step": "9c",
+      "status": "doing",
+      "model": "Fable 5.1",
+      "codes": [
+        "A-01",
+        "O-01",
+        "S-01",
+        "G-01"
+      ],
+      "dependsOn": [
+        "step-9c"
+      ]
+    },
+    {
+      "id": "kb-thumbs",
+      "title": "Hub thumbnails generated at deploy time (D-011)",
+      "step": "0",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "step-0"
+      ],
+      "changelog": "0005"
+    },
+    {
+      "id": "kb-knowledge",
+      "title": "Knowledge base docs/knowledge with change tracking (D-012), team, competitions, roles-and-portals",
+      "step": "0",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [],
+      "dependsOn": [
+        "step-0"
+      ],
+      "changelog": "0005"
+    },
+    {
+      "id": "kb-deploy-0",
+      "title": "First Pages deploy green, live screenshots of HUB-01",
+      "step": "0",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "step-0"
+      ],
+      "changelog": "0002"
+    },
+    {
+      "id": "kb-deploy-1",
+      "title": "Prototype verified live at /business-os/, screenshots BOS-01 / BOS-02",
+      "step": "1",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "BOS-01",
+        "BOS-02"
+      ],
+      "dependsOn": [
+        "step-1"
+      ],
+      "changelog": "0004"
+    }
+  ]
+}

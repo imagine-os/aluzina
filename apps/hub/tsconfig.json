@@ -12,6 +12,8 @@
     "isolatedModules": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": { "@docs/*": ["../../docs/*"] },
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "types": ["vite/client"]

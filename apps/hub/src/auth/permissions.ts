@@ -65,6 +65,21 @@ export const PERMISSIONS = [
   'suppliers.read',
   'dev.tools',
   'session.viewAs',
+  // Service playbook (prompt 0009, D-034): lead intake and pipeline, engagements (service checklists), revision matrix,
+  // change orders, purchasing control, site control, project messages, the ops manual and the in-app docs
+  'leads.manage',
+  'leads.read',
+  'engagements.write',
+  'engagements.read',
+  'revisionMatrix.write',
+  'changeOrders.manage',
+  'purchases.manage',
+  'siteReports.write',
+  'messages.write',
+  'manual.read',
+  'docs.read',
+  /** The client comments on their own project's revision matrix (03 stage 10). */
+  'own.revisions.write',
 ] as const;
 
 export type Permission = (typeof PERMISSIONS)[number];
@@ -88,12 +103,23 @@ export const ROLE_PERMISSIONS: Record<Role, readonly string[]> = {
     'documents.manage',
     'alerts.manage',
     'reports.write',
+    'leads.manage',
+    'leads.read',
+    'engagements.write',
+    'engagements.read',
+    'revisionMatrix.write',
+    'changeOrders.manage',
+    'purchases.manage',
+    'siteReports.write',
+    'messages.write',
+    'manual.read',
+    'docs.read',
   ],
-  studio: ['projects.read', 'suppliers.read', 'spaces.read', 'tasks.own.write', 'design.develop', 'references.manage', 'materials.manage', 'plans.write', 'schedules.write', 'renders.brief', 'measurements.write', 'projects.check'],
-  brand: ['projects.read', 'spaces.read', 'spaces.write', 'tasks.own.write', 'brand.manage', 'competitions.manage', 'presentations.write', 'images.write', 'revisions.manage', 'assets.manage'],
-  marketing: ['projects.read', 'spaces.read', 'spaces.write', 'tasks.own.write', 'marketing.plan', 'marketing.content', 'marketing.channels'],
-  client: ['spaces.read', 'own.projects.read', 'own.proposals.approve', 'own.messages.write', 'own.payments.read'],
-  dev: ['projects.read', 'spaces.read', 'spaces.write', 'spaces.admin', 'dev.tools', 'session.viewAs'],
+  studio: ['projects.read', 'suppliers.read', 'spaces.read', 'tasks.own.write', 'design.develop', 'references.manage', 'materials.manage', 'plans.write', 'schedules.write', 'renders.brief', 'measurements.write', 'projects.check', 'engagements.write', 'engagements.read', 'revisionMatrix.write', 'siteReports.write', 'messages.write', 'manual.read', 'docs.read'],
+  brand: ['projects.read', 'spaces.read', 'spaces.write', 'tasks.own.write', 'brand.manage', 'competitions.manage', 'presentations.write', 'images.write', 'revisions.manage', 'assets.manage', 'leads.read', 'engagements.read', 'manual.read', 'docs.read'],
+  marketing: ['projects.read', 'spaces.read', 'spaces.write', 'tasks.own.write', 'marketing.plan', 'marketing.content', 'marketing.channels', 'leads.read', 'engagements.read', 'manual.read', 'docs.read'],
+  client: ['spaces.read', 'own.projects.read', 'own.proposals.approve', 'own.messages.write', 'own.payments.read', 'own.revisions.write', 'messages.write', 'manual.read'],
+  dev: ['projects.read', 'spaces.read', 'spaces.write', 'spaces.admin', 'dev.tools', 'session.viewAs', 'engagements.read', 'manual.read', 'docs.read'],
 };
 
 export function hasPermission(role: Role, permission: string): boolean {
