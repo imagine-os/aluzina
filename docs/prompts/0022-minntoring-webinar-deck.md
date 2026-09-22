@@ -38,4 +38,12 @@ Assessment reply posted to the Slack thread at 22:55 UTC (verbatim; model Fable 
 
 ### Final reply
 
-_Pending: the "filed" reply follows in the Slack thread after this change set is pushed (changelog 0024) and is synced here verbatim in the same turn it is posted._
+Posted to the Slack thread at 00:31 UTC on 2026-09-22 (model Fable 5.1), verbatim:
+
+> Filed and pushed to main: [commit b591a33](https://github.com/imagine-os/aluzina/commit/b591a33898092e8878abce2fbbb1ef9f2b003e49), build green.
+>
+> - The note at `docs/knowledge/market/minntoring-webinar-2025.md` summarises the deck and maps each of its problem and solution bullets against the playbook. Most are already covered.
+> - The two gaps (niche and value offer, client acquisition beyond word of mouth) are now backlog cards in the kanban and plan.
+> - Logged as prompt 0022 and changelog 0024 so other threads skip those numbers. The PDF stays in this thread, not in the public repo.
+>
+> Model: Fable 5.1.
