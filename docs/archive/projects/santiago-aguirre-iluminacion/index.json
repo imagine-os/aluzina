@@ -1,0 +1,207 @@
+{
+ "folderName": "05 SANTIAGO AGUIRRE ILUMINACION",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEl5fo5Gbr8W-G-XYTkQjw4/PROYECTOS%20ALUZINA%202025/05%20SANTIAGO%20AGUIRRE%20ILUMINACION?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:29:37.557Z",
+ "indexedAt": "2026-09-21T23:55:32.640Z",
+ "depth": 1,
+ "fileCount": 8,
+ "totalBytes": 175985284,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/santiago-aguirre-iluminacion/",
+ "files": [
+  {
+   "path": "Cotización (redactado).xlsx",
+   "name": "Cotización (redactado).xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 456161,
+   "modified": "Jan 15, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEl5fo5Gbr8W-G-XYTkQjw4/PROYECTOS%20ALUZINA%202025/05%20SANTIAGO%20AGUIRRE%20ILUMINACION?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-santiago-aguirre",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "iluminacon Santiago aguirre con dimer 2.pdf",
+   "name": "iluminacon Santiago aguirre con dimer 2.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 30400408,
+   "modified": "Jan 15, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AF55P0_g4t7ajDO-yJJDzRo/PROYECTOS%20ALUZINA%202025/05%20SANTIAGO%20AGUIRRE%20ILUMINACION/iluminacon%20Santiago%20aguirre%20con%20dimer%202.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "iluminacon-santiago-aguirre-con-dimer-2",
+   "thumb": "thumbs/iluminacon-santiago-aguirre-con-dimer-2.jpg",
+   "pages": [
+    "pages/iluminacon-santiago-aguirre-con-dimer-2-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "RIEL PARA CINTA LED RIEL PARA CINTA LED Valor de propuesta con luminarias 2.080.000 Switche dimmerizable Impacto en el bienestar: La iluminación afecta directamente cómo nos sentimos y comportamos en los espacios que habitamos. La luz adecuada puede crear un entorno más cómodo, resaltando la experiencia de los usuarios y promoviendo su bienestar . Beneﬁcios estéticos y emocionales: La luz puede resaltar, engrandecer, o incluso minimizar elementos en un espacio. También inﬂuye en las emociones y percepciones, lo que la convierte en un elemento central del diseño interior .",
+   "palette": [
+    "#ffffff",
+    "#524c4a",
+    "#c1bfbc",
+    "#f1f3f5",
+    "#feffff",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "iluminacon Santiago aguirre SIN DIMERIZADO 2.ai",
+   "name": "iluminacon Santiago aguirre SIN DIMERIZADO 2.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 30401363,
+   "modified": "Jan 15, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACAVAXfxoVewu3TVeLBtIjA/PROYECTOS%20ALUZINA%202025/05%20SANTIAGO%20AGUIRRE%20ILUMINACION/iluminacon%20Santiago%20aguirre%20SIN%20DIMERIZADO%202.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "iluminacon-santiago-aguirre-sin-dimerizado-2",
+   "thumb": "thumbs/iluminacon-santiago-aguirre-sin-dimerizado-2.jpg",
+   "pages": [
+    "pages/iluminacon-santiago-aguirre-sin-dimerizado-2-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "RIEL PARA CINTA LED RIEL PARA CINTA LED Valor de propuesta con luminarias 2.080.000 Switche dimmerizable Impacto en el bienestar: La iluminación afecta directamente cómo nos sentimos y comportamos en los espacios que habitamos. La luz adecuada puede crear un entorno más cómodo, resaltando la experiencia de los usuarios y promoviendo su bienestar . Beneﬁcios estéticos y emocionales: La luz puede resaltar, engrandecer, o incluso minimizar elementos en un espacio. También inﬂuye en las emociones y percepciones, lo que la convierte en un elemento central del diseño interior .",
+   "palette": [
+    "#ffffff",
+    "#524c4a",
+    "#c1bfbc",
+    "#f1f3f5",
+    "#feffff",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "iluminacon Santiago aguirre SIN DIMERIZADO.ai",
+   "name": "iluminacon Santiago aguirre SIN DIMERIZADO.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 27168604,
+   "modified": "Jan 15, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APQ_jnNKO2RUdLvwrF1Jm6A/PROYECTOS%20ALUZINA%202025/05%20SANTIAGO%20AGUIRRE%20ILUMINACION/iluminacon%20Santiago%20aguirre%20SIN%20DIMERIZADO.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "iluminacon-santiago-aguirre-sin-dimerizado",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "iluminacon Santiago aguirre SIN DIMERIZADO.pdf",
+   "name": "iluminacon Santiago aguirre SIN DIMERIZADO.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 27376199,
+   "modified": "Jan 14, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APLyuGfvut2tTRKZVivCT2Q/PROYECTOS%20ALUZINA%202025/05%20SANTIAGO%20AGUIRRE%20ILUMINACION/iluminacon%20Santiago%20aguirre%20SIN%20DIMERIZADO.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "iluminacon-santiago-aguirre-sin-dimerizado-3",
+   "thumb": "thumbs/iluminacon-santiago-aguirre-sin-dimerizado-3.jpg",
+   "pages": [
+    "pages/iluminacon-santiago-aguirre-sin-dimerizado-3-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "30.000 30.000 RIEL PARA CINTA LED RIEL PARA CINTA LED Valor de propuesta con luminarias 1.680.000 Valor de propuesta 550.000 Impacto en el bienestar: La iluminación afecta directamente cómo nos sentimos y comportamos en los espacios que habitamos. La luz adecuada puede crear un entorno más cómodo, resaltando la experiencia de los usuarios y promoviendo su bienestar . Beneﬁcios estéticos y emocionales: La luz puede resaltar, engrandecer, o incluso minimizar elementos en un espacio. También inﬂuye en las emociones y percepciones, lo que la convierte en un elemento central del diseño interior .",
+   "palette": [
+    "#ffffff",
+    "#4b4543",
+    "#bcbcb9",
+    "#f0f2f5",
+    "#feffff",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "iluminacon Santiago aguirre.ai",
+   "name": "iluminacon Santiago aguirre.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 31971082,
+   "modified": "Jan 17, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFQhVqjqOy66nHmTm61KJ7A/PROYECTOS%20ALUZINA%202025/05%20SANTIAGO%20AGUIRRE%20ILUMINACION/iluminacon%20Santiago%20aguirre.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "iluminacon-santiago-aguirre",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "iluminacon Santiago aguirre.pdf",
+   "name": "iluminacon Santiago aguirre.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 28128550,
+   "modified": "Jan 13, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKK8ICS9k6Zrj0X8fe1KtZQ/PROYECTOS%20ALUZINA%202025/05%20SANTIAGO%20AGUIRRE%20ILUMINACION/iluminacon%20Santiago%20aguirre.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "iluminacon-santiago-aguirre-2",
+   "thumb": "thumbs/iluminacon-santiago-aguirre-2.jpg",
+   "pages": [
+    "pages/iluminacon-santiago-aguirre-2-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "Bombillo dimerizable 30.000 30.000 RIEL PARA CINTA LED RIEL PARA CINTA LED Valor de propuesta con luminarias 2.480.000 Valor de propuesta 580.000 Switch dimerizable 4.000 GRADOS KELVIN HABITACIONES Y AREA SOCIAL DIMERIZABLE TEMPERATURA DE LA CASA Impacto en el bienestar: La iluminación afecta directamente cómo nos sentimos y comportamos en los espacios que habitamos. La luz adecuada puede crear un entorno más cómodo, resaltando la experiencia de los usuarios y promoviendo su bienestar . Beneﬁcios estéticos y emocionales: La luz puede resaltar, engrandecer, o incluso minimizar elementos en un e",
+   "palette": [
+    "#ffffff",
+    "#514a48",
+    "#c0bfbd",
+    "#f2f3f6",
+    "#fdffff",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "pared de santiago aguirre master.pdf",
+   "name": "pared de santiago aguirre master.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 81389,
+   "modified": "Feb 1, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADXrMbKwlFizPvuUGp7QKSg/PROYECTOS%20ALUZINA%202025/05%20SANTIAGO%20AGUIRRE%20ILUMINACION/pared%20de%20santiago%20aguirre%20master.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "pared-de-santiago-aguirre-master",
+   "thumb": "thumbs/pared-de-santiago-aguirre-master.jpg",
+   "pages": [
+    "pages/pared-de-santiago-aguirre-master-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "2.30 0.20 1.90 0.20 R0.37 Ø0.43 1.60 0.27 0.73 0.27 0.26 0.73 0.26 0.20 0.73 0.20 1.27 1.25 1.13",
+   "palette": [
+    "#ffffff",
+    "#f6f6f6",
+    "#fefefe",
+    "#e9e9e9",
+    "#fafafa",
+    "#fbfbfb"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 5,
+  "pages": 5,
+  "bytes": 424665,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

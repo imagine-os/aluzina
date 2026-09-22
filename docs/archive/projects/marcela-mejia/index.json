@@ -1,0 +1,53 @@
+{
+ "folderName": "MARCELA MEJIA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAhBzzOz5IpiDr-ATyjl-qo/PROYECTOS%20ALUZINA%202024/MARCELA%20MEJIA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:39:18.173Z",
+ "indexedAt": "2026-09-21T23:55:32.596Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 173004554,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/marcela-mejia/",
+ "files": [
+  {
+   "path": "Presentacion Aluzina MARCELA MEJIA.pdf",
+   "name": "Presentacion Aluzina MARCELA MEJIA.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 173004554,
+   "modified": "Jan 30, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AArKPRcHHuhdE8CDe2KWgqU/PROYECTOS%20ALUZINA%202024/MARCELA%20MEJIA/Presentacion%20Aluzina%20MARCELA%20MEJIA.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "presentacion-aluzina-marcela-mejia",
+   "thumb": "thumbs/presentacion-aluzina-marcela-mejia.jpg",
+   "pages": [
+    "pages/presentacion-aluzina-marcela-mejia-page-01.jpg",
+    "pages/presentacion-aluzina-marcela-mejia-page-02.jpg",
+    "pages/presentacion-aluzina-marcela-mejia-page-03.jpg",
+    "pages/presentacion-aluzina-marcela-mejia-page-04.jpg"
+   ],
+   "pageCount": 10,
+   "textExcerpt": "ESPACIO + LUZ I N T E R I O R I S M O I L U M I N A C I Ó N Por Que Trabajar Con Aluzina E S T U D I O C R E A T I V O D E D I S E Ñ O SERVICIOS COMPLETOS DE DISEÑO • Enfoque a su medida. • Diseños de alta calidad. • Respuesta rapida y comunicación clara. • Nuestro cliente siempre cuenta con un gestor de proyectos dedicado a su proyecto. ATMOSFERA • Un valor agregado con el manejo de la luz como hilo conductor que conecta los proyectos como experiencias de luz • Enfasis en iluminación emocional sin dejar atras la iluminación general y funcional UNICIDAD • Experiencia de usuario diferenciado. •",
+   "palette": [
+    "#1d1711",
+    "#372f1f",
+    "#504837",
+    "#2b2418",
+    "#8e8578",
+    "#7f7668"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 248401,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

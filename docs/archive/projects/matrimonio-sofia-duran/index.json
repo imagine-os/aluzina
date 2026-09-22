@@ -1,0 +1,60 @@
+{
+ "folderName": "04 MATRIMONIO SOFIA DURAN",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAKjVFTgxNyVy5UZALHVg-Q/PROYECTOS%20ALUZINA%202025/04%20MATRIMONIO%20SOFIA%20DURAN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:29:26.301Z",
+ "indexedAt": "2026-09-21T23:55:32.629Z",
+ "depth": 2,
+ "fileCount": 2,
+ "totalBytes": 3179418747,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/matrimonio-sofia-duran/",
+ "files": [
+  {
+   "path": "Cotización (redactado).pdf",
+   "name": "Cotización (redactado).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 1142948,
+   "modified": "May 10, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAKjVFTgxNyVy5UZALHVg-Q/PROYECTOS%20ALUZINA%202025/04%20MATRIMONIO%20SOFIA%20DURAN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-sofia-duran",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "2025 LUMINARIAS/wetransfer_luminarias_2025-01-22_0300.zip",
+   "name": "wetransfer_luminarias_2025-01-22_0300.zip",
+   "ext": "zip",
+   "mimeType": "application/zip",
+   "bytes": 3178275799,
+   "modified": "Jan 22, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMgFhqRvgH92WkRO72CZpWQ/PROYECTOS%20ALUZINA%202025/04%20MATRIMONIO%20SOFIA%20DURAN/2025%20LUMINARIAS/wetransfer_luminarias_2025-01-22_0300.zip?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "2025-luminarias--wetransfer-luminarias-2025-01-22-0300",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

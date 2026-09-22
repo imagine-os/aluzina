@@ -240,10 +240,10 @@ export const documentsSpec = defineSpec({
   navGroup: 'documents',
   layout: [
     'PageHeader (replace document, a Placeholder)',
-    'One Card per assets row of kind document: title, file name, page count and size, how many pages are records, the colours and fonts read from the file, and View / Download / Open in new tab / Share link',
+    'One Card per assets row of kind document: a Thumb (served render, FileIcon PDF fallback), title, file name, page count and size, how many pages are records, the colours and fonts read from the file, and View / Download / Open in new tab / Share link',
     'Related section per Card: the projects its pages depict (links to the Work view) and the playbook services its pages argue for (links to the manual), read from relations',
     'Section "Company documents (Dropbox 2023)": a grid of Thumb tiles (thumbnail or FileIcon, badge = pages or ext, caption = file name, owner / visibility Badges) for the 12 files of ar-15, each opening a Drawer with a DocumentViewer (served pages for the 5 rendered ones; a sentence + "Open at source" for the price lists and the 3 third-party files)',
-    'Viewer Card: Tabs (one per document) around an <object> PDF viewer with an <iframe> and a plain-text fallback; ?page=N opens the PDF at that page',
+    'Viewer Card: Tabs (one per document) around the shared DocumentViewer organism (ar-17); ?page=N opens the PDF at that page',
     'Card "Where these files live": the files are static assets shipped with the app until file storage exists; the rows and their relations are data',
   ],
   dataTables: ['assets', 'relations', 'projects'],
@@ -253,13 +253,13 @@ export const documentsSpec = defineSpec({
     'Related = relations whose fromType is assets and fromId is one of the document\'s page rows (parentId = the document): kind depicts / references -> projects, kind applies-to -> services (registry, id = playbook code).',
     'The files are static assets served with the app (./brand/aluzina-portfolio.pdf, ./brand/aluzina-brochure.pdf); the paths are relative so the app keeps working under the GitHub Pages sub-path.',
     'The selected document is the ?doc= query parameter, so a viewer link is shareable and the back button works; an unknown value falls back to the portfolio.',
-    'The viewer is three deep: <object> renders the PDF, the <iframe> inside it renders when the browser has no PDF plugin, and a paragraph with a download link renders when neither works - which is also what a visitor sees if the file is missing from the server.',
+    'The viewer is the shared DocumentViewer organism (ar-17), not a page frame: with no served page renders it takes its PDF branch, which is three deep - <object> renders the PDF, the <iframe> inside it renders when the browser has no PDF plugin, and a paragraph with a download link renders when neither works, which is also what a visitor sees if the file is missing from the server. A document row that gains previewUrls becomes the paged image viewer with no page change.',
     '"View" moves focus to the viewer and scrolls to it, so the keyboard path matches the visual one (P-03).',
     '"Share link" copies the absolute URL of the file (new URL(href, location.href)) and says so in a Toast; when the clipboard is unavailable (insecure origin) the Toast shows the URL instead of failing silently.',
     'Download is an anchor carrying the download attribute and wearing the Button classes: the library Button has no download attribute yet (requested), and a plain href would open the PDF instead of saving it.',
     'Replacing a document is a Placeholder: the hub has no file storage, so a new version is a commit today.',
   ],
-  components: ['PageHeader', 'Card', 'Tabs', 'Button', 'Placeholder', 'Toast'],
+  components: ['PageHeader', 'Card', 'Tabs', 'Button', 'Placeholder', 'Toast', 'Badge', 'Thumb', 'FileIcon', 'Drawer', 'DocumentViewer'],
   actions: [
     { id: 'brand.viewDocument', label: 'View a document', intent: 'show the {doc} in the viewer', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
     { id: 'brand.downloadDocument', label: 'Download a document', intent: 'download the {doc} as a PDF', permission: 'brand.manage', params: { doc: 'enum:portfolio|brochure' } },
@@ -272,7 +272,7 @@ export const documentsSpec = defineSpec({
   checkedAt: [360, 390, 768, 1280, 1920, 2560, 3840],
   notes: [
     'Page count, file size, palette and fonts come from the assets row, which the seed derives from docs/brand/<doc>/index.json (prompt 0013): replacing a PDF means re-rendering the pages and updating the index, and the row follows; the static list in documents.ts is only the loading fallback (and what G-01 still lists).',
-    'The same rows are published to visitors on P-05 /portfolio; both pages keep their own DocFrame until a DocumentViewer organism lands in the library (request in docs/changelog/_pending/brand-docs.md).',
+    'The same rows are published to visitors on P-05 /portfolio. G-08 moved to the shared DocumentViewer in ar-17 and its DocFrame is gone; P-05 still has its own copy (public module, a separate card).',
     'The "Company documents" section (ar-15) reads assets rows tagged `empresa` (seed/company.ts, order 75) instead of a fixed doc list, so it grows with the next Dropbox intake without a page change.',
   ],
 });

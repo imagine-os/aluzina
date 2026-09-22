@@ -1,0 +1,43 @@
+{
+ "folderName": "SEGUNDO PROCESO DE VILLA VERDE",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADR06Rn_-eaFtHszu93JdJY/PROYECTOS%20ALUZINA%202024/SEGUNDO%20PROCESO%20DE%20VILLA%20VERDE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:43:11.885Z",
+ "indexedAt": "2026-09-21T23:55:32.612Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 236902,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/segundo-proceso-de-villa-verde/",
+ "files": [
+  {
+   "path": "Cotización (redactado).pdf",
+   "name": "Cotización (redactado).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 236902,
+   "modified": "Aug 12, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADR06Rn_-eaFtHszu93JdJY/PROYECTOS%20ALUZINA%202024/SEGUNDO%20PROCESO%20DE%20VILLA%20VERDE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-villa-verde-2024",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

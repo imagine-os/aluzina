@@ -1,0 +1,41 @@
+{
+ "folderName": "0_91 MARYURI",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AC8_z5ifrZUfOf_UICdkM4E/PROYECTOS%20ALUZINA%202020/0_91%20MARYURI?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:55:17.510Z",
+ "indexedAt": "2026-09-21T23:55:32.682Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 753469,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/maryuri/",
+ "files": [
+  {
+   "path": "0087 MARYURY LOTERO.xlsx",
+   "name": "0087 MARYURY LOTERO.xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 753474,
+   "modified": "Nov 11, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHbe8sn7HqK-oqoNSgtEhv8/PROYECTOS%20ALUZINA%202020/0_91%20MARYURI/0087%20MARYURY%20LOTERO.xlsx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "0087-maryury-lotero",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

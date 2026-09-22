@@ -1,0 +1,99 @@
+{
+ "folderName": "030 LA BABY",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AI7xU9SbV5Z7D7wZo_MFlWE/PROYECTOS%20ALUZINA%202025/030%20LA%20BABY?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:36:02.869Z",
+ "indexedAt": "2026-09-21T23:55:32.628Z",
+ "depth": 1,
+ "fileCount": 3,
+ "totalBytes": 94840433,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/la-baby/",
+ "files": [
+  {
+   "path": "Copy of LA Baby image lists April 5 2025 Comments added.xlsx",
+   "name": "Copy of LA Baby image lists April 5 2025 Comments added.xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 437131,
+   "modified": "Aug 23, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACML8eg4ISVtVU4tXTIFEVQ/PROYECTOS%20ALUZINA%202025/030%20LA%20BABY/Copy%20of%20LA%20Baby%20image%20lists%20April%205%202025%20Comments%20added.xlsx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "copy-of-la-baby-image-lists-april-5-2025-comments-added",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "LA IMAGE BABY PRODUCT PRODUCTION _pdf.pdf",
+   "name": "LA IMAGE BABY PRODUCT PRODUCTION _pdf.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 15749676,
+   "modified": "Jun 6, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFuYsXA8YDRz1a5nLh9naGo/PROYECTOS%20ALUZINA%202025/030%20LA%20BABY/LA%20IMAGE%20BABY%20PRODUCT%20PRODUCTION%20_pdf.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "la-image-baby-product-production-pdf",
+   "thumb": "thumbs/la-image-baby-product-production-pdf.jpg",
+   "pages": [
+    "pages/la-image-baby-product-production-pdf-page-01.jpg",
+    "pages/la-image-baby-product-production-pdf-page-02.jpg",
+    "pages/la-image-baby-product-production-pdf-page-03.jpg",
+    "pages/la-image-baby-product-production-pdf-page-04.jpg"
+   ],
+   "pageCount": 18,
+   "textExcerpt": "ModDel family 1 Nombre :Alejandra Giraldo Edad : 34 anos Estatura :1.70 Nombre :Alejandra Giraldo Edad : 34 anos Estatura :1.70 Charlotte Gutierrez 13 meses 77 Juan Gutierrez 27 183",
+   "palette": [
+    "#3c3c3c",
+    "#231312",
+    "#96776b",
+    "#553c2f",
+    "#3c3c3b",
+    "#3b3c3c"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PORTFOLIO PARA PRODUCCION FOTOGRAFIACA .pdf.pdf",
+   "name": "PORTFOLIO PARA PRODUCCION FOTOGRAFIACA .pdf.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 78654964,
+   "modified": "Jun 6, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACOXvLBMuvFSAssXQKxCmTk/PROYECTOS%20ALUZINA%202025/030%20LA%20BABY/PORTFOLIO%20PARA%20PRODUCCION%20FOTOGRAFIACA%20.pdf.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "portfolio-para-produccion-fotografiaca-pdf",
+   "thumb": "thumbs/portfolio-para-produccion-fotografiaca-pdf.jpg",
+   "pages": [
+    "pages/portfolio-para-produccion-fotografiaca-pdf-page-01.jpg",
+    "pages/portfolio-para-produccion-fotografiaca-pdf-page-02.jpg",
+    "pages/portfolio-para-produccion-fotografiaca-pdf-page-03.jpg",
+    "pages/portfolio-para-produccion-fotografiaca-pdf-page-04.jpg"
+   ],
+   "pageCount": 36,
+   "textExcerpt": "YOUR IMAGE SELL BRANDING AND COMMUNICATION THROUGH IMAGES ALUZINA PRODUCTION IMAGE FOR BRANDS MAIN IMAGE",
+   "palette": [
+    "#d9e0e0",
+    "#e0e5e5",
+    "#c9d2cf",
+    "#a6aca4",
+    "#d3dad7",
+    "#e9ecea"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 2,
+  "pages": 8,
+  "bytes": 433294,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

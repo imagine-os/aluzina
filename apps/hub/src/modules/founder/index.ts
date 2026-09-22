@@ -1,13 +1,14 @@
 import { createElement } from 'react';
 import type { RouteDef } from '../../specs/PageSpec';
 import { ApprovalsPage } from './ApprovalsPage';
+import { ArchiveReviewPage } from './ArchiveReviewPage';
 import { ClientsPage } from './ClientsPage';
 import { FounderHome } from './FounderHome';
 import { LeadsPage } from './LeadsPage';
 import { PipelinePage } from './PipelinePage';
 import { ProductsPage } from './ProductsPage';
 import { ProposalsPage } from './ProposalsPage';
-import { approvalsSpec, clientsSpec, homeSpec, leadsSpec, pipelineSpec, productsSpec, proposalsSpec, teamSpec } from './specs';
+import { approvalsSpec, archiveReviewSpec, clientsSpec, homeSpec, leadsSpec, pipelineSpec, productsSpec, proposalsSpec, teamSpec } from './specs';
 import { TeamPage } from './TeamPage';
 
 export { strings } from './strings';
@@ -106,5 +107,16 @@ export const routes: RouteDef[] = [
     spec: teamSpec,
     element: createElement(TeamPage),
     nav: { labelKey: 'founder.nav.team', order: 60, glyph: '☷' },
+  },
+  {
+    path: '/founder/archive-review',
+    code: archiveReviewSpec.code,
+    surface: 'founder',
+    status: 'built',
+    permission: 'projects.write',
+    shell: 'desktop',
+    spec: archiveReviewSpec,
+    element: createElement(ArchiveReviewPage),
+    nav: { labelKey: 'founder.nav.archiveReview', order: 12, glyph: '✓' },
   },
 ];

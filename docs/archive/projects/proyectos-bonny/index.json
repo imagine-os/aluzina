@@ -1,0 +1,108 @@
+{
+ "folderName": "0_107 PROYECTOS BONNY",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AD8OAvTgNspKxUq1-I4bGfI/PROYECTOS%20ALUZINA%202021/0_107%20PROYECTOS%20BONNY?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:38:09.551Z",
+ "indexedAt": "2026-09-21T23:55:32.733Z",
+ "depth": 1,
+ "fileCount": 4,
+ "totalBytes": 58104145,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/proyectos-bonny/",
+ "files": [
+  {
+   "path": "bonny juego nubesita  000143.ai",
+   "name": "bonny juego nubesita  000143.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 23704985,
+   "modified": "Jun 7, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIQeUqAF-LoDzc1jvtniKSk/PROYECTOS%20ALUZINA%202021/0_107%20PROYECTOS%20BONNY/bonny%20juego%20nubesita%20%20000143.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "bonny-juego-nubesita-000143",
+   "thumb": "thumbs/bonny-juego-nubesita-000143.jpg",
+   "pages": [
+    "pages/bonny-juego-nubesita-000143-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#606060",
+    "#7a8e89",
+    "#60605f",
+    "#56585c",
+    "#326095",
+    "#62605e"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "bonny juego nubesita  000143.pdf",
+   "name": "bonny juego nubesita  000143.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 22638756,
+   "modified": "Jun 7, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AE8AaLUAsDNUy2Rx05dc89s/PROYECTOS%20ALUZINA%202021/0_107%20PROYECTOS%20BONNY/bonny%20juego%20nubesita%20%20000143.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "bonny-juego-nubesita-000143-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "Calera alta.jpg",
+   "name": "Calera alta.jpg",
+   "ext": "jpg",
+   "mimeType": "image/jpeg",
+   "bytes": 411494,
+   "modified": "Jun 16, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APU8XonHCOZHOah2eTKAwBw/PROYECTOS%20ALUZINA%202021/0_107%20PROYECTOS%20BONNY/Calera%20alta.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "calera-alta",
+   "thumb": "thumbs/calera-alta.jpg",
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [
+    "#686244",
+    "#3d4235",
+    "#6a7a49",
+    "#9c9860",
+    "#8a8154",
+    "#d9cba6"
+   ],
+   "renderer": "pillow"
+  },
+  {
+   "path": "Calera alta.psd",
+   "name": "Calera alta.psd",
+   "ext": "psd",
+   "mimeType": "image/vnd.adobe.photoshop",
+   "bytes": 11345592,
+   "modified": "Jun 16, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACtBFGrqcNBJNUvqUns1w18/PROYECTOS%20ALUZINA%202021/0_107%20PROYECTOS%20BONNY/Calera%20alta.psd?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "calera-alta-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 2,
+  "pages": 1,
+  "bytes": 171984,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

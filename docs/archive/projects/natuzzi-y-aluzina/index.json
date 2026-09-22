@@ -1,0 +1,91 @@
+{
+ "folderName": "NATUZZI & ALUZINA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAHY7chRiN9_XTTfjMpmnVs/PROYECTOS%20ALUZINA%202019%202023/NATUZZI%20%26%20ALUZINA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T23:07:59.877Z",
+ "indexedAt": "2026-09-21T23:55:32.654Z",
+ "depth": 1,
+ "fileCount": 3,
+ "totalBytes": 5950607,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/natuzzi-y-aluzina/",
+ "files": [
+  {
+   "path": "ALEJA GUERRA.pdf",
+   "name": "ALEJA GUERRA.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 44455,
+   "modified": "Jun 2, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFR6CcECg2jz6qokPQ3qrAk/PROYECTOS%20ALUZINA%202019%202023/NATUZZI%20%26%20ALUZINA/ALEJA%20GUERRA.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "aleja-guerra",
+   "thumb": "thumbs/aleja-guerra.jpg",
+   "pages": [
+    "pages/aleja-guerra-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#838282",
+    "#c8c8c7",
+    "#202020",
+    "#f3f3f3",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "ALUZINA - NATUZZI.pdf",
+   "name": "ALUZINA - NATUZZI.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 5714739,
+   "modified": "Jun 2, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AK4v_jrpN5mbGI0g8aUoP1k/PROYECTOS%20ALUZINA%202019%202023/NATUZZI%20%26%20ALUZINA/ALUZINA%20-%20NATUZZI.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "aluzina-natuzzi",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "INVITACION .jpg",
+   "name": "INVITACION .jpg",
+   "ext": "jpg",
+   "mimeType": "image/jpeg",
+   "bytes": 191414,
+   "modified": "Jun 1, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFci38fCbESSgQrVrHfeKlc/PROYECTOS%20ALUZINA%202019%202023/NATUZZI%20%26%20ALUZINA/INVITACION%20.jpg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "invitacion",
+   "thumb": "thumbs/invitacion.jpg",
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [
+    "#838282",
+    "#160d0c",
+    "#342c2a",
+    "#a59e9c",
+    "#5d5755",
+    "#807f7f"
+   ],
+   "renderer": "pillow"
+  }
+ ],
+ "served": {
+  "thumbs": 2,
+  "pages": 1,
+  "bytes": 164149,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

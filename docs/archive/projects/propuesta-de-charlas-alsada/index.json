@@ -1,0 +1,53 @@
+{
+ "folderName": "PROPUESTA DE CHARLAS ALSADA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJdnrC9g7pWaS24b4tgtll4/PROYECTOS%20ALUZINA%202024/PROPUESTA%20DE%20CHARLAS%20ALSADA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:42:24.143Z",
+ "indexedAt": "2026-09-21T23:55:32.610Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 688005,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/propuesta-de-charlas-alsada/",
+ "files": [
+  {
+   "path": "ALUZINA Y ALSADA (2).pdf",
+   "name": "ALUZINA Y ALSADA (2).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 688005,
+   "modified": "Jul 15, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEPlAn4lGBA7he0cb7Fuh20/PROYECTOS%20ALUZINA%202024/PROPUESTA%20DE%20CHARLAS%20ALSADA/ALUZINA%20Y%20ALSADA%20%282%29.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "aluzina-y-alsada-2",
+   "thumb": "thumbs/aluzina-y-alsada-2.jpg",
+   "pages": [
+    "pages/aluzina-y-alsada-2-page-01.jpg",
+    "pages/aluzina-y-alsada-2-page-02.jpg",
+    "pages/aluzina-y-alsada-2-page-03.jpg",
+    "pages/aluzina-y-alsada-2-page-04.jpg"
+   ],
+   "pageCount": 8,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I LUZ EDUCACION ESPACIOS Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial. El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar Valor de charla ALSADA 10.000 $ por asistente a charla 20.000 $ por asistente a workshop Tentativo 25 asistentes . 200.000 charla 250.000 workshop VALOR ESPECIAL para primer evento de alsada en medellin Esperamos crear vinculos con proyeccion Estudiar Contrastar LOGRAR QUE SE PREGUNTEN INVITAR A EL ANALISIS ESTRATEGIAS CONECTAR",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff98",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 328166,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

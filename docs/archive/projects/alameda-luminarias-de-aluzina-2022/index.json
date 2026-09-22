@@ -1,0 +1,70 @@
+{
+ "folderName": "ALAMEDA , LUMINARIAS DE ALUZINA 2022",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AF_OHeoH-WHsstZQ5f1VF3E/PROYECTOS%20ALUZINA%202022/ALAMEDA%20%2C%20LUMINARIAS%20DE%20ALUZINA%202022?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:46:47.746Z",
+ "indexedAt": "2026-09-21T23:55:32.537Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 8105492,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/alameda-luminarias-de-aluzina-2022/",
+ "files": [
+  {
+   "path": "ALAMEDA , DESCRIPCION DE LUMINARIAS 2022.pdf",
+   "name": "ALAMEDA , DESCRIPCION DE LUMINARIAS 2022.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 3609646,
+   "modified": "Apr 19, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMO81eas4iDwDCzrfcn5lt4/PROYECTOS%20ALUZINA%202022/ALAMEDA%20%2C%20LUMINARIAS%20DE%20ALUZINA%202022/ALAMEDA%20%2C%20DESCRIPCION%20DE%20LUMINARIAS%202022.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "alameda-descripcion-de-luminarias-2022",
+   "thumb": "thumbs/alameda-descripcion-de-luminarias-2022.jpg",
+   "pages": [
+    "pages/alameda-descripcion-de-luminarias-2022-page-01.jpg",
+    "pages/alameda-descripcion-de-luminarias-2022-page-02.jpg",
+    "pages/alameda-descripcion-de-luminarias-2022-page-03.jpg",
+    "pages/alameda-descripcion-de-luminarias-2022-page-04.jpg"
+   ],
+   "pageCount": 4,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#dbeff1",
+    "#d5d4c6",
+    "#ffff16",
+    "#f2ee74",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "LUIMARIAS ALUZINA EN ALAMEDA .xlsx",
+   "name": "LUIMARIAS ALUZINA EN ALAMEDA .xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 4502599,
+   "modified": "Apr 19, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEDvIgy1p96i5Wasx9Nvx68/PROYECTOS%20ALUZINA%202022/ALAMEDA%20%2C%20LUMINARIAS%20DE%20ALUZINA%202022/LUIMARIAS%20ALUZINA%20EN%20ALAMEDA%20.xlsx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "luimarias-aluzina-en-alameda",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 107038,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

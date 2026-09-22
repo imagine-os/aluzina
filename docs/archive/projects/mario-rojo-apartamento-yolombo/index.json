@@ -1,0 +1,87 @@
+{
+ "folderName": "MARIO ROJO APARTAMENTO YOLOMBO",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ALo-hFsUcZOQzniEjnNReJc/PROYECTOS%20ALUZINA%202024/MARIO%20ROJO%20APARTAMENTO%20YOLOMBO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:39:38.088Z",
+ "indexedAt": "2026-09-21T23:55:32.596Z",
+ "depth": 2,
+ "fileCount": 3,
+ "totalBytes": 175542109,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/mario-rojo-apartamento-yolombo/",
+ "files": [
+  {
+   "path": "PROYECTO YOLOMBO MARIO ROJO.ai",
+   "name": "PROYECTO YOLOMBO MARIO ROJO.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 59558064,
+   "modified": "Oct 26, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIezjFcporj22usTXXQSusc/PROYECTOS%20ALUZINA%202024/MARIO%20ROJO%20APARTAMENTO%20YOLOMBO/PROYECTO%20YOLOMBO%20MARIO%20ROJO.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "proyecto-yolombo-mario-rojo",
+   "thumb": "thumbs/proyecto-yolombo-mario-rojo.jpg",
+   "pages": [
+    "pages/proyecto-yolombo-mario-rojo-page-01.jpg",
+    "pages/proyecto-yolombo-mario-rojo-page-02.jpg",
+    "pages/proyecto-yolombo-mario-rojo-page-03.jpg",
+    "pages/proyecto-yolombo-mario-rojo-page-04.jpg"
+   ],
+   "pageCount": 8,
+   "textExcerpt": "ESPACIO + LUZ Pasamos el 87% de nuestrasexistencia en espacios interiores como estos esten disenadors afectara nuestra calidad de vida Somos la posibilidad de disenar tu sueño. I N T E R I O R I S M O I L U M I N A C I Ó N Por Que Trabajar Con Aluzina E S T U D I O C R E A T I V O D E D I S E Ñ O SERVICIOS COMPLETOS DE DISEÑO • Enfoque a su medida. • Diseños de alta calidad. • Respuesta rapida y comunicación clara. • Nuestro cliente siempre cuenta con un gestor de proyectos dedicado a su proyecto. ATMOSFERA • Un valor agregado con el manejo de la luz como hilo conductor que conecta los proyect",
+   "palette": [
+    "#110d0a",
+    "#2a2518",
+    "#3b3729",
+    "#837e74",
+    "#524d40",
+    "#746f64"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PROYECTO YOLOMBO MARIO ROJO.pdf",
+   "name": "PROYECTO YOLOMBO MARIO ROJO.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 59569603,
+   "modified": "Oct 26, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AN-nh5P_2-4Zfafg7HAGY-E/PROYECTOS%20ALUZINA%202024/MARIO%20ROJO%20APARTAMENTO%20YOLOMBO/PROYECTO%20YOLOMBO%20MARIO%20ROJO.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "proyecto-yolombo-mario-rojo-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "YOLOMBO MARIO ROJO/PROYECTO YOLOMBO MARIO ROJO.ai",
+   "name": "PROYECTO YOLOMBO MARIO ROJO.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 56413389,
+   "modified": "Oct 26, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AG4ND22A-pBC1OSjf7oY3B4/PROYECTOS%20ALUZINA%202024/MARIO%20ROJO%20APARTAMENTO%20YOLOMBO/YOLOMBO%20MARIO%20ROJO/PROYECTO%20YOLOMBO%20MARIO%20ROJO.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "yolombo-mario-rojo--proyecto-yolombo-mario-rojo",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 243726,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

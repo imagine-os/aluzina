@@ -1,0 +1,219 @@
+{
+ "folderName": "09 TORRES CLARAS",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHQIiVkhT1a_bCXuVaSIE3g/PROYECTOS%20ALUZINA%202025/09%20TORRES%20CLARAS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:30:21.256Z",
+ "indexedAt": "2026-09-21T23:55:32.644Z",
+ "depth": 1,
+ "fileCount": 8,
+ "totalBytes": 19667570,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/torres-claras/",
+ "files": [
+  {
+   "path": "Cotización (redactado).pdf",
+   "name": "Cotización (redactado).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 2160067,
+   "modified": "Feb 19, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHQIiVkhT1a_bCXuVaSIE3g/PROYECTOS%20ALUZINA%202025/09%20TORRES%20CLARAS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-de-techo-y-piso-torres-claras",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "Cotización (redactado).xlsx",
+   "name": "Cotización (redactado).xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 14029947,
+   "modified": "Feb 19, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHQIiVkhT1a_bCXuVaSIE3g/PROYECTOS%20ALUZINA%202025/09%20TORRES%20CLARAS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-torres-claras",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "HUMEDAD TORRES CLARAS.pdf",
+   "name": "HUMEDAD TORRES CLARAS.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 303773,
+   "modified": "Jan 23, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AF8GhaQ1vhj9EQncHSEpsdU/PROYECTOS%20ALUZINA%202025/09%20TORRES%20CLARAS/HUMEDAD%20TORRES%20CLARAS.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "humedad-torres-claras",
+   "thumb": "thumbs/humedad-torres-claras.jpg",
+   "pages": [
+    "pages/humedad-torres-claras-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "UNIVERSO #00250 Nombre proyecto: TORRES CLARAS APARTAMENTO 303 Item Description imagen unidad Total 1.0 Aplicar el producto GLOBAL 2.0 Alquiler de equipos requeridos deshumidificador GLOBAL 3.0 Pintar habitación nivel 2 GLOBAL 4.0 Pelar pared zona cortinas GLOBAL 5.0 Resane en estuco plástico GLOBAL 6.0 Poncheras GLOBAL OBRA CIVIL 2,500,000.00 $ TOTAL 2,500,000.00 $ PAGO 1 1,250,000.00 $ PAGO 2 1,250,000.00 $ 3. La cotizacion tiene una validez de 15 dias calendario. Despues de este periodo de tiempo puede tener alguna variacion en su valor final 4. Todos los elementos que hayan sido instalados",
+   "palette": [
+    "#ffffff",
+    "#c9dadc",
+    "#f9f9f8",
+    "#e1f6eb",
+    "#ffffb9",
+    "#f2fff2"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "LIMPIEZA, BANO, ESTUCO , ARREGLOS.pdf",
+   "name": "LIMPIEZA, BANO, ESTUCO , ARREGLOS.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 241257,
+   "modified": "Jan 24, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADAkfYN-72bO2nTB1zJ7oGU/PROYECTOS%20ALUZINA%202025/09%20TORRES%20CLARAS/LIMPIEZA%2C%20BANO%2C%20ESTUCO%20%2C%20ARREGLOS.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "limpieza-bano-estuco-arreglos",
+   "thumb": "thumbs/limpieza-bano-estuco-arreglos.jpg",
+   "pages": [
+    "pages/limpieza-bano-estuco-arreglos-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "UNIVERSO #00251 Nombre proyecto: TORRES CLARAS APARTAMENTO 303 Item Description imagen unidad Total 1.0 Piso de acceso > Pelar pared de sala y torta GLOBAL 2.0 Aplicar estuco plástico pared y torta para resane GLOBAL 3.0 Pintar habitación nivel de acceso GLOBAL 4.0 Limpieza de desagües en zona de plantas GLOBAL 5.0 Cambio de dispositivo en baño GLOBAL 6.0 Arreglo de esquina con esquinero , dry wall y microcemento GLOBAL 7.0 limpieza de tapetes y sofas en sitio GLOBAL OBRA CIVIL + LIMPIEZA TOTAL 2,420,000.00 $ PAGO 1 1,210,000.00 $ PAGO 2 1,210,000.00 $ 11. Se debe asignar a un representante qu",
+   "palette": [
+    "#ffffff",
+    "#c7d5d2",
+    "#f8fafa",
+    "#dff2e4",
+    "#fcffff",
+    "#f6ffb1"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "LIMPIEZAS , PINTURAS, ARREGLO BAÑO TORRES CLARAS.pdf",
+   "name": "LIMPIEZAS , PINTURAS, ARREGLO BAÑO TORRES CLARAS.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 240065,
+   "modified": "Jan 23, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOIDRmFRlxebu3DOAM0mOZk/PROYECTOS%20ALUZINA%202025/09%20TORRES%20CLARAS/LIMPIEZAS%20%2C%20PINTURAS%2C%20ARREGLO%20BA%C3%91O%20TORRES%20CLARAS.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "limpiezas-pinturas-arreglo-bano-torres-claras",
+   "thumb": "thumbs/limpiezas-pinturas-arreglo-bano-torres-claras.jpg",
+   "pages": [
+    "pages/limpiezas-pinturas-arreglo-bano-torres-claras-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "UNIVERSO #00251 Nombre proyecto: TORRES CLARAS APARTAMENTO 303 Item Description imagen unidad Total 1.0 Pelar pared de sala y torta GLOBAL 2.0 Aplicar estuco plástico pared y torta para resane GLOBAL 3.0 Pintar habitación nivel de acceso GLOBAL 11.0 Limpieza de desagües en zona de plantas GLOBAL 12.0 Cambio de dispositivo en baño GLOBAL 13.0 limpieza de tapetes y sofas en sitio GLOBAL OBRA CIVIL + LIMPIEZA TOTAL 1,960,000.00 $ PAGO 1 980,000.00 $ PAGO 2 980,000.00 $ 11. Se debe asignar a un representante que será el único encargado de cualquier decisión en el proceso de producción. 13. Esperam",
+   "palette": [
+    "#ffffff",
+    "#c5d3d1",
+    "#f8fafa",
+    "#e0f3e1",
+    "#feffff",
+    "#f0ff84"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "pintura de techos torres claras.pdf",
+   "name": "pintura de techos torres claras.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 239904,
+   "modified": "Jan 30, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJysR8e2sELGr_q1R9Dw1ks/PROYECTOS%20ALUZINA%202025/09%20TORRES%20CLARAS/pintura%20de%20techos%20torres%20claras.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "pintura-de-techos-torres-claras",
+   "thumb": "thumbs/pintura-de-techos-torres-claras.jpg",
+   "pages": [
+    "pages/pintura-de-techos-torres-claras-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "UNIVERSO #00255 Nombre proyecto: TORRES CLARAS APARTAMENTO 303 Item Description imagen unidad Total 1.0 Pintura de Techos con pintura a base de aceite blanca GLOBAL 1,500,000.00 $ TOTAL 1,500,000.00 $ PAGO 1 750,000.00 $ PAGO 2 750,000.00 $ BANCOLOMBIA 10272616877 AHORROS ALEJANDRA GUERRA LOTERO UNIVERSO DE DISEÑO DISEÑOADORA DE ESPACIOS Y ESCENARIOS NOTA IMPORTANTE PAGO 1: PRODUCCION DE PEDIDO PAGO 2: ENTREGA DE PROYECTO , ALEJANDRA GUERRA LOTERO LINK SEND TRU BOLD EMAIL OR WHATS APP TO PAY WITH CREDIT OR DEBIT CARD ALUZINA 11. Se debe asignar a un representante que será el único encargado de",
+   "palette": [
+    "#ffffff",
+    "#c0d1ce",
+    "#d2f0e0",
+    "#f6f8f2",
+    "#f4ffa0",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PISOS Y TECHOS TORRES CLARAS.pdf",
+   "name": "PISOS Y TECHOS TORRES CLARAS.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 2161913,
+   "modified": "Feb 19, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AE2Ysv2qjOEo8buzF_vEHhY/PROYECTOS%20ALUZINA%202025/09%20TORRES%20CLARAS/PISOS%20Y%20TECHOS%20TORRES%20CLARAS.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "pisos-y-techos-torres-claras",
+   "thumb": "thumbs/pisos-y-techos-torres-claras.jpg",
+   "pages": [
+    "pages/pisos-y-techos-torres-claras-page-01.jpg",
+    "pages/pisos-y-techos-torres-claras-page-02.jpg"
+   ],
+   "pageCount": 2,
+   "textExcerpt": "UNIVERSO #00258 Nombre proyecto: TORRES CLARAS APARTAMENTO 303 Item Description imagen unidad Total 1.0 RESTAURACON DE PISOS 171.metros de pulida y brillada de piso , mate 171 METROS 10,916,640.00 $ 2.0 RESTAURACON DE ESCALERAS 23 ESCALERAS 2,400,000.00 $ 3.0 cambio de 48 mts de manto por manto de 2 mm instalación con soplete , desmonte de toda la teja e remplazo de las malas , mantenimiento de 24 mts de runas del perímetro , limpieza de canoa con mantenimiento de ella con pintura en color gris, en dicha cotización está incluído materiales mano de obra y los elementos para realizar todas las a",
+   "palette": [
+    "#ffffff",
+    "#f7f8f7",
+    "#d6ece1",
+    "#776d65",
+    "#b6ced3",
+    "#d7ffab"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "TORRES CLARAS APARTAMENTO 303.pdf",
+   "name": "TORRES CLARAS APARTAMENTO 303.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 292497,
+   "modified": "Jan 22, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APQJk9-Xrl77Cfmud_FEzPQ/PROYECTOS%20ALUZINA%202025/09%20TORRES%20CLARAS/TORRES%20CLARAS%20APARTAMENTO%20303.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "torres-claras-apartamento-303",
+   "thumb": "thumbs/torres-claras-apartamento-303.jpg",
+   "pages": [
+    "pages/torres-claras-apartamento-303-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "UNIVERSO #00250 Nombre proyecto: TORRES CLARAS APARTAMENTO 303 Item Description imagen unidad Total 1.0 Pelar pared de sala y torta GLOBAL 2.0 Aplicar estuco plástico pared y torta para resane GLOBAL 3.0 Pintar habitación nivel 2 GLOBAL 4.0 Pelar pared zona cortinas GLOBAL 5.0 Resane en estuco plástico GLOBAL 6.0 Pintar GLOBAL 7.0 Habitación nivel 3 GLOBAL 8.0 Aplicar el producto GLOBAL 9.0 Masillar pared en drywoll GLOBAL 10.0 Pintar GLOBAL 11.0 Limpieza de desagües en zona de plantas GLOBAL 12.0 Cambio de dispositivo en baño 2,400,000.00 $ TOTAL 2,400,000.00 $ PAGO 1 1200000 PAGO 2 1,200,000",
+   "palette": [
+    "#ffffff",
+    "#ced7d5",
+    "#f8f9f9",
+    "#e1f5d4",
+    "#fcff42",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 6,
+  "pages": 7,
+  "bytes": 481294,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

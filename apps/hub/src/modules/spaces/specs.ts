@@ -34,6 +34,8 @@ const POST_ACTIONS: ActionDef[] = [
   { id: 'spaces.openTarget', label: 'Open related entity', intent: 'open the {type} {target}', permission: 'spaces.read', params: { type: 'string', target: 'id' } },
   { id: 'spaces.comment', label: 'Comment', intent: 'comment on the post {post}: {text}', permission: 'spaces.read', params: { post: 'id', text: 'string' } },
   { id: 'spaces.openLink', label: 'Open link', intent: 'open the link of the post {post}', permission: 'spaces.read', params: { post: 'id' } },
+  { id: 'spaces.previewAsset', label: 'Preview the file', intent: 'preview the file of this post', permission: 'spaces.read', params: { asset: 'id' } },
+  { id: 'spaces.closeAssetPreview', label: 'Close the preview', intent: 'close the file preview', permission: 'spaces.read' },
 ];
 
 const GRAPH_ACTIONS: ActionDef[] = [
@@ -50,11 +52,14 @@ const GRAPH_ACTIONS: ActionDef[] = [
 ];
 
 const CATALOG_ACTIONS: ActionDef[] = [
-  { id: 'spaces.catalogTab', label: 'Catalog tab', intent: 'show the {tab} catalog', permission: 'spaces.read', params: { tab: 'enum:deliverables|clients|tools|roles' } },
+  { id: 'spaces.catalogTab', label: 'Catalog tab', intent: 'show the {tab} catalog', permission: 'spaces.read', params: { tab: 'enum:deliverables|clients|tools|roles|assets' } },
   { id: 'spaces.openTemplate', label: 'Open template', intent: 'open the template of the deliverable {deliverable}', permission: 'spaces.read', params: { deliverable: 'id' } },
   { id: 'spaces.openRoute', label: 'Open hub page', intent: 'open the hub page {code}', permission: 'spaces.read', params: { code: 'string' } },
   { id: 'spaces.selectSpace', label: 'Open space', intent: 'open the space {space}', permission: 'spaces.read', params: { space: 'id' } },
   { id: 'spaces.openProject', label: 'Open project work', intent: 'open the work of the project {project}', permission: 'spaces.read', params: { project: 'id' } },
+  { id: 'spaces.previewAsset', label: 'Preview an asset', intent: 'preview the asset {asset}', permission: 'spaces.read', params: { asset: 'id' } },
+  { id: 'spaces.closeAssetPreview', label: 'Close the preview', intent: 'close the asset preview', permission: 'spaces.read' },
+  { id: 'spaces.openAssetSource', label: 'Open an asset at its source', intent: 'open the asset {asset} at its source', permission: 'spaces.read', params: { asset: 'id' } },
 ];
 
 const IMPORT_ACTIONS: ActionDef[] = [
@@ -74,6 +79,7 @@ const HOME_LOGIC = [
   'Entering as a role preselects the space about that role (spaces.aboutType = roles) and the banner counts the posts filed to it from anywhere in the Hub.',
   'Search filters the tree (matches and their ancestors) and, when not empty, lists matching posts across all spaces instead of the selected space.',
   'Pinned posts first, then the chosen sort; filters by kind, tag and author; the description is edited inline and saved with basedOn (D-024). Every write goes through the DataProvider and reaches other tabs live (D-023).',
+  'A post of kind file shows a Thumb (ar-17): the served thumbnail of the assets row its relations point at, or the FileIcon of the family read from the file name. The Thumb is markup inside the card button, so the card stays one tab stop.',
 ];
 
 export function spacesHomeSpec(surface: Surface): PageSpec {
@@ -83,10 +89,10 @@ export function spacesHomeSpec(surface: Surface): PageSpec {
     purpose: 'The Hub\'s own organizer replacing the Slack sidebar (prompt 0005): a tree of spaces without depth limit on the left, the posts filed in the selected space on the right, one post in as many spaces as it belongs to.',
     surface,
     navGroup: 'spaces',
-    layout: ['PageHeader (New space, New post)', 'Role banner: posts filed to my role', 'Left: SearchField, show-archived Checkbox, SpaceTree (Drawer under 1024 px)', 'Right: space description (editable), child spaces grid (Cards), FilterBar (kind, tag, author, sort), PostCard list pinned first', 'Modals: New space, New post'],
-    dataTables: ['spaces', 'posts', 'filings', 'tags'],
+    layout: ['PageHeader (New space, New post)', 'Role banner: posts filed to my role', 'Left: SearchField, show-archived Checkbox, SpaceTree (Drawer under 1024 px)', 'Right: space description (editable), child spaces grid (Cards), FilterBar (kind, tag, author, sort), PostCard list pinned first (a file post carries a Thumb of its file)', 'Modals: New space, New post'],
+    dataTables: ['spaces', 'posts', 'filings', 'tags', 'relations', 'assets'],
     logic: HOME_LOGIC,
-    components: ['PageHeader', 'SearchField', 'Checkbox', 'SpaceTree', 'Card', 'FilterBar', 'Select', 'PostCard', 'Badge', 'Button', 'Textarea', 'Input', 'Modal', 'Drawer', 'EmptyState', 'Markdown'],
+    components: ['PageHeader', 'SearchField', 'Checkbox', 'SpaceTree', 'Card', 'FilterBar', 'Select', 'PostCard', 'Thumb', 'FileIcon', 'Badge', 'Button', 'Textarea', 'Input', 'Modal', 'Drawer', 'EmptyState', 'Markdown'],
     actions: HOME_ACTIONS,
     ...COMMON,
   });
@@ -99,9 +105,9 @@ export function spaceViewSpec(surface: Surface): PageSpec {
     purpose: 'One space deep-linked (`/<surface>/spaces/:spaceId`): breadcrumb of its ancestors, its description, its child spaces and its posts; the same page as K-01 with the selection taken from the route.',
     surface,
     layout: ['PageHeader with ancestor breadcrumb (Archive for spaces.admin)', 'Left tree with the space selected and expanded', 'Description (Markdown, editable inline)', 'Child spaces grid', 'FilterBar + PostCard list'],
-    dataTables: ['spaces', 'posts', 'filings', 'tags'],
+    dataTables: ['spaces', 'posts', 'filings', 'tags', 'relations', 'assets'],
     logic: [...HOME_LOGIC, 'The space id comes from the route; an unknown id shows an empty state with a way back to Spaces.'],
-    components: ['PageHeader', 'SearchField', 'Checkbox', 'SpaceTree', 'Card', 'FilterBar', 'Select', 'PostCard', 'Badge', 'Button', 'Textarea', 'Modal', 'Drawer', 'EmptyState', 'Markdown'],
+    components: ['PageHeader', 'SearchField', 'Checkbox', 'SpaceTree', 'Card', 'FilterBar', 'Select', 'PostCard', 'Thumb', 'FileIcon', 'Badge', 'Button', 'Textarea', 'Modal', 'Drawer', 'EmptyState', 'Markdown'],
     actions: HOME_ACTIONS,
     ...COMMON,
   });
@@ -113,15 +119,16 @@ export function postSpec(surface: Surface): PageSpec {
     name: 'Post',
     purpose: 'One post: its Markdown body, the spaces it is filed in (add or remove without duplicating it), tags, typed relations to any entity, what references it (backlinks), comments and the activity trail.',
     surface,
-    layout: ['PageHeader (breadcrumb: Spaces > first space > post; Pin, Edit, Publish / Archive, Open link)', 'Meta row: kind, status, author, updated, tags (+ editor)', 'Markdown body (Textarea in edit mode)', 'Filed in: chips with remove + "File in…" Drawer (Checkbox per space)', 'Relations: list with remove; add form (type Select, target SearchField results, kind Select, note Input)', 'Referenced by (reverse query)', 'Comments (comments entity) and Activity'],
-    dataTables: ['posts', 'filings', 'spaces', 'relations', 'tags', 'comments', 'activity', 'projects', 'tasks', 'documents', 'clients', 'deliverables', 'tools', 'competitions', 'brandAssets', 'presentations'],
+    layout: ['PageHeader (breadcrumb: Spaces > first space > post; Pin, Edit, Publish / Archive, Preview or Open link)', 'File block on a file post: Thumb of the file, its family, Preview (Drawer + DocumentViewer) or the sentence that it cannot be shown here, plus the source link', 'Meta row: kind, status, author, updated, tags (+ editor)', 'Markdown body (Textarea in edit mode)', 'Filed in: chips with remove + "File in…" Drawer (Checkbox per space)', 'Relations: list with remove; add form (type Select, target SearchField results, kind Select, note Input)', 'Referenced by (reverse query)', 'Comments (comments entity) and Activity'],
+    dataTables: ['posts', 'filings', 'spaces', 'relations', 'tags', 'comments', 'activity', 'projects', 'tasks', 'documents', 'clients', 'deliverables', 'tools', 'competitions', 'brandAssets', 'presentations', 'assets'],
     logic: [
       'Filing adds or removes a `filings` row: the post stays one row, so an edit shows in every space at once.',
       'Relations are typed (`kind`) and any-to-any: the target picker searches spaces, posts, projects, tasks, documents, clients, deliverables, tools, roles, users, competitions, brand assets and presentations. "Referenced by" is the reverse query on toType = posts.',
       'Edits write with basedOn = post.updated_at (D-024); comments reuse the Work `comments` entity (D-022); the provider writes `activity` rows per changed field.',
       'Draft / archived posts stay visible to the author and to spaces.write roles; the Markdown atom renders bodies without HTML.',
+      'A file post shows the file it points at (ar-17): the first assets row among its relations. When that row has served page renders, or is a served PDF, image or video, Preview opens the shared DocumentViewer in the page\'s Drawer pattern and replaces the bare "Open link" in the header; anything else keeps its link, which for the Dropbox archive is the only way to the file.',
     ],
-    components: ['PageHeader', 'Badge', 'StatusPill', 'Avatar', 'Markdown', 'Textarea', 'Input', 'Select', 'SearchField', 'Checkbox', 'Drawer', 'Button', 'EmptyState', 'KeyValue'],
+    components: ['PageHeader', 'Badge', 'StatusPill', 'Avatar', 'Markdown', 'Textarea', 'Input', 'Select', 'SearchField', 'Checkbox', 'Drawer', 'Thumb', 'FileIcon', 'DocumentViewer', 'Button', 'EmptyState', 'KeyValue'],
     actions: [...POST_ACTIONS, HOME_ACTIONS[0]],
     ...COMMON,
   });
@@ -159,15 +166,16 @@ export function catalogSpec(surface: Surface): PageSpec {
     purpose: 'The catalogs behind the spaces as data (D-029): deliverable types with phase, owner and status; clients (past, current, prospect) with their projects; tools with what replaces them and a dependency map; roles with portal links.',
     surface,
     navGroup: 'spaces',
-    layout: ['PageHeader', 'Tabs: Deliverables, Clients, Tools, Roles (`?tab=`)', 'Deliverables: DataTable (name, phase, owner, typical days, status, relations, template)', 'Clients: DataTable (name, kind, sector, city, contact, projects, relations, space)', 'Tools: StatTiles dependency map + DataTable (name, vendor, category, used for, status, replaced by, notes)', 'Roles: DataTable (role, portal, permissions, demo user, role space)'],
-    dataTables: ['deliverables', 'clients', 'tools', 'relations', 'spaces', 'projects'],
+    layout: ['PageHeader', 'Tabs: Deliverables, Clients, Tools, Roles, Assets (`?tab=`)', 'Deliverables: DataTable (name, phase, owner, typical days, status, relations, template)', 'Clients: DataTable (name, kind, sector, city, contact, projects, relations, space)', 'Tools: StatTiles dependency map + DataTable (name, vendor, category, used for, status, replaced by, notes)', 'Roles: DataTable (role, portal, permissions, demo user, role space)', 'Assets: DataTable (Thumb, name, kind, file type, pages, source, relations, Preview / G-08 / Open at source) + Drawer with the DocumentViewer'],
+    dataTables: ['deliverables', 'clients', 'tools', 'relations', 'spaces', 'projects', 'assets'],
     logic: [
       'A template that is a hub page code (S-09, O-05, A-04, …) links to that route from the manifest; a deliverable without one shows a Placeholder "Open template" (P-09).',
       'Unknown facts are shown as "unknown", never invented (Sporti: sector, city, contact).',
       'The dependency map counts tools by status: in use, to replace, replaced, planned; "replaced by" links to the hub route when the value is a page code.',
       'Roles come from `src/auth/roles.ts` (seven since D-028) with their permissions and the space about them.',
+      'Assets (ar-17) are the assets rows that are files in their own right (kind != page, since a page row is a render inside a document): every row shows a Thumb (served thumbnail, FileIcon of the family otherwise). A row with served page renders, or a served PDF / image / video, previews in a Drawer through the shared DocumentViewer; the rest keep "Open at source", and a document also links to G-08.',
     ],
-    components: ['PageHeader', 'Tabs', 'DataTable', 'StatusPill', 'Badge', 'StatTile', 'Button', 'Placeholder', 'EmptyState'],
+    components: ['PageHeader', 'Tabs', 'DataTable', 'StatusPill', 'Badge', 'StatTile', 'Thumb', 'FileIcon', 'Drawer', 'DocumentViewer', 'Button', 'Placeholder', 'EmptyState'],
     actions: CATALOG_ACTIONS,
     ...COMMON,
   });

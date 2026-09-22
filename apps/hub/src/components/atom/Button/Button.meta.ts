@@ -7,8 +7,8 @@ export default defineMeta({
   props: {
     variant: "'primary' | 'secondary' | 'ghost' | 'danger' (default secondary)",
     size: "'sm' | 'md' | 'lg' (default md; every size is >= 44 px tall)",
-    icon: 'ReactNode? – before the label',
-    iconEnd: 'ReactNode? – after the label',
+    icon: 'IconName | ReactNode? – before the label; a string resolves as an icon name, then as a mapped Unicode glyph, then renders as text (D-064)',
+    iconEnd: 'IconName | ReactNode? – after the label; same resolution as icon',
     href: 'string? – renders an <a> styled as a button',
     external: 'boolean? – new tab + rel=noreferrer',
     download: 'boolean | string? – with href, downloads the target (true, or a suggested file name) instead of navigating',

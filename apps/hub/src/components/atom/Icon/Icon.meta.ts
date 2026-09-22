@@ -4,7 +4,7 @@ export default defineMeta({
   name: 'Icon',
   tier: 'atom',
   purpose:
-    'The system icon set (71 names): one inline SVG per name on a 24 x 24 grid, stroke 1.75, round caps and joins, currentColor, no fills except tiny dots. Replaces the Unicode nav glyphs; the glyphs stay in the route manifest as data and as the last fallback (docs/design/icons.md).',
+    'The system icon set (78 names): one inline SVG per name on a 24 x 24 grid, stroke 1.75, round caps and joins, currentColor, no fills except tiny dots. Replaces the Unicode nav glyphs; the glyphs stay in the route manifest as data and as the last fallback (docs/design/icons.md).',
   props: {
     name: 'IconName – one of ICON_NAMES (isIconName guards data)',
     size: "'sm' | 'md' | 'lg' | 'xl' = 'md' (--icon-sm 1rem / md 1.25rem / lg 1.5rem / xl 2rem)",
@@ -22,5 +22,7 @@ export default defineMeta({
     'DesktopShell sidebar and bottom nav, PhoneShell bottom nav, the More drawer (app/shells.tsx)',
     'SpaceTree rows (space kind) and its expand / collapse chevron',
     'SurfaceCard header line and the empty thumbnail tile (HUB-01 cards)',
+    'Button icon / iconEnd: a name or a mapped glyph renders as a drawn icon (ar-21)',
+    'K-01 space heading and child rows (space kind), PostCard post-kind mark, the shell theme toggle (moon / sun)',
   ],
 });

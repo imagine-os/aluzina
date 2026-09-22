@@ -5,6 +5,8 @@ import { useSession } from '../../auth/SessionProvider';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
 import { Checkbox } from '../../components/atom/Checkbox/Checkbox';
+import { Icon, type IconSize } from '../../components/atom/Icon/Icon';
+import { SPACE_KIND_ICONS, resolveIcon } from '../../components/atom/Icon/iconMap';
 import { Input } from '../../components/atom/Input/Input';
 import { Markdown } from '../../components/atom/Markdown/Markdown';
 import { Select } from '../../components/atom/Select/Select';
@@ -20,13 +22,25 @@ import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { Modal } from '../../components/organism/Modal/Modal';
 import { SpaceTree } from '../../components/organism/SpaceTree/SpaceTree';
 import { useData, useTable } from '../../data/DataContext';
-import { POST_KINDS, SPACE_KINDS, type Post, type PostKind, type Space, type SpaceKind } from '../../data/schema';
+import { POST_KINDS, SPACE_KINDS, type Asset, type Post, type PostKind, type Space, type SpaceKind } from '../../data/schema';
+import { FILE_TYPE_LABELS, fileTypeOf, pick } from '../../domain';
 import { formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';
 import { ancestorsOf, buildTree, excerptOf, matchingSpaceIds, postCountsBySpace, postMatches, slugify, toTreeNodes, type SpaceNode } from './model';
 import { spaceViewSpec, spacesHomeSpec } from './specs';
 import './spaces.css';
+
+/**
+ * ar-21: a space's mark on K-01. The drawn icon of the space kind wins, a seeded glyph the icon map knows
+ * comes next, and the glyph text itself is the last fallback (D-064) - the seeded `glyph` stays data and
+ * no space row changes.
+ */
+function SpaceGlyph({ kind, glyph, size = 'md' }: { kind: string; glyph?: string | null; size?: IconSize }) {
+  const name = SPACE_KIND_ICONS[kind] ?? resolveIcon(undefined, glyph ?? undefined);
+  if (name) return <Icon name={name} size={size} className="spaces-glyph" />;
+  return <span className="spaces-glyph" aria-hidden="true">{glyph}</span>;
+}
 
 type SortBy = 'updated' | 'title' | 'kind' | 'author';
 
@@ -49,6 +63,10 @@ export function SpacesPage({ surface }: { surface: Surface }) {
   const posts = useTable('posts');
   const filings = useTable('filings');
   const tagRows = useTable('tags');
+  // ar-17: a file post's file, so its card can carry a Thumb. Relations are the link (D-026); archived files
+  // are not `assets` rows since ar-19, so most file posts fall back to the icon of their own file name.
+  const postRelations = useTable('relations', { where: { fromType: 'posts' } });
+  const assets = useTable('assets');
   const canWrite = can('spaces.write');
   const canAdmin = can('spaces.admin');
   const base = `/${surface}/spaces`;
@@ -105,6 +123,17 @@ export function SpacesPage({ surface }: { surface: Surface }) {
     for (const f of filings.rows) m.set(f.postId, (m.get(f.postId) ?? 0) + 1);
     return m;
   }, [filings.rows]);
+
+  const assetByPost = useMemo(() => {
+    const byId = new Map(assets.rows.map((a) => [a.id, a]));
+    const m = new Map<string, Asset>();
+    for (const r of postRelations.rows) {
+      if (r.toType !== 'assets' || m.has(r.fromId)) continue;
+      const a = byId.get(r.toId);
+      if (a) m.set(r.fromId, a);
+    }
+    return m;
+  }, [assets.rows, postRelations.rows]);
 
   const searching = query.trim().length > 0;
   const visiblePosts = useMemo(() => {
@@ -187,7 +216,7 @@ export function SpacesPage({ surface }: { surface: Surface }) {
         breadcrumb={crumbs}
         actions={
           <>
-            <Button className="spaces-browse" icon="☰" onClick={() => setTreeOpen(true)} aria-expanded={treeOpen}>
+            <Button className="spaces-browse" icon="menu" onClick={() => setTreeOpen(true)} aria-expanded={treeOpen}>
               {t('spaces.browse')}
             </Button>
             {canAdmin && selected && routeSpaceId && (
@@ -213,7 +242,7 @@ export function SpacesPage({ surface }: { surface: Surface }) {
             <div className="spaces-desc">
               <div className="spaces-desc__head">
                 <h2 className="spaces-h2">
-                  <span className="spaces-glyph" aria-hidden="true">{selected.glyph}</span> {selected.name} <Badge>{t(`spaces.kind.${selected.kind}`)}</Badge>
+                  <SpaceGlyph kind={selected.kind} glyph={selected.glyph} size="lg" /> {selected.name} <Badge>{t(`spaces.kind.${selected.kind}`)}</Badge>
                 </h2>
                 {canWrite && !editingDesc && (
                   <Button size="sm" variant="ghost" onClick={() => { setDescDraft(selected.description); setEditingDesc(true); }}>
@@ -245,7 +274,7 @@ export function SpacesPage({ surface }: { surface: Surface }) {
                   <li key={c.id}>
                     <Card onActivate={() => select(c.id)} aria-label={c.name} padding="sm" className="spaces-child">
                       <span className="spaces-child__row">
-                        <span className="spaces-glyph" aria-hidden="true">{c.glyph}</span>
+                        <SpaceGlyph kind={c.kind} glyph={c.glyph} />
                         <span className="spaces-child__name">{c.name}</span>
                         <Badge>{t(`spaces.kind.${c.kind}`)}</Badge>
                       </span>
@@ -278,9 +307,11 @@ export function SpacesPage({ surface }: { surface: Surface }) {
             <ul className="spaces-posts">
               {visiblePosts.map((p) => {
                 const a = demoUserById(p.authorId);
+                const file = p.kind === 'file' ? assetByPost.get(p.id) ?? null : null;
+                const fileType = p.kind === 'file' ? fileTypeOf(file?.sourceName ?? file?.title ?? p.title) : undefined;
                 return (
                   <li key={p.id}>
-                    <PostCard title={p.title} kind={p.kind} status={p.status} pinned={p.pinned} tags={p.tags} author={a ? { name: a.name, initials: a.initials } : null} updated={formatDate(p.updated_at, lang)} alsoIn={Math.max(0, (filingCountByPost.get(p.id) ?? 0) - (searching ? 0 : 1))} excerpt={excerptOf(p.body)} url={p.url} onOpen={() => navigate(`${base}/post/${p.id}`)} />
+                    <PostCard title={p.title} kind={p.kind} status={p.status} pinned={p.pinned} tags={p.tags} author={a ? { name: a.name, initials: a.initials } : null} updated={formatDate(p.updated_at, lang)} alsoIn={Math.max(0, (filingCountByPost.get(p.id) ?? 0) - (searching ? 0 : 1))} excerpt={excerptOf(p.body)} url={p.url} thumbType={fileType} thumbSrc={file?.thumbnailUrl ?? null} thumbLabel={fileType ? pick(FILE_TYPE_LABELS[fileType], lang) : undefined} onOpen={() => navigate(`${base}/post/${p.id}`)} />
                   </li>
                 );
               })}

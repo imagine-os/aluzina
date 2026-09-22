@@ -269,6 +269,10 @@ export function seed({ add, users }: SeedCtx): void {
       coverAssetId: null,
       year: prj.year,
       sourceFolderUrl: null,
+      fileCount: null,
+      coverUrl: null,
+      archiveSlug: null,
+      fileTypes: [],
     });
 
     if (meta.client) {

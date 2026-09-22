@@ -1,53 +1,57 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTable } from '../../data/DataContext';
+import { useProjectFiles, type ProjectFilesState } from '../../data/archiveFiles';
 import type { Asset, Project, Relation } from '../../data/schema';
 import { DELIVERY_STAGES, compareFolderPaths, fileTypeOf, lifecycleOf, type DeliveryStage, type FileType, type Lifecycle } from '../../domain';
 
-/** One place for the archive's derived reads, so S-12 and S-13 count files the same way. */
+/** One place for the archive's derived reads, so S-12 and S-13 read the same rows. */
 export interface ArchiveData {
   projects: Project[];
-  /** Files of a project, already sorted by folder order then name. */
-  filesByProject: Map<string, Asset[]>;
-  assetsById: Map<string, Asset>;
+  /**
+   * Stored (curated) file rows per project id: the files someone tagged or moved on S-13, linked by their `belongs-to`
+   * relation (`saveFilePatch`, ar-19). Everything else about a project's files lives in its chunk (`useProjectFiles`).
+   */
+  curatedByProject: Map<string, Asset[]>;
   loading: boolean;
 }
 
 /** Files sort in the studio's own folder order (`compareFolderPaths`), then by name inside a folder. */
-function byFolderThenName(a: Asset, b: Asset): number {
+export function byFolderThenName(a: Asset, b: Asset): number {
   const folder = compareFolderPaths(a.folderPath ?? '', b.folderPath ?? '');
   if (folder !== 0) return folder;
   return (a.title || a.slug).localeCompare(b.title || b.slug, undefined, { numeric: true, sensitivity: 'base' });
 }
 
 /**
- * Projects, their archived files and the `belongs-to` relations that connect them, as maps built once.
- * Every project is returned, not only the archived ones: the browser's point is that you can see
- * everything and then narrow it (Justin, #past-projects).
+ * Projects and the curated file rows that point at them. Every project is returned, not only the archived ones: the
+ * browser's point is that you can see everything and then narrow it (Justin, #past-projects). File counts and covers
+ * are columns of the project row (`fileCount`, `coverUrl`, `fileTypes`), so this hook never scans file rows (ar-19).
  */
 export function useArchiveData(): ArchiveData {
   const projects = useTable('projects');
-  const files = useTable('assets', { where: { kind: 'file' } });
+  const stored = useTable('assets', { where: { kind: 'file' } });
   const relations = useTable('relations', { where: { kind: 'belongs-to' } });
 
   return useMemo(() => {
-    const assetsById = new Map(files.rows.map((a) => [a.id, a]));
-    const filesByProject = new Map<string, Asset[]>();
+    const byId = new Map(stored.rows.map((a) => [a.id, a]));
+    const curatedByProject = new Map<string, Asset[]>();
     for (const rel of relations.rows as Relation[]) {
       if (rel.fromType !== 'assets' || rel.toType !== 'projects') continue;
-      const asset = assetsById.get(rel.fromId);
+      const asset = byId.get(rel.fromId);
       if (!asset) continue;
-      const list = filesByProject.get(rel.toId);
+      const list = curatedByProject.get(rel.toId);
       if (list) list.push(asset);
-      else filesByProject.set(rel.toId, [asset]);
+      else curatedByProject.set(rel.toId, [asset]);
     }
-    for (const list of filesByProject.values()) list.sort(byFolderThenName);
-    return {
-      projects: projects.rows as Project[],
-      filesByProject,
-      assetsById,
-      loading: projects.loading || files.loading || relations.loading,
-    };
-  }, [projects.rows, projects.loading, files.rows, files.loading, relations.rows, relations.loading]);
+    return { projects: projects.rows as Project[], curatedByProject, loading: projects.loading || stored.loading || relations.loading };
+  }, [projects.rows, projects.loading, stored.rows, stored.loading, relations.rows, relations.loading]);
+}
+
+/** A project's files (chunk rows overlaid by stored edits, `useProjectFiles`), sorted in folder order for S-13. */
+export function useProjectArchiveFiles(project: Project | null | undefined): ProjectFilesState {
+  const state = useProjectFiles(project);
+  const rows = useMemo(() => [...state.rows].sort(byFolderThenName), [state.rows]);
+  return { rows, loading: state.loading, error: state.error };
 }
 
 /** The lifecycle a project sits in (`prospect | active | past`), from its pipeline status. */
@@ -63,19 +67,6 @@ export function fileTypeOfAsset(asset: Asset): FileType {
 /** Delivery stage of a file: the stored `stage` when the seed set one, else `'other'`. */
 export function stageOfAsset(asset: Asset): DeliveryStage {
   return (asset.stage ?? 'other') as DeliveryStage;
-}
-
-/** Up to four file-type icons for a project without a cover, most common first (the mosaic on S-12). */
-export function topFileTypes(files: readonly Asset[], max = 4): FileType[] {
-  const counts = new Map<FileType, number>();
-  for (const f of files) {
-    const type = fileTypeOfAsset(f);
-    counts.set(type, (counts.get(type) ?? 0) + 1);
-  }
-  return [...counts.entries()]
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-    .slice(0, max)
-    .map(([type]) => type);
 }
 
 /** Stages that actually hold files, in delivery order, with their counts. */

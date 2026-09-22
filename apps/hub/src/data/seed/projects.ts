@@ -74,6 +74,10 @@ export function seed({ add, users }: SeedCtx): void {
     coverAssetId: null,
     year: null,
     sourceFolderUrl: null,
+    fileCount: null,
+    coverUrl: null,
+    archiveSlug: null,
+    fileTypes: [],
   });
   add('projects', P.hoy, {
     name: 'HOY Wellness Center',
@@ -95,6 +99,10 @@ export function seed({ add, users }: SeedCtx): void {
     coverAssetId: null,
     year: null,
     sourceFolderUrl: null,
+    fileCount: null,
+    coverUrl: null,
+    archiveSlug: null,
+    fileTypes: [],
   });
   add('projects', P.noam, {
     name: 'Noam Residential',
@@ -116,6 +124,10 @@ export function seed({ add, users }: SeedCtx): void {
     coverAssetId: null,
     year: null,
     sourceFolderUrl: null,
+    fileCount: null,
+    coverUrl: null,
+    archiveSlug: null,
+    fileTypes: [],
   });
   add('projects', P.honeyValley, {
     name: 'Honey Valley Lighting',
@@ -137,6 +149,10 @@ export function seed({ add, users }: SeedCtx): void {
     coverAssetId: null,
     year: null,
     sourceFolderUrl: null,
+    fileCount: null,
+    coverUrl: null,
+    archiveSlug: null,
+    fileTypes: [],
   });
   add('projects', P.provenza, {
     name: 'Café Provenza',
@@ -158,6 +174,10 @@ export function seed({ add, users }: SeedCtx): void {
     coverAssetId: null,
     year: null,
     sourceFolderUrl: null,
+    fileCount: null,
+    coverUrl: null,
+    archiveSlug: null,
+    fileTypes: [],
   });
   add('projects', P.rutaN, {
     name: 'Oficinas Ruta N piso 4',
@@ -179,6 +199,10 @@ export function seed({ add, users }: SeedCtx): void {
     coverAssetId: null,
     year: null,
     sourceFolderUrl: null,
+    fileCount: null,
+    coverUrl: null,
+    archiveSlug: null,
+    fileTypes: [],
   });
 
   // Sections (D-022): Asana-style groups per project; the Work views group, column and swimlane by them.

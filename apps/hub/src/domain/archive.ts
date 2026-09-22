@@ -156,6 +156,32 @@ function hasWord(text: string, keyword: string): boolean {
  * not `execution`; "INGENIERIA DE OBRA" is an admin folder; "FOTOGRAFIAS DE ESPACIO" is the survey).
  */
 const STAGE_PHRASES: readonly { stage: DeliveryStage; phrases: readonly string[] }[] = [
+  // --- The 2026 folder template (ar-22) -----------------------------------------------------------
+  // Every PROYECTOS 2026 folder is numbered from the same template (`00_PRIMERA PROPUESTA` ..
+  // `09 CONSIGNACIONES`), which the keyword rules alone read badly: 180 of HOY's 206 files landed in
+  // `other` (changelog 0021 H). These run first because each one is a whole folder name whose parts
+  // would misfire on their own.
+  // "03 PLANOS DEL ESPACIO" and "05 DETALLES TECNICOS DE ILUMINACION": before the `iluminacion` phrase
+  // below, which would otherwise read a lighting-detail drawing as design development.
+  { stage: 'technical', phrases: ['planos del espacio', 'detalles tecnicos', 'artes de corte'] },
+  // "01 FOTOGRAFIA Y VIDEO DEL ESPACIO" (template), HOY's plural "FOTOS Y VIDEOS DEL ESPACIO",
+  // SPORTI's "VIDEOS DEL ESPACIO" and HOY's "FOTOS DE LAS SALAS": the photographic survey of what is
+  // there today - before the generic `videos` / `imagenes` phrases at the end of this list.
+  { stage: 'survey', phrases: ['fotografia y video del espacio', 'fotos y videos del espacio', 'fotos y video del espacio', 'videos del espacio', 'video del espacio', 'fotos de las salas'] },
+  // "00_PRIMERA PROPUESTA", "02 PRESENTACION DE DISENO DEL ESPACIO", HOY's "propuestas" (the plural
+  // the singular keyword misses).
+  { stage: 'concept', phrases: ['primera propuesta', 'presentacion de diseno del espacio', 'propuestas'] },
+  // "04_COTIZACION DEL ESPACIO" and its "COTIZACIONES PARA CLIENTE" child.
+  { stage: 'quotation', phrases: ['cotizacion del espacio'] },
+  // "05 CRONOGRAMA DE OBRA" and "07_ FOTOGRAFIAS DE OBRA Y AVANCE": the build, not the drawings.
+  { stage: 'execution', phrases: ['cronograma de obra', 'fotografias de obra y avance'] },
+  // "08 DOCUMENTACION IMPORTANTE", "09 CONSIGNACIONES", and the plurals the singular keywords miss
+  // ("PAGOS", "FACTURAS"). "informes" is CARTAGENA's and SPORTI's folder of conciliation notices,
+  // extra-cost reports and handover reports: paperwork, so admin.
+  { stage: 'admin', phrases: ['documentacion importante', 'consignaciones', 'pagos', 'facturas', 'informes', 'informe'] },
+  // "CERTIFICADOS Y GARANTIAS": what the client is handed at the end.
+  { stage: 'delivery', phrases: ['certificados y garantias', 'garantias', 'certificados'] },
+  // --- Folders of the featured project (prompt 0017) ----------------------------------------------
   { stage: 'quotation', phrases: ['propuesta economica', 'cotizacion', 'cotizaciones', 'presupuesto'] },
   { stage: 'procurement', phrases: ['suppliers', 'supplier', 'proveedores', 'proveedor'] },
   { stage: 'admin', phrases: ['control financiero', 'contabilidad', 'documentos de aluzina', 'ingenieria de obra', 'financial status', 'cuentas de cobro', 'cuenta de cobro', 'contratos'] },
@@ -164,6 +190,18 @@ const STAGE_PHRASES: readonly { stage: DeliveryStage; phrases: readonly string[]
   { stage: 'design-development', phrases: ['3d obra', 'diseno interior imagenes', 'mobiliario', 'botanica', 'arte', 'domotica', 'modelos', 'iluminacion'] },
   { stage: 'concept', phrases: ['feng shui', 'presentation'] },
   { stage: 'delivery', phrases: ['cierre de proyecto', 'cierre', 'fotos finales'] },
+  // --- What the rest of HOY's and SODIME's trees use (ar-22) --------------------------------------
+  // HOY's "MANUAL DE MARCA" (BrandBook, logo, fuente) and "INFORMACION DISENO INTERIOR" are design
+  // output; SODIME's "ARTES RIONEGRO" (logos, mailing, .ai artwork) is too. "RENOVACION" was left out
+  // on purpose: it would have swallowed the quotation sitting in SODIME's renovation folder.
+  // After `artes de corte` above, which stays technical.
+  { stage: 'design-development', phrases: ['manual de marca', 'informacion diseno interior', 'artes'] },
+  // Last of all: a folder that is only an image or video library is what the project publishes from -
+  // HOY's "IMAGENES HOY" (105 files) and "IMAGENES DE ECOSISTEMA VIRTUAL", SODIME's "IMAGENES DE
+  // SODIME", HOY's "VIDEOS". Everything more specific ("diseno interior imagenes", the survey photos,
+  // the brand manual) has already matched above. Marketing is the honest bucket for an image library;
+  // whether HOY's 105 dated photos are marketing or the final-photo record is a question for Justin.
+  { stage: 'marketing', phrases: ['imagenes', 'imagen', 'videos', 'ecosistema virtual'] },
 ];
 
 function classify(text: string): DeliveryStage | null {

@@ -1,0 +1,86 @@
+{
+ "folderName": "PROCESO CRISTIAN ZAPATA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJeFUPXvUnCblCHRtSSjOIs/PROYECTOS%20ALUZINA%202024/PROCESO%20CRISTIAN%20ZAPATA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:41:49.764Z",
+ "indexedAt": "2026-09-21T23:55:32.608Z",
+ "depth": 2,
+ "fileCount": 3,
+ "totalBytes": 3039539,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/proceso-cristian-zapata/",
+ "files": [
+  {
+   "path": "Cotización (redactado).xlsx",
+   "name": "Cotización (redactado).xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 2757755,
+   "modified": "Oct 30, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJeFUPXvUnCblCHRtSSjOIs/PROYECTOS%20ALUZINA%202024/PROCESO%20CRISTIAN%20ZAPATA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-tapiceria-cristian-salazar",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "CRISTIAN SALAZAR_TAPIZ SOFA.pdf",
+   "name": "CRISTIAN SALAZAR_TAPIZ SOFA.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 265441,
+   "modified": "Oct 30, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACX1yovMzGUDleGs0JNM79U/PROYECTOS%20ALUZINA%202024/PROCESO%20CRISTIAN%20ZAPATA/CRISTIAN%20SALAZAR_TAPIZ%20SOFA.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "cristian-salazar-tapiz-sofa",
+   "thumb": "thumbs/cristian-salazar-tapiz-sofa.jpg",
+   "pages": [
+    "pages/cristian-salazar-tapiz-sofa-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "UNIVERSO 00650 Nombre proyecto: CRISTIAN SALAZAR Correo Octubre 27 Direccion: EDIFICIO URBAN STUDIO POBLADO Ciudad Tiempo de entrega: 20 DIAS TIEMPO PROCESO DESCRIPCION FOTOGRAFIA DE TELA FOTOGRAFIA DE MUEBLE Valor del servicio 20 dias TAPIZADO SERVICIO COMPLETO 1 ANTICIPO 1 70% ANTICIPO 2 30% COP 1,521,000 760,500 COP ALEJANDRA GUERRA LOTERO UNIVERSO DE DISEÑO DISEÑOADORA DE ESPACIOS Y ESCENARIOS ALUZINA 4. Los precios descritos anteriormente podrian variar al momento de la compra por la fluctuacion del mercado y del dólar 7. Las piezas deban ser fabricadas que hayan sido aprobadas por escrit",
+   "palette": [
+    "#ffffff",
+    "#f9f9f9",
+    "#e6e7df",
+    "#e2f3ec",
+    "#d3c081",
+    "#cbffcc"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "SUMANA HEALING/sumana healing.xlsx",
+   "name": "sumana healing.xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 16343,
+   "modified": "Jul 6, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHlzIu9n1hzCBfZI6vFjkrs/PROYECTOS%20ALUZINA%202024/PROCESO%20CRISTIAN%20ZAPATA/SUMANA%20HEALING/sumana%20healing.xlsx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "sumana-healing--sumana-healing",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 1,
+  "bytes": 48103,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

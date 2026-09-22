@@ -3,7 +3,7 @@
 - component: `apps/hub/src/components/atom/Icon/Icon.tsx` (+ `iconMap.ts`, `Icon.css`, `Icon.meta.ts`, `Icon.example.tsx`)
 - sheet: `/#/dev/components` -> Icon (every name, drawn)
 - tokens: `--icon-sm` 1rem / `--icon-md` 1.25rem / `--icon-lg` 1.5rem / `--icon-xl` 2rem (`design/tokens.ts` -> `styles/tokens.css`)
-- model: Fable 5.1 (set and mapping), Opus 5 (build)
+- model: Fable 5.1 (set and mapping), Opus 5 (build, and the ar-21 pass below)
 
 Navigating the OS used to mean reading Unicode glyphs (`◈ ▤ ◇ ▦ ◆ ✓ ☷ ▣ ◉ ▷ ✦ ▩ ▥ ◦ …`): they render differently on every platform, several routes share one shape, and none of them says what the page is. This pass draws one icon per thing the OS actually has, and resolves it from data that already exists, so **no module changed**.
 
@@ -53,16 +53,31 @@ Space kinds have their own map, `SPACE_KIND_ICONS`: `area` spaces, `topic` note,
 | `▧` | purchases | `⌗` | testing | `⌁` | actions |
 | `◐` | tokens | `!` | alerts | `☰ …` | more |
 
+UI glyphs added in ar-21, for the marks modules typed inside their own bodies rather than in a `nav.glyph`:
+
+| glyph | icon | glyph | icon | glyph | icon |
+| --- | --- | --- | --- | --- | --- |
+| `× ✕` | close | `›` | chevron-right | `‹` | chevron-left |
+| `▶` | chevron-right | `◀` | chevron-left | `→` | chevron-right |
+| `←` | back | `↓` | download | `↗` | external |
+| `−` | minus | `+` | plus | `⧉` | copy |
+| `⌕` | search | `⚲` | pin | `⚑` | flag |
+| `⎙` | print | `☾` | moon | `☼` | sun |
+| `↺` | revisions | | | | |
+
+`POST_KIND_ICONS` maps a post kind to its mark on a `PostCard` (K-01 / K-02): `note` note, `link` external, `file` documents, `decision` approvals, `procedure` manual, `brief` intake, `announcement` alerts. An unknown kind falls back to `note`.
+
 Per-route overrides (`ROUTE_ICONS`) cover every nav route of every surface; the interesting ones are the four portal homes, which would otherwise all read as one gauge: `A-01` dashboard, `O-01` execution, `S-01` design, `G-01` brand, `C-01` home.
 
 ## The set
 
-71 names, grouped by what they mark:
+78 names, grouped by what they mark:
 
 - **surfaces and sections**: dashboard, approvals, projects, work, spaces, graph, catalog, import, documents, plans, design, references, palette, brand, competitions, presentations, images, revisions, assets, communication, messages, alerts, reports, quality, settings, manual, developer, docs, archive
 - **business**: sales, leads, intake, schedule, calendar, suppliers, quotes, deliveries, payments, execution, purchases, site, money, clients, team
 - **builder and dev tools**: tools, plan, canvas, simulator, actions, tokens, testing
-- **interface**: folder, search, filter, close, chevron-right, chevron-down, external, download, copy, plus, minus, check, warning, info, user, home, back, note, dot, more
+- **interface**: folder, search, filter, close, chevron-right, chevron-left, chevron-down, external, download, copy, plus, minus, check, warning, info, user, home, back, note, dot, more, menu
+- **added in ar-21**: chevron-left, moon, sun, pin, print, flag, menu (the theme toggle, pinned posts, the print button, the bug flag, the menu button and the back chevron had no drawn name)
 
 ## Where they are used
 
@@ -73,9 +88,14 @@ Per-route overrides (`ROUTE_ICONS`) cover every nav route of every surface; the 
 | SpaceTree rows and chevron | `components/organism/SpaceTree/SpaceTree.tsx` | kind icon at `md`, chevron `chevron-right` / `chevron-down` at `sm` inside the existing 44 px button |
 | SurfaceCard | `components/molecule/SurfaceCard/SurfaceCard.tsx` | `sm` next to the code, `xl` (x1.6) inside the "No preview yet" tile in place of the monogram |
 | Hub cards (HUB-01) | `modules/hub/HubPage.tsx` | `icon={resolveIcon(code)}` for portals, product surfaces, dev tools and prototype pages |
+| Every `Button` (ar-21) | `components/atom/Button/Button.tsx` | a string `icon` / `iconEnd` resolves as an icon name first, then through `GLYPH_ICONS`, then renders as text: one change drew the close, chevron, zoom, copy and download marks on every page, with no module edited |
+| K-01 space heading and child rows | `modules/spaces/SpacesPage.tsx` (`SpaceGlyph`) | `SPACE_KIND_ICONS[kind]`, then the seeded glyph through `resolveIcon`, then the glyph text |
+| PostCard kind mark and pin | `components/molecule/PostCard/PostCard.tsx` | `POST_KIND_ICONS[kind]` at `sm` beside the kind badge; the pin is the `pin` icon |
+| Theme toggle and the menu button | `app/shells.tsx` | `moon` / `sun` when compact; the menu button is `menu` |
 
 ## Adding one
 
+0. Ask first whether the mark is a *thing* the OS has (then it is a name) or a Unicode glyph a module already prints (then a `GLYPH_ICONS` row draws it everywhere without touching the module).
 1. Add the name to `ICON_NAMES` (alphabetical inside its group is not required; keep the row grouping readable).
 2. Draw it in `PATHS` on the 24 grid: no `fill` except `<Dot />`, no `stroke-width` of its own, no hard-coded colour.
 3. Point at it: a page code in `ROUTE_ICONS`, a glyph in `GLYPH_ICONS`, or a space kind in `SPACE_KIND_ICONS`. Never change a module's `nav.glyph`.

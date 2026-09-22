@@ -1,5 +1,6 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRegisterActions } from '../../actions';
 import { demoUserById } from '../../auth/demoUsers';
 import { useSession } from '../../auth/SessionProvider';
 import { Avatar } from '../../components/atom/Avatar/Avatar';
@@ -15,9 +16,12 @@ import { toast } from '../../components/atom/Toast/Toast';
 import { EmptyState } from '../../components/molecule/EmptyState/EmptyState';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { SearchField } from '../../components/molecule/SearchField/SearchField';
+import { Thumb } from '../../components/molecule/Thumb/Thumb';
+import { DocumentViewer } from '../../components/organism/DocumentViewer/DocumentViewer';
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useData, useRow, useTable } from '../../data/DataContext';
-import { RELATION_KINDS, type PostStatus, type RelationKind } from '../../data/schema';
+import { RELATION_KINDS, type Asset, type PostStatus, type RelationKind } from '../../data/schema';
+import { FILE_TYPE_LABELS, fileTypeOf, isPreviewable, pick } from '../../domain';
 import { formatDate, formatDateTime } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';
@@ -42,6 +46,7 @@ export function PostPage({ surface }: { surface: Surface }) {
   const incoming = useTable('relations', { where: { toType: 'posts', toId: id } });
   const comments = useTable('comments', { where: { entity: 'posts', entityId: id }, orderBy: 'created_at' });
   const activity = useTable('activity', { where: { entity: 'posts', entityId: id }, orderBy: 'at', dir: 'desc' });
+  const assets = useTable('assets');
   const index = useEntityIndex(surface);
   const canWrite = can('spaces.write');
   const base = `/${surface}/spaces`;
@@ -59,6 +64,7 @@ export function PostPage({ surface }: { surface: Surface }) {
   const [relKind, setRelKind] = useState<RelationKind>('references');
   const [relNote, setRelNote] = useState('');
   const [comment, setComment] = useState('');
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   const filedSpaces = useMemo(() => filings.rows.map((f) => ({ filing: f, space: index.spaces.find((s) => s.id === f.spaceId) })).filter((x) => x.space), [filings.rows, index.spaces]);
   const spaceOptions = useMemo(() => {
@@ -70,6 +76,37 @@ export function PostPage({ surface }: { surface: Surface }) {
       .sort((a, b) => a.path.localeCompare(b.path));
   }, [index.spaces, fileQuery]);
   const relResults = useMemo(() => index.search(relType, relQuery, 8).filter((o) => !(relType === 'posts' && o.id === id)), [index, relType, relQuery, id]);
+
+  /**
+   * ar-17: the file a `file` post points at - the first `assets` row among its relations (D-026). When the
+   * row has served page renders (or is a served PDF, image or video) the post previews in place through the
+   * shared `DocumentViewer`; anything else keeps its link, which for the Dropbox archive is the whole point.
+   */
+  const fileAsset: Asset | null = useMemo(() => {
+    if (post?.kind !== 'file') return null;
+    for (const r of outgoing.rows) {
+      if (r.toType !== 'assets') continue;
+      const a = assets.rows.find((x) => x.id === r.toId);
+      if (a) return a;
+    }
+    return null;
+  }, [post?.kind, outgoing.rows, assets.rows]);
+  const fileType = fileTypeOf(fileAsset?.sourceName ?? fileAsset?.title ?? post?.title ?? '');
+  const previewable = Boolean(fileAsset && (fileAsset.previewUrls.length > 0 || (fileAsset.url && isPreviewable(fileType))));
+
+  const openPreview = (): string => {
+    if (!previewable) return 'not previewable: this post has no file the browser can show; its link opens it at the source';
+    setPreviewOpen(true);
+    return fileAsset?.id ?? 'open';
+  };
+  const closePreview = (): string => {
+    setPreviewOpen(false);
+    return 'closed';
+  };
+  useRegisterActions({
+    'spaces.previewAsset': () => openPreview(),
+    'spaces.closeAssetPreview': () => closePreview(),
+  });
 
   if (!loading && !post) {
     return (
@@ -157,7 +194,8 @@ export function PostPage({ surface }: { surface: Surface }) {
         breadcrumb={crumbs}
         actions={
           <>
-            {post.url && <Button href={post.url} external iconEnd="↗">{t('spaces.openLink')}</Button>}
+            {previewable && <Button variant="secondary" icon="images" onClick={openPreview}>{t('spaces.preview')}</Button>}
+            {post.url && !previewable && <Button href={post.url} external iconEnd="↗">{t('spaces.openLink')}</Button>}
             {canWrite && <Button variant={post.pinned ? 'primary' : 'secondary'} icon="⚲" aria-pressed={post.pinned} onClick={togglePin}>{t(post.pinned ? 'spaces.unpin' : 'spaces.pin')}</Button>}
             {canWrite && !editing && <Button onClick={startEdit} icon="✎">{t('spaces.edit')}</Button>}
             {canWrite && <Select className="spaces-status" label={t('spaces.status')} hideLabel value={post.status} onChange={(e) => setStatus(e.target.value as PostStatus)} options={(['draft', 'published', 'archived'] as PostStatus[]).map((s) => ({ value: s, label: t(`core.status.${s}`) }))} />}
@@ -189,6 +227,29 @@ export function PostPage({ surface }: { surface: Surface }) {
                 </span>
               )}
             </div>
+
+            {/* ar-17: the file of a `file` post - its Thumb (served render or the family icon) and the way in. */}
+            {post.kind === 'file' && (
+              <section className="spaces-post__file" aria-labelledby="post-file-title">
+                <h3 id="post-file-title" className="visually-hidden">{t('spaces.file')}</h3>
+                <Thumb className="spaces-post__thumb" src={fileAsset?.thumbnailUrl ?? null} alt={fileAsset?.title ?? post.title} type={fileType} ratio="4:3" size="sm" iconLabel={pick(FILE_TYPE_LABELS[fileType], lang)} />
+                <div className="spaces-post__file-facts">
+                  <p className="spaces-muted">
+                    {pick(FILE_TYPE_LABELS[fileType], lang)}
+                    {fileAsset?.previewUrls.length ? ` · ${t('spaces.filePages', { count: fileAsset.previewUrls.length })}` : ''}
+                  </p>
+                  <div className="spaces-actions">
+                    {previewable ? (
+                      <Button size="sm" variant="primary" icon="images" onClick={openPreview}>{t('spaces.preview')}</Button>
+                    ) : (
+                      <p className="spaces-muted spaces-hint">{t('spaces.noFilePreview')}</p>
+                    )}
+                    {post.url && <Button size="sm" variant="ghost" href={post.url} external iconEnd="↗">{t('spaces.openLink')}</Button>}
+                    {fileAsset?.sourceUrl && fileAsset.sourceUrl !== post.url && <Button size="sm" variant="ghost" href={fileAsset.sourceUrl} external iconEnd="↗">{t('spaces.openSource')}</Button>}
+                  </div>
+                </div>
+              </section>
+            )}
 
             {editing ? (
               <form className="spaces-form" onSubmit={save}>
@@ -326,6 +387,34 @@ export function PostPage({ surface }: { surface: Surface }) {
           </aside>
         </div>
       )}
+
+      {/* ar-17: the shared viewer in the page's existing Drawer pattern, not a bare link out. */}
+      <Drawer open={previewOpen && fileAsset !== null} onClose={closePreview} title={fileAsset?.title ?? post.title}>
+        {fileAsset && (
+          <>
+            <DocumentViewer
+              asset={{ title: fileAsset.title, titleEs: fileAsset.titleEs, url: fileAsset.url, sourceUrl: fileAsset.sourceUrl, mimeType: fileAsset.mimeType, previewUrls: fileAsset.previewUrls, pageCount: fileAsset.pageCount, thumbnailUrl: fileAsset.thumbnailUrl, fileType }}
+              downloadName={fileAsset.title}
+              controls={false}
+              labels={{
+                fallback: t('spaces.noFilePreview'),
+                download: t('spaces.download'),
+                openSource: t('spaces.openSource'),
+                page: (n, total) => t('spaces.viewerPosition', { index: n, total }),
+                prev: t('spaces.viewerPrev'),
+                next: t('spaces.viewerNext'),
+                thumbnails: t('spaces.viewerThumbnails'),
+                fileType: pick(FILE_TYPE_LABELS[fileType], lang),
+              }}
+            />
+            <div className="spaces-actions">
+              {fileAsset.url && <Button href={fileAsset.url} download={fileAsset.title}>{t('spaces.download')}</Button>}
+              {(fileAsset.sourceUrl ?? post.url) && <Button variant="ghost" href={(fileAsset.sourceUrl ?? post.url) as string} external>{t('spaces.openSource')}</Button>}
+              <Button variant="ghost" onClick={closePreview}>{t('spaces.close')}</Button>
+            </div>
+          </>
+        )}
+      </Drawer>
 
       <Drawer open={fileOpen} onClose={() => setFileOpen(false)} title={t('spaces.fileInTitle', { post: post.title })}>
         <div className="spaces-form">

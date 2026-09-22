@@ -1,0 +1,53 @@
+{
+ "folderName": "0_109 REALITY COLOMBIA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOcQMJoBbycOzfG20dqeoJ0/PROYECTOS%20ALUZINA%202021/0_109%20REALITY%20COLOMBIA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:38:42.868Z",
+ "indexedAt": "2026-09-21T23:55:32.735Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 23142,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/reality-colombia/",
+ "files": [
+  {
+   "path": "REALITY EN COLOMBIA.docx",
+   "name": "REALITY EN COLOMBIA.docx",
+   "ext": "docx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+   "bytes": 23147,
+   "modified": "Sep 14, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMEHAKjywe_8Qlm6_jNFFPw/PROYECTOS%20ALUZINA%202021/0_109%20REALITY%20COLOMBIA/REALITY%20EN%20COLOMBIA.docx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "reality-en-colombia",
+   "thumb": "thumbs/reality-en-colombia.jpg",
+   "pages": [
+    "pages/reality-en-colombia-page-01.jpg",
+    "pages/reality-en-colombia-page-02.jpg",
+    "pages/reality-en-colombia-page-03.jpg",
+    "pages/reality-en-colombia-page-04.jpg"
+   ],
+   "pageCount": 6,
+   "textExcerpt": "DOCUMENTAL EN COLOMBIA RECONSTRUYENDO NUESTRA HISTORIA La pantalla siempre será una manera de viajar desde casa, conocer y viajar por un lugar tan poco explorado por las cámaras como lo es Colombia. El guion literal y técnico será desarrollados una ves se escoja el mejor concepto dentro de los 3 que describiremos a continuación. CONCEPTO 1 INSPIRACION: TESOROS Y ANTIGUEDADES COLOMBIANAS NOMBRE REALITY: Encuentra Los Origenes Colombia REFRENTE: American Pickers PERSONAJES: 1. Canadiense viajero un poco loco con gran sentido de la estética, amante del arte, el diseño y la arquitectura, coleccion",
+   "palette": [
+    "#ffffff",
+    "#e8e8e8",
+    "#f7f7f7",
+    "#b5b5b5",
+    "#cdcdcd",
+    "#d9d9d9"
+   ],
+   "renderer": "libreoffice"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 320794,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

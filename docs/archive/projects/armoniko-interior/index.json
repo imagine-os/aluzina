@@ -1,0 +1,96 @@
+{
+ "folderName": "armoniko interior",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHFbuVjLSHhpRK_TXG3-lbw/PROYECTOS%20ALUZINA%202022/armoniko%20interior?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:46:59.468Z",
+ "indexedAt": "2026-09-21T23:55:32.539Z",
+ "depth": 1,
+ "fileCount": 3,
+ "totalBytes": 52718070,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/armoniko-interior/",
+ "files": [
+  {
+   "path": "0077 METODOLOGIA PARA AGREGAR VALOR A ARMONIKO .ai",
+   "name": "0077 METODOLOGIA PARA AGREGAR VALOR A ARMONIKO .ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 46961726,
+   "modified": "Feb 4, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHifNNoPKuL8589j6-b9W-8/PROYECTOS%20ALUZINA%202022/armoniko%20interior/0077%20METODOLOGIA%20PARA%20AGREGAR%20VALOR%20A%20ARMONIKO%20.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "0077-metodologia-para-agregar-valor-a-armoniko",
+   "thumb": "thumbs/0077-metodologia-para-agregar-valor-a-armoniko.jpg",
+   "pages": [],
+   "pageCount": 17,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I L U Z Pasamos el 87% de nuestras vidas en ESPACIOS interiores; la manera como estén diseñados, impacta nuestra vida. La parte hace el todo y el todo la parte El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial. D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo EXPERIENCIA ARMONIKO",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff96",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "0077 METODOLOGIA PARA AGREGAR VALOR A ARMONIKO .pdf",
+   "name": "0077 METODOLOGIA PARA AGREGAR VALOR A ARMONIKO .pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 5188614,
+   "modified": "Feb 4, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFrgW2Ma3WfwRPYNcOC0efk/PROYECTOS%20ALUZINA%202022/armoniko%20interior/0077%20METODOLOGIA%20PARA%20AGREGAR%20VALOR%20A%20ARMONIKO%20.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "0077-metodologia-para-agregar-valor-a-armoniko-2",
+   "thumb": "thumbs/0077-metodologia-para-agregar-valor-a-armoniko-2.jpg",
+   "pages": [],
+   "pageCount": 17,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I L U Z Pasamos el 87% de nuestras vidas en ESPACIOS interiores; la manera como estén diseñados, impacta nuestra vida. La parte hace el todo y el todo la parte El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial. D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo EXPERIENCIA ARMONIKO",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff96",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "0077 METODOLOGIA PARA AGREGAR VALOR A ARMONIKO big .pdf",
+   "name": "0077 METODOLOGIA PARA AGREGAR VALOR A ARMONIKO big .pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 561896,
+   "modified": "Feb 3, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKUwY8H8zV7a4CAUbTPGh9s/PROYECTOS%20ALUZINA%202022/armoniko%20interior/0077%20METODOLOGIA%20PARA%20AGREGAR%20VALOR%20A%20ARMONIKO%20big%20.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "0077-metodologia-para-agregar-valor-a-armoniko-big",
+   "thumb": "thumbs/0077-metodologia-para-agregar-valor-a-armoniko-big.jpg",
+   "pages": [],
+   "pageCount": 15,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I L U Z Pasamos el 87% de nuestras vidas en ESPACIOS interiores; la manera como estén diseñados, impacta nuestra vida. La parte hace el todo y el todo la parte El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial. D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo EXPERIENCIA ARMONIKO",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff96",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 3,
+  "pages": 0,
+  "bytes": 28983,
+  "maxPages": 0,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

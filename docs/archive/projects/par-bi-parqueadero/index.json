@@ -1,0 +1,128 @@
+{
+ "folderName": "0_106 PAR BI (PARQUEADERO)",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APlBXkaEglox0vaZD6O56aY/PROYECTOS%20ALUZINA%202021/0_106%20PAR%20BI%20%28PARQUEADERO%29?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:37:57.982Z",
+ "indexedAt": "2026-09-21T23:55:32.729Z",
+ "depth": 1,
+ "fileCount": 4,
+ "totalBytes": 2233928,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/par-bi-parqueadero/",
+ "files": [
+  {
+   "path": "PARQUEADERO PUBLICO.ai",
+   "name": "PARQUEADERO PUBLICO.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 211670,
+   "modified": "May 18, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADILlfL4N3ytTbmO5-_A254/PROYECTOS%20ALUZINA%202021/0_106%20PAR%20BI%20%28PARQUEADERO%29/PARQUEADERO%20PUBLICO.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "parqueadero-publico",
+   "thumb": "thumbs/parqueadero-publico.jpg",
+   "pages": [
+    "pages/parqueadero-publico-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "PARQUEADERO PUBLICO CARRO 2.800 20.000 MOTO 1.700 7.000 HORA DIA 24/7 PREGUNTE POR SU MENSUALIDAD",
+   "palette": [
+    "#ffffff",
+    "#cbd96f",
+    "#908462",
+    "#f3f6e4",
+    "#fdfdff",
+    "#fdffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PARQUEADERO PUBLICO.pdf",
+   "name": "PARQUEADERO PUBLICO.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 241660,
+   "modified": "May 18, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AP_D6D6ZkD8_Ovmg-XG6CEw/PROYECTOS%20ALUZINA%202021/0_106%20PAR%20BI%20%28PARQUEADERO%29/PARQUEADERO%20PUBLICO.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "parqueadero-publico-2",
+   "thumb": "thumbs/parqueadero-publico-2.jpg",
+   "pages": [
+    "pages/parqueadero-publico-2-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "PARQUEADERO PUBLICO CARRO 2.800 20.000 MOTO 1.700 7.000 HORA DIA 24/7 PREGUNTE POR SU MENSUALIDAD",
+   "palette": [
+    "#ffffff",
+    "#cbd96f",
+    "#908462",
+    "#f3f6e4",
+    "#fdfdff",
+    "#fdffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "VOLANTE PARQUEADERO.ai",
+   "name": "VOLANTE PARQUEADERO.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 863114,
+   "modified": "Jun 1, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ALUlBUlAtC0qSGsfR96aRsY/PROYECTOS%20ALUZINA%202021/0_106%20PAR%20BI%20%28PARQUEADERO%29/VOLANTE%20PARQUEADERO.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "volante-parqueadero",
+   "thumb": "thumbs/volante-parqueadero.jpg",
+   "pages": [
+    "pages/volante-parqueadero-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "PARQUEADERO PUBLICO CARRO 2.500 15.000 100.000 Puedes dejar tu carro durante la noche y te lo cuidamos hasta la mañana MOTO 1.500 7.000 50.000 HORA DIA MES HORA DIA MES 24/7 PARQUEADERO PUBLICO CARRO 2.500 15.000 100.000 Puedes dejar tu carro durante la noche y te lo cuidamos hasta la mañana MOTO 1.500 7.000 50.000 HORA DIA MES HORA DIA MES 24/7",
+   "palette": [
+    "#ffffff",
+    "#baac85",
+    "#dee4be",
+    "#f8f8f5",
+    "#fefffd",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "VOLANTE PARQUEADERO.pdf",
+   "name": "VOLANTE PARQUEADERO.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 917487,
+   "modified": "Jun 1, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACHqfXDROxUJG3faKWr0XzI/PROYECTOS%20ALUZINA%202021/0_106%20PAR%20BI%20%28PARQUEADERO%29/VOLANTE%20PARQUEADERO.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "volante-parqueadero-2",
+   "thumb": "thumbs/volante-parqueadero-2.jpg",
+   "pages": [
+    "pages/volante-parqueadero-2-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "PARQUEADERO PUBLICO CARRO 2.500 15.000 100.000 Puedes dejar tu carro durante la noche y te lo cuidamos hasta la mañana MOTO 1.500 7.000 50.000 HORA DIA MES HORA DIA MES 24/7 PARQUEADERO PUBLICO CARRO 2.500 15.000 100.000 Puedes dejar tu carro durante la noche y te lo cuidamos hasta la mañana MOTO 1.500 7.000 50.000 HORA DIA MES HORA DIA MES 24/7",
+   "palette": [
+    "#ffffff",
+    "#baac85",
+    "#dee4be",
+    "#f8f8f5",
+    "#fefffd",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 4,
+  "pages": 4,
+  "bytes": 361952,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

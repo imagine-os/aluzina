@@ -1,0 +1,58 @@
+{
+ "folderName": "CURVE ID INSTAGRAM",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKInW1Sc9lz9Hb7-djE5wy0/PROYECTOS%20ALUZINA%202024/CURVE%20ID%20INSTAGRAM?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:35:51.305Z",
+ "indexedAt": "2026-09-21T23:55:32.588Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 197436375,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/curve-id-instagram/",
+ "files": [
+  {
+   "path": "CURVE ID.ai",
+   "name": "CURVE ID.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 97758740,
+   "modified": "Jul 21, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ALTsVDZHaW5vS_Rsyy2uHUE/PROYECTOS%20ALUZINA%202024/CURVE%20ID%20INSTAGRAM/CURVE%20ID.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "curve-id",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "CURVE ID.pdf",
+   "name": "CURVE ID.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 99677635,
+   "modified": "Jul 22, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACrB2vX1PUYPoKdKH2oInxo/PROYECTOS%20ALUZINA%202024/CURVE%20ID%20INSTAGRAM/CURVE%20ID.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "curve-id-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

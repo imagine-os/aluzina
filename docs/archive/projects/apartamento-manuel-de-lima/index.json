@@ -1,0 +1,70 @@
+{
+ "folderName": "015 APARTAMENTO MANUEL DE LIMA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIEMzGFwLXWJ97VuGWTcIYM/PROYECTOS%20ALUZINA%202025/015%20APARTAMENTO%20MANUEL%20DE%20LIMA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:32:22.334Z",
+ "indexedAt": "2026-09-21T23:55:32.617Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 366466826,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/apartamento-manuel-de-lima/",
+ "files": [
+  {
+   "path": "PRESENTACION DE DISENO MANUEL DE LIMA.ai",
+   "name": "PRESENTACION DE DISENO MANUEL DE LIMA.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 183217684,
+   "modified": "Feb 19, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMBIkS-JX7bhzO0-FPEuPW8/PROYECTOS%20ALUZINA%202025/015%20APARTAMENTO%20MANUEL%20DE%20LIMA/PRESENTACION%20DE%20DISENO%20MANUEL%20DE%20LIMA.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "presentacion-de-diseno-manuel-de-lima",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "PRESENTACION DE DISENO MANUEL DE LIMA.pdf",
+   "name": "PRESENTACION DE DISENO MANUEL DE LIMA.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 183249142,
+   "modified": "Feb 19, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AGM1C3ZMzQppI1zQk9AjrdY/PROYECTOS%20ALUZINA%202025/015%20APARTAMENTO%20MANUEL%20DE%20LIMA/PRESENTACION%20DE%20DISENO%20MANUEL%20DE%20LIMA.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "presentacion-de-diseno-manuel-de-lima-2",
+   "thumb": "thumbs/presentacion-de-diseno-manuel-de-lima-2.jpg",
+   "pages": [
+    "pages/presentacion-de-diseno-manuel-de-lima-2-page-01.jpg",
+    "pages/presentacion-de-diseno-manuel-de-lima-2-page-02.jpg",
+    "pages/presentacion-de-diseno-manuel-de-lima-2-page-03.jpg",
+    "pages/presentacion-de-diseno-manuel-de-lima-2-page-04.jpg"
+   ],
+   "pageCount": 9,
+   "textExcerpt": "ESPACIO + LUZ A L E J A N D R A G U E R R A / C E O P R I N C I P A L / P R O P E T A R I A I N T E R I O R I S M O I L U M I N A C I Ó N Por Que Trabajar Con Aluzina E S T U D I O C R E A T I V O D E D I S E Ñ O SERVICIOS COMPLETOS DE DISEÑO • Enfoque a su medida. • Diseños de alta calidad. • Respuesta rapida y comunicación clara. • Nuestro cliente siempre cuenta con un gestor de proyectos dedicado a su proyecto. ATMOSFERA • Un valor agregado con el manejo de la luz como hilo conductor que conecta los proyectos como experiencias de luz • Enfasis en iluminación emocional sin dejar atras la ilu",
+   "palette": [
+    "#120d0a",
+    "#312c1f",
+    "#484438",
+    "#262116",
+    "#827e73",
+    "#756f65"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 225904,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

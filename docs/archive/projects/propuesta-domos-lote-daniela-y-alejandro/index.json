@@ -1,0 +1,43 @@
+{
+ "folderName": "PROPUESTA DOMOS LOTE DANIELA Y ALEJANDRO",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIp-7Mt2RuWeg_BVxZYkWik/PROYECTOS%20ALUZINA%202022/PROPUESTA%20DOMOS%20LOTE%20DANIELA%20Y%20ALEJANDRO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:56:24.696Z",
+ "indexedAt": "2026-09-21T23:55:32.570Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 35473326,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/propuesta-domos-lote-daniela-y-alejandro/",
+ "files": [
+  {
+   "path": "Cotización (redactado).pdf",
+   "name": "Cotización (redactado).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 35473326,
+   "modified": "Sep 8, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIp-7Mt2RuWeg_BVxZYkWik/PROYECTOS%20ALUZINA%202022/PROPUESTA%20DOMOS%20LOTE%20DANIELA%20Y%20ALEJANDRO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-sauna",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

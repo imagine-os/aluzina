@@ -1,0 +1,111 @@
+{
+ "folderName": "CAMILO ECHEVERY INTERIORISMO",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AM2d-w0EkrV0eyus1AZX4QA/PROYECTOS%20ALUZINA%202024/CAMILO%20ECHEVERY%20INTERIORISMO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:32:13.687Z",
+ "indexedAt": "2026-09-21T23:55:32.579Z",
+ "depth": 1,
+ "fileCount": 3,
+ "totalBytes": 65001226,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/camilo-echevery-interiorismo/",
+ "files": [
+  {
+   "path": "ASESORIA pro 202403.pdf",
+   "name": "ASESORIA pro 202403.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 1956417,
+   "modified": "Jan 26, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABp-I9QaeHmpsIN9EW4jW18/PROYECTOS%20ALUZINA%202024/CAMILO%20ECHEVERY%20INTERIORISMO/ASESORIA%20pro%20202403.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "asesoria-pro-202403",
+   "thumb": "thumbs/asesoria-pro-202403.jpg",
+   "pages": [
+    "pages/asesoria-pro-202403-page-01.jpg",
+    "pages/asesoria-pro-202403-page-02.jpg",
+    "pages/asesoria-pro-202403-page-03.jpg",
+    "pages/asesoria-pro-202403-page-04.jpg"
+   ],
+   "pageCount": 6,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo ESPACIO HOGAR CAMILO A S E S O R Í A D I S E Ñ O D E E S P A C I O S ¿QUE ES? La asesoría dictada por Alejandra Guerra es un servicio con un enfoque profesional como método para potenciar los ESPACIOS personales, comerciales, efimeros que entretienen, educan, venden, cautivan , probeen descanso y sobre todo generan expe- riencias acordes a una necesidades o sueños. ES LA FORMA DE SERVIR PARA QUE PROYECTO CONSERVE SU UNICIDAD ¿COMO? A través de una metodología integral se le otorga al cliente las h",
+   "palette": [
+    "#ffffff",
+    "#c1d5ed",
+    "#b4f7e2",
+    "#d4fcc2",
+    "#e3ff92",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "FASES INTERIORISMO camilo perfil led.ai",
+   "name": "FASES INTERIORISMO camilo perfil led.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 31505936,
+   "modified": "Jan 24, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAlqmzXW0B8FNOzMG-WXKsE/PROYECTOS%20ALUZINA%202024/CAMILO%20ECHEVERY%20INTERIORISMO/FASES%20INTERIORISMO%20camilo%20perfil%20led.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "fases-interiorismo-camilo-perfil-led",
+   "thumb": "thumbs/fases-interiorismo-camilo-perfil-led.jpg",
+   "pages": [
+    "pages/fases-interiorismo-camilo-perfil-led-page-01.jpg",
+    "pages/fases-interiorismo-camilo-perfil-led-page-02.jpg",
+    "pages/fases-interiorismo-camilo-perfil-led-page-03.jpg",
+    "pages/fases-interiorismo-camilo-perfil-led-page-04.jpg"
+   ],
+   "pageCount": 12,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I L U Z Pasamos el 87% de nuestras vidas en ESPACIOS interiores; la manera como estén diseñados, impacta nuestra vida. La parte hace el todo y el todo la parte El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial. D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo NATASHA CAPILAR",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff96",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "FASES INTERIORISMO camilo perfil led.pdf",
+   "name": "FASES INTERIORISMO camilo perfil led.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 31533593,
+   "modified": "Jan 24, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AC13RybqK4AmfJpYjW8xPNE/PROYECTOS%20ALUZINA%202024/CAMILO%20ECHEVERY%20INTERIORISMO/FASES%20INTERIORISMO%20camilo%20perfil%20led.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "fases-interiorismo-camilo-perfil-led-2",
+   "thumb": "thumbs/fases-interiorismo-camilo-perfil-led-2.jpg",
+   "pages": [
+    "pages/fases-interiorismo-camilo-perfil-led-2-page-01.jpg",
+    "pages/fases-interiorismo-camilo-perfil-led-2-page-02.jpg",
+    "pages/fases-interiorismo-camilo-perfil-led-2-page-03.jpg",
+    "pages/fases-interiorismo-camilo-perfil-led-2-page-04.jpg"
+   ],
+   "pageCount": 12,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I L U Z Pasamos el 87% de nuestras vidas en ESPACIOS interiores; la manera como estén diseñados, impacta nuestra vida. La parte hace el todo y el todo la parte El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial. D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo NATASHA CAPILAR",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff96",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 3,
+  "pages": 12,
+  "bytes": 1032254,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

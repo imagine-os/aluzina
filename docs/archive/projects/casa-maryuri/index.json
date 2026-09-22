@@ -1,0 +1,60 @@
+{
+ "folderName": "CASA MARYURI",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKIBKN_TyBLeiMPZNUIH5YY/PROYECTOS%20ALUZINA%202022/CASA%20MARYURI?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:50:12.562Z",
+ "indexedAt": "2026-09-21T23:55:32.549Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 5534546,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/casa-maryuri/",
+ "files": [
+  {
+   "path": "MARYURI ESCRITORIO.pdf",
+   "name": "MARYURI ESCRITORIO.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 281177,
+   "modified": "Nov 4, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKIBKN_TyBLeiMPZNUIH5YY/PROYECTOS%20ALUZINA%202022/CASA%20MARYURI?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "maryuri-escritorio",
+   "thumb": null,
+   "pages": [],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "contenido con datos personales"
+  },
+  {
+   "path": "maryuri1.psd",
+   "name": "maryuri1.psd",
+   "ext": "psd",
+   "mimeType": "image/vnd.adobe.photoshop",
+   "bytes": 5253366,
+   "modified": "Nov 4, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHfa9znXZUcqRlh6EB74erM/PROYECTOS%20ALUZINA%202022/CASA%20MARYURI/maryuri1.psd?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "maryuri1",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

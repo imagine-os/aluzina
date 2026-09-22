@@ -266,6 +266,10 @@ export function LeadsPage() {
       coverAssetId: null,
       year: null,
       sourceFolderUrl: null,
+      fileCount: null,
+      coverUrl: null,
+      archiveSlug: null,
+      fileTypes: [],
     });
     await data.create('engagements', {
       projectId: project.id,

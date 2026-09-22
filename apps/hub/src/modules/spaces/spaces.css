@@ -171,3 +171,43 @@
 
 /* K-04 gallery views (prompt 0010) */
 .spaces-graph-note { margin: 0; color: var(--color-text-muted); font-size: 0.875rem; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+
+/* ---------------------------------------------------------------- files and previews (ar-17) */
+
+/* K-05 assets tab: the thumbnail column keeps its width; the table's own wrap handles the overflow. */
+.spaces-cat__thumb {
+  width: 4rem;
+}
+
+/* K-03: the file of a `file` post - its Thumb and the way in (Preview, or the source link). */
+.spaces-post__file {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+}
+
+.spaces-post__thumb {
+  flex: none;
+  width: 5rem;
+}
+
+.spaces-post__file-facts {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.spaces-post__file-facts > p {
+  margin: 0;
+}
+
+@media (min-width: 1920px) {
+  .spaces-cat__thumb { width: 5rem; }
+  .spaces-post__thumb { width: 6.5rem; }
+}

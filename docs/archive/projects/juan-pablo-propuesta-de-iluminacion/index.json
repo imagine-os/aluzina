@@ -1,0 +1,70 @@
+{
+ "folderName": "JUAN PABLO PROPUESTA DE ILUMINACION",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEVz-iA6k8XsX10cz_AFQUc/PROYECTOS%20ALUZINA%202024/JUAN%20PABLO%20PROPUESTA%20DE%20ILUMINACION?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:37:41.550Z",
+ "indexedAt": "2026-09-21T23:55:32.593Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 216468029,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/juan-pablo-propuesta-de-iluminacion/",
+ "files": [
+  {
+   "path": "JUAN PABLO PRESENTACION Y PROPUESTA.ai",
+   "name": "JUAN PABLO PRESENTACION Y PROPUESTA.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 214423306,
+   "modified": "Mar 12, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AK7lGO6Zi8LRm6LlqHRhHf0/PROYECTOS%20ALUZINA%202024/JUAN%20PABLO%20PROPUESTA%20DE%20ILUMINACION/JUAN%20PABLO%20PRESENTACION%20Y%20PROPUESTA.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "juan-pablo-presentacion-y-propuesta",
+   "thumb": "thumbs/juan-pablo-presentacion-y-propuesta.jpg",
+   "pages": [
+    "pages/juan-pablo-presentacion-y-propuesta-page-01.jpg",
+    "pages/juan-pablo-presentacion-y-propuesta-page-02.jpg",
+    "pages/juan-pablo-presentacion-y-propuesta-page-03.jpg",
+    "pages/juan-pablo-presentacion-y-propuesta-page-04.jpg"
+   ],
+   "pageCount": 13,
+   "textExcerpt": "ESPACIO + LUZ Estamos conectados con la inmensidad de la naturaleza, el cielo, las estrellas y entre nosotros. En el pasado Tuvimos tiempo para contemplar y apreciar estas cosas. Sin embargo, ahora pasamos la mayor parte de nuestro tiempo persiguiendo nuestros tiempo para conectarnos con nuestro entorno y relajarnos. La luz y los espacios de descanso son herramientas que nos ayudan a bajar nuestra revolución y disfrutar. LO QUE HACEMOS Somos un estudio de diseño, que se dedica de los humanos para dar sentido a él tiempo y tu idea . I N T E R I O R I S M O I L U M I N A C I Ó N Por Que Trabajar",
+   "palette": [
+    "#1d1711",
+    "#372f1f",
+    "#504837",
+    "#2b2418",
+    "#8e8578",
+    "#7f7668"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "JUAN PABLO PROPUESTA 0007.pdf",
+   "name": "JUAN PABLO PROPUESTA 0007.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 2044723,
+   "modified": "Mar 12, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIDh9EHXw_vsY3Kj0O3fK1k/PROYECTOS%20ALUZINA%202024/JUAN%20PABLO%20PROPUESTA%20DE%20ILUMINACION/JUAN%20PABLO%20PROPUESTA%200007.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "juan-pablo-propuesta-0007",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 301496,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

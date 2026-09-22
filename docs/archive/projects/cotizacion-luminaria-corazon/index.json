@@ -1,0 +1,62 @@
+{
+ "folderName": "011 COTIZACION LUMINARIA CORAZON",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABxDbvqX5z6uirayISxxmkY/PROYECTOS%20ALUZINA%202025/011%20COTIZACION%20LUMINARIA%20CORAZON?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:31:10.756Z",
+ "indexedAt": "2026-09-21T23:55:32.622Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 515646,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/cotizacion-luminaria-corazon/",
+ "files": [
+  {
+   "path": "Cotización (redactado).pdf",
+   "name": "Cotización (redactado).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 267807,
+   "modified": "Feb 19, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABxDbvqX5z6uirayISxxmkY/PROYECTOS%20ALUZINA%202025/011%20COTIZACION%20LUMINARIA%20CORAZON?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-jairo-andres-ibanez",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "Cotización (redactado).xlsx",
+   "name": "Cotización (redactado).xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 247839,
+   "modified": "Feb 19, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABxDbvqX5z6uirayISxxmkY/PROYECTOS%20ALUZINA%202025/011%20COTIZACION%20LUMINARIA%20CORAZON?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-jairo-andres-ibanez-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

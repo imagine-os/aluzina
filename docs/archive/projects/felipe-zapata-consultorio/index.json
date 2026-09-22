@@ -1,0 +1,43 @@
+{
+ "folderName": "FELIPE ZAPATA CONSULTORIO",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AM23qJx27ghSztBqY9VNz4o/PROYECTOS%20ALUZINA%202024/FELIPE%20ZAPATA%20CONSULTORIO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:37:20.096Z",
+ "indexedAt": "2026-09-21T23:55:32.592Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 171264,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/felipe-zapata-consultorio/",
+ "files": [
+  {
+   "path": "C-1-3741 ALEJANDRA GUERRA.pdf",
+   "name": "C-1-3741 ALEJANDRA GUERRA.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 171267,
+   "modified": "Jan 25, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AM23qJx27ghSztBqY9VNz4o/PROYECTOS%20ALUZINA%202024/FELIPE%20ZAPATA%20CONSULTORIO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "c-1-3741-alejandra-guerra",
+   "thumb": null,
+   "pages": [],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "contenido con datos personales"
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

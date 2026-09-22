@@ -1,0 +1,154 @@
+/* A-09 Archive review. Layout only: tokens, no colours of its own, no fixed px widths. */
+
+.arev-bulk {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Positioned so the absolutely placed hidden label below is clipped with the cell, not with the page. */
+.arev-check {
+  position: relative;
+}
+
+/* The row checkbox keeps its label for screen readers; the row's project name carries the visible name. */
+.arev-check .check__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.arev-project {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.arev-project__thumb {
+  flex: 0 0 auto;
+  width: 3rem;
+}
+
+.arev-project__text {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.arev-project__name {
+  font-weight: 600;
+}
+
+.arev-project__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.arev-project__meta {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+/* The DataTable scrolls horizontally inside itself; clipping here keeps that scroller from widening the page. */
+.arev-table {
+  min-width: 0;
+  overflow-x: clip;
+}
+
+/* Seven columns with three inline editors need room to stay readable; the DataTable scrolls inside itself
+   under this width and the wrapper above keeps that scroller from widening the page. */
+.arev-table .table {
+  min-width: 66rem;
+}
+
+@media (max-width: 47.99rem) {
+  .arev-table .table {
+    min-width: 0;
+  }
+}
+
+/* Inline editors: a <select> is sized by its widest option, which would stretch the table. */
+.arev-field {
+  /* `hideLabel` renders an absolutely positioned label; this makes the field its containing block, so a
+     wide table clips it with the scroller instead of widening the page. */
+  position: relative;
+  min-width: 8.5rem;
+  width: 100%;
+  max-width: 12rem;
+}
+
+.arev-field .field__select,
+.arev-field .field__input {
+  width: 100%;
+  min-width: 0;
+  text-overflow: ellipsis;
+}
+
+.arev-field--year {
+  min-width: 6rem;
+  max-width: 7rem;
+}
+
+.arev-status {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  justify-items: start;
+}
+
+.arev-rowactions {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  justify-items: stretch;
+}
+
+.arev-rowactions .btn {
+  white-space: nowrap;
+}
+
+.arev-note {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+  max-width: 14rem;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.arev-questions {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding-inline-start: var(--space-5);
+}
+
+.arev-questions__text {
+  margin: 0 0 var(--space-2);
+}
+
+/* Stacked-card rows under 768 px: the editors get the full width of the card. */
+@media (max-width: 47.99rem) {
+  .arev-note {
+    -webkit-line-clamp: none;
+    line-clamp: none;
+    max-width: none;
+  }
+
+  .arev-field,
+  .arev-field--year {
+    min-width: 0;
+    max-width: none;
+  }
+}

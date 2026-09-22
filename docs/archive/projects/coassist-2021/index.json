@@ -1,0 +1,112 @@
+{
+ "folderName": "0_103 COASSIST 2021",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AGxbNk3pU3MCCv_W89G7m5I/PROYECTOS%20ALUZINA%202021/0_103%20COASSIST%202021?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:36:32.588Z",
+ "indexedAt": "2026-09-21T23:55:32.719Z",
+ "depth": 2,
+ "fileCount": 4,
+ "totalBytes": 4012390,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/coassist-2021/",
+ "files": [
+  {
+   "path": "01000 COASSIST TERMINAL DEL SUR.xlsx",
+   "name": "01000 COASSIST TERMINAL DEL SUR.xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 89488,
+   "modified": "Apr 12, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMEdfXB05QPeH1jiaM1DGAw/PROYECTOS%20ALUZINA%202021/0_103%20COASSIST%202021/01000%20COASSIST%20TERMINAL%20DEL%20SUR.xlsx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "01000-coassist-terminal-del-sur",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "CANECAS.ai",
+   "name": "CANECAS.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 3217859,
+   "modified": "Dec 1, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AD1YQ1mI3qHEGISr5awtl0c/PROYECTOS%20ALUZINA%202021/0_103%20COASSIST%202021/CANECAS.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "canecas",
+   "thumb": "thumbs/canecas.jpg",
+   "pages": [
+    "pages/canecas-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "RESIDUOS ORGÁNICO Restos de comida Desechos agrícolas RESIDUOS NO APROVECHABLE Papel higiénico Servilletas Papeles metalizados. Papeles y cartones contaminados con comida RESIDUOS APROVECHABLE Plástico Carton Vidrio Papel Metales",
+   "palette": [
+    "#221f1f",
+    "#30995b",
+    "#f4f5f4",
+    "#292b31",
+    "#3e6757",
+    "#201d1d"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "LOGO COASSIST.ai",
+   "name": "LOGO COASSIST.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 184702,
+   "modified": "Apr 21, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AETn3Cg0DL5wML_NTAlPtWU/PROYECTOS%20ALUZINA%202021/0_103%20COASSIST%202021/LOGO%20COASSIST.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "logo-coassist",
+   "thumb": "thumbs/logo-coassist.jpg",
+   "pages": [
+    "pages/logo-coassist-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#d6ded9",
+    "#6b6c71",
+    "#f2f7f1",
+    "#fdfffc",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "ADHESIVOS DE RECICLAJE/Cotización (redactado).pdf",
+   "name": "Cotización (redactado).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 519076,
+   "modified": "Oct 25, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ALc3UusQKgfvz8FtAU_B2m0/PROYECTOS%20ALUZINA%202021/0_103%20COASSIST%202021/ADHESIVOS%20DE%20RECICLAJE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "adhesivos-de-reciclaje--cotizacion-de-adhesivos-para-canecas-coassist",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  }
+ ],
+ "served": {
+  "thumbs": 2,
+  "pages": 2,
+  "bytes": 90974,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

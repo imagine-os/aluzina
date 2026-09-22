@@ -1,0 +1,70 @@
+{
+ "folderName": "0_87 LUMINARIAS 2021 VENTAS",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AA-JOlFY-cVc80_PkdUiZ_U/PROYECTOS%20ALUZINA%202020/0_87%20LUMINARIAS%202021%20VENTAS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:54:55.018Z",
+ "indexedAt": "2026-09-21T23:55:32.682Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 295572603,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/luminarias-2021-ventas/",
+ "files": [
+  {
+   "path": "CATALOGO Y FOTOGRAFIA COMERCIAL.ai",
+   "name": "CATALOGO Y FOTOGRAFIA COMERCIAL.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 191092490,
+   "modified": "Oct 29, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMqjVzDB3-WqW6Fse6cRs1M/PROYECTOS%20ALUZINA%202020/0_87%20LUMINARIAS%202021%20VENTAS/CATALOGO%20Y%20FOTOGRAFIA%20COMERCIAL.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "catalogo-y-fotografia-comercial",
+   "thumb": "thumbs/catalogo-y-fotografia-comercial.jpg",
+   "pages": [
+    "pages/catalogo-y-fotografia-comercial-page-01.jpg",
+    "pages/catalogo-y-fotografia-comercial-page-02.jpg",
+    "pages/catalogo-y-fotografia-comercial-page-03.jpg",
+    "pages/catalogo-y-fotografia-comercial-page-04.jpg"
+   ],
+   "pageCount": 16,
+   "textExcerpt": "SER / TODO HABLO / EQUILIBRIO",
+   "palette": [
+    "#ffffff",
+    "#898487",
+    "#de232b",
+    "#bcb9ba",
+    "#eeeeee",
+    "#fdffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PAINTS 1.ai",
+   "name": "PAINTS 1.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 104480113,
+   "modified": "Oct 29, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AARGwyZftosAreJuERl-uUI/PROYECTOS%20ALUZINA%202020/0_87%20LUMINARIAS%202021%20VENTAS/PAINTS%201.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "paints-1",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 145217,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

@@ -498,6 +498,46 @@ INFORME GENERAL NEBULOSA ,ALTOS DE LA TOJA,CARPINTERIA.pdf   (1.6 MB, Mar 13, 20
 Subject CARPENTRY.pdf   (1.5 MB, Mar 13, 2024, redactado)
 ```
 
+## Deep indexes and served previews per year (ar-06, ar-07)
+
+status: current · since: 2026-09-21 (changelog 0021 for 2026, 0022 for 2019-2025 and root) · source: `docs/archive/projects/<slug>/index.json`, `apps/hub/public/archive/<slug>/`
+
+| year folder | folders | files indexed | deep | with served renders | thumbs | pages | served MB | covers | redacted files |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 2026 | 18 | 575 | 18 | 18 | 408 | 150 | 23.52 | 17 | 105 |
+| 2025 | 37 | 624 | 35 | 35 | 381 | 71 | 11.81 | 25 | 55 |
+| 2024 | 43 | 573 | 43 | 43 | 190 | 125 | 11.76 | 29 | 170 |
+| 2022 | 25 | 862 | 24 | 24 | 391 | 39 | 11.64 | 17 | 180 |
+| 2021 | 23 | 646 | 23 | 23 | 159 | 143 | 11.61 | 17 | 268 |
+| 2020 | 25 | 1045 | 24 | 24 | 167 | 93 | 10.58 | 14 | 117 |
+| 2019-2023 | 14 | 788 | 14 | 14 | 71 | 122 | 10.64 | 12 | 207 |
+| root | 2 | 178 | 2 | 2 | 10 | 7 | 0.50 | 2 | 5 |
+| **total** | **187** | **5291** | **183** | **183** | **1777** | **750** | **92.06** | **133** | **1107** |
+
+The three folders without a deep index are the three empty ones (LONDON CITY BARBER SHOP 2020, one 2022 and one 2025 folder with no files); they keep a `depth: 1` chunk with no files. Deep-indexed in 0019: JOE GALLINA INTERIOR; in 0021: the 18 of 2026; in 0022 (ar-07): the other 164.
+
+Since ar-19 (D-071) every non-admin folder has a chunk under `docs/archive/projects/<slug>/index.json`: the deep index when the folder was crawled to full depth, else the folder's direct child files at `depth: 1`. The app loads a chunk when S-13 (or P-06) opens that project; nothing about a file is seeded, and only a file a person tags, moves or picks as cover becomes a stored row. Render budgets: ~12 MB of served renders per year folder, 4-6 pages per file, thumbs <= 640 px, pages <= 1200 px (D-069 for 2026; D-082 for the older years).
+
+## Delivery stage from the folder path (ar-22)
+
+status: current · since: 2026-09-21 (changelog 0022) · source: `apps/hub/src/domain/archive.ts` (`STAGE_PHRASES`, `stageFor`)
+
+The stage of an archived file is computed at load time from its folder path and name; the first matching phrase wins, so the order of the list is the rule. The 2026 folder template (read from HOY, CARTAGENA COPETRAN, SODIME) maps as follows:
+
+| phrase(s) | stage | folder it comes from |
+| --- | --- | --- |
+| `planos del espacio`, `detalles tecnicos`, `artes de corte` | technical | `03 PLANOS DEL ESPACIO`, HOY `DETALLES TECNICOS DE ILUMINACION`, HONEY VALLEY `ARTES DE CORTE` |
+| `fotografia y video del espacio`, `fotos y videos del espacio`, `videos del espacio`, `fotos de las salas` | survey | template `01`, HOY, SPORTI |
+| `primera propuesta`, `presentacion de diseno del espacio`, `propuestas` | concept | template `00` and `02` |
+| `cotizacion del espacio` | quotation | template `04` |
+| `cronograma de obra`, `fotografias de obra y avance` | execution | template `05` and `07` |
+| `documentacion importante`, `consignaciones`, `pagos`, `facturas`, `informes` | admin | template `08` and `09`, HOY, CARTAGENA + SPORTI |
+| `certificados y garantias`, `garantias`, `certificados` | delivery | CARTAGENA |
+| `manual de marca`, `informacion diseno interior`, `artes` | design-development | HOY's brand book, SODIME `ARTES RIONEGRO` |
+| `imagenes`, `imagen`, `videos`, `ecosistema virtual` | marketing (last in the list) | HOY `IMAGENES HOY`, SODIME `IMAGENES DE SODIME` |
+
+Effect: HOY 180 of 206 files in "other" -> 0; the three template projects together 200 -> 1; every deep index 1475 -> 1183 in "other". **Open (inferred, D-060)**: `IMAGENES HOY` (105 camera-dated photos) is filed as *marketing* because HOY keeps a separate survey folder; if they are the final-photo record of the finished space the stage is *delivery* — the founder decides (changelog 0022 H).
+
 ## Known vs inferred
 
 | Fact | Status | Source |
@@ -512,7 +552,34 @@ Subject CARPENTRY.pdf   (1.5 MB, Mar 13, 2024, redactado)
 | Delivery stage of each file | inferred from folder / file keywords (`stageFor`); files at a project's top level without a folder mostly land in "Other" | domain rule, D-057 |
 | Link D (00 INFORMACION RELEVANTE ALUZINA 2023) | listed (12 files: price lists, catalogues, brochures, presentations), not yet seeded | ar-15 |
 
+## How the founder confirms the inferred facts (A-09)
+
+Everything marked "inferred" in the table above is corrected in the product, on **A-09 Archive review**
+(`/#/founder/archive-review`, founder portal, permission `projects.write`), never in a chat thread:
+
+- One row per archived project (the `projects` rows tagged `archive`). Type, status, client and year are
+  inline editors; the intake note (the duplicate / quotation / year sentences the crawler wrote into the
+  summary) is shown read only next to them, with the Dropbox folder link.
+- **Confirm** adds the tag `confirmado` and removes the sentence
+  `Tipo y estado inferidos de la carpeta; confirmar con la fundadora.` from the project summary, keeping
+  the folder line and the notes. The row then reads as fact; "pending only" (the default filter) hides it.
+  There is no new column: a confirmed row is a tagged row (changelog draft `archive-review.md`).
+- **Mark as duplicate of…** tags the row `duplicado`, appends `Duplicado de <name> (<id>).` to its summary
+  and records a `replaces` relation from the project that is kept to the duplicate, so nothing is deleted
+  while the grouping is still being decided.
+- A missing client is created from its row (name, kind, sector), which writes a `clients` row, the
+  project's client name and a `for-client` relation.
+- The eleven questions of changelog 0019 section H are listed on the page in English and Spanish, each
+  with a button that filters the table to the rows it is about (question 3 -> status `proposal-sent`,
+  question 6 -> the projects with no year, and so on). They live in the page, not in the changelog file,
+  because the list shrinks as she answers.
+
+Until a row is confirmed, treat its type, status, client and year as inferred, whatever this file's
+inventory tables say.
+
 ## Change log
 
+- 2026-09-21 (step 14 pass 3, changelog 0022, Fable 5.1 integration): ar-07 deep indexes + served previews for the 2019-2025 and root folders (164 folders deep-indexed with previews in ar-07 (2025 35, 2024 43, 2022 24, 2021 23, 2020 24, 2019-2023 13, root 2): 5 291 files in 186 lazy chunks, 1 777 thumbnails and 750 page renders served, 92.1 MB in total (62.4 MB new), R7 passed over every chunk and served file name); ar-19 the files leave the seed for lazy chunks (D-071); ar-22 stage phrases of the 2026 folder template (section above); JOE GALLINA INTERIOR gets `year` 2023 inferred from its file dates (170 of 179), marked `yearInferred`; A-09 is the place the founder answers the open questions (ar-08).
 - 2026-09-21 (ar-06 / ar-16, Fable 5.1): deep index + served previews for the 18 folders of PROYECTOS 2026 (575 files, 413 thumbnails, 196 page renders rendered; 23.5 MB served); the 15 "empty" folders re-listed: 12 hold files, 3 stay empty; R2 extended to contratos / cotizaci* / documentación importante / consignaciones / pagos / proveedores, R3 to quotation content, one explicit client-name rename (changelog pending `archive-ar06`).
 - 2026-09-21: created from the pass-0019 crawls (inventory of 187 folders incl. the 74 the first, paginated listing had missed; deep index of JOE GALLINA INTERIOR), redaction D-059, decisions D-055..D-061 (prompt 0017, changelog 0019).
+- 2026-09-21 (ar-23, Opus 5): A-09 Archive review added — the inferred type, status, client, year and duplicate flags are now confirmed or corrected in the product (tag `confirmado` + the summary sentence removed; duplicates as a `replaces` relation); section "How the founder confirms the inferred facts (A-09)" above (changelog pending `archive-review`).

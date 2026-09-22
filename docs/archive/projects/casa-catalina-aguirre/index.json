@@ -1,0 +1,174 @@
+{
+ "folderName": "012 CASA CATALINA AGUIRRE",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APepe79nCaBqROxIHRYeb9I/PROYECTOS%20ALUZINA%202025/012%20CASA%20CATALINA%20AGUIRRE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:31:22.364Z",
+ "indexedAt": "2026-09-21T23:55:32.618Z",
+ "depth": 1,
+ "fileCount": 6,
+ "totalBytes": 223557325,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/casa-catalina-aguirre/",
+ "files": [
+  {
+   "path": "342_250121_ESQUEMAS-02_PLANTA PP.pdf",
+   "name": "342_250121_ESQUEMAS-02_PLANTA PP.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 1090284,
+   "modified": "Feb 11, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AA6W3bTnju8W11rSk8_weIA/PROYECTOS%20ALUZINA%202025/012%20CASA%20CATALINA%20AGUIRRE/342_250121_ESQUEMAS-02_PLANTA%20PP.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "342-250121-esquemas-02-planta-pp",
+   "thumb": "thumbs/342-250121-esquemas-02-planta-pp.jpg",
+   "pages": [
+    "pages/342-250121-esquemas-02-planta-pp-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "-Este plano reemplaza cualquier plano similar con fecha anterior, verificar medidas y consultar dudas es responsabilidad de la dirección de obra -Los planos arquitectónicos priman sobre cualquier otro plano de otra especialidad, se deben usar para trazar el proyecto -Las especificiaciones se deben respetar;siempre deben primar la seguridad humana y la estabilidad de la construcción; cualquier cambio debe ser aprobado por el arquitecto encargado -Los métodos, materiales y procedimientos constructivos deben ser evaluados y definidos en un comité de construcción para garantizar duración y segurid",
+   "palette": [
+    "#ffffff",
+    "#f1f1ef",
+    "#d2d3d0",
+    "#fcfcfc",
+    "#fefffe",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "342_250121_ESQUEMAS-07_ACABADOS.pdf",
+   "name": "342_250121_ESQUEMAS-07_ACABADOS.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 997898,
+   "modified": "Feb 11, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOvLdIpQx9a5BSdnnfON20w/PROYECTOS%20ALUZINA%202025/012%20CASA%20CATALINA%20AGUIRRE/342_250121_ESQUEMAS-07_ACABADOS.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "342-250121-esquemas-07-acabados",
+   "thumb": "thumbs/342-250121-esquemas-07-acabados.jpg",
+   "pages": [
+    "pages/342-250121-esquemas-07-acabados-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "2 3 -Este plano reemplaza cualquier plano similar con fecha anterior, verificar medidas y consultar dudas es responsabilidad de la dirección de obra -Los planos arquitectónicos priman sobre cualquier otro plano de otra especialidad, se deben usar para trazar el proyecto -Las especificiaciones se deben respetar;siempre deben primar la seguridad humana y la estabilidad de la construcción; cualquier cambio debe ser aprobado por el arquitecto encargado -Los métodos, materiales y procedimientos constructivos deben ser evaluados y definidos en un comité de construcción para garantizar duración y seg",
+   "palette": [
+    "#ffffff",
+    "#f2f2f0",
+    "#d5d1cd",
+    "#fefefe",
+    "#fffefe",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "342_250121_ESQUEMAS-08_ILUMINACION.pdf",
+   "name": "342_250121_ESQUEMAS-08_ILUMINACION.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 965126,
+   "modified": "Feb 11, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANWwBr2pJ0DpTw1SnwHh8vk/PROYECTOS%20ALUZINA%202025/012%20CASA%20CATALINA%20AGUIRRE/342_250121_ESQUEMAS-08_ILUMINACION.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "342-250121-esquemas-08-iluminacion",
+   "thumb": "thumbs/342-250121-esquemas-08-iluminacion.jpg",
+   "pages": [
+    "pages/342-250121-esquemas-08-iluminacion-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 2 2 3 3 3 3 3 3 2 3 -Este plano reemplaza cualquier plano similar con fecha anterior, verificar medidas y consultar dudas es responsabilidad de la dirección de obra -Los planos arquitectónicos priman sobre cualquier otro plano de otra especialidad, se deben usar para trazar el proyecto -Las especificiaciones se deben respetar;siempre deben primar la seguridad humana y la estabilidad de la construcción; cualquier cambio debe ser aprobado por el arquitecto encargado -Los métodos, materiales y procedimientos constructivos deben ser evaluados y definidos en un com",
+   "palette": [
+    "#ffffff",
+    "#ecebe9",
+    "#d4d4d2",
+    "#f9f9f9",
+    "#fefffe",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "342_250121_ESQUEMAS-09_COCINAS.pdf",
+   "name": "342_250121_ESQUEMAS-09_COCINAS.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 305004,
+   "modified": "Feb 11, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEG-Pp2g0Cxos0CCUU2vkCY/PROYECTOS%20ALUZINA%202025/012%20CASA%20CATALINA%20AGUIRRE/342_250121_ESQUEMAS-09_COCINAS.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "342-250121-esquemas-09-cocinas",
+   "thumb": "thumbs/342-250121-esquemas-09-cocinas.jpg",
+   "pages": [
+    "pages/342-250121-esquemas-09-cocinas-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "-Este plano reemplaza cualquier plano similar con fecha anterior, verificar medidas y consultar dudas es responsabilidad de la dirección de obra -Los planos arquitectónicos priman sobre cualquier otro plano de otra especialidad, se deben usar para trazar el proyecto -Las especificiaciones se deben respetar;siempre deben primar la seguridad humana y la estabilidad de la construcción; cualquier cambio debe ser aprobado por el arquitecto encargado -Los métodos, materiales y procedimientos constructivos deben ser evaluados y definidos en un comité de construcción para garantizar duración y segurid",
+   "palette": [
+    "#ffffff",
+    "#f4f4f3",
+    "#b5b3ac",
+    "#fbfbfb",
+    "#e3e1db",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "Aluzina CATALINA AGUIRRE.ai",
+   "name": "Aluzina CATALINA AGUIRRE.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 110131937,
+   "modified": "Feb 11, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJvJJKmuY3hc8YMUhxvwtRE/PROYECTOS%20ALUZINA%202025/012%20CASA%20CATALINA%20AGUIRRE/Aluzina%20CATALINA%20AGUIRRE.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "aluzina-catalina-aguirre",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "Aluzina CATALINA AGUIRRE.pdf",
+   "name": "Aluzina CATALINA AGUIRRE.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 110066538,
+   "modified": "Feb 11, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAgeohymnN1keju5uOOeTBk/PROYECTOS%20ALUZINA%202025/012%20CASA%20CATALINA%20AGUIRRE/Aluzina%20CATALINA%20AGUIRRE.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "aluzina-catalina-aguirre-2",
+   "thumb": "thumbs/aluzina-catalina-aguirre-2.jpg",
+   "pages": [
+    "pages/aluzina-catalina-aguirre-2-page-01.jpg",
+    "pages/aluzina-catalina-aguirre-2-page-02.jpg",
+    "pages/aluzina-catalina-aguirre-2-page-03.jpg",
+    "pages/aluzina-catalina-aguirre-2-page-04.jpg"
+   ],
+   "pageCount": 7,
+   "textExcerpt": "ESPACIO + LUZ I N T E R I O R I S M O I L U M I N A C I Ó N OVI ON THE DRUMS/ MIAMI, EEUU E X P E R I E N C I A S D E L U Z . “Lo que le da peso tener tu equipo de diseño , hace que lo que es una idea , evolucione y se potencie , te sorprenden los resultados y tú satisfacción es total.” I N T E R I O R I S M O I L U M I N A C I Ó N Por Que Trabajar Con Aluzina E S T U D I O C R E A T I V O D E D I S E Ñ O SERVICIOS COMPLETOS DE DISEÑO • Enfoque a su medida. • Diseños de alta calidad. • Respuesta rapida y comunicación clara. • Nuestro cliente siempre cuenta con un gestor de proyectos dedicado a",
+   "palette": [
+    "#211913",
+    "#332a1c",
+    "#453c2a",
+    "#908579",
+    "#5d5241",
+    "#807668"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 5,
+  "pages": 8,
+  "bytes": 552002,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

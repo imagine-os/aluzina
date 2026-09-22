@@ -1,0 +1,93 @@
+{
+ "folderName": "0_92 AYAMONTE",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMxYA5G5jkGHG817WbwsC2Y/PROYECTOS%20ALUZINA%202020/0_92%20AYAMONTE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:55:29.309Z",
+ "indexedAt": "2026-09-21T23:55:32.673Z",
+ "depth": 1,
+ "fileCount": 3,
+ "totalBytes": 623780,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/ayamonte/",
+ "files": [
+  {
+   "path": "Factura (redactado).xlsx",
+   "name": "Factura (redactado).xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 61256,
+   "modified": "Dec 19, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMxYA5G5jkGHG817WbwsC2Y/PROYECTOS%20ALUZINA%202020/0_92%20AYAMONTE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "04-factura-de-venta-simon-copy",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "2020-12-19 (3).png",
+   "name": "2020-12-19 (3).png",
+   "ext": "png",
+   "mimeType": "image/png",
+   "bytes": 346202,
+   "modified": "Dec 19, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOez9eZ4QelOv9eRgbXgKwA/PROYECTOS%20ALUZINA%202020/0_92%20AYAMONTE/2020-12-19%20%283%29.png?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "2020-12-19-3",
+   "thumb": "thumbs/2020-12-19-3.jpg",
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#f3faf0",
+    "#d4d6d2",
+    "#f5f2e9",
+    "#fff8e3",
+    "#fffffd"
+   ],
+   "renderer": "pillow"
+  },
+  {
+   "path": "Ayamonte.pdf",
+   "name": "Ayamonte.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 216317,
+   "modified": "Dec 19, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AGqI9BhmI2166dv1z2kp5tA/PROYECTOS%20ALUZINA%202020/0_92%20AYAMONTE/Ayamonte.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "ayamonte",
+   "thumb": "thumbs/ayamonte.jpg",
+   "pages": [
+    "pages/ayamonte-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#eff4ee",
+    "#dbdcd9",
+    "#fffffd",
+    "#ebffdb",
+    "#fbf8ee"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 2,
+  "pages": 1,
+  "bytes": 73889,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

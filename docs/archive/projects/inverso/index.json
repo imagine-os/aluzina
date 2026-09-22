@@ -1,0 +1,70 @@
+{
+ "folderName": "INVERSO",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEtG_SWgQXlgNqXAtjuheh0/PROYECTOS%20ALUZINA%202022/INVERSO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:53:36.982Z",
+ "indexedAt": "2026-09-21T23:55:32.561Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 68901929,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/inverso/",
+ "files": [
+  {
+   "path": "00_ METODOLOGIA Y VALORES INVERSO.ai",
+   "name": "00_ METODOLOGIA Y VALORES INVERSO.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 34691103,
+   "modified": "Jul 22, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEbTF8k2tuak0T7-gJ99Bhg/PROYECTOS%20ALUZINA%202022/INVERSO/00_%20METODOLOGIA%20Y%20VALORES%20INVERSO.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "00-metodologia-y-valores-inverso",
+   "thumb": "thumbs/00-metodologia-y-valores-inverso.jpg",
+   "pages": [
+    "pages/00-metodologia-y-valores-inverso-page-01.jpg",
+    "pages/00-metodologia-y-valores-inverso-page-02.jpg",
+    "pages/00-metodologia-y-valores-inverso-page-03.jpg",
+    "pages/00-metodologia-y-valores-inverso-page-04.jpg"
+   ],
+   "pageCount": 13,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I L U Z Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial. El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar Pasamos el 87% de nuestras vidas en ESPACIOS interiores; la manera como estén diseñados, impacta nuestra vida. La parte hace el todo y el todo la parte D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo INVERSO",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff96",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "00_ METODOLOGIA Y VALORES INVERSO.pdf",
+   "name": "00_ METODOLOGIA Y VALORES INVERSO.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 34215035,
+   "modified": "Jul 21, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOLCSG8eaV-Er-vvIKPtZBI/PROYECTOS%20ALUZINA%202022/INVERSO/00_%20METODOLOGIA%20Y%20VALORES%20INVERSO.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "00-metodologia-y-valores-inverso-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 385221,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

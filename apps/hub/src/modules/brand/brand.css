@@ -120,30 +120,28 @@
   scroll-margin-top: var(--space-4);
 }
 
-.brand-doc__frame {
-  width: 100%;
-  /* Tall enough to read a page on a laptop, capped so a 4K TV does not stretch one page to 2000 px. */
-  height: clamp(22rem, 68vh, 56rem);
-}
+/*
+ * ar-17: the page's own frame, object and fallback rules are gone with `DocFrame` - the shared
+ * `DocumentViewer` carries the same heights (`clamp(22rem, 68vh, 56rem)`, raised from 1920 up) in
+ * `DocumentViewer.css`, so the 10-foot case did not move.
+ */
 
-.brand-doc__object {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: var(--color-surface-raised);
-}
-
-/* Shown when the browser cannot render a PDF in place, and when the file is not on the server yet. */
-.brand-doc__fallback {
+/* Cover + file facts side by side on a document card; the thumb keeps its width, the meta takes the rest. */
+.brand-doc__head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-3);
-  padding: var(--space-5);
-  margin: 0;
-  color: var(--color-text-muted);
-  line-height: 1.6;
+  margin-bottom: var(--space-2);
+}
+
+.brand-doc__thumb {
+  flex: none;
+  width: 4.5rem;
+}
+
+.brand-doc__head .brand-doc__meta {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .brand-doc__note {
@@ -203,8 +201,8 @@
 }
 
 @media (min-width: 1920px) {
-  .brand-doc__frame {
-    height: clamp(30rem, 72vh, 76rem);
+  .brand-doc__thumb {
+    width: 6rem;
   }
 }
 

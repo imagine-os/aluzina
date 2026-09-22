@@ -3,6 +3,9 @@
   display: grid;
   gap: var(--space-1);
   min-width: 0;
+  /* The hideLabel label is `.visually-hidden` (absolute); without a positioned ancestor it lays out against the page and a
+     horizontally scrolling table widens the document (72 px at 1280 on A-09 before this rule). */
+  position: relative;
 }
 
 .field__label {

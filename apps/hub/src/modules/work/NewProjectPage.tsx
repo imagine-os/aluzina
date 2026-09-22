@@ -110,6 +110,10 @@ export function NewProjectPage({ surface }: { surface: Surface }) {
         coverAssetId: null,
         year: new Date(today).getFullYear(),
         sourceFolderUrl: null,
+        fileCount: null,
+        coverUrl: null,
+        archiveSlug: null,
+        fileTypes: [],
       });
 
       const expanded = expandTemplate(template, { phaseIds, zones });

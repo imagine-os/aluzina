@@ -1,0 +1,68 @@
+{
+ "folderName": "0_76 OFICINA ALUZINA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIufd07DQTLt2GwgXuvoRbo/PROYECTOS%20ALUZINA%202020/0_76%20OFICINA%20ALUZINA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:51:10.988Z",
+ "indexedAt": "2026-09-21T23:55:32.683Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 1529989,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/oficina-aluzina/",
+ "files": [
+  {
+   "path": "Produccion e instalacion san frnado plaza aluzina .ai",
+   "name": "Produccion e instalacion san frnado plaza aluzina .ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 1524499,
+   "modified": "Feb 25, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AA3gOS4u-8KvSDZPWfyFINA/PROYECTOS%20ALUZINA%202020/0_76%20OFICINA%20ALUZINA/Produccion%20e%20instalacion%20san%20frnado%20plaza%20aluzina%20.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "produccion-e-instalacion-san-frnado-plaza-aluzina",
+   "thumb": "thumbs/produccion-e-instalacion-san-frnado-plaza-aluzina.jpg",
+   "pages": [
+    "pages/produccion-e-instalacion-san-frnado-plaza-aluzina-page-01.jpg",
+    "pages/produccion-e-instalacion-san-frnado-plaza-aluzina-page-02.jpg"
+   ],
+   "pageCount": 2,
+   "textExcerpt": "U N I V E R S O D E D I S E Ñ O Material iridicente Si no estamos y quieres comprar algo o solicitar algún servicio, Contactanos !!! +57 31039067773 De inmediato te responderemos",
+   "palette": [
+    "#ffffff",
+    "#1d191a",
+    "#b5b4b4",
+    "#f2f2f2",
+    "#565353",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "VICTOR .xlsx",
+   "name": "VICTOR .xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 9559,
+   "modified": "Mar 6, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACtJhEc7HE9cxLDIzV_bqu8/PROYECTOS%20ALUZINA%202020/0_76%20OFICINA%20ALUZINA/VICTOR%20.xlsx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "victor",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 2,
+  "bytes": 85616,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

@@ -40,7 +40,7 @@ export function GlobalControls({ compact }: { compact?: boolean }) {
         {otherLang.toUpperCase()}
       </ToggleButton>
       <ToggleButton label={t(theme === 'dark' ? 'core.shell.theme.toLight' : 'core.shell.theme.toDark')} pressed={theme === 'dark'} onClick={toggleTheme}>
-        {compact ? (theme === 'dark' ? '☾' : '☼') : theme === 'dark' ? t('core.shell.theme.dark') : t('core.shell.theme.light')}
+        {compact ? <Icon name={theme === 'dark' ? 'moon' : 'sun'} /> : theme === 'dark' ? t('core.shell.theme.dark') : t('core.shell.theme.light')}
       </ToggleButton>
       <ToggleButton label={t('core.shell.dev.label')} pressed={devMode} onClick={toggleDevMode}>
         {compact ? 'DEV' : devMode ? t('core.shell.dev.on') : t('core.shell.dev.off')}
@@ -153,7 +153,7 @@ export function DesktopShell({ route, children }: { route: RouteDef; children: R
         {t('core.shell.skip')}
       </a>
       <header className="dshell__top">
-        <Button className="dshell__menu-btn" variant="ghost" icon="☰" aria-label={t('core.shell.openMenu')} aria-expanded={navOpen} onClick={() => setNavOpen(true)} />
+        <Button className="dshell__menu-btn" variant="ghost" icon="menu" aria-label={t('core.shell.openMenu')} aria-expanded={navOpen} onClick={() => setNavOpen(true)} />
         <ShellBrand compact />
         <span className="dshell__portal">{t(portalKey)}</span>
         <Badge tone="accent" className="dshell__role">{t(isRoleId(role) ? ROLE_META[role].labelKey : 'core.role.unknown')}</Badge>

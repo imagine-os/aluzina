@@ -14,38 +14,12 @@ import { DocumentViewer } from '../../components/organism/DocumentViewer/Documen
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useTable } from '../../data/DataContext';
 import type { Asset, Project, Relation } from '../../data/schema';
-import { fileTypeOf } from '../../domain/archive';
+import { FILE_TYPE_LABELS, fileTypeOf } from '../../domain/archive';
 import { SERVICES, pick, type Service } from '../../domain';
 import { useT } from '../../i18n/I18nProvider';
-import { absoluteUrl, copyText, docIn, docsFromAssets, fontNames, formatMb, triggerDownload, type BrandDoc } from './documents';
+import { absoluteUrl, copyText, docIn, docsFromAssets, fontNames, formatMb, triggerDownload, viewerAssetOf, type BrandDoc } from './documents';
 import { documentsSpec } from './specs';
 import './brand.css';
-
-/**
- * The PDF viewer, three deep so nothing is a dead frame: `<object>` renders the PDF, its children render
- * when the browser has no PDF plugin (an `<iframe>`, which most mobile browsers do show), and the plain
- * paragraph renders when neither works - or when the file is simply not on the server yet. The download
- * link is inside the fallback, so a person who cannot read the PDF in place can still get it (P-09).
- * `page` opens the viewer at that page (`#page=N`, honoured by the browsers' PDF viewers).
- */
-export function DocFrame({ doc, page, title, label, fallback, download }: { doc: BrandDoc; page?: number | null; title: string; label: string; fallback: string; download: string }) {
-  const src = page && page > 0 ? `${doc.href}#page=${page}` : doc.href;
-  return (
-    <div className="brand-doc__frame">
-      <object key={`${doc.id}-${page ?? 0}`} className="brand-doc__object" type="application/pdf" data={src} aria-label={label}>
-        <iframe className="brand-doc__object" src={src} title={title}>
-          <p className="brand-doc__fallback">{fallback}</p>
-        </iframe>
-        <p className="brand-doc__fallback">
-          {fallback}{' '}
-          <Button href={doc.href} download={doc.downloadName}>
-            {download}
-            </Button>
-        </p>
-      </object>
-    </div>
-  );
-}
 
 /** What a document's pages relate to (D-026): the projects they depict or mention, the services they argue for. */
 interface Related {
@@ -195,11 +169,16 @@ export function DocumentsPage() {
             <li key={doc.id} data-doc={doc.id} data-asset={doc.assetId ?? undefined}>
               <Card title={title(doc)} subtitle={fullTitle(doc)} raised={doc.id === current.id}>
                 {desc(doc) && <p className="brand-doc__note">{desc(doc)}</p>}
-                <p className="brand-doc__meta">
-                  <span className="brand-path">{doc.downloadName}</span>
-                  <span className="brand-list__meta">{t('brand.documents.fileMeta', { pages: doc.pages, size: formatMb(doc.bytes, lang) })}</span>
-                  {rel && rel.pageCount > 0 && <span className="brand-list__meta">{t('brand.documents.pagesInData', { count: rel.pageCount })}</span>}
-                </p>
+                {/* ar-17: the same Thumb the company tiles and the archive use - served render when there is
+                    one, the PDF FileIcon on a tint when there is not, never a broken image. */}
+                <div className="brand-doc__head">
+                  <Thumb className="brand-doc__thumb" src={doc.thumbnailUrl} alt={title(doc)} type="pdf" ratio="3:4" size="sm" badge={pick(FILE_TYPE_LABELS.pdf, lang)} iconLabel={pick(FILE_TYPE_LABELS.pdf, lang)} />
+                  <p className="brand-doc__meta">
+                    <span className="brand-path">{doc.downloadName}</span>
+                    <span className="brand-list__meta">{t('brand.documents.fileMeta', { pages: doc.pages, size: formatMb(doc.bytes, lang) })}</span>
+                    {rel && rel.pageCount > 0 && <span className="brand-list__meta">{t('brand.documents.pagesInData', { count: rel.pageCount })}</span>}
+                  </p>
+                </div>
                 {(doc.palette.length > 0 || fonts.length > 0) && (
                   <p className="brand-doc__meta">
                     <Palette colors={doc.palette} label={t('brand.documents.palette', { colors: doc.palette.join(', ') })} className="brand-doc__palette" />
@@ -336,7 +315,25 @@ export function DocumentsPage() {
         <div ref={viewerRef} tabIndex={-1} className="brand-doc__anchor" id="brand-documents-viewer">
           <Card title={t('brand.documents.viewer')} subtitle={t('brand.documents.viewerSub')} padding="sm">
             <Tabs label={t('brand.documents.tabsLabel')} value={current.id} onChange={(id) => select(docIn(docs, id) ?? docs[0])} tabs={docs.map((d) => ({ id: d.id, label: title(d) }))}>
-              <DocFrame doc={current} page={page} title={t('brand.documents.frameTitle', { title: title(current) })} label={t('brand.documents.frameTitle', { title: title(current) })} fallback={t('brand.documents.noPdf')} download={t('brand.documents.download')} />
+              {/* ar-17: the shared organism, not the page's own frame. `previewUrls` is empty for both marketing
+                  PDFs, so it takes its PDF branch (object / iframe / sentence + Download) and `?page=N` still
+                  opens the file at that page; a row that gains served renders becomes the paged viewer for free. */}
+              <DocumentViewer
+                asset={viewerAssetOf(current)}
+                page={page ?? undefined}
+                onPage={(n) => setParams({ doc: current.id, page: String(n) }, { replace: true })}
+                downloadName={current.downloadName}
+                labels={{
+                  fallback: t('brand.documents.noPdf'),
+                  download: t('brand.documents.download'),
+                  openSource: t('brand.documents.newTab'),
+                  page: (n, total) => t('brand.documents.viewerPosition', { index: n, total }),
+                  prev: t('brand.documents.viewerPrev'),
+                  next: t('brand.documents.viewerNext'),
+                  thumbnails: t('brand.documents.viewerThumbnails'),
+                  fileType: pick(FILE_TYPE_LABELS.pdf, lang),
+                }}
+              />
             </Tabs>
           </Card>
         </div>

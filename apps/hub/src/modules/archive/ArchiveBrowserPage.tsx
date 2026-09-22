@@ -1,6 +1,7 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
+import { useCan, useSession } from '../../auth/SessionProvider';
 import { Button } from '../../components/atom/Button/Button';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Checkbox } from '../../components/atom/Checkbox/Checkbox';
@@ -18,16 +19,25 @@ import { SearchField } from '../../components/molecule/SearchField/SearchField';
 import { StatTile } from '../../components/molecule/StatTile/StatTile';
 import { Thumb } from '../../components/molecule/Thumb/Thumb';
 import { DataTable, type Column } from '../../components/organism/DataTable/DataTable';
-import type { Asset, Project } from '../../data/schema';
-import { LIFECYCLES, lifecycleOf, pick, type FileType, type Lifecycle } from '../../domain';
+import { useData, useTable } from '../../data/DataContext';
+import type { Project, Space } from '../../data/schema';
+import { LIFECYCLES, lifecycleOf, pick, type Lifecycle } from '../../domain';
 import { copyText } from '../../design/clipboard';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';
 import { archiveBrowserSpec } from './specs';
-import { topFileTypes, useArchiveData, usePortfolioSet } from './model';
+import { useArchiveData, usePortfolioSet } from './model';
 import './archive.css';
 
 const PROJECT_TYPES = ['residential', 'commercial', 'hospitality', 'wellness', 'lighting-product'] as const;
+/** Spaces a saved example set is filed in (`seed/assets.ts`, `seed/archive.ts`); a missing one is simply skipped. */
+const SET_SPACE_IDS = ['sp-portfolio', 'sp-archive'] as const;
+/** Absolute link to P-06 with this set in it: the page is stateless, the link IS the set (ar-14). */
+function setPageUrl(ids: readonly string[], title: string, print = false): string {
+  const base = `${window.location.origin}${window.location.pathname}`;
+  const query = `p=${ids.join(',')}${title ? `&t=${encodeURIComponent(title)}` : ''}${print ? '&print=1' : ''}`;
+  return `${base}#/sets?${query}`;
+}
 type SortKey = 'yearDesc' | 'yearAsc' | 'name' | 'files';
 const SORTS: SortKey[] = ['yearDesc', 'yearAsc', 'name', 'files'];
 
@@ -58,11 +68,11 @@ function readFilters(params: URLSearchParams): Filters {
   };
 }
 
-/** A project's cover: the cover asset's thumbnail, else the mosaic of its most common file types. */
-function Cover({ project, files, coverSrc }: { project: Project; files: Asset[]; coverSrc: string | null }) {
+/** A project's cover: `coverUrl` (a column of the row, ar-19), else the mosaic of its most common file types (`fileTypes`). */
+function Cover({ project }: { project: Project }) {
   const { t } = useT();
-  if (coverSrc) return <Thumb src={coverSrc} alt={t('archive.browser.cover', { name: project.name })} type="image" ratio="16:9" />;
-  const types: FileType[] = topFileTypes(files);
+  if (project.coverUrl) return <Thumb src={project.coverUrl} alt={t('archive.browser.cover', { name: project.name })} type="image" ratio="16:9" />;
+  const types = project.fileTypes;
   if (types.length === 0) return <Thumb src={null} alt={t('archive.browser.mosaic', { name: project.name })} type="folder" ratio="16:9" />;
   return (
     <span className={`arc-mosaic${types.length === 1 ? ' arc-mosaic--single' : ''}`} role="img" aria-label={t('archive.browser.mosaic', { name: project.name })}>
@@ -82,8 +92,14 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
   const { t, lang } = useT();
   const [params, setParams] = useSearchParams();
   const f = readFilters(params);
-  const { projects, filesByProject, assetsById, loading } = useArchiveData();
+  const { projects, curatedByProject, loading } = useArchiveData();
   const set = usePortfolioSet();
+  const data = useData();
+  const { user } = useSession();
+  const can = useCan();
+  const spaces = useTable('spaces');
+  /** The post the last "Save set to Spaces" created, so the bar can offer a link to it (a toast is text only). */
+  const [savedPostId, setSavedPostId] = useState<string | null>(null);
 
   const patch = (next: Partial<Filters>) => {
     const merged = { ...f, ...next };
@@ -100,11 +116,17 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
     return merged;
   };
 
-  const fileCount = (id: string) => filesByProject.get(id)?.length ?? 0;
-  const totalFiles = useMemo(() => [...filesByProject.values()].reduce((n, list) => n + list.length, 0), [filesByProject]);
+  // File counts are a column of the project row (`fileCount`, from the inventory), never a scan of file rows (ar-19).
+  const fileCount = (p: Project) => p.fileCount ?? 0;
+  const totalFiles = useMemo(() => projects.reduce((n, p) => n + (p.fileCount ?? 0), 0), [projects]);
 
   const years = useMemo(() => [...new Set(projects.map((p) => p.year).filter((y): y is number => y !== null))].sort((a, b) => b - a), [projects]);
-  const tags = useMemo(() => [...new Set(projects.flatMap((p) => p.tags))].sort((a, b) => a.localeCompare(b)), [projects]);
+  /** Tags a project answers to: its own plus those saved on its curated files (S-13), so a file tag reaches this filter. */
+  const tagsOf = (p: Project): string[] => [...p.tags, ...(curatedByProject.get(p.id) ?? []).flatMap((a) => a.tags)];
+  const tags = useMemo(
+    () => [...new Set(projects.flatMap((p) => [...p.tags, ...(curatedByProject.get(p.id) ?? []).flatMap((a) => a.tags)]))].sort((a, b) => a.localeCompare(b)),
+    [projects, curatedByProject],
+  );
 
   const counts = useMemo(() => {
     const byLife = { prospect: 0, active: 0, past: 0 } as Record<Lifecycle, number>;
@@ -112,11 +134,10 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
     for (const p of projects) {
       const life = lifecycleOf(p.pipelineStatus);
       byLife[life] += 1;
-      filesByLife[life] += fileCount(p.id);
+      filesByLife[life] += fileCount(p);
     }
     return { byLife, filesByLife };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projects, filesByProject]);
+  }, [projects]);
 
   const shown = useMemo(() => {
     const needle = f.q.trim().toLowerCase();
@@ -124,15 +145,15 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
       if (f.life !== 'all' && lifecycleOf(p.pipelineStatus) !== f.life) return false;
       if (f.year && String(p.year ?? '') !== f.year) return false;
       if (f.type && p.type !== f.type) return false;
-      if (f.tag && !p.tags.includes(f.tag)) return false;
+      if (f.tag && !tagsOf(p).includes(f.tag)) return false;
       if (!needle) return true;
-      const hay = [p.name, p.client, String(p.year ?? ''), ...p.tags].join(' ').toLowerCase();
+      const hay = [p.name, p.client, String(p.year ?? ''), ...tagsOf(p)].join(' ').toLowerCase();
       return hay.includes(needle);
     });
     const sorted = [...list];
     sorted.sort((a, b) => {
       if (f.sort === 'name') return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
-      if (f.sort === 'files') return fileCount(b.id) - fileCount(a.id) || a.name.localeCompare(b.name);
+      if (f.sort === 'files') return fileCount(b) - fileCount(a) || a.name.localeCompare(b.name);
       const ya = a.year ?? 0;
       const yb = b.year ?? 0;
       if (ya !== yb) return f.sort === 'yearAsc' ? ya - yb : yb - ya;
@@ -140,7 +161,7 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
     });
     return sorted;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projects, filesByProject, f.life, f.year, f.type, f.tag, f.q, f.sort]);
+  }, [projects, curatedByProject, f.life, f.year, f.type, f.tag, f.q, f.sort]);
 
   const projectPath = (id: string) => `/${surface}/archive/${id}`;
   const byName = (value: unknown): Project | undefined => {
@@ -148,8 +169,37 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
     return projects.find((p) => p.id === value) ?? projects.find((p) => p.name.toLowerCase() === needle);
   };
 
+  /** The set in the order it was picked (`set.ids`), which is the order P-06 renders and the post lists. */
+  const setProjects = useMemo(() => {
+    const byId = new Map(projects.map((p) => [p.id, p]));
+    return set.ids.map((id) => byId.get(id)).filter((p): p is Project => Boolean(p));
+  }, [projects, set.ids]);
+
+  const setTitle = () => (setProjects.length === 1 ? t('archive.set.titleOne') : t('archive.set.title', { count: setProjects.length }));
+  const setLink = (print = false) => setPageUrl(setProjects.map((p) => p.id), setTitle(), print);
+
+  /**
+   * Files the set as a `link` post in Spaces (ar-10): the post carries the P-06 link and a markdown list of
+   * the projects, filed in the portfolio and archive spaces through `filings` (D-026) so two people share one
+   * set instead of one localStorage list. Behind `archive.curate` (the set is curation of the archive; studio, brand and the
+   * founder hold it, so Sarai can file a set without the brand's whole `spaces.write`).
+   */
+  const saveSetToSpaces = async () => {
+    if (setProjects.length === 0) return 'the portfolio set is empty';
+    const title = setTitle();
+    const url = setLink();
+    const list = setProjects.map((p) => `- ${[p.name, p.year ?? '', t(`archive.type.${p.type}`)].filter((part) => String(part).length > 0).join(' · ')}`);
+    const body = [t('archive.set.postBody'), '', ...list].join('\n');
+    const post = await data.create('posts', { title, body, kind: 'link', url, authorId: user.id, pinned: false, status: 'published', tags: ['portfolio', 'ejemplos'] });
+    const targets = (spaces.rows as Space[]).filter((space) => (SET_SPACE_IDS as readonly string[]).includes(space.id));
+    for (const space of targets) await data.create('filings', { postId: post.id, spaceId: space.id });
+    setSavedPostId(post.id);
+    toast(targets.length > 0 ? t('archive.set.saved', { count: setProjects.length, spaces: targets.length }) : t('archive.set.savedUnfiled', { count: setProjects.length }));
+    return post.id;
+  };
+
   const copySet = async () => {
-    const chosen = projects.filter((p) => set.ids.includes(p.id));
+    const chosen = setProjects;
     const text = chosen.map((p) => [p.name, p.year ?? '', p.client, p.sourceFolderUrl ?? ''].filter(Boolean).join(' · ')).join('\n');
     const ok = await copyText(text);
     if (!ok) console.info('[archive] portfolio set:\n', text);
@@ -178,13 +228,23 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
       return `${found.name}: ${added ? 'in the set' : 'removed from the set'}`;
     },
     'archive.copySet': () => copySet(),
+    'archive.openSetPage': () => {
+      if (setProjects.length === 0) return 'the portfolio set is empty';
+      window.open(setLink(), '_blank', 'noreferrer');
+      return setLink();
+    },
+    'archive.exportSet': () => {
+      if (setProjects.length === 0) return 'the portfolio set is empty';
+      window.open(setLink(true), '_blank', 'noreferrer');
+      return setLink(true);
+    },
+    'archive.saveSetToSpaces': can('archive.curate') ? () => saveSetToSpaces() : false,
     'archive.clearSet': () => {
       set.clear();
       toast(t('archive.set.cleared'));
       return 'cleared';
     },
-    // Declared, shown as Placeholders, still registered so the bus tells the same truth as the tooltip (D-047).
-    'archive.exportSet': () => 'not wired yet: PDF export lands with the documents module R3',
+    // Declared, shown as a Placeholder, still registered so the bus tells the same truth as the tooltip (D-047).
     'archive.importFolder': () => 'not wired yet: Dropbox / Drive intake runs as scripts/archive/*, see docs/reference/surfaces.md',
   });
 
@@ -203,7 +263,7 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
     { key: 'type', header: t('archive.label.type'), sortable: true, render: (p) => t(`archive.type.${p.type}`) },
     { key: 'pipelineStatus', header: t('archive.label.status'), render: (p) => <StatusPill status={p.pipelineStatus} /> },
     { key: 'life', header: t('archive.label.lifecycle'), sortValue: (p) => lifecycleOf(p.pipelineStatus), render: (p) => <Badge>{pick(LIFECYCLES.find((l) => l.id === lifecycleOf(p.pipelineStatus))!.label, lang)}</Badge> },
-    { key: 'files', header: t('archive.label.files'), align: 'end', sortValue: (p) => fileCount(p.id), render: (p) => fileCount(p.id) },
+    { key: 'files', header: t('archive.label.files'), align: 'end', sortValue: (p) => fileCount(p), render: (p) => fileCount(p) },
   ];
 
   const clearAll = () => patch({ life: 'all', year: '', type: '', tag: '', q: '', sort: 'yearDesc' });
@@ -270,22 +330,21 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
       {f.view === 'cards' && shown.length > 0 && (
         <ul className="arc-grid">
           {shown.map((p) => {
-            const files = filesByProject.get(p.id) ?? [];
-            const cover = p.coverAssetId ? (assetsById.get(p.coverAssetId)?.thumbnailUrl ?? null) : null;
-            // Files that carry at least one tag: how far the tagging pass has got on this project (ar-09).
-            const tagged = files.reduce((n, file) => n + (file.tags.length > 0 ? 1 : 0), 0);
+            const count = fileCount(p);
+            // Curated files: the stored rows of this project (tagged or moved on S-13), how far the tagging pass has got (ar-09, ar-19).
+            const tagged = (curatedByProject.get(p.id) ?? []).filter((file) => file.tags.length > 0).length;
             const life = LIFECYCLES.find((l) => l.id === lifecycleOf(p.pipelineStatus));
             return (
               <li key={p.id} data-project={p.id}>
                 <Card padding="sm">
                   <Link className="arc-card__link" to={projectPath(p.id)} aria-label={t('archive.browser.openAria', { name: p.name })}>
-                    <Cover project={p} files={files} coverSrc={cover} />
+                    <Cover project={p} />
                     <div className="arc-card__body">
                       <span className="arc-card__name">{p.name}</span>
                       <span className="arc-card__meta">
                         <span>{p.client}</span>
                         {p.year !== null && <span>· {p.year}</span>}
-                        <span>· {files.length === 0 ? t('archive.browser.noFiles') : files.length === 1 ? t('archive.browser.filesOne') : t('archive.browser.files', { count: files.length })}</span>
+                        <span>· {count === 0 ? t('archive.browser.noFiles') : count === 1 ? t('archive.browser.filesOne') : t('archive.browser.files', { count })}</span>
                         {tagged > 0 && <span>· {t('archive.browser.tagged', { count: tagged })}</span>}
                         {p.sourceFolderUrl && <span title={t('archive.browser.source')} aria-label={t('archive.browser.source')}>· ⛁</span>}
                       </span>
@@ -314,13 +373,19 @@ export function ArchiveBrowserPage({ surface }: { surface: Surface }) {
         <div className="arc-setbar" role="group" aria-label={t('archive.set.bar')}>
           <span className="arc-setbar__count">{set.ids.length === 1 ? t('archive.set.countOne') : t('archive.set.count', { count: set.ids.length })}</span>
           <div className="arc-setbar__actions">
+            <Button variant="primary" href={setLink()} external>
+              {t('archive.set.openPage')}
+            </Button>
+            <Button href={setLink(true)} external>
+              {t('archive.set.export')}
+            </Button>
+            {can('archive.curate') && <Button onClick={() => void saveSetToSpaces()}>{t('archive.set.saveToSpaces')}</Button>}
+            {savedPostId && (
+              <Button variant="ghost" href={`#/${surface}/spaces/post/${savedPostId}`}>
+                {t('archive.set.openPost')}
+              </Button>
+            )}
             <Button onClick={() => void copySet()}>{t('archive.set.copy')}</Button>
-            <Placeholder what={t('archive.set.openSpacesWhat')}>
-              <Button>{t('archive.set.openSpaces')}</Button>
-            </Placeholder>
-            <Placeholder what={t('archive.set.exportWhat')}>
-              <Button>{t('archive.set.export')}</Button>
-            </Placeholder>
             <Button
               variant="ghost"
               onClick={() => {

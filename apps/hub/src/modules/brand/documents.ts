@@ -1,4 +1,5 @@
 import { downloadUrl } from '../../design/clipboard';
+import type { ViewerAsset } from '../../components/organism/DocumentViewer/DocumentViewer';
 import type { Asset } from '../../data/schema';
 
 /**
@@ -7,8 +8,8 @@ import type { Asset } from '../../data/schema';
  * `assets` rows with `kind: 'document'` (seeded from `docs/brand/<doc>/index.json`), read by G-08 through
  * `useTable` and turned into `BrandDoc` with `docFromAsset`; `BRAND_DOCUMENTS` is the fallback while the
  * table loads (and the list G-01 still uses). Replacing a file is a `Placeholder` (P-09) until file storage
- * exists. The same documents are published to visitors on P-05 `/portfolio`; when a `DocumentViewer`
- * organism lands in the library both pages use it (request in docs/changelog/_pending/brand-docs.md).
+ * exists. The same documents are published to visitors on P-05 `/portfolio`. Since ar-17 G-08 renders them
+ * with the shared `DocumentViewer` organism (`viewerAssetOf`) instead of its own frame; P-05 still has its own.
  */
 export const BRAND_DOC_IDS = ['portfolio', 'brochure'] as const;
 export type BrandDocId = (typeof BRAND_DOC_IDS)[number];
@@ -30,17 +31,43 @@ export interface BrandDoc {
   titleEs: string | null;
   palette: string[];
   fonts: string[];
+  /** Mime type of the served file (`application/pdf` for both marketing documents). */
+  mimeType: string;
+  /** Served cover render, or null: the `Thumb` then draws the `FileIcon` fallback (ar-17). */
+  thumbnailUrl: string | null;
+  /** Served page renders for the paged viewer; `[]` for the two marketing PDFs (their renders stay in the repo). */
+  previewUrls: string[];
 }
 
 export const BRAND_DOCUMENTS: readonly BrandDoc[] = [
-  { id: 'portfolio', assetId: 'ast-portfolio', href: './brand/aluzina-portfolio.pdf', downloadName: 'Aluzina-Portfolio.pdf', pages: 37, bytes: 2_928_197, title: 'Aluzina portfolio (Universo de Diseño)', titleEs: 'Portafolio Aluzina (Universo de Diseño)', palette: [], fonts: [] },
-  { id: 'brochure', assetId: 'ast-brochure', href: './brand/aluzina-brochure.pdf', downloadName: 'Aluzina-Brochure.pdf', pages: 19, bytes: 3_130_687, title: 'Aluzina brochure (Interiorismo / Iluminación)', titleEs: 'Brochure Aluzina (Interiorismo / Iluminación)', palette: [], fonts: [] },
+  { id: 'portfolio', assetId: 'ast-portfolio', href: './brand/aluzina-portfolio.pdf', downloadName: 'Aluzina-Portfolio.pdf', pages: 37, bytes: 2_928_197, title: 'Aluzina portfolio (Universo de Diseño)', titleEs: 'Portafolio Aluzina (Universo de Diseño)', palette: [], fonts: [], mimeType: 'application/pdf', thumbnailUrl: null, previewUrls: [] },
+  { id: 'brochure', assetId: 'ast-brochure', href: './brand/aluzina-brochure.pdf', downloadName: 'Aluzina-Brochure.pdf', pages: 19, bytes: 3_130_687, title: 'Aluzina brochure (Interiorismo / Iluminación)', titleEs: 'Brochure Aluzina (Interiorismo / Iluminación)', palette: [], fonts: [], mimeType: 'application/pdf', thumbnailUrl: null, previewUrls: [] },
 ];
 
 /** A served `document` asset as the page's document; null for pages, images and unserved rows. */
 export function docFromAsset(a: Asset): BrandDoc | null {
   if (a.kind !== 'document' || !a.url) return null;
-  return { id: a.slug, assetId: a.id, href: a.url, downloadName: downloadNameFor(a.slug), pages: a.pageCount ?? 0, bytes: a.bytes ?? 0, title: a.title, titleEs: a.titleEs, palette: a.palette, fonts: a.fonts };
+  return { id: a.slug, assetId: a.id, href: a.url, downloadName: downloadNameFor(a.slug), pages: a.pageCount ?? 0, bytes: a.bytes ?? 0, title: a.title, titleEs: a.titleEs, palette: a.palette, fonts: a.fonts, mimeType: a.mimeType, thumbnailUrl: a.thumbnailUrl, previewUrls: a.previewUrls };
+}
+
+/**
+ * A `BrandDoc` as the shared `DocumentViewer`'s asset (ar-17). Both marketing PDFs are served files without
+ * served page renders, so the viewer takes its PDF branch (`<object>` / `<iframe>` / sentence, the same three
+ * levels the page's own `DocFrame` had); a row that later carries `previewUrls` gets the paged image viewer
+ * with no page change. `sourceUrl` is null: the file lives in the repo, "Open in a new tab" is the card's own.
+ */
+export function viewerAssetOf(doc: BrandDoc): ViewerAsset {
+  return {
+    title: doc.title,
+    titleEs: doc.titleEs,
+    url: doc.href,
+    sourceUrl: null,
+    mimeType: doc.mimeType,
+    previewUrls: doc.previewUrls,
+    pageCount: doc.pages,
+    thumbnailUrl: doc.thumbnailUrl,
+    fileType: 'pdf',
+  };
 }
 
 /** `Aluzina-Portfolio.pdf` from the slug, so the saved file is named the same on every surface. */

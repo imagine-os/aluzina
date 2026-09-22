@@ -1,0 +1,53 @@
+{
+ "folderName": "0_100 APARTAMENTO EN CALI 38M2",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMaWMndD6KDz3WNv7RCdyXE/PROYECTOS%20ALUZINA%202021/0_100%20APARTAMENTO%20EN%20CALI%2038M2?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:35:25.508Z",
+ "indexedAt": "2026-09-21T23:55:32.715Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 505293,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/apartamento-en-cali-38m2/",
+ "files": [
+  {
+   "path": "PROYECTO APARTAMENTO EN CALI 38M2   .pdf",
+   "name": "PROYECTO APARTAMENTO EN CALI 38M2   .pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 505295,
+   "modified": "Oct 1, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AA-HN7nO7JhrscmwQAnF4PM/PROYECTOS%20ALUZINA%202021/0_100%20APARTAMENTO%20EN%20CALI%2038M2/PROYECTO%20APARTAMENTO%20EN%20CALI%2038M2%20%20%20.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "proyecto-apartamento-en-cali-38m2",
+   "thumb": "thumbs/proyecto-apartamento-en-cali-38m2.jpg",
+   "pages": [
+    "pages/proyecto-apartamento-en-cali-38m2-page-01.jpg",
+    "pages/proyecto-apartamento-en-cali-38m2-page-02.jpg",
+    "pages/proyecto-apartamento-en-cali-38m2-page-03.jpg",
+    "pages/proyecto-apartamento-en-cali-38m2-page-04.jpg"
+   ],
+   "pageCount": 13,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I L U Z Pasamos el 87% de nuestras vidas en ESPACIOS interiores; la manera como estén diseñados, impacta nuestra vida. La parte hace el todo y el todo la parte El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial. Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial.",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff96",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 381061,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

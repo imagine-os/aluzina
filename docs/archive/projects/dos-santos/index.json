@@ -1,0 +1,60 @@
+{
+ "folderName": "0_92 DOS SANTOS",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOYhM6FULReJw78SovvOnaI/PROYECTOS%20ALUZINA%202020/0_92%20DOS%20SANTOS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:55:40.502Z",
+ "indexedAt": "2026-09-21T23:55:32.677Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 10317987,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/dos-santos/",
+ "files": [
+  {
+   "path": "Cotización (redactado).xlsx",
+   "name": "Cotización (redactado).xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 1027604,
+   "modified": "Nov 17, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOYhM6FULReJw78SovvOnaI/PROYECTOS%20ALUZINA%202020/0_92%20DOS%20SANTOS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "0097-cotizacion-cantina",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "plano dos santos.pdf",
+   "name": "plano dos santos.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 9290383,
+   "modified": "Nov 10, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AL9fBQ_YTiIpY-_kupZSuQU/PROYECTOS%20ALUZINA%202020/0_92%20DOS%20SANTOS/plano%20dos%20santos.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "plano-dos-santos",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

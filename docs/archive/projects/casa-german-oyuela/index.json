@@ -1,0 +1,41 @@
+{
+ "folderName": "017 CASA GERMAN OYUELA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANNlRGyqS10U4sChgP9HfCA/PROYECTOS%20ALUZINA%202025/017%20CASA%20GERMAN%20OYUELA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:33:02.085Z",
+ "indexedAt": "2026-09-21T23:55:32.619Z",
+ "depth": 2,
+ "fileCount": 1,
+ "totalBytes": 177306,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/casa-german-oyuela/",
+ "files": [
+  {
+   "path": "2025 ESTRATEGIA DE MARKETING/ESTUDIO DE CLIENTE  ALUZINA INTERIORISMO E ILUMINACIÓN.pdf",
+   "name": "ESTUDIO DE CLIENTE  ALUZINA INTERIORISMO E ILUMINACIÓN.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 177306,
+   "modified": "Jun 15, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABvEgw9Bzbdy-_4D5UPAWcQ/PROYECTOS%20ALUZINA%202025/017%20CASA%20GERMAN%20OYUELA/2025%20ESTRATEGIA%20DE%20MARKETING/ESTUDIO%20DE%20CLIENTE%20%20ALUZINA%20INTERIORISMO%20E%20ILUMINACI%C3%93N.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "2025-estrategia-de-marketing--estudio-de-cliente-aluzina-interiorismo-e-iluminacion",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "folderName": "EL ENCANTO",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKvhLUu7bdoY5J4I0dwdsWA/PROYECTOS%20ALUZINA%202024/EL%20ENCANTO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:36:43.240Z",
+ "indexedAt": "2026-09-21T23:55:32.591Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 183828,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/el-encanto-2024/",
+ "files": [
+  {
+   "path": "EL ENCANTO VALORES.pdf",
+   "name": "EL ENCANTO VALORES.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 183833,
+   "modified": "Dec 26, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AD1eZw59ZAO7fIucOYhwGM8/PROYECTOS%20ALUZINA%202024/EL%20ENCANTO/EL%20ENCANTO%20VALORES.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "el-encanto-valores",
+   "thumb": "thumbs/el-encanto-valores.jpg",
+   "pages": [
+    "pages/el-encanto-valores-page-01.jpg",
+    "pages/el-encanto-valores-page-02.jpg"
+   ],
+   "pageCount": 2,
+   "textExcerpt": "UNIVERSO 600000 600.000,00 1 700000 700.000,00 bombillos 6u10 para iluminacion incandecente 4 5000 20.000,00 Mesa nueva de mobilidad 1 40000 40.000,00 Telas blancas para sala y comedor 30mts 130000 130.000,00 Adecuacion de telas en techo, arreglo de telas en sofas 1 500000 500.000,00 Primera sala, area de acceso , logo en acceso , cafeteria, consultorio holistico , 1 500000 500.000,00 Expositores tomaron 2 horas diarias durante 15 dias lo que es 30 horas de trabajo en total 1 700000 700.000,00 Conversaciones con anterior toldos , desercion de trabajar con e llos , busqueda de nueva empresa , c",
+   "palette": [
+    "#ffffff",
+    "#daf2eb",
+    "#d2c5b1",
+    "#fffefe",
+    "#ebfded",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 2,
+  "bytes": 150471,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

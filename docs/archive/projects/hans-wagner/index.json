@@ -1,0 +1,70 @@
+{
+ "folderName": "013 HANS WAGNER",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABdc9fGqmcekgamtg49Z8zA/PROYECTOS%20ALUZINA%202025/013%20HANS%20WAGNER?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:31:34.090Z",
+ "indexedAt": "2026-09-21T23:55:32.626Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 2083059138,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/hans-wagner/",
+ "files": [
+  {
+   "path": "Hans  & Aluzina.ai",
+   "name": "Hans  & Aluzina.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 1041529569,
+   "modified": "Feb 18, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKWynFyctpDyyW2Raezp18Y/PROYECTOS%20ALUZINA%202025/013%20HANS%20WAGNER/Hans%20%20%26%20Aluzina.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "hans-aluzina",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "Hans  & Aluzina.pdf",
+   "name": "Hans  & Aluzina.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 1041529569,
+   "modified": "Feb 18, 2025",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHT41XSv0vDmWTtdCJdXQYk/PROYECTOS%20ALUZINA%202025/013%20HANS%20WAGNER/Hans%20%20%26%20Aluzina.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "hans-aluzina-2",
+   "thumb": "thumbs/hans-aluzina-2.jpg",
+   "pages": [
+    "pages/hans-aluzina-2-page-01.jpg",
+    "pages/hans-aluzina-2-page-02.jpg",
+    "pages/hans-aluzina-2-page-03.jpg",
+    "pages/hans-aluzina-2-page-04.jpg"
+   ],
+   "pageCount": 9,
+   "textExcerpt": "ESPACIO + LUZ I N T E R I O R I S M O I L U M I N A C I Ó N OVI ON THE DRUMS/ MIAMI, EEUU E X P E R I E N C I A S D E L U Z . “Lo que le da peso tener tu equipo de diseño , hace que lo que es una idea , evolucione y se potencie , te sorprenden los resultados y tú satisfacción es total.” I N T E R I O R I S M O I L U M I N A C I Ó N Por Que Trabajar Con Aluzina E S T U D I O C R E A T I V O D E D I S E Ñ O SERVICIOS COMPLETOS DE DISEÑO • Enfoque a su medida. • Diseños de alta calidad. • Respuesta rapida y comunicación clara. • Nuestro cliente siempre cuenta con un gestor de proyectos dedicado a",
+   "palette": [
+    "#211913",
+    "#332a1c",
+    "#453c2a",
+    "#908579",
+    "#5d5241",
+    "#807668"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 215224,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

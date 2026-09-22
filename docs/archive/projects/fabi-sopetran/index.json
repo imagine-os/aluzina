@@ -1,0 +1,48 @@
+{
+ "folderName": "FABI SOPETRAN",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADcPSvZW-Vhxh3kPwT30Kwk/PROYECTOS%20ALUZINA%202019%202023/FABI%20SOPETRAN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T23:06:32.278Z",
+ "indexedAt": "2026-09-21T23:55:32.651Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 2097152,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/fabi-sopetran/",
+ "files": [
+  {
+   "path": "qb_MNO6Z.jpeg",
+   "name": "qb_MNO6Z.jpeg",
+   "ext": "jpeg",
+   "mimeType": "image/jpeg",
+   "bytes": 2083854,
+   "modified": null,
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAgdkAP9bx62bm_rgJXtr-I/PROYECTOS%20ALUZINA%202019%202023/FABI%20SOPETRAN/qb_MNO6Z.jpeg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "qb-mno6z",
+   "thumb": "thumbs/qb-mno6z.jpg",
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [
+    "#384824",
+    "#494c2f",
+    "#2b321e",
+    "#857e63",
+    "#5f653e",
+    "#9b907a"
+   ],
+   "renderer": "pillow"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 0,
+  "bytes": 33835,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "folderName": "DESARROLLO DE ILUMINACION",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AGtL8dZieeVC_Wp-j5qB7RU/PROYECTOS%20ALUZINA%202024/DESARROLLO%20DE%20ILUMINACION?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:36:31.579Z",
+ "indexedAt": "2026-09-21T23:55:32.589Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 349259694,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/desarrollo-de-iluminacion/",
+ "files": [
+  {
+   "path": "LETS WORK TOGHETER IN YOUR LIGHTING DEVELOPMENT ALUZINA.ai",
+   "name": "LETS WORK TOGHETER IN YOUR LIGHTING DEVELOPMENT ALUZINA.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 349259694,
+   "modified": "Jun 24, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAIpgC2dieU92YuY7Lbc6sw/PROYECTOS%20ALUZINA%202024/DESARROLLO%20DE%20ILUMINACION/LETS%20WORK%20TOGHETER%20IN%20YOUR%20LIGHTING%20DEVELOPMENT%20ALUZINA.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "lets-work-togheter-in-your-lighting-development-aluzina",
+   "thumb": "thumbs/lets-work-togheter-in-your-lighting-development-aluzina.jpg",
+   "pages": [
+    "pages/lets-work-togheter-in-your-lighting-development-aluzina-page-01.jpg",
+    "pages/lets-work-togheter-in-your-lighting-development-aluzina-page-02.jpg",
+    "pages/lets-work-togheter-in-your-lighting-development-aluzina-page-03.jpg",
+    "pages/lets-work-togheter-in-your-lighting-development-aluzina-page-04.jpg"
+   ],
+   "pageCount": 14,
+   "textExcerpt": "SPACE + LIGHT Light have more power than what we think LIGHTING DEVELOPMENT DEVELOPMENT OF LIGHT EFFECTS I N T E R I O R I S M O I L U M I N A C I Ó N Why work with us l i g h t i n g d e s i g n s t u d i o COMPLETE DESIGN SERVICES • Tailored approach. • High quality designs. • Design , Blue print , 3d model • Prototype . atmosp • Un valor agregado con el manejo de la luz como hilo conductor que conecta los proyectos como experiencias de luz UNIQUENESS Technological Integration • : Incorporate advanced technology such as smart lighting, voice control, and energy efficiency systems. • . Positi",
+   "palette": [
+    "#1d1711",
+    "#372f1f",
+    "#504837",
+    "#2b2418",
+    "#8e8678",
+    "#7f7668"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 272021,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

@@ -1,0 +1,172 @@
+{
+ "folderName": "034 ALMA PRANA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ALB8pa9j0cXUGcrZZC8laBg/PROYECTOS%20ALUZINA%202025/034%20ALMA%20PRANA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:37:43.023Z",
+ "indexedAt": "2026-09-21T23:55:32.617Z",
+ "depth": 2,
+ "fileCount": 6,
+ "totalBytes": 63902055,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/alma-prana/",
+ "files": [
+  {
+   "path": "ICONOS alma prana.pdf",
+   "name": "ICONOS alma prana.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 603937,
+   "modified": "4 months ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AH_RkjAFypYrlfrGFSsyPNs/PROYECTOS%20ALUZINA%202025/034%20ALMA%20PRANA/ICONOS%20alma%20prana.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "iconos-alma-prana",
+   "thumb": "thumbs/iconos-alma-prana.jpg",
+   "pages": [
+    "pages/iconos-alma-prana-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "Sala hongo Sala bosque Sala zen Sala Pranaki Silencio Lugar de relajación",
+   "palette": [
+    "#ffffff",
+    "#f7dfbb",
+    "#f8eddd",
+    "#fefaf5",
+    "#dbc39d",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PRESENTACION DISEÑO SEGUNDO PISO/ALMA PATIO.pdf (1).pdf",
+   "name": "ALMA PATIO.pdf (1).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 18740575,
+   "modified": "11 months ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AI7R4b1A7SP98eqLnxLgiOk/PROYECTOS%20ALUZINA%202025/034%20ALMA%20PRANA/PRESENTACION%20DISE%C3%91O%20SEGUNDO%20PISO/ALMA%20PATIO.pdf%20%281%29.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "presentacion-diseno-segundo-piso--alma-patio-pdf-1",
+   "thumb": "thumbs/presentacion-diseno-segundo-piso--alma-patio-pdf-1.jpg",
+   "pages": [
+    "pages/presentacion-diseno-segundo-piso--alma-patio-pdf-1-page-01.jpg",
+    "pages/presentacion-diseno-segundo-piso--alma-patio-pdf-1-page-02.jpg",
+    "pages/presentacion-diseno-segundo-piso--alma-patio-pdf-1-page-03.jpg",
+    "pages/presentacion-diseno-segundo-piso--alma-patio-pdf-1-page-04.jpg"
+   ],
+   "pageCount": 7,
+   "textExcerpt": "PATIO",
+   "palette": [
+    "#ffffff",
+    "#545454",
+    "#c9c9c9",
+    "#8a8a8a",
+    "#e3e3e3",
+    "#f6f6f6"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PRESENTACION DISEÑO SEGUNDO PISO/ALMA SANTA PLANOS.pdf",
+   "name": "ALMA SANTA PLANOS.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 3472654,
+   "modified": "11 months ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJKnNb26sCa0Uj03QMCy-Po/PROYECTOS%20ALUZINA%202025/034%20ALMA%20PRANA/PRESENTACION%20DISE%C3%91O%20SEGUNDO%20PISO/ALMA%20SANTA%20PLANOS.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "presentacion-diseno-segundo-piso--alma-santa-planos",
+   "thumb": "thumbs/presentacion-diseno-segundo-piso--alma-santa-planos.jpg",
+   "pages": [
+    "pages/presentacion-diseno-segundo-piso--alma-santa-planos-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#edeceb",
+    "#dcdcd9",
+    "#f9f8f4",
+    "#9b9181",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PRESENTACION DISEÑO SEGUNDO PISO/ALMA SEGUNDO PISO.pdf.pdf",
+   "name": "ALMA SEGUNDO PISO.pdf.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 40464730,
+   "modified": "11 months ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFAnQ9A9HkvE5GOf1gaifKc/PROYECTOS%20ALUZINA%202025/034%20ALMA%20PRANA/PRESENTACION%20DISE%C3%91O%20SEGUNDO%20PISO/ALMA%20SEGUNDO%20PISO.pdf.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "presentacion-diseno-segundo-piso--alma-segundo-piso-pdf",
+   "thumb": "thumbs/presentacion-diseno-segundo-piso--alma-segundo-piso-pdf.jpg",
+   "pages": [
+    "pages/presentacion-diseno-segundo-piso--alma-segundo-piso-pdf-page-01.jpg",
+    "pages/presentacion-diseno-segundo-piso--alma-segundo-piso-pdf-page-02.jpg",
+    "pages/presentacion-diseno-segundo-piso--alma-segundo-piso-pdf-page-03.jpg",
+    "pages/presentacion-diseno-segundo-piso--alma-segundo-piso-pdf-page-04.jpg"
+   ],
+   "pageCount": 17,
+   "textExcerpt": "Diseñando espacios de manera profecional y confiable desde 2016 RECEPCIÓN 1",
+   "palette": [
+    "#000000",
+    "#101010",
+    "#161c19",
+    "#353e39",
+    "#030403",
+    "#000001"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PRESENTACION DISEÑO SEGUNDO PISO/RUT (redactado).pdf",
+   "name": "RUT (redactado).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 193116,
+   "modified": "11 months ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANBwIoh7I3QOiDEPK8ksPqQ/PROYECTOS%20ALUZINA%202025/034%20ALMA%20PRANA/PRESENTACION%20DISE%C3%91O%20SEGUNDO%20PISO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "presentacion-diseno-segundo-piso--rut-18-07-2024-14976369220",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "PRESENTACION DISEÑO SEGUNDO PISO/RUT (redactado).pdf",
+   "name": "RUT (redactado).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 431616,
+   "modified": "11 months ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANBwIoh7I3QOiDEPK8ksPqQ/PROYECTOS%20ALUZINA%202025/034%20ALMA%20PRANA/PRESENTACION%20DISE%C3%91O%20SEGUNDO%20PISO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "presentacion-diseno-segundo-piso--rut-senora-ana",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  }
+ ],
+ "served": {
+  "thumbs": 4,
+  "pages": 10,
+  "bytes": 451479,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

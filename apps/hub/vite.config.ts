@@ -23,5 +23,15 @@ export default defineConfig({
   build: {
     outDir: '../../dist',
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        // Every lazy archive chunk is an `index.json` (docs/archive/projects/<slug>/index.json, D-071), so Rollup would name them
+        // all `index-<hash>.js`; name them by the project slug instead so the network panel and the Pages deploy read.
+        chunkFileNames: (chunk) => {
+          const m = /[\\/]docs[\\/]archive[\\/]projects[\\/]([^\\/]+)[\\/]index\.json$/.exec(chunk.facadeModuleId ?? '');
+          return m ? `assets/archive-${m[1]}-[hash].js` : 'assets/[name]-[hash].js';
+        },
+      },
+    },
   },
 });

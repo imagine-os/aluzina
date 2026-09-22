@@ -1,0 +1,70 @@
+{
+ "folderName": "PROPIEDAD ROSITA Y JUAN",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJFfjXgOB09QiFkE6oMglXI/PROYECTOS%20ALUZINA%202024/PROPIEDAD%20ROSITA%20Y%20JUAN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:42:12.351Z",
+ "indexedAt": "2026-09-21T23:55:32.609Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 91540685,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/propiedad-rosita-y-juan/",
+ "files": [
+  {
+   "path": "rosita y juan diseno interior.ai",
+   "name": "rosita y juan diseno interior.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 40240506,
+   "modified": "Aug 5, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AE-1vRnJxStadOHhGKUlUlU/PROYECTOS%20ALUZINA%202024/PROPIEDAD%20ROSITA%20Y%20JUAN/rosita%20y%20juan%20diseno%20interior.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "rosita-y-juan-diseno-interior",
+   "thumb": "thumbs/rosita-y-juan-diseno-interior.jpg",
+   "pages": [
+    "pages/rosita-y-juan-diseno-interior-page-01.jpg",
+    "pages/rosita-y-juan-diseno-interior-page-02.jpg",
+    "pages/rosita-y-juan-diseno-interior-page-03.jpg",
+    "pages/rosita-y-juan-diseno-interior-page-04.jpg"
+   ],
+   "pageCount": 13,
+   "textExcerpt": "ESPACIO LUZ ROSITA Y JUAN TU Y LO QUE HACEMOS Somos un estudio de diseño, que se dedica D\u0003OD\u0003UHÁH[LyQ\u0003GHO\u0003HVSDFLR\u000f\u0003ODV\u0003HPRFLRQHV\u0003\\\u0003HO\u0003FRPSRUWDPLHQWR\u0003 de los humanos para dar sentido a él tiempo y tu idea . I N T E R I O R I S M O I L U M I N A C I Ó N Por Que Trabajar Con Aluzina E S T U D I O C R E A T I V O D E D I S E Ñ O SERVICIOS COMPLETOS DE DISEÑO • Enfoque a su medida. • Diseños de alta calidad. • Respuesta rapida y comunicación clara. • Nuestro cliente siempre cuenta con un gestor de proyectos dedicado a su proyecto. ATMOSFERA • Un valor agregado con el manejo de la luz como hilo cond",
+   "palette": [
+    "#140f0b",
+    "#332e1f",
+    "#4e493c",
+    "#787368",
+    "#282316",
+    "#848075"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "rosita y juan diseno interior.pdf",
+   "name": "rosita y juan diseno interior.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 51296338,
+   "modified": "Aug 5, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACESUW6DmowUZRk0q_6OHWE/PROYECTOS%20ALUZINA%202024/PROPIEDAD%20ROSITA%20Y%20JUAN/rosita%20y%20juan%20diseno%20interior.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "rosita-y-juan-diseno-interior-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 228836,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

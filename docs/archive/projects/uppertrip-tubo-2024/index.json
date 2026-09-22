@@ -1,0 +1,227 @@
+{
+ "folderName": "UPPERTRIP TUBO 2024",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANenhyWo3UqhpN_kbjhpvDg/PROYECTOS%20ALUZINA%202024/UPPERTRIP%20TUBO%202024?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:44:06.224Z",
+ "indexedAt": "2026-09-21T23:55:32.614Z",
+ "depth": 1,
+ "fileCount": 9,
+ "totalBytes": 7620546,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/uppertrip-tubo-2024/",
+ "files": [
+  {
+   "path": "0220 upper trip prices.xlsx",
+   "name": "0220 upper trip prices.xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 588088,
+   "modified": "Nov 14, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAEqWYHqjbW-kQv3pDIrWqU/PROYECTOS%20ALUZINA%202024/UPPERTRIP%20TUBO%202024/0220%20upper%20trip%20prices.xlsx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "0220-upper-trip-prices",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "BROCHURE ALUZINA.pdf",
+   "name": "BROCHURE ALUZINA.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 3130687,
+   "modified": "Nov 7, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAqjy86fvCMmztkk8_mO-DM/PROYECTOS%20ALUZINA%202024/UPPERTRIP%20TUBO%202024/BROCHURE%20ALUZINA.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "brochure-aluzina",
+   "thumb": "thumbs/brochure-aluzina.jpg",
+   "pages": [
+    "pages/brochure-aluzina-page-01.jpg",
+    "pages/brochure-aluzina-page-02.jpg",
+    "pages/brochure-aluzina-page-03.jpg",
+    "pages/brochure-aluzina-page-04.jpg"
+   ],
+   "pageCount": 19,
+   "textExcerpt": "I L U M I N A C I Ó N @ a l u z i n a a + 5 7 3 1 0 3 9 0 6 7 7 3 Las constantes de nuestro trabajo son la búsqueda de coherencia, armonía, vanguardia, versaƟlidad, creaƟvidad, atemporalidad, consciencia, experiencias, cercanía y memorabilidad. COMERCIAL 1. Hotel Mantyx. 2. Coassist. 3. Bebo. 4. Sodime. 5. Área metropolitana de Medellín. 6. Semana de la juventud. 7. Mantyx. 8. Alcaldía de Medellín. 9. London City barber shop. 10.Brewhouse cervecería. 1. Apartamento Parma Noham Ebresum. 2. Casa Nueva York Colin Kamesh Raja. 3. Casa Miami Ovy on the drums 4. Apartamento La Estrella Estela Clavel",
+   "palette": [
+    "#ffffff",
+    "#fdfdfe",
+    "#d4dff3",
+    "#e4faf0",
+    "#f1fff4",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "MEDIDAS TUBO UPPER TRIP para imprecion.pdf",
+   "name": "MEDIDAS TUBO UPPER TRIP para imprecion.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 5204,
+   "modified": "Nov 14, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACfJ7Dm4-qyOcuyiFiZR2VU/PROYECTOS%20ALUZINA%202024/UPPERTRIP%20TUBO%202024/MEDIDAS%20TUBO%20UPPER%20TRIP%20para%20imprecion.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "medidas-tubo-upper-trip-para-imprecion",
+   "thumb": "thumbs/medidas-tubo-upper-trip-para-imprecion.jpg",
+   "pages": [
+    "pages/medidas-tubo-upper-trip-para-imprecion-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#e1e1e1",
+    "#eaeaea",
+    "#f4f4f4",
+    "#fdfdfd",
+    "#fafafa"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "MEDIDAS TUBO UPPER TRIP.pdf",
+   "name": "MEDIDAS TUBO UPPER TRIP.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 31305,
+   "modified": "Nov 14, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AM6Tz9-ftYu6RKmSCpEz0Jo/PROYECTOS%20ALUZINA%202024/UPPERTRIP%20TUBO%202024/MEDIDAS%20TUBO%20UPPER%20TRIP.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "medidas-tubo-upper-trip",
+   "thumb": "thumbs/medidas-tubo-upper-trip.jpg",
+   "pages": [
+    "pages/medidas-tubo-upper-trip-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "R1181.00 P\"308cm 749.99 R605.86 1387.76 560.00 R605.86 380.80 776.25 R1163.55 2879.14",
+   "palette": [
+    "#ffffff",
+    "#fafafa",
+    "#ececec",
+    "#fdfdfd",
+    "#bebebe",
+    "#fcfcfc"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "MEDIDAS TUBO.pdf",
+   "name": "MEDIDAS TUBO.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 117127,
+   "modified": "Nov 14, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADo7DJ2adVnJzOdImTT6yds/PROYECTOS%20ALUZINA%202024/UPPERTRIP%20TUBO%202024/MEDIDAS%20TUBO.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "medidas-tubo",
+   "thumb": "thumbs/medidas-tubo.jpg",
+   "pages": [
+    "pages/medidas-tubo-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#eeeeee",
+    "#dbdbdb",
+    "#f7f7f7",
+    "#fbfbfb",
+    "#fefefe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PDF-1017146337-FEV21.pdf",
+   "name": "PDF-1017146337-FEV21.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 106624,
+   "modified": "Dec 3, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANenhyWo3UqhpN_kbjhpvDg/PROYECTOS%20ALUZINA%202024/UPPERTRIP%20TUBO%202024?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "pdf-1017146337-fev21",
+   "thumb": null,
+   "pages": [],
+   "pageCount": 2,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "contenido financiero (cotización o factura)"
+  },
+  {
+   "path": "UPPER TRIP MODELO TUBO.3dm",
+   "name": "UPPER TRIP MODELO TUBO.3dm",
+   "ext": "3dm",
+   "mimeType": "text/vnd.in3d.3dml",
+   "bytes": 619213,
+   "modified": "Nov 26, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOgK_p5Ntw_sN7zQgIG_-gw/PROYECTOS%20ALUZINA%202024/UPPERTRIP%20TUBO%202024/UPPER%20TRIP%20MODELO%20TUBO.3dm?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "upper-trip-modelo-tubo",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "uppertrip analisis formal.pdf",
+   "name": "uppertrip analisis formal.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 197076,
+   "modified": "Nov 13, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFJftF0QQ3d_t_FcZDLAi_M/PROYECTOS%20ALUZINA%202024/UPPERTRIP%20TUBO%202024/uppertrip%20analisis%20formal.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "uppertrip-analisis-formal",
+   "thumb": "thumbs/uppertrip-analisis-formal.jpg",
+   "pages": [
+    "pages/uppertrip-analisis-formal-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "0.30 0.39 0.30 0.39 0.30 0.39 0.28 0.52 a b c d",
+   "palette": [
+    "#ffffff",
+    "#eaebeb",
+    "#fcfcfc",
+    "#f3f5f4",
+    "#979797",
+    "#f4fff1"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "uppertrip.dwg",
+   "name": "uppertrip.dwg",
+   "ext": "dwg",
+   "mimeType": "image/vnd.dwg",
+   "bytes": 2820669,
+   "modified": "Nov 13, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMjA7YjlmBwEWc_v6bv_Yeo/PROYECTOS%20ALUZINA%202024/UPPERTRIP%20TUBO%202024/uppertrip.dwg?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "uppertrip",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 5,
+  "pages": 8,
+  "bytes": 312764,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

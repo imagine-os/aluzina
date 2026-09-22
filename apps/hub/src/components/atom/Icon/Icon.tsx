@@ -18,6 +18,9 @@ export const ICON_NAMES = [
   'actions', 'tokens', 'testing', 'folder', 'search', 'filter', 'close', 'chevron-right',
   'chevron-down', 'external', 'download', 'copy', 'plus', 'minus', 'check', 'warning',
   'info', 'user', 'home', 'back', 'note', 'dot', 'more',
+  // ar-21: the glyphs the modules printed in their own bodies (theme toggle, pins, print, bug flag, the
+  // back chevron) needed drawn names of their own; same 24-grid, 1.75 stroke as the rest.
+  'chevron-left', 'moon', 'sun', 'pin', 'print', 'flag', 'menu',
 ] as const;
 
 export type IconName = (typeof ICON_NAMES)[number];
@@ -386,6 +389,7 @@ const PATHS: Record<IconName, ReactNode> = {
   ),
   close: <path d="m6 6 12 12M18 6 6 18" />,
   'chevron-right': <path d="m9.5 5.5 6.5 6.5-6.5 6.5" />,
+  'chevron-left': <path d="m14.5 5.5-6.5 6.5 6.5 6.5" />,
   'chevron-down': <path d="m5.5 9.5 6.5 6.5 6.5-6.5" />,
   external: (
     <>
@@ -455,6 +459,34 @@ const PATHS: Record<IconName, ReactNode> = {
       <Dot cx={6} cy={12} r={1.3} />
       <Dot cx={12} cy={12} r={1.3} />
       <Dot cx={18} cy={12} r={1.3} />
+    </>
+  ),
+  menu: <path d="M4 6.8h16M4 12h16M4 17.2h16" />,
+  moon: <path d="M20.3 14.6A8.6 8.6 0 1 1 9.4 3.7a6.9 6.9 0 0 0 10.9 10.9Z" />,
+  sun: (
+    <>
+      <circle cx="12" cy="12" r="4.3" />
+      <path d="M12 2.6v2.4M12 19v2.4M2.6 12H5M19 12h2.4M5.3 5.3 7 7M17 17l1.7 1.7M18.7 5.3 17 7M7 17l-1.7 1.7" />
+    </>
+  ),
+  pin: (
+    <>
+      <path d="M9 3.6h6l-1 4.9 3.3 3.3H6.7L10 8.5l-1-4.9Z" />
+      <path d="M12 11.8v8.6" />
+    </>
+  ),
+  print: (
+    <>
+      <path d="M7.5 8.5V3.8h9v4.7" />
+      <path d="M7.5 15.5H5.2A1.7 1.7 0 0 1 3.5 13.8v-3.6A1.7 1.7 0 0 1 5.2 8.5h13.6a1.7 1.7 0 0 1 1.7 1.7v3.6a1.7 1.7 0 0 1-1.7 1.7h-2.3" />
+      <path d="M7.5 13.4h9v6.8h-9z" />
+      <Dot cx={17.2} cy={11.1} />
+    </>
+  ),
+  flag: (
+    <>
+      <path d="M6 20.8V3.8" />
+      <path d="M6 4.6h11.6l-2.4 4 2.4 4H6" />
     </>
   ),
 };

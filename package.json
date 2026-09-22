@@ -1,7 +1,7 @@
 {
   "name": "aluzina",
   "private": true,
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Aluzina Business OS monorepo: hub, Claude Design prototype, docs.",
   "//": "Root build assembles dist/ for GitHub Pages: the hub builds into dist/ (site root), then scripts/copy-static.mjs copies the static Claude Design bundle apps/business-os/ into dist/business-os/ and writes dist/.nojekyll (D-003, D-007). If the prototype is ever ported to a build step, replace the copy with `npm run build -w @aluzina/business-os` emitting into dist/business-os/. `npm run thumbs` (scripts/thumbnails.mjs) is a separate CI step after the build: it screenshots every hub-linked page from dist/ into dist/thumbs/ (D-011); local builds stay fast without it.",
   "workspaces": [

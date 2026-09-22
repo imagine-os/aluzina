@@ -53,6 +53,30 @@ export const GLYPH_ICONS: Record<string, IconName> = {
   '!': 'alerts',
   '☰': 'more',
   '…': 'more',
+
+  // ar-21: the UI glyphs modules typed inside their own bodies (close buttons, chevrons, zoom, copy,
+  // the theme toggle). `Button` reads this map for a string `icon` / `iconEnd`, so a module keeps its
+  // glyph and still renders a drawn icon (D-064: code, then glyph, then the glyph text itself).
+  '×': 'close',
+  '✕': 'close',
+  '›': 'chevron-right',
+  '‹': 'chevron-left',
+  '▶': 'chevron-right',
+  '◀': 'chevron-left',
+  '→': 'chevron-right',
+  '←': 'back',
+  '↓': 'download',
+  '↗': 'external',
+  '−': 'minus',
+  '+': 'plus',
+  '⧉': 'copy',
+  '⌕': 'search',
+  '⚲': 'pin',
+  '⚑': 'flag',
+  '⎙': 'print',
+  '☾': 'moon',
+  '☼': 'sun',
+  '↺': 'revisions',
 };
 
 /**
@@ -121,6 +145,20 @@ export const SPACE_KIND_ICONS: Record<string, IconName> = {
   tool: 'tools',
   project: 'projects',
   archive: 'archive',
+};
+
+/**
+ * Post kind (data/schema/spaces.ts) -> icon: the mark a `PostCard` shows beside its kind label (ar-21).
+ * An unknown kind falls back to `note`, which is what an untyped post is.
+ */
+export const POST_KIND_ICONS: Record<string, IconName> = {
+  note: 'note',
+  link: 'external',
+  file: 'documents',
+  decision: 'approvals',
+  procedure: 'manual',
+  brief: 'intake',
+  announcement: 'alerts',
 };
 
 /**

@@ -6,7 +6,6 @@ import {
   deliveryStage,
   fileTypeOf,
   folderLabel,
-  mimeTypeOf,
   normalize,
   projectTypeFromName,
   slugify,
@@ -15,17 +14,20 @@ import {
   titleCase,
   yearOf,
   type DeliveryStage,
+  type FileType,
 } from '../../domain/archive';
-import type { Asset, Post, Project, Relation, Space, Tag } from '../schema';
+import type { Post, Project, Relation, Space, Tag } from '../schema';
 import { PROJECT_IDS } from './projects';
 import type { SeedCtx } from './types';
 
 /**
  * The project archive as data (prompt 0017, S-12, D-055 pending). Justin shared Aluzina's Dropbox project folders
- * (2019-2026, ~130 folders) in Slack; two crawlers wrote `docs/archive/index.json` (one entry per project folder
- * with its direct children) and `docs/archive/projects/<slug>/index.json` (every file of a featured project, with
- * thumbnails and page renders). Both are imported through `@docs` so the JSON stays the single source; this file
- * only derives rows. `scripts/archive/build-index.mjs` writes both files (redacted, D-059) from the crawler output.
+ * (2019-2026, ~190 folders) in Slack; the crawlers' output becomes `docs/archive/index.json` (one entry per project folder
+ * with counts, `depth`, `cover` and notes — no children since ar-19) and `docs/archive/projects/<slug>/index.json` (every
+ * file of the folder: the deep index for a featured project, the direct children at depth 1 otherwise). The inventory is
+ * imported here through `@docs`; the per-project file indexes are NOT: `data/archiveFiles.ts` loads them lazily and builds
+ * the `assets` rows in memory (`data/archiveRows.ts`), and only edited files become stored rows (ar-19, D-071 proposed).
+ * `scripts/archive/build-index.mjs` writes all of it (redacted, D-059) from the crawler output.
  *
  * Seeding rules (unknowns are explicit, never guessed silently — D-045 precedent; inferred facts marked, D-060):
  * - One `projects` row per inventory entry with `kind: 'project'`, id `prj-ar-<id>`. Type comes from the folder
@@ -40,13 +42,13 @@ import type { SeedCtx } from './types';
  *   (a quotation-only folder is the studio's record of a prospect; inferred, the summary says so).
  * - Redacted files (D-059, `redacted: true` from build-index) keep the redacted name as title, get the tag
  *   `confidencial`, no excerpt, no thumbnail and no page renders.
- * - One `assets` row (`kind: 'file'`, `source: 'dropbox'`) per child FILE of every project folder; folders are not
- *   rows (the project view groups by `folderPath`), only counted in the summary. For a project with a deep index the
- *   deep index replaces the shallow children: one row per file with `folderPath`, `stage`, thumbnail and page
- *   renders served from `apps/hub/public/archive/<slug>/{thumbs,pages}/` (the integrator copies them).
+ * - NO `assets` rows and no per-file relations for archived files (ar-19): the project row carries `fileCount`, `coverUrl`,
+ *   `coverAssetId` (from the inventory's `cover`), `archiveSlug` (= the inventory id = the chunk key) and `fileTypes`
+ *   (from `extensions`, most common first); S-13 loads the files through `useProjectFiles`. Company documents
+ *   (`seed/company.ts`) are the only seeded `kind: 'file'` rows.
  * - Spaces: under the existing `sp-archive`, one area per year folder (`sp-ar-<yearFolder>`), one project space per
- *   archived project inside its year, and `sp-ar-admin`. One Spanish `posts` note per FEATURED project listing the
- *   folder tree by stage.
+ *   archived project inside its year, and `sp-ar-admin`. One Spanish `posts` note per FEATURED project listing its
+ *   folders by delivery stage (`folders` in the inventory entry: path, file count, files with a preview).
  * - Tags: `archive`, `dropbox`, each year folder, the Spanish type tags, and every DeliveryStage id (tone by
  *   pipeline group). Tags that other seeds already register (`marketing`, `iluminación`) are not repeated.
  */
@@ -75,9 +77,17 @@ interface InventoryProject {
   extensions: Record<string, number>;
   totalBytesKnown: number;
   latestModified: string | null;
-  children: InventoryChild[];
+  /** Only `kind: 'admin'` entries keep their children (they become posts); every other folder's files live in its chunk (ar-19). */
+  children?: InventoryChild[];
   listed: boolean;
+  /** Set for a featured project (full-depth crawl with renders); every non-admin folder has a chunk regardless. */
   deepIndex: string | null;
+  /** Deepest level the chunk lists (1 = direct children only, 0 = empty folder). */
+  depth?: number;
+  /** The first design file with a served thumbnail: the project cover, with the asset id `rowsFromDeepIndex` gives it. */
+  cover?: { assetId: string; thumb: string; pages?: string[] } | null;
+  /** Featured projects: the folders that hold files directly, for the Spaces note. */
+  folders?: { path: string; files: number; withThumb: number }[];
   kind: 'project' | 'admin' | 'quote';
   /** Free text from build-index: duplicates across year folders, empty / unlisted folders, inferred year; appended to the summary. */
   note?: string;
@@ -92,50 +102,7 @@ interface Inventory {
   projects: InventoryProject[];
 }
 
-interface DeepFile {
-  path: string;
-  name: string;
-  ext: string;
-  mimeType: string;
-  bytes: number | null;
-  modified: string | null;
-  sourceHref: string;
-  downloaded: boolean;
-  thumb: string | null;
-  pages: string[];
-  pageCount: number | null;
-  textExcerpt: string;
-  palette: string[];
-  renderer: string | null;
-  redacted?: boolean;
-  redactedReason?: string;
-}
-
-interface DeepIndex {
-  stub?: boolean;
-  folderName: string;
-  sourceUrl: string;
-  crawledAt: string;
-  fileCount: number;
-  totalBytes: number;
-  files: DeepFile[];
-}
-
 export const ARCHIVE_INVENTORY = inventoryRaw as unknown as Inventory;
-
-/**
- * Deep indexes by inventory project id (= the folder slug `docs/archive/projects/<slug>/index.json`). Every file build-index
- * writes is picked up by the glob, so a new featured project needs no import here (ar-06; the JSON is the source, D-037).
- * Vite resolves the `@docs` alias inside the glob (mirrored in tsconfig `paths`); the key is whatever path form Vite emits,
- * so the slug is read from the `/projects/<slug>/index.json` tail.
- */
-const DEEP_INDEX_MODULES = import.meta.glob('@docs/archive/projects/*/index.json', { eager: true, import: 'default' }) as Record<string, unknown>;
-export const DEEP_INDEXES: Record<string, DeepIndex> = Object.fromEntries(
-  Object.entries(DEEP_INDEX_MODULES).flatMap(([file, mod]) => {
-    const m = /\/projects\/([^/]+)\/index\.json$/.exec(file);
-    return m ? [[m[1], mod as DeepIndex]] : [];
-  }),
-);
 
 export const ARCHIVE_SPACE_ID = 'sp-archive';
 export const ARCHIVE_ADMIN_SPACE_ID = 'sp-ar-admin';
@@ -163,14 +130,21 @@ const STAGE_TONE: Record<string, Tag['tone']> = { lead: 'neutral', sale: 'info',
 /** Registered by other seeds (spaces.ts, assets.ts); the registry has one row per name. */
 const TAGS_ELSEWHERE = new Set(['brand', 'marketing', 'procesos', 'plantillas', 'asana', 'slack', 'clientes', 'entregables', 'herramientas', 'decisión', 'iluminación', 'dev', 'portfolio']);
 
-type AssetRow = Omit<Asset, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
 type SpaceRow = Omit<Space, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
 type PostRow = Omit<Post, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
 type ProjectRow = Omit<Project, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
 
-function dirname(path: string): string {
-  const i = path.lastIndexOf('/');
-  return i === -1 ? '' : path.slice(0, i);
+/** Up to four file types of a folder from its extension counts, most common first (the S-12 mosaic; same ranking `topFileTypes` used on rows). */
+function topFileTypes(extensions: Record<string, number>, max = 4): FileType[] {
+  const counts = new Map<FileType, number>();
+  for (const [ext, n] of Object.entries(extensions)) {
+    const type = fileTypeOf(ext);
+    counts.set(type, (counts.get(type) ?? 0) + n);
+  }
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, max)
+    .map(([type]) => type);
 }
 
 function formatBytes(n: number): string {
@@ -190,46 +164,6 @@ export function seed({ add, users }: SeedCtx): void {
   const post = (id: string, spaces: string[], row: Partial<PostRow> & Pick<PostRow, 'title' | 'body' | 'kind' | 'authorId'>) => {
     add('posts', id, { url: null, pinned: false, status: 'published', tags: [], ...row });
     spaces.forEach((spaceId, i) => add('filings', `fil-${id.replace(/^post-/, '')}-${i + 1}`, { postId: id, spaceId }));
-  };
-
-  // Unique asset ids: `ast-ar-<projectId>-<slug>`, `-2`, `-3` … on collisions (two "render.jpg" in different folders).
-  const seenIds = new Map<string, number>();
-  const uniqueId = (base: string): string => {
-    const n = (seenIds.get(base) ?? 0) + 1;
-    seenIds.set(base, n);
-    return n === 1 ? base : `${base}-${n}`;
-  };
-
-  const fileAsset = (projectSlug: string, name: string, extra: Partial<AssetRow> & Pick<AssetRow, 'sourceUrl' | 'folderPath' | 'stage' | 'year' | 'bytes'>): string => {
-    const type = fileTypeOf(name);
-    const id = uniqueId(`ast-ar-${projectSlug}-${slugify(name.replace(/\.[a-z0-9]{1,5}$/i, '')) || 'file'}`);
-    add('assets', id, {
-      kind: 'file',
-      title: name,
-      titleEs: null,
-      slug: id.replace(/^ast-/, ''),
-      url: null,
-      repoPath: null,
-      mimeType: mimeTypeOf(name),
-      pageCount: null,
-      pageNumber: null,
-      parentId: null,
-      sourceFileId: null,
-      sourceName: name,
-      publishedAt: null,
-      language: null,
-      palette: [],
-      fonts: [],
-      textExcerpt: '',
-      tags: ['archive', type],
-      status: 'current',
-      supersedesId: null,
-      source: 'dropbox',
-      thumbnailUrl: null,
-      previewUrls: [],
-      ...extra,
-    });
-    return id;
   };
 
   // ---- Tags registry ----
@@ -274,13 +208,11 @@ export function seed({ add, users }: SeedCtx): void {
   inv.projects.forEach((prj, i) => {
     const year = prj.year ?? yearOf(prj.yearFolder);
     const yearLabel = year ? String(year) : prj.yearFolder;
-    const dirs = prj.children.filter((c) => c.is_dir);
-    const files = prj.children.filter((c) => !c.is_dir);
     const name = titleCase(stripNumberPrefix(prj.folderName));
 
     if (prj.kind === 'admin') {
-      // Invoice folders: files as posts in the admin area, nothing else.
-      files.forEach((f) => {
+      // Invoice folders: files as posts in the admin area, nothing else (the inventory keeps their children for this).
+      (prj.children ?? []).filter((c) => !c.is_dir).forEach((f) => {
         const postId = `post-ar-${prj.id}-${slugify(f.name.replace(/\.[a-z0-9]{1,5}$/i, '')) || 'file'}`;
         post(postId, [ARCHIVE_ADMIN_SPACE_ID, archiveYearSpaceId(prj.yearFolder)], {
           title: f.name,
@@ -300,49 +232,19 @@ export function seed({ add, users }: SeedCtx): void {
     const isCurrent = prj.yearFolder === '2026';
     const isQuote = prj.kind === 'quote';
     const client = KNOWN_CLIENTS.find((c) => normalize(name).split(' ').includes(c.match));
-    const deep = prj.deepIndex ? DEEP_INDEXES[prj.id] : undefined;
+    const deep = Boolean(prj.deepIndex);
     const lightsInName = normalize(name).includes('iluminacion') || normalize(name).includes('luminaria');
 
     const tags = [...new Set(['archive', 'dropbox', yearLabel, PROJECT_TYPE_TAGS[type], ...(lightsInName ? ['iluminación'] : []), ...(isQuote ? ['cotización'] : [])])];
     const dateNote = year ? '' : ` La carpeta "${prj.yearFolder}" es un rango, así que el año queda sin definir y la fecha de inicio se fija en 2019-01-01.`;
-    const fileCount = deep ? deep.files.length : files.length;
+    const fileCount = prj.fileCount;
+    const dirCount = prj.dirCount;
     const quoteNote = isQuote ? ' Carpeta de cotización: prospecto inferido (propuesta enviada); confirmar.' : '';
     const yearNote = prj.yearInferred && year ? ` Año ${year} inferido de las fechas de los archivos.` : '';
-    const summary = `Carpeta "${prj.folderName}" del Dropbox de Aluzina (${prj.yearFolder}): ${fileCount} archivo${fileCount === 1 ? '' : 's'} y ${dirs.length} subcarpeta${dirs.length === 1 ? '' : 's'}${prj.latestModified ? `, última modificación ${prj.latestModified}` : ''}. Tipo y estado inferidos de la carpeta; confirmar con la fundadora.${quoteNote}${yearNote}${dateNote}${prj.note ? ` ${prj.note}` : ''}${stubNote}`;
+    const summary = `Carpeta "${prj.folderName}" del Dropbox de Aluzina (${prj.yearFolder}): ${fileCount} archivo${fileCount === 1 ? '' : 's'} y ${dirCount} subcarpeta${dirCount === 1 ? '' : 's'}${prj.latestModified ? `, última modificación ${prj.latestModified}` : ''}. Tipo y estado inferidos de la carpeta; confirmar con la fundadora.${quoteNote}${yearNote}${dateNote}${prj.note ? ` ${prj.note}` : ''}${stubNote}`;
 
-    // Files first, so the cover can be chosen before the project row is written.
-    const assetIds: { id: string; type: ReturnType<typeof fileTypeOf>; hasThumb: boolean; stage: DeliveryStage; folderPath: string; name: string }[] = [];
-    if (deep) {
-      for (const f of deep.files) {
-        const folderPath = dirname(f.path);
-        const stage = stageFor(folderPath, f.name);
-        const thumbnailUrl = f.thumb && !f.redacted ? `./archive/${prj.id}/${f.thumb}` : null;
-        const id = fileAsset(prj.id, f.name, {
-          sourceUrl: f.sourceHref,
-          folderPath,
-          stage,
-          year,
-          bytes: f.bytes,
-          mimeType: f.mimeType || mimeTypeOf(f.name),
-          // Served copies are the visual memory (D-058): the same file the browser loads, nothing under docs/.
-          repoPath: thumbnailUrl ? `apps/hub/public/archive/${prj.id}/${f.thumb}` : null,
-          thumbnailUrl,
-          previewUrls: f.redacted ? [] : f.pages.map((p) => `./archive/${prj.id}/${p}`),
-          pageCount: f.pageCount,
-          textExcerpt: f.redacted ? '' : f.textExcerpt ?? '',
-          palette: f.redacted ? [] : f.palette,
-          tags: ['archive', fileTypeOf(f.name), stage, ...(f.redacted ? ['confidencial'] : [])],
-        });
-        assetIds.push({ id, type: fileTypeOf(f.name), hasThumb: Boolean(thumbnailUrl), stage, folderPath, name: f.name });
-      }
-    } else {
-      for (const f of files) {
-        const stage = stageFor('', f.name);
-        const id = fileAsset(prj.id, f.name, { sourceUrl: f.href, folderPath: '', stage, year, bytes: f.size, tags: ['archive', fileTypeOf(f.name), stage, ...(f.redacted ? ['confidencial'] : [])] });
-        assetIds.push({ id, type: fileTypeOf(f.name), hasThumb: false, stage, folderPath: '', name: f.name });
-      }
-    }
-    const cover = assetIds.find((a) => a.hasThumb && (a.type === 'image' || a.type === 'pdf'));
+    // The cover comes from the inventory (build-index picks the first design file with a served thumbnail and names its asset id).
+    const cover = prj.cover ?? null;
 
     const row: ProjectRow = {
       name,
@@ -361,18 +263,16 @@ export function seed({ add, users }: SeedCtx): void {
       location: 'Ubicación no publicada',
       summary,
       tags,
-      coverAssetId: cover?.id ?? null,
+      coverAssetId: cover?.assetId ?? null,
       year,
       sourceFolderUrl: prj.sourceHref,
+      fileCount,
+      coverUrl: cover ? `./archive/${prj.id}/${cover.thumb}` : null,
+      archiveSlug: prj.id,
+      fileTypes: topFileTypes(prj.extensions),
     };
     add('projects', projectId, row);
 
-    for (const a of assetIds) {
-      relate(`rel-${a.id}-belongs-to`, { fromType: 'assets', fromId: a.id, toType: 'projects', toId: projectId, kind: 'belongs-to' });
-      if (deep && (a.type === 'image' || a.stage === 'design-development' || a.stage === 'concept')) {
-        relate(`rel-${a.id}-depicts`, { fromType: 'assets', fromId: a.id, toType: 'projects', toId: projectId, kind: 'depicts' });
-      }
-    }
     if (client) relate(`rel-${projectId}-for-client`, { fromType: 'projects', fromId: projectId, toType: 'clients', toId: client.id, kind: 'for-client', note: 'Cliente reconocido por el nombre de la carpeta.' });
     relate(`rel-${projectId}-produced-by`, { fromType: 'projects', fromId: projectId, toType: 'roles', toId: 'founder', kind: 'produced-by', note: 'Proyecto anterior al Hub; autoría del estudio.' });
     if (normalize(name).includes('honey valley') && lightsInName) {
@@ -391,25 +291,29 @@ export function seed({ add, users }: SeedCtx): void {
       description: summary,
     });
 
-    // Featured project: one Spanish note with the folder tree grouped by delivery stage.
+    // Featured project: one Spanish note with the folders grouped by delivery stage (file counts, not file rows: ar-19).
     if (deep) {
-      const byStage = new Map<DeliveryStage, typeof assetIds>();
-      for (const a of assetIds) byStage.set(a.stage, [...(byStage.get(a.stage) ?? []), a]);
+      const folders = prj.folders ?? [];
+      const byStage = new Map<DeliveryStage, typeof folders>();
+      for (const f of folders) {
+        const stage = stageFor(f.path, '');
+        byStage.set(stage, [...(byStage.get(stage) ?? []), f]);
+      }
       const sections = DELIVERY_STAGES.filter((s) => byStage.has(s.id))
         .map((s) => {
-          const items = (byStage.get(s.id) ?? []).sort((a, b) => compareFolderPaths(a.folderPath, b.folderPath) || a.name.localeCompare(b.name));
-          const lines = items.map((a) => `- \`${a.folderPath ? `${a.folderPath.split('/').map(folderLabel).join(' / ')} / ` : ''}${a.name}\`${a.hasThumb ? ' (con vista previa)' : ''}`);
-          return `### ${deliveryStage(s.id)?.label.es ?? s.id} (${items.length})\n\n${lines.join('\n')}`;
+          const items = (byStage.get(s.id) ?? []).sort((a, b) => compareFolderPaths(a.path, b.path));
+          const lines = items.map((f) => `- \`${f.path ? f.path.split('/').map(folderLabel).join(' / ') : '/'}\` — ${f.files} archivo${f.files === 1 ? '' : 's'}${f.withThumb ? ` (${f.withThumb} con vista previa)` : ''}`);
+          return `### ${deliveryStage(s.id)?.label.es ?? s.id} (${items.reduce((n, f) => n + f.files, 0)})\n\n${lines.join('\n')}`;
         })
         .join('\n\n');
       const postId = `post-ar-${prj.id}`;
       post(postId, [spaceId, archiveYearSpaceId(prj.yearFolder)], {
-        title: `${name}: carpeta completa (${deep.files.length} archivos)`,
+        title: `${name}: carpeta completa (${fileCount} archivos)`,
         kind: 'note',
         authorId: users.founder,
         pinned: true,
         tags: ['archive', 'dropbox', yearLabel],
-        body: `Índice de la carpeta **${deep.folderName}** en Dropbox (${formatBytes(deep.totalBytes)}, rastreada ${deep.crawledAt.slice(0, 10)}), agrupado por etapa de entrega; las carpetas conservan la numeración del estudio. Etapas asignadas por palabras clave del nombre de carpeta (\`stageFor\`); revisar las que queden en "Otros".${stubNote}\n\n${sections}`,
+        body: `Índice de la carpeta **${prj.folderName}** en Dropbox (${formatBytes(prj.totalBytesKnown)}, rastreada ${inv.crawledAt.slice(0, 10)}), agrupado por etapa de entrega; las carpetas conservan la numeración del estudio. Etapas asignadas por palabras clave del nombre de carpeta (\`stageFor\`); revisar las que queden en "Otros". Los archivos se abren en la vista del proyecto (S-13).${stubNote}\n\n${sections}`,
       });
       relate(`rel-${postId}-references-project`, { fromType: 'posts', fromId: postId, toType: 'projects', toId: projectId, kind: 'references' });
     }

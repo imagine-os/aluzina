@@ -4,6 +4,7 @@ import { defineSpec, type ActionDef, type PageSpec, type Surface } from '../../s
 /** 2560 / 3840 + dark verified in ar-18 (docs/qa/0004-archive-4k-dark.md, changelog 0021). */
 const WIDTHS = [360, 390, 768, 1280, 1920, 2560, 3840];
 
+/** S-12 writes `posts` + `filings` when a set is saved (ar-10); everything else is read. */
 const DATA_TABLES = ['projects', 'assets', 'relations', 'clients', 'spaces', 'filings', 'posts'];
 const ROLES = ['studio', 'founder', 'brand'];
 
@@ -19,7 +20,9 @@ export const ARCHIVE_BROWSER_ACTIONS: ActionDef[] = [
   { id: 'archive.toggleInSet', label: 'Add or remove from the portfolio set', intent: 'put the project {project} in the portfolio set', permission: 'projects.read', params: { project: 'id' } },
   { id: 'archive.copySet', label: 'Copy the portfolio set', intent: 'copy the portfolio set as a list', permission: 'projects.read' },
   { id: 'archive.clearSet', label: 'Clear the portfolio set', intent: 'clear the portfolio set', permission: 'projects.read' },
+  { id: 'archive.openSetPage', label: 'Open the example page of the set', intent: 'open the client-facing example page of the portfolio set', permission: 'projects.read' },
   { id: 'archive.exportSet', label: 'Export the portfolio set', intent: 'export the portfolio set as a PDF', permission: 'projects.read' },
+  { id: 'archive.saveSetToSpaces', label: 'Save the set to Spaces', intent: 'save the portfolio set as a post in Spaces', permission: 'archive.curate' },
   { id: 'archive.importFolder', label: 'Import a folder', intent: 'import a Dropbox or Drive folder into the archive', permission: 'projects.read' },
 ];
 
@@ -49,10 +52,12 @@ export const ARCHIVE_PORTAL_ACTIONS: ActionDef[] = [
 const BROWSER_LOGIC = [
   'Every project is listed, not only the archived ones: lifecycle tabs (Prospects / In progress / Past / All) come from `lifecycleOf(project.pipelineStatus)`, so "sometimes we want to see everything" is one click and the default is All.',
   'Filters live in the query string (`?life=&year=&type=&tag=&q=&view=&set=`), so any view is a link a person can paste and an intent voice can address; the actions write the same params.',
-  'A card cover is the project `coverAssetId` thumbnail when there is one; otherwise a 2x2 mosaic of `FileIcon`s for the four most common file types in the project, so a project without photography still reads as itself.',
-  'The portfolio set is a list of project ids in `localStorage["aluzina.archive.set"]`, shared by S-12 and S-13; "Copy list" writes name, year, client and source link per line through `copyText`.',
-  'File counts per project come from the `relations` rows of kind `belongs-to` pointing at `projects`, counted once into a Map in `useMemo` rather than per card; the card also says how many of them carry tags.',
-  'The Tag filter\'s options are the live union of `projects[].tags`, so a tag saved on S-13 shows up here without a reload (D-023).',
+  'A card cover is the project `coverUrl` (a column of the row, set with `coverAssetId` by S-13, ar-19) when there is one; otherwise a 2x2 mosaic of `FileIcon`s for `project.fileTypes`, the four most common file types in the folder, so a project without photography still reads as itself.',
+  'The portfolio set is a list of project ids in `localStorage["aluzina.archive.set"]`, shared by S-12 and S-13; "Copy list" writes name, year, client and source link per line through `copyText`, in the order the projects were picked.',
+  'The set bar is now real (ar-10 / ar-14): "Open example page" opens P-06 `/#/sets?p=<ids>&t=<title>` in a new tab, "Export PDF" opens the same link with `&print=1` (P-06 calls `window.print()` once after it loads), and "Save set to Spaces" (`archive.curate`: filing a set is curation of the archive, so the studio can do it without `spaces.write`) creates a `link` post carrying that link and a markdown list of the projects, filed through `filings` in `sp-portfolio` and `sp-archive` when they exist; the bar then offers a link to the post (`/<surface>/spaces/post/:id`), because a toast is text only.',
+  'The set link is stateless: P-06 resolves the ids in the URL, so nothing about a set is stored and a link keeps working without a row (a saved post is a record of the set, not its storage).',
+  'File counts per project are `project.fileCount` (the inventory count, ar-19): no file rows are seeded or scanned. The "N tagged" meta counts the project\'s curated files: the stored `assets` rows linked by a `belongs-to` relation, written by S-13 through `saveFilePatch`.',
+  'The Tag filter\'s options are the live union of `projects[].tags` and the tags on curated file rows; a project answers to both, so a tag saved on a file on S-13 finds its project here without a reload (D-023).',
 ];
 
 const PORTAL_LOGIC = [
@@ -60,11 +65,12 @@ const PORTAL_LOGIC = [
   'Files are grouped two ways (`?group=stage|folder`): by delivery stage (`stageFor`) in pipeline order, or by the studio\'s own numbered folders sorted with `folderOrderKey` and labelled with `folderLabel`, which is the "documents in order" view. Empty numbered folders still render, muted, in the folder view so the structure is complete.',
   'The preview Drawer holds one asset at a time (`?file=<assetId>`), with Previous / Next walking the currently filtered, sorted file list, and `page` state driving the `DocumentViewer`. When nothing is previewable the viewer renders its sentence and type icon, never a blank frame.',
   'Related is three reverse queries: the client through `relations` `for-client`, the Spaces post through `spaces.aboutId` and its `filings`, and up to six other projects sharing at least two tags — the "sets of related examples" the studio shows a client.',
-  'Tags are real writes (ar-09): the `TagEditor` holds a draft and Save writes it once through `data.update(\'assets\', id, { tags }, { basedOn: asset.updated_at })` or on `projects`, both behind the curation permission `archive.curate` (studio, brand, founder), so one save is one row version and a stale edit raises the global D-024 conflict toast.',
-  'Tags are free text, trimmed, lower-cased and de-duplicated; the suggestion list is the live union of every file tag, the `tags` registry names and the delivery-stage ids, so new vocabulary reaches S-12\'s tag filter the moment it is saved (lists re-render from `subscribe`, D-023).',
-  'The delivery stage of a file is a `Select` over `DELIVERY_STAGES` that writes `assets.stage` at once: the rail, the sections and the counts move with it because they all read the same rows.',
-  '"Set as cover" writes `projects.coverAssetId`, offered only for an image or a PDF that already has a thumbnail; a coverable file without a render is a Placeholder saying why, and a `confidencial` or redacted file is never offered as a cover (D-059).',
-  'The portfolio set is still localStorage only; Spaces collections and PDF export are ar-10.',
+  'The files are not seeded (ar-19): `useProjectArchiveFiles` loads the project\'s chunk (`docs/archive/projects/<slug>/index.json`, a lazy `import.meta.glob` chunk keyed by `project.archiveSlug`) the first time the page opens it, turns it into `assets` rows in memory (`rowsFromDeepIndex`) and overlays the stored rows of the same id; a Skeleton shows while the chunk loads and an EmptyState says why when it cannot.',
+  'Tags are real writes (ar-09): the `TagEditor` holds a draft and Save writes it once through `saveFilePatch(data, asset, { tags }, projectId)` — `update` with `basedOn` when the file already has a stored row, else `create` with the chunk row\'s own id plus its `belongs-to` relation — or through `data.update` on `projects`; both behind the curation permission `archive.curate` (studio, brand, founder), so one save is one row version and a stale edit raises the global D-024 conflict toast.',
+  'Tags are free text, trimmed, lower-cased and de-duplicated; the suggestion list is the live union of this project\'s file tags, the `tags` registry names and the delivery-stage ids, so new vocabulary reaches S-12\'s tag filter the moment it is saved (lists re-render from `subscribe`, D-023).',
+  'The delivery stage of a file is a `Select` over `DELIVERY_STAGES` that writes `assets.stage` at once through `saveFilePatch`: the rail, the sections and the counts move with it because they all read the same overlaid rows.',
+  '"Set as cover" writes `projects.coverAssetId` and `projects.coverUrl` together, offered only for an image or a PDF that already has a thumbnail; a coverable file without a render is a Placeholder saying why, and a `confidencial` or redacted file is never offered as a cover (D-059).',
+  'The portfolio set is still localStorage on this page, but it now leaves the studio two ways (ar-10 / ar-14): as the client page P-06 (`/#/sets?p=…`, also the PDF through the browser\'s own print) and as a `link` post in Spaces filed in the portfolio and archive spaces.',
 ];
 
 const BROWSER_COMPONENTS = ['PageHeader', 'StatTile', 'FilterBar', 'SearchField', 'Select', 'ToggleButton', 'Checkbox', 'Card', 'Thumb', 'FileIcon', 'Badge', 'StatusPill', 'Button', 'DataTable', 'EmptyState', 'Placeholder', 'Skeleton'];
@@ -83,7 +89,7 @@ export function archiveBrowserSpec(surface: Surface): PageSpec {
       'FilterBar: search, year, type, tag, sort, and a Cards | Table ToggleButton',
       'Cards grid (Thumb cover or FileIcon mosaic, name, client, year, StatusPill, Badges, file count) or DataTable with the same columns',
       'EmptyState when nothing matches',
-      'Sticky portfolio-set bar: count, Copy list, Open in Spaces (Placeholder), Export PDF (Placeholder), Clear',
+      'Sticky portfolio-set bar: count, Open example page (P-06, new tab), Export PDF (P-06 with print=1), Save set to Spaces (archive.curate), a link to the saved post once it exists, Copy list, Clear',
     ],
     dataTables: DATA_TABLES,
     roles: ROLES,

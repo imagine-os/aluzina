@@ -24,7 +24,10 @@
   min-width: 0;
 }
 
-.pcard__pin { color: var(--color-metal-text); font-size: 1rem; }
+.pcard__pin { display: inline-flex; align-items: center; color: var(--color-metal-text); font-size: 1rem; }
+
+/* ar-21: the post-kind mark, a drawn icon beside the kind badge (POST_KIND_ICONS). */
+.pcard__mark { display: inline-flex; align-items: center; color: var(--color-text-muted); }
 
 .pcard__url {
   font-size: 0.8125rem;
@@ -33,6 +36,26 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
+}
+
+/* ar-17: a file post shows its thumbnail beside the title; without one the row is just the text column. */
+.pcard__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.pcard__text {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.pcard__thumb {
+  flex: none;
+  width: 4.5rem;
 }
 
 .pcard__title {
@@ -67,5 +90,25 @@
 .pcard__tag { color: var(--color-accent-text); font-weight: var(--weight-bold); }
 
 @media (min-width: 1920px) {
-  .pcard__title { font-size: 1.25rem; }
+  /* ar-17: a file post shows its thumbnail beside the title; without one the row is just the text column. */
+.pcard__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.pcard__text {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.pcard__thumb {
+  flex: none;
+  width: 4.5rem;
+}
+
+.pcard__title { font-size: 1.25rem; }
 }

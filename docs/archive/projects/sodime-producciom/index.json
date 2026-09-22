@@ -1,0 +1,155 @@
+{
+ "folderName": "0_79 SODIME producciom",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHV1FKhSgdCJavdMCrYiEDk/PROYECTOS%20ALUZINA%202020/0_79%20SODIME%20producciom?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:51:54.788Z",
+ "indexedAt": "2026-09-21T23:55:32.710Z",
+ "depth": 1,
+ "fileCount": 6,
+ "totalBytes": 2955366,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/sodime-producciom/",
+ "files": [
+  {
+   "path": ".ARTES PARA PRODUCCION SODIME ANTOCONTAGIO.ai.icloud",
+   "name": ".ARTES PARA PRODUCCION SODIME ANTOCONTAGIO.ai.icloud",
+   "ext": "icloud",
+   "mimeType": null,
+   "bytes": null,
+   "modified": "Jun 5, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJ_S8Q4oDQDVDl6GKt43LXA/PROYECTOS%20ALUZINA%202020/0_79%20SODIME%20producciom/.ARTES%20PARA%20PRODUCCION%20SODIME%20ANTOCONTAGIO.ai.icloud?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "artes-para-produccion-sodime-antocontagio-ai",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": ".ARTES PARA PRODUCCION SODIME ANTOCONTAGIO.pdf.icloud",
+   "name": ".ARTES PARA PRODUCCION SODIME ANTOCONTAGIO.pdf.icloud",
+   "ext": "icloud",
+   "mimeType": null,
+   "bytes": null,
+   "modified": "Jun 6, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHqUrcmXg7X8CuwHoSDyUX0/PROYECTOS%20ALUZINA%202020/0_79%20SODIME%20producciom/.ARTES%20PARA%20PRODUCCION%20SODIME%20ANTOCONTAGIO.pdf.icloud?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "artes-para-produccion-sodime-antocontagio-pdf",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "ARTES PARA PRODUCCION SODIME ANTOCONTAGIO-07.pdf",
+   "name": "ARTES PARA PRODUCCION SODIME ANTOCONTAGIO-07.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 1005621,
+   "modified": "Jun 12, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AObSyELohLFwbgsAuPKhqmc/PROYECTOS%20ALUZINA%202020/0_79%20SODIME%20producciom/ARTES%20PARA%20PRODUCCION%20SODIME%20ANTOCONTAGIO-07.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "artes-para-produccion-sodime-antocontagio-07",
+   "thumb": "thumbs/artes-para-produccion-sodime-antocontagio-07.jpg",
+   "pages": [
+    "pages/artes-para-produccion-sodime-antocontagio-07-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#155671",
+    "#11425a",
+    "#0e4964",
+    "#447275",
+    "#124760",
+    "#97b7af"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "Cotización (redactado).xlsx",
+   "name": "Cotización (redactado).xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 361513,
+   "modified": "Jun 16, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHV1FKhSgdCJavdMCrYiEDk/PROYECTOS%20ALUZINA%202020/0_79%20SODIME%20producciom?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-probedores-y-produccion-ganancia",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "LOGO.ai",
+   "name": "LOGO.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 1261769,
+   "modified": "Jun 5, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACmZRwiItJ6HRsukQSF6-Hs/PROYECTOS%20ALUZINA%202020/0_79%20SODIME%20producciom/LOGO.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "logo",
+   "thumb": "thumbs/logo.jpg",
+   "pages": [
+    "pages/logo-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#6dcdcc",
+    "#7fb7cf",
+    "#1066a1",
+    "#e4f0f5",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "provvedro jcm lacer .pdf",
+   "name": "provvedro jcm lacer .pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 328929,
+   "modified": "Jun 5, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AN1GT7gFO156hQAulWr3kGI/PROYECTOS%20ALUZINA%202020/0_79%20SODIME%20producciom/provvedro%20jcm%20lacer%20.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "provvedro-jcm-lacer",
+   "thumb": "thumbs/provvedro-jcm-lacer.jpg",
+   "pages": [
+    "pages/provvedro-jcm-lacer-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "Item Descripcion Imagen Valor unidad Cantidad Valor proveedor KIT DE SEÑALIZACIONES PARA BAÑOS Y CONSULTORIO EN POLIPROPILENO 1.0 CANTIDAD 11 de 30 x 20 y 1 de 22 x 40 , Señalizacion explicativa para empleados y usarios ( para pegar en pared o autoportantes), baños, consulta , administrativo , customizada para la marca con instalacion Podemos incluir las huellas como 1 item de señalizacion dentro de este valor y la linea de mantenga la distancia Poliestileno de artes enviadas a correoa 6,364 COP 11 70,000 COP 2.0 adhesivo narnja o cinta reflectiva narnja MAMPARAS EN ESCRITORIO 1.0 Mampara en a",
+   "palette": [
+    "#ffffff",
+    "#fbfbfb",
+    "#e0f4ec",
+    "#c8d7ce",
+    "#baffc6",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 3,
+  "pages": 3,
+  "bytes": 209176,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

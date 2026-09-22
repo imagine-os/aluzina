@@ -1,0 +1,58 @@
+{
+ "folderName": "JOSH INTERIOR DESIGN",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJpbb85husJFf_adOkRBfKk/PROYECTOS%20ALUZINA%202019%202023/JOSH%20INTERIOR%20DESIGN?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T23:07:49.119Z",
+ "indexedAt": "2026-09-21T23:55:32.654Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 63271076,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/josh-interior-design/",
+ "files": [
+  {
+   "path": "JOSH INTERIOR PRESENTATION YOUR MEDELLIN PARADISE APARTMENT.ai",
+   "name": "JOSH INTERIOR PRESENTATION YOUR MEDELLIN PARADISE APARTMENT.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 31625052,
+   "modified": "Jul 11, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKfnBLtYk_x286cpw4N8YDU/PROYECTOS%20ALUZINA%202019%202023/JOSH%20INTERIOR%20DESIGN/JOSH%20INTERIOR%20PRESENTATION%20YOUR%20MEDELLIN%20PARADISE%20APARTMENT.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "josh-interior-presentation-your-medellin-paradise-apartment",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "JOSH INTERIOR PRESENTATION YOUR MEDELLIN PARADISE APARTMENT.pdf",
+   "name": "JOSH INTERIOR PRESENTATION YOUR MEDELLIN PARADISE APARTMENT.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 31646024,
+   "modified": "Jul 11, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKBQMigpB1OJkLg36k0q_Zs/PROYECTOS%20ALUZINA%202019%202023/JOSH%20INTERIOR%20DESIGN/JOSH%20INTERIOR%20PRESENTATION%20YOUR%20MEDELLIN%20PARADISE%20APARTMENT.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "josh-interior-presentation-your-medellin-paradise-apartment-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

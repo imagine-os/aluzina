@@ -1,0 +1,72 @@
+{
+ "folderName": "TG NOVIAS",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAto0w3uY8r_VjYsVc2jMik/PROYECTOS%20ALUZINA%202022/TG%20NOVIAS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:58:14.950Z",
+ "indexedAt": "2026-09-21T23:55:32.576Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 34498212,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/tg-novias/",
+ "files": [
+  {
+   "path": "TG NOVIAS.pdf",
+   "name": "TG NOVIAS.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 34443826,
+   "modified": "Feb 11, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AGYrTUPOJfO4Mg5bx8_hehk/PROYECTOS%20ALUZINA%202022/TG%20NOVIAS/TG%20NOVIAS.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "tg-novias",
+   "thumb": "thumbs/tg-novias.jpg",
+   "pages": [],
+   "pageCount": 15,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I L U Z Pasamos el 87% de nuestras vidas en ESPACIOS interiores; la manera como estén diseñados, impacta nuestra vida. La parte hace el todo y el todo la parte El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial. D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo TG NOVIAS",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff96",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "TG.pdf",
+   "name": "TG.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 52488,
+   "modified": "Feb 11, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOg-osjQbJeuHNPW82F9Az4/PROYECTOS%20ALUZINA%202022/TG%20NOVIAS/TG.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "tg",
+   "thumb": "thumbs/tg.jpg",
+   "pages": [],
+   "pageCount": 1,
+   "textExcerpt": "L.P HABITACIÓN 1 Puerta vidriera Puerta vidriera Puerta vidriera CLOSET CLOSET CLOSET JARDINERA JARDINERA",
+   "palette": [
+    "#ffffff",
+    "#d8e0dc",
+    "#f1f0ee",
+    "#f9fcfa",
+    "#fffffe",
+    "#fffaf4"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 2,
+  "pages": 0,
+  "bytes": 29628,
+  "maxPages": 0,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

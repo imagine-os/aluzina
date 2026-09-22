@@ -14,14 +14,22 @@
 //   --deep        a featured project's full-depth index (render-previews.py output); written redacted to
 //                 docs/archive/projects/<slug>/index.json and added to the inventory as one entry.
 //   --deep-entries the crawl entries.json of the same folder, only to give its top-level folders their own share links.
-// Output: <out>/index.json (shape `Inventory` in apps/hub/src/data/seed/archive.ts), <out>/projects/<slug>/index.json (shape
-// `DeepIndex`), <out>/README.md. Counts and every distinct folder segment that was rewritten are printed for review.
+//   --reindex-deep rebuild the deep indexes from the render output even when the served copy (render-previews.py serve) exists;
+//                 by default a served deep index is kept verbatim (only `indexedAt` / `depth` refresh) so the index step never
+//                 undoes the serve step's page budget (D-069).
+// Output: <out>/index.json (shape `Inventory` in apps/hub/src/data/seed/archive.ts: one entry per folder WITHOUT its children,
+// with `fileCount`, `dirCount`, `extensions`, `latestModified`, `depth`, `cover`, `deepIndex`, `kind`, `note`), <out>/projects/<slug>/index.json
+// for EVERY project folder (shape `DeepIndex` in apps/hub/src/data/archiveRows.ts: the deep index when one was crawled, else a
+// `depth: 1` index of the folder's direct child files; the app loads these lazily per project, ar-19), <out>/README.md. Counts and
+// every distinct folder segment that was rewritten are printed for review.
 //
 // Classification (inferred, marked as such for the founder, D-060)
 //   kind   'admin' when the folder name matches /cuentas? de cobro|facturas?|contables/i; 'quote' when it starts (after the
 //          studio's number prefix) with /cotizaci/i; otherwise 'project'. Quote folders become prospect rows in the seed.
 //   year   the year folder when it is one year ("2026" -> 2026); null for "2019-2023" and for root-level folders, except the
-//          inference noted in `note` (LIFE VIOLETA VILLA: 2019, the year of its oldest file, `yearInferred: true`).
+//          inference noted in `note` (LIFE VIOLETA VILLA: 2019, the year of its oldest file, `yearInferred: true`; since step 14
+//          pass 3 a deep-indexed folder in a range / root folder takes the modal year of its dated files when it holds >= 50 %:
+//          JOE GALLINA INTERIOR 2023, 170 of 179).
 //   note   duplicates across year folders (table DUPLICATE_GROUPS), empty folders, container folders, unlisted folders.
 //
 // Redaction rules (D-059). The hub is a public GitHub Pages site, so the committed data must not identify a personal or
@@ -29,13 +37,13 @@
 // lower-cased name with `_` read as a space.
 // | # | Rule | Effect |
 // |---|------|--------|
-// | R1 | file name matches NAME_RE (rut, seguridad social, seg soc, planilla, autoliquidacion, arus, cedula, tarjeta profesional, contrato / contract / agreement, comprobante, cuenta de cobro, factura, fv-, fra, cxc, pedido, cotizaci, quotation, invoice, whatsapp image, pago, payment, cash, asana, .xml, "c.m ") | name -> "<Tipo> (redactado).<ext>", `redacted: true`, no thumb / pages / excerpt / palette; ext, size, modified, href kept |
+// | R1 | file name matches NAME_RE (or, since step 14 pass 3, contains a known person's full name from the R4 table: `MARTA OVIEDO BALCON.pdf`, `Links/Daniel Yepes.jpg` -> "Documento personal (redactado)") (rut, seguridad social, seg soc, planilla, autoliquidacion, arus, cedula, tarjeta profesional, contrato / contract / agreement, comprobante, cuenta de cobro, factura, fv-, fra, cxc, pedido, cotizaci, quotation, invoice, whatsapp image, pago, payment, cash, asana, .xml, "c.m ") | name -> "<Tipo> (redactado).<ext>", `redacted: true`, no thumb / pages / excerpt / palette; ext, size, modified, href kept |
 // | R2 | any folder segment of the file's path matches FOLDER_RE (administrativo y financiero, suppliers and financial status, cierre de proyecto, contables, cuentas de cobro, facturas; since ar-06 also contratos, cotizaci*, documentacion importante, consignaciones, pagos, proveedores) | same as R1; Tipo from the name when R1 also matches, else "Documento financiero" ("Documento de cierre" under cierre de proyecto). Exception: a file named "logo" keeps its name |
 // | R3 | text excerpt carries personal data (fecha de nacimiento, cédula / C.C., NIT) or reads as a quotation / invoice (FIN_CONTENT_RE: no. de cotización, facturar a nombre, V/R unit, total a pagar, forma de pago, valor total; ar-06), the name says "feng shui" (the report is the owner's birth chart), or the file is on the explicit SENSITIVE_CONTENT list (delivery form naming the client and apartment with an internal process review; contractor-dispute letters) | name kept, `redacted: true`, no thumb / pages / excerpt / palette (`redactedReason`) |
 // | R4 | folder segments that are person names (table SEGMENT_MAP, explicit, no guessing): suppliers and financial status/04_ALUZINA/<NN NAME ROLE> -> "NN EQUIPO <ROLE>"; 10_MERY & SONS/<NN NAME> -> "NN CONTRATISTA"; 01_AJOTA ANDREA JIMENEZ ARTISTA -> 01_ARTISTA; 02_ALEX DAVID BEDOYA ELECTRICO -> 02_ELECTRICISTA; 06_DOMOTICA YAKO DAVID -> 06_DOMOTICA; unknown segments under 04_ALUZINA -> "NN EQUIPO" | path rewritten; `folderPath` in the app shows the rewritten segments |
 // | R5 | company folder names (ALFA, DECORCERAMICA, INDURAL, J.F.S.R INGENIEROS CONSTRUCTORES, MERY & SONS, MOSAGRES ACABADOS, NEBULA, PISENDE, SEMCO, TECHOS Y ESTRUCTURAS HERREÑO, TECNICOCINA, AMAZON, PERFIL LED, LED LIGHT, ILUMINACION ANTIOQUIA) and project folder names (the studio's identifiers) | kept as they are; Justin can ask for any of them to be redacted |
 // | R6 | share links embed the full path URL-encoded, so a redacted file's `href` / `sourceHref` (and a person-named folder's `href`) is replaced by the link of the nearest SAFE ancestor folder: the company-level supplier folder, or the project root when the parent is a person folder or the file sits under ADMINISTRATIVO Y FINANCIERO / CIERRE DE PROYECTO / CONTABLES / CUENTAS DE COBRO / FACTURAS | the link opens the folder at Dropbox, never names the document |
-// | R7 | self-check before writing: no redacted entry's href (URL-decoded, beyond the project root) matches the pattern or a replaced person segment; no `name` / `path` / excerpt anywhere contains a replaced person segment or a person's full name (the founder's name is public and exempt); no file `name` matches the pattern unless it is the "(redactado)" form. Any hit exits 1 and nothing is written | `privacyCheck` in index.json records the result |
+// | R7 | self-check before writing (since step 14 pass 3 also over every served thumb / page file name, de-dashed): no redacted entry's href (URL-decoded, beyond the project root) matches the pattern or a replaced person segment; no `name` / `path` / excerpt anywhere contains a replaced person segment or a person's full name (the founder's name is public and exempt); no file `name` matches the pattern unless it is the "(redactado)" form. Any hit exits 1 and nothing is written | `privacyCheck` in index.json records the result |
 // Tipo: RUT | Seguridad social | Documento personal | Contrato | Comprobante de pago | Cuenta de cobro | Factura | Cotización | Pedido | Imagen de WhatsApp | Documento financiero | Documento de cierre.
 // Short tokens (rut, arus, cash, cxc, fra, pago) match as whole words so "ruta" or "estructura" are not redacted.
 import fs from 'node:fs';
@@ -89,6 +97,15 @@ function approxDays(t) {
   const abs = /^([A-Za-z]{3}) (\d{1,2}), (\d{4})$/.exec(t);
   if (abs) return (NOW - Date.UTC(parseInt(abs[3], 10), MONTHS[abs[1].toLowerCase()] ?? 0, parseInt(abs[2], 10))) / 86400000;
   return Infinity;
+}
+/** The year most of the dated `modified` values fall in, when it holds at least half of them; `null` otherwise or with no dates. */
+function modalYear(modifieds) {
+  const years = modifieds.map(yearOfModified).filter(Boolean);
+  if (years.length === 0) return null;
+  const tally = new Map();
+  for (const y of years) tally.set(y, (tally.get(y) ?? 0) + 1);
+  const [year, count] = [...tally.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0];
+  return count * 2 >= years.length ? { year, count, dated: years.length } : null;
 }
 function yearOfModified(t) { const m = /(\d{4})$/.exec((t || '').trim()); const y = m ? parseInt(m[1], 10) : null; return y && y >= 2000 ? y : null; } // "Jan 1, 1970" is Dropbox's unknown-date placeholder
 
@@ -186,11 +203,14 @@ function redactedName(name, folderPath) {
   const n = norm(name);
   const f = norm(folderPath || '');
   const byName = NAME_RE.test(n);
+  const byPerson = namesPerson(n);
   const byFolder = FOLDER_RE.test(f) && !/\blogo\b/.test(n);
-  if (!byName && !byFolder) return null;
+  if (!byName && !byPerson && !byFolder) return null;
   const ext = extOf(name);
-  return `${typeFor(n, f)} (redactado)${ext ? `.${ext}` : ''}`;
+  return `${byPerson && !byName ? 'Documento personal' : typeFor(n, f)} (redactado)${ext ? `.${ext}` : ''}`;
 }
+/** R1 since step 14 pass 3: a file named after a known person (R4's table + EXTRA_PERSON_NAMES) is a personal document, whatever it holds. */
+const namesPerson = (normName) => PERSON_NAMES.some((nm) => normName.includes(norm(nm)));
 function rewriteSegments(folderPath) {
   const segs = folderPath ? folderPath.split('/') : [];
   const out = [];
@@ -216,7 +236,7 @@ function redactChild(c, folderPath = '', rootHref = null, scope = '') {
   }
   stats.inventoryFiles++;
   const r = redactedName(c.name, folderPath);
-  if (r) { stats.inventoryRedacted++; stats.hrefsReplaced++; return { ...child, name: r, href: safeAncestorHref(folderPath, rootHref, scope), redacted: true }; }
+  if (r) { stats.inventoryRedacted++; stats.hrefsReplaced++; return { ...child, name: r, href: safeAncestorHref(folderPath, rootHref, scope), redacted: true, redactedReason: NAME_RE.test(norm(c.name)) || namesPerson(norm(c.name)) ? 'nombre de archivo' : 'carpeta administrativa o financiera' }; }
   return child;
 }
 
@@ -313,6 +333,9 @@ function yearFolderOfUrl(url) {
   const one = /PROYECTOS (?:ALUZINA )?(\d{4})\//.exec(u.replace(/PROYECTOS ALUZINA \d{4} \d{4}\//, ''));
   if (one) return one[1];
   if (range) return `${range[1]}-${range[2]}`;
+  // A folder next to the year folders (LIFE VIOLETA VILLA, SANTIAGO AGUIRRE ILUMINACION): `scl/fo/<share>/<id>/<one segment>` -> root.
+  const segs = u.replace(/^https?:\/\/[^/]+\//, '').split('?')[0].split('/').filter(Boolean);
+  if (segs[0] === 'scl' && segs[1] === 'fo' && segs.length === 5) return 'root';
   return '2019-2023';
 }
 // 5. Featured projects from their deep indexes.
@@ -333,13 +356,96 @@ for (const [slugId, file] of pairs(args.deep)) {
   for (const f of deep.files) extensions[f.ext || '(none)'] = (extensions[f.ext || '(none)'] || 0) + 1;
   const newest = deep.files.map((f) => f.modified).filter(Boolean).sort((a, b) => approxDays(a) - approxDays(b))[0] ?? null;
   const yearFolder = yearFolderOfUrl(deep.sourceUrl);
-  byKey.set(`${yearFolder}/${deep.folderName}`, {
-    id: slugId, folderName: deep.folderName, yearFolder, numberPrefix: numberPrefix(deep.folderName), sourceHref: deep.sourceUrl,
+  // A deep-indexed folder inside a range folder ("2019-2023") or at the root gets no year from its path (D-060): take the year most
+  // of its dated files were modified in when that year holds at least half of them (JOE GALLINA INTERIOR: 170 of 179 in 2023),
+  // marked `yearInferred` and said in the note so the founder can correct it on A-09. Otherwise the year stays null.
+  const modal = yearOf(yearFolder) === null ? modalYear(deep.files.map((f) => f.modified)) : null;
+  // Match the inventory entry on collapsed whitespace ("0_80 OZAOZ  jinetes del horizonte" vs the deep crawl's single space) and keep
+  // the inventory's spelling of the folder name, so a deep index never creates a second entry for the same folder.
+  const squash = (k) => k.replace(/\s+/g, ' ').trim();
+  const key = [...byKey.keys()].find((k) => squash(k) === squash(`${yearFolder}/${deep.folderName}`)) ?? `${yearFolder}/${deep.folderName}`;
+  const existing = byKey.get(key);
+  byKey.set(key, {
+    id: slugId, folderName: existing?.folderName ?? deep.folderName, yearFolder, numberPrefix: numberPrefix(deep.folderName), sourceHref: deep.sourceUrl,
     childCount: children.length, fileCount: deep.files.length, dirCount: dirChildren.length, extensions, totalBytesKnown: deep.totalBytes, latestModified: newest,
     children, listed: true, deepIndex: `docs/archive/projects/${slugId}/index.json`, _featured: true,
-    _noteExtra: `Proyecto destacado con índice completo: ${deep.files.length} archivos en ${allFolders.size} carpetas (${dirChildren.length} de primer nivel), rastreado ${String(deep.crawledAt).slice(0, 10)}; archivos fechados hasta ${newest ?? '—'}.`,
+    _yearInferred: modal?.year,
+    _noteExtra: `Proyecto destacado con índice completo: ${deep.files.length} archivos en ${allFolders.size} carpetas (${dirChildren.length} de primer nivel), rastreado ${String(deep.crawledAt).slice(0, 10)}; archivos fechados hasta ${newest ?? '—'}.${modal ? ` Año ${modal.year} inferido (inferred) de las fechas de los archivos (${modal.count} de ${modal.dated} fechados en ${modal.year}); confirmar con la fundadora.` : ''}`,
   });
-  deepOut.push([slugId, redactDeep(deep, slugId)]);
+  deepOut.push([slugId, keepServed(slugId, redactDeep(deep, slugId))]);
+}
+
+/**
+ * `render-previews.py serve` rewrites `<out>/projects/<slug>/index.json` after this script (per-folder page / size budget, D-069) and
+ * records a `served` block. Re-running the index step must not undo that: when the existing file carries `served`, its content is
+ * kept verbatim and only `indexedAt` / `depth` are refreshed. `--reindex-deep` regenerates from the render index (then run serve again).
+ */
+function keepServed(slugId, fresh) {
+  const file = path.join(OUT, 'projects', slugId, 'index.json');
+  if (args['reindex-deep'] || !fs.existsSync(file)) return fresh;
+  let existing;
+  try { existing = readJson(file); } catch { return fresh; }
+  if (!existing?.served || !Array.isArray(existing.files)) return fresh;
+  const out = {};
+  for (const [k, v] of Object.entries(existing)) {
+    if (k === 'depth') continue;
+    out[k] = k === 'indexedAt' ? fresh.indexedAt : v;
+    if (k === 'indexedAt') out.depth = depthOf(existing.files);
+  }
+  if (!('depth' in out)) out.depth = depthOf(existing.files);
+  return out;
+}
+
+/** Deepest level a listed file sits at: 1 = the folder's own files, 2 = one subfolder down, … (0 for an empty folder). */
+function depthOf(files) { return files.reduce((n, f) => Math.max(n, f.path.split('/').length), 0); }
+/**
+ * The app's asset id for a file of a project chunk, ported verbatim from `apps/hub/src/data/archiveRows.ts` (`rowsFromDeepIndex`):
+ * `ast-ar-<projectSlug>-<slugify(name without extension) || 'file'>`, `-2`, `-3`, … on collisions inside the project, in file order.
+ * `slugify` is `domain/archive.ts`: NFD, combining marks stripped, lower-case, runs of anything but [a-z0-9] -> '-', trimmed.
+ */
+function slugifyTs(s) { return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+function rowIds(projectSlug, files) {
+  const used = new Set();
+  const seen = new Map();
+  return files.map((f) => {
+    const base = `ast-ar-${projectSlug}-${slugifyTs(f.name.replace(/\.[a-z0-9]{1,5}$/i, '')) || 'file'}`;
+    let n = seen.get(base) ?? 1;
+    let id = n === 1 ? base : `${base}-${n}`;
+    while (used.has(id)) { n += 1; id = `${base}-${n}`; } // a suffixed id can collide with a file named "… 2": keep counting until free
+    seen.set(base, n + 1);
+    used.add(id);
+    return id;
+  });
+}
+const IMAGE_EXTS = new Set(['jpg', 'jpeg', 'png', 'webp', 'gif', 'tif', 'tiff', 'heic', 'bmp']);
+/** The seed's cover rule: the first file (in index order) that has a served thumbnail and is an image or a PDF; `null` when none. */
+function coverOf(projectSlug, files) {
+  const ids = rowIds(projectSlug, files);
+  const i = files.findIndex((f) => f.thumb && !f.redacted && (f.ext === 'pdf' || IMAGE_EXTS.has(f.ext)));
+  if (i === -1) return null;
+  const f = files[i];
+  return { assetId: ids[i], thumb: f.thumb, ...(f.pages.length ? { pages: f.pages } : {}) };
+}
+/** Folders that hold files directly, with counts, for the featured project's Spaces note (the seed no longer sees the files). */
+function foldersOf(files) {
+  const map = new Map();
+  for (const f of files) {
+    const folder = f.path.includes('/') ? f.path.slice(0, f.path.lastIndexOf('/')) : '';
+    const cur = map.get(folder) ?? { path: folder, files: 0, withThumb: 0 };
+    cur.files++;
+    if (f.thumb) cur.withThumb++;
+    map.set(folder, cur);
+  }
+  return [...map.values()];
+}
+/** A shallow (depth 1) chunk for a folder without a deep index: its direct child files in the `DeepIndex` file shape, already redacted. */
+function shallowChunk(entry, children) {
+  const files = children.filter((c) => !c.is_dir).map((c) => ({
+    path: c.name, name: c.name, ext: c.ext || extOf(c.name), mimeType: null, bytes: c.size ?? null, modified: c.modified ?? null, sourceHref: c.href ?? null, downloaded: false,
+    slug: slugifyTs(c.name.replace(/\.[a-z0-9]{1,5}$/i, '')) || 'file', thumb: null, pages: [], pageCount: null, textExcerpt: '', palette: [], renderer: null,
+    ...(c.redacted ? { redacted: true, redactedReason: c.redactedReason ?? 'nombre de archivo' } : {}),
+  }));
+  return { folderName: entry.folderName, sourceUrl: entry.sourceHref, crawledAt: CRAWLED_AT, indexedAt: new Date().toISOString(), depth: files.length ? 1 : 0, fileCount: files.length, totalBytes: entry.totalBytesKnown || 0, redaction: 'D-059: see scripts/archive/build-index.mjs header', files };
 }
 
 function redactDeep(deep, slugId) {
@@ -363,7 +469,7 @@ function redactDeep(deep, slugId) {
     stats.pagesKept += pages.length;
     return { ...base, thumb: f.thumb ? `thumbs/${path.basename(f.thumb)}` : null, pages, pageCount: f.pageCount ?? null, textExcerpt: (f.textExcerpt || '').slice(0, 600), palette: f.palette || [], renderer: f.renderer ?? null };
   });
-  return { folderName: deep.folderName, sourceUrl: deep.sourceUrl, crawledAt: deep.crawledAt, indexedAt: new Date().toISOString(), fileCount: files.length, totalBytes: deep.totalBytes, maxPages: MAX_PAGES, redaction: 'D-059: see scripts/archive/build-index.mjs header', servedFrom: `apps/hub/public/archive/${slugId}/`, files };
+  return { folderName: deep.folderName, sourceUrl: deep.sourceUrl, crawledAt: deep.crawledAt, indexedAt: new Date().toISOString(), depth: depthOf(files), fileCount: files.length, totalBytes: deep.totalBytes, maxPages: MAX_PAGES, redaction: 'D-059: see scripts/archive/build-index.mjs header', servedFrom: `apps/hub/public/archive/${slugId}/`, files };
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -427,6 +533,19 @@ for (const p of projects) {
   if (n > 1) p.id = `${p.id}-${p.yearFolder.toLowerCase()}`;
 }
 
+// ar-19: one lazy chunk per project folder (admin folders become posts in the seed and need none): the deep index when it exists,
+// else the folder's direct child files at depth 1. The inventory entry keeps counts, `depth` and `cover`, never the children.
+const CRAWLED_AT = rawRecords.length ? '2026-09-21T17:10:00Z' : new Date().toISOString();
+const deepById = new Map(deepOut);
+const chunks = [];
+for (const p of projects) {
+  if (p.kind === 'admin') continue;
+  const chunk = deepById.get(p.id) ?? shallowChunk(p, p.children);
+  chunks.push([p.id, chunk]);
+  p.depth = chunk.depth;
+  p.cover = coverOf(p.id, chunk.files);
+  if (p.deepIndex) p.folders = foldersOf(chunk.files);
+}
 const roots = [
   { label: 'A', name: 'JOE GALLINA INTERIOR', url: 'https://www.dropbox.com/scl/fo/xg5yoe6qo29bhr574q5ns/AOyD6MfpnUDe9JQK6yliIXY?rlkey=djfb5faa8o7tyfy1ljqvfvi87&st=31ko6hst&dl=0', note: 'The direct link asks for a Dropbox sign-in; the folder was read through its copy inside link C (PROYECTOS ALUZINA 2019 2023/JOE GALLINA INTERIOR).' },
   { label: 'B', name: '2026 (PROYECTOS 2026)', url: 'https://www.dropbox.com/scl/fo/3emfxpbratvegn0256zk8/ABtCCw9qOi_fTm0ryx4826U?rlkey=db3828bqezrux1nomqwl3xupy&st=8lhagpot&dl=0' },
@@ -443,6 +562,10 @@ const counts = {
   childFiles: projects.reduce((n, p) => n + p.children.filter((c) => !c.is_dir).length, 0),
   childDirs: projects.reduce((n, p) => n + p.children.filter((c) => c.is_dir).length, 0),
   totalBytesKnown: projects.reduce((n, p) => n + (p.totalBytesKnown || 0), 0),
+  chunks: chunks.length,
+  chunkFiles: chunks.reduce((n, [, c]) => n + c.files.length, 0),
+  shallowChunks: chunks.filter(([, c]) => !c.servedFrom).length,
+  covers: projects.filter((p) => p.cover).length,
   deep: Object.fromEntries(deepOut.map(([s, d]) => [s, { files: d.fileCount, totalBytes: d.totalBytes, redacted: d.files.filter((f) => f.redacted).length, withThumb: d.files.filter((f) => f.thumb).length, withPages: d.files.filter((f) => f.pages.length).length, pages: d.files.reduce((n, f) => n + f.pages.length, 0) }])),
 };
 const redaction = { inventoryFiles: stats.inventoryFiles, inventoryRedacted: stats.inventoryRedacted, hrefsReplaced: stats.hrefsReplaced, deepFiles: stats.deepFiles, deepRedactedByName: stats.deepRedacted, deepRedactedByContent: stats.deepContentRedacted, folderSegmentsRewritten: stats.segmentsRewritten.size, rules: 'scripts/archive/build-index.mjs header (R1..R5), decision D-059' };
@@ -487,10 +610,21 @@ for (const [s, d] of deepOut) {
     else for (const seg of PERSON_SEGMENTS) if (dec(f.sourceHref || '').includes(seg)) problems.push(`${where}: href contains "${seg}"`);
   });
 }
+// R7 over the served render names (step 14 pass 3): the renderer slugs the folder path into a thumb / page file name, so the name
+// is checked like a path — de-dashed, against NAME_RE, the person names and the person segments the index maps to roles. A hit
+// means the served file (and the index's `thumb` / `pages` reference) must be renamed to the role form; project folder names stay (R5).
+const deslug = (p) => path.basename(p, path.extname(p)).replace(/-+/g, ' ');
+for (const [s, c] of chunks) for (const f of c.files) for (const rel of [f.thumb, ...(f.pages || [])].filter(Boolean)) {
+  const t = norm(deslug(rel)); const where = `${s}: served ${rel}`;
+  if (NAME_RE.test(t)) problems.push(`${where}: matches the pattern`);
+  for (const nm of PERSON_NAMES) if (t.includes(norm(nm))) problems.push(`${where}: contains "${nm}"`);
+  // The founder's name is public (PUBLIC_NAMES) and exempt as everywhere else in R7: Dropbox "conflicted copy" file names carry it.
+  for (const seg of PERSON_SEGMENTS) { const bare = norm(seg.replace(/^\d+[_ ]+/, '')); if (bare.length > 6 && t.includes(bare) && ![...PUBLIC_NAMES].some((pn) => bare.includes(norm(pn)))) problems.push(`${where}: contains person segment "${seg}"`); }
+}
 // Whole-output grep, URL-encoded too.
-const serialized = JSON.stringify(projects) + JSON.stringify(deepOut);
+const serialized = JSON.stringify(projects) + JSON.stringify(deepOut) + JSON.stringify(chunks);
 for (const seg of PERSON_SEGMENTS) for (const v of [seg, encodeURIComponent(seg), seg.replace(/ /g, '%20')]) if (serialized.includes(v)) problems.push(`output contains "${v}"`);
-const privacyCheck = { ok: problems.length === 0, checkedInventoryEntries: projects.reduce((n, p) => n + p.children.length, 0), checkedDeepFiles: deepOut.reduce((n, [, d]) => n + d.files.length, 0), personSegments: PERSON_SEGMENTS.size, problems: [...new Set(problems)].slice(0, 50) };
+const privacyCheck = { ok: problems.length === 0, checkedInventoryEntries: projects.reduce((n, p) => n + p.children.length, 0), checkedDeepFiles: deepOut.reduce((n, [, d]) => n + d.files.length, 0), checkedChunkFiles: chunks.reduce((n, [, c]) => n + c.files.length, 0), personSegments: PERSON_SEGMENTS.size, problems: [...new Set(problems)].slice(0, 50) };
 if (!privacyCheck.ok) {
   console.error('PRIVACY CHECK FAILED (nothing written):');
   for (const pr of privacyCheck.problems) console.error('  - ' + pr);
@@ -498,9 +632,11 @@ if (!privacyCheck.ok) {
 }
 
 fs.mkdirSync(OUT, { recursive: true });
-const index = { source: 'Dropbox shared folders shared by Justin Massion in Slack #past-projects, 2026-09-21 (prompt 0017); crawled with scripts/archive/crawl-dropbox.mjs, indexed and redacted with scripts/archive/build-index.mjs', crawledAt: rawRecords.length ? '2026-09-21T17:10:00Z' : new Date().toISOString(), indexedAt: new Date().toISOString(), roots, counts, redaction, privacyCheck, projects };
+// The inventory carries no children (ar-19): the files of every project live in its chunk, loaded by the app on demand.
+const slim = projects.map(({ children, ...rest }) => (rest.kind === 'admin' ? { ...rest, children } : rest));
+const index = { source: 'Dropbox shared folders shared by Justin Massion in Slack #past-projects, 2026-09-21 (prompt 0017); crawled with scripts/archive/crawl-dropbox.mjs, indexed and redacted with scripts/archive/build-index.mjs', crawledAt: CRAWLED_AT, indexedAt: new Date().toISOString(), roots, counts, redaction, privacyCheck, projects: slim };
 fs.writeFileSync(path.join(OUT, 'index.json'), JSON.stringify(index, null, 1) + '\n');
-for (const [s, d] of deepOut) {
+for (const [s, d] of chunks) {
   fs.mkdirSync(path.join(OUT, 'projects', s), { recursive: true });
   fs.writeFileSync(path.join(OUT, 'projects', s, 'index.json'), JSON.stringify(d, null, 1) + '\n');
 }
@@ -513,8 +649,8 @@ status: current · since: 2026-09-21 · source: Dropbox shared folders from Just
 
 What this folder holds (changelog 0019, D-055, D-058, D-059):
 
-- \`index.json\` — the **inventory**: one entry per project folder of Aluzina's Dropbox (${projects.length} folders across ${YEAR_ORDER.filter((y) => counts.byYearFolder[y]).length} year folders: ${YEAR_ORDER.filter((y) => counts.byYearFolder[y]).map((y) => `${y} (${counts.byYearFolder[y]})`).join(', ')}), with its direct children (${counts.childFiles} files, ${counts.childDirs} subfolders, ${gb(counts.totalBytesKnown)} of listed sizes), inferred \`kind\` (${counts.byKind.project} project, ${counts.byKind.quote} quotation-only = prospect, ${counts.byKind.admin} admin), \`year\`, notes on duplicates / empty / unlisted folders (${counts.unlisted.length} unlisted, ${counts.empty} empty). Read by \`apps/hub/src/data/seed/archive.ts\` through \`@docs\`.
-- \`projects/<slug>/index.json\` — the **deep index** of a featured project: every file with its folder path, size, date, share link, and for design deliverables the served thumbnail and page renders (\`apps/hub/public/archive/<slug>/{thumbs,pages}/\`, <= 640 px / <= 1200 px, <= ${MAX_PAGES} pages). ${deepOut.map(([s, d]) => `\`${s}\`: ${d.fileCount} files, ${counts.deep[s].withThumb} with a thumbnail, ${counts.deep[s].pages} page renders, ${counts.deep[s].redacted} redacted`).join('; ')}.
+- \`index.json\` — the **inventory**: one entry per project folder of Aluzina's Dropbox (${projects.length} folders across ${YEAR_ORDER.filter((y) => counts.byYearFolder[y]).length} year folders: ${YEAR_ORDER.filter((y) => counts.byYearFolder[y]).map((y) => `${y} (${counts.byYearFolder[y]})`).join(', ')}), with the counts of its direct children (${counts.childFiles} files, ${counts.childDirs} subfolders, ${gb(counts.totalBytesKnown)} of listed sizes), \`extensions\`, \`latestModified\`, \`depth\` (how deep its chunk lists), \`cover\` (the first design file with a served thumbnail, ${counts.covers} folders), inferred \`kind\` (${counts.byKind.project} project, ${counts.byKind.quote} quotation-only = prospect, ${counts.byKind.admin} admin), \`year\`, notes on duplicates / empty / unlisted folders (${counts.unlisted.length} unlisted, ${counts.empty} empty). Since ar-19 the entries carry **no children**: the files live in the per-project chunks below. Read by \`apps/hub/src/data/seed/archive.ts\` through \`@docs\` (projects, spaces, tags, relations, the featured notes — never file rows).
+- \`projects/<slug>/index.json\` — one **file index per project folder** (${counts.chunks} chunks, ${counts.chunkFiles} files), the same shape for all (\`DeepIndex\` in \`apps/hub/src/data/archiveRows.ts\`). For ${counts.shallowChunks} folders it is the folder's direct child files at \`depth: 1\`; for the ${deepOut.length} featured projects it is the **deep index**: every file to full depth with its folder path, size, date, share link, and for design deliverables the served thumbnail and page renders (\`apps/hub/public/archive/<slug>/{thumbs,pages}/\`, <= 640 px / <= 1200 px, <= ${MAX_PAGES} pages). The app never seeds these: \`apps/hub/src/data/archiveFiles.ts\` loads a project's chunk on demand (\`import.meta.glob\`, lazy) and turns it into \`assets\` rows in memory; only the files a person tags or moves become stored rows (ar-19). ${deepOut.map(([s, d]) => `\`${s}\`: ${d.fileCount} files, ${counts.deep[s].withThumb} with a thumbnail, ${counts.deep[s].pages} page renders, ${counts.deep[s].redacted} redacted`).join('; ')}.
 - No renders are stored here (D-058): the served copies under \`apps/hub/public/archive/\` are the visual memory; the crawl output and downloaded originals stay outside the repo.
 
 ## Re-running the pipeline
@@ -522,13 +658,13 @@ What this folder holds (changelog 0019, D-055, D-058, D-059):
 1. **Crawl** — \`npm run archive:crawl -- --url=<share url> --depth=1 --out=<label>.entries.json\` lists a shared folder (headless Chromium, read-only); \`--targets=<targets.json>\` lists one page per project folder (resumable). Gentle pacing, one retry after a gate / 429.
 2. **Index + redact** — \`npm run archive:index -- --inventory=<projects.json> --raw=<projects_raw.json> --entries=<B.entries.json>,<C.entries.json> --deep=<slug>=<index.json> --deep-entries=<slug>=<entries.json>\` writes this folder.
 3. **Renders** — \`npm run archive:previews -- render --entries=<entries.json> --files=<dir> --out=<dir>\` downloads the allow-listed design files and renders thumbnails / pages (PyMuPDF, Pillow, LibreOffice for Office files); \`npm run archive:previews -- serve --index=docs/archive/projects/<slug>/index.json --src=<thumbs dir> --dest=apps/hub/public/archive/<slug>\` re-encodes the kept renders into the served folder (thumbs 640 px q80, pages 1200 px q72, max ${MAX_PAGES} pages).
-4. **Build** — \`npm run build\`; the seed derives projects, assets, spaces, posts, relations and tags from the JSON (\`SEED_VERSION\` bumps when the data shape changes).
+4. **Build** — \`npm run build\`; the seed derives projects, spaces, posts, relations and tags from \`index.json\` (\`SEED_VERSION\` bumps when the data shape changes); the per-project chunks become lazy JS chunks of the bundle, one per folder, loaded when S-13 opens that project.
 
 ## Redaction (D-059)
 
 The hub deploys as a public GitHub Pages site, so no personal or financial document may be identifiable in the committed data. Rules R1..R5 are the table in the header of \`scripts/archive/build-index.mjs\`; in short: a file whose name says RUT, seguridad social, planilla, cédula, contrato, comprobante, cuenta de cobro, factura, cotización, pedido, invoice, payment, WhatsApp image, etc., or that sits under an administrative / supplier / closing folder, keeps only its type, size, date and link (\`"<Tipo> (redactado).<ext>"\`, \`redacted: true\`, no preview or excerpt); a file whose text carries personal data (birth date, cédula, NIT) or a feng shui report keeps its name but loses preview and excerpt; folder segments that are person names become their role (EQUIPO, CONTRATISTA, ARTISTA, ELECTRICISTA); company and project folder names stay as the studio's identifiers (Justin can ask for any to be redacted).
 
-Counts this run: ${redaction.inventoryRedacted} of ${redaction.inventoryFiles} inventory files redacted; ${redaction.deepRedactedByName} of ${redaction.deepFiles} deep-index files redacted by name / folder and ${redaction.deepRedactedByContent} by content; ${redaction.folderSegmentsRewritten} folder segments rewritten; ${redaction.hrefsReplaced} share links replaced by the link of a safe ancestor folder (R6: Dropbox links embed the file path, so a redacted file links to its folder, never to itself). Self-check R7 (names, paths, links, URL-encoded too): ${privacyCheck.ok ? 'passed' : 'FAILED'} over ${privacyCheck.checkedInventoryEntries} inventory entries and ${privacyCheck.checkedDeepFiles} deep-index files.
+Counts this run: ${redaction.inventoryRedacted} of ${redaction.inventoryFiles} inventory files redacted; ${redaction.deepRedactedByName} of ${redaction.deepFiles} deep-index files redacted by name / folder and ${redaction.deepRedactedByContent} by content; ${redaction.folderSegmentsRewritten} folder segments rewritten; ${redaction.hrefsReplaced} share links replaced by the link of a safe ancestor folder (R6: Dropbox links embed the file path, so a redacted file links to its folder, never to itself). Self-check R7 (names, paths, links, URL-encoded too): ${privacyCheck.ok ? 'passed' : 'FAILED'} over ${privacyCheck.checkedInventoryEntries} inventory entries, ${privacyCheck.checkedDeepFiles} deep-index files and ${privacyCheck.checkedChunkFiles} chunk files.
 
 ## Inferred, to confirm with the founder (D-060)
 
@@ -539,4 +675,4 @@ fs.writeFileSync(path.join(OUT, 'README.md'), readme);
 console.log(JSON.stringify({ counts, redaction, privacyCheck }, null, 1));
 console.log('Folder segments rewritten (review):');
 for (const [from, to] of stats.segmentsRewritten) console.log(`  ${from}  ->  ${to}`);
-console.log(`wrote ${path.join(OUT, 'index.json')}${deepOut.map(([s]) => `, ${path.join(OUT, 'projects', s, 'index.json')}`).join('')}, ${path.join(OUT, 'README.md')}`);
+console.log(`wrote ${path.join(OUT, 'index.json')}, ${chunks.length} chunks under ${path.join(OUT, 'projects')} (${deepOut.length} deep, ${counts.shallowChunks} shallow), ${path.join(OUT, 'README.md')}`);

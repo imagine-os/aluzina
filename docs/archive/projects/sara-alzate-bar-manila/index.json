@@ -1,0 +1,70 @@
+{
+ "folderName": "SARA ALZATE BAR MANILA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJq01x_G7bpG5BeS2CtvLJM/PROYECTOS%20ALUZINA%202024/SARA%20ALZATE%20BAR%20MANILA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:42:59.330Z",
+ "indexedAt": "2026-09-21T23:55:32.611Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 197719490,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/sara-alzate-bar-manila/",
+ "files": [
+  {
+   "path": "SARA ALZATE BAR MANILA  _ALUZINA_.ai",
+   "name": "SARA ALZATE BAR MANILA  _ALUZINA_.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 55731814,
+   "modified": "Nov 20, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKXbrDHD7CDExjwzNOB3zfM/PROYECTOS%20ALUZINA%202024/SARA%20ALZATE%20BAR%20MANILA/SARA%20ALZATE%20BAR%20MANILA%20%20_ALUZINA_.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "sara-alzate-bar-manila-aluzina",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "SARA ALZATE BAR MANILA  _ALUZINA_.pdf",
+   "name": "SARA ALZATE BAR MANILA  _ALUZINA_.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 141987676,
+   "modified": "Nov 20, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKTS6czQZUHHhZzms0fZdVc/PROYECTOS%20ALUZINA%202024/SARA%20ALZATE%20BAR%20MANILA/SARA%20ALZATE%20BAR%20MANILA%20%20_ALUZINA_.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "sara-alzate-bar-manila-aluzina-2",
+   "thumb": "thumbs/sara-alzate-bar-manila-aluzina-2.jpg",
+   "pages": [
+    "pages/sara-alzate-bar-manila-aluzina-2-page-01.jpg",
+    "pages/sara-alzate-bar-manila-aluzina-2-page-02.jpg",
+    "pages/sara-alzate-bar-manila-aluzina-2-page-03.jpg",
+    "pages/sara-alzate-bar-manila-aluzina-2-page-04.jpg"
+   ],
+   "pageCount": 8,
+   "textExcerpt": "ESPACIO LA MEJOR OPCION PARA TU I N T E R I O R I S M O I L U M I N A C I Ó N Por Que Trabajar Con Aluzina E S T U D I O C R E A T I V O D E D I S E Ñ O SERVICIOS COMPLETOS DE DISEÑO • Enfoque a su medida. • Diseños de alta calidad. • Respuesta rapida y comunicación clara. • Nuestro cliente siempre cuenta con un gestor de proyectos dedicado a su proyecto. ATMOSFERA • Un valor agregado con el manejo de la luz como hilo conductor que conecta los proyectos como experiencias de luz • Enfasis en iluminación emocional sin dejar atras la iluminación general y funcional UNICIDAD • Experiencia de usuar",
+   "palette": [
+    "#120d0a",
+    "#2a2518",
+    "#3b3729",
+    "#847f75",
+    "#746f64",
+    "#524d40"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 239035,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

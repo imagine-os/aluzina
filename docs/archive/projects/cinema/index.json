@@ -1,0 +1,41 @@
+{
+ "folderName": "0_88 CINEMA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APxz0cT8A4JuNLolFK_ReOs/PROYECTOS%20ALUZINA%202020/0_88%20CINEMA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:55:05.967Z",
+ "indexedAt": "2026-09-21T23:55:32.673Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 9133097,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/cinema/",
+ "files": [
+  {
+   "path": "CINEMA .xlsx",
+   "name": "CINEMA .xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 9133097,
+   "modified": "Oct 27, 2020",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADb2H6I7MI4PX2xY6XUpFGE/PROYECTOS%20ALUZINA%202020/0_88%20CINEMA/CINEMA%20.xlsx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cinema",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

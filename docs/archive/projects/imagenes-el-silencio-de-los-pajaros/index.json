@@ -1,0 +1,65 @@
+{
+ "folderName": "07 IMAGENES EL SILENCIO DE LOS PAJAROS",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHlaR5_W-948ELwFuSYHN7I/PROYECTOS%20ALUZINA%202025/07%20IMAGENES%20EL%20SILENCIO%20DE%20LOS%20PAJAROS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:29:59.544Z",
+ "indexedAt": "2026-09-21T23:55:32.627Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 491930,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/imagenes-el-silencio-de-los-pajaros/",
+ "files": [
+  {
+   "path": "Screenshot 2024-09-06 182201.png",
+   "name": "Screenshot 2024-09-06 182201.png",
+   "ext": "png",
+   "mimeType": "image/png",
+   "bytes": null,
+   "modified": null,
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADCx6GNLXk_Jdi1lccloO7A/PROYECTOS%20ALUZINA%202025/07%20IMAGENES%20EL%20SILENCIO%20DE%20LOS%20PAJAROS/Screenshot%202024-09-06%20182201.png?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "screenshot-2024-09-06-182201",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "Screenshot 2024-09-15 110840.png",
+   "name": "Screenshot 2024-09-15 110840.png",
+   "ext": "png",
+   "mimeType": "image/png",
+   "bytes": 491975,
+   "modified": null,
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AJZF991Jw0NPg-Hd5dglqwM/PROYECTOS%20ALUZINA%202025/07%20IMAGENES%20EL%20SILENCIO%20DE%20LOS%20PAJAROS/Screenshot%202024-09-15%20110840.png?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "screenshot-2024-09-15-110840",
+   "thumb": "thumbs/screenshot-2024-09-15-110840.jpg",
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [
+    "#382518",
+    "#744b2e",
+    "#916f51",
+    "#b99a7b",
+    "#63371d",
+    "#d3bca2"
+   ],
+   "renderer": "pillow"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 0,
+  "bytes": 38358,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

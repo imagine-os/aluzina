@@ -1,0 +1,43 @@
+{
+ "folderName": "038 ERIK",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIzVHpARPHTnPOYNgDV6euU/PROYECTOS%20ALUZINA%202025/038%20ERIK?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:44:44.876Z",
+ "indexedAt": "2026-09-21T23:55:32.625Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 922747,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/erik/",
+ "files": [
+  {
+   "path": "ERIK  first quote LIVING ROOM ELECTRICAL MATTER  000380.pdf",
+   "name": "ERIK  first quote LIVING ROOM ELECTRICAL MATTER  000380.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 922023,
+   "modified": "9 months ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIzVHpARPHTnPOYNgDV6euU/PROYECTOS%20ALUZINA%202025/038%20ERIK?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "erik-first-quote-living-room-electrical-matter-000380",
+   "thumb": null,
+   "pages": [],
+   "pageCount": 2,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "contenido con datos personales"
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

@@ -1,3 +1,4 @@
+import type { FileType } from '../../domain/archive';
 import type { PipelineStatusId, ServiceCode } from '../../domain/playbook';
 import type { BaseRow, CentsCop, Id, ISODate } from './base';
 
@@ -34,6 +35,14 @@ export interface Project extends BaseRow {
   year: number | null;
   /** The shared folder the project's files live in at the source (Dropbox); null for projects born in the hub. */
   sourceFolderUrl: string | null;
+  /** How many archived files the folder holds (inventory count, ar-19); null for projects born in the hub. Lists read this, never the file rows. */
+  fileCount: number | null;
+  /** Served path of the cover thumbnail (`./archive/<slug>/thumbs/<file>.jpg`) so a card needs no asset row; set with `coverAssetId` (S-13 "Set as cover"). */
+  coverUrl: string | null;
+  /** Key of the project's file chunk (`docs/archive/projects/<slug>/index.json`, loaded by `data/archiveFiles.ts`); null when the project has no archived folder. */
+  archiveSlug: string | null;
+  /** Up to four file types present in the folder, most common first (the S-12 mosaic when there is no cover); `[]` when unknown. */
+  fileTypes: FileType[];
 }
 
 export type TaskStatus = 'todo' | 'doing' | 'blocked' | 'done';

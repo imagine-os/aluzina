@@ -1,0 +1,101 @@
+{
+ "folderName": "YAKHOL",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AGlJxS6a4saNiv8Ocj_iYvk/PROYECTOS%20ALUZINA%202019%202023/YAKHOL?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T23:16:26.957Z",
+ "indexedAt": "2026-09-21T23:55:32.671Z",
+ "depth": 1,
+ "fileCount": 4,
+ "totalBytes": 247443282,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/yakhol/",
+ "files": [
+  {
+   "path": "ALUZINA para yakhol.pdf",
+   "name": "ALUZINA para yakhol.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 849668,
+   "modified": "Feb 20, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADpXJoS2etdDTvjtq_61CJs/PROYECTOS%20ALUZINA%202019%202023/YAKHOL/ALUZINA%20para%20yakhol.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "aluzina-para-yakhol",
+   "thumb": "thumbs/aluzina-para-yakhol.jpg",
+   "pages": [
+    "pages/aluzina-para-yakhol-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "CALIDEZ PARA YAKHOL POSIBILIDAD BENEFICIOS",
+   "palette": [
+    "#050505",
+    "#1e1917",
+    "#42362a",
+    "#89816c",
+    "#bac1b1",
+    "#100f0e"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "Yakol Colombia Interiorismo e iluminacion por Aluzina [Autosaved].pdf",
+   "name": "Yakol Colombia Interiorismo e iluminacion por Aluzina [Autosaved].pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 6973030,
+   "modified": "Mar 14, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMl5wi8UI9m9U5uKyfHBr2A/PROYECTOS%20ALUZINA%202019%202023/YAKHOL/Yakol%20Colombia%20Interiorismo%20e%20iluminacion%20por%20Aluzina%20%5BAutosaved%5D.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "yakol-colombia-interiorismo-e-iluminacion-por-aluzina-autosaved",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "Yakol Colombia Interiorismo e iluminacion por Aluzina [Autosaved].pptm",
+   "name": "Yakol Colombia Interiorismo e iluminacion por Aluzina [Autosaved].pptm",
+   "ext": "pptm",
+   "mimeType": "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+   "bytes": 156636283,
+   "modified": "Feb 20, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMMnC9WU86dqC7wGOYQH6Nk/PROYECTOS%20ALUZINA%202019%202023/YAKHOL/Yakol%20Colombia%20Interiorismo%20e%20iluminacion%20por%20Aluzina%20%5BAutosaved%5D.pptm?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "yakol-colombia-interiorismo-e-iluminacion-por-aluzina-autosaved-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "yakol para colombia.ai",
+   "name": "yakol para colombia.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 82984305,
+   "modified": "Feb 20, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIjA6WHUi5KVyCWCNk08BIk/PROYECTOS%20ALUZINA%202019%202023/YAKHOL/yakol%20para%20colombia.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "yakol-para-colombia",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 1,
+  "bytes": 115827,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

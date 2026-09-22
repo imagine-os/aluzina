@@ -1,0 +1,104 @@
+{
+ "folderName": "TRIPLAB ART SHOW",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ANypjuwN4c9j_npJzDJLbb8/PROYECTOS%20ALUZINA%202022/TRIPLAB%20ART%20SHOW?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:58:26.502Z",
+ "indexedAt": "2026-09-21T23:55:32.576Z",
+ "depth": 1,
+ "fileCount": 3,
+ "totalBytes": 1475604,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/triplab-art-show/",
+ "files": [
+  {
+   "path": "TRIP LAB ART SHOW  .docx",
+   "name": "TRIP LAB ART SHOW  .docx",
+   "ext": "docx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+   "bytes": 292796,
+   "modified": "Oct 12, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIEJFTdoJRCoB_m0_q7uIlo/PROYECTOS%20ALUZINA%202022/TRIPLAB%20ART%20SHOW/TRIP%20LAB%20ART%20SHOW%20%20.docx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "trip-lab-art-show",
+   "thumb": "thumbs/trip-lab-art-show.jpg",
+   "pages": [
+    "pages/trip-lab-art-show-page-01.jpg",
+    "pages/trip-lab-art-show-page-02.jpg"
+   ],
+   "pageCount": 2,
+   "textExcerpt": "EXPOSICION 13 – 10- 2022 LUGAR HASH POBLADO CLIENTE ASPRO ALUZINA diseño de espacios - Ubicación de arte e iluminación, detalles lumínicos y publicidad, manejo de marcas. - Toques de la expo. - Impresión de vendido y reseña de obra. - Invitación 10 compradores potenciales. - Ayuda en logística durante y post evento. Catering: - Licor ron parce - Alimentación nación sushi Personal: - 4 chicas de protocolo - 2 camareros - 1 Bar tender  Identificar responsabilidades y roles clave de cada persona del equipo: 1. TOBY: ARTISTA 2. KIKE: ARTISTA 3. ANGELO: CAPTADOR DE CLIENTES POTENCIALES 4. ALEJANDR",
+   "palette": [
+    "#ffffff",
+    "#e7e8e8",
+    "#fcfcfb",
+    "#e8fbf3",
+    "#feffff",
+    "#fefffc"
+   ],
+   "renderer": "libreoffice"
+  },
+  {
+   "path": "TRIPLAB ART SHOW  .pdf",
+   "name": "TRIPLAB ART SHOW  .pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 498957,
+   "modified": "Oct 12, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOxb5C12HphGZuBZqi5IPbQ/PROYECTOS%20ALUZINA%202022/TRIPLAB%20ART%20SHOW/TRIPLAB%20ART%20SHOW%20%20.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "triplab-art-show",
+   "thumb": "thumbs/triplab-art-show.jpg",
+   "pages": [
+    "pages/triplab-art-show-page-01.jpg",
+    "pages/triplab-art-show-page-02.jpg"
+   ],
+   "pageCount": 2,
+   "textExcerpt": "•",
+   "palette": [
+    "#ffffff",
+    "#fbfbfb",
+    "#e6e8e7",
+    "#e6fbf2",
+    "#fdfffc",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "VENDIDO .pdf",
+   "name": "VENDIDO .pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 683854,
+   "modified": "Oct 11, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AA-VnDvcrrmojs2cYDjkwC4/PROYECTOS%20ALUZINA%202022/TRIPLAB%20ART%20SHOW/VENDIDO%20.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "vendido",
+   "thumb": "thumbs/vendido.jpg",
+   "pages": [
+    "pages/vendido-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "VENDIDO",
+   "palette": [
+    "#000000",
+    "#ffff00",
+    "#1d1d06",
+    "#e1e100",
+    "#969600",
+    "#fefe00"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 3,
+  "pages": 5,
+  "bytes": 226307,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

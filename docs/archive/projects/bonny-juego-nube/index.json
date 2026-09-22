@@ -1,0 +1,41 @@
+{
+ "folderName": "BONNY JUEGO NUBE",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIiFUM1qbhzIrg4HIfNkoZo/PROYECTOS%20ALUZINA%202019%202023/BONNY%20JUEGO%20NUBE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T23:06:20.140Z",
+ "indexedAt": "2026-09-21T23:55:32.651Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 22607299,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/bonny-juego-nube/",
+ "files": [
+  {
+   "path": "bonny juego nubesita  000143.pdf",
+   "name": "bonny juego nubesita  000143.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 22607299,
+   "modified": "Jun 8, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ALEx6yzaiY9l2gLnATGbGlg/PROYECTOS%20ALUZINA%202019%202023/BONNY%20JUEGO%20NUBE/bonny%20juego%20nubesita%20%20000143.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "bonny-juego-nubesita-000143",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

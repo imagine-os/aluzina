@@ -1,0 +1,99 @@
+{
+ "folderName": "ESPACIO LILO CAKES",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOBHp4aWnRS9woxggxrdYvM/PROYECTOS%20ALUZINA%202022/ESPACIO%20LILO%20CAKES?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:53:26.400Z",
+ "indexedAt": "2026-09-21T23:55:32.560Z",
+ "depth": 1,
+ "fileCount": 3,
+ "totalBytes": 70139248,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/espacio-lilo-cakes/",
+ "files": [
+  {
+   "path": "ASESORIA lilo cakes.ai",
+   "name": "ASESORIA lilo cakes.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 42447434,
+   "modified": "Feb 5, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABBXYlBeOei31h3hWMb0K-Q/PROYECTOS%20ALUZINA%202022/ESPACIO%20LILO%20CAKES/ASESORIA%20lilo%20cakes.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "asesoria-lilo-cakes",
+   "thumb": "thumbs/asesoria-lilo-cakes.jpg",
+   "pages": [
+    "pages/asesoria-lilo-cakes-page-01.jpg",
+    "pages/asesoria-lilo-cakes-page-02.jpg",
+    "pages/asesoria-lilo-cakes-page-03.jpg",
+    "pages/asesoria-lilo-cakes-page-04.jpg"
+   ],
+   "pageCount": 12,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I A S E S O R Í A D I S E Ñ O D E E S P A C I O S D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo ¿QUE ES? La asesoría dictada por Alejandra Guerra es un servicio con un enfoque profesional como método para potenciar los ESPACIOS personales, comerciales, efimeros que entretienen, educan, venden, cautivan , probeen descanso y sobre todo generan expe- riencias acordes a una necesidades o sueños. Es una manera de colaborar con todas las industrias conectandolas con las personas a través de un lenguaje no verbal para la creación conciente y obje- tiv",
+   "palette": [
+    "#ffffff",
+    "#c2d5ec",
+    "#b4f8e1",
+    "#d7fcc5",
+    "#e3ff93",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "ASESORIA lilo cakes.pdf",
+   "name": "ASESORIA lilo cakes.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 1051496,
+   "modified": "Feb 5, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABar9jpVsZ-kTh5hiZsEnRs/PROYECTOS%20ALUZINA%202022/ESPACIO%20LILO%20CAKES/ASESORIA%20lilo%20cakes.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "asesoria-lilo-cakes-2",
+   "thumb": "thumbs/asesoria-lilo-cakes-2.jpg",
+   "pages": [
+    "pages/asesoria-lilo-cakes-2-page-01.jpg",
+    "pages/asesoria-lilo-cakes-2-page-02.jpg",
+    "pages/asesoria-lilo-cakes-2-page-03.jpg",
+    "pages/asesoria-lilo-cakes-2-page-04.jpg"
+   ],
+   "pageCount": 12,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I A S E S O R Í A D I S E Ñ O D E E S P A C I O S D E D I S E Ñ O U N I V E R S O Necesidad Espacio Fisico vs Deseo ¿QUE ES? La asesoría dictada por Alejandra Guerra es un servicio con un enfoque profesional como método para potenciar los ESPACIOS personales, comerciales, efimeros que entretienen, educan, venden, cautivan , probeen descanso y sobre todo generan expe- riencias acordes a una necesidades o sueños. Es una manera de colaborar con todas las industrias conectandolas con las personas a través de un lenguaje no verbal para la creación conciente y obje- tiv",
+   "palette": [
+    "#ffffff",
+    "#c2d5ec",
+    "#b4f8e1",
+    "#d7fcc5",
+    "#e3ff93",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "lilo cakes.ai",
+   "name": "lilo cakes.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 26644316,
+   "modified": "Feb 5, 2022",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMy5UF4736q_eCRly-rHYOA/PROYECTOS%20ALUZINA%202022/ESPACIO%20LILO%20CAKES/lilo%20cakes.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "lilo-cakes",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 2,
+  "pages": 8,
+  "bytes": 281918,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

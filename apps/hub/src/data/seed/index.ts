@@ -6,8 +6,11 @@ import { SEED_AT, type SeedCtx, type SeedModule } from './types';
  * Bump when the seed shape changes so existing browsers re-seed (MockProvider stores it).
  * 9: changelog 0021 (step 14 pass 2) — 18 deep indexes of PROYECTOS 2026 and the 12 company documents of
  * "00 INFORMACION RELEVANTE ALUZINA 2023" land as rows; existing stores re-seed to see them.
+ * 10: ar-19 — archived files leave the seed (no `assets` rows or `belongs-to` relations for archive projects; they load per
+ * project from `docs/archive/projects/<slug>/index.json`, `data/archiveFiles.ts`); `projects` gain `fileCount`, `coverUrl`,
+ * `archiveSlug`, `fileTypes`. Tags / stages saved on archived files at version 9 are not carried over (they lived on seeded rows).
  */
-export const SEED_VERSION = 9;
+export const SEED_VERSION = 11;
 
 /** One file per area, globbed: add `src/data/seed/<area>.ts` exporting `seed(ctx)` (+ `order`), never edit this file. */
 const modules = import.meta.glob<SeedModule>(['./*.ts', '!./index.ts', '!./types.ts'], { eager: true });

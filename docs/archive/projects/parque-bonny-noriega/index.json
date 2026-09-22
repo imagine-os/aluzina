@@ -1,0 +1,82 @@
+{
+ "folderName": "037 PARQUE BONNY NORIEGA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABGqI_a_CGtrf3_I8gyr1cs/PROYECTOS%20ALUZINA%202025/037%20PARQUE%20BONNY%20NORIEGA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:44:33.484Z",
+ "indexedAt": "2026-09-21T23:55:32.631Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 84945142,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/parque-bonny-noriega/",
+ "files": [
+  {
+   "path": "PROPUESTA DE PARQUE.ai",
+   "name": "PROPUESTA DE PARQUE.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 42744166,
+   "modified": "9 months ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEy29ATnfb-aScHeI4ZSdKk/PROYECTOS%20ALUZINA%202025/037%20PARQUE%20BONNY%20NORIEGA/PROPUESTA%20DE%20PARQUE.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "propuesta-de-parque",
+   "thumb": "thumbs/propuesta-de-parque.jpg",
+   "pages": [
+    "pages/propuesta-de-parque-page-01.jpg",
+    "pages/propuesta-de-parque-page-02.jpg",
+    "pages/propuesta-de-parque-page-03.jpg",
+    "pages/propuesta-de-parque-page-04.jpg"
+   ],
+   "pageCount": 10,
+   "textExcerpt": "ESPACIO @aluzinaa +573103906773 www.aluzinaa.com Diseño de espacios e iluminacion Convertimos metros cuadrados en marca, emoción y negocio. I N T E R I O R I S M O I L U M I N A C I Ó N Nuestro increible Equipo U N A F A M I L I A D E D I S E Ñ O / A L I A D O S K A R M E N Z A Y E P E S / D I R E C T O R A D E P R O Y E C T O S A L E J A N D R A G U E R R A / C E O P R I N C I P A L / P R O P E T A R I A D A N I E L Y E P E S / D I S E Ñ A D O R J U N I O R A N G E L I C A L O T E R O / D I S E Ñ A D O R A G R Á F I C A A L E J A N D R O G A R C E S / / P R O D U C C I O N ALIADOS Para cada p",
+   "palette": [
+    "#110d0a",
+    "#302b1d",
+    "#484436",
+    "#241f13",
+    "#767066",
+    "#878379"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PROPUESTA DE PARQUE.pdf",
+   "name": "PROPUESTA DE PARQUE.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 42201784,
+   "modified": "9 months ago",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AFt8Ki1BtVon8YnkxZsgYJ4/PROYECTOS%20ALUZINA%202025/037%20PARQUE%20BONNY%20NORIEGA/PROPUESTA%20DE%20PARQUE.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "propuesta-de-parque-2",
+   "thumb": "thumbs/propuesta-de-parque-2.jpg",
+   "pages": [
+    "pages/propuesta-de-parque-2-page-01.jpg",
+    "pages/propuesta-de-parque-2-page-02.jpg",
+    "pages/propuesta-de-parque-2-page-03.jpg",
+    "pages/propuesta-de-parque-2-page-04.jpg"
+   ],
+   "pageCount": 10,
+   "textExcerpt": "ESPACIO @aluzinaa +573103906773 www.aluzinaa.com Diseño de espacios e iluminacion Convertimos metros cuadrados en marca, emoción y negocio. I N T E R I O R I S M O I L U M I N A C I Ó N Nuestro increible Equipo U N A F A M I L I A D E D I S E Ñ O / A L I A D O S K A R M E N Z A Y E P E S / D I R E C T O R A D E P R O Y E C T O S A L E J A N D R A G U E R R A / C E O P R I N C I P A L / P R O P E T A R I A D A N I E L Y E P E S / D I S E Ñ A D O R J U N I O R A N G E L I C A L O T E R O / D I S E Ñ A D O R A G R Á F I C A A L E J A N D R O G A R C E S / / P R O D U C C I O N ALIADOS Para cada p",
+   "palette": [
+    "#110d0a",
+    "#302b1d",
+    "#484436",
+    "#241f13",
+    "#767066",
+    "#878379"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 2,
+  "pages": 8,
+  "bytes": 357386,
+  "maxPages": 6,
+  "pagePx": 1000,
+  "pageQuality": 68,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

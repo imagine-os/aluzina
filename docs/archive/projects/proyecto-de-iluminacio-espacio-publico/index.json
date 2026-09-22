@@ -1,0 +1,41 @@
+{
+ "folderName": "PROYECTO DE ILUMINACIO ESPACIO PUBLICO",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAxnA8VZVKxLAGBxB7PTgjY/PROYECTOS%20ALUZINA%202020/PROYECTO%20DE%20ILUMINACIO%20ESPACIO%20PUBLICO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:58:28.104Z",
+ "indexedAt": "2026-09-21T23:55:32.689Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 19797115,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/proyecto-de-iluminacio-espacio-publico/",
+ "files": [
+  {
+   "path": "ILUMINACION ESPACIO PUBLICO .zip",
+   "name": "ILUMINACION ESPACIO PUBLICO .zip",
+   "ext": "zip",
+   "mimeType": "application/zip",
+   "bytes": 19797115,
+   "modified": "Aug 12, 2019",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMeJAnUcW7a9Bb3NGtgx7TA/PROYECTOS%20ALUZINA%202020/PROYECTO%20DE%20ILUMINACIO%20ESPACIO%20PUBLICO/ILUMINACION%20ESPACIO%20PUBLICO%20.zip?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "iluminacion-espacio-publico",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

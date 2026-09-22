@@ -1,0 +1,82 @@
+{
+ "folderName": "KARLA BARCELONA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHItGK3xIyjqGF89-8U33q4/PROYECTOS%20ALUZINA%202024/KARLA%20BARCELONA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:37:53.144Z",
+ "indexedAt": "2026-09-21T23:55:32.593Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 35190210,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/karla-barcelona/",
+ "files": [
+  {
+   "path": "Servicio de consultoria de marca y redes sociales karla.pdf",
+   "name": "Servicio de consultoria de marca y redes sociales karla.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 2912784,
+   "modified": "Nov 8, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOXxzy1S46qf33HFq8Fxbis/PROYECTOS%20ALUZINA%202024/KARLA%20BARCELONA/Servicio%20de%20consultoria%20de%20marca%20y%20redes%20sociales%20karla.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "servicio-de-consultoria-de-marca-y-redes-sociales-karla",
+   "thumb": "thumbs/servicio-de-consultoria-de-marca-y-redes-sociales-karla.jpg",
+   "pages": [
+    "pages/servicio-de-consultoria-de-marca-y-redes-sociales-karla-page-01.jpg",
+    "pages/servicio-de-consultoria-de-marca-y-redes-sociales-karla-page-02.jpg",
+    "pages/servicio-de-consultoria-de-marca-y-redes-sociales-karla-page-03.jpg",
+    "pages/servicio-de-consultoria-de-marca-y-redes-sociales-karla-page-04.jpg"
+   ],
+   "pageCount": 8,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I D E D I S E Ñ O U N I V E R S O Necesidad Experiencia Marca Redes sociales vs Deseo YOU KARLA YOU KARLA YOU KARLA Servicios de Consultoría de Marca y Redes Sociales Karla es una personalidad multifacética y resolutiva con las siguientes características: Personalidad: Independiente, apasionada por la independencia y la autenticidad. Se identifica con el estilo de vida empresarial. Busca ser una figura transformadora en su campo. Su personalidad se asemeja a un mago, lo que sugiere creatividad y la capacidad de hacer realidad la magia en su vida. Desafíos y Necesi",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff96",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "Servicio de consultoria de marca y redes sociales.ai",
+   "name": "Servicio de consultoria de marca y redes sociales.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 32277141,
+   "modified": "Nov 8, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKnm1_jdNEC0yUsvF1GqFQw/PROYECTOS%20ALUZINA%202024/KARLA%20BARCELONA/Servicio%20de%20consultoria%20de%20marca%20y%20redes%20sociales.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "servicio-de-consultoria-de-marca-y-redes-sociales",
+   "thumb": "thumbs/servicio-de-consultoria-de-marca-y-redes-sociales.jpg",
+   "pages": [
+    "pages/servicio-de-consultoria-de-marca-y-redes-sociales-page-01.jpg",
+    "pages/servicio-de-consultoria-de-marca-y-redes-sociales-page-02.jpg",
+    "pages/servicio-de-consultoria-de-marca-y-redes-sociales-page-03.jpg",
+    "pages/servicio-de-consultoria-de-marca-y-redes-sociales-page-04.jpg"
+   ],
+   "pageCount": 13,
+   "textExcerpt": "D D I S E Ñ O U V E R S O E N I Pasamos el 87% de nuestras vidas en ESPACIOS interiores; la manera como estén diseñados, impacta nuestra vida. La parte hace el todo y el todo la parte El diseño es uno de los instrumentos que realza nuestra humanidad. No se trata de verse bien, se tratade sentirse bien. Bienestar Identidad para cada espacio Haciendo Lo ordinario extraordinario, Lo normal especial. D E D I S E Ñ O U N I V E R S O Necesidad Experiencia Marca Redes sociales vs Deseo",
+   "palette": [
+    "#ffffff",
+    "#c1d1e6",
+    "#b4f5e5",
+    "#deff96",
+    "#d4faca",
+    "#fffffe"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 2,
+  "pages": 8,
+  "bytes": 561299,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

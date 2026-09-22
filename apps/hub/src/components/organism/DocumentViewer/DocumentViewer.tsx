@@ -45,8 +45,8 @@ function clamp(n: number, min: number, max: number): number {
  * 1. `previewUrls` present -> paged image viewer over the served page renders (archived PDFs, D-055): prev / next
  *    buttons (>= 44 px), ArrowLeft / ArrowRight and Home / End on the focused stage, "Page n of N", a thumbnail
  *    strip where each page is a button.
- * 2. PDF with a served `url` -> `<object>` / `<iframe>` chain with a sentence + Download fallback (the approach of
- *    brand's DocFrame, G-08; that page migrates here in a later card).
+ * 2. PDF with a served `url` -> `<object>` / `<iframe>` chain with a sentence + Download fallback (G-08's own
+ *    DocFrame worked this way and was replaced by this organism in ar-17).
  * 3. Image with `url` or `thumbnailUrl` -> one large `<img>`; video with `url` -> `<video controls>`.
  * 4. Anything else -> `FileIcon`, the mime type and the buttons "Open at source" (`sourceUrl`, new tab) and
  *    "Download" (`url`), each rendered only when its link exists (`controls={false}` hides the row in every mode).

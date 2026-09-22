@@ -1,0 +1,76 @@
+{
+ "folderName": "YURA Y NESTOR",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEBlaEkglk8Q3RhH6i0-bY4/PROYECTOS%20ALUZINA%202024/YURA%20Y%20NESTOR?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:44:57.037Z",
+ "indexedAt": "2026-09-21T23:55:32.616Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 545730,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/yura-y-nestor/",
+ "files": [
+  {
+   "path": "PLANO ARQUITECTONICO  1801.pdf",
+   "name": "PLANO ARQUITECTONICO  1801.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 197301,
+   "modified": "Jan 29, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APh18dkPrmzlFQCLQut9dc0/PROYECTOS%20ALUZINA%202024/YURA%20Y%20NESTOR/PLANO%20ARQUITECTONICO%20%201801.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "plano-arquitectonico-1801",
+   "thumb": "thumbs/plano-arquitectonico-1801.jpg",
+   "pages": [
+    "pages/plano-arquitectonico-1801-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "X X X X PROYECTO CONTIENE FIRMA PROPIETARIO VERSION PLANO - FECHA FIRMA RESIDENTE DE OBRA 1801 APTO FIRMA ARQUITECTO (A) DE PERSONALIZACIÓN SOLICITUD DE REFORMAS 1. PV XXXX incluída en la negociación 2. Cambio de estudio por zona de ropas. Se trasladan salidas hidrosanitarias y eléctricas. Se traslada persiana de ventilación y tablero eléctrico 3. Salida de agua en balcón, incluye caja plástica de fondo, tapa y llave vertical 4. Se reubican salidas para calentador d 5.5L 5. Se elimina muro que conforma nicho de calentador en balcón. 6. Mesones en pisola CON EMPATE 7. Espejo completo en pared (",
+   "palette": [
+    "#ffffff",
+    "#d9d8d8",
+    "#e9e9e9",
+    "#f7f7f7",
+    "#adacac",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "PLANO ELECTRICO 1801.pdf",
+   "name": "PLANO ELECTRICO 1801.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 348425,
+   "modified": "Jan 29, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AK8Pe8ou0Ny2L0A9JnRXo24/PROYECTOS%20ALUZINA%202024/YURA%20Y%20NESTOR/PLANO%20ELECTRICO%201801.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "plano-electrico-1801",
+   "thumb": "thumbs/plano-electrico-1801.jpg",
+   "pages": [
+    "pages/plano-electrico-1801-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "X X X X PROYECTO CONTIENE FIRMA PROPIETARIO VERSION PLANO - FECHA FIRMA RESIDENTE DE OBRA APTO FIRMA ARQUITECTO (A) DE PERSONALIZACIÓN ..\\11D\\2. PLANOS\\Coral living.PNG NV LV 4G TI PL CU CE MO HR 7G BUITRON CAL. GAS MURO CAJA ELECT PROY. MUEBLE SUPERIOR ACCESO ALCOBA PPAL W.C PPAL. SALA ALCOBA 2. ROPAS WC VESTIER HALL ALCOBAS COMEDOR COCINA BALCÓN NICHO BANCA BUIT. NICHO BANCA NICHO BUITRON PROY. DESCOLG. WC SOCIAL ESTUDIO h=1.40m h=0.30m h=0.30m h=1.40m h=1.40m S S S S S S3 S3 2S3 abd a ef 2b 2b 2d 2a 2e 2f 2f 2S 3S3 2e b S3 S 2S3 3S3 S RIEL + SPOT SATURNO MINITITANIA DE 1.14M- BLANCA- LUZ NE",
+   "palette": [
+    "#ffffff",
+    "#fffff3",
+    "#f6efeb",
+    "#dbc5ce",
+    "#ffffd8",
+    "#f0ffff"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 2,
+  "pages": 2,
+  "bytes": 208984,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

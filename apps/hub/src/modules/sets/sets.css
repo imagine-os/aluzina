@@ -1,0 +1,352 @@
+/* P-06 example set (ar-14). Tokens only (P-07); rem everywhere so the --scale bands carry it to 4K (P-01). */
+
+.set-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-height: 100dvh;
+  padding: var(--space-5) var(--space-4) var(--space-7);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* ------------------------------------------------------------------ header */
+
+.set-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-5);
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.set-head__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.set-head__kicker {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.set-head__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.set-head__langs {
+  display: inline-flex;
+  gap: var(--space-1);
+}
+
+/* ------------------------------------------------------------------ body */
+
+.set-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+}
+
+.set-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: var(--weight-light);
+  line-height: 1.15;
+}
+
+.set-intro {
+  margin: calc(-1 * var(--space-5)) 0 0;
+  max-width: 46rem;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.set-intro__count {
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--color-text);
+}
+
+.set-loading {
+  max-width: 40rem;
+}
+
+/* ------------------------------------------------------------------ one project */
+
+.set-project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-hairline);
+}
+
+.set-project:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.set-project__cover {
+  min-width: 0;
+}
+
+.set-project__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.set-project__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: var(--weight-medium);
+  line-height: 1.2;
+}
+
+.set-project__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.set-project__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.set-project__summary {
+  margin: 0;
+  max-width: 46rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Mosaic fallback when a project has no cover render (same idea as S-12). */
+.set-mosaic {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  place-items: center;
+  gap: var(--space-2);
+  aspect-ratio: 16 / 9;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+}
+
+.set-mosaic--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* ------------------------------------------------------------------ previews */
+
+.set-previews {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.set-previews__title {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.set-previews__none,
+.set-previews__more {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.set-previews__strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.set-preview {
+  display: block;
+  width: 100%;
+  min-height: var(--target);
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.set-preview:hover {
+  border-color: var(--color-accent);
+}
+
+/* ------------------------------------------------------------------ footer */
+
+.set-foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-hairline);
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.set-foot__studio,
+.set-foot__site,
+.set-foot__note {
+  margin: 0;
+}
+
+.set-foot__site a {
+  color: var(--color-accent-text);
+  min-height: var(--target);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ------------------------------------------------------------------ widths */
+
+@media (min-width: 768px) {
+  .set-page {
+    padding-inline: var(--space-6);
+  }
+
+  .set-project {
+    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-6);
+  }
+
+  .set-title {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .set-project {
+    grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 2560px) {
+  .set-head,
+  .set-main,
+  .set-foot {
+    max-width: 92rem;
+  }
+
+  .set-project__summary,
+  .set-intro {
+    font-size: 1.0625rem;
+  }
+}
+
+/* ------------------------------------------------------------------ print / PDF (S-12 "Export PDF" opens ?print=1) */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .set-page {
+    min-height: auto;
+    gap: var(--space-5);
+    /* The printer owns the page margins; a small inline pad keeps the wordmark off the trim edge. */
+    padding: 0 var(--space-4);
+    background: #fff;
+    color: #000;
+  }
+
+  .set-head,
+  .set-main,
+  .set-foot {
+    max-width: none;
+  }
+
+  .set-head__kicker,
+  .set-project__meta,
+  .set-previews__title,
+  .set-previews__none,
+  .set-previews__more,
+  .set-foot {
+    color: #000;
+  }
+
+  /* One project per page: the client reads a sheet per example, cover left, facts and previews right. */
+  .set-project {
+    break-before: page;
+    break-inside: avoid;
+    padding-top: 0;
+    border-top: 0;
+    grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .set-project__cover {
+    max-width: 16rem;
+  }
+
+  .set-project:first-of-type {
+    break-before: auto;
+  }
+
+  .set-project__name {
+    break-after: avoid;
+  }
+
+  /* Covers and previews as a grid on paper, never a scrolling strip. */
+  .set-previews__strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .set-preview {
+    border-color: #000;
+    background: none;
+  }
+
+  .set-mosaic {
+    border-color: #000;
+    background: none;
+  }
+
+  .set-foot {
+    border-top: 1px solid #000;
+  }
+}

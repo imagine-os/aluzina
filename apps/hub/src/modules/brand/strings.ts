@@ -287,6 +287,11 @@ export const strings: StringTable = {
   'brand.documents.viewerSub': { en: 'Read the document without leaving the portal.', es: 'Lee el documento sin salir del portal.' },
   'brand.documents.tabsLabel': { en: 'Document to view', es: 'Documento por ver' },
   'brand.documents.frameTitle': { en: '{title}, PDF viewer', es: '{title}, visor de PDF' },
+  // ar-17: labels of the shared DocumentViewer on the main viewer Card (the company drawer keeps its own).
+  'brand.documents.viewerPosition': { en: 'Page {index} of {total}', es: 'Página {index} de {total}' },
+  'brand.documents.viewerPrev': { en: 'Previous page', es: 'Página anterior' },
+  'brand.documents.viewerNext': { en: 'Next page', es: 'Página siguiente' },
+  'brand.documents.viewerThumbnails': { en: 'Pages', es: 'Páginas' },
   'brand.documents.noPdf': {
     en: 'Your browser cannot show PDFs here; download it instead.',
     es: 'Tu navegador no puede mostrar PDF aquí; descárgalo.',

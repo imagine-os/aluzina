@@ -1,0 +1,53 @@
+{
+ "folderName": "ZIENTTE",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ABmSYhNJtXuqmZM6WT5LVHw/PROYECTOS%20ALUZINA%202019%202023/ZIENTTE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T23:16:37.983Z",
+ "indexedAt": "2026-09-21T23:55:32.671Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 499364,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/zientte/",
+ "files": [
+  {
+   "path": "ZIENTTE by aluzina.pdf",
+   "name": "ZIENTTE by aluzina.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 499361,
+   "modified": "May 29, 2023",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AAGM1BfWM0O0yuu_W_AvKvE/PROYECTOS%20ALUZINA%202019%202023/ZIENTTE/ZIENTTE%20by%20aluzina.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "zientte-by-aluzina",
+   "thumb": "thumbs/zientte-by-aluzina.jpg",
+   "pages": [
+    "pages/zientte-by-aluzina-page-01.jpg",
+    "pages/zientte-by-aluzina-page-02.jpg",
+    "pages/zientte-by-aluzina-page-03.jpg",
+    "pages/zientte-by-aluzina-page-04.jpg"
+   ],
+   "pageCount": 5,
+   "textExcerpt": "ALIANZA PARA CREAR UN COMPLEMENTO DE LUZ CON IDENTIDAD M ATERIALES NATURALES DISEÑO DE AUTOR CERTIFICACION DE ORIGEN DISEÑO Y PRODUCCION COLOMBIANA VINCULAR SU MARCA A LA LUZ DISEÑADO PARA SU PUBLICO OBJETIVO 1 CIRCULAR DE TECHO COMPOSICION ES DE MULTIPLES EN PAREDES OFICIN A HABITACIONES LADO DE CAMASSOBRENOCHERO S RESTAURANTE ELEMENTO DECORATIVO EN PARED HOTELERI A",
+   "palette": [
+    "#4e4e4e",
+    "#4f4e4e",
+    "#4d4d4d",
+    "#6e6d6c",
+    "#4d4e4e",
+    "#4e4e4d"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 99878,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "folderName": "ACABADOS Y FORMAS",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ACEEb1FzbtsGj1jCW5-JCt4/PROYECTOS%20ALUZINA%202024/ACABADOS%20Y%20FORMAS?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:30:33.257Z",
+ "indexedAt": "2026-09-21T23:55:32.576Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 365363,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/acabados-y-formas/",
+ "files": [
+  {
+   "path": "lampara aluzina LA FERIA DISE;O.png",
+   "name": "lampara aluzina LA FERIA DISE;O.png",
+   "ext": "png",
+   "mimeType": "image/png",
+   "bytes": 365379,
+   "modified": null,
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AMgTxikWPsqm3lzl_Nsc8OU/PROYECTOS%20ALUZINA%202024/ACABADOS%20Y%20FORMAS/lampara%20aluzina%20LA%20FERIA%20DISE%3BO.png?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "lampara-aluzina-la-feria-dise-o",
+   "thumb": "thumbs/lampara-aluzina-la-feria-dise-o.jpg",
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff",
+    "#ae8f6c",
+    "#bd9f7b",
+    "#7e644b",
+    "#e3dacb",
+    "#fffff3"
+   ],
+   "renderer": "pillow"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 0,
+  "bytes": 15147,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

@@ -1,11 +1,12 @@
 import type { ReactNode } from 'react';
 import { BrandMark } from '../../atom/BrandMark/BrandMark';
+import { glyphNode } from '../../atom/Icon/glyphNode';
 import './EmptyState.css';
 
 export interface EmptyStateProps {
   title: string;
   description?: string;
-  /** Text glyph in place of the default outlined monogram. */
+  /** Glyph in place of the default outlined monogram: an icon name, a mapped Unicode glyph or text (D-064 order, `glyphNode`). */
   glyph?: string;
   /** Actions (Buttons). */
   children?: ReactNode;
@@ -16,7 +17,7 @@ export function EmptyState({ title, description, glyph, children }: EmptyStatePr
   return (
     <div className="empty" role="status">
       {glyph ? (
-        <span className="empty__glyph" aria-hidden="true">{glyph}</span>
+        <span className="empty__glyph" aria-hidden="true">{glyphNode(glyph, 'xl')}</span>
       ) : (
         <span className="empty__mark" aria-hidden="true">
           <BrandMark kind="monogram" finish="outline" size="lg" />

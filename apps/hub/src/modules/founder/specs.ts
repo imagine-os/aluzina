@@ -274,4 +274,45 @@ export const teamSpec = defineSpec({
   checkedAt: WIDTHS,
 });
 
-export const founderSpecs = [homeSpec, approvalsSpec, pipelineSpec, leadsSpec, proposalsSpec, productsSpec, clientsSpec, teamSpec];
+export const archiveReviewSpec = defineSpec({
+  code: 'A-09',
+  name: 'Archive review',
+  purpose:
+    'The facts the archive intake inferred (type, status, client, year, duplicates; D-060 and changelog 0019 section H) are confirmed or corrected by the founder here, in the product, one row at a time or in bulk, instead of being answered in a chat.',
+  surface: 'founder',
+  navGroup: 'projects',
+  layout: [
+    'PageHeader (A-09) with a "Open questions" toggle',
+    'Four StatTiles: archived projects, confirmed, pending, flagged (a duplicate or an intake note)',
+    'Collapsible Card "Open questions": the eleven items of changelog 0019 section H as bilingual text, each with a button that filters the table to the rows it is about',
+    'FilterBar: search, year (incl. "no year"), type, status, "pending only" (on by default), "duplicates only"',
+    'Bulk row: select all shown + "Confirm selected"',
+    'DataTable of archived projects: checkbox, project (cover thumb, name, year, file count), inferred type (inline Select), status (inline Select + lifecycle Badge), client (inline Select of clients / unknown / new client…), year (number Input), the intake note (read only), the Dropbox folder link, and the actions Confirm and "Mark as duplicate of…"',
+    'Drawer "New client": name, kind (past / current / prospect), sector',
+  ],
+  dataTables: ['projects', 'clients', 'relations'],
+  roles: ['founder'],
+  logic: [
+    'The table is the `projects` rows tagged `archive`; "pending only" (default) hides the rows already tagged `confirmado`.',
+    'Confirm adds the tag `confirmado` and removes the sentence "Tipo y estado inferidos de la carpeta; confirmar con la fundadora." from the summary, keeping the folder line and every note: confirmation is a tag plus a summary edit, no schema change.',
+    'The note column is every sentence of the summary except the folder line and that inferred sentence, so it survives the confirmation edit.',
+    '"Mark as duplicate of…" adds the tag `duplicado`, appends "Duplicado de <name> (<id>)" to the summary and records a `replaces` relation from the project that is kept to the duplicate (D-026).',
+    'Choosing "new client…" opens the Drawer: it creates a `clients` row, writes `projects.client` and records a `for-client` relation; picking an existing client writes the name and links the same relation once.',
+    'Every write goes through `data.update(\'projects\', id, patch, { basedOn: row.updated_at })` (D-024); the bulk confirmation re-reads each stored row before writing it.',
+    'The eleven open questions are a constant in the page, not a read of the changelog file: the numbered changelog is history, this list shrinks as the founder answers.',
+  ],
+  components: ['PageHeader', 'Button', 'StatTile', 'Card', 'FilterBar', 'SearchField', 'Select', 'Input', 'Checkbox', 'Badge', 'Thumb', 'DataTable', 'Drawer'],
+  actions: [
+    { id: 'founder.confirmProject', label: 'Confirm the inferred facts', intent: 'confirm the inferred facts of the project {project}', permission: 'projects.write', params: { project: 'id' } },
+    { id: 'founder.setProjectType', label: 'Set the project type', intent: 'set the type of {project} to {type}', permission: 'projects.write', params: { project: 'id', type: 'enum:residential|commercial|hospitality|wellness|lighting-product' } },
+    { id: 'founder.setProjectStatus', label: 'Set the project status', intent: 'set the status of {project} to {status}', permission: 'projects.write', params: { project: 'id', status: 'enum:lead-new|lead-qualified|proposal-sent|contracted|briefing|concept|design-development|client-review|approved|procurement|in-construction|punch-list|delivered|closed|follow-up' } },
+    { id: 'founder.setProjectClient', label: 'Set the client', intent: 'set the client of {project} to {client}', permission: 'projects.write', params: { project: 'id', client: 'string' } },
+    { id: 'founder.setProjectYear', label: 'Set the year', intent: 'set the year of {project} to {year}', permission: 'projects.write', params: { project: 'id', year: 'number' } },
+    { id: 'founder.markDuplicate', label: 'Mark as a duplicate', intent: 'mark {project} as a duplicate of {of}', permission: 'projects.write', params: { project: 'id', of: 'id' } },
+    { id: 'founder.createClient', label: 'Create a client', intent: 'create the client {name} of kind {kind}', permission: 'clients.write', params: { name: 'string', kind: 'enum:past|current|prospect' } },
+    { id: 'founder.confirmSelected', label: 'Confirm the selected projects', intent: 'confirm the projects I selected', permission: 'projects.write' },
+  ],
+  checkedAt: WIDTHS,
+});
+
+export const founderSpecs = [homeSpec, approvalsSpec, pipelineSpec, leadsSpec, proposalsSpec, productsSpec, clientsSpec, teamSpec, archiveReviewSpec];

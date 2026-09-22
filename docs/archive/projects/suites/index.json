@@ -1,0 +1,145 @@
+{
+ "folderName": "0_98 4 SUITES",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AP2H--ZK-J_x9RuEQ-bmt0Y/PROYECTOS%20ALUZINA%202021/0_98%204%20SUITES?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:34:37.513Z",
+ "indexedAt": "2026-09-21T23:55:32.739Z",
+ "depth": 1,
+ "fileCount": 5,
+ "totalBytes": 284884889,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/suites/",
+ "files": [
+  {
+   "path": "4 SUITES INSPO.ai",
+   "name": "4 SUITES INSPO.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 151760404,
+   "modified": "Aug 19, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKy0b6SOqnDIdTyp0Unixv0/PROYECTOS%20ALUZINA%202021/0_98%204%20SUITES/4%20SUITES%20INSPO.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "4-suites-inspo",
+   "thumb": "thumbs/4-suites-inspo.jpg",
+   "pages": [
+    "pages/4-suites-inspo-page-01.jpg",
+    "pages/4-suites-inspo-page-02.jpg"
+   ],
+   "pageCount": 2,
+   "textExcerpt": "4 Hospedaje Autoctono Chic #Colombiaestademoda",
+   "palette": [
+    "#402932",
+    "#dddbd9",
+    "#ffffff",
+    "#655a53",
+    "#a3968d",
+    "#f7fafb"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "4 SUITES INSPO.pdf",
+   "name": "4 SUITES INSPO.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 726665,
+   "modified": "Aug 19, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AKFwk8aSVSUGT_r4bb1i2do/PROYECTOS%20ALUZINA%202021/0_98%204%20SUITES/4%20SUITES%20INSPO.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "4-suites-inspo-2",
+   "thumb": "thumbs/4-suites-inspo-2.jpg",
+   "pages": [
+    "pages/4-suites-inspo-2-page-01.jpg",
+    "pages/4-suites-inspo-2-page-02.jpg"
+   ],
+   "pageCount": 2,
+   "textExcerpt": "4 Hospedaje Autoctono Chic #Colombiaestademoda",
+   "palette": [
+    "#2c181e",
+    "#ffffff",
+    "#dedad3",
+    "#55443c",
+    "#9b897b",
+    "#f7fafa"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "4 SUITES.pdf",
+   "name": "4 SUITES.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 318252,
+   "modified": "Aug 19, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOs1Rfv2o8UkhTqQbNwa5Io/PROYECTOS%20ALUZINA%202021/0_98%204%20SUITES/4%20SUITES.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "4-suites",
+   "thumb": "thumbs/4-suites.jpg",
+   "pages": [
+    "pages/4-suites-page-01.jpg"
+   ],
+   "pageCount": 1,
+   "textExcerpt": "4 SUITES GASTOS DESGLOSE VALOR Alquiler Renta de 7 espacios 14.000.000 $ Empleados Domestica 800.000 $ Recepcionista/ Loundry 1.200.000 $ Recepcionista / Loundr 1.200.000 $ Diseño- amoblamiento 7 sweets x 5 millones c/u 35.000.000 $ TOTAL INICIAL 52.200.000 $ GASTOS MENSUALES 17.200.000 $",
+   "palette": [
+    "#ffffff",
+    "#d8dbd7",
+    "#a5a6a2",
+    "#b6b8b3",
+    "#c3c0ba",
+    "#f0f4ec"
+   ],
+   "renderer": "pymupdf"
+  },
+  {
+   "path": "4 SUITES.xlsx",
+   "name": "4 SUITES.xlsx",
+   "ext": "xlsx",
+   "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+   "bytes": 11430,
+   "modified": "Aug 19, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AOervwdMVV9_9qlJf-iGpNA/PROYECTOS%20ALUZINA%202021/0_98%204%20SUITES/4%20SUITES.xlsx?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "4-suites-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null
+  },
+  {
+   "path": "airbnb design.ai",
+   "name": "airbnb design.ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 132068147,
+   "modified": "Jul 9, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AIQFgEXkFnM_ickvVmZU_2g/PROYECTOS%20ALUZINA%202021/0_98%204%20SUITES/airbnb%20design.ai?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "airbnb-design",
+   "thumb": "thumbs/airbnb-design.jpg",
+   "pages": [
+    "pages/airbnb-design-page-01.jpg",
+    "pages/airbnb-design-page-02.jpg",
+    "pages/airbnb-design-page-03.jpg",
+    "pages/airbnb-design-page-04.jpg"
+   ],
+   "pageCount": 5,
+   "textExcerpt": "",
+   "palette": [
+    "#ffffff"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 4,
+  "pages": 9,
+  "bytes": 609253,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

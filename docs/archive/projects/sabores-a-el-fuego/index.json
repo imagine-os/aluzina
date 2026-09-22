@@ -1,0 +1,62 @@
+{
+ "folderName": "SABORES A EL FUEGO",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AItIRkvWioF5b_DSZr9SSk0/PROYECTOS%20ALUZINA%202022/SABORES%20A%20EL%20FUEGO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:57:32.241Z",
+ "indexedAt": "2026-09-21T23:55:32.572Z",
+ "depth": 1,
+ "fileCount": 2,
+ "totalBytes": 31402240,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/sabores-a-el-fuego/",
+ "files": [
+  {
+   "path": "Cotización (redactado).ai",
+   "name": "Cotización (redactado).ai",
+   "ext": "ai",
+   "mimeType": "application/postscript",
+   "bytes": 30870077,
+   "modified": "Dec 16, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AItIRkvWioF5b_DSZr9SSk0/PROYECTOS%20ALUZINA%202022/SABORES%20A%20EL%20FUEGO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-sabores-al-fuego-pdf",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  },
+  {
+   "path": "Cotización (redactado).pdf",
+   "name": "Cotización (redactado).pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 532163,
+   "modified": "Dec 16, 2021",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AItIRkvWioF5b_DSZr9SSk0/PROYECTOS%20ALUZINA%202022/SABORES%20A%20EL%20FUEGO?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "cotizacion-sabores-al-fuego-pdf-2",
+   "thumb": null,
+   "pages": [],
+   "pageCount": null,
+   "textExcerpt": "",
+   "palette": [],
+   "renderer": null,
+   "redacted": true,
+   "redactedReason": "nombre de archivo"
+  }
+ ],
+ "served": {
+  "thumbs": 0,
+  "pages": 0,
+  "bytes": 0,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

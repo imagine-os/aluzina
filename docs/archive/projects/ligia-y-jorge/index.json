@@ -1,0 +1,53 @@
+{
+ "folderName": "LIGIA Y JORGE",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AHuNex2xuDJNuL-OP1gG-7s/PROYECTOS%20ALUZINA%202024/LIGIA%20Y%20JORGE?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:39:06.503Z",
+ "indexedAt": "2026-09-21T23:55:32.595Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 193934131,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/ligia-y-jorge/",
+ "files": [
+  {
+   "path": "CASA CAMPRESTRE JORGE Y LIGIA LA CEJA.pdf",
+   "name": "CASA CAMPRESTRE JORGE Y LIGIA LA CEJA.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 193934131,
+   "modified": "Aug 27, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADyOKZbTU9ogPSYu59_K9kY/PROYECTOS%20ALUZINA%202024/LIGIA%20Y%20JORGE/CASA%20CAMPRESTRE%20JORGE%20Y%20LIGIA%20LA%20CEJA.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": false,
+   "slug": "casa-camprestre-jorge-y-ligia-la-ceja",
+   "thumb": "thumbs/casa-camprestre-jorge-y-ligia-la-ceja.jpg",
+   "pages": [
+    "pages/casa-camprestre-jorge-y-ligia-la-ceja-page-01.jpg",
+    "pages/casa-camprestre-jorge-y-ligia-la-ceja-page-02.jpg",
+    "pages/casa-camprestre-jorge-y-ligia-la-ceja-page-03.jpg",
+    "pages/casa-camprestre-jorge-y-ligia-la-ceja-page-04.jpg"
+   ],
+   "pageCount": 10,
+   "textExcerpt": "ESPACIO + LUZ A L E J A N D R A G U E R R A / C E O P R I N C I P A L / P R O P E T A R I A I N T E R I O R I S M O I L U M I N A C I Ó N Por Que Trabajar Con Aluzina E S T U D I O C R E A T I V O D E D I S E Ñ O SERVICIOS COMPLETOS DE DISEÑO • Enfoque a su medida. • Diseños de alta calidad. • Respuesta rapida y comunicación clara. • Nuestro cliente siempre cuenta con un gestor de proyectos dedicado a su proyecto. ATMOSFERA • Un valor agregado con el manejo de la luz como hilo conductor que conecta los proyectos como experiencias de luz • Enfasis en iluminación emocional sin dejar atras la ilu",
+   "palette": [
+    "#120d0a",
+    "#312c1f",
+    "#484438",
+    "#262116",
+    "#827e73",
+    "#756f65"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 229184,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

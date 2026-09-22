@@ -1,0 +1,53 @@
+{
+ "folderName": "UPPERTRIP",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/APHRdZ0GYHWVOVF5N1SUSZY/PROYECTOS%20ALUZINA%202024/UPPERTRIP?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:43:54.185Z",
+ "indexedAt": "2026-09-21T23:55:32.614Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 27346862,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/uppertrip/",
+ "files": [
+  {
+   "path": "UPGRATE _UPPERTRIP _ ALUZINA.pdf",
+   "name": "UPGRATE _UPPERTRIP _ ALUZINA.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 27342461,
+   "modified": "Aug 11, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AI4xlmN7ujGsJ-LzhGyn60g/PROYECTOS%20ALUZINA%202024/UPPERTRIP/UPGRATE%20_UPPERTRIP%20_%20ALUZINA.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "upgrate-uppertrip-aluzina",
+   "thumb": "thumbs/upgrate-uppertrip-aluzina.jpg",
+   "pages": [
+    "pages/upgrate-uppertrip-aluzina-page-01.jpg",
+    "pages/upgrate-uppertrip-aluzina-page-02.jpg",
+    "pages/upgrate-uppertrip-aluzina-page-03.jpg",
+    "pages/upgrate-uppertrip-aluzina-page-04.jpg"
+   ],
+   "pageCount": 6,
+   "textExcerpt": "ESPACIO ACTUAL AREA PARA RESOLVER UPPERTRIP UPGRATE AREA PARA RESOLVER EL ESPACIO SOBRE EL CUAL SE ADJUNTAN 3 FOTOGRAFÍAS SUGIERE HACER UN REDISEÑO DE ESTA ÁREA PARA SUMAR Y DAR MÁS PROTAGONISMO A LA PARTE DE LA ROPA Y, LUEGO DE 3 AÑOS, DARLE UN TOQUE DE RENOVACIÓN. CAMBIO DE LAS DISPOSICION DE LAS GORRAS GORRAS EN CAJONES DE CRISTAL, COLORES A TRAVÉS DE ACRÍLICO Y LAS SUPERFICIES, URNAS, COLGADOS. POSIBILIDAD DE ILUMINAR TODOS O ALGUNOS MARCOS DE LAS VITRINAS. ILUMINACION EN VITRINA CINTA LED INSTALADA CON GUAYA DESCOLGAD A PAR A DA R LU Z A LA PARTE SUPERIOR ILUMINACION EN GORRAS CINTA LED C",
+   "palette": [
+    "#ffffff",
+    "#c0bdb7",
+    "#a67873",
+    "#080907",
+    "#404338",
+    "#757572"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 288205,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}

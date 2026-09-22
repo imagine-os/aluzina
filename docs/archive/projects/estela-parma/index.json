@@ -1,0 +1,53 @@
+{
+ "folderName": "ESTELA PARMA",
+ "sourceUrl": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/AEvcglvRFP78YxdNPWiXoPE/PROYECTOS%20ALUZINA%202024/ESTELA%20PARMA?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+ "crawledAt": "2026-09-21T22:37:07.576Z",
+ "indexedAt": "2026-09-21T23:55:32.592Z",
+ "depth": 1,
+ "fileCount": 1,
+ "totalBytes": 29685187,
+ "maxPages": 8,
+ "redaction": "D-059: see scripts/archive/build-index.mjs header",
+ "servedFrom": "apps/hub/public/archive/estela-parma/",
+ "files": [
+  {
+   "path": "Estela 2320 parma diseno interior.pdf",
+   "name": "Estela 2320 parma diseno interior.pdf",
+   "ext": "pdf",
+   "mimeType": "application/pdf",
+   "bytes": 29683138,
+   "modified": "Jul 30, 2024",
+   "sourceHref": "https://www.dropbox.com/scl/fo/fufb968sqwatycuu0oj5q/ADE1pQ1UeISWJ7nHOznKQ6Q/PROYECTOS%20ALUZINA%202024/ESTELA%20PARMA/Estela%202320%20parma%20diseno%20interior.pdf?rlkey=3abou8zagwodzjc2u2pi4buv8&dl=0",
+   "downloaded": true,
+   "slug": "estela-2320-parma-diseno-interior",
+   "thumb": "thumbs/estela-2320-parma-diseno-interior.jpg",
+   "pages": [
+    "pages/estela-2320-parma-diseno-interior-page-01.jpg",
+    "pages/estela-2320-parma-diseno-interior-page-02.jpg",
+    "pages/estela-2320-parma-diseno-interior-page-03.jpg",
+    "pages/estela-2320-parma-diseno-interior-page-04.jpg"
+   ],
+   "pageCount": 6,
+   "textExcerpt": "ESPACIO ACTUAL TROPICAL ELEGANCE INSPIRING OPCIONES DE TAPETE DELGADO 60 CM X 1.50 OPCION A OPCIONB VALORES > 850.000 CADA UNA X 3 SON 2.550.000 280.000 ELEMENTO DECORATIVO SOBRE MESA 120.000 CADA UNO PLENITUD 70.000 CADA UNO 1.000.000 CADA UNO 2.000.000 ESPEJOS Y NEGRO ARMONIA",
+   "palette": [
+    "#ffffff",
+    "#312f27",
+    "#8d8a7f",
+    "#bbb9ad",
+    "#e8eae6",
+    "#feffff"
+   ],
+   "renderer": "pymupdf"
+  }
+ ],
+ "served": {
+  "thumbs": 1,
+  "pages": 4,
+  "bytes": 235903,
+  "maxPages": 6,
+  "pagePx": 1200,
+  "pageQuality": 72,
+  "thumbPx": 640,
+  "thumbQuality": 80
+ }
+}
