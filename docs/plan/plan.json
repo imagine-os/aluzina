@@ -1,6 +1,6 @@
 {
   "version": "0.15.0",
-  "updatedAt": "2026-09-21",
+  "updatedAt": "2026-09-22",
   "source": "docs/build-plan.md (steps 0-14, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
     "done",
@@ -1738,6 +1738,36 @@
       "dependsOn": [
         "kb-asana-importer"
       ]
+    },
+    {
+      "id": "kb-market-positioning",
+      "title": "Positioning: niche, unique value offer, non-clients and pricing stance (founder session -> knowledge/positioning.md, reflected in P-01 / P-02); gap named by the Minntoring deck, knowledge/market/minntoring-webinar-2025.md 4a",
+      "step": "13",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "P-01",
+        "P-02"
+      ],
+      "dependsOn": [
+        "kb-await-brand-era"
+      ],
+      "changelog": "0024"
+    },
+    {
+      "id": "kb-market-acquisition",
+      "title": "Client-acquisition strategy beyond word of mouth for the marketing role, measured by 'How they found ALUZINA' and leadToContractRate on A-08; gap named by the Minntoring deck, knowledge/market/minntoring-webinar-2025.md 4b",
+      "step": "13",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "A-08",
+        "P-03"
+      ],
+      "dependsOn": [
+        "kb-marketing-portal"
+      ],
+      "changelog": "0024"
     }
   ]
 }
