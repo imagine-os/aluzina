@@ -9,8 +9,10 @@ import { SEED_AT, type SeedCtx, type SeedModule } from './types';
  * 10: ar-19 — archived files leave the seed (no `assets` rows or `belongs-to` relations for archive projects; they load per
  * project from `docs/archive/projects/<slug>/index.json`, `data/archiveFiles.ts`); `projects` gain `fileCount`, `coverUrl`,
  * `archiveSlug`, `fileTypes`. Tags / stages saved on archived files at version 9 are not carried over (they lived on seeded rows).
+ * 12: Dropbox collections pass (G-09, changelog 0023) — one `assets` row per set of the 2021 digital campaign and the studio asset
+ * folder (`seed/collections.ts`), their set -> project `depicts` relations and the two Brand Memory notes.
  */
-export const SEED_VERSION = 11;
+export const SEED_VERSION = 12;
 
 /** One file per area, globbed: add `src/data/seed/<area>.ts` exporting `seed(ctx)` (+ `order`), never edit this file. */
 const modules = import.meta.glob<SeedModule>(['./*.ts', '!./index.ts', '!./types.ts'], { eager: true });
