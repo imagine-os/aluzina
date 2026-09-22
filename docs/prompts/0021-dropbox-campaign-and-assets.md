@@ -34,4 +34,14 @@ Plan reply posted to the Slack thread at 22:36 UTC (verbatim):
 
 ### Final reply
 
-_(synced from Slack after posting)_
+Posted to the Slack thread at 00:22 UTC on 2026-09-22 (ts 1790036144.512179), verbatim:
+
+> Done and pushed to main (changelog 0023). Both folders are in the Hub as [Campaigns & assets](https://imagine-os.github.io/aluzina/#/brand/collections?as=brand) in the Brand portal; the Pages deploy is running now, so give it a few minutes.
+>
+> - 78 sets with previews; originals stay in Dropbox. Accounting, contracts, the partner agreement, staff files and the customer database are one redacted line each; templates, briefs and priced presentations are indexed with no preview.
+> - Photo sets link to 20 existing project records (Shabela, Noam, El Encanto, New York, Miami, Club Unión, Coassist, Sodime, Brewhouse, Bonny and others). Terrazino Cumbres, Mantix, Semana de la Juventud and LU7 have no project row yet, so they're marked attribution unknown.
+> - Everything in the 2021 campaign uses the gold Didone wordmark, and "Interiorismo · Iluminación" already appears on April 2021 print pieces. The brochure's light sans wordmark appears in neither folder. I've left which era is current as an open question.
+>
+> Two questions for you or Aleja: some 2021 ads show a sale price and the studio WhatsApp number in the artwork, and I kept them since they were published; say if you'd rather hide them. And are the DIN Round Pro fonts licensed? They're indexed but not shipped.
+>
+> Fable 5.1 did the classification, pipeline and integration, Opus 5 the page, Sonnet 5 the QA matrix and screenshots.
