@@ -103,6 +103,7 @@ export const ROUTE_ICONS: Record<string, IconName> = {
   // Graphic design and communication (G)
   'G-01': 'brand', 'G-02': 'competitions', 'G-03': 'presentations', 'G-04': 'brand',
   'G-05': 'images', 'G-06': 'revisions', 'G-07': 'assets', 'G-08': 'documents',
+  'G-09': 'catalog', // the Dropbox collections read as a grid of sets, not as another 'images' page
 
   // Administration and operations (O)
   'O-01': 'execution', 'O-02': 'schedule', 'O-03': 'work', 'O-04': 'suppliers',

@@ -276,3 +276,41 @@ export const documentsSpec = defineSpec({
     'The "Company documents" section (ar-15) reads assets rows tagged `empresa` (seed/company.ts, order 75) instead of a fixed doc list, so it grows with the next Dropbox intake without a page change.',
   ],
 });
+
+export const collectionsSpec = defineSpec({
+  code: 'G-09',
+  name: 'Campaigns & assets',
+  purpose:
+    'The two shared Dropbox folders Angélica works out of — the 2021 campaign and the studio asset library — browsable set by set inside the hub: what is in each set, which of it can be previewed, which of it is internal or redacted, and which project it belongs to.',
+  surface: 'brand',
+  navGroup: 'brand',
+  layout: [
+    'PageHeader (breadcrumb Brand portal / Campaigns & assets)',
+    'Collection switcher: Tabs (Campaign 2021 | Studio assets) with the caption, who shared the folder, when it was shared and indexed, and a Button that opens the Dropbox folder',
+    'StatTile row: sets, files, files with a preview, internal files (hint: indexed size, redacted count)',
+    'Set grid (one Card per set): cover Thumb, title, kind and visibility Badges, file count, note, and one chip per projectIds entry linking to the S-13 project portal',
+    'Set view (?set=<id>): back link, set header with Badges and a Download set Placeholder, the contact sheet when the index has one, a text filter, a Thumb grid of the files that have a preview, and a row list of the files that do not (FileIcon, name, size, internal / redacted / RAW / duplicate Badges)',
+    'Drawer: one file — DocumentViewer over the served page renders, or the served thumbnail, plus its size, dimensions, tags, note and a link to Dropbox',
+  ],
+  dataTables: ['projects'],
+  roles: ['brand', 'founder'],
+  logic: [
+    'The index is NOT seeded: `loadCollection(slug)` reads docs/archive/collections/<slug>/index.json through a lazy import.meta.glob, so the per-file rows are their own chunk and never enter the main bundle or the localStorage store.',
+    'The collection and the open set live in the URL (?c=&set=), so both are linkable and the browser back button walks out of a set; the filter and the open file are component state.',
+    'A file is previewable only when it is served: not redacted, not internal, and carrying a thumb or page renders. Internal and redacted rows render as text rows with a tooltip saying why, never as a broken image (D-059).',
+    'Badges are computed from the row, not from a status column: internal from visibility, redacted from `redacted`, RAW from the extension or the `raw` tag, duplicate from `duplicateOf`.',
+    'Served paths are relative (`./archive/<slug>/<rel>`, servedUrl) so the app keeps working under the GitHub Pages sub-path.',
+    'Project chips resolve their label from the projects table when the row exists and fall back to the raw id, so a chip is never blank while the archive seed catches up.',
+    'The index may be a stub while the crawl is still running; the page says so in a banner instead of pretending the example rows are real.',
+  ],
+  components: ['PageHeader', 'Tabs', 'StatTile', 'Card', 'Thumb', 'FileIcon', 'Badge', 'Input', 'Button', 'Drawer', 'DocumentViewer', 'EmptyState', 'Placeholder', 'Icon'],
+  actions: [
+    { id: 'brand.openCollection', label: 'Open a collection', intent: 'show the {collection} collection', permission: 'brand.manage', params: { collection: 'enum:campaign-2021|studio-assets' } },
+    { id: 'brand.openSet', label: 'Open a set', intent: 'open the set {set}', permission: 'brand.manage', params: { set: 'id' } },
+    { id: 'brand.filterCollection', label: 'Filter the files', intent: 'filter the files by {query}', permission: 'brand.manage', params: { query: 'string' } },
+    { id: 'brand.openCollectionFile', label: 'Preview a file', intent: 'preview the file {file}', permission: 'brand.manage', params: { file: 'string' } },
+    { id: 'brand.closeCollectionFile', label: 'Close the preview', intent: 'close the file preview', permission: 'brand.manage' },
+    { id: 'brand.downloadCollectionSet', label: 'Download a set', intent: 'download the set {set} as a zip', permission: 'brand.manage', params: { set: 'id' } },
+  ],
+  checkedAt: [360, 390, 768, 1280, 1920, 2560, 3840],
+});

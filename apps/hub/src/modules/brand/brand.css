@@ -241,3 +241,97 @@
   outline: var(--focus-ring) solid var(--color-focus);
   outline-offset: 2px;
 }
+
+/* ---------------------------------------------------------------- campaigns & assets (G-09) */
+
+/* Notice that the index on screen is a stub the crawl will overwrite: a state, not decoration. */
+.brand-col__stub {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.brand-grid--sets {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  margin-top: var(--space-3);
+}
+
+.brand-grid--files {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
+  margin-top: var(--space-3);
+}
+
+/* The whole thumbnail is the control (one tab stop, P-03); the caption carries the file name. */
+.brand-col__tile {
+  display: block;
+  width: 100%;
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+}
+
+.brand-col__tile:focus-visible {
+  outline: var(--focus-ring) solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.brand-col__meta {
+  margin-top: var(--space-3);
+}
+
+.brand-col__note {
+  max-width: 52rem;
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.brand-col__set {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.brand-col__set-title {
+  margin: 0;
+  font-size: 1.25rem;
+  overflow-wrap: anywhere;
+}
+
+/* A contact sheet is read, not cropped: it keeps its own ratio and never widens the page. */
+.brand-col__sheet {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: clamp(18rem, 60vh, 48rem);
+  object-fit: contain;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+}
+
+.brand-col__filter {
+  max-width: 28rem;
+}
+
+@media (min-width: 1920px) {
+  .brand-grid--sets {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  }
+
+  .brand-grid--files {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  }
+
+  .brand-col__sheet {
+    max-height: clamp(24rem, 64vh, 64rem);
+  }
+}
