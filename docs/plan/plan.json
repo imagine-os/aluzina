@@ -1,5 +1,5 @@
 {
-  "version": "0.14.0",
+  "version": "0.15.0",
   "updatedAt": "2026-09-21",
   "source": "docs/build-plan.md (steps 0-14, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -1573,6 +1573,115 @@
       ],
       "dependsOn": [
         "ar-23"
+      ],
+      "owner": "founder"
+    },
+    {
+      "id": "col-pipeline",
+      "title": "Dropbox collections pipeline: scripts/archive/index-collection.py (classification with D-059 rules extended, md5 dedupe, photo caps, contact sheets, 25 MiB budget, R7 self-check), docs/archive/collections/<slug>/{index,sets}.json, 743 served renders (24.68 MiB), seed one assets row per set + depicts relations, SEED_VERSION 12",
+      "step": "14",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "G-09"
+      ],
+      "dependsOn": [
+        "ar-05"
+      ],
+      "changelog": "0023"
+    },
+    {
+      "id": "col-g09",
+      "title": "G-09 Campaigns & assets (/brand/collections): lazy collection index, switcher, stats, set grid with project chips to S-13, set view with contact sheet / filter / preview grid, file Drawer, six brand.* actions, EN + ES",
+      "step": "14",
+      "status": "done",
+      "model": "Opus 5",
+      "codes": [
+        "G-09"
+      ],
+      "dependsOn": [
+        "col-pipeline"
+      ],
+      "changelog": "0023"
+    },
+    {
+      "id": "col-qa",
+      "title": "QA 0006: G-09 at 360 / 390 / 768 / 1280 / 1920 / 2560 / 3840, light + dark, EN + ES against the real indexes and renders; G-09 recaptured; checkedAt",
+      "step": "14",
+      "status": "done",
+      "model": "Sonnet 5",
+      "codes": [
+        "G-09"
+      ],
+      "dependsOn": [
+        "col-g09"
+      ],
+      "changelog": "0023"
+    },
+    {
+      "id": "ar-25",
+      "title": "Split the web-diseno-de-espacios set (551 files, ~30 project subfolders) per project folder in index-collection.py's rules table; re-run; recapture G-09",
+      "step": "14",
+      "status": "next",
+      "model": "Sonnet 5",
+      "codes": [
+        "G-09"
+      ],
+      "dependsOn": [
+        "col-pipeline"
+      ]
+    },
+    {
+      "id": "ar-26",
+      "title": "Re-run both collections with a full ffmpeg and a working LibreOffice: poster frames for the four videos, render of DESIGN PRESENTACION ALUZINA.pptx",
+      "step": "14",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "G-09"
+      ],
+      "dependsOn": [
+        "col-pipeline"
+      ]
+    },
+    {
+      "id": "ar-27",
+      "title": "Perceptual-hash dedupe of Imagenes Reload vs TODOS LOS ESPACIOS in index-collection.py (only 32 files byte-identical; re-exports render twice)",
+      "step": "14",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "G-09"
+      ],
+      "dependsOn": [
+        "col-pipeline"
+      ]
+    },
+    {
+      "id": "ar-28",
+      "title": "S-13 project portal shows the campaign / photo sets that depict the project through the depicts relations of seed/collections.ts, linking to G-09 ?c=<slug>&set=<id>",
+      "step": "14",
+      "status": "next",
+      "model": "Opus 5",
+      "codes": [
+        "S-13",
+        "G-09"
+      ],
+      "dependsOn": [
+        "col-g09"
+      ]
+    },
+    {
+      "id": "ar-29",
+      "title": "Founder session: DIN Round Pro licence; brand-era dating from the 2021 campaign and 2023 artwork (changelog 0023 E); 2021 ads with price / WhatsApp number kept rendered (D-085); attributions with no project row (Terrazino Cumbres, Mantix, Semana de la Juventud, LU7, Polaris, Wabi); empty SERVICIOS ALUZINA folder",
+      "step": "14",
+      "status": "backlog",
+      "model": "Justin / Aleja (founder session)",
+      "codes": [
+        "G-09"
+      ],
+      "dependsOn": [
+        "col-pipeline"
       ],
       "owner": "founder"
     },

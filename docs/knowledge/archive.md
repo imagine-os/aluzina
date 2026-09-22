@@ -577,8 +577,19 @@ Everything marked "inferred" in the table above is corrected in the product, on 
 Until a row is confirmed, treat its type, status, client and year as inferred, whatever this file's
 inventory tables say.
 
+## Collections (non-project folders)
+
+```
+status: current
+since: 2026-09-21
+source: prompt 0021 (Aleja Guerra via Justin Massion, Slack #all-aluzina), changelog 0023, D-083..D-086; docs/archive/collections/README.md
+```
+
+A **collection** is a shared Dropbox folder that is not a project folder: the studio's own campaign and asset material. Two so far, shared on 2026-09-21: `campaign-2021` ("digital campain aluzina 2021", 179 files) and `studio-assets` ("services , lighting , presentatios , projects , icones ,", 1,517 files). Unlike the project archive above, a collection is downloaded as a zip and indexed by `scripts/archive/index-collection.py` (`npm run archive:collection`), is **not seeded file by file** (D-083, the collection twin of D-071: the hub loads `docs/archive/collections/<slug>/index.json` lazily; the seed keeps one `assets` row per set from `sets.json` plus `depicts` relations to the archived projects a set shows), and is browsed on the brand portal at G-09 `/#/brand/collections`, not on S-12 / S-13. The D-059 rules apply with three extensions (D-084: folder-level redacted rows for wholly private folders, template folders indexed by name but never rendered, priced content internal) and a served budget per pass (D-086: 25 MiB combined, 24.68 MiB this pass). Everything about the two folders — rules, the per-set table, what is inferred, the brand-era evidence and the open questions — is `docs/archive/collections/README.md`; the brand facts are in `brand.md` ("Campaign 2021 and studio assets").
+
 ## Change log
 
+- 2026-09-21 (prompt 0021, changelog 0023, Fable 5.1): "Collections (non-project folders)" added for the two Dropbox folders Aleja shared (campaign 2021, studio assets), indexed at `docs/archive/collections/<slug>/` by `index-collection.py` (D-083..D-086), shown on G-09.
 - 2026-09-21 (step 14 pass 3, changelog 0022, Fable 5.1 integration): ar-07 deep indexes + served previews for the 2019-2025 and root folders (164 folders deep-indexed with previews in ar-07 (2025 35, 2024 43, 2022 24, 2021 23, 2020 24, 2019-2023 13, root 2): 5 291 files in 186 lazy chunks, 1 777 thumbnails and 750 page renders served, 92.1 MB in total (62.4 MB new), R7 passed over every chunk and served file name); ar-19 the files leave the seed for lazy chunks (D-071); ar-22 stage phrases of the 2026 folder template (section above); JOE GALLINA INTERIOR gets `year` 2023 inferred from its file dates (170 of 179), marked `yearInferred`; A-09 is the place the founder answers the open questions (ar-08).
 - 2026-09-21 (ar-06 / ar-16, Fable 5.1): deep index + served previews for the 18 folders of PROYECTOS 2026 (575 files, 413 thumbnails, 196 page renders rendered; 23.5 MB served); the 15 "empty" folders re-listed: 12 hold files, 3 stay empty; R2 extended to contratos / cotizaci* / documentación importante / consignaciones / pagos / proveedores, R3 to quotation content, one explicit client-name rename (changelog pending `archive-ar06`).
 - 2026-09-21: created from the pass-0019 crawls (inventory of 187 folders incl. the 74 the first, paginated listing had missed; deep index of JOE GALLINA INTERIOR), redaction D-059, decisions D-055..D-061 (prompt 0017, changelog 0019).
