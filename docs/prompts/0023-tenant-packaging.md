@@ -44,3 +44,17 @@ Passes 2 and 3 are on main, build green, now at v0.17.0: 8b0acf8 and c92a729.
 - A manifest validator runs inside every build, and a new CI workflow runs the build on every push and pull request.
 
 Pass 4 (scripts, sub-project readmes, stale docs) is starting now. Models: Fable 5.1 for the manifest and shared code, Opus 5 for the moves, token split, validator and CI.
+
+---
+_Final reply:_
+Done: aluzina is packaged as one tenant after six passes on main, with the build and CI green on each, now at v0.18.1 (7d928a4). Start at docs/tenant/README.md.
+
+What the host gets:
+- A root tenant.json with a JSON schema declares the modules, sub-projects, data model, content mounts, routing and host requirements.
+- A validator checks it in every build and in CI, and it accepts any tenant's manifest path.
+- Tenant-owned code sits in one folder, and every data row carries a tenant id and version.
+- A cold-start recipe (docs/tenant/between-gigs.md) covers the second tenant.
+
+QA across the seven widths, Spanish and dark mode passed with no issues (docs/qa/0007).
+
+Still waiting on you: between-gigs repo access, the path-vs-subdomain call, and a go-ahead before any binaries leave git. Models used: Fable 5.1, Opus 5, Sonnet 5.

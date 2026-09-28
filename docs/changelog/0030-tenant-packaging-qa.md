@@ -42,3 +42,4 @@ Every task in step 15 (`tp-01..tp-12`) is now **Done**; `tp-13` (host-time: extr
 
 - tp-13: host-time, blocked on the host + credentials, unchanged.
 - between-gigs itself: still blocked on GitHub repo access (Justin), unchanged since changelog 0029.
+Final Slack reply synced into prompt 0023 (this commit).
