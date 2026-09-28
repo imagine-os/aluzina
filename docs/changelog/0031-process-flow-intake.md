@@ -53,3 +53,5 @@ Recorded in the new "Migration readiness" section of `docs/tenant/README.md`: `c
 ## Memory
 
 Team memory `aluzina-process-flow` written (stages, statuses, rules, paths, decisions, how to apply); `aluzina-tenant-packaging-status` gains one sentence pointing at this intake and the migration-readiness section.
+
+Slack reply synced into prompt 0024 (follow-up commit).

@@ -15,4 +15,8 @@ Attachment: `ALUZINA_Design_Production_Installation_Flow_EN.pdf`.
 
 ## Response
 
-_Synced from the Slack reply after posting._
+Your flow document is in the repo and the migration checks are green, pushed as 075f304 at v0.19.0. The facts live in the knowledge base (docs/knowledge/design-production-installation-flow.md); the app now derives your 11 client-facing statuses from its 15 internal ones, and the website automations are planned as build step 16. What to check before the host mounts this tenant is in docs/tenant/README.md.
+
+Should "Site Visit" and "Installation" become real internal statuses? Today they sit inside other stages, so I left them as a question rather than inventing them.
+
+Model: Fable 5.1.
