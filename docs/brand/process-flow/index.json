@@ -1,0 +1,179 @@
+{
+ "label": "process-flow",
+ "source": "docs/source/process/ALUZINA_Design_Production_Installation_Flow_EN.pdf",
+ "source_bytes": 53347,
+ "page_count": 6,
+ "out_dir": "docs/brand/process-flow",
+ "contact_sheet_bytes": 194145,
+ "total_bytes": 962968,
+ "pages": [
+  {
+   "page": 1,
+   "image": "page-01.jpg",
+   "px": [
+    1400,
+    1980
+   ],
+   "pt": [
+    595.3,
+    841.9
+   ],
+   "bytes": 67879,
+   "colours": [
+    "#ffffff",
+    "#bebebe",
+    "#dfdfdf",
+    "#5d5d5d",
+    "#efefef",
+    "#fbfbfb"
+   ],
+   "text": "ALUZINA | 1\nALUZINA\nDESIGN, PRODUCTION\n& INSTALLATION FLOW\nBase system for automating interior spaces, furniture and lighting projects\nPURPOSE\nTransform ALUZINA's real working process into a clear, measurable and automatable digital workflow,\nwithout replacing the studio's creative judgment.\nSPACE + LIGHT + EXPERIENCE",
+   "images_on_page": 0,
+   "fonts": [
+    "AAAAAA+DejaVuSans",
+    "AAAAAA+DejaVuSans-Bold",
+    "Helvetica"
+   ]
+  },
+  {
+   "page": 2,
+   "image": "page-02.jpg",
+   "px": [
+    1400,
+    1980
+   ],
+   "pt": [
+    595.3,
+    841.9
+   ],
+   "bytes": 98896,
+   "colours": [
+    "#ffffff",
+    "#f6f6f2",
+    "#d0d0ce",
+    "#f6f6f1",
+    "#fafaf8",
+    "#fffffb"
+   ],
+   "text": "ALUZINA | 2\nOverview\nThe client experience should remain simple; ALUZINA's internal operating system should be detailed.\nCLIENT-FACING FLOW\n01\nTell us what you want to\ncreate\n02\nLet us get to know your\nspace\n03\nReceive the proposal\n04\nApprove your design\n05\nWe design and develop\n06\nWe bring it to life\n07\nWe install\n08\nWe deliver\nALUZINA INTERNAL FLOW\nContact → Requirement → Site Visit & Survey → Quotation → On-site Validation →\nApproval → Drawings & 3D → Production → Installation → Final Details → Closeout\n& Payment\nSystem principle\nEach stage has an input, an owner, a deliverable, a status and an approval. When a required condition\nis met, the system automatically activates the next stage.",
+   "images_on_page": 0,
+   "fonts": [
+    "AAAAAA+DejaVuSans",
+    "AAAAAA+DejaVuSans-Bold",
+    "Helvetica"
+   ]
+  },
+  {
+   "page": 3,
+   "image": "page-03.jpg",
+   "px": [
+    1400,
+    1980
+   ],
+   "pt": [
+    595.3,
+    841.9
+   ],
+   "bytes": 175366,
+   "colours": [
+    "#ffffff",
+    "#d5d5d5",
+    "#ebebeb",
+    "#acacac",
+    "#f7f7f7",
+    "#fcfcfc"
+   ],
+   "text": "ALUZINA | 3\nDetailed Flow\nBase operational process for space, furniture and lighting projects.\n01\nCLIENT CONTACT / MEETING\nThe project begins through a meeting, chat, phone call or website form. Client information,\nproject type and general need are identified.\nAutomation: Create the client and project record, assign a project code, register the incoming channel\nand notify the team.\n02\nUNDERSTANDING THE REQUIREMENT\nDefine what the client needs, what they want to transform, where the element will be\nlocated, functional needs, aesthetics, approximate budget and timing.\nAutomation: Generate a dynamic brief according to project type and flag missing information.\n03\nSITE VISIT + SURVEY\nTake photographs and measurements, and review existing conditions, access, utilities and\nsite restrictions.\nAutomation: Site-visit checklist, photo upload, measurements and technical conditions saved to the\nproject record.\n04\nQUOTATION\nUsing the initial information, define the value of the service or element and the contracted\nscope.\nAutomation: Generate the quotation, send it, and track version and status: sent / pending / accepted.\n05\nON-SITE VALIDATION\nShow the client the real scale and dimensions of the element or intervention within the\nspace using tape, layout markings or physical references. Validate size, location, proportion\nand functionality.\nAutomation: Record observations, photographs and requested changes; create a validation version.\n06\nAPPROVAL\nThe client approves dimensions, location, scope, value and initial concept. This approval\nunlocks the development phase.\nAutomation: APPROVE PROJECT button, date/user/version stamp, and lock the approved version.",
+   "images_on_page": 0,
+   "fonts": [
+    "AAAAAA+DejaVuSans",
+    "AAAAAA+DejaVuSans-Bold",
+    "Helvetica"
+   ]
+  },
+  {
+   "page": 4,
+   "image": "page-04.jpg",
+   "px": [
+    1400,
+    1980
+   ],
+   "pt": [
+    595.3,
+    841.9
+   ],
+   "bytes": 141771,
+   "colours": [
+    "#ffffff",
+    "#d4d4d4",
+    "#e7e7e7",
+    "#a7a7a7",
+    "#f4f4f4",
+    "#fcfcfc"
+   ],
+   "text": "ALUZINA | 4\nDetailed Flow\nFrom technical development to project closeout.\n07\nDRAWINGS + 3D MODEL\nDesign development: drawings, dimensions, materials, details, 3D model, and visualizations\nor renders when required.\nAutomation: Version control and a second approval: APPROVE DESIGN FOR PRODUCTION.\n08\nPRODUCTION / CONSTRUCTION\nGenerate the production or execution order with suppliers, materials, quantities, dates, costs\nand tracking.\nAutomation: Automatic statuses: To Start → In Production → Quality Control → Completed.\n09\nINSTALLATION\nSchedule the date, team, transportation, tools, site conditions, electrical installation when\napplicable, and assembly.\nAutomation: Installation checklist, calendar, responsible parties and before/after photo record.\n10\nFINAL DETAILS & REVIEW\nComplete adjustments, touch-ups, leveling, cleaning, hardware review, finishes, lighting and\nfunctional testing.\nAutomation: ALUZINA delivery checklist and punch list with owner and closeout date.\n11\nCLOSEOUT + PAYMENT\nRecord the outstanding balance, issue invoice or payment request, close the project, archive\nfinal photographs and request a testimonial.\nAutomation: Balance reminder, administrative closeout and automatic creation of a case\nstudy/portfolio entry.",
+   "images_on_page": 0,
+   "fonts": [
+    "AAAAAA+DejaVuSans",
+    "AAAAAA+DejaVuSans-Bold",
+    "Helvetica"
+   ]
+  },
+  {
+   "page": 5,
+   "image": "page-05.jpg",
+   "px": [
+    1400,
+    1980
+   ],
+   "pt": [
+    595.3,
+    841.9
+   ],
+   "bytes": 122467,
+   "colours": [
+    "#ffffff",
+    "#cfcfcf",
+    "#e6e6e6",
+    "#a7a7a7",
+    "#f5f5f5",
+    "#fbfbfb"
+   ],
+   "text": "ALUZINA | 5\nApplication by Project Line\nThe same core structure adapts to ALUZINA's three areas of creation.\nINTERIOR SPACES\nClient → requirement → site visit → survey → quotation → concept → validation → approval →\ndrawings/3D → construction → installation → final details → payment.\nFURNITURE\nClient → requirement → measurements → quotation → scale validation → approval → drawings/3D →\nfabrication → installation → final details → payment.\nLIGHTING FIXTURES\nClient → requirement → lighting conditions and measurements → quotation → scale test → approval →\ntechnical design/3D → prototype/production → installation → calibration → payment.\nApproval Rules\n• Before production, every proposal must have a client-approved version.\n• Every change after approval creates a new version and may generate additional cost or lead time.\n• Approval must store date, responsible person, version and supporting evidence.\n• Production cannot begin if measurements, drawings, materials or final approval are missing.",
+   "images_on_page": 0,
+   "fonts": [
+    "AAAAAA+DejaVuSans",
+    "AAAAAA+DejaVuSans-Bold",
+    "Helvetica"
+   ]
+  },
+  {
+   "page": 6,
+   "image": "page-06.jpg",
+   "px": [
+    1400,
+    1980
+   ],
+   "pt": [
+    595.3,
+    841.9
+   ],
+   "bytes": 162444,
+   "colours": [
+    "#ffffff",
+    "#fefefd",
+    "#f8f8f7",
+    "#b3b3b3",
+    "#e3e3e3",
+    "#fffffe"
+   ],
+   "text": "ALUZINA | 6\nWebsite Automation\nThe website works as the client portal and as the trigger for ALUZINA's internal operating system.\nWHEN THIS HAPPENS\nTHE SYSTEM DOES THIS\nForm received\nCreate client + project + brief + folder + project code.\nQuotation accepted\nRequest deposit and activate survey/design phase.\nPayment confirmed\nUnlock the next phase and notify the responsible person.\nSite visit completed\nRequest upload of photos, measurements and technical checklist.\nValidation completed\nSend summary to the client and request approval.\nDesign approved\nGenerate the production package and lock the approved version.\nProduction started\nActivate supplier, date and cost tracking.\nProduction completed\nSchedule installation.\nInstallation completed\nActivate final-details and closeout checklist.\nProject closed\nRequest final balance, review, photographs and case study.\nProject Statuses\nNew → Brief → Site Visit → Quotation → Approved → Design → Production →\nInstallation → Final Details → Closeout → Completed\nAUTOMATION GOAL\nEliminate repetitive tasks, centralize information and make the status of every project visible. Creative\njudgment, composition, experience, materiality and lighting remain under ALUZINA's direction.",
+   "images_on_page": 0,
+   "fonts": [
+    "AAAAAA+DejaVuSans",
+    "AAAAAA+DejaVuSans-Bold",
+    "Helvetica"
+   ]
+  }
+ ]
+}

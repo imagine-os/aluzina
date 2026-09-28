@@ -1,7 +1,7 @@
 {
-  "version": "0.18.1",
+  "version": "0.19.0",
   "updatedAt": "2026-09-28",
-  "source": "docs/build-plan.md (steps 0-15, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
+  "source": "docs/build-plan.md (steps 0-16, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
     "done",
     "doing",
@@ -1949,6 +1949,144 @@
         "ar-12"
       ],
       "owner": "Justin (credentials, LFS / object storage go-ahead)"
+    },
+    {
+      "id": "wa-00",
+      "title": "Process-flow intake: file the Design, Production & Installation Flow PDF (docs/source/process, renders docs/brand/process-flow), knowledge entry design-production-installation-flow.md, CLIENT_STATUSES + CLIENT_STATUS_BY_PIPELINE + PROJECT_LINES + G-15..G-17 in playbook.ts, step 16, D-099..D-102, migration-readiness section",
+      "step": "16",
+      "status": "done",
+      "model": "Fable 5.1",
+      "codes": [
+        "M-08",
+        "C-02",
+        "A-03"
+      ],
+      "dependsOn": [],
+      "changelog": "0031"
+    },
+    {
+      "id": "wa-01",
+      "title": "Approval record shape: projects.approval gains approvedAt / approvedBy / version / evidenceAssetIds and the two events APPROVE PROJECT and APPROVE DESIGN FOR PRODUCTION lock the approved version (G-15, G-16); quotes carry version + sent / pending / accepted; SEED_VERSION bump",
+      "step": "16",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "A-02",
+        "C-03"
+      ],
+      "dependsOn": [
+        "wa-00"
+      ]
+    },
+    {
+      "id": "wa-02",
+      "title": "Status state machine: guarded transitions on pipelineStatus (G-06 / G-12 / G-17 production-readiness), the ten trigger -> action rows as typed data (domain/automations.ts with event ids), decide Site Visit / Installation (split a status or derive from siteReports / schedule) and the production order with its four sub-statuses vs purchases",
+      "step": "16",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "A-03"
+      ],
+      "dependsOn": [
+        "wa-01"
+      ]
+    },
+    {
+      "id": "wa-03",
+      "title": "Website automations 1-3: form received -> client + project + brief + folder + project code (public.submitIntake -> founder.convertLead), quotation accepted -> deposit request + activate survey / design (public.reserveDeposit, founder.advanceLead), payment confirmed -> unlock next phase + notify owner (ops.markPaid -> alerts); production-readiness check (G-17) before procurement",
+      "step": "16",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "P-03",
+        "A-08",
+        "O-07"
+      ],
+      "dependsOn": [
+        "wa-02"
+      ]
+    },
+    {
+      "id": "wa-04",
+      "title": "Site and validation automations 4-6: site visit completed -> request photos / measurements / technical checklist (ops.newSiteReport, studio.attachSitePhoto), validation completed -> summary to the client + approval request (revisionItems -> messages), design approved -> production package + locked version (client.approveForExecution, founder.approveProject)",
+      "step": "16",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "O-13",
+        "S-11",
+        "C-03",
+        "A-02"
+      ],
+      "dependsOn": [
+        "wa-02"
+      ]
+    },
+    {
+      "id": "wa-05",
+      "title": "Production and closeout automations 7-10: production started -> supplier / date / cost tracking (ops.newPurchase, ops.advancePurchase), production completed -> schedule installation (schedule + ops.scheduleMeeting), installation completed -> final-details + closeout checklist (del-punch-list), project closed -> balance, review, photos, case study (ops.registerPayment, assets, deliverables case study)",
+      "step": "16",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "O-12",
+        "O-13",
+        "O-07",
+        "S-13"
+      ],
+      "dependsOn": [
+        "wa-02"
+      ]
+    },
+    {
+      "id": "wa-06",
+      "title": "Client-facing status in the UI: C-01 / C-02 StatusPill and 8-step progress read clientStatus() / CLIENT_FLOW_STEPS, A-03 pipeline gains a client-status column, M-08 shows rule.source (fixes the 'Playbook p. 5' subtitle of G-15..G-17); page docs C-01 / C-02 / A-03 / M-08 updated",
+      "step": "16",
+      "status": "backlog",
+      "model": "Opus 5",
+      "codes": [
+        "C-01",
+        "C-02",
+        "A-03",
+        "M-08"
+      ],
+      "dependsOn": [
+        "wa-00"
+      ]
+    },
+    {
+      "id": "wa-07",
+      "title": "Spanish review of the flow wording with the founder (CLIENT_STATUSES, CLIENT_FLOW_STEPS, PROJECT_LINES, G-15..G-17 are the integrator's es, D-004) and QA matrix for wa-03..wa-06 at 360-3840 light / dark EN / ES",
+      "step": "16",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "C-01",
+        "C-02",
+        "A-03",
+        "M-08",
+        "P-03"
+      ],
+      "dependsOn": [
+        "wa-03",
+        "wa-04",
+        "wa-05",
+        "wa-06"
+      ]
+    },
+    {
+      "id": "wa-08",
+      "title": "Project line on projects (D-101): a projectLine field or a derivation from Project.type (lighting-product -> lighting-fixtures, others -> interior-spaces, furniture needs a type), one W-03 template per line from PROJECT_LINES chains",
+      "step": "16",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [
+        "W-03",
+        "C-02"
+      ],
+      "dependsOn": [
+        "wa-01"
+      ]
     }
   ]
 }

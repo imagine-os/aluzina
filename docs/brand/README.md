@@ -225,6 +225,25 @@ Three of them are the same clients the portfolio shows work for; those rows carr
 
 ---
 
+## Process flow (added 2026-09-28)
+
+Not a brand document, but the same visual memory: the founder's **"ALUZINA Design, Production &
+Installation Flow" (EN)**, 6 portrait A4 pages (1400x1980 px renders, 0.96 MB with the contact sheet),
+rendered from `../source/process/ALUZINA_Design_Production_Installation_Flow_EN.pdf` (prompt 0024,
+changelog 0031, model Fable 5.1) into [`process-flow/`](process-flow/) with
+[`process-flow/index.json`](process-flow/index.json) (the renderer's summary: page text, sizes,
+colours). White pages, black DejaVu Sans / Helvetica text, no imagery. The **textual** memory is
+`../knowledge/design-production-installation-flow.md`; its `index.json` is *not* read by any seed.
+
+| Page | What is on it |
+| --- | --- |
+| 01 | Cover: "DESIGN, PRODUCTION & INSTALLATION FLOW", subtitle, PURPOSE, "SPACE + LIGHT + EXPERIENCE". |
+| 02 | Overview: the 8 client-facing steps as numbered tiles, the 11-stage internal flow, the system principle. |
+| 03 | Detailed flow 01-06 (contact, requirement, site visit + survey, quotation, on-site validation, approval), each with an "Automation:" line. |
+| 04 | Detailed flow 07-11 (drawings + 3D, production / construction, installation, final details, closeout + payment). |
+| 05 | Application by project line (interior spaces, furniture, lighting fixtures) and the four approval rules. |
+| 06 | Website automation table (10 trigger -> action rows), the 11 project statuses, the automation goal. |
+
 ## Using this index
 
 - **Citing the brand in a spec or page doc:** point at the page image, e.g.
@@ -243,6 +262,7 @@ Three of them are the same clients the portfolio shows work for; those rows carr
   contact sheets, `index.json` written for both, every page described (prompt 0011, changelog 0013;
   model Opus 5).
 - 2026-09-28 (changelog 0028, tp-08): "Tenant package" section added.
+- 2026-09-28 (changelog 0031, prompt 0024): `process-flow/` (6 pages + contact sheet + `index.json`) rendered from the Design, Production & Installation Flow PDF; "Process flow" section added. Fable 5.1.
 
 ## Tenant package
 

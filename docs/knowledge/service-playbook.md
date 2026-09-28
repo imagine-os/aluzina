@@ -8,6 +8,8 @@ source: ALUZINA Operating System – Service Delivery Playbook v1.0 (Alejandra G
 
 The founder's own operating framework: "a repeatable operating framework that defines how ALUZINA receives, diagnoses, designs, executes and closes every client experience - while protecting creative quality, scope and profitability." This file is the complete structured transcription of the PDF (`../source/playbook/ALUZINA_Operating_System_Services_EN.pdf`, 18 pages; page 6 is blank). It is the **canonical service model** of the product (D-033): the typed data in `apps/hub/src/tenant/domain/playbook.ts` mirrors it item by item, and the pipeline statuses below are the `projects.pipelineStatus` / `leads.status` vocabulary. Wording is the founder's; headings keep her numbering (00, 01, 02, 03, E, 04, 05, 06).
 
+**Companion document (2026-09-28):** the founder's *Design, Production & Installation Flow* (`design-production-installation-flow.md`, prompt 0024) adds the operational chain per stage, three project lines, four approval rules (G-15..G-17) and ten website automations; its 11 client-facing statuses are a derived view over the 15 statuses below (D-099), never a replacement.
+
 Tagline (cover and back page): "ALUZINA - Interior Design & Emotional Lighting"; "Spaces + Light + Experiences that transform".
 
 ## 00 Operating logic
@@ -294,3 +296,4 @@ Folder tree; File naming convention; Client message templates; Brief forms; Visi
 
 - 2026-09-21: created as the full transcription of the Service Delivery Playbook v1.0 (prompt 0009, changelog 0013, D-033); status ids, governance ids and KPI keys assigned for the product; role map onto `team.md` with PM and suppliers as `_unknown_`.
 - 2026-09-28 (changelog 0028, tp-09): path fix — `apps/hub/src/domain/playbook.ts` above renamed to `apps/hub/src/tenant/domain/playbook.ts` by tp-05 (changelog 0027). No rule changed.
+- 2026-09-28 (changelog 0031, prompt 0024): companion-document pointer to `design-production-installation-flow.md`; `GOVERNANCE_RULES` in the product now continues to G-15..G-17 with `source: 'process-flow'` (D-100). No playbook rule changed.

@@ -730,18 +730,148 @@ export function nextPurchaseStatus(id: string): PurchaseStatus | undefined {
 }
 
 // ---------------------------------------------------------------------------------------------
+// Client-facing statuses and project lines (Design, Production & Installation Flow, 2026-09-28)
+// ---------------------------------------------------------------------------------------------
+
+/**
+ * The studio's "ALUZINA Design, Production & Installation Flow" (EN, shared 2026-09-28, prompt 0024;
+ * transcription `docs/knowledge/design-production-installation-flow.md`) names eleven **project statuses**
+ * the client sees and eight client-facing steps. They are a *view* over the fifteen internal statuses
+ * above, never a second stored value (D-099): `projects.pipelineStatus` stays what is written and
+ * `clientStatus()` derives what the client reads. Two flow statuses have no internal status of their own
+ * today (`site-visit` happens inside `lead-qualified` / `briefing`, `installation` inside `in-construction`),
+ * so the map never yields them until that split is decided (step 16, wa-02).
+ */
+export type ClientStatusId =
+  | 'new'
+  | 'brief'
+  | 'site-visit'
+  | 'quotation'
+  | 'approved'
+  | 'design'
+  | 'production'
+  | 'installation'
+  | 'final-details'
+  | 'closeout'
+  | 'completed';
+
+export interface ClientStatus {
+  id: ClientStatusId;
+  /** The flow document's wording ("Site Visit"). */
+  flow: string;
+  label: Text;
+  /** The client-facing step (01..08 on p. 2 of the flow) this status belongs to. */
+  clientStep: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  tone: StatusTone;
+}
+
+/** The flow's project statuses (p. 6), 11 in order. */
+export const CLIENT_STATUSES: readonly ClientStatus[] = [
+  { id: 'new', flow: 'New', label: T('New', 'Nuevo'), clientStep: 1, tone: 'neutral' },
+  { id: 'brief', flow: 'Brief', label: T('Brief', 'Brief'), clientStep: 2, tone: 'info' },
+  { id: 'site-visit', flow: 'Site Visit', label: T('Site visit', 'Visita técnica'), clientStep: 2, tone: 'info' },
+  { id: 'quotation', flow: 'Quotation', label: T('Quotation', 'Cotización'), clientStep: 3, tone: 'accent' },
+  { id: 'approved', flow: 'Approved', label: T('Approved', 'Aprobado'), clientStep: 4, tone: 'success' },
+  { id: 'design', flow: 'Design', label: T('Design', 'Diseño'), clientStep: 5, tone: 'accent' },
+  { id: 'production', flow: 'Production', label: T('Production', 'Producción'), clientStep: 6, tone: 'accent' },
+  { id: 'installation', flow: 'Installation', label: T('Installation', 'Instalación'), clientStep: 7, tone: 'accent' },
+  { id: 'final-details', flow: 'Final Details', label: T('Final details', 'Detalles finales'), clientStep: 8, tone: 'warning' },
+  { id: 'closeout', flow: 'Closeout', label: T('Closeout', 'Cierre'), clientStep: 8, tone: 'neutral' },
+  { id: 'completed', flow: 'Completed', label: T('Completed', 'Completado'), clientStep: 8, tone: 'success' },
+];
+
+/** The eight client-facing steps (p. 2), in order; index + 1 is `ClientStatus.clientStep`. */
+export const CLIENT_FLOW_STEPS: readonly Text[] = L(
+  'Tell us what you want to create;Let us get to know your space;Receive the proposal;Approve your design;We design and develop;We bring it to life;We install;We deliver',
+  'Cuéntanos qué quieres crear;Déjanos conocer tu espacio;Recibe la propuesta;Aprueba tu diseño;Diseñamos y desarrollamos;Lo hacemos realidad;Instalamos;Entregamos',
+);
+
+/**
+ * Internal -> client-facing (D-099). `contracted` reads as the flow's "Approved" (the client said yes to scope,
+ * value and concept); the playbook's `approved` (design approved for execution) already reads as "Production",
+ * because step 06 "We bring it to life" starts at that approval.
+ */
+export const CLIENT_STATUS_BY_PIPELINE: Readonly<Record<PipelineStatusId, ClientStatusId>> = {
+  'lead-new': 'new',
+  'lead-qualified': 'brief',
+  'proposal-sent': 'quotation',
+  contracted: 'approved',
+  briefing: 'design',
+  concept: 'design',
+  'design-development': 'design',
+  'client-review': 'design',
+  approved: 'production',
+  procurement: 'production',
+  'in-construction': 'production',
+  'punch-list': 'final-details',
+  delivered: 'closeout',
+  closed: 'completed',
+  'follow-up': 'completed',
+};
+
+/** What the client reads for a `leads.status` / `projects.pipelineStatus`; undefined for an unknown id. */
+export function clientStatus(pipelineId: string | null | undefined): ClientStatus | undefined {
+  if (!isPipelineStatusId(pipelineId)) return undefined;
+  const id = CLIENT_STATUS_BY_PIPELINE[pipelineId];
+  return CLIENT_STATUSES.find((s) => s.id === id);
+}
+
+/** The flow's three project lines (p. 5): one core chain, adapted. Orthogonal to `ServiceCode` (depth of service) and to `Project.type` (sector), D-101. */
+export type ProjectLineId = 'interior-spaces' | 'furniture' | 'lighting-fixtures';
+
+export interface ProjectLine {
+  id: ProjectLineId;
+  label: Text;
+  /** The stage chain in the flow's own words, in order. */
+  chain: Text[];
+}
+
+export const PROJECT_LINES: readonly ProjectLine[] = [
+  {
+    id: 'interior-spaces',
+    label: T('Interior spaces', 'Espacios interiores'),
+    chain: L(
+      'Client;Requirement;Site visit;Survey;Quotation;Concept;Validation;Approval;Drawings / 3D;Construction;Installation;Final details;Payment',
+      'Cliente;Requerimiento;Visita;Levantamiento;Cotización;Concepto;Validación;Aprobación;Planos / 3D;Construcción;Instalación;Detalles finales;Pago',
+    ),
+  },
+  {
+    id: 'furniture',
+    label: T('Furniture', 'Mobiliario'),
+    chain: L(
+      'Client;Requirement;Measurements;Quotation;Scale validation;Approval;Drawings / 3D;Fabrication;Installation;Final details;Payment',
+      'Cliente;Requerimiento;Medidas;Cotización;Validación de escala;Aprobación;Planos / 3D;Fabricación;Instalación;Detalles finales;Pago',
+    ),
+  },
+  {
+    id: 'lighting-fixtures',
+    label: T('Lighting fixtures', 'Luminarias'),
+    chain: L(
+      'Client;Requirement;Lighting conditions and measurements;Quotation;Scale test;Approval;Technical design / 3D;Prototype / production;Installation;Calibration;Payment',
+      'Cliente;Requerimiento;Condiciones de luz y medidas;Cotización;Prueba de escala;Aprobación;Diseño técnico / 3D;Prototipo / producción;Instalación;Calibración;Pago',
+    ),
+  },
+];
+
+export function projectLine(id: string | null | undefined): ProjectLine | undefined {
+  return PROJECT_LINES.find((l) => l.id === id);
+}
+
+// ---------------------------------------------------------------------------------------------
 // Governance
 // ---------------------------------------------------------------------------------------------
 
 export type GovernanceKind = 'mandatory' | 'commercial' | 'method' | 'gate' | 'principle' | 'change-control';
 
 export interface GovernanceRule {
-  /** `G-01..G-09` are the nine mandatory rules (p. 16); `G-10..G-14` are the other rules the playbook states in its service sections. */
+  /** `G-01..G-09` are the nine mandatory rules (p. 16); `G-10..G-14` are the other rules the playbook states in its service sections; `G-15..G-17` are the approval rules of the Design, Production & Installation Flow (p. 5, D-100). */
   id: `G-${string}`;
   kind: GovernanceKind;
   rule: Text;
-  /** Playbook page. */
+  /** Page in `source` (the playbook when `source` is omitted). */
   page: number;
+  /** Which founder document states the rule; `playbook` when omitted. */
+  source?: 'playbook' | 'process-flow';
   /** Where the product enforces or records it. */
   enforcedBy?: string;
 }
@@ -761,6 +891,12 @@ export const GOVERNANCE_RULES: readonly GovernanceRule[] = [
   { id: 'G-12', kind: 'gate', page: 11, rule: T('Construction may begin only after the client approves the final design for execution. This gate protects quality, schedule, scope and cost.', 'La construcción solo puede comenzar cuando el cliente aprueba el diseño final para ejecución. Esta puerta protege calidad, cronograma, alcance y costo.'), enforcedBy: 'pipelineStatus approved is required before procurement' },
   { id: 'G-13', kind: 'principle', page: 12, rule: T('Design and construction are separate stages. Final execution pricing must be based on an approved design, not assumptions.', 'Diseño y construcción son etapas separadas. El precio final de ejecución debe basarse en un diseño aprobado, no en supuestos.'), enforcedBy: 'service E requires an approved 03 engagement' },
   { id: 'G-14', kind: 'change-control', page: 13, rule: T('Any request after approval becomes a change order with description, reason, additional cost, additional time and client approval; unapproved changes are not executed.', 'Toda solicitud posterior a la aprobación se convierte en una orden de cambio con descripción, motivo, costo adicional, tiempo adicional y aprobación del cliente; los cambios no aprobados no se ejecutan.'), enforcedBy: 'changeOrders.status executed only after approved' },
+  // The four approval rules of the Design, Production & Installation Flow (p. 5, 2026-09-28, D-100). Rule 2 ("every
+  // change after approval creates a new version and may generate additional cost or lead time") is G-14 already;
+  // the other three are new or make G-03 / G-06 explicit.
+  { id: 'G-15', kind: 'gate', source: 'process-flow', page: 5, rule: T('Before production, every proposal must have a client-approved version.', 'Antes de producir, toda propuesta debe tener una versión aprobada por el cliente.'), enforcedBy: 'projects.approval client-approved on a locked version before procurement (extends G-06 / G-12 with versioning; step 16 wa-01)' },
+  { id: 'G-16', kind: 'mandatory', source: 'process-flow', page: 5, rule: T('Approval must store date, responsible person, version and supporting evidence.', 'La aprobación debe guardar fecha, responsable, versión y evidencia de soporte.'), enforcedBy: 'the APPROVE PROJECT / APPROVE DESIGN FOR PRODUCTION stamps (date, user, version, evidence), fields planned in step 16 wa-01; makes G-03 explicit' },
+  { id: 'G-17', kind: 'gate', source: 'process-flow', page: 5, rule: T('Production cannot begin if measurements, drawings, materials or final approval are missing.', 'La producción no puede comenzar si faltan medidas, planos, materiales o la aprobación final.'), enforcedBy: 'the production-readiness check before procurement / in-construction (step 16 wa-03); makes G-06 explicit' },
 ];
 
 export const FINAL_PRINCIPLE: Text = T(

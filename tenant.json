@@ -3,7 +3,7 @@
   "id": "aluzina",
   "name": { "en": "Aluzina", "es": "Aluzina" },
   "repo": "https://github.com/imagine-os/aluzina",
-  "version": "0.18.1",
+  "version": "0.19.0",
   "generatedFrom": "8b0acf8",
   "spec": "docs/tenant/manifest.md",
   "identity": {
@@ -123,7 +123,7 @@
     { "id": "business-os-assets", "path": "apps/business-os/assets", "sizeMb": 136, "servedAt": "./business-os/assets/", "objectStorage": true, "regenerate": null, "note": "6 mp4 (43 MB) + world/*.png (93 MB, webp conversion is a kanban card)" },
     { "id": "screenshots", "path": "docs/screenshots", "sizeMb": 69, "servedAt": null, "objectStorage": true, "regenerate": "npm run screenshots", "note": "357 JPEGs over 90 codes; QA evidence, not served" },
     { "id": "source-material", "path": "docs/source", "sizeMb": 18, "servedAt": null, "objectStorage": false, "regenerate": null, "note": "playbook, brand kit, site captures, Asana CSVs; data not instructions; stays in git" },
-    { "id": "brand-renders", "path": "docs/brand", "sizeMb": 9, "servedAt": null, "objectStorage": false, "regenerate": "python3 docs/brand/tools/render-pdf-pages.py", "note": "visual memory of the brand PDFs; seeds read its index.json through @docs" }
+    { "id": "brand-renders", "path": "docs/brand", "sizeMb": 10, "servedAt": null, "objectStorage": false, "regenerate": "python3 docs/brand/tools/render-pdf-pages.py", "note": "visual memory of the brand PDFs (+ process-flow renders since 0031); seeds read brochure / portfolio index.json through @docs" }
   ],
   "namespace": {
     "config": "apps/hub/src/tenant/config.ts",
@@ -162,7 +162,7 @@
   },
   "docs": {
     "root": "docs/README.md",
-    "counters": { "prompts": 23, "changelog": 30, "decisions": 98, "qa": 7 },
+    "counters": { "prompts": 24, "changelog": 31, "decisions": 102, "qa": 7 },
     "pendingDir": "docs/changelog/_pending",
     "plan": "docs/plan/plan.json",
     "kanban": "docs/kanban.md",
