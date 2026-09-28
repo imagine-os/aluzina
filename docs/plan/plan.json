@@ -1,5 +1,5 @@
 {
-  "version": "0.18.0",
+  "version": "0.18.1",
   "updatedAt": "2026-09-28",
   "source": "docs/build-plan.md (steps 0-15, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -1902,12 +1902,14 @@
       "id": "tp-11",
       "title": "QA pass for step 15: build + tenant:validate green, 7-width screenshots of HUB-01 / D-05 / D-09 unchanged, EN / ES spot check, plan.json = kanban = build-plan, QA matrix 0007",
       "step": "15",
-      "status": "next",
+      "status": "done",
       "model": "Sonnet 5",
       "codes": [
         "HUB-01",
         "D-05",
-        "D-09"
+        "D-09",
+        "D-10",
+        "S-01"
       ],
       "dependsOn": [
         "tp-03",
@@ -1918,7 +1920,8 @@
         "tp-08",
         "tp-09",
         "tp-10"
-      ]
+      ],
+      "changelog": "0030"
     },
     {
       "id": "tp-12",
