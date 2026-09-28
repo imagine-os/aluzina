@@ -18,3 +18,7 @@ Columns (Asana standard): Task ID, Created At, Completed At, Last Modified, Name
 Row counts above are logical CSV data rows (one per unique, 16-digit `Task ID`), verified with Python's `csv` module — a raw line count is not the same number for any of these files, because several `Notes` cells hold multi-paragraph text with embedded line breaks.
 
 De-identification: the `Assignee Email` column is blanked and the Lovable project URL's `magic_link` token is replaced with `REDACTED`. Everything else is verbatim, including the people named in notes and task names.
+
+## Tenant package
+
+This folder is the readme for the `asana-import` sub-project in `tenant.json` `subProjects[]` (kind `pipeline`, status `done`; paths `scripts/import-asana.mjs`, `docs/source/asana`, `apps/hub/src/tenant/seed/asana`; codes K-06, W-03). Build: `npm run import:asana`; the host needs the tenant store once imports write rows instead of seeds (HR-02). Full entry: `docs/tenant/sub-projects.md`.

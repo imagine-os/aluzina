@@ -1,0 +1,8 @@
+# Python deps for scripts/archive/render-previews.py and index-collection.py (tp-08).
+# Not installed at build time (the root build is Node-only); install with
+# `pip install -r scripts/archive/requirements.txt` before running either script.
+pymupdf
+pillow
+
+# Optional, index-collection.py only: registers a HEIC opener for Image.open() (pillow_heif.register_heif_opener()).
+# pillow-heif

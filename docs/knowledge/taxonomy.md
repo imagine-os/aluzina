@@ -17,7 +17,7 @@ since: 2026-09-21
 
 - The Hub's **Spaces** (K-01..K-06, `apps/hub/src/modules/spaces/`) are the organizing mechanism from now on. Spaces nest without limit, a post is filed in every space it applies to (one row, many filings), and any entity relates to any other with a typed relation (D-026).
 - **Slack stays for chat** until the Comms module ships (build plan, "own the whole operations platform"). New standing information goes into Spaces, not into a Slack channel.
-- The Slack sidebar below was **seeded as the initial space tree** (`apps/hub/src/data/seed/spaces.ts`, `SEED_VERSION` 4). Sections became areas; channels became spaces inside them, with the channel name as `slug`.
+- The Slack sidebar below was **seeded as the initial space tree** (`apps/hub/src/tenant/seed/spaces.ts`, `SEED_VERSION` 4). Sections became areas; channels became spaces inside them, with the channel name as `slug`.
 - The lists Justin started (deliverables, team, clients) are **incomplete by his own note**; the catalogs (`deliverables.md`, `clients.md`, `tools-in-use.md`, K-05) fill the obvious gaps and mark everything else `_unknown_`.
 
 ## The Slack sidebar, transcribed (2026-09-21)
@@ -72,3 +72,4 @@ source: Justin, 2026-09-21 03:24 UTC
 
 - 2026-09-21: created from Justin's message (02:51 UTC) and the two sidebar screenshots; seven sections and 22 channels transcribed and seeded as spaces; rule "the Hub is the organizing mechanism, Slack stays for chat" (prompt 0005, changelog 0009, D-026..D-028).
 - 2026-09-21: Justin added three channels under Brand Memory (03:24 UTC, message + screenshot): `drive-scraping`, `website-scraping`, `social-scraping`, seeded as topics before `aluzina-brand-kit` with one draft intake post each; "Archive intake" phase added to the build plan roadmap.
+- 2026-09-28 (changelog 0028, tp-09): path fix — `apps/hub/src/data/seed/spaces.ts` above renamed to `apps/hub/src/tenant/seed/spaces.ts` by tp-05 (changelog 0027). No rule changed.

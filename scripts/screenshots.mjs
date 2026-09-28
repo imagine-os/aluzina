@@ -13,9 +13,12 @@
 //        --use-gl=swiftshader --enable-unsafe-swiftshader: software GL for headless captures of WebGL views (K-04 3D).
 //        External bases (not http://localhost) launch with --disable-features=ChromeRootStoreUsed so Chromium trusts the
 //        sandbox's CA-terminating outbound proxy via the OS/NSS store instead of the bundled Chrome Root Store.
+//        --list prints the resolved --as role -> demo user id (from tenant/auth/demoUsers.ts) and exits, no browser (tp-07).
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
+// Demo identities as tenant data (tp-07, D-089): one user id per role, instead of a hand-duplicated map here.
+import { demoUserForRole } from '../apps/hub/src/tenant/auth/demoUsers.ts';
 
 const args = Object.fromEntries(
   process.argv.slice(2).map((a) => {
@@ -35,7 +38,13 @@ const langToggle = args['lang-toggle'];
 const waitFor = args.wait ?? (staticPath ? '#dc-root' : 'h1');
 const shots = (args.shots ?? 'en-390,en-1280,en-3840,es-390').split(',');
 const asRole = args.as; // demo user id per role (apps/hub/src/tenant/auth/demoUsers.ts)
-const USER_BY_ROLE = { founder: 'u-alejandra', ops: 'u-miguel', studio: 'u-sarai', brand: 'u-angelica', client: 'u-client', dev: 'u-dev' };
+
+if (args.list) {
+  const ROLES = ['founder', 'ops', 'studio', 'brand', 'client', 'dev'];
+  console.log(JSON.stringify(Object.fromEntries(ROLES.map((r) => [r, demoUserForRole(r)?.id ?? null])), null, 2));
+  process.exit(0);
+}
+
 const settle = Number(args.settle ?? 0);
 const theme = args.theme === 'dark' ? 'dark' : 'light'; // --theme=dark -> <lang>-<width>-dark.jpg
 const name = args.name ? `-${args.name}` : ''; // --name=board -> <lang>-<width>-board.jpg
@@ -74,7 +83,7 @@ for (const shot of shots) {
       if (userId) localStorage.setItem(`${id}.session`, JSON.stringify({ userId, viewAs: null, devMode: false }));
       for (const [k, v] of Object.entries(extra)) localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v));
     },
-    [tenant.id, lang, asRole ? USER_BY_ROLE[asRole] ?? null : null, theme, storage],
+    [tenant.id, lang, asRole ? demoUserForRole(asRole)?.id ?? null : null, theme, storage],
   );
   const page = await context.newPage();
   const target = staticPath ? `${base}${staticPath}` : `${base}#${route}`;

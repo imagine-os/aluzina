@@ -61,3 +61,7 @@ To reproduce: `node tools/scrape-aluzinaa.js` and `node tools/crawl-direccion.js
 - **Stack**: hand-authored static HTML + inline `<style>` + one inline `<script>` (hero slideshow); no framework, no bundler, no backend calls; externals only Calendly widget JS / CSS and Google Fonts; hosted on **Vercel** (`server: Vercel`, `x-vercel-cache: HIT`); images at relative `/Fotos/web/...`.
 - **Design**: ink `#141414` dominant, white, ink-soft `rgb(95,95,95)`, gray `rgb(138,138,138)`, WhatsApp green `rgb(37,211,102)`, cream `rgb(242,236,226)`; font stack `'DIN Round Pro', 'M PLUS Rounded 1c', -apple-system, sans-serif` (DIN Round Pro is not embedded, so the Google Fonts fallback renders); primary button translucent white on the hero, solid `#141414` elsewhere; logo `Fotos/web/logo-aluzina-blanco.png`.
 - **Notable**: one transient 502 / console 404 on `Fotos/web/antes-1.jpg` during the first crawl, 200 on re-check (momentary Vercel blip); no forms, no placeholders, otherwise error-free.
+
+## Tenant package
+
+This folder is the `public-site` sub-project in `tenant.json` `subProjects[]` (kind `external`, status `linked`; code P-00, `identity.publicSite`). No build here; the host needs a link slot per tenant (HR-07). Full entry: `docs/tenant/sub-projects.md`.

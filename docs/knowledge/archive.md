@@ -520,7 +520,7 @@ Since ar-19 (D-071) every non-admin folder has a chunk under `docs/archive/proje
 
 ## Delivery stage from the folder path (ar-22)
 
-status: current · since: 2026-09-21 (changelog 0022) · source: `apps/hub/src/domain/archive.ts` (`STAGE_PHRASES`, `stageFor`)
+status: current · since: 2026-09-21 (changelog 0022) · source: `apps/hub/src/tenant/domain/archive.ts` (`STAGE_PHRASES`, `stageFor`)
 
 The stage of an archived file is computed at load time from its folder path and name; the first matching phrase wins, so the order of the list is the rule. The 2026 folder template (read from HOY, CARTAGENA COPETRAN, SODIME) maps as follows:
 
@@ -594,3 +594,4 @@ A **collection** is a shared Dropbox folder that is not a project folder: the st
 - 2026-09-21 (ar-06 / ar-16, Fable 5.1): deep index + served previews for the 18 folders of PROYECTOS 2026 (575 files, 413 thumbnails, 196 page renders rendered; 23.5 MB served); the 15 "empty" folders re-listed: 12 hold files, 3 stay empty; R2 extended to contratos / cotizaci* / documentación importante / consignaciones / pagos / proveedores, R3 to quotation content, one explicit client-name rename (changelog pending `archive-ar06`).
 - 2026-09-21: created from the pass-0019 crawls (inventory of 187 folders incl. the 74 the first, paginated listing had missed; deep index of JOE GALLINA INTERIOR), redaction D-059, decisions D-055..D-061 (prompt 0017, changelog 0019).
 - 2026-09-21 (ar-23, Opus 5): A-09 Archive review added — the inferred type, status, client, year and duplicate flags are now confirmed or corrected in the product (tag `confirmado` + the summary sentence removed; duplicates as a `replaces` relation); section "How the founder confirms the inferred facts (A-09)" above (changelog pending `archive-review`).
+- 2026-09-28 (changelog 0028, tp-09): path fix — the `source:` header's `apps/hub/src/domain/archive.ts` renamed to `apps/hub/src/tenant/domain/archive.ts` by tp-05 (changelog 0027). No rule changed.

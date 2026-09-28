@@ -83,9 +83,13 @@ Clear space, minimum sizes, misuse cases, photography / imagery direction, tone 
 
 ## Files
 
-`apps/hub/src/design/tokens.ts`, `scripts/gen-tokens.mjs` -> `src/styles/tokens.css`; `src/styles/{global,fonts,textures}.css`; `src/brand/paths.ts`; `src/components/atom/BrandMark/*`; `public/brand/*.svg`, `public/brand/MANUAL-DE-MARCA-ALUZINA.pdf` (the served manual, D-051), `public/fonts/README.md`; `index.html` (Rubik link, monogram favicon).
+`apps/hub/src/design/tokens.ts`, `scripts/gen-tokens.mjs` -> `src/styles/tokens.css`; `src/styles/{global,fonts,textures}.css`; `src/tenant/brand/paths.ts`; `src/components/atom/BrandMark/*`; `public/brand/*.svg`, `public/brand/MANUAL-DE-MARCA-ALUZINA.pdf` (the served manual, D-051), `public/fonts/README.md`; `index.html` (Rubik link, monogram favicon).
 
 ## Editions
 
 - 2026-09-21 gold (prompt 0010, changelog 0014, D-039): Pantone 875 C, banded gold gradient, metal wordmark on light / iridescent on dark, warm greys. Superseded.
 - 2026-09-21 silver (prompt 0014, changelog 0015, D-050..D-052): Pantone 877 C, smooth silver ramp, iridescent wordmark in both themes, neutral greys, black footer band, INTERIORISMO / ILUMINACIÓN lockup. Current.
+
+## Tenant package
+
+This brief is the readme for the `design-system` sub-project in `tenant.json` `subProjects[]` (kind `platform-candidate`, status `done`; paths also cover `apps/hub/src/{design,components,styles}`, `apps/hub/scripts/gen-tokens.mjs`; codes D-02, D-10, D-12, D-13, D-14). Build: `npm run tokens`; the host needs per-tenant theme loading (HR-06). Full entry: `docs/tenant/sub-projects.md`; the code-side pointer: `apps/hub/src/design/README.md`.

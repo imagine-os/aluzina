@@ -6,10 +6,11 @@ import { useRegisterActions } from '../../actions';
 import { Button } from '../../components/atom/Button/Button';
 import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 import { useT } from '../../i18n/I18nProvider';
+import { TENANT } from '../../tenant/config';
 import './public.css';
 
-/** The owner's Lovable site stays the studio home and the portfolio (P-00, D-031 / D-035). */
-export const WEBSITE_URL = 'https://aluzinaa.com';
+/** The owner's Lovable site stays the studio home and the portfolio (P-00, D-031 / D-035; tp-07: `tenant.json` `identity.publicSite`). */
+export const WEBSITE_URL = TENANT.publicSite;
 
 /**
  * Header and footer of every public page (P-01..P-04). The `public` surface uses the `bare` shell, so the

@@ -37,7 +37,7 @@ What the deck does **not** contain: any price, any contract term, the content of
 
 ## 3. Validation checklist: the three pillars against the playbook
 
-Every problem and solution bullet from the deck's six problem / solution slides, in the deck's order and wording. "Answered" means the playbook has a rule, stage or asset for it and the product implements it; "partial" means the playbook names it but leaves the detail to the "next build" (`../service-playbook.md#06-next-layer-internal-sop-by-role`, "Not yet known"); "gap" means neither the playbook nor the product addresses it. References are to `docs/knowledge/` files and to the typed mirror `apps/hub/src/domain/playbook.ts`; page codes are the hub's (`../../README.md`).
+Every problem and solution bullet from the deck's six problem / solution slides, in the deck's order and wording. "Answered" means the playbook has a rule, stage or asset for it and the product implements it; "partial" means the playbook names it but leaves the detail to the "next build" (`../service-playbook.md#06-next-layer-internal-sop-by-role`, "Not yet known"); "gap" means neither the playbook nor the product addresses it. References are to `docs/knowledge/` files and to the typed mirror `apps/hub/src/tenant/domain/playbook.ts`; page codes are the hub's (`../../README.md`).
 
 ### Pillar 1 - "Claridad y Enfoque"
 
@@ -119,3 +119,4 @@ The deck's persuasion mechanics conflict with the playbook and are recorded so n
 ## Change log
 
 - 2026-09-22: created from the Minntoring webinar deck Aleja Guerra received and Justin forwarded in #all-aluzina (prompt 0022, changelog 0024, D-087); model Fable 5.1.
+- 2026-09-28 (changelog 0028, tp-09): path fix — `apps/hub/src/domain/playbook.ts` above renamed to `apps/hub/src/tenant/domain/playbook.ts` by tp-05 (changelog 0027). No rule changed.

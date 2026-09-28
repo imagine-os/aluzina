@@ -1,6 +1,6 @@
 # Surfaces: routes, scripts, actions, MCP / CLI / API
 
-Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0013 integration, after 0014 and 0015); last update: changelog 0023.
+Every surface a machine (script, agent, voice controller, MCP client) can drive, recorded every pass (P-10). Update this file in the same turn as any change to a route, npm script, action, provider method or API. Last full pass: 2026-09-21 (changelog 0013 integration, after 0014 and 0015); last update: changelog 0028.
 
 ## 1. What exists today
 
@@ -274,6 +274,39 @@ Entities (`src/data/schema/index.ts`, all rows carry `id, created_at, updated_at
 
 **No MCP server yet.** The in-page seam is live: `window.__aluzina.actions = { run, list, declared }` (D-036): `run(id, params)` drives whatever page is mounted, `list()` is what is live now, `declared` the tool list (one entry per route x action: `{ id, code, path, label, intent, permission?, params? }`). **D-09 `/#/dev/actions` is the WebMCP surface today**: it joins declared vs live, generates the input form from `params`, runs actions, and exports each as a WebMCP tool JSON (`name = id`, `description = intent`, `inputSchema` from `paramSchema()`) or all of them at once; `paramSchema()` / `toolJson()` in `modules/qa/ActionsPage.tsx` are the canonical mapping until the generator moves to `src/actions/`.
 
+### 1.8 Tenant package (tp-10)
+
+**`tenant.json`** (repo root, `manifestVersion: 1`, spec `docs/tenant/manifest.md`): the one file a multitenant host reads before doing anything else with this repo. It states, as data, everything sections 1.1-1.7 above describe in prose: `identity` (id, languages, currency, locale, public site), `brand` (token schema / values files, marks, documents), `surfaces` (the `Surface` union, roles, code prefixes, the auth / nav / hub-card files), `hubModules` (the 17 modules and their codes), `subProjects[]` (every deliverable that is not "the hub app" — kind, paths, entry, build, codes, status, `dependsOn`, `hostNeeds`), `data` (entities, base row, `seedVersion`, seed dir), `contentMounts[]` (the heavy committed binaries and which the host should move to object storage), `namespace` (below), `routing`, `deploy`, `docs` (counters and conventions), `actions` (bus, global, `declared` / `distinct` counts) and `hostRequirements[]`. A host mounts this repo by reading `tenant.json` first and refusing anything not `manifestVersion: 1` or failing `tenant:validate`.
+
+**`npm run tenant:validate`** (`scripts/tenant-validate.mjs`, tp-03) checks the manifest against the checkout on every build (chained into the root `build` script) and in `.github/workflows/ci.yml`. Nine checks, (a)-(i): (a) every `hubModules[]` name / path / `codes` matches the module folder and its `specs.ts` (including page codes produced by a spec factory, e.g. `M-03..M-07`); (b) every `subProjects[].paths[]` exists, `readme` / non-URL `entry` exist, `dependsOn` ids resolve; (c) every `contentMounts[].path` exists; (d) `docs.counters` equal the highest numbered file in `prompts/`, `changelog/`, `qa/` and the last `decisions.md` row; (e) `version` equals root `package.json`; (f) no tenant namespace literal (a storage key, channel name or the `window.__<id>` global) appears in an executable string position under the hub's source, scripts, or `index.html` outside `namespace.tenantDir` / `literalAllowlist`; (g) `manifestVersion === 1` and required top-level keys are present; (h) `data.seedVersion` equals the code's `SEED_VERSION`; (i) `routing.strategy` is one of `routing.supports`. It also checks ~37 single-path fields, the surfaces / roles / entities lists against their code, and `plan.json` shape. One line per failure, exit 1; a summary line and exit 0 when green (the line printed after every `npm run build` in this repo).
+
+**`.github/workflows/ci.yml`** (tp-03): on every push (all branches) and pull request, `npm ci && npm run build` (which runs `tenant:validate`), no deploy. `.github/workflows/pages.yml` is the separate deploy workflow (build + `npm run thumbs` + upload to Pages on push to `main` only); a host running its own CI would run the same two commands against its copy of the manifest.
+
+**Namespace derivation** (`apps/hub/src/tenant/config.ts`, D-090): every browser key, channel and global name is a pure function of `tenant.json`'s `id` (`aluzina`), so a host renaming the tenant only edits the manifest.
+
+- `storageKey(name)` -> `` `${TENANT.id}.${name}` `` — e.g. `aluzina.lang`, `aluzina.session` (full list: section 1.2).
+- `channelName(name)` -> `` `${TENANT.id}-${name}` `` — `aluzina-data`, `aluzina-presence`.
+- `GLOBAL_NAME` -> `` `__${TENANT.id}` `` — `window.__aluzina` (section 1.1, 1.7).
+
+**Sub-project ids as the future addressing scheme:** `tenant.json` `subProjects[].id` (`hub`, `business-os`, `public-site`, `archive`, `brand-kit`, `knowledge-base`, `asana-import`, `design-system`, `docs-and-plan`) are already stable, unique within this tenant. When actions aggregate across tenants (HR-11, section 2.1), the planned address for one action is `<tenantId>.<subProjectId>/<actionId>` at the transport layer and `<tenantId>/<subProjectId>` as the CLI / WebMCP resource path (e.g. `aluzina/hub`, `aluzina/archive`) — today `window.__aluzina.actions` only carries the `hub` sub-project's own `<module>.<verb>` ids (section 1.3); the other sub-projects are not yet addressable by machine (`archive` and `asana-import` are scripts, run by npm, not by id).
+
+**`hostRequirements[]` (HR-01..HR-12,** full detail in `docs/tenant/host-requirements.md`):
+
+| HR | Requirement | This repo's seam today |
+| --- | --- | --- |
+| HR-01 | Auth and identity | `auth/SessionProvider.tsx`, demo users in `tenant/auth/demoUsers.ts` |
+| HR-02 | Tenant-scoped data store | `data/provider.ts` / `MockProvider`; rows carry `tenant_id` + `version` |
+| HR-03 | Realtime and presence | `subscribe`, `usePresence()`, channels derived from the tenant id |
+| HR-04 | Object storage for content mounts | `contentMounts[]` (archive renders, business-os assets, screenshots) |
+| HR-05 | Docs mount (or fetched docs) | the `@docs` Vite alias into this repo's `docs/` |
+| HR-06 | Per-tenant theme loading | `tenant/brand/tokens.values.ts` composed by `gen-tokens.mjs` |
+| HR-07 | Tenant routing | relative `base`, HashRouter (works under any route prefix) |
+| HR-08 | Deploy-time thumbnails | `scripts/thumbnails.mjs` (`npm run thumbs`), reads `tenant/hubCards.data.ts` |
+| HR-09 | Per-tenant docs counters | `docs.counters`, checked by `tenant:validate` (d) |
+| HR-10 | CI gates | `.github/workflows/ci.yml` (`npm run build`, incl. `tenant:validate`) |
+| HR-11 | WebMCP / actions aggregation | `actions/bus.ts`, `window.__<id>.actions` |
+| HR-12 | Annotations store | none yet (P-08 plans a `feedback` table) |
+
 ## 2. Planned
 
 ### 2.1 Actions bus -> WebMCP tools (P-05, D-036)
@@ -298,6 +331,7 @@ Realtime and presence exist as the mock seam since 0008 (D-023): `subscribe` alr
 
 ## 3. Change log of this file
 
+- 2026-09-28 (changelog 0028): new section 1.8 "Tenant package" (tp-10): `tenant.json`, `tenant:validate`'s nine checks, `ci.yml`, the namespace derivation functions, the sub-project ids as the future WebMCP / CLI addressing scheme, and `hostRequirements` HR-01..HR-12 as a table. No surface, key, channel or global changed; `scripts/thumbnails.mjs` / `screenshots.mjs` now read `tenant/hubCards.data.ts` / `tenant/auth/demoUsers.ts` instead of a hand-typed copy (tp-07), same captures.
 - 2026-09-28 (changelog 0027): `npm run tenant:validate` (1.4) runs inside `npm run build` and in the new `ci.yml` gate; tenant-owned code moved to `apps/hub/src/tenant/` (roles / permissions / demo users, nav groups, hub cards, domain, seeds, brand paths, token values); `npm run tokens` composes schema + values. No surface, key, channel or global changed.
 - 2026-09-28 (changelog 0026): every storage key, channel and the window global derive from `tenant.json` `id` through `src/tenant/config.ts`, values unchanged (1.2); rows carry `tenant_id` + `version`, `create` / `update` stamp them, `SEED_VERSION` 13, `assetVersion` / `docVersion` renames (1.5). The tenant section proper (manifest, `tenant:validate`, `ci.yml`) is tp-10.
 - 2026-09-21 (changelog 0023): route G-09 `/brand/collections` (124 routes) with six `brand.*` collection actions, the WebMCP / voice vocabulary for the Dropbox collections (1.1 / 1.3); `npm run archive:collection` (`scripts/archive/index-collection.py`, 1.4); served renders under `./archive/{campaign-2021,studio-assets}/` (1.1a-bis); `SEED_VERSION` 12 and `seed/collections.ts` (1.2 / 1.5); `domain/collections.ts` lazy loader (D-083).

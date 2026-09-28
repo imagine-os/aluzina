@@ -25,3 +25,7 @@ Counts this run: 223 of 1489 inventory files redacted; 1068 of 5291 deep-index f
 ## Inferred, to confirm with the founder (D-060)
 
 Project type (from the folder name), status (from the year folder: 2026 = in progress, quotation folders = prospect, else past), client (only when a folder name matches an existing client row), year (from the year folder; LIFE VIOLETA VILLA inferred from its newest file), and every duplicate note. Each seeded row's summary says so.
+
+## Tenant package
+
+This folder is part of the `archive` sub-project in `tenant.json` `subProjects[]` (kind `pipeline`, status `done`; paths `scripts/archive`, `docs/archive`, `apps/hub/public/archive`; codes S-12, S-13, G-09, A-09, P-06). Build: `npm run archive:crawl && npm run archive:index && npm run archive:previews && npm run archive:collection`; the host needs object storage for the served renders and the tenant store for patch rows (HR-04, HR-02). Full entry: `docs/tenant/sub-projects.md`; the scripts themselves: `scripts/archive/README.md`.

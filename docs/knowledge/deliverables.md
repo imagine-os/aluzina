@@ -6,7 +6,7 @@ since: 2026-09-21
 source: Slack #aluzina 2026-09-21 02:51 UTC, Justin Massion (four Slack channels under "Deliverables": contract, final-presentation, furniture-selection, proposal; "there's a lot more to add, some of which you can identify yourself"); gaps filled by the integrator for an interior design + lighting + experience design studio (prompt 0005, D-029)
 ```
 
-The catalog is **data**: `deliverables` rows in `apps/hub/src/data/seed/spaces.ts`, rendered on K-05 (Spaces > Catalog > Deliverables) and related from posts (`produced-by`). This file is the change-tracked narrative. Owners are role ids (`roles-and-portals.md`); phases are the project phases (`lead, concept, development, documentation, procurement, execution, delivered`). `status`: `defined` (named, no template), `template-ready` (a hub page produces it today), `automated` (generated from data; none yet). Typical days are the integrator's estimates, to be corrected by the founder.
+The catalog is **data**: `deliverables` rows in `apps/hub/src/tenant/seed/spaces.ts`, rendered on K-05 (Spaces > Catalog > Deliverables) and related from posts (`produced-by`). This file is the change-tracked narrative. Owners are role ids (`roles-and-portals.md`); phases are the project phases (`lead, concept, development, documentation, procurement, execution, delivered`). `status`: `defined` (named, no template), `template-ready` (a hub page produces it today), `automated` (generated from data; none yet). Typical days are the integrator's estimates, to be corrected by the founder.
 
 ## From Justin's list
 
@@ -90,4 +90,5 @@ The table "Documents the data says the OS can generate" in `asana-conventions.md
 - 2026-09-21: created from Justin's four channels plus 21 proposed types; 25 rows seeded, K-05 renders them (prompt 0005, changelog 0009, D-029).
 - 2026-09-21: pointer to the playbook's status architecture and per-service delivery lists (`service-playbook.md`, prompt 0009, changelog 0013).
 - 2026-09-21: pointer to `asana-conventions.md`'s document-generation table added (prompt 0015, changelog 0017, D-054).
-- 2026-09-21: two rows added from the Asana workflow, **RFQ packet per trade** and **Invoice** (27 seeded rows); 21 task-to-deliverable links now live in the project template `apps/hub/src/domain/templates/aluzina-workflow.ts` and 19 in the imported PROYECTO HOY tree, so `tasks.deliverableId` is the first real use of this catalog outside K-05 (prompt 0017, changelog 0020, D-062).
+- 2026-09-21: two rows added from the Asana workflow, **RFQ packet per trade** and **Invoice** (27 seeded rows); 21 task-to-deliverable links now live in the project template `apps/hub/src/tenant/domain/templates/aluzina-workflow.ts` and 19 in the imported PROYECTO HOY tree, so `tasks.deliverableId` is the first real use of this catalog outside K-05 (prompt 0017, changelog 0020, D-062).
+- 2026-09-28 (changelog 0028, tp-09): path fix — `apps/hub/src/data/seed/spaces.ts` above renamed to `apps/hub/src/tenant/seed/spaces.ts` by tp-05 (changelog 0027; the templates path above was already correct). No rule changed.

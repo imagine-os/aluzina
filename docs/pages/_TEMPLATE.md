@@ -1,7 +1,7 @@
 # <CODE> - <Page name>
 
 - route: `/#/<path>`
-- surface: hub | business-os | website | customer | staff | docs | manual | dev
+- surface: hub | founder | ops | studio | brand | client | dev | design | docs | manual | public (`Surface` union, `apps/hub/src/specs/PageSpec.ts`)
 - status: built | stub
 - spec: `apps/<app>/src/modules/<module>/specs.ts`
 - model: <who built it>

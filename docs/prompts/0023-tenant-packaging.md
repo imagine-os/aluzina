@@ -30,3 +30,17 @@ Can you grant this channel the between-gigs repo, or name its owner, so I can sl
 Model: Fable 5.1.
 
 _Pass 2 (tp-02 + tp-04) followed in changelog 0026._
+
+---
+
+_Pass 2 + 3 reply:_
+
+Passes 2 and 3 are on main, build green, now at v0.17.0: 8b0acf8 and c92a729.
+
+- The root tenant.json manifest exists and states every module, sub-project, entity, content mount, counter and host requirement as data.
+- Browser keys, channels and the window global derive from the tenant id with unchanged values; nobody's saved state moves.
+- Every row carries a tenant id and a version that climbs on each edit.
+- Tenant-owned code (roles, seeds, domain, brand values, hub cards) now lives in one folder inside the hub, moved with history; the generated token CSS is byte-identical.
+- A manifest validator runs inside every build, and a new CI workflow runs the build on every push and pull request.
+
+Pass 4 (scripts, sub-project readmes, stale docs) is starting now. Models: Fable 5.1 for the manifest and shared code, Opus 5 for the moves, token split, validator and CI.

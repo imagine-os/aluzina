@@ -32,7 +32,7 @@ _unknown_ per category until the founder or Justin names them.
 ```
 status: current
 since: 2026-09-21
-source: Slack #aluzina 2026-09-21 02:51 UTC, Justin Massion (sidebar sections "Art Tools", "Project Management", plus the tools already on record); catalog rows `tools` in apps/hub/src/data/seed/spaces.ts, rendered on K-05 (D-029, D-030)
+source: Slack #aluzina 2026-09-21 02:51 UTC, Justin Massion (sidebar sections "Art Tools", "Project Management", plus the tools already on record); catalog rows `tools` in apps/hub/src/tenant/seed/spaces.ts, rendered on K-05 (D-029, D-030)
 ```
 
 | Tool | Category | Used for | Status | Replaced by |
@@ -54,3 +54,4 @@ Unknown: plans and costs per tool, who holds each account, what else the team pa
 - 2026-09-21: file created with the Asana entry (Slack #aluzina 2026-09-21 01:47 UTC, Justin Massion; prompt 0004, changelog 0008).
 - 2026-09-21: ChatGPT, Lovart, Magnific, Slack, Lovable, Claude Design, Supabase, Stripe added with status and replaced-by (Slack sidebar, prompt 0005, changelog 0009, D-029, D-030); the "Other tools" draft is superseded.
 - 2026-09-21: Asana entry extended with the six-export intake (Slack #import-asana, Justin Massion; prompt 0015, changelog 0017, D-054); see `asana-conventions.md`.
+- 2026-09-28 (changelog 0028, tp-09): path fix — `apps/hub/src/data/seed/spaces.ts` above renamed to `apps/hub/src/tenant/seed/spaces.ts` by tp-05 (changelog 0027). No rule changed.

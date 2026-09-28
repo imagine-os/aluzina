@@ -4,15 +4,20 @@
 // Never commit the output: CI runs `npm run thumbs` after `npm run build` on every deploy so the
 // thumbnails always match the live pages.
 //
-// Usage: node scripts/thumbnails.mjs [--dist=dist] [--port=4180] [--skip-external] [--only=HUB-01,BOS-01]
+// Usage: node scripts/thumbnails.mjs [--dist=dist] [--port=4180] [--skip-external] [--only=HUB-01,BOS-01] [--list]
 // Env:   PW_EXECUTABLE / PLAYWRIGHT_CHROMIUM_EXECUTABLE override the browser binary
 //        (default: /opt/pw-browsers/chromium when it exists, otherwise Playwright's own install).
 //        HTTPS_PROXY is honoured for the external captures only; localhost bypasses it.
 // Chromium is preinstalled at /opt/pw-browsers in our containers; never run `playwright install` there.
+// --list prints the resolved SURFACES (code + path/url) as JSON and exits without touching a browser or dist/;
+// use it to check the hubCards-derived entries below without paying for a full Playwright run (tp-07).
 import { createServer } from 'node:http';
 import { createReadStream, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+// Card lists as tenant data (tp-07, D-089): read from the same file `apps/hub/src/tenant/hubCards.ts` re-exports,
+// instead of hand-typing the business-os pages, the spaces card href, the website URL and the portal roles here.
+import { PORTALS, PRODUCT_SURFACES, PROTOTYPE_PAGES, WEBSITE_URL } from '../apps/hub/src/tenant/hubCards.data.ts';
 import { chromium } from 'playwright';
 
 const args = Object.fromEntries(
@@ -36,6 +41,16 @@ const CAPTURE = { width: 1280, height: 800 };
 const THUMB = { width: 640, height: 400, quality: 80 };
 const DC_ROOT = '#dc-root';
 
+// tp-07: the codes and hrefs below that duplicate `hubCards.ts` data (business-os pages, the spaces card
+// href, the website URL, the per-role dashboard letter) are derived from it instead of retyped; `roleCode`
+// inverts `tenant.json` `surfaces.codePrefixes` (A: founder, O: ops, S: studio, G: brand) to get the
+// dashboard code for a portal role. Everything else here is thumbnail-specific (deep links a card list
+// does not carry a route for) and stays hand-written.
+const roleCode = Object.fromEntries(Object.entries(tenant.surfaces.codePrefixes).map(([letter, role]) => [role, letter]));
+const businessOsCard = PRODUCT_SURFACES.find((s) => s.id === 'business-os');
+const spacesCard = PRODUCT_SURFACES.find((s) => s.id === 'spaces');
+const websiteCard = PRODUCT_SURFACES.find((s) => s.id === 'website');
+
 /**
  * Every surface the hub links to (mirrors PORTALS + SURFACES + PROTOTYPE_PAGES in apps/hub/src/modules/hub/HubPage.tsx).
  * `wait`: selector that must render before the shot; `dc: true` waits for the Claude Design runtime
@@ -43,19 +58,12 @@ const DC_ROOT = '#dc-root';
  * HUB-01 is captured last so its own thumbnail shows the freshly written thumbnails.
  */
 const SURFACES = [
-  { code: 'BOS-01', path: 'business-os/', dc: true },
-  { code: 'BOS-02', path: 'business-os/home.html', dc: true },
-  { code: 'BOS-03', path: 'business-os/cyber-bridge.html', dc: true },
-  { code: 'BOS-04', path: 'business-os/cyber-bridge-deck.html', dc: true },
-  { code: 'BOS-05', path: 'business-os/image-generation-plan.html', dc: true },
-  { code: 'BOS-06', path: 'business-os/lod-ladder.html', dc: true },
+  { code: businessOsCard.code, path: businessOsCard.href.replace(/^\.\//, ''), dc: true },
+  ...PROTOTYPE_PAGES.map((p) => ({ code: p.code, path: p.href.replace(/^\.\//, ''), dc: true })),
   // Portal dashboards and dev tools (D-014): `?as=<role>` before the hash selects that demo user on first load
   // (SessionProvider contract, docs/reference/surfaces.md 1.2b); `.dshell__main` is the DesktopShell content area.
-  { code: 'A-01', path: '?as=founder#/founder', wait: '.dshell__main' },
-  { code: 'O-01', path: '?as=ops#/ops', wait: '.dshell__main' },
-  { code: 'S-01', path: '?as=studio#/studio', wait: '.dshell__main' },
-  { code: 'G-01', path: '?as=brand#/brand', wait: '.dshell__main' },
-  { code: 'K-01', path: '?as=founder#/founder/spaces', wait: '.pcard' },
+  ...PORTALS.filter((p) => p.role !== 'client').map((p) => ({ code: `${roleCode[p.role]}-01`, path: `?as=${p.role}#/${p.role}`, wait: '.dshell__main' })),
+  { code: spacesCard.code, path: `?as=founder${spacesCard.href}`, wait: '.pcard' },
   { code: 'D-12', path: '?as=dev#/design', wait: '.dshell__main' },
   { code: 'D-02', path: '?as=dev#/dev/components', wait: '.dshell__main' },
   { code: 'D-03', path: '?as=dev#/dev/specs', wait: '.dshell__main' },
@@ -81,9 +89,17 @@ const SURFACES = [
   { code: 'S-13', path: '?as=studio#/studio/archive/prj-ar-joe-gallina-interior', wait: '.dshell__main' },
   // K-04 opens its 3D view first; SwiftShader (launch args below) renders it headless, and the page falls back to the 2D graph without WebGL.
   { code: 'K-04', path: '?as=founder#/founder/spaces/graph', wait: '.dshell__main' },
-  { code: 'P-00', url: 'https://aluzinaa.com/', external: true, wait: 'body' },
+  // K-05 / K-06 (kanban graph-views card, tp-07): static routes, no dynamic id, so trivial to add here.
+  { code: 'K-05', path: '?as=founder#/founder/spaces/catalog', wait: '.dshell__main' },
+  { code: 'K-06', path: '?as=founder#/founder/spaces/import', wait: '.dshell__main' },
+  { code: websiteCard.code, url: `${WEBSITE_URL}/`, external: true, wait: 'body' },
   { code: 'HUB-01', path: '#/', wait: '.surface-card__thumb', hub: true },
 ];
+
+if (args.list) {
+  console.log(JSON.stringify(SURFACES.map(({ code, path, url }) => ({ code, path, url })), null, 2));
+  process.exit(0);
+}
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',

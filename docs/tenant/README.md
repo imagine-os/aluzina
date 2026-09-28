@@ -1,6 +1,6 @@
 # Tenant packaging: aluzina as one tenant of a multitenant host
 
-Status: **pass 3 (tp-03 + tp-05 + tp-06) done, changelog 0027; pass 2 (tp-02 + tp-04) changelog 0026; pass 1 (tp-01) changelog 0025; prompt 0023, D-088..D-097.** `tenant.json` exists at the repo root, `apps/hub/src/tenant/` holds the tenant-owned code (config, auth constants, nav groups, hub cards, domain, seeds, brand paths, token values), and `npm run tenant:validate` checks the manifest in every build and in `.github/workflows/ci.yml`. Owner model: Fable 5.1 (architecture and plan). Start here, then read the files in the order of the table.
+Status: **pass 4 (tp-07..tp-10) done, changelog 0028; pass 3 (tp-03 + tp-05 + tp-06) changelog 0027; pass 2 (tp-02 + tp-04) changelog 0026; pass 1 (tp-01) changelog 0025; prompt 0023, D-088..D-097.** `tenant.json` exists at the repo root, `apps/hub/src/tenant/` holds the tenant-owned code (config, auth constants, nav groups, hub cards, domain, seeds, brand paths, token values), and `npm run tenant:validate` checks the manifest in every build and in `.github/workflows/ci.yml`. Owner model: Fable 5.1 (architecture and plan). Start here, then read the files in the order of the table.
 
 ## What a tenant package is
 
@@ -64,12 +64,12 @@ tenant.json  (manifestVersion 1)                       <- the host reads this fi
 | tp-04 | `tenant_id` + `version` on the base row, MockProvider stamps them, `SEED_VERSION` 13 | tp-02 | Fable 5.1 | **done** (0026) |
 | tp-05 | Move tenant-owned code into `src/tenant/` with `git mv`, tsc green | tp-02 | Opus 5 | **done** (0027) |
 | tp-06 | Tokens schema / values split, `gen-tokens` output byte-identical | tp-05 | Opus 5 | **done** (0027) |
-| tp-07 | `thumbnails.mjs` / `screenshots.mjs` read hubCards + demoUsers (no hand duplicates) | tp-05 | Sonnet 5 | next |
-| tp-08 | One `README.md` per sub-project root pointing at its manifest entry | tp-02 | Sonnet 5 | next |
-| tp-09 | Stale docs fixes (root README status, `_TEMPLATE` surfaces, playwright note, docs map) | tp-01 | Sonnet 5 | next |
-| tp-10 | `surfaces.md` tenant section (manifest, validate script, CI) | tp-03 | Sonnet 5 | next |
-| tp-11 | QA pass: build green, 7-width screenshots of HUB-01 / D-05 / D-09 unchanged, EN / ES spot check, docs agree | tp-03..tp-10 | Sonnet 5 | backlog |
-| tp-12 | Second tenant slot: between-gigs package checklist, ready when access lands | tp-02 | Fable 5.1 | backlog |
+| tp-07 | `thumbnails.mjs` / `screenshots.mjs` read hubCards + demoUsers (no hand duplicates) | tp-05 | Sonnet 5 | **done** (0028) |
+| tp-08 | One `README.md` per sub-project root pointing at its manifest entry | tp-02 | Sonnet 5 | **done** (0028) |
+| tp-09 | Stale docs fixes (root README status, `_TEMPLATE` surfaces, playwright note, docs map) | tp-01 | Sonnet 5 | **done** (0028) |
+| tp-10 | `surfaces.md` tenant section (manifest, validate script, CI) | tp-03 | Sonnet 5 | **done** (0028) |
+| tp-11 | QA pass: build green, 7-width screenshots of HUB-01 / D-05 / D-09 unchanged, EN / ES spot check, docs agree | tp-03..tp-10 | Sonnet 5 | next |
+| tp-12 | Second tenant slot: between-gigs package checklist, ready when access lands | tp-02 | Fable 5.1 | next |
 | tp-13 | Host-time: extract `packages/platform`; real provider with `tenant_id`; object storage for content mounts | tp-05, tp-06, credentials | Fable 5.1 | backlog |
 
 Definition of done for every pass: `npm run build` green (which includes `tenant:validate` since tp-03), docs agree (`plan.json` = `kanban.md` = `build-plan.md`), changelog with `model:`, decisions logged, `surfaces.md` current.
@@ -86,3 +86,4 @@ Definition of done for every pass: `npm run build` green (which includes `tenant
 - 2026-09-28 (changelog 0025, prompt 0023): folder created with the seven files above; step 15 and tp-01..tp-13 added to the plan; D-088..D-096 logged. Fable 5.1.
 - 2026-09-28 (changelog 0026, prompt 0023): tp-02 and tp-04 done: root `tenant.json`, `apps/hub/src/tenant/config.ts`, every key / channel / global derived, `tenant_id` + `version` on rows, `SEED_VERSION` 13, `routing: path` (D-097). Fable 5.1.
 - 2026-09-28 (changelog 0027, prompt 0023): tp-05, tp-06 and tp-03 done: tenant-owned code moved into `apps/hub/src/tenant/` with `git mv` (29 files, no shims), hub card lists into `tenant/hubCards.ts`, locale / currency read from `tenant.json`; token schema / values split with `tokens.css` byte-identical; `scripts/tenant-validate.mjs` in `npm run build` and `.github/workflows/ci.yml`; version 0.17.0. tp-07..tp-10 are next. Opus 5.
+- 2026-09-28 (changelog 0028, prompt 0023): tp-07..tp-10 done: `scripts/thumbnails.mjs` / `screenshots.mjs` read `tenant/hubCards.data.ts` (a plain-data sibling of `hubCards.ts` that Node's type-stripping can import) and `tenant/auth/demoUsers.ts` instead of a hand-kept card list / role map, both scripts gain a `--list` flag, K-05 / K-06 added to the thumbnail list, the two module-local `WEBSITE_URL` constants read `TENANT.publicSite`; a `README.md` for every sub-project root that lacked one plus a "Tenant package" section on every one that already had a README, `scripts/README.md` and `scripts/archive/requirements.txt`; root README status / playwright note / a "Tenant package" paragraph, `_TEMPLATE.md` surfaces, nine knowledge entries and thirteen page docs with pre-move paths fixed, `actions.declared` / `distinct` recounted (430 / 409, unchanged); `surfaces.md` section 1.8 "Tenant package". Version 0.17.1. tp-11 (QA) and tp-12 (second tenant slot) are next. Sonnet 5.

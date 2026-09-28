@@ -6,7 +6,7 @@ since: 2026-09-21
 source: Slack #aluzina 2026-09-21 02:51 UTC, Justin Massion ("Past Clients": hoy, sporti; "list of clients ... will need to be filled in further"); projects seed (prompt 0003) for the rest (prompt 0005, D-029)
 ```
 
-The catalog is **data**: `clients` rows in `apps/hub/src/data/seed/spaces.ts`, rendered on K-05 (Spaces > Catalog > Clients), each past client also has a `client` space under Past Clients. Unknown facts are `null` in data and `_unknown_` here; nothing is guessed.
+The catalog is **data**: `clients` rows in `apps/hub/src/tenant/seed/spaces.ts`, rendered on K-05 (Spaces > Catalog > Clients), each past client also has a `client` space under Past Clients. Unknown facts are `null` in data and `_unknown_` here; nothing is guessed.
 
 ## Past clients (Slack "Past Clients")
 
@@ -90,7 +90,7 @@ only Aluzina's own channels.
 
 **Update 2026-09-21 (prompt 0013, model Fable 5.1)** - six of the clients the **portfolio** names are
 now `clients` rows (`kind: past`, seeded from `docs/brand/portfolio/index.json` by
-`apps/hub/src/data/seed/assets.ts`), each related `for-client` to its portfolio project: `cl-brewhouse`
+`apps/hub/src/tenant/seed/assets.ts`), each related `for-client` to its portfolio project: `cl-brewhouse`
 Brew House (`prj-pf-brewhouse-bar-cerveza-artesanal`), `cl-club-union` Club Unión
 (`prj-pf-club-union-sala-de-masajes`), `cl-sodime` Sodime (`prj-pf-sodime-consultorio-medico`),
 `cl-terminal-norte` Terminal Norte (`prj-pf-terminal-norte-plazoleta-comida`), `cl-coassist` Coassist
@@ -116,3 +116,4 @@ The founder's quarter board has sections **SPORTI** (pintura, techo caña brava,
 - 2026-09-21: six portfolio clients seeded as `clients` rows (`cl-brewhouse`, `cl-club-union`, `cl-sodime`, `cl-terminal-norte`, `cl-coassist`, `cl-gahia`, all `past`) with `for-client` relations to the new `prj-pf-*` projects; the brochure's twenty names remain unseeded. Nothing above changed or removed (prompt 0013, changelog 0013; model Fable 5.1).
 - 2026-09-21: `asana-conventions.md` added from six Asana CSV exports (Slack #import-asana, Justin Massion; prompt 0015, changelog 0017, D-054); `tools-in-use.md` Asana entry extended, `clients.md` gains the Sep-Dec 2026 active-jobs note, `deliverables.md` gains a pointer.
 - 2026-09-21: the Dropbox project archive (prompt 0017, changelog 0019, `knowledge/archive.md`) matched four existing client rows by folder name only: `cl-sodime` (0_79 SODIME producciom 2020, 05_SODIME 2026), `cl-coassist` (0_73 COASSIST TERMIAL DE EL SUR 2020, 0_103 COASSIST 2021), `cl-hoy` (010_HOY 2026), `cl-sporti` (011_SPORTI 2026); `for-client` relations were seeded for those six `prj-ar-*` projects. Every other archived project keeps `client: 'unknown'`: folder names such as GREGORY APARTMENT, PETER INTERIOR PH or 03_ANDRES Y ANDREA name people, and no client row is created from a name (D-060; the founder confirms, ar-08).
+- 2026-09-28 (changelog 0028, tp-09): path fix — `apps/hub/src/data/seed/{spaces,assets}.ts` above renamed to `apps/hub/src/tenant/seed/` by tp-05 (changelog 0027). No rule changed.

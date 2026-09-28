@@ -8,3 +8,7 @@ The **ALUZINA Business OS prototype**: the Claude Design export, served as a sta
 - No package.json, no build: the root `npm run build` copies this folder into `dist/business-os/` (`scripts/copy-static.mjs`). Serve it locally with `npm run build && npm run preview` -> `http://localhost:4173/business-os/`.
 
 Read `docs/reference/business-os-export.md` before changing anything here; page docs: `docs/pages/BOS-01.md`, `docs/pages/BOS.md`. Re-exporting from Claude Design: drop the new files in, re-apply the `support.js` patch, run the build.
+
+## Tenant package
+
+This folder is the `business-os` sub-project in `tenant.json` `subProjects[]` (kind `static`, status `doing`; codes BOS-01..06). The host needs object storage for `assets/` and a static mount that tolerates space-containing filenames (HR-04, HR-07). Full entry: `docs/tenant/sub-projects.md`.

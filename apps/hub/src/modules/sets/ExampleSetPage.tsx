@@ -16,13 +16,14 @@ import { useTable } from '../../data/DataContext';
 import { useProjectFiles } from '../../data/archiveFiles';
 import type { Asset, Project } from '../../data/schema';
 import { FILE_TYPE_LABELS, fileTypeOf, pick, type FileType } from '../../tenant/domain';
+import { TENANT } from '../../tenant/config';
 import { copyText } from '../../design/clipboard';
 import type { Lang } from '../../i18n/types';
 import { clientPreviews, clientSummary, clientTags, readSetParams, realText, translator } from './model';
 import './sets.css';
 
-/** The studio's own site stays the home of the full body of work (D-031); the set page links to it, never replaces it. */
-const WEBSITE_URL = 'https://aluzinaa.com';
+/** The studio's own site stays the home of the full body of work (D-031; tp-07: `tenant.json` `identity.publicSite`); the set page links to it, never replaces it. */
+const WEBSITE_URL = TENANT.publicSite;
 /** Print waits for the covers and the first previews to settle before handing the page to the browser dialog. */
 const PRINT_SETTLE_MS = 1200;
 

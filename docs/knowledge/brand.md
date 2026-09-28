@@ -551,7 +551,7 @@ away.
    phase or status in the playbook.
 
 **How to use this until the founder rules.** Keep `service-playbook.md` and
-`apps/hub/src/domain/playbook.ts` as the operating model. Treat this file as what the *market*
+`apps/hub/src/tenant/domain/playbook.ts` as the operating model. Treat this file as what the *market*
 currently sees. Do not retire either. A kanban card should carry the reconciliation question.
 
 ## Portfolio projects as records
@@ -559,7 +559,7 @@ currently sees. Do not retire either. A kanban card should carry the reconciliat
 ```
 status: current
 since: 2026-09-21
-source: docs/brand/portfolio/index.json and docs/brand/brochure/index.json (prompt 0011), seeded by apps/hub/src/data/seed/assets.ts (prompt 0013, Justin: "properly saved by project and relational in the proper way in the database"); model Fable 5.1
+source: docs/brand/portfolio/index.json and docs/brand/brochure/index.json (prompt 0011), seeded by apps/hub/src/tenant/seed/assets.ts (prompt 0013, Justin: "properly saved by project and relational in the proper way in the database"); model Fable 5.1
 ```
 
 The two PDFs and everything the portfolio shows are **rows in the Hub**, derived at seed time from the
@@ -685,7 +685,7 @@ Justin shared a second Dropbox folder, not inside a project or a year folder: 12
 - `Catalog LU7.pdf` (28.93 MB, Aug 2023) — a lighting-fixture catalogue from a third-party brand ("LU7"), likely a supplier reference; not Aluzina's work, copyrighted.
 - `FICHAS TECNICAS LAZARO ROSA VIOLAN.pdf` (1.98 MB, Jul 2023) — technical spec sheets for Lázaro Rosa-Violán, a Spanish designer/brand, kept as a design reference; not Aluzina's work, copyrighted.
 
-Seeded as `assets` rows (`kind: 'file'`, tag `empresa`) by `apps/hub/src/data/seed/company.ts` (order 75); shown on G-08 in a dedicated section below the two brand documents. `applies-to` relations to the playbook were added only where the subject is unambiguous: the two interior-design presentation decks -> service `03` (Comprehensive Interior Design). The catalogue and the bulb spec sheet were left unlinked (product material, not a service pitch) rather than guessed onto a service code.
+Seeded as `assets` rows (`kind: 'file'`, tag `empresa`) by `apps/hub/src/tenant/seed/company.ts` (order 75); shown on G-08 in a dedicated section below the two brand documents. `applies-to` relations to the playbook were added only where the subject is unambiguous: the two interior-design presentation decks -> service `03` (Comprehensive Interior Design). The catalogue and the bulb spec sheet were left unlinked (product material, not a service pitch) rather than guessed onto a service code.
 
 ## Campaign 2021 and studio assets (Dropbox collections, 2026-09-21)
 
@@ -736,3 +736,4 @@ Open questions (ar-29): is **DIN Round Pro** a brand font and is there a licence
   Dropbox link only, never rendered. Seeded as `assets` rows (`seed/company.ts`, order 75, tag
   `empresa`); one Spanish note filed in `sp-brand-memory`. No entry superseded.
 - 2026-09-21: appended "Campaign 2021 and studio assets (Dropbox collections, 2026-09-21)" (prompt 0021, changelog 0023, D-083..D-086; model Fable 5.1): the two non-project Dropbox folders Aleja shared, indexed as collections at `docs/archive/collections/<slug>/`, 78 sets on G-09, one `assets` row per set with `depicts` relations; brand-era evidence recorded (Didone wordmark throughout 2021 and in the 2023+ artwork, the "Interiorismo · Iluminación" descriptor from April 2021, the brochure's sans wordmark in neither folder) without closing D-052; open questions ar-29. No entry superseded.
+- 2026-09-28 (changelog 0028, tp-09): path fix — `apps/hub/src/domain/playbook.ts` and `apps/hub/src/data/seed/{assets,company}.ts` above renamed to `apps/hub/src/tenant/{domain,seed}/` by tp-05 (changelog 0027). No rule changed.

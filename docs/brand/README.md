@@ -242,3 +242,12 @@ Three of them are the same clients the portfolio shows work for; those rows carr
 - 2026-09-21: folder created; portfolio (37 pages) and brochure (19 pages) rendered to JPEG with
   contact sheets, `index.json` written for both, every page described (prompt 0011, changelog 0013;
   model Opus 5).
+- 2026-09-28 (changelog 0028, tp-08): "Tenant package" section added.
+
+## Tenant package
+
+This folder is the readme for the `brand-kit` sub-project in `tenant.json` `subProjects[]` (kind `data`,
+status `done`; paths also cover `docs/source/brand-kit`, `docs/source/brand`, `apps/hub/public/brand`,
+`apps/hub/src/tenant/brand`; codes G-08, D-12). Build: `python3 docs/brand/tools/render-pdf-pages.py`;
+the host needs object storage optional (9 MB stays in git) and per-tenant theme loading (HR-04, HR-06).
+Full entry: `docs/tenant/sub-projects.md`.
