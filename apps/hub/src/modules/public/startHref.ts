@@ -1,4 +1,4 @@
-import { SERVICES, type ServiceCode } from '../../domain';
+import { SERVICES, type ServiceCode } from '../../tenant/domain';
 
 /** `?service=` carries the service the visitor came from into the intake form; slugs are accepted too (voice / WebMCP). */
 export function toServiceCode(value: string | null | undefined): ServiceCode | null {

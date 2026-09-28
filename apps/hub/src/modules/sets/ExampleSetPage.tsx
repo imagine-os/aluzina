@@ -15,7 +15,7 @@ import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useTable } from '../../data/DataContext';
 import { useProjectFiles } from '../../data/archiveFiles';
 import type { Asset, Project } from '../../data/schema';
-import { FILE_TYPE_LABELS, fileTypeOf, pick, type FileType } from '../../domain';
+import { FILE_TYPE_LABELS, fileTypeOf, pick, type FileType } from '../../tenant/domain';
 import { copyText } from '../../design/clipboard';
 import type { Lang } from '../../i18n/types';
 import { clientPreviews, clientSummary, clientTags, readSetParams, realText, translator } from './model';

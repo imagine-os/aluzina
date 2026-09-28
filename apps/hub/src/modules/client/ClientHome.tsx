@@ -12,7 +12,7 @@ import { EmptyState } from '../../components/molecule/EmptyState/EmptyState';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { StatTile } from '../../components/molecule/StatTile/StatTile';
 import { useTable } from '../../data/DataContext';
-import { CLIENT_JOURNEY, pick } from '../../domain';
+import { CLIENT_JOURNEY, pick } from '../../tenant/domain';
 import { formatCop } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import './client.css';

@@ -1,12 +1,12 @@
-import type { NewRow } from '../provider';
-import type { EntityName } from '../schema';
+import type { NewRow } from '../../data/provider';
+import type { EntityName } from '../../data/schema';
 
 /** Seed rows get a fixed timestamp so the mock data is deterministic between runs. */
 export const SEED_AT = '2026-09-20T12:00:00.000Z';
 
 export interface SeedCtx {
   add<E extends EntityName>(entity: E, id: string, row: NewRow<E>): void;
-  /** Demo user ids (src/auth/demoUsers.ts). */
+  /** Demo user ids (src/tenant/auth/demoUsers.ts). */
   users: { founder: string; ops: string; studio: string; brand: string; marketing: string; client: string; dev: string };
 }
 

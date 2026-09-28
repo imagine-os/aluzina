@@ -18,7 +18,7 @@ import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { Modal } from '../../components/organism/Modal/Modal';
 import { useData, useTable } from '../../data/DataContext';
 import type { Purchase } from '../../data/schema';
-import { PURCHASE_STATUSES, nextPurchaseStatus, pick, type PurchaseStatusId } from '../../domain';
+import { PURCHASE_STATUSES, nextPurchaseStatus, pick, type PurchaseStatusId } from '../../tenant/domain';
 import { formatCop, formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import { todayIso, useLookups } from './helpers';

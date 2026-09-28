@@ -1,6 +1,6 @@
 import { applyQuery, type Change, type Conflict, type DataProvider, type NewRow, type Patch, type Query, type Row, type Unsubscribe, type WriteOptions } from './provider';
 import { ENTITIES, type EntityName } from './schema';
-import { runSeeds, SEED_VERSION } from './seed';
+import { runSeeds, SEED_VERSION } from '../tenant/seed';
 import { channelName, storageKey, TENANT } from '../tenant/config';
 
 export const DATA_STORAGE_KEY = storageKey('data');

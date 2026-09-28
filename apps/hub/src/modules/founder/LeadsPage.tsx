@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
-import { DEMO_USERS, demoUserById } from '../../auth/demoUsers';
+import { DEMO_USERS, demoUserById } from '../../tenant/auth/demoUsers';
 import { useCan } from '../../auth/SessionProvider';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
@@ -33,7 +33,7 @@ import {
   type PipelineStatusId,
   type QualificationKey,
   type ServiceCode,
-} from '../../domain';
+} from '../../tenant/domain';
 import { formatCop, formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import './founder.css';

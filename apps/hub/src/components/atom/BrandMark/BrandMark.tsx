@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import { cx } from '../../../design/cx';
-import { descriptorSlash, glyphs, monogram, wordmark, type BrandShape, type GlyphName } from '../../../brand/paths';
+import { descriptorSlash, glyphs, monogram, wordmark, type BrandShape, type GlyphName } from '../../../tenant/brand/paths';
 import './BrandMark.css';
 
 export type BrandMarkKind = 'wordmark' | 'monogram' | 'descriptor' | 'glyph';

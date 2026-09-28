@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRegisterActions } from '../../actions';
 import { useRoutes } from '../../app/RoutesContext';
-import { DEMO_USERS } from '../../auth/demoUsers';
-import { ROLES, type RoleId } from '../../auth/roles';
+import { DEMO_USERS } from '../../tenant/auth/demoUsers';
+import { ROLES, type RoleId } from '../../tenant/auth/roles';
 import { Button } from '../../components/atom/Button/Button';
 import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 import { Select } from '../../components/atom/Select/Select';

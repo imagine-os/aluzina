@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRegisterActions } from '../../actions';
-import { demoUserById } from '../../auth/demoUsers';
+import { demoUserById } from '../../tenant/auth/demoUsers';
 import { useCan, useSession } from '../../auth/SessionProvider';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';

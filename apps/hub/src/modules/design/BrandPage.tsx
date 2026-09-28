@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRegisterActions } from '../../actions/useRegisterAction';
-import { GLYPH_NAMES } from '../../brand/paths';
+import { GLYPH_NAMES } from '../../tenant/brand/paths';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { BrandMark } from '../../components/atom/BrandMark/BrandMark';
 import { Button } from '../../components/atom/Button/Button';

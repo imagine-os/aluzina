@@ -1,9 +1,16 @@
-// Generates src/styles/tokens.css from src/design/tokens.ts (P-07).
-// Runs under `node --experimental-strip-types` so it can import the .ts source directly.
-import { writeFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+// Generates src/styles/tokens.css (P-07) by composing the platform token schema (src/design/tokens.ts:
+// types, --scale bands, target / focus / icon sizes, composeTokens) with the tenant's token values
+// (tenant.json `brand.tokenValues`, aluzina: src/tenant/brand/tokens.values.ts; tp-06, D-096).
+// Runs under `node --experimental-strip-types` so it can import the .ts sources directly.
+// The output is byte-identical to the pre-split generator (the header line below is kept verbatim).
+import { readFileSync, writeFileSync } from 'node:fs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const { tokens, softenGradient } = await import('../src/design/tokens.ts');
+const repoRoot = new URL('../../../', import.meta.url);
+const manifest = JSON.parse(readFileSync(new URL('tenant.json', repoRoot), 'utf8'));
+const { composeTokens, softenGradient } = await import('../src/design/tokens.ts');
+const { tokenValues } = await import(pathToFileURL(fileURLToPath(new URL(manifest.brand.tokenValues, repoRoot))).href);
+const tokens = composeTokens(tokenValues);
 
 const kebab = (s) => String(s).replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
 const vars = (prefix, obj, indent = '  ') =>

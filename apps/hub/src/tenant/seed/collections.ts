@@ -1,8 +1,8 @@
 import campaignSets from '@docs/archive/collections/campaign-2021/sets.json';
 import studioSets from '@docs/archive/collections/studio-assets/sets.json';
-import type { CollectionSet, CollectionSlug } from '../../domain/collections';
-import { slugify } from '../../domain/archive';
-import type { Asset, BaseRow, Relation, Tag } from '../schema';
+import type { CollectionSet, CollectionSlug } from '../domain/collections';
+import { slugify } from '../domain/archive';
+import type { Asset, BaseRow, Relation, Tag } from '../../data/schema';
 import type { SeedCtx } from './types';
 
 /**

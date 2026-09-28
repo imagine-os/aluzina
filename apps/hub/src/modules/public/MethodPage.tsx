@@ -3,7 +3,7 @@ import { useRegisterActions } from '../../actions';
 import { Button } from '../../components/atom/Button/Button';
 import { Card } from '../../components/molecule/Card/Card';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
-import { CLIENT_JOURNEY, FINAL_PRINCIPLE, GOVERNANCE_RULES, ROLE_RESPONSIBILITIES, pick, serviceByCode } from '../../domain';
+import { CLIENT_JOURNEY, FINAL_PRINCIPLE, GOVERNANCE_RULES, ROLE_RESPONSIBILITIES, pick, serviceByCode } from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import { PublicLayout, WEBSITE_URL } from './PublicLayout';
 import { startHref, startPath } from './startHref';

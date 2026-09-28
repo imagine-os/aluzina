@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { DEFAULT_USER_ID, DEMO_USERS, demoUserById, demoUserForRole, type DemoUser } from './demoUsers';
-import { hasPermission } from './permissions';
-import { isRoleId, type Role } from './roles';
+import { DEFAULT_USER_ID, DEMO_USERS, demoUserById, demoUserForRole, type DemoUser } from '../tenant/auth/demoUsers';
+import { hasPermission } from '../tenant/auth/permissions';
+import { isRoleId, type Role } from '../tenant/auth/roles';
 import { storageKey } from '../tenant/config';
 
 export const SESSION_STORAGE_KEY = storageKey('session');

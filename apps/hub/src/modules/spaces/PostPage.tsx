@@ -1,7 +1,7 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
-import { demoUserById } from '../../auth/demoUsers';
+import { demoUserById } from '../../tenant/auth/demoUsers';
 import { useSession } from '../../auth/SessionProvider';
 import { Avatar } from '../../components/atom/Avatar/Avatar';
 import { Badge } from '../../components/atom/Badge/Badge';
@@ -21,7 +21,7 @@ import { DocumentViewer } from '../../components/organism/DocumentViewer/Documen
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useData, useRow, useTable } from '../../data/DataContext';
 import { RELATION_KINDS, type Asset, type PostStatus, type RelationKind } from '../../data/schema';
-import { FILE_TYPE_LABELS, fileTypeOf, isPreviewable, pick } from '../../domain';
+import { FILE_TYPE_LABELS, fileTypeOf, isPreviewable, pick } from '../../tenant/domain';
 import { formatDate, formatDateTime } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';

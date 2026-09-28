@@ -3,7 +3,7 @@ import { useRegisterActions } from '../../actions';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
 import { Card } from '../../components/molecule/Card/Card';
-import { CLIENT_JOURNEY, SERVICES, SERVICE_LADDER_LOGIC, pick, type Service } from '../../domain';
+import { CLIENT_JOURNEY, SERVICES, SERVICE_LADDER_LOGIC, pick, type Service } from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import { PublicLayout } from './PublicLayout';
 import { startHref, startPath } from './startHref';

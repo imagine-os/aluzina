@@ -1,4 +1,4 @@
-import type { FileType } from '../../../domain/archive';
+import type { FileType } from '../../../tenant/domain/archive';
 import { cx } from '../../../design/cx';
 import './FileIcon.css';
 

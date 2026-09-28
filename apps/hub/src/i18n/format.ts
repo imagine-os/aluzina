@@ -1,10 +1,16 @@
+import { TENANT } from '../tenant/config';
 import type { Lang } from './types';
 
-const LOCALE: Record<Lang, string> = { en: 'en-US', es: 'es-CO' };
+/**
+ * Platform formatters; the tenant supplies the values (tp-05): money is `TENANT.currency` and the `es` locale is
+ * `TENANT.numberLocale` / `TENANT.dateLocale` from `tenant.json` (`COP`, `es-CO` for aluzina). English stays `en-US`.
+ */
+const NUMBER_LOCALE: Record<Lang, string> = { en: 'en-US', es: TENANT.numberLocale };
+const DATE_LOCALE: Record<Lang, string> = { en: 'en-US', es: TENANT.dateLocale };
 
-/** Colombian pesos, no decimals: `$ 18.400.000` (es) / `COP 18,400,000` (en). */
+/** Money in the tenant currency, no decimals: `$ 18.400.000` (es) / `COP 18,400,000` (en) for COP. */
 export function formatCop(amount: number, lang: Lang = 'es'): string {
-  return new Intl.NumberFormat(LOCALE[lang], { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(amount);
+  return new Intl.NumberFormat(NUMBER_LOCALE[lang], { style: 'currency', currency: TENANT.currency, maximumFractionDigits: 0 }).format(amount);
 }
 
 /** `YYYY-MM-DD` or ISO date-time -> short date in the current language; `null` -> em dash. */
@@ -12,7 +18,7 @@ export function formatDate(iso: string | null | undefined, lang: Lang = 'en', op
   if (!iso) return '—';
   const d = iso.length === 10 ? new Date(`${iso}T12:00:00`) : new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  return new Intl.DateTimeFormat(LOCALE[lang], opts).format(d);
+  return new Intl.DateTimeFormat(DATE_LOCALE[lang], opts).format(d);
 }
 
 export function formatDateTime(iso: string | null | undefined, lang: Lang = 'en'): string {

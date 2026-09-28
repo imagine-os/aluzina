@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCan } from '../../auth/SessionProvider';
-import { demoUserById } from '../../auth/demoUsers';
+import { demoUserById } from '../../tenant/auth/demoUsers';
 import { Button } from '../../components/atom/Button/Button';
 import { Checkbox } from '../../components/atom/Checkbox/Checkbox';
 import { Placeholder } from '../../components/atom/Placeholder/Placeholder';

@@ -3,7 +3,7 @@ import { useTable } from '../../data/DataContext';
 import { storageKey } from '../../tenant/config';
 import { useProjectFiles, type ProjectFilesState } from '../../data/archiveFiles';
 import type { Asset, Project, Relation } from '../../data/schema';
-import { DELIVERY_STAGES, compareFolderPaths, fileTypeOf, lifecycleOf, type DeliveryStage, type FileType, type Lifecycle } from '../../domain';
+import { DELIVERY_STAGES, compareFolderPaths, fileTypeOf, lifecycleOf, type DeliveryStage, type FileType, type Lifecycle } from '../../tenant/domain';
 
 /** One place for the archive's derived reads, so S-12 and S-13 read the same rows. */
 export interface ArchiveData {

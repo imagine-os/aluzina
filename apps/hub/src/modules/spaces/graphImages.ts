@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useRoutes } from '../../app/RoutesContext';
-import { DEMO_USERS, demoUserForRole } from '../../auth/demoUsers';
-import { isRoleId } from '../../auth/roles';
+import { DEMO_USERS, demoUserForRole } from '../../tenant/auth/demoUsers';
+import { isRoleId } from '../../tenant/auth/roles';
 import type { GraphNode } from '../../components/organism/RelationGraph/RelationGraph';
 import type { NodeImage, ViewNode } from '../../components/organism/GraphViews/GraphViews';
 import { useTable } from '../../data/DataContext';

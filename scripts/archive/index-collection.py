@@ -12,7 +12,7 @@ Usage
   that already exist and match the plan are kept, renders the plan no longer references are pruned, the JSON is
   rewritten. --dry-run classifies, plans and prints the tables without touching the served folder or the JSON.
 
-Output (shape: `apps/hub/src/domain/collections.ts`, keys exactly as there)
+Output (shape: `apps/hub/src/tenant/domain/collections.ts`, keys exactly as there)
   docs/archive/collections/<slug>/index.json   canonical index: collection header, totals, sets[], files[]  (memory)
   docs/archive/collections/<slug>/sets.json    the same minus files[] (seed input, `seed/collections.ts`)
   apps/hub/public/archive/<slug>/thumbs/*.jpg|png   512 px long edge, JPEG q72 (PNG with alpha only for icon sets)

@@ -1,4 +1,4 @@
-import { FILE_TYPES, FILE_TYPE_LABELS, pick } from '../../../domain';
+import { FILE_TYPES, FILE_TYPE_LABELS, pick } from '../../../tenant/domain';
 import { useT } from '../../../i18n/I18nProvider';
 import { FileIcon } from './FileIcon';
 

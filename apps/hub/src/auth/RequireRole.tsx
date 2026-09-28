@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/atom/Button/Button';
 import { EmptyState } from '../components/molecule/EmptyState/EmptyState';
 import { useT } from '../i18n/I18nProvider';
-import { rolesWith } from './permissions';
-import { ROLE_META, isRoleId } from './roles';
+import { rolesWith } from '../tenant/auth/permissions';
+import { ROLE_META, isRoleId } from '../tenant/auth/roles';
 import { useSession } from './SessionProvider';
 import './RequireRole.css';
 

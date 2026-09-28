@@ -1,5 +1,5 @@
 import type { Asset, Project } from '../../data/schema';
-import { fileTypeOf } from '../../domain';
+import { fileTypeOf } from '../../tenant/domain';
 import type { Lang, StringTable } from '../../i18n/types';
 import { strings } from './strings';
 

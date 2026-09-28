@@ -1,6 +1,6 @@
-import { fileTypeOf, mimeTypeOf, slugify, stageFor, type DeliveryStage } from '../domain/archive';
+import { fileTypeOf, mimeTypeOf, slugify, stageFor, type DeliveryStage } from '../tenant/domain/archive';
 import type { Asset } from './schema';
-import { SEED_AT } from './seed/types';
+import { SEED_AT } from '../tenant/seed/types';
 import { TENANT } from '../tenant/config';
 
 /**

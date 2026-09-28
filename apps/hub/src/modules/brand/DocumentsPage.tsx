@@ -14,8 +14,8 @@ import { DocumentViewer } from '../../components/organism/DocumentViewer/Documen
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useTable } from '../../data/DataContext';
 import type { Asset, Project, Relation } from '../../data/schema';
-import { FILE_TYPE_LABELS, fileTypeOf } from '../../domain/archive';
-import { SERVICES, pick, type Service } from '../../domain';
+import { FILE_TYPE_LABELS, fileTypeOf } from '../../tenant/domain/archive';
+import { SERVICES, pick, type Service } from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import { absoluteUrl, copyText, docIn, docsFromAssets, fontNames, formatMb, triggerDownload, viewerAssetOf, type BrandDoc } from './documents';
 import { documentsSpec } from './specs';

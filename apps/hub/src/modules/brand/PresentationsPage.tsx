@@ -14,7 +14,7 @@ import { DataTable } from '../../components/organism/DataTable/DataTable';
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useData, useTable } from '../../data/DataContext';
 import type { Presentation, PresentationKind, Project } from '../../data/schema';
-import { demoUserById } from '../../auth/demoUsers';
+import { demoUserById } from '../../tenant/auth/demoUsers';
 import { formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import { isOverdue, nextStatus, PRESENTATION_FLOW, unknownable } from './helpers';

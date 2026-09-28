@@ -1,4 +1,4 @@
-import type { DeliveryStage } from '../../domain/archive';
+import type { DeliveryStage } from '../../tenant/domain/archive';
 import type { BaseRow, Id, ISODate } from './base';
 
 /**

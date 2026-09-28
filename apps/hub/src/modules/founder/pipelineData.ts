@@ -8,7 +8,7 @@ import {
   type PipelineStatus,
   type PipelineStatusId,
   type ServiceCode,
-} from '../../domain';
+} from '../../tenant/domain';
 
 /** The pipeline, left to right (src/data/schema/projects.ts). */
 export const PHASES: readonly ProjectPhase[] = ['lead', 'concept', 'development', 'documentation', 'procurement', 'execution', 'delivered'];

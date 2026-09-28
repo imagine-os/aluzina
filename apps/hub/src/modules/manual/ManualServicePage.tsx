@@ -5,7 +5,7 @@ import { Button } from '../../components/atom/Button/Button';
 import { Card } from '../../components/molecule/Card/Card';
 import { EmptyState } from '../../components/molecule/EmptyState/EmptyState';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
-import { isGrouped, pick, SERVICES, serviceByCode, type ServiceCode, type ServicePhase } from '../../domain';
+import { isGrouped, pick, SERVICES, serviceByCode, type ServiceCode, type ServicePhase } from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import './manual.css';
 import { Checklist, focusSection, PrintButton, SectionHeading } from './parts';

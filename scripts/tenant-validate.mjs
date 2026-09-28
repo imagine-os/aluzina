@@ -1,0 +1,328 @@
+#!/usr/bin/env node
+// tenant-validate (tp-03, D-094): checks the root `tenant.json` (manifestVersion 1) against the checkout.
+// Contract: docs/tenant/manifest.md "What tenant-validate.mjs checks". Plain Node, no browser, no TypeScript
+// loader: sources are read as text. One line per failure and exit 1; a summary line and exit 0 when green.
+// Tenant-agnostic: every name it looks for (namespace literals, paths, counters) comes from the manifest.
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { execSync } from 'node:child_process';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const failures = [];
+const warnings = [];
+const notes = [];
+const fail = (msg) => failures.push(msg);
+const abs = (p) => join(root, p);
+const read = (p) => readFileSync(abs(p), 'utf8');
+const exists = (p) => existsSync(abs(p));
+const isDir = (p) => exists(p) && statSync(abs(p)).isDirectory();
+const nonEmpty = (p) => exists(p) && (!isDir(p) || readdirSync(abs(p)).length > 0);
+const sameSet = (a, b) => a.length === b.length && [...a].sort().join('|') === [...b].sort().join('|');
+const diff = (a, b) => {
+  const A = new Set(a), B = new Set(b);
+  const missing = [...B].filter((x) => !A.has(x)), extra = [...A].filter((x) => !B.has(x));
+  return [missing.length ? `not in the manifest: ${missing.join(', ')}` : '', extra.length ? `only in the manifest: ${extra.join(', ')}` : ''].filter(Boolean).join('; ');
+};
+
+let m;
+try {
+  m = JSON.parse(read('tenant.json'));
+} catch (e) {
+  console.error(`tenant-validate: tenant.json does not parse: ${e.message}`);
+  process.exit(1);
+}
+const pkg = JSON.parse(read('package.json'));
+
+// ---- (g) manifest version and required top-level keys ---------------------------------------------------
+const REQUIRED = ['manifestVersion', 'id', 'name', 'repo', 'version', 'identity', 'brand', 'surfaces', 'hubModules', 'subProjects', 'data', 'contentMounts', 'namespace', 'routing', 'deploy', 'docs', 'actions', 'hostRequirements'];
+if (m.manifestVersion !== 1) fail(`manifestVersion is ${JSON.stringify(m.manifestVersion)}, expected 1`);
+for (const k of REQUIRED) if (!(k in m)) fail(`tenant.json: required top-level key "${k}" is missing`);
+if (typeof m.id !== 'string' || !/^[a-z][a-z0-9-]*$/.test(m.id)) fail(`id ${JSON.stringify(m.id)} does not match ^[a-z][a-z0-9-]*$`);
+
+// ---- (e) version mirrors root package.json --------------------------------------------------------------
+if (m.version !== pkg.version) fail(`version ${m.version} != package.json version ${pkg.version}`);
+
+// ---- (i) routing strategy is one it supports ------------------------------------------------------------
+if (!m.routing || !Array.isArray(m.routing.supports) || !m.routing.supports.includes(m.routing.strategy)) {
+  fail(`routing.strategy ${JSON.stringify(m.routing?.strategy)} is not in routing.supports ${JSON.stringify(m.routing?.supports)}`);
+}
+
+// ---- single-path fields must exist ----------------------------------------------------------------------
+const pathFields = {
+  spec: m.spec,
+  'brand.tokenValues': m.brand?.tokenValues,
+  'brand.tokenSchema': m.brand?.tokenSchema,
+  'brand.generatedCss': m.brand?.generatedCss,
+  'brand.paths': m.brand?.paths,
+  'brand.renders': m.brand?.renders,
+  'brand.sourceKit': m.brand?.sourceKit,
+  'brand.brief': m.brand?.brief,
+  'surfaces.rolesFile': m.surfaces?.rolesFile,
+  'surfaces.permissionsFile': m.surfaces?.permissionsFile,
+  'surfaces.demoUsersFile': m.surfaces?.demoUsersFile,
+  'surfaces.navGroupsFile': m.surfaces?.navGroupsFile,
+  'surfaces.hubCardsFile': m.surfaces?.hubCardsFile,
+  'data.providerInterface': m.data?.providerInterface,
+  'data.schemaDir': m.data?.schemaDir,
+  'data.seedDir': m.data?.seedDir,
+  'data.domainDir': m.data?.domainDir,
+  'namespace.config': m.namespace?.config,
+  'namespace.tenantDir': m.namespace?.tenantDir,
+  'deploy.workflow': m.deploy?.workflow,
+  'deploy.ciWorkflow': m.deploy?.ciWorkflow,
+  'docs.root': m.docs?.root,
+  'docs.plan': m.docs?.plan,
+  'docs.kanban': m.docs?.kanban,
+  'docs.buildPlan': m.docs?.buildPlan,
+  'docs.decisions': m.docs?.decisions,
+  'docs.pagesDir': m.docs?.pagesDir,
+  'docs.pageTemplate': m.docs?.pageTemplate,
+  'docs.screenshotsDir': m.docs?.screenshotsDir,
+  'docs.knowledge': m.docs?.knowledge,
+  'docs.surfaces': m.docs?.surfaces,
+  'docs.tenantDocs': m.docs?.tenantDocs,
+  'actions.bus': m.actions?.bus,
+};
+let pathsChecked = 0;
+for (const [field, p] of Object.entries(pathFields)) {
+  if (p == null) continue;
+  pathsChecked++;
+  if (!exists(p)) fail(`${field}: ${p} does not exist`);
+}
+for (const d of m.brand?.documents ?? []) {
+  pathsChecked++;
+  if (!exists(d.file)) fail(`brand.documents: ${d.file} does not exist`);
+}
+for (const p of m.data?.providers ?? []) {
+  pathsChecked++;
+  if (!exists(p.file)) fail(`data.providers[${p.name}]: ${p.file} does not exist`);
+}
+
+// ---- (a) hub modules: folder set, paths, codes ----------------------------------------------------------
+const modulesDir = 'apps/hub/src/modules';
+const folders = readdirSync(abs(modulesDir)).filter((n) => isDir(join(modulesDir, n)));
+const listed = (m.hubModules ?? []).map((h) => h.name);
+if (!sameSet(folders, listed)) fail(`hubModules names != folders of ${modulesDir}: ${diff(listed, folders)}`);
+
+/** Page codes a specs.ts defines: `code: 'X-nn'` literals, plus codes a spec factory is called with (see below). */
+function specCodes(file) {
+  const src = read(file);
+  const codes = new Set([...src.matchAll(/\bcode:\s*['"]((?:HUB|BOS|[A-Z])-\d{2})['"]/g)].map((x) => x[1]));
+  // Generated specs (manual M-03..M-07): `serviceSpec(code)` is fed from an object literal keyed by page code
+  // (`SERVICE_CODES_BY_PAGE = { 'M-03': '01', ... }`); a spec factory `function xSpec(code: string)` marks the file.
+  if (/export function \w+Spec\(\s*code\b/.test(src)) {
+    for (const x of src.matchAll(/['"]((?:HUB|BOS|[A-Z])-\d{2})['"]\s*:/g)) codes.add(x[1]);
+  }
+  return [...codes];
+}
+const allSpecCodes = new Set();
+let codeCount = 0;
+for (const h of m.hubModules ?? []) {
+  if (!isDir(h.path)) { fail(`hubModules[${h.name}].path ${h.path} does not exist`); continue; }
+  const specs = join(h.path, 'specs.ts');
+  if (!exists(specs)) { fail(`hubModules[${h.name}]: ${specs} is missing`); continue; }
+  const found = specCodes(specs);
+  found.forEach((c) => allSpecCodes.add(c));
+  codeCount += h.codes.length;
+  if (!sameSet(found, h.codes)) fail(`hubModules[${h.name}].codes != codes in ${specs}: ${diff(h.codes, found)}`);
+}
+for (const c of m.surfaces?.nextFreeCodes ?? []) if (allSpecCodes.has(c)) fail(`surfaces.nextFreeCodes: ${c} is already defined in a specs.ts`);
+
+// ---- surfaces and roles mirror the code -----------------------------------------------------------------
+const pageSpec = read('apps/hub/src/specs/PageSpec.ts');
+const surfacesSrc = /export const SURFACES[^=]*=\s*\[([^\]]*)\]/.exec(pageSpec);
+if (!surfacesSrc) fail('apps/hub/src/specs/PageSpec.ts: SURFACES not found');
+else {
+  const surfaces = [...surfacesSrc[1].matchAll(/'([^']+)'/g)].map((x) => x[1]);
+  if (!sameSet(surfaces, m.surfaces.list)) fail(`surfaces.list != SURFACES in PageSpec.ts: ${diff(m.surfaces.list, surfaces)}`);
+}
+if (m.surfaces?.rolesFile && exists(m.surfaces.rolesFile)) {
+  const rolesSrc = /export const ROLES\s*=\s*\[([^\]]*)\]/.exec(read(m.surfaces.rolesFile));
+  const roles = rolesSrc ? [...rolesSrc[1].matchAll(/'([^']+)'/g)].map((x) => x[1]) : [];
+  if (!sameSet(roles, m.surfaces.roles)) fail(`surfaces.roles != ROLES in ${m.surfaces.rolesFile}: ${diff(m.surfaces.roles, roles)}`);
+}
+
+// ---- (b) sub-projects, (c) content mounts ---------------------------------------------------------------
+let subPaths = 0;
+for (const s of m.subProjects ?? []) {
+  for (const p of s.paths ?? []) {
+    subPaths++;
+    if (!nonEmpty(p)) fail(`subProjects[${s.id}].paths: ${p} does not exist or is empty`);
+  }
+  if (s.readme && !exists(s.readme)) fail(`subProjects[${s.id}].readme: ${s.readme} does not exist`);
+  if (s.entry && !/^https?:/.test(s.entry) && !exists(s.entry)) fail(`subProjects[${s.id}].entry: ${s.entry} does not exist`);
+  for (const d of s.dependsOn ?? []) if (!(m.subProjects ?? []).some((x) => x.id === d)) fail(`subProjects[${s.id}].dependsOn: unknown id ${d}`);
+}
+for (const c of m.contentMounts ?? []) if (!nonEmpty(c.path)) fail(`contentMounts[${c.id}].path: ${c.path} does not exist or is empty`);
+
+// ---- (h) seed version, entities --------------------------------------------------------------------------
+const seedIndex = join(m.data.seedDir, 'index.ts');
+const seedVersion = exists(seedIndex) ? /export const SEED_VERSION\s*=\s*(\d+)/.exec(read(seedIndex))?.[1] : undefined;
+const provider = (m.data.providers ?? []).find((p) => p.name === 'mock');
+if (seedVersion === undefined) fail(`${seedIndex}: SEED_VERSION not found`);
+else if (Number(seedVersion) !== m.data.seedVersion) fail(`data.seedVersion ${m.data.seedVersion} != SEED_VERSION ${seedVersion} (${seedIndex})`);
+if (provider && exists(provider.file) && !/\bSEED_VERSION\b/.test(read(provider.file))) fail(`${provider.file} does not use SEED_VERSION`);
+const schemaIndex = read(join(m.data.schemaDir, 'index.ts'));
+const entityMap = /export interface EntityMap\s*\{([^}]*)\}/.exec(schemaIndex);
+const entities = entityMap ? [...entityMap[1].matchAll(/^\s*(\w+)\s*:/gm)].map((x) => x[1]) : [];
+if (!sameSet(entities, m.data.entities)) fail(`data.entities != EntityMap keys: ${diff(m.data.entities, entities)}`);
+const seedModules = readdirSync(abs(m.data.seedDir)).filter((n) => n.endsWith('.ts') && !['index.ts', 'types.ts'].includes(n)).map((n) => n.replace(/\.ts$/, ''));
+if (!sameSet(seedModules, m.data.seedModules ?? [])) fail(`data.seedModules != modules in ${m.data.seedDir}: ${diff(m.data.seedModules ?? [], seedModules)}`);
+
+// ---- (d) docs counters equal the highest numbered file --------------------------------------------------
+const highest = (dir) => Math.max(0, ...readdirSync(abs(dir)).map((n) => /^(\d{4})-/.exec(n)?.[1]).filter(Boolean).map(Number));
+const counters = {
+  prompts: highest('docs/prompts'),
+  changelog: highest('docs/changelog'),
+  decisions: Math.max(0, ...[...read(m.docs.decisions).matchAll(/^\| D-(\d{3}) \|/gm)].map((x) => Number(x[1]))),
+  qa: highest('docs/qa'),
+};
+for (const [k, v] of Object.entries(counters)) {
+  if (m.docs?.counters?.[k] !== v) fail(`docs.counters.${k} is ${m.docs?.counters?.[k]}, highest in the repo is ${v}`);
+}
+if (m.docs?.pendingDir && isDir(m.docs.pendingDir) && readdirSync(abs(m.docs.pendingDir)).length) {
+  notes.push(`${m.docs.pendingDir} has ${readdirSync(abs(m.docs.pendingDir)).length} draft(s) waiting for the integrator`);
+}
+
+// ---- plan.json: parses, dependsOn ids exist, every step is a build-plan row ----------------------------
+try {
+  const plan = JSON.parse(read(m.docs.plan));
+  const ids = new Set(plan.tasks.map((t) => t.id));
+  const buildPlan = read(m.docs.buildPlan);
+  const steps = new Set([...buildPlan.matchAll(/^\| \*\*(\S+?)[* ]/gm)].map((x) => x[1]));
+  for (const t of plan.tasks) {
+    for (const d of t.dependsOn ?? []) if (!ids.has(d)) fail(`${m.docs.plan}: ${t.id} dependsOn unknown task ${d}`);
+    if (!steps.has(String(t.step))) fail(`${m.docs.plan}: ${t.id} step ${t.step} has no row in ${m.docs.buildPlan}`);
+    if (!plan.statuses.includes(t.status)) fail(`${m.docs.plan}: ${t.id} status ${t.status} is not one of ${plan.statuses.join('/')}`);
+  }
+} catch (e) {
+  fail(`${m.docs.plan}: ${e.message}`);
+}
+
+// ---- (f) no namespace literal in an executable string position ------------------------------------------
+// Forbidden: `${id}.<storage key>`, every channel name, the window global `__${id}`. Allowed: Markdown, comments,
+// `strings.ts` (UI prose), prose fields of `specs.ts`, files under the tenant dir, and `namespace.literalAllowlist`.
+const id = m.id;
+const keyHeads = [...new Set(Object.values(m.namespace.storageKeys ?? {}).flat().map((k) => k.split(/[.<]/)[0]))];
+const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const forbidden = new RegExp(`${esc(id)}\\.(?:${keyHeads.map(esc).join('|')})\\b|${(m.namespace.channels ?? []).map(esc).join('|')}|__${esc(id)}\\b`);
+const PROSE_KEYS = new Set(['logic', 'label', 'intent', 'description', 'purpose', 'notes', 'layout', 'name']);
+const tenantDir = m.namespace.tenantDir;
+const allow = new Set(m.namespace.literalAllowlist ?? []);
+
+/** Tokens of a JS / TS source: string literals (with offsets) and single punctuation / words; comments dropped. */
+function tokenize(src) {
+  const out = [];
+  let i = 0;
+  let prev = '';
+  const regexOk = () => prev === '' || /[(,=:[!&|?{};+\-*%<>~^]$/.test(prev) || /^(return|typeof|case|in|of|new|delete|void|throw)$/.test(prev);
+  while (i < src.length) {
+    const c = src[i];
+    if (c === '/' && src[i + 1] === '/') { i = src.indexOf('\n', i); if (i < 0) break; continue; }
+    if (c === '/' && src[i + 1] === '*') { const e = src.indexOf('*/', i + 2); i = e < 0 ? src.length : e + 2; continue; }
+    if (c === "'" || c === '"' || c === '`') {
+      let j = i + 1;
+      while (j < src.length && src[j] !== c) { if (src[j] === '\\') j++; if (c !== '`' && src[j] === '\n') break; j++; }
+      out.push({ t: 'str', v: src.slice(i + 1, j), at: i });
+      prev = 'str';
+      i = j + 1;
+      continue;
+    }
+    if (c === '/' && regexOk()) {
+      let j = i + 1, cls = false;
+      while (j < src.length && src[j] !== '\n' && (cls || src[j] !== '/')) { if (src[j] === '\\') j++; else if (src[j] === '[') cls = true; else if (src[j] === ']') cls = false; j++; }
+      prev = 'regex';
+      i = j + 1;
+      continue;
+    }
+    if (/\s/.test(c)) { i++; continue; }
+    const w = /^[A-Za-z_$][\w$]*/.exec(src.slice(i, i + 64));
+    if (w) { out.push({ t: 'word', v: w[0], at: i }); prev = w[0]; i += w[0].length; continue; }
+    out.push({ t: 'p', v: c, at: i });
+    prev = c;
+    i++;
+  }
+  return out;
+}
+/** The object key a string token belongs to (`logic: ['...']` -> logic), walking back over arrays and calls. */
+function ownerKey(tokens, k) {
+  let depth = 0;
+  for (let j = k - 1; j >= 0; j--) {
+    const t = tokens[j];
+    if (t.t === 'p') {
+      if (t.v === ']' || t.v === ')' || t.v === '}') depth++;
+      else if (t.v === '[' || t.v === '(') { if (depth > 0) depth--; }
+      else if (t.v === '{') { if (depth > 0) depth--; else return null; }
+      else if (t.v === ':' && depth === 0) { const key = tokens[j - 1]; return key ? key.v : null; }
+      // `const BROWSER_LOGIC = [ ... ]` later spread into `logic:`: the constant's name is the owner.
+      else if (t.v === '=' && depth === 0) { const key = tokens[j - 1]; return key && key.t === 'word' ? key.v : null; }
+    }
+  }
+  return null;
+}
+function* walk(dir) {
+  for (const n of readdirSync(abs(dir))) {
+    const p = join(dir, n);
+    if (n === 'node_modules') continue;
+    if (isDir(p)) yield* walk(p);
+    else yield p;
+  }
+}
+const scanFiles = [
+  ...walk('apps/hub/src'),
+  ...walk('apps/hub/scripts'),
+  ...walk('scripts'),
+  'apps/hub/index.html',
+].filter((p) => /\.(ts|tsx|mjs|js|html)$/.test(p));
+let scanned = 0;
+for (const file of scanFiles) {
+  if (allow.has(file) || (tenantDir && file.startsWith(tenantDir + '/')) || /(^|\/)strings\.ts$/.test(file)) continue;
+  let src = read(file);
+  if (!forbidden.test(src)) { scanned++; continue; }
+  scanned++;
+  if (file.endsWith('.html')) {
+    src = src.replace(/<!--[\s\S]*?-->/g, (s) => ' '.repeat(s.length));
+    const scripts = [...src.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)];
+    const outside = src.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '');
+    if (forbidden.test(outside)) fail(`${file}: namespace literal in markup (derive it from tenant.json, e.g. %TENANT_ID%)`);
+    for (const s of scripts) for (const t of tokenize(s[1])) if (t.t === 'str' && forbidden.test(t.v)) fail(`${file}: namespace literal "${forbidden.exec(t.v)[0]}" in an inline script string`);
+    continue;
+  }
+  const tokens = tokenize(src);
+  const isSpecs = /(^|\/)specs\.ts$/.test(file);
+  tokens.forEach((t, k) => {
+    if (t.t === 'word' && t.v === `__${id}`) {
+      fail(`${file}:${src.slice(0, t.at).split('\n').length}: the global __${id} used as an identifier (read it through GLOBAL_NAME)`);
+      return;
+    }
+    if (t.t !== 'str' || !forbidden.test(t.v)) return;
+    const owner = ownerKey(tokens, k);
+    if (isSpecs && owner && (PROSE_KEYS.has(owner) || [...PROSE_KEYS].some((p) => owner.toLowerCase().split('_').includes(p)))) return;
+    const line = src.slice(0, t.at).split('\n').length;
+    fail(`${file}:${line}: namespace literal "${forbidden.exec(t.v)[0]}" in an executable string (derive it with storageKey() / channelName() / GLOBAL_NAME)`);
+  });
+}
+
+// ---- generatedFrom freshness (warning only) -------------------------------------------------------------
+try {
+  const behind = Number(execSync(`git rev-list --count ${m.generatedFrom}..HEAD`, { cwd: root, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim());
+  if (behind > 50) warnings.push(`generatedFrom ${m.generatedFrom} is ${behind} commits behind HEAD; re-verify the manifest`);
+} catch {
+  /* shallow clone or no git: skip */
+}
+
+// ---- report ---------------------------------------------------------------------------------------------
+for (const w of warnings) console.warn(`tenant-validate: warning: ${w}`);
+for (const n of notes) console.log(`tenant-validate: note: ${n}`);
+if (failures.length) {
+  for (const f of failures) console.error(`tenant-validate: FAIL ${f}`);
+  console.error(`tenant-validate: ${failures.length} failure(s); fix tenant.json or the code it describes (spec: ${m.spec ?? 'docs/tenant/manifest.md'})`);
+  process.exit(1);
+}
+console.log(
+  `tenant-validate: OK ${m.id} v${m.version} manifestVersion ${m.manifestVersion} — ${m.hubModules.length} modules / ${codeCount} codes, ` +
+    `${m.subProjects.length} sub-projects (${subPaths} paths), ${m.contentMounts.length} content mounts, ${pathsChecked} path fields, ` +
+    `seed v${seedVersion}, ${entities.length} entities, counters prompts ${counters.prompts} / changelog ${counters.changelog} / decisions ${counters.decisions} / qa ${counters.qa}, ` +
+    `routing ${m.routing.strategy}, ${scanned} files scanned for namespace literals`,
+);

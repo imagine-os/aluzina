@@ -64,7 +64,7 @@ export const strings: StringTable = {
   'qa.tokens.search': { en: 'Search token or variable…', es: 'Buscar token o variable…' },
   'qa.tokens.copy': { en: 'Copy variable', es: 'Copiar variable' },
   'qa.tokens.edit': { en: 'Edit token', es: 'Editar token' },
-  'qa.tokens.editWhat': { en: 'write the value back into src/design/tokens.ts and regenerate tokens.css', es: 'escribir el valor de vuelta en src/design/tokens.ts y regenerar tokens.css' },
+  'qa.tokens.editWhat': { en: 'write the value back into src/tenant/brand/tokens.values.ts and regenerate tokens.css', es: 'escribir el valor de vuelta en src/tenant/brand/tokens.values.ts y regenerar tokens.css' },
   'qa.tokens.colors': { en: 'Colours', es: 'Colores' },
   'qa.tokens.colorsSub': { en: 'Light and dark side by side. Every pair is generated into tokens.css as --color-*.', es: 'Claro y oscuro lado a lado. Cada par se genera en tokens.css como --color-*.' },
   'qa.tokens.light': { en: 'Light', es: 'Claro' },

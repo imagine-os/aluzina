@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
 import { useSession } from '../../auth/SessionProvider';
-import type { RoleId } from '../../auth/roles';
+import type { RoleId } from '../../tenant/auth/roles';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
 import { Checkbox } from '../../components/atom/Checkbox/Checkbox';
@@ -15,8 +15,8 @@ import { StatTile } from '../../components/molecule/StatTile/StatTile';
 import { Tabs } from '../../components/molecule/Tabs/Tabs';
 import { useData, useTable } from '../../data/DataContext';
 import type { ProjectType } from '../../data/schema';
-import { pick, SERVICES, type ServiceCode } from '../../domain';
-import { expandTemplate, TEMPLATES, templateCounts, ZONES, type Zone } from '../../domain/templates';
+import { pick, SERVICES, type ServiceCode } from '../../tenant/domain';
+import { expandTemplate, TEMPLATES, templateCounts, ZONES, type Zone } from '../../tenant/domain/templates';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';
 import { todayIso } from '../../work/model';
@@ -34,7 +34,7 @@ const LEAD_ROLES: RoleId[] = ['founder', 'studio', 'ops'];
 
 /**
  * W-03: create a project from a template (D-062). Five steps over one `ProjectTemplate`
- * (`src/domain/templates`): template, project, phases, zones, review. "Create" writes the `projects` row,
+ * (`src/tenant/domain/templates`): template, project, phases, zones, review. "Create" writes the `projects` row,
  * one `sections` row per chosen phase and the whole task tree through the DataProvider — every task with
  * its `templateTaskId`, `deliverableId`, `ownerRole`, assignee, `order` and `parentTaskId` — and then
  * opens the new project in W-02.

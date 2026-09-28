@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useCan } from '../../auth/SessionProvider';
-import { demoUserById } from '../../auth/demoUsers';
+import { demoUserById } from '../../tenant/auth/demoUsers';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
 import { Placeholder } from '../../components/atom/Placeholder/Placeholder';

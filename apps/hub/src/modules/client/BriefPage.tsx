@@ -9,7 +9,7 @@ import { Card } from '../../components/molecule/Card/Card';
 import { EmptyState } from '../../components/molecule/EmptyState/EmptyState';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { useData } from '../../data/DataContext';
-import { checkKey, isGrouped, phaseById, pick, type PhaseGroup } from '../../domain';
+import { checkKey, isGrouped, phaseById, pick, type PhaseGroup } from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import { briefSpec } from './specs';
 import './client.css';

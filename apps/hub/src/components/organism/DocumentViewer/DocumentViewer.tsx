@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import type { Asset } from '../../../data/schema';
-import type { FileType } from '../../../domain/archive';
+import type { FileType } from '../../../tenant/domain/archive';
 import { cx } from '../../../design/cx';
 import { Button } from '../../atom/Button/Button';
 import { FileIcon } from '../../atom/FileIcon/FileIcon';

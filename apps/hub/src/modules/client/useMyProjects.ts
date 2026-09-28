@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useSession } from '../../auth/SessionProvider';
 import { useTable } from '../../data/DataContext';
 import type { Engagement, Project } from '../../data/schema';
-import { CLIENT_JOURNEY, checkKey, phaseItems, serviceByCode, type PipelineStatusId, type Service, type ServicePhase, type Text } from '../../domain';
+import { CLIENT_JOURNEY, checkKey, phaseItems, serviceByCode, type PipelineStatusId, type Service, type ServicePhase, type Text } from '../../tenant/domain';
 
 /**
  * Which journey step (`CLIENT_JOURNEY`, playbook p. 2) a pipeline status sits in. The journey is what the

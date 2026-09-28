@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
 import { useRoutes } from '../../app/RoutesContext';
-import { ROLE_META } from '../../auth/roles';
+import { ROLE_META } from '../../tenant/auth/roles';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
 import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
@@ -23,7 +23,7 @@ import {
   pick,
   type GovernanceKind,
   type PipelineGroup,
-} from '../../domain';
+} from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import './manual.css';
 import { focusSection, PrintButton, SectionHeading } from './parts';

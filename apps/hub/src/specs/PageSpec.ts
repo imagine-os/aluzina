@@ -29,7 +29,7 @@ export interface PageSpec {
   name: string;
   purpose: string;
   surface: Surface;
-  /** Sidebar group key from `src/app/navGroups.ts`; omit for detail pages that are not in the menu. */
+  /** Sidebar group key from `src/tenant/navGroups.ts`; omit for detail pages that are not in the menu. */
   navGroup?: string;
   /** Top-to-bottom description of the layout. */
   layout: string[];

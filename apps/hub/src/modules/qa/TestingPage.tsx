@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useRegisterActions } from '../../actions';
 import { useRoutes } from '../../app/RoutesContext';
-import { isRoleId, roleForSurface } from '../../auth/roles';
+import { isRoleId, roleForSurface } from '../../tenant/auth/roles';
 import { useSession } from '../../auth/SessionProvider';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';

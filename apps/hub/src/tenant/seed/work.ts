@@ -1,5 +1,5 @@
-import type { NewRow } from '../provider';
-import type { Priority, TaskStatus } from '../schema';
+import type { NewRow } from '../../data/provider';
+import type { Priority, TaskStatus } from '../../data/schema';
 import { PROJECT_IDS, SECTION_IDS, TASK_DEFAULTS } from './projects';
 import { SEED_AT, type SeedCtx } from './types';
 

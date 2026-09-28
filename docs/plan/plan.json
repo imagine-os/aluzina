@@ -1,5 +1,5 @@
 {
-  "version": "0.16.0",
+  "version": "0.17.0",
   "updatedAt": "2026-09-28",
   "source": "docs/build-plan.md (steps 0-15, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -1799,12 +1799,13 @@
       "id": "tp-03",
       "title": "scripts/tenant-validate.mjs + npm run tenant:validate inside build + .github/workflows/ci.yml running npm ci && npm run build on every push and PR (D-094)",
       "step": "15",
-      "status": "next",
+      "status": "done",
       "model": "Opus 5",
       "codes": [],
       "dependsOn": [
         "tp-02"
-      ]
+      ],
+      "changelog": "0027"
     },
     {
       "id": "tp-04",
@@ -1820,22 +1821,23 @@
     },
     {
       "id": "tp-05",
-      "title": "Move tenant-owned code into apps/hub/src/tenant/ with git mv: auth constants (roles, permissions, demoUsers), navGroups, hubCards out of HubPage.tsx, domain/, data/seed/, brand/paths.ts; re-export shims; tsc green (D-089)",
+      "title": "Move tenant-owned code into apps/hub/src/tenant/ with git mv: auth constants (roles, permissions, demoUsers), navGroups, hubCards out of HubPage.tsx, domain/, data/seed/, brand/paths.ts, imports updated directly (no shims); tsc green (D-089)",
       "step": "15",
-      "status": "next",
+      "status": "done",
       "model": "Opus 5",
       "codes": [
         "HUB-01"
       ],
       "dependsOn": [
         "tp-02"
-      ]
+      ],
+      "changelog": "0027"
     },
     {
       "id": "tp-06",
       "title": "Split design/tokens.ts into the platform token schema + tenant/brand/tokens.values.ts; gen-tokens.mjs output byte-identical to the committed tokens.css (D-096)",
       "step": "15",
-      "status": "backlog",
+      "status": "done",
       "model": "Opus 5",
       "codes": [
         "D-10",
@@ -1843,13 +1845,14 @@
       ],
       "dependsOn": [
         "tp-05"
-      ]
+      ],
+      "changelog": "0027"
     },
     {
       "id": "tp-07",
       "title": "scripts/thumbnails.mjs and scripts/screenshots.mjs read tenant/hubCards.ts and tenant/auth/demoUsers.ts instead of hand-kept card list and USER_BY_ROLE map",
       "step": "15",
-      "status": "backlog",
+      "status": "next",
       "model": "Sonnet 5",
       "codes": [
         "HUB-01"
@@ -1862,7 +1865,7 @@
       "id": "tp-08",
       "title": "One README.md per sub-project root (scripts/archive, docs/plan, docs/source/brand-kit, apps/hub; business-os, knowledge, brand, archive already have one) pointing at its tenant.json subProjects entry",
       "step": "15",
-      "status": "backlog",
+      "status": "next",
       "model": "Sonnet 5",
       "codes": [],
       "dependsOn": [
@@ -1873,7 +1876,7 @@
       "id": "tp-09",
       "title": "Stale docs fixes: root README status line (0.10.0 / 0013 -> current), docs/pages/_TEMPLATE.md surface list = the Surface union, README 'never run playwright install' vs pages.yml, docs/README map row for screenshots/routes.json per code",
       "step": "15",
-      "status": "backlog",
+      "status": "next",
       "model": "Sonnet 5",
       "codes": [],
       "dependsOn": [
@@ -1884,7 +1887,7 @@
       "id": "tp-10",
       "title": "docs/reference/surfaces.md tenant section: tenant.json, npm run tenant:validate, ci.yml, namespace derivation",
       "step": "15",
-      "status": "backlog",
+      "status": "next",
       "model": "Sonnet 5",
       "codes": [],
       "dependsOn": [

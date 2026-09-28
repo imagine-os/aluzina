@@ -21,7 +21,7 @@ import {
   SERVICES,
   type QualificationAnswers,
   type QualificationKey,
-} from '../../domain';
+} from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import './manual.css';
 import { focusSection, PrintButton, SectionHeading } from './parts';

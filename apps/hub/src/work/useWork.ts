@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { DEMO_USERS } from '../auth/demoUsers';
+import { DEMO_USERS } from '../tenant/auth/demoUsers';
 import { useSession } from '../auth/SessionProvider';
 import { useData, useTable } from '../data/DataContext';
 import type { Task, TaskStatus } from '../data/schema';

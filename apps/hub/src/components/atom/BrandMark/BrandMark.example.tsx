@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { GLYPH_NAMES } from '../../../brand/paths';
+import { GLYPH_NAMES } from '../../../tenant/brand/paths';
 import { BrandMark } from './BrandMark';
 
 const tile: CSSProperties = {

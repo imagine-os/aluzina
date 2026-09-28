@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { FileType } from '../../../domain/archive';
+import type { FileType } from '../../../tenant/domain/archive';
 import { cx } from '../../../design/cx';
 import { FileIcon } from '../../atom/FileIcon/FileIcon';
 import './Thumb.css';

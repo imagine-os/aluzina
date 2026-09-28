@@ -91,7 +91,7 @@ export function newProjectSpec(surface: Surface): PageSpec {
     dataTables: ['projects', 'sections', 'tasks', 'clients', 'deliverables'],
     roles: ['founder', 'ops'],
     logic: [
-      'The template is typed data, not rows (`src/domain/templates`): `tpl-aluzina-workflow` is the merge of the founder\u2019s two Asana template projects plus PROYECTO HOY\u2019s kickoff section.',
+      'The template is typed data, not rows (`src/tenant/domain/templates`): `tpl-aluzina-workflow` is the merge of the founder\u2019s two Asana template projects plus PROYECTO HOY\u2019s kickoff section.',
       'Zone-scoped template tasks (references per space, 3D model per space, the nine-lens deep design) are written once per chosen zone; every other task once. The review step counts what will be created before anything is written.',
       'Create writes one `projects` row, one `sections` row per chosen phase and the tasks parents-first, each with `templateTaskId`, `deliverableId`, `ownerRole`, the team member for that role as assignee, `order` and `parentTaskId`; then it opens W-02 for the new project.',
       'Everything is `projects.write`: the founder always, operations since this pass. Without it the review step says so and Create stays disabled while the action still answers readably (D-047).',

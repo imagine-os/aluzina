@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useRegisterAction } from '../../actions';
 import { Button } from '../../components/atom/Button/Button';
-import { pick, type Text } from '../../domain';
+import { pick, type Text } from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 
 /**

@@ -1,5 +1,5 @@
 import { createElement } from 'react';
-import { SERVICES, type ServiceCode } from '../../domain';
+import { SERVICES, type ServiceCode } from '../../tenant/domain';
 import type { RouteDef } from '../../specs/PageSpec';
 import { ManualCommercialPage } from './ManualCommercialPage';
 import { ManualGovernancePage } from './ManualGovernancePage';
@@ -22,7 +22,7 @@ const common = { surface: 'manual' as const, status: 'built' as const, permissio
 
 /**
  * The operations manual (M-01..M-08, prompt 0009): the founder's Service Delivery Playbook rendered from
- * `src/domain/playbook.ts`, never from a copy. Its own surface (`manual`, guarded by `manual.read`, which
+ * `src/tenant/domain/playbook.ts`, never from a copy. Its own surface (`manual`, guarded by `manual.read`, which
  * every role holds) so the sidebar is the manual's table of contents. Each service is its own route, code
  * and page doc even though one component renders them all.
  */

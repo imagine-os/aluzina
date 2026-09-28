@@ -10,9 +10,9 @@ Everything in this repository that is a deliverable of its own, so the multitena
 | `business-os` | static | `apps/business-os` | `apps/business-os/index.html` | `npm run copy:static` -> `dist/business-os/` | BOS-01..06 | doing (step 2 audit) | – | HR-04, 07 | Fable 5.1 audit, Sonnet 5 |
 | `public-site` | external | `docs/source/aluzinaa-archive`, `docs/knowledge/public-sites.md` | `https://aluzinaa.com` | none (Lovable) | P-00 | linked | – | HR-07 | Justin (Lovable); Opus 5 for R7 |
 | `archive` | pipeline | `scripts/archive`, `docs/archive`, `apps/hub/public/archive` | `scripts/archive/build-index.mjs` | `npm run archive:{crawl,index,previews,collection}` -> `dist/archive/` | S-12, S-13, G-09, A-09, P-06 | done (14; ar-25.. open) | – | HR-04, 02 | Fable 5.1 index/seed, Sonnet 5 crawls |
-| `brand-kit` | data | `docs/source/brand-kit`, `docs/source/brand`, `docs/brand`, `apps/hub/public/brand`, `apps/hub/src/brand` | `docs/brand/README.md` | `python3 docs/brand/tools/render-pdf-pages.py` -> `dist/brand/` | G-08, D-12 | done | – | HR-04, 06 | Fable 5.1 |
+| `brand-kit` | data | `docs/source/brand-kit`, `docs/source/brand`, `docs/brand`, `apps/hub/public/brand`, `apps/hub/src/tenant/brand` | `docs/brand/README.md` | `python3 docs/brand/tools/render-pdf-pages.py` -> `dist/brand/` | G-08, D-12 | done | – | HR-04, 06 | Fable 5.1 |
 | `knowledge-base` | docs | `docs/knowledge` | `docs/knowledge/README.md` | none; read in-app on D-06 / D-15 | – | done (grows every turn) | – | HR-05 | Fable 5.1 |
-| `asana-import` | pipeline | `scripts/import-asana.mjs`, `docs/source/asana`, `apps/hub/src/data/seed/asana` | `scripts/import-asana.mjs` | `npm run import:asana` -> checked-in seeds | K-06, W-03 | done (K-06 importer UI open) | hub | HR-02 | Fable 5.1 seam, Sonnet 5 mapper |
+| `asana-import` | pipeline | `scripts/import-asana.mjs`, `docs/source/asana`, `apps/hub/src/tenant/seed/asana` | `scripts/import-asana.mjs` | `npm run import:asana` -> checked-in seeds | K-06, W-03 | done (K-06 importer UI open) | hub | HR-02 | Fable 5.1 seam, Sonnet 5 mapper |
 | `design-system` | platform-candidate | `apps/hub/src/design`, `apps/hub/src/components`, `apps/hub/scripts/gen-tokens.mjs`, `apps/hub/src/styles`, `docs/design` | `docs/design/brand-system.md` | `npm run tokens` -> `src/styles/tokens.css` | D-02, D-10, D-12, D-13, D-14 | done | brand-kit | HR-06 | Fable 5.1 |
 | `docs-and-plan` | docs | `docs` (plan, prompts, changelog, decisions, pages, qa, reference) | `docs/README.md` | none; D-05 renders `plan.json`, D-06 / D-15 the Markdown | D-05, D-06, D-15 | live | – | HR-05, 09 | Fable 5.1 |
 
@@ -50,7 +50,7 @@ Everything in this repository that is a deliverable of its own, so the multitena
 
 ## `brand-kit` (data)
 
-- **What:** the brand as data: source manuals `docs/source/brand-kit/MANUAL-DE-MARCA-ALUZINA-{silver,gold}-2026-09-21.pdf` (+ extraction diffs), marketing PDFs `docs/source/brand/`, page renders and `index.json` in `docs/brand/{portfolio,brochure}/` (visual memory, `docs/brand/README.md`), served copies `apps/hub/public/brand/` (3 PDFs, 6 SVG marks), vector paths `apps/hub/src/brand/paths.ts`, facts in `docs/knowledge/brand.md`. Token values live in `design/tokens.ts` until tp-06.
+- **What:** the brand as data: source manuals `docs/source/brand-kit/MANUAL-DE-MARCA-ALUZINA-{silver,gold}-2026-09-21.pdf` (+ extraction diffs), marketing PDFs `docs/source/brand/`, page renders and `index.json` in `docs/brand/{portfolio,brochure}/` (visual memory, `docs/brand/README.md`), served copies `apps/hub/public/brand/` (3 PDFs, 6 SVG marks), vector paths `apps/hub/src/tenant/brand/paths.ts`, facts in `docs/knowledge/brand.md`. Token values live in `design/tokens.ts` until tp-06.
 - **Build:** `python3 docs/brand/tools/render-pdf-pages.py` regenerates the renders; `seed/assets.ts` seeds one `assets` row per document from `docs/brand/*/index.json`.
 - **Codes:** G-08 brand documents, D-12 brand guidelines.
 - **hostNeeds:** object storage optional (HR-04, 9 MB stays in git); per-tenant theme loading consumes the token values (HR-06).
@@ -65,7 +65,7 @@ Everything in this repository that is a deliverable of its own, so the multitena
 
 ## `asana-import` (pipeline)
 
-- **What:** `scripts/import-asana.mjs` (own RFC 4180 CSV parser) turns the de-identified exports in `docs/source/asana/<date>/` into checked-in seeds `apps/hub/src/data/seed/asana/{hoy,portfolio}.ts` (D-062 / D-063); conventions in `docs/knowledge/asana-conventions.md`; the two founder templates merged into `domain/templates/aluzina-workflow.ts` (W-03).
+- **What:** `scripts/import-asana.mjs` (own RFC 4180 CSV parser) turns the de-identified exports in `docs/source/asana/<date>/` into checked-in seeds `apps/hub/src/tenant/seed/asana/{hoy,portfolio}.ts` (D-062 / D-063); conventions in `docs/knowledge/asana-conventions.md`; the two founder templates merged into `domain/templates/aluzina-workflow.ts` (W-03).
 - **Build:** `npm run import:asana`. Codes K-06 (import page, read-only UI), W-03 (new project from template).
 - **hostNeeds:** the tenant store (HR-02) once imports write rows instead of seeds; roadmap R9 integrations seam.
 - **Owner:** Fable 5.1 (seam), Sonnet 5 (mapper).

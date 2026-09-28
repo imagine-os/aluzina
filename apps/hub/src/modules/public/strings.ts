@@ -4,7 +4,7 @@ import type { StringTable } from '../../i18n/types';
  * Public site strings, namespaced `public.*` (P-13). Aluzina's clients are Spanish-speaking people in
  * Medellín, so every key here carries `es` as well as `en`: this is the one surface where a missing
  * Spanish string would be read by a customer. Service names, outcomes, phases and checklist items are
- * not here - they come from `src/domain/playbook.ts` through `pick(text, lang)` (D-033).
+ * not here - they come from `src/tenant/domain/playbook.ts` through `pick(text, lang)` (D-033).
  */
 export const strings: StringTable = {
   // ---------------------------------------------------------------- layout (P-01..P-04)

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { Tone } from '../../components/atom/Badge/Badge';
-import { demoUserById } from '../../auth/demoUsers';
+import { demoUserById } from '../../tenant/auth/demoUsers';
 import { useTable } from '../../data/DataContext';
 import { daysUntil } from '../../i18n/format';
 

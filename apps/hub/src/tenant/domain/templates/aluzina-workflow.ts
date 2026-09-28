@@ -28,7 +28,7 @@ import type { ProjectTemplate, TemplateTask, Trade, Zone } from './types';
 
 const T = (en: string, es: string): Text => ({ en, es });
 
-/** `deliverables` catalog ids (`apps/hub/src/data/seed/spaces.ts` `DELIVERABLE_IDS`, `docs/knowledge/deliverables.md`). */
+/** `deliverables` catalog ids (`apps/hub/src/tenant/seed/spaces.ts` `DELIVERABLE_IDS`, `docs/knowledge/deliverables.md`). */
 const DEL = {
   survey: 'del-site-survey',
   concept: 'del-concept-presentation',

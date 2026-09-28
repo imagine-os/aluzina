@@ -1,4 +1,4 @@
-import type { Surface } from '../specs/PageSpec';
+import type { Surface } from '../../specs/PageSpec';
 
 /**
  * Roles are strings (D-015): pages call `can('<area>.<verb>')` and never compare roles.

@@ -172,7 +172,7 @@ export function catalogSpec(surface: Surface): PageSpec {
       'A template that is a hub page code (S-09, O-05, A-04, …) links to that route from the manifest; a deliverable without one shows a Placeholder "Open template" (P-09).',
       'Unknown facts are shown as "unknown", never invented (Sporti: sector, city, contact).',
       'The dependency map counts tools by status: in use, to replace, replaced, planned; "replaced by" links to the hub route when the value is a page code.',
-      'Roles come from `src/auth/roles.ts` (seven since D-028) with their permissions and the space about them.',
+      'Roles come from `src/tenant/auth/roles.ts` (seven since D-028) with their permissions and the space about them.',
       'Assets (ar-17) are the assets rows that are files in their own right (kind != page, since a page row is a render inside a document): every row shows a Thumb (served thumbnail, FileIcon of the family otherwise). A row with served page renders, or a served PDF / image / video, previews in a Drawer through the shared DocumentViewer; the rest keep "Open at source", and a document also links to G-08.',
     ],
     components: ['PageHeader', 'Tabs', 'DataTable', 'StatusPill', 'Badge', 'StatTile', 'Thumb', 'FileIcon', 'Drawer', 'DocumentViewer', 'Button', 'Placeholder', 'EmptyState'],
@@ -193,7 +193,7 @@ export function importSpec(surface: Surface): PageSpec {
     logic: [
       'Read-only: the mapping is derived from the seeded spaces whose slug equals the Slack channel name (D-027); nothing here re-seeds.',
       'The checklist is the contract for the Slack import script: channels -> spaces, messages -> posts, threads -> comments, pins -> pinned, mentions -> relations, files -> file posts.',
-      'The Asana card counts the generated seeds it imports (`data/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files.',
+      'The Asana card counts the generated seeds it imports (`tenant/seed/asana/{hoy,portfolio}.ts`), so the page cannot claim more than the repository holds (D-062). There is no Asana upload: `npm run import:asana` emits reviewable files.',
     ],
     components: ['PageHeader', 'Card', 'KeyValue', 'Placeholder', 'Button', 'DataTable', 'Badge'],
     actions: IMPORT_ACTIONS,

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRegisterActions } from '../../actions';
 import { useCan, useSession } from '../../auth/SessionProvider';
-import { demoUserById } from '../../auth/demoUsers';
+import { demoUserById } from '../../tenant/auth/demoUsers';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
 import { Input } from '../../components/atom/Input/Input';
@@ -20,7 +20,7 @@ import { DataTable } from '../../components/organism/DataTable/DataTable';
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useData, useTable } from '../../data/DataContext';
 import type { RevisionItem, RevisionSource } from '../../data/schema';
-import { type ValidationStatusId, pick, serviceByCode, VALIDATION_STATUSES } from '../../domain';
+import { type ValidationStatusId, pick, serviceByCode, VALIDATION_STATUSES } from '../../tenant/domain';
 import { formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import { todayIso } from '../../work/model';

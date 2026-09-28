@@ -1,4 +1,4 @@
-import type { BaseRow, Client, Deliverable, Post, Relation, Space, Tag, Tool } from '../schema';
+import type { BaseRow, Client, Deliverable, Post, Relation, Space, Tag, Tool } from '../../data/schema';
 import { PROJECT_IDS } from './projects';
 import type { SeedCtx } from './types';
 

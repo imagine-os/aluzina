@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DEMO_USERS, demoUserById } from '../../auth/demoUsers';
+import { DEMO_USERS, demoUserById } from '../../tenant/auth/demoUsers';
 import { useSession } from '../../auth/SessionProvider';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
@@ -23,7 +23,7 @@ import { Modal } from '../../components/organism/Modal/Modal';
 import { SpaceTree } from '../../components/organism/SpaceTree/SpaceTree';
 import { useData, useTable } from '../../data/DataContext';
 import { POST_KINDS, SPACE_KINDS, type Asset, type Post, type PostKind, type Space, type SpaceKind } from '../../data/schema';
-import { FILE_TYPE_LABELS, fileTypeOf, pick } from '../../domain';
+import { FILE_TYPE_LABELS, fileTypeOf, pick } from '../../tenant/domain';
 import { formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';

@@ -15,8 +15,8 @@ import {
   yearOf,
   type DeliveryStage,
   type FileType,
-} from '../../domain/archive';
-import type { BaseRow, Post, Project, Relation, Space, Tag } from '../schema';
+} from '../domain/archive';
+import type { BaseRow, Post, Project, Relation, Space, Tag } from '../../data/schema';
 import { PROJECT_IDS } from './projects';
 import type { SeedCtx } from './types';
 

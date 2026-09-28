@@ -1,4 +1,4 @@
-import { SERVICES, type Service } from '../../domain';
+import { SERVICES, type Service } from '../../tenant/domain';
 import { defineSpec, type ActionDef, type PageSpec } from '../../specs/PageSpec';
 
 /** Widths verified with Playwright on this pass, light and dark, EN and ES (P-01). */
@@ -38,7 +38,7 @@ export const overviewSpec: PageSpec = defineSpec({
   dataTables: [],
   roles: ['founder', 'ops', 'studio', 'brand', 'marketing', 'client', 'dev'],
   logic: [
-    'Every word on the page comes from `src/domain/playbook.ts` (CLIENT_JOURNEY, SERVICES, SERVICE_LADDER_LOGIC, GOVERNANCE_RULES, FINAL_PRINCIPLE) through `pick(text, lang)`; nothing is a hard-coded copy.',
+    'Every word on the page comes from `src/tenant/domain/playbook.ts` (CLIENT_JOURNEY, SERVICES, SERVICE_LADDER_LOGIC, GOVERNANCE_RULES, FINAL_PRINCIPLE) through `pick(text, lang)`; nothing is a hard-coded copy.',
     'The stepper is an ordered list of connected chips: it scrolls horizontally from 768 px and stacks into a column below it (no hover-only affordance, no drag).',
     'Print / PDF calls window.print(); the module print stylesheet drops interactive chrome and prints the manual content only.',
   ],

@@ -2,7 +2,7 @@ import type { StringTable } from '../../i18n/types';
 
 /**
  * Operations manual strings (M-01..M-08). English primary, Spanish complete (P-13).
- * The manual's *content* is not here: it comes from `src/domain/playbook.ts` through `pick(text, lang)`,
+ * The manual's *content* is not here: it comes from `src/tenant/domain/playbook.ts` through `pick(text, lang)`,
  * so the founder's wording is never duplicated in a string table.
  */
 export const strings: StringTable = {
@@ -23,8 +23,8 @@ export const strings: StringTable = {
   'manual.motto': { en: 'One studio. One method. Different depths of service.', es: 'Un estudio. Un método. Distintas profundidades de servicio.' },
   'manual.purpose.title': { en: 'What this manual is for', es: 'Para qué sirve este manual' },
   'manual.purpose.body': {
-    en: 'This is how ALUZINA sells, designs, builds, delivers and closes. Every page here is rendered from `src/domain/playbook.ts`, the same data the leads, engagements, checklists and status pipelines of the Hub run on: the manual and the product can never drift apart.',
-    es: 'Así vende, diseña, construye, entrega y cierra ALUZINA. Cada página se renderiza desde `src/domain/playbook.ts`, los mismos datos con los que funcionan los leads, los encargos, las listas de chequeo y los estados del Hub: el manual y el producto no pueden separarse.',
+    en: 'This is how ALUZINA sells, designs, builds, delivers and closes. Every page here is rendered from `src/tenant/domain/playbook.ts`, the same data the leads, engagements, checklists and status pipelines of the Hub run on: the manual and the product can never drift apart.',
+    es: 'Así vende, diseña, construye, entrega y cierra ALUZINA. Cada página se renderiza desde `src/tenant/domain/playbook.ts`, los mismos datos con los que funcionan los leads, los encargos, las listas de chequeo y los estados del Hub: el manual y el producto no pueden separarse.',
   },
   'manual.source': { en: 'Source: docs/knowledge/service-playbook.md (transcription of the founder’s PDF).', es: 'Fuente: docs/knowledge/service-playbook.md (transcripción del PDF de la fundadora).' },
 

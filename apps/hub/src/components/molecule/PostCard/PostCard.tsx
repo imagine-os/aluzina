@@ -5,7 +5,7 @@ import { POST_KIND_ICONS } from '../../atom/Icon/iconMap';
 import { StatusPill } from '../../atom/StatusPill/StatusPill';
 import { Thumb } from '../Thumb/Thumb';
 import { cx } from '../../../design/cx';
-import type { FileType } from '../../../domain/archive';
+import type { FileType } from '../../../tenant/domain/archive';
 import { useT } from '../../../i18n/I18nProvider';
 import './PostCard.css';
 

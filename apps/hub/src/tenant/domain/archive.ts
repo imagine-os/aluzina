@@ -1,4 +1,4 @@
-import type { ProjectType } from '../data/schema/projects';
+import type { ProjectType } from '../../data/schema/projects';
 import type { PipelineGroup, PipelineStatusId, Text } from './playbook';
 
 /**

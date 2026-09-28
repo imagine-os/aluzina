@@ -24,7 +24,7 @@ import {
   type LeadChannelId,
   type QualificationKey,
   type Text,
-} from '../../domain';
+} from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import { PublicLayout } from './PublicLayout';
 import { startPath, toServiceCode } from './startHref';

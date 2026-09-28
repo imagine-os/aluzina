@@ -4,7 +4,7 @@ import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
 import { Card } from '../../components/molecule/Card/Card';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
-import { CLIENT_JOURNEY, FINAL_PRINCIPLE, GOVERNANCE_RULES, pick, SERVICE_LADDER_LOGIC, SERVICES } from '../../domain';
+import { CLIENT_JOURNEY, FINAL_PRINCIPLE, GOVERNANCE_RULES, pick, SERVICE_LADDER_LOGIC, SERVICES } from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import './manual.css';
 import { focusSection, PrintButton, SectionHeading } from './parts';

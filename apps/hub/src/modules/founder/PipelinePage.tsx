@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
-import { demoUserById } from '../../auth/demoUsers';
+import { demoUserById } from '../../tenant/auth/demoUsers';
 import { useCan } from '../../auth/SessionProvider';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
@@ -18,7 +18,7 @@ import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { Kanban, type KanbanCard } from '../../components/organism/Kanban/Kanban';
 import { useData, useTable } from '../../data/DataContext';
 import type { Lead, Project, ProjectPhase } from '../../data/schema';
-import { PIPELINE_STATUSES, nextPipelineStatus, pick, pipelineStatus, serviceByCode, type PipelineGroup, type PipelineStatusId } from '../../domain';
+import { PIPELINE_STATUSES, nextPipelineStatus, pick, pipelineStatus, serviceByCode, type PipelineGroup, type PipelineStatusId } from '../../tenant/domain';
 import { formatCop, formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import './founder.css';

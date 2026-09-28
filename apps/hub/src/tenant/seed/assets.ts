@@ -1,7 +1,7 @@
 import brochureRaw from '@docs/brand/brochure/index.json';
 import portfolioRaw from '@docs/brand/portfolio/index.json';
-import type { ServiceCode } from '../../domain/playbook';
-import type { Asset, BaseRow, Client, Post, ProjectType, Relation, Space } from '../schema';
+import type { ServiceCode } from '../domain/playbook';
+import type { Asset, BaseRow, Client, Post, ProjectType, Relation, Space } from '../../data/schema';
 import type { SeedCtx } from './types';
 
 /**

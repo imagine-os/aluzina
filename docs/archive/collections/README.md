@@ -2,7 +2,7 @@
 
 status: current · since: 2026-09-21 · source: two Dropbox folders shared by Aleja Guerra (founder) through Justin Massion in Slack #all-aluzina on 2026-09-21 (thread 1790029292.924479); downloaded as zips, unzipped locally, indexed and rendered by `scripts/archive/index-collection.py` (Fable 5.1 pipeline worker, prompt 0021, changelog 0023). The originals (12 GB) never enter the repo.
 
-A **collection** is a shared folder that is not a project folder: the studio's own campaign and asset material. Unlike the project archive (`docs/archive/projects/`), a collection is **not** seeded file by file: `apps/hub/src/domain/collections.ts` loads `index.json` lazily (one chunk per collection, fetched when G-09 opens), and `apps/hub/src/data/seed/collections.ts` seeds **one `assets` row per set** from `sets.json` (order 76, `SEED_VERSION` 12), plus set -> project `depicts` relations and one Spanish note per collection in Brand Memory.
+A **collection** is a shared folder that is not a project folder: the studio's own campaign and asset material. Unlike the project archive (`docs/archive/projects/`), a collection is **not** seeded file by file: `apps/hub/src/tenant/domain/collections.ts` loads `index.json` lazily (one chunk per collection, fetched when G-09 opens), and `apps/hub/src/tenant/seed/collections.ts` seeds **one `assets` row per set** from `sets.json` (order 76, `SEED_VERSION` 12), plus set -> project `depicts` relations and one Spanish note per collection in Brand Memory.
 
 | Collection | Slug | Caption (as shared) | Files | Source bytes | Index rows | Redacted | Served |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |

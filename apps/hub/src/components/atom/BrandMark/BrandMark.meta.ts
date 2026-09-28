@@ -4,7 +4,7 @@ export default defineMeta({
   name: 'BrandMark',
   tier: 'atom',
   purpose:
-    'The Aluzina marks as inline SVG from src/brand/paths.ts: wordmark, monogram A, descriptor lockup and the eight outline glyphs, painted with the iridescent (the primary wordmark since the silver edition), metal (silver / gold switch), outline or flat finish so they follow theme and metal.',
+    'The Aluzina marks as inline SVG from src/tenant/brand/paths.ts: wordmark, monogram A, descriptor lockup and the eight outline glyphs, painted with the iridescent (the primary wordmark since the silver edition), metal (silver / gold switch), outline or flat finish so they follow theme and metal.',
   props: {
     kind: "'wordmark' | 'monogram' | 'descriptor' | 'glyph'",
     glyph: "'fuego' | 'agua' | 'aire' | 'tierra' | 'neutro' | 'productos' | 'espacios' | 'arte'? – required for kind glyph",

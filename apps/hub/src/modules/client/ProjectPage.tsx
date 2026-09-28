@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
-import { demoUserById } from '../../auth/demoUsers';
+import { demoUserById } from '../../tenant/auth/demoUsers';
 import { Avatar } from '../../components/atom/Avatar/Avatar';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
@@ -13,7 +13,7 @@ import { KeyValue } from '../../components/molecule/KeyValue/KeyValue';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { useTable } from '../../data/DataContext';
 import type { DocumentStatus } from '../../data/schema';
-import { checkKey, phaseItems, pick } from '../../domain';
+import { checkKey, phaseItems, pick } from '../../tenant/domain';
 import { formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import { Progress } from './ClientHome';

@@ -14,7 +14,7 @@ import { EmptyState } from '../../components/molecule/EmptyState/EmptyState';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { useData, useTable } from '../../data/DataContext';
 import type { RevisionItem } from '../../data/schema';
-import { pick, VALIDATION_STATUSES, type ValidationStatusId } from '../../domain';
+import { pick, VALIDATION_STATUSES, type ValidationStatusId } from '../../tenant/domain';
 import { formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import './client.css';

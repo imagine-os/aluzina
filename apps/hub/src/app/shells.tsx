@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { ROLE_META, isRoleId } from '../auth/roles';
+import { ROLE_META, isRoleId } from '../tenant/auth/roles';
 import { useSession } from '../auth/SessionProvider';
 import { Avatar } from '../components/atom/Avatar/Avatar';
 import { Badge } from '../components/atom/Badge/Badge';
@@ -16,7 +16,7 @@ import { useTheme } from '../design/ThemeProvider';
 import { useT } from '../i18n/I18nProvider';
 import { usePresence } from '../presence/PresenceProvider';
 import type { RouteDef } from '../specs/PageSpec';
-import { navGroupOrder } from './navGroups';
+import { navGroupOrder } from '../tenant/navGroups';
 import { navRoutesFor } from './registry';
 import { useRoutes } from './RoutesContext';
 import './shells.css';

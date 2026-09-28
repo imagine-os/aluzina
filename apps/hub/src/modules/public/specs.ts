@@ -1,4 +1,4 @@
-import { SERVICES } from '../../domain';
+import { SERVICES } from '../../tenant/domain';
 import { defineSpec, type ActionDef } from '../../specs/PageSpec';
 
 /** Slug vocabulary for `public.openService` (the public URLs; visitors never see the internal codes 01 / 02 / 03 / E / 04). */
@@ -50,7 +50,7 @@ export const servicesSpec = defineSpec({
   dataTables: [],
   roles: ['public'],
   logic: [
-    'Everything on the page is rendered from `SERVICES`, `CLIENT_JOURNEY` and `SERVICE_LADDER_LOGIC` in src/domain/playbook.ts through pick(text, lang); no service copy is duplicated in the module.',
+    'Everything on the page is rendered from `SERVICES`, `CLIENT_JOURNEY` and `SERVICE_LADDER_LOGIC` in src/tenant/domain/playbook.ts through pick(text, lang); no service copy is duplicated in the module.',
     'Service codes (01 / 02 / 03 / E / 04), pipeline statuses and checklist ids are internal: the public pages address services by slug and name only (D-035).',
     'No permission and no session requirement: the route is public and the shell is bare (the module draws its own header).',
   ],

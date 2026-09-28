@@ -1,4 +1,4 @@
-import { ROLE_META } from '../../../auth/roles';
+import { ROLE_META } from '../../../tenant/auth/roles';
 import { useSession } from '../../../auth/SessionProvider';
 import { useT } from '../../../i18n/I18nProvider';
 import { Avatar } from '../../atom/Avatar/Avatar';

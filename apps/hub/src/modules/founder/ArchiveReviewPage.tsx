@@ -16,7 +16,7 @@ import { DataTable } from '../../components/organism/DataTable/DataTable';
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useData, useTable } from '../../data/DataContext';
 import type { ClientKind, Project, ProjectType } from '../../data/schema';
-import { PIPELINE_STATUSES, lifecycle, lifecycleOf, pick, type PipelineStatusId, type Text } from '../../domain';
+import { PIPELINE_STATUSES, lifecycle, lifecycleOf, pick, type PipelineStatusId, type Text } from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import './archiveReview.css';
 import './founder.css';

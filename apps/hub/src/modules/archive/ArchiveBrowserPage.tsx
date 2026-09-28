@@ -21,7 +21,7 @@ import { Thumb } from '../../components/molecule/Thumb/Thumb';
 import { DataTable, type Column } from '../../components/organism/DataTable/DataTable';
 import { useData, useTable } from '../../data/DataContext';
 import type { Project, Space } from '../../data/schema';
-import { LIFECYCLES, lifecycleOf, pick, type Lifecycle } from '../../domain';
+import { LIFECYCLES, lifecycleOf, pick, type Lifecycle } from '../../tenant/domain';
 import { copyText } from '../../design/clipboard';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';

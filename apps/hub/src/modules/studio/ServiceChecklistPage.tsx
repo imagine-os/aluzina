@@ -16,7 +16,7 @@ import { StatTile } from '../../components/molecule/StatTile/StatTile';
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { useData, useTable } from '../../data/DataContext';
 import type { Engagement, Project } from '../../data/schema';
-import { type Service, type ServicePhase, checkKey, phaseItems, PIPELINE_STATUS_IDS, pick, serviceByCode } from '../../domain';
+import { type Service, type ServicePhase, checkKey, phaseItems, PIPELINE_STATUS_IDS, pick, serviceByCode } from '../../tenant/domain';
 import { formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
 import { todayIso } from '../../work/model';

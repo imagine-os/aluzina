@@ -1,5 +1,5 @@
-import type { FileType } from '../../domain/archive';
-import type { PipelineStatusId, ServiceCode } from '../../domain/playbook';
+import type { FileType } from '../../tenant/domain/archive';
+import type { PipelineStatusId, ServiceCode } from '../../tenant/domain/playbook';
 import type { BaseRow, CentsCop, Id, ISODate } from './base';
 
 export type ProjectType = 'residential' | 'commercial' | 'hospitality' | 'wellness' | 'lighting-product';

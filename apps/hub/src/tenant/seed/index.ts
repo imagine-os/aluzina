@@ -1,6 +1,6 @@
-import type { NewRow, Row } from '../provider';
-import type { EntityName } from '../schema';
-import { TENANT } from '../../tenant/config';
+import type { NewRow, Row } from '../../data/provider';
+import type { EntityName } from '../../data/schema';
+import { TENANT } from '../config';
 import { SEED_AT, type SeedCtx, type SeedModule } from './types';
 
 /**
@@ -17,7 +17,7 @@ import { SEED_AT, type SeedCtx, type SeedModule } from './types';
  */
 export const SEED_VERSION = 13;
 
-/** One file per area, globbed: add `src/data/seed/<area>.ts` exporting `seed(ctx)` (+ `order`), never edit this file. */
+/** One file per area, globbed: add `src/tenant/seed/<area>.ts` exporting `seed(ctx)` (+ `order`), never edit this file. */
 const modules = import.meta.glob<SeedModule>(['./*.ts', '!./index.ts', '!./types.ts'], { eager: true });
 
 export function runSeeds(tables: { [E in EntityName]: Row<E>[] }): void {

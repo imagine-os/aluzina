@@ -1,9 +1,9 @@
 // Asana CSV -> checked-in seed files (D-062). `npm run import:asana [-- --date=2026-09-21]`.
 //
 // Reads the de-identified exports in docs/source/asana/<date>/ and writes
-//   apps/hub/src/data/seed/asana/hoy.ts        PROYECTO HOY: sections + the whole task tree
-//   apps/hub/src/data/seed/asana/portfolio.ts  the Sep-Dec 2026 board as typed vendor jobs
-// Shapes: apps/hub/src/data/seed/asana/types.ts. Rows are added to the project by seed/asana.ts.
+//   apps/hub/src/tenant/seed/asana/hoy.ts        PROYECTO HOY: sections + the whole task tree
+//   apps/hub/src/tenant/seed/asana/portfolio.ts  the Sep-Dec 2026 board as typed vendor jobs
+// Shapes: apps/hub/src/tenant/seed/asana/types.ts. Rows are added to the project by seed/asana.ts.
 //
 // Asana's export has no stable parent key: `Parent task` is a NAME, names repeat, most carry trailing
 // spaces and one parent's name is a single space. Resolution therefore follows the founder's own file:
@@ -20,7 +20,7 @@ const args = Object.fromEntries(process.argv.slice(2).map((a) => {
 const srcRoot = join(root, 'docs/source/asana');
 const date = args.date ?? readdirSync(srcRoot).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d)).sort().pop();
 const srcDir = join(srcRoot, date);
-const outDir = join(root, 'apps/hub/src/data/seed/asana');
+const outDir = join(root, 'apps/hub/src/tenant/seed/asana');
 if (!existsSync(srcDir)) throw new Error(`no export folder at ${srcDir}`);
 mkdirSync(outDir, { recursive: true });
 
@@ -147,7 +147,7 @@ const ROLE_OF = { 'u-alejandra': 'founder', 'u-sarai': 'studio', 'u-miguel': 'op
 
 /**
  * Deliverable links, matched on the normalized title — the same mapping the template carries
- * (`apps/hub/src/domain/templates/aluzina-workflow.ts`), so an imported project and a generated one
+ * (`apps/hub/src/tenant/domain/templates/aluzina-workflow.ts`), so an imported project and a generated one
  * point at the same `deliverables` rows.
  */
 const DELIVERABLE_BY_TITLE = new Map(Object.entries({
@@ -341,4 +341,4 @@ const assignedByDefault = hoyTasks.filter((t) => !ASSIGNEES[norm(rowById.get(t.e
 console.log(`import:asana  source ${date}`);
 console.log(`  PROYECTO HOY        ${hoyTasks.length} tasks in ${hoySections.length} sections; ${nested} nested, ${linked} linked to a deliverable, ${hoyTasks.length - assignedByDefault} assigned in Asana`);
 console.log(`  portfolio board     ${jobs.length} vendor jobs; ${jobs.filter((j) => j.encargado).length} with ENCARGADO, ${jobs.filter((j) => j.valorCop).length} with VALOR, ${jobs.reduce((n, j) => n + j.payments.length, 0)} payment lines`);
-console.log(`  wrote apps/hub/src/data/seed/asana/{hoy,portfolio}.ts`);
+console.log(`  wrote apps/hub/src/tenant/seed/asana/{hoy,portfolio}.ts`);

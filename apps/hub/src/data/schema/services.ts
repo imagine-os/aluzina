@@ -1,4 +1,4 @@
-import type { LeadChannelId, PipelineStatusId, PurchaseStatusId, QualificationKey, ServiceCode, ValidationStatusId } from '../../domain/playbook';
+import type { LeadChannelId, PipelineStatusId, PurchaseStatusId, QualificationKey, ServiceCode, ValidationStatusId } from '../../tenant/domain/playbook';
 import type { BaseRow, CentsCop, Id, ISODate } from './base';
 import type { ProjectType } from './projects';
 
@@ -6,7 +6,7 @@ import type { ProjectType } from './projects';
  * Entities from the Service Delivery Playbook (prompt 0009, D-034): lead intake and pipeline, one engagement per
  * project and service (its phase checklist and brief), the single revision matrix, change orders, purchasing
  * control, site control and project messages. Vocabulary (status ids, phase ids, question keys) lives in
- * `src/domain/playbook.ts`; unknown facts are `null`, never guessed.
+ * `src/tenant/domain/playbook.ts`; unknown facts are `null`, never guessed.
  */
 
 export type LeadProjectType = ProjectType | 'other';

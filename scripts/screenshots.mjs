@@ -34,7 +34,7 @@ const staticPath = args.static; // e.g. business-os/ -> captures base + staticPa
 const langToggle = args['lang-toggle'];
 const waitFor = args.wait ?? (staticPath ? '#dc-root' : 'h1');
 const shots = (args.shots ?? 'en-390,en-1280,en-3840,es-390').split(',');
-const asRole = args.as; // demo user id per role (apps/hub/src/auth/demoUsers.ts)
+const asRole = args.as; // demo user id per role (apps/hub/src/tenant/auth/demoUsers.ts)
 const USER_BY_ROLE = { founder: 'u-alejandra', ops: 'u-miguel', studio: 'u-sarai', brand: 'u-angelica', client: 'u-client', dev: 'u-dev' };
 const settle = Number(args.settle ?? 0);
 const theme = args.theme === 'dark' ? 'dark' : 'light'; // --theme=dark -> <lang>-<width>-dark.jpg

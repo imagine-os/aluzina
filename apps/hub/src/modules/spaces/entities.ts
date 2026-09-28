@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from 'react';
-import { DEMO_USERS } from '../../auth/demoUsers';
-import { ROLE_META, ROLES, isRoleId } from '../../auth/roles';
+import { DEMO_USERS } from '../../tenant/auth/demoUsers';
+import { ROLE_META, ROLES, isRoleId } from '../../tenant/auth/roles';
 import { useTable } from '../../data/DataContext';
 import type { Asset, Space } from '../../data/schema';
-import { SERVICES, pick } from '../../domain';
+import { SERVICES, pick } from '../../tenant/domain';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';
 

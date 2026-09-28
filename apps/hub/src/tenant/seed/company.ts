@@ -1,6 +1,6 @@
 import companyRaw from '@docs/archive/company/index.json';
-import { mimeTypeOf, slugify } from '../../domain/archive';
-import type { Asset, BaseRow, Relation, Tag } from '../schema';
+import { mimeTypeOf, slugify } from '../domain/archive';
+import type { Asset, BaseRow, Relation, Tag } from '../../data/schema';
 import type { SeedCtx } from './types';
 
 /**

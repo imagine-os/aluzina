@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { cx } from '../../../design/cx';
+import { tokens } from '../../../design/tokens';
 import './Shimmer.css';
+
+/** Used only when the `--metal-*` custom properties are missing: the tenant's default metal from the tokens (tp-06). */
+const FALLBACK_METAL = tokens.metal[tokens.metalDefault];
 
 export type ShimmerFinish = 'metal' | 'iridescent';
 
@@ -138,9 +142,9 @@ export function Shimmer({ finish = 'metal', intensity = 0.6, motion, label, clas
     const readColors = () => {
       const cs = getComputedStyle(document.documentElement);
       gl.useProgram(prog);
-      gl.uniform3fv(uBase, hexToRgb(cs.getPropertyValue('--metal-base') || '#C0C0C0'));
-      gl.uniform3fv(uHigh, hexToRgb(cs.getPropertyValue('--metal-highlight') || '#FFFFFF'));
-      gl.uniform3fv(uShade, hexToRgb(cs.getPropertyValue('--metal-shade') || '#4D4D4D'));
+      gl.uniform3fv(uBase, hexToRgb(cs.getPropertyValue('--metal-base') || FALLBACK_METAL.base));
+      gl.uniform3fv(uHigh, hexToRgb(cs.getPropertyValue('--metal-highlight') || FALLBACK_METAL.highlight));
+      gl.uniform3fv(uShade, hexToRgb(cs.getPropertyValue('--metal-shade') || FALLBACK_METAL.shade));
     };
 
     const resize = () => {

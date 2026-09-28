@@ -67,7 +67,7 @@ export const coreStrings: StringTable = {
   'core.shell.stub': { en: 'stub', es: 'borrador' },
   'core.shell.more': { en: 'More', es: 'Más' },
 
-  // sidebar groups (src/app/navGroups.ts)
+  // sidebar groups (src/tenant/navGroups.ts)
   'core.nav.overview': { en: 'Overview', es: 'Resumen' },
   'core.nav.approvals': { en: 'Approvals', es: 'Aprobaciones' },
   'core.nav.projects': { en: 'Projects', es: 'Proyectos' },

@@ -1,4 +1,4 @@
-import { phaseItems, serviceByCode } from '../../domain/playbook';
+import { phaseItems, serviceByCode } from '../domain/playbook';
 import { SUPPLIER_IDS as S } from './operations';
 import { PROJECT_IDS as P } from './projects';
 import type { SeedCtx } from './types';

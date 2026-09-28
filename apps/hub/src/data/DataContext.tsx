@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { demoUserById } from '../auth/demoUsers';
+import { demoUserById } from '../tenant/auth/demoUsers';
 import { useSession } from '../auth/SessionProvider';
 import { toast } from '../components/atom/Toast/Toast';
 import { useT } from '../i18n/I18nProvider';

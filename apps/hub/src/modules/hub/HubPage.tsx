@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useRoutes } from '../../app/RoutesContext';
-import { demoUserForRole } from '../../auth/demoUsers';
-import { ROLE_META, isRoleId, type RoleId } from '../../auth/roles';
+import { demoUserForRole } from '../../tenant/auth/demoUsers';
+import { ROLE_META, isRoleId, type RoleId } from '../../tenant/auth/roles';
 import { useCan, useSession } from '../../auth/SessionProvider';
 import { BrandMark } from '../../components/atom/BrandMark/BrandMark';
 import { resolveIcon } from '../../components/atom/Icon/iconMap';
@@ -9,84 +9,11 @@ import { Shimmer } from '../../components/atom/Shimmer/Shimmer';
 import { HubHeader } from '../../components/organism/HubHeader/HubHeader';
 import { SurfaceCard, type SurfaceStatus } from '../../components/molecule/SurfaceCard/SurfaceCard';
 import { useT } from '../../i18n/I18nProvider';
-import { PORTAL_ROLES, type PrototypePageId, type SurfaceId } from './specs';
+import { PORTALS, PRODUCT_SURFACES, PROTOTYPE_PAGES, REPO_URL, TOOL_SURFACES, type SurfaceEntry } from '../../tenant/hubCards';
 import './HubPage.css';
-
-export const REPO_URL = 'https://github.com/imagine-os/aluzina';
-export const WEBSITE_URL = 'https://aluzinaa.com';
 
 /** Deploy-time thumbnails (scripts/thumbnails.mjs, D-011); the build id busts the Pages cache on every deploy. */
 const thumb = (code: string) => `./thumbs/${code}.jpg?v=${__BUILD_ID__}`;
-
-/**
- * A card on the Product surfaces or Builder and dev tools grids (pass 0013). `route`: live when a built route
- * with `code` is registered (its path is the href), stub when the route is a stub, planned otherwise, exactly
- * like portal cards; `fallbackHref` keeps a planned surface reachable outside the app (docs on GitHub).
- * `static`: always live at `href`. `external`: a site outside the OS.
- */
-interface SurfaceEntry {
-  id: SurfaceId;
-  code: string;
-  key: string;
-  kind: 'route' | 'static' | 'external';
-  href?: string;
-  fallbackHref?: string;
-  /** Route-derived cards that need a session switch first (the client app opens as the demo client). */
-  enterAs?: RoleId;
-  /** With `enterAs`: the permission that makes the switch unnecessary (the current role can already open it). */
-  enterUnless?: string;
-}
-
-/** Product surfaces: what clients and the team use. */
-const PRODUCT_SURFACES: SurfaceEntry[] = [
-  { id: 'website', code: 'P-00', key: 'website', kind: 'external', href: WEBSITE_URL },
-  { id: 'services', code: 'P-01', key: 'services', kind: 'route' },
-  { id: 'brand-docs', code: 'G-08', key: 'brandDocs', kind: 'route', enterAs: 'brand', enterUnless: 'brand.manage' },
-  { id: 'client', code: 'C-01', key: 'client', kind: 'route', enterAs: 'client' },
-  { id: 'manual', code: 'M-01', key: 'manual', kind: 'route' },
-  { id: 'docs', code: 'D-06', key: 'docs', kind: 'route', fallbackHref: `${REPO_URL}/tree/main/docs` },
-  { id: 'archive', code: 'S-12', key: 'archive', kind: 'route', enterAs: 'studio', enterUnless: 'projects.read' },
-  { id: 'spaces', code: 'K-01', key: 'spaces', kind: 'static', href: '#/founder/spaces' },
-  { id: 'business-os', code: 'BOS-01', key: 'businessOs', kind: 'static', href: './business-os/' },
-];
-
-/** Builder and dev tools: how the system is built and checked (D-xx). */
-const TOOL_SURFACES: SurfaceEntry[] = [
-  { id: 'design', code: 'D-12', key: 'design', kind: 'route' },
-  { id: 'plan', code: 'D-05', key: 'plan', kind: 'route' },
-  { id: 'canvas', code: 'D-07', key: 'canvas', kind: 'route' },
-  { id: 'simulator', code: 'D-08', key: 'simulator', kind: 'route' },
-  { id: 'actions', code: 'D-09', key: 'actions', kind: 'route' },
-  { id: 'tokens', code: 'D-10', key: 'tokens', kind: 'route' },
-  { id: 'testing', code: 'D-11', key: 'testing', kind: 'route' },
-  { id: 'components', code: 'D-02', key: 'components', kind: 'route' },
-  { id: 'specs', code: 'D-03', key: 'specs', kind: 'route' },
-  { id: 'multiuser', code: 'D-04', key: 'multiuser', kind: 'route' },
-];
-
-interface PortalEntry {
-  role: RoleId;
-  key: string;
-}
-
-/** One card per role (D-014). Status comes from the route manifest at render time (see portalStatus); the client portal has no route yet. */
-const PORTALS: PortalEntry[] = [...PORTAL_ROLES.map((role) => ({ role, key: role })), { role: 'client', key: 'client' }];
-
-interface PrototypePage {
-  id: PrototypePageId;
-  code: string;
-  key: string;
-  href: string;
-}
-
-/** The other pages of the Claude Design export (URL-safe entry points, D-010). Canvas.dc.html is empty and not listed. */
-const PROTOTYPE_PAGES: PrototypePage[] = [
-  { id: 'home', code: 'BOS-02', key: 'home', href: './business-os/home.html' },
-  { id: 'cyber-bridge', code: 'BOS-03', key: 'cyberBridge', href: './business-os/cyber-bridge.html' },
-  { id: 'cyber-bridge-deck', code: 'BOS-04', key: 'cyberBridgeDeck', href: './business-os/cyber-bridge-deck.html' },
-  { id: 'image-generation-plan', code: 'BOS-05', key: 'imageGenerationPlan', href: './business-os/image-generation-plan.html' },
-  { id: 'lod-ladder', code: 'BOS-06', key: 'lodLadder', href: './business-os/lod-ladder.html' },
-];
 
 export function HubPage() {
   const { t } = useT();

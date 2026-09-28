@@ -17,11 +17,18 @@ export const TENANT = {
   slug: manifest.id,
   /** Mirrors root `package.json` `version` (the validator checks the two agree). */
   version: manifest.version,
+  /** Canonical repository URL (`repo`). */
+  repo: manifest.repo,
+  /** The tenant's own public website (`identity.publicSite`, P-00). */
+  publicSite: manifest.identity.publicSite,
   /** UI languages the string tables cover. */
   locales: manifest.identity.languages as Lang[],
   defaultLocale: manifest.identity.defaultLanguage as Lang,
+  /** ISO 4217 code `i18n/format.ts` formats money in (`formatCop`). */
   currency: manifest.identity.currency,
+  /** BCP-47 locale for numbers and money in the tenant's own language (`es` in `i18n/format.ts`). */
   numberLocale: manifest.identity.numberLocale,
+  /** BCP-47 locale for dates in the tenant's own language (`es` in `i18n/format.ts`). */
   dateLocale: manifest.identity.dateLocale,
   timezone: manifest.identity.timezone,
   routing: manifest.routing,

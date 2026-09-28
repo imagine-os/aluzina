@@ -307,7 +307,7 @@ export const checklistSpec = defineSpec({
   dataTables: ['engagements', 'projects'],
   roles: ['studio', 'founder', 'ops'],
   logic: [
-    'The checklist is the playbook itself: phases and items come from SERVICES in src/domain/playbook.ts and the tick is engagements.checks[checkKey(phaseId, index)]; nothing about the service is stored twice.',
+    'The checklist is the playbook itself: phases and items come from SERVICES in src/tenant/domain/playbook.ts and the tick is engagements.checks[checkKey(phaseId, index)]; nothing about the service is stored twice.',
     'A project can carry more than one engagement (Noam: design delivered, execution running); the open one (started / in-progress) is shown, otherwise the last.',
     'Mark phase complete ticks every item of the phase; on the last phase it also writes status = delivered and completedAt (G-09).',
     'Advance to next phase writes currentPhaseId and status = in-progress; it is disabled on the last phase.',

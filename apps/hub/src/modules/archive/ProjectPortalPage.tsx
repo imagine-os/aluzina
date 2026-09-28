@@ -38,7 +38,7 @@ import {
   pick,
   type DeliveryStage,
   type PipelineGroup,
-} from '../../domain';
+} from '../../tenant/domain';
 import { copyText, downloadUrl } from '../../design/clipboard';
 import { formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
