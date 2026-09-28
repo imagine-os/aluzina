@@ -52,11 +52,11 @@ export function seed({ add }: SeedCtx): void {
   add('payments', 'pay-hoy-marmol-anticipo', { projectId: P.hoy, counterparty: 'Mármoles de Antioquia', direction: 'out', concept: 'Anticipo 50% mármol recepción', amountCop: 13_750_000, paidCop: 0, dueDate: '2026-10-01', paidDate: null, status: 'due' });
   add('payments', 'pay-arriendo-taller', { projectId: null, counterparty: 'Inmobiliaria Laureles', direction: 'out', concept: 'Arriendo taller octubre', amountCop: 4_200_000, paidCop: 0, dueDate: '2026-10-05', paidDate: null, status: 'due' });
 
-  add('documents', 'doc-laureles-contrato', { projectId: P.laureles, title: 'Contrato de diseño Casa Laureles', kind: 'contract', status: 'signed', ownerRole: 'ops', version: 2, url: null });
-  add('documents', 'doc-laureles-pdf', { projectId: P.laureles, title: 'PDF propuesta sala y comedor', kind: 'project-pdf', status: 'draft', ownerRole: 'founder', version: 1, url: null });
-  add('documents', 'doc-hoy-planos', { projectId: P.hoy, title: 'Planos técnicos recepción y salas', kind: 'plan', status: 'final', ownerRole: 'studio', version: 3, url: null });
-  add('documents', 'doc-hoy-cotizacion', { projectId: P.hoy, title: 'Cotización cliente hito 3', kind: 'quote', status: 'draft', ownerRole: 'founder', version: 1, url: null });
-  add('documents', 'doc-noam-factura2', { projectId: P.noam, title: 'Factura Ebanistería Robledo pago 2', kind: 'invoice', status: 'sent', ownerRole: 'ops', version: 1, url: null });
-  add('documents', 'doc-informe-sept', { projectId: null, title: 'Informe mensual septiembre 2026', kind: 'report', status: 'draft', ownerRole: 'ops', version: 1, url: null });
-  add('documents', 'doc-provenza-brief', { projectId: P.provenza, title: 'Brief Café Provenza', kind: 'brief', status: 'draft', ownerRole: 'founder', version: 1, url: null });
+  add('documents', 'doc-laureles-contrato', { projectId: P.laureles, title: 'Contrato de diseño Casa Laureles', kind: 'contract', status: 'signed', ownerRole: 'ops', docVersion: 2, url: null });
+  add('documents', 'doc-laureles-pdf', { projectId: P.laureles, title: 'PDF propuesta sala y comedor', kind: 'project-pdf', status: 'draft', ownerRole: 'founder', docVersion: 1, url: null });
+  add('documents', 'doc-hoy-planos', { projectId: P.hoy, title: 'Planos técnicos recepción y salas', kind: 'plan', status: 'final', ownerRole: 'studio', docVersion: 3, url: null });
+  add('documents', 'doc-hoy-cotizacion', { projectId: P.hoy, title: 'Cotización cliente hito 3', kind: 'quote', status: 'draft', ownerRole: 'founder', docVersion: 1, url: null });
+  add('documents', 'doc-noam-factura2', { projectId: P.noam, title: 'Factura Ebanistería Robledo pago 2', kind: 'invoice', status: 'sent', ownerRole: 'ops', docVersion: 1, url: null });
+  add('documents', 'doc-informe-sept', { projectId: null, title: 'Informe mensual septiembre 2026', kind: 'report', status: 'draft', ownerRole: 'ops', docVersion: 1, url: null });
+  add('documents', 'doc-provenza-brief', { projectId: P.provenza, title: 'Brief Café Provenza', kind: 'brief', status: 'draft', ownerRole: 'founder', docVersion: 1, url: null });
 }

@@ -1,6 +1,6 @@
 import companyRaw from '@docs/archive/company/index.json';
 import { mimeTypeOf, slugify } from '../../domain/archive';
-import type { Asset, Relation, Tag } from '../schema';
+import type { Asset, BaseRow, Relation, Tag } from '../schema';
 import type { SeedCtx } from './types';
 
 /**
@@ -57,7 +57,7 @@ export function companyAssetId(name: string): string {
   return `ast-co-${slugify(name.replace(/\.[a-z0-9]{1,5}$/i, '')) || 'file'}`;
 }
 
-type AssetRow = Omit<Asset, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
+type AssetRow = Omit<Asset, keyof BaseRow>;
 
 /** Playbook services a company document argues for; only where the file's subject is unambiguous (D-060 style, inferred). */
 const APPLIES_TO: Record<string, readonly string[]> = {
@@ -67,7 +67,7 @@ const APPLIES_TO: Record<string, readonly string[]> = {
 
 export function seed({ add, users }: SeedCtx): void {
   const idx = COMPANY_INDEX;
-  const relate = (id: string, row: Omit<Relation, 'id' | 'created_at' | 'updated_at' | 'updated_by' | 'note'> & { note?: string }) => add('relations', id, { note: '', ...row });
+  const relate = (id: string, row: Omit<Relation, keyof BaseRow | 'note'> & { note?: string }) => add('relations', id, { note: '', ...row });
 
   // ---- Tags registry: the tag names this batch introduces (`empresa`, `interno`/`público`, plus what/kind tags) ----
   const tagRows: [string, Tag['tone']][] = [

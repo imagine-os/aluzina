@@ -1,5 +1,5 @@
 {
-  "version": "0.15.0",
+  "version": "0.16.0",
   "updatedAt": "2026-09-28",
   "source": "docs/build-plan.md (steps 0-15, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -1785,20 +1785,21 @@
       "id": "tp-02",
       "title": "tenant.json manifest v1 (manifestVersion 1) + apps/hub/src/tenant/config.ts + namespace derivation of every aluzina.* key, BroadcastChannel name and window.__aluzina from TENANT.id, values unchanged (D-088, D-090)",
       "step": "15",
-      "status": "next",
+      "status": "done",
       "model": "Fable 5.1",
       "codes": [
         "HUB-01"
       ],
       "dependsOn": [
         "tp-01"
-      ]
+      ],
+      "changelog": "0026"
     },
     {
       "id": "tp-03",
       "title": "scripts/tenant-validate.mjs + npm run tenant:validate inside build + .github/workflows/ci.yml running npm ci && npm run build on every push and PR (D-094)",
       "step": "15",
-      "status": "backlog",
+      "status": "next",
       "model": "Opus 5",
       "codes": [],
       "dependsOn": [
@@ -1809,18 +1810,19 @@
       "id": "tp-04",
       "title": "tenant_id + version on the base row, MockProvider stamps tenant_id from TENANT.id and increments version on update, SEED_VERSION 12 -> 13 (D-091)",
       "step": "15",
-      "status": "backlog",
+      "status": "done",
       "model": "Fable 5.1",
       "codes": [],
       "dependsOn": [
         "tp-02"
-      ]
+      ],
+      "changelog": "0026"
     },
     {
       "id": "tp-05",
       "title": "Move tenant-owned code into apps/hub/src/tenant/ with git mv: auth constants (roles, permissions, demoUsers), navGroups, hubCards out of HubPage.tsx, domain/, data/seed/, brand/paths.ts; re-export shims; tsc green (D-089)",
       "step": "15",
-      "status": "backlog",
+      "status": "next",
       "model": "Opus 5",
       "codes": [
         "HUB-01"

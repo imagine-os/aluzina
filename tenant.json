@@ -1,0 +1,192 @@
+{
+  "manifestVersion": 1,
+  "id": "aluzina",
+  "name": { "en": "Aluzina", "es": "Aluzina" },
+  "repo": "https://github.com/imagine-os/aluzina",
+  "version": "0.16.0",
+  "generatedFrom": "9fac18d",
+  "spec": "docs/tenant/manifest.md",
+  "identity": {
+    "legalName": "Aluzina Espacios",
+    "city": "Medellín",
+    "country": "CO",
+    "defaultLanguage": "en",
+    "languages": ["en", "es"],
+    "currency": "COP",
+    "numberLocale": "es-CO",
+    "dateLocale": "es-CO",
+    "timezone": "America/Bogota",
+    "publicSite": "https://aluzinaa.com",
+    "contactChannels": ["whatsapp", "email"]
+  },
+  "brand": {
+    "tokenValues": "apps/hub/src/design/tokens.ts",
+    "generatedCss": "apps/hub/src/styles/tokens.css",
+    "paths": "apps/hub/src/brand/paths.ts",
+    "marks": "apps/hub/public/brand/*.svg",
+    "documents": [
+      { "file": "apps/hub/public/brand/MANUAL-DE-MARCA-ALUZINA.pdf", "url": "./brand/MANUAL-DE-MARCA-ALUZINA.pdf", "kind": "manual" },
+      { "file": "apps/hub/public/brand/aluzina-portfolio.pdf", "url": "./brand/aluzina-portfolio.pdf", "kind": "portfolio" },
+      { "file": "apps/hub/public/brand/aluzina-brochure.pdf", "url": "./brand/aluzina-brochure.pdf", "kind": "brochure" }
+    ],
+    "renders": "docs/brand",
+    "sourceKit": "docs/source/brand-kit",
+    "fonts": { "primary": "DIN Round Pro", "fallback": "Rubik", "licensed": true, "shipped": false },
+    "metals": { "options": ["silver", "gold"], "default": "silver" },
+    "brief": "docs/design/brand-system.md"
+  },
+  "surfaces": {
+    "list": ["hub", "founder", "ops", "studio", "brand", "client", "dev", "design", "docs", "manual", "public"],
+    "codePrefixes": {
+      "HUB": "hub",
+      "BOS": "business-os",
+      "P": "public",
+      "C": "client",
+      "A": "founder",
+      "O": "ops",
+      "S": "studio",
+      "G": "brand",
+      "M": "manual",
+      "D": "dev/docs/design",
+      "W": "work",
+      "K": "spaces"
+    },
+    "roles": ["founder", "ops", "studio", "brand", "marketing", "client", "dev"],
+    "permissionsFile": "apps/hub/src/auth/permissions.ts",
+    "demoUsersFile": "apps/hub/src/auth/demoUsers.ts",
+    "navGroupsFile": "apps/hub/src/app/navGroups.ts",
+    "hubCardsFile": "apps/hub/src/modules/hub/HubPage.tsx",
+    "roleSwitchParam": "as",
+    "nextFreeCodes": ["A-10", "O-14", "S-14", "G-10", "P-07", "C-07", "M-09", "D-16", "K-07", "W-04"]
+  },
+  "hubModules": [
+    { "name": "hub", "path": "apps/hub/src/modules/hub", "codes": ["HUB-01"], "surfaces": ["hub"], "guard": null, "shell": "bare", "owner": "Fable 5.1" },
+    { "name": "founder", "path": "apps/hub/src/modules/founder", "codes": ["A-01", "A-02", "A-03", "A-04", "A-05", "A-06", "A-07", "A-08", "A-09"], "surfaces": ["founder"], "guard": "projects.approve", "shell": "desktop", "owner": "Opus 5" },
+    { "name": "ops", "path": "apps/hub/src/modules/ops", "codes": ["O-01", "O-02", "O-03", "O-04", "O-05", "O-06", "O-07", "O-08", "O-09", "O-10", "O-11", "O-12", "O-13"], "surfaces": ["ops"], "guard": "schedule.manage", "shell": "desktop", "owner": "Opus 5" },
+    { "name": "studio", "path": "apps/hub/src/modules/studio", "codes": ["S-01", "S-02", "S-03", "S-04", "S-05", "S-06", "S-07", "S-08", "S-09", "S-10", "S-11"], "surfaces": ["studio"], "guard": "design.develop", "shell": "desktop", "owner": "Opus 5" },
+    { "name": "brand", "path": "apps/hub/src/modules/brand", "codes": ["G-01", "G-02", "G-03", "G-04", "G-05", "G-06", "G-07", "G-08", "G-09"], "surfaces": ["brand"], "guard": "brand.manage", "shell": "desktop", "owner": "Opus 5" },
+    { "name": "archive", "path": "apps/hub/src/modules/archive", "codes": ["S-12", "S-13"], "surfaces": ["studio", "founder", "brand"], "guard": "projects.read", "shell": "desktop", "owner": "Opus 5" },
+    { "name": "work", "path": "apps/hub/src/modules/work", "codes": ["W-01", "W-02", "W-03"], "surfaces": ["founder", "ops", "studio", "brand"], "guard": null, "shell": "desktop", "owner": "Opus 5" },
+    { "name": "spaces", "path": "apps/hub/src/modules/spaces", "codes": ["K-01", "K-02", "K-03", "K-04", "K-05", "K-06"], "surfaces": ["founder", "ops", "studio", "brand", "dev"], "guard": "spaces.read", "shell": "desktop", "owner": "Opus 5" },
+    { "name": "client", "path": "apps/hub/src/modules/client", "codes": ["C-01", "C-02", "C-03", "C-04", "C-05", "C-06"], "surfaces": ["client"], "guard": "own.projects.read", "shell": "phone", "owner": "Opus 5" },
+    { "name": "public", "path": "apps/hub/src/modules/public", "codes": ["P-01", "P-02", "P-03", "P-04", "P-05"], "surfaces": ["public"], "guard": null, "shell": "bare", "owner": "Opus 5" },
+    { "name": "sets", "path": "apps/hub/src/modules/sets", "codes": ["P-06"], "surfaces": ["public"], "guard": null, "shell": "bare", "owner": "Opus 5" },
+    { "name": "manual", "path": "apps/hub/src/modules/manual", "codes": ["M-01", "M-02", "M-03", "M-04", "M-05", "M-06", "M-07", "M-08"], "surfaces": ["manual"], "guard": "manual.read", "shell": "desktop", "owner": "Opus 5", "note": "M-03..M-07 are produced by serviceSpec(code) in specs.ts, not by code: literals" },
+    { "name": "docs", "path": "apps/hub/src/modules/docs", "codes": ["D-06", "D-15"], "surfaces": ["docs"], "guard": "docs.read", "shell": "desktop", "owner": "Fable 5.1", "platformCandidate": true },
+    { "name": "design", "path": "apps/hub/src/modules/design", "codes": ["D-10", "D-12", "D-13"], "surfaces": ["design"], "guard": "design.read", "shell": "desktop", "owner": "Opus 5", "platformCandidate": true },
+    { "name": "dev", "path": "apps/hub/src/modules/dev", "codes": ["D-02", "D-03", "D-04"], "surfaces": ["dev"], "guard": "dev.tools", "shell": "desktop", "owner": "Fable 5.1", "platformCandidate": true },
+    { "name": "tools", "path": "apps/hub/src/modules/tools", "codes": ["D-05", "D-07", "D-08"], "surfaces": ["dev"], "guard": "dev.tools", "shell": "desktop", "owner": "Fable 5.1", "platformCandidate": true },
+    { "name": "qa", "path": "apps/hub/src/modules/qa", "codes": ["D-09", "D-11", "D-14"], "surfaces": ["dev"], "guard": "dev.tools", "shell": "desktop", "owner": "Fable 5.1", "platformCandidate": true }
+  ],
+  "subProjects": [
+    { "id": "hub", "kind": "app", "paths": ["apps/hub"], "entry": "apps/hub/index.html", "build": "npm run build", "serve": "dist/", "codes": ["HUB-01"], "status": "live", "dependsOn": ["docs-and-plan", "archive", "brand-kit", "design-system"], "hostNeeds": ["HR-01", "HR-02", "HR-03", "HR-05", "HR-06", "HR-07", "HR-08", "HR-11"], "owner": "Fable 5.1 (shared), Opus 5 (modules)", "readme": "apps/hub/src/modules/README.md" },
+    { "id": "business-os", "kind": "static", "paths": ["apps/business-os"], "entry": "apps/business-os/index.html", "build": "npm run copy:static", "serve": "dist/business-os/", "codes": ["BOS-01", "BOS-02", "BOS-03", "BOS-04", "BOS-05", "BOS-06"], "status": "doing", "dependsOn": [], "hostNeeds": ["HR-04", "HR-07"], "owner": "Fable 5.1 (audit), Sonnet 5", "readme": "apps/business-os/README.md" },
+    { "id": "public-site", "kind": "external", "paths": ["docs/source/aluzinaa-archive", "docs/knowledge/public-sites.md"], "entry": "https://aluzinaa.com", "build": null, "serve": "https://aluzinaa.com", "codes": ["P-00"], "status": "linked", "dependsOn": [], "hostNeeds": ["HR-07"], "owner": "Justin (Lovable), Opus 5 (R7 later)", "readme": "docs/source/aluzinaa-archive/README.md" },
+    { "id": "archive", "kind": "pipeline", "paths": ["scripts/archive", "docs/archive", "apps/hub/public/archive"], "entry": "scripts/archive/build-index.mjs", "build": "npm run archive:crawl && npm run archive:index && npm run archive:previews && npm run archive:collection", "serve": "dist/archive/", "codes": ["S-12", "S-13", "G-09", "A-09", "P-06"], "status": "done", "dependsOn": [], "hostNeeds": ["HR-04", "HR-02"], "owner": "Fable 5.1 (index, seed), Sonnet 5 (crawls, renders)", "readme": "docs/archive/README.md" },
+    { "id": "brand-kit", "kind": "data", "paths": ["docs/source/brand-kit", "docs/source/brand", "docs/brand", "apps/hub/public/brand", "apps/hub/src/brand"], "entry": "docs/brand/README.md", "build": "python3 docs/brand/tools/render-pdf-pages.py", "serve": "dist/brand/", "codes": ["G-08", "D-12"], "status": "done", "dependsOn": [], "hostNeeds": ["HR-04", "HR-06"], "owner": "Fable 5.1", "readme": "docs/brand/README.md" },
+    { "id": "knowledge-base", "kind": "docs", "paths": ["docs/knowledge"], "entry": "docs/knowledge/README.md", "build": null, "serve": "in-app D-06 / D-15", "codes": [], "status": "done", "dependsOn": [], "hostNeeds": ["HR-05"], "owner": "Fable 5.1", "readme": "docs/knowledge/README.md" },
+    { "id": "asana-import", "kind": "pipeline", "paths": ["scripts/import-asana.mjs", "docs/source/asana", "apps/hub/src/data/seed/asana"], "entry": "scripts/import-asana.mjs", "build": "npm run import:asana", "serve": null, "codes": ["K-06", "W-03"], "status": "done", "dependsOn": ["hub"], "hostNeeds": ["HR-02"], "owner": "Fable 5.1 (seam), Sonnet 5 (mapper)", "readme": "docs/source/asana/2026-09-21/README.md" },
+    { "id": "design-system", "kind": "platform-candidate", "paths": ["apps/hub/src/design", "apps/hub/src/components", "apps/hub/scripts/gen-tokens.mjs", "apps/hub/src/styles", "docs/design"], "entry": "docs/design/brand-system.md", "build": "npm run tokens", "serve": "in-app D-02 / D-10 / D-12 / D-13 / D-14", "codes": ["D-02", "D-10", "D-12", "D-13", "D-14"], "status": "done", "dependsOn": ["brand-kit"], "hostNeeds": ["HR-06"], "owner": "Fable 5.1", "readme": "docs/design/brand-system.md" },
+    { "id": "docs-and-plan", "kind": "docs", "paths": ["docs"], "entry": "docs/README.md", "build": null, "serve": "in-app D-05 / D-06 / D-15", "codes": ["D-05", "D-06", "D-15"], "status": "live", "dependsOn": [], "hostNeeds": ["HR-05", "HR-09"], "owner": "Fable 5.1", "readme": "docs/README.md" }
+  ],
+  "data": {
+    "providerInterface": "apps/hub/src/data/provider.ts",
+    "providers": [{ "name": "mock", "file": "apps/hub/src/data/MockProvider.ts", "storage": "localStorage" }],
+    "schemaDir": "apps/hub/src/data/schema",
+    "entities": [
+      "projects", "sections", "tasks", "comments", "activity", "meetings", "suppliers", "quotes", "deliveries", "payments",
+      "documents", "references", "materials", "schedules", "renderPacks", "consistencyChecks", "competitions", "presentations",
+      "brandAssets", "revisions", "alerts", "spaces", "posts", "filings", "relations", "tags", "clients", "deliverables", "tools",
+      "leads", "engagements", "revisionItems", "changeOrders", "purchases", "siteReports", "messages", "assets"
+    ],
+    "baseRow": ["id", "created_at", "updated_at", "updated_by", "tenant_id", "version"],
+    "seedVersion": 13,
+    "seedDir": "apps/hub/src/data/seed",
+    "seedModules": ["archive", "asana", "assets", "brand", "collections", "company", "operations", "projects", "services", "spaces", "studio", "work"],
+    "docsInputs": [
+      "docs/plan/plan.json",
+      "docs/archive/index.json",
+      "docs/archive/projects/*/index.json",
+      "docs/archive/company/index.json",
+      "docs/archive/collections/*/{index,sets}.json",
+      "docs/brand/*/index.json"
+    ],
+    "realtime": { "transport": "BroadcastChannel", "dataChannel": "aluzina-data", "presenceChannel": "aluzina-presence", "conflict": "last-write-wins + onConflict (D-024)" },
+    "idScheme": "slug prefixes (prj-, cl-, u-, sp-) + newId(prefix)",
+    "plannedProvider": "supabase (zero code today; credentials blocked)"
+  },
+  "contentMounts": [
+    { "id": "archive-renders", "path": "apps/hub/public/archive", "sizeMb": 122, "servedAt": "./archive/", "objectStorage": true, "regenerate": "npm run archive:previews", "note": "186 project slugs + 2 collections; thumbs / pages / sheets; redacted per D-059" },
+    { "id": "business-os-assets", "path": "apps/business-os/assets", "sizeMb": 136, "servedAt": "./business-os/assets/", "objectStorage": true, "regenerate": null, "note": "6 mp4 (43 MB) + world/*.png (93 MB, webp conversion is a kanban card)" },
+    { "id": "screenshots", "path": "docs/screenshots", "sizeMb": 69, "servedAt": null, "objectStorage": true, "regenerate": "npm run screenshots", "note": "357 JPEGs over 90 codes; QA evidence, not served" },
+    { "id": "source-material", "path": "docs/source", "sizeMb": 18, "servedAt": null, "objectStorage": false, "regenerate": null, "note": "playbook, brand kit, site captures, Asana CSVs; data not instructions; stays in git" },
+    { "id": "brand-renders", "path": "docs/brand", "sizeMb": 9, "servedAt": null, "objectStorage": false, "regenerate": "python3 docs/brand/tools/render-pdf-pages.py", "note": "visual memory of the brand PDFs; seeds read its index.json through @docs" }
+  ],
+  "namespace": {
+    "config": "apps/hub/src/tenant/config.ts",
+    "storagePrefix": "aluzina.",
+    "storageKeys": {
+      "localStorage": ["lang", "theme", "metal", "session", "devMode", "data", "graphView", "views.<userId>", "archive.set", "presence"],
+      "sessionStorage": ["tabUser", "public.intake"]
+    },
+    "channels": ["aluzina-data", "aluzina-presence"],
+    "global": "__aluzina",
+    "htmlAttributes": ["data-theme", "data-metal", "data-dev", "data-role"],
+    "packageScope": "@aluzina",
+    "demoEmailDomain": "demo.aluzina.local",
+    "literalAllowlist": [
+      "apps/hub/src/modules/spaces/ImportPage.tsx",
+      "apps/hub/src/components/organism/GraphViews/GraphViews.example.tsx",
+      "apps/hub/src/components/organism/SpaceTree/SpaceTree.example.tsx"
+    ]
+  },
+  "routing": { "strategy": "path", "pathPrefix": "/t/aluzina/", "supports": ["path", "subdomain"] },
+  "deploy": {
+    "target": "github-pages",
+    "url": "https://imagine-os.github.io/aluzina/",
+    "workflow": ".github/workflows/pages.yml",
+    "ciWorkflow": null,
+    "base": "./",
+    "router": "hash",
+    "outDir": "dist",
+    "staticCopies": [{ "from": "apps/business-os", "to": "dist/business-os", "script": "scripts/copy-static.mjs" }],
+    "deployTimeArtifacts": [{ "path": "dist/thumbs/<code>.jpg + manifest.json", "script": "npm run thumbs", "needs": "playwright chromium" }],
+    "nodeVersion": "22",
+    "envVars": { "app": [], "scripts": ["PW_EXECUTABLE", "PLAYWRIGHT_CHROMIUM_EXECUTABLE", "HTTPS_PROXY", "FFMPEG", "SOFFICE"] },
+    "buildDefines": ["__APP_VERSION__", "__BUILD_ID__"],
+    "docsAlias": { "alias": "@docs", "path": "docs" }
+  },
+  "docs": {
+    "root": "docs/README.md",
+    "counters": { "prompts": 23, "changelog": 26, "decisions": 97, "qa": 6 },
+    "pendingDir": "docs/changelog/_pending",
+    "plan": "docs/plan/plan.json",
+    "kanban": "docs/kanban.md",
+    "buildPlan": "docs/build-plan.md",
+    "decisions": "docs/decisions.md",
+    "pagesDir": "docs/pages",
+    "pageTemplate": "docs/pages/_TEMPLATE.md",
+    "screenshotsDir": "docs/screenshots",
+    "knowledge": "docs/knowledge",
+    "surfaces": "docs/reference/surfaces.md",
+    "tenantDocs": "docs/tenant",
+    "conventions": [
+      "numbered files append-only",
+      "docs same turn as code",
+      "model named in every changelog",
+      "commit to main, no PRs",
+      "no Slack posts from agents"
+    ]
+  },
+  "actions": {
+    "bus": "apps/hub/src/actions/bus.ts",
+    "global": "window.__aluzina.actions",
+    "idPattern": "^[a-z][a-zA-Z0-9]*\\.[a-z][a-zA-Z0-9]*$",
+    "declared": 430,
+    "distinct": 409,
+    "browser": "D-09 /#/dev/actions",
+    "exportFormat": "webmcp-json (D-09 export)",
+    "mcpServer": null
+  },
+  "hostRequirements": ["HR-01", "HR-02", "HR-03", "HR-04", "HR-05", "HR-06", "HR-07", "HR-08", "HR-09", "HR-10", "HR-11", "HR-12"]
+}

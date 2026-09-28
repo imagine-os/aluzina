@@ -16,17 +16,18 @@
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap"
     />
     <script>
-      // First-paint preferences (mirrors the providers; keys documented in docs/reference/surfaces.md).
+      // First-paint preferences (mirrors the providers; keys documented in docs/reference/surfaces.md). %TENANT_ID% is
+      // replaced at build / dev time from tenant.json by the tenantHtml plugin in vite.config.ts (D-090).
       (function () {
         try {
-          var theme = localStorage.getItem('aluzina.theme');
+          var theme = localStorage.getItem('%TENANT_ID%.theme');
           if (theme !== 'light' && theme !== 'dark') {
             theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
           }
           document.documentElement.setAttribute('data-theme', theme);
-          var lang = localStorage.getItem('aluzina.lang');
+          var lang = localStorage.getItem('%TENANT_ID%.lang');
           if (lang === 'es' || lang === 'en') document.documentElement.lang = lang;
-          if (localStorage.getItem('aluzina.devMode') === 'on') document.documentElement.setAttribute('data-dev', 'on');
+          if (localStorage.getItem('%TENANT_ID%.devMode') === 'on') document.documentElement.setAttribute('data-dev', 'on');
         } catch (e) {}
       })();
     </script>

@@ -152,7 +152,7 @@ export function ProjectsPage() {
               columns={[
                 { key: 'title', header: t('studio.col.title') },
                 { key: 'kind', header: t('studio.col.kind') },
-                { key: 'version', header: t('studio.col.version'), align: 'end' },
+                { key: 'docVersion', header: t('studio.col.version'), align: 'end' },
                 { key: 'status', header: t('studio.col.status'), render: (d) => <StatusPill status={d.status} /> },
               ]}
             />

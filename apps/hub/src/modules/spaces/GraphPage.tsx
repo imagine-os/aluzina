@@ -1,6 +1,7 @@
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
+import { storageKey } from '../../tenant/config';
 import { useSession } from '../../auth/SessionProvider';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
@@ -41,7 +42,7 @@ import './spaces.css';
 const NODE_KINDS = [...SPACE_KINDS, 'post', 'other'] as const;
 const ZOOMS = [0.5, 0.65, 0.8, 1, 1.25, 1.5, 2, 2.5, 3];
 /** Where the chosen view is remembered between visits. */
-const VIEW_STORAGE_KEY = 'aluzina.graphView';
+const VIEW_STORAGE_KEY = storageKey('graphView');
 /** Nodes drawn before "Show all" is on; the rest are the ones furthest from the focus. */
 const MAX_NODES = 140;
 

@@ -2,11 +2,12 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import { demoUserById } from '../auth/demoUsers';
 import { useSession } from '../auth/SessionProvider';
 import type { PresencePerson } from '../components/molecule/PresenceBar/PresenceBar';
+import { channelName, storageKey } from '../tenant/config';
 
 /** BroadcastChannel every tab joins for presence heartbeats (D-023); Supabase Presence replaces it. */
-export const PRESENCE_CHANNEL = 'aluzina-presence';
+export const PRESENCE_CHANNEL = channelName('presence');
 /** localStorage fallback key when BroadcastChannel is unavailable. */
-export const PRESENCE_STORAGE_KEY = 'aluzina.presence';
+export const PRESENCE_STORAGE_KEY = storageKey('presence');
 export const HEARTBEAT_MS = 5_000;
 export const EXPIRE_MS = 15_000;
 
@@ -43,7 +44,7 @@ function currentRoute(): string {
 }
 
 /**
- * Heartbeats `{ tabId, userId, route, at }` every 5 s over BroadcastChannel('aluzina-presence') (fallback:
+ * Heartbeats `{ tabId, userId, route, at }` every 5 s over BroadcastChannel(PRESENCE_CHANNEL) (fallback:
  * a localStorage map + `storage` events), drops tabs silent for 15 s and says goodbye on unload (D-023).
  * `usePresence()` gives the PresenceBar its people; the DesktopShell and WorkHeader render it.
  */

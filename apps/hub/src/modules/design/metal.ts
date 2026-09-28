@@ -1,7 +1,8 @@
 import { tokens, type MetalName } from '../../design/tokens';
+import { storageKey } from '../../tenant/config';
 
 /** Reserved by the design system for the gold / silver preview (docs/design/brand-system.md section 2). */
-export const METAL_STORAGE_KEY = 'aluzina.metal';
+export const METAL_STORAGE_KEY = storageKey('metal');
 
 export const METAL_NAMES = Object.keys(tokens.metal) as MetalName[];
 

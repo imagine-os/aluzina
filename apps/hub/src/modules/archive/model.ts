@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTable } from '../../data/DataContext';
+import { storageKey } from '../../tenant/config';
 import { useProjectFiles, type ProjectFilesState } from '../../data/archiveFiles';
 import type { Asset, Project, Relation } from '../../data/schema';
 import { DELIVERY_STAGES, compareFolderPaths, fileTypeOf, lifecycleOf, type DeliveryStage, type FileType, type Lifecycle } from '../../domain';
@@ -83,7 +84,7 @@ export function stageCounts(files: readonly Asset[]): { stage: DeliveryStage; co
 // Portfolio set: the projects the studio is assembling to show one client
 // ---------------------------------------------------------------------------------------------
 
-export const SET_STORAGE_KEY = 'aluzina.archive.set';
+export const SET_STORAGE_KEY = storageKey('archive.set');
 const SET_EVENT = 'aluzina:archive-set';
 
 function readSet(): string[] {

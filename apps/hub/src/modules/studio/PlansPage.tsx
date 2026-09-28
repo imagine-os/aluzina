@@ -49,8 +49,8 @@ export function PlansPage() {
   const current = open ? (documents.find((d) => d.id === open.id) ?? open) : null;
 
   const newVersion = async (d: Document) => {
-    const next = d.version + 1;
-    await data.update('documents', d.id, { version: next, status: 'draft' });
+    const next = d.docVersion + 1;
+    await data.update('documents', d.id, { docVersion: next, status: 'draft' });
     toast(t('studio.plans.versioned', { n: next }));
   };
   const markFinal = async (d: Document) => {
@@ -102,7 +102,7 @@ export function PlansPage() {
           { key: 'title', header: t('studio.col.title'), sortable: true },
           { key: 'projectId', header: t('studio.col.project'), render: (d) => (d.projectId ? nameOf(d.projectId) : t('studio.noProject')) },
           { key: 'kind', header: t('studio.col.kind'), sortable: true, render: (d) => t(`studio.docKind.${d.kind}`) },
-          { key: 'version', header: t('studio.col.version'), sortable: true, align: 'end' },
+          { key: 'docVersion', header: t('studio.col.version'), sortable: true, align: 'end' },
           { key: 'ownerRole', header: t('studio.col.owner'), render: (d) => t(`core.role.${d.ownerRole}`) },
           { key: 'status', header: t('studio.col.status'), render: (d) => <StatusPill status={d.status} /> },
         ]}
@@ -134,7 +134,7 @@ export function PlansPage() {
             items={[
               { key: t('studio.col.project'), value: current.projectId ? nameOf(current.projectId) : t('studio.noProject') },
               { key: t('studio.col.kind'), value: t(`studio.docKind.${current.kind}`) },
-              { key: t('studio.col.version'), value: current.version },
+              { key: t('studio.col.version'), value: current.docVersion },
               { key: t('studio.col.owner'), value: t(`core.role.${current.ownerRole}`) },
               { key: t('studio.col.status'), value: <StatusPill status={current.status} /> },
               { key: t('studio.col.updated'), value: formatDate(current.updated_at, lang) },

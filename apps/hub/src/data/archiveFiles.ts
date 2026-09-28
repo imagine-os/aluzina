@@ -108,6 +108,8 @@ export async function saveFilePatch(data: DataProvider, baseRow: Asset, patch: P
   delete draft.created_at;
   delete draft.updated_at;
   delete draft.updated_by;
+  delete draft.tenant_id;
+  delete draft.version;
   const created = await data.create('assets', draft as unknown as NewRow<'assets'>, baseRow.id);
   if (projectId) {
     await data.create(

@@ -1,7 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { storageKey } from '../tenant/config';
 import type { ThemeName } from './tokens';
 
-export const THEME_STORAGE_KEY = 'aluzina.theme';
+export const THEME_STORAGE_KEY = storageKey('theme');
 
 interface ThemeCtx {
   theme: ThemeName;

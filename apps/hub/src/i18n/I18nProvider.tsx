@@ -1,7 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { storageKey } from '../tenant/config';
 import type { Lang, StringTable } from './types';
 
-export const LANG_STORAGE_KEY = 'aluzina.lang';
+export const LANG_STORAGE_KEY = storageKey('lang');
 
 type Vars = Record<string, string | number>;
 

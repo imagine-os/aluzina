@@ -1,7 +1,7 @@
 import brochureRaw from '@docs/brand/brochure/index.json';
 import portfolioRaw from '@docs/brand/portfolio/index.json';
 import type { ServiceCode } from '../../domain/playbook';
-import type { Asset, Client, Post, ProjectType, Relation, Space } from '../schema';
+import type { Asset, BaseRow, Client, Post, ProjectType, Relation, Space } from '../schema';
 import type { SeedCtx } from './types';
 
 /**
@@ -121,10 +121,10 @@ const SERVICE_PAGES: { docId: string; page: number; services: ServiceCode[] }[] 
   { docId: ASSET_IDS.portfolio, page: 2, services: ['03'] },
 ];
 
-type AssetRow = Omit<Asset, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
-type SpaceRow = Omit<Space, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
-type PostRow = Omit<Post, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
-type ClientRow = Omit<Client, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
+type AssetRow = Omit<Asset, keyof BaseRow>;
+type SpaceRow = Omit<Space, keyof BaseRow>;
+type PostRow = Omit<Post, keyof BaseRow>;
+type ClientRow = Omit<Client, keyof BaseRow>;
 
 function excerpt(text: string, max = 200): string {
   const flat = text.replace(/\s+/g, ' ').trim();
@@ -148,7 +148,7 @@ function pageTitle(docTitle: string, p: BrandPage): string {
 }
 
 export function seed({ add, users }: SeedCtx): void {
-  const relate = (id: string, row: Omit<Relation, 'id' | 'created_at' | 'updated_at' | 'updated_by' | 'note'> & { note?: string }) => add('relations', id, { note: '', ...row });
+  const relate = (id: string, row: Omit<Relation, keyof BaseRow | 'note'> & { note?: string }) => add('relations', id, { note: '', ...row });
   const space = (id: string, row: Partial<SpaceRow> & Pick<SpaceRow, 'name' | 'slug' | 'kind'>) =>
     add('spaces', id, { parentId: null, description: '', glyph: '◇', order: 0, visibility: 'team', archived: false, aboutType: null, aboutId: null, ...row });
   const post = (id: string, spaces: string[], row: Partial<PostRow> & Pick<PostRow, 'title' | 'body' | 'kind' | 'authorId'>) => {

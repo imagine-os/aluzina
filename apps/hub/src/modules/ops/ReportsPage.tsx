@@ -98,7 +98,7 @@ export function ReportsPage() {
           columns={[
             { key: 'title', header: t('ops.documents.col.title') },
             { key: 'projectId', header: t('ops.common.project'), render: (d) => projectName(d.projectId) ?? t('ops.common.internal') },
-            { key: 'version', header: t('ops.documents.col.version'), align: 'end', render: (d) => `v${d.version}` },
+            { key: 'docVersion', header: t('ops.documents.col.version'), align: 'end', render: (d) => `v${d.docVersion}` },
             { key: 'status', header: t('ops.common.status'), render: (d) => <StatusPill status={d.status} /> },
           ]}
         />

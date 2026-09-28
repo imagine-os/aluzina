@@ -113,7 +113,7 @@ export function DocumentsPage() {
           { key: 'kind', header: t('ops.documents.col.kind'), render: (d) => t(`ops.documents.kind.${d.kind}`) },
           { key: 'projectId', header: t('ops.common.project'), render: (d) => projectName(d.projectId) ?? t('ops.common.internal') },
           { key: 'ownerRole', header: t('ops.common.owner'), render: (d) => t(`core.role.${d.ownerRole}`) },
-          { key: 'version', header: t('ops.documents.col.version'), align: 'end', sortable: true, render: (d) => `v${d.version}` },
+          { key: 'docVersion', header: t('ops.documents.col.version'), align: 'end', sortable: true, render: (d) => `v${d.docVersion}` },
           { key: 'status', header: t('ops.common.status'), render: (d) => <StatusPill status={d.status} /> },
         ]}
         rowActions={
@@ -129,14 +129,14 @@ export function DocumentsPage() {
             <div className="ops-badges">
               <StatusPill status={open.status} />
               <Badge tone="neutral">{t(`ops.documents.kind.${open.kind}`)}</Badge>
-              <Badge tone="info">{`v${open.version}`}</Badge>
+              <Badge tone="info">{`v${open.docVersion}`}</Badge>
             </div>
             <KeyValue
               columns={1}
               items={[
                 { key: t('ops.common.project'), value: projectName(open.projectId) ?? t('ops.common.internal') },
                 { key: t('ops.common.owner'), value: t(`core.role.${open.ownerRole}`) },
-                { key: t('ops.documents.col.version'), value: `v${open.version}` },
+                { key: t('ops.documents.col.version'), value: `v${open.docVersion}` },
                 { key: t('ops.common.due'), value: formatDate(open.updated_at, lang) },
               ]}
             />

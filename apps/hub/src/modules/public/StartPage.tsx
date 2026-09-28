@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
+import { storageKey } from '../../tenant/config';
 import { Badge } from '../../components/atom/Badge/Badge';
 import { Button } from '../../components/atom/Button/Button';
 import { Checkbox } from '../../components/atom/Checkbox/Checkbox';
@@ -29,7 +30,7 @@ import { PublicLayout } from './PublicLayout';
 import { startPath, toServiceCode } from './startHref';
 
 /** A reload, a language switch or a wrong Back must never cost the visitor their answers (P-03). */
-const STORE_KEY = 'aluzina.public.intake';
+const STORE_KEY = storageKey('public.intake');
 const STEP_COUNT = 4;
 
 /** Form fields; the ten playbook keys keep their `QualificationKey` names so the answer map builds itself. */

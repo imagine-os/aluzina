@@ -1,6 +1,6 @@
 # Tenant packaging: aluzina as one tenant of a multitenant host
 
-Status: **pass 1 (tp-01) done, changelog 0025, prompt 0023, D-088..D-096.** Owner model: Fable 5.1 (architecture and plan). Start here, then read the files in the order of the table.
+Status: **pass 2 (tp-02 + tp-04) done, changelog 0026; pass 1 (tp-01) changelog 0025; prompt 0023, D-088..D-097.** `tenant.json` exists at the repo root and `apps/hub/src/tenant/config.ts` is the namespace source. Owner model: Fable 5.1 (architecture and plan). Start here, then read the files in the order of the table.
 
 ## What a tenant package is
 
@@ -59,10 +59,10 @@ tenant.json  (manifestVersion 1)                       <- the host reads this fi
 | Task | Work | Depends on | Model | Status |
 | --- | --- | --- | --- | --- |
 | tp-01 | Inventory + tenant packaging plan + `docs/tenant/*` + decisions D-088..D-096 | – | Fable 5.1 | **done** (0025) |
-| tp-02 | `tenant.json` manifest v1 + `src/tenant/config.ts` + namespace derivation (keys, channels, global) | tp-01 | Fable 5.1 | next |
-| tp-03 | `scripts/tenant-validate.mjs` + `npm run tenant:validate` in `build` + `.github/workflows/ci.yml` | tp-02 | Opus 5 | backlog |
-| tp-04 | `tenant_id` + `version` on the base row, MockProvider stamps them, `SEED_VERSION` 13 | tp-02 | Fable 5.1 | backlog |
-| tp-05 | Move tenant-owned code into `src/tenant/` with `git mv`, tsc green | tp-02 | Opus 5 | backlog |
+| tp-02 | `tenant.json` manifest v1 + `src/tenant/config.ts` + namespace derivation (keys, channels, global) | tp-01 | Fable 5.1 | **done** (0026) |
+| tp-03 | `scripts/tenant-validate.mjs` + `npm run tenant:validate` in `build` + `.github/workflows/ci.yml` | tp-02 | Opus 5 | next |
+| tp-04 | `tenant_id` + `version` on the base row, MockProvider stamps them, `SEED_VERSION` 13 | tp-02 | Fable 5.1 | **done** (0026) |
+| tp-05 | Move tenant-owned code into `src/tenant/` with `git mv`, tsc green | tp-02 | Opus 5 | next |
 | tp-06 | Tokens schema / values split, `gen-tokens` output byte-identical | tp-05 | Opus 5 | backlog |
 | tp-07 | `thumbnails.mjs` / `screenshots.mjs` read hubCards + demoUsers (no hand duplicates) | tp-05 | Sonnet 5 | backlog |
 | tp-08 | One `README.md` per sub-project root pointing at its manifest entry | tp-02 | Sonnet 5 | backlog |
@@ -84,3 +84,4 @@ Definition of done for every pass: `npm run build` green (which will include `te
 ## Change log of this folder
 
 - 2026-09-28 (changelog 0025, prompt 0023): folder created with the seven files above; step 15 and tp-01..tp-13 added to the plan; D-088..D-096 logged. Fable 5.1.
+- 2026-09-28 (changelog 0026, prompt 0023): tp-02 and tp-04 done: root `tenant.json`, `apps/hub/src/tenant/config.ts`, every key / channel / global derived, `tenant_id` + `version` on rows, `SEED_VERSION` 13, `routing: path` (D-097). Fable 5.1.

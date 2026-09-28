@@ -66,6 +66,7 @@ export interface Document extends BaseRow {
   kind: DocumentKind;
   status: DocumentStatus;
   ownerRole: string;
-  version: number;
+  /** The document's own revision as the team numbers it (v1, v2, ...); renamed from `version` when the base row took that column (D-091). */
+  docVersion: number;
   url: string | null;
 }

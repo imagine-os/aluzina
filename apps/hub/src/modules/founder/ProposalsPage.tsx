@@ -97,7 +97,7 @@ export function ProposalsPage() {
                 { key: 'title', header: t('founder.common.title') },
                 { key: 'kind', header: t('founder.proposals.col.kind'), render: (d) => <Badge tone="neutral">{t(`founder.proposals.kind.${d.kind}`)}</Badge> },
                 { key: 'projectId', header: t('founder.common.project'), render: (d) => nameOf(d.projectId) },
-                { key: 'version', header: t('founder.common.version'), align: 'end', sortable: true },
+                { key: 'docVersion', header: t('founder.common.version'), align: 'end', sortable: true },
                 { key: 'status', header: t('founder.common.status'), render: (d) => <StatusPill status={d.status} /> },
               ]}
               rowActions={

@@ -25,13 +25,13 @@ export function seed({ add, users }: SeedCtx): void {
   add('presentations', 'prs-laureles-propuesta', { title: 'Propuesta sala y comedor Casa Laureles', projectId: P.laureles, kind: 'proposal', status: 'review', dueDate: '2026-10-02', ownerId: users.brand, slideCount: 26 });
   add('presentations', 'prs-aluzina-servicios', { title: 'Aluzina: servicios y portafolio 2026', projectId: null, kind: 'sales', status: 'final', dueDate: null, ownerId: users.brand, slideCount: 32 });
 
-  add('brandAssets', 'ast-logo-primary', { name: 'Logotipo principal', kind: 'logo', format: 'svg', version: '2.1', path: 'Marca/Logo/aluzina-primary.svg', status: 'current' });
-  add('brandAssets', 'ast-logo-mono', { name: 'Logotipo monocromo', kind: 'logo', format: 'svg', version: '2.1', path: 'Marca/Logo/aluzina-mono.svg', status: 'current' });
-  add('brandAssets', 'ast-type', { name: 'Tipografías: Playfair Display + Roboto', kind: 'typography', format: 'otf', version: '1.0', path: 'Marca/Tipografia/', status: 'current' });
-  add('brandAssets', 'ast-palette', { name: 'Paleta: negro cálido, ámbar, crema', kind: 'palette', format: 'ase', version: '1.2', path: 'Marca/Paleta/aluzina.ase', status: 'current' });
-  add('brandAssets', 'ast-template-pdf', { name: 'Plantilla PDF de proyecto', kind: 'template', format: 'indd', version: '3.0', path: 'Marca/Plantillas/proyecto-pdf.indd', status: 'draft' });
-  add('brandAssets', 'ast-template-deck', { name: 'Plantilla presentación de ventas', kind: 'template', format: 'key', version: '2.0', path: 'Marca/Plantillas/ventas.key', status: 'current' });
-  add('brandAssets', 'ast-guideline', { name: 'Manual de identidad', kind: 'guideline', format: 'pdf', version: '1.0', path: 'Marca/manual-identidad-v1.pdf', status: 'superseded' });
+  add('brandAssets', 'ast-logo-primary', { name: 'Logotipo principal', kind: 'logo', format: 'svg', assetVersion: '2.1', path: 'Marca/Logo/aluzina-primary.svg', status: 'current' });
+  add('brandAssets', 'ast-logo-mono', { name: 'Logotipo monocromo', kind: 'logo', format: 'svg', assetVersion: '2.1', path: 'Marca/Logo/aluzina-mono.svg', status: 'current' });
+  add('brandAssets', 'ast-type', { name: 'Tipografías: Playfair Display + Roboto', kind: 'typography', format: 'otf', assetVersion: '1.0', path: 'Marca/Tipografia/', status: 'current' });
+  add('brandAssets', 'ast-palette', { name: 'Paleta: negro cálido, ámbar, crema', kind: 'palette', format: 'ase', assetVersion: '1.2', path: 'Marca/Paleta/aluzina.ase', status: 'current' });
+  add('brandAssets', 'ast-template-pdf', { name: 'Plantilla PDF de proyecto', kind: 'template', format: 'indd', assetVersion: '3.0', path: 'Marca/Plantillas/proyecto-pdf.indd', status: 'draft' });
+  add('brandAssets', 'ast-template-deck', { name: 'Plantilla presentación de ventas', kind: 'template', format: 'key', assetVersion: '2.0', path: 'Marca/Plantillas/ventas.key', status: 'current' });
+  add('brandAssets', 'ast-guideline', { name: 'Manual de identidad', kind: 'guideline', format: 'pdf', assetVersion: '1.0', path: 'Marca/manual-identidad-v1.pdf', status: 'superseded' });
 
   add('revisions', 'rev-laureles-pdf', { title: 'Aplicar identidad al PDF propuesta sala', projectId: P.laureles, kind: 'pdf', requestedById: users.studio, status: 'requested', dueDate: '2026-09-30' });
   add('revisions', 'rev-hoy-imagenes', { title: 'Imágenes cliente: renders recepción HOY', projectId: P.hoy, kind: 'image', requestedById: users.founder, status: 'in-progress', dueDate: '2026-09-26' });

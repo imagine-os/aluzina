@@ -1,10 +1,11 @@
 import { applyQuery, type Change, type Conflict, type DataProvider, type NewRow, type Patch, type Query, type Row, type Unsubscribe, type WriteOptions } from './provider';
 import { ENTITIES, type EntityName } from './schema';
 import { runSeeds, SEED_VERSION } from './seed';
+import { channelName, storageKey, TENANT } from '../tenant/config';
 
-export const DATA_STORAGE_KEY = 'aluzina.data';
+export const DATA_STORAGE_KEY = storageKey('data');
 /** BroadcastChannel name every tab of the same origin joins for data changes (D-023). */
-export const DATA_CHANNEL = 'aluzina-data';
+export const DATA_CHANNEL = channelName('data');
 /** Keep the activity table small (D-022): oldest rows are dropped past this. */
 const ACTIVITY_LIMIT = 500;
 /** Entities whose updates are not logged to `activity` (they are the log). */
@@ -49,7 +50,7 @@ function summarize(v: unknown): string | null {
  * In-memory tables persisted to localStorage (D-016). Seeds run once per SEED_VERSION; writes persist on
  * every mutation; `subscribe` fires synchronously after each write so lists re-render from events (P-14).
  *
- * Multiuser (D-023, D-024): every write is broadcast on `BroadcastChannel('aluzina-data')` (fallback: the
+ * Multiuser (D-023, D-024): every write is broadcast on `BroadcastChannel(DATA_CHANNEL)` (fallback: the
  * `storage` event); a receiving tab reloads the tables from localStorage and emits the same change through
  * `subscribe`, so a second tab (another demo user) sees it live. Supabase Realtime replaces the channel
  * behind the same `subscribe`. Writes with `basedOn` older than the stored row are applied last-write-wins
@@ -166,6 +167,8 @@ export class MockProvider implements DataProvider {
         created_at: now,
         updated_at: now,
         updated_by: this.actor,
+        tenant_id: TENANT.id,
+        version: 1,
         entity,
         entityId: id,
         actorId: this.actor,
@@ -195,7 +198,7 @@ export class MockProvider implements DataProvider {
 
   async create<E extends EntityName>(entity: E, data: NewRow<E>, id = newId(entity.slice(0, 3))): Promise<Row<E>> {
     const now = new Date().toISOString();
-    const row = { ...data, id, created_at: now, updated_at: now, updated_by: this.actor } as Row<E>;
+    const row = { ...data, id, created_at: now, updated_at: now, updated_by: this.actor, tenant_id: TENANT.id, version: 1 } as Row<E>;
     (this.tables[entity] as Row<E>[]).push(row);
     this.commit({ entity, kind: 'create', id }, { [entity]: [row] });
     return { ...row };
@@ -210,7 +213,7 @@ export class MockProvider implements DataProvider {
       const conflict: Conflict = { entity, id, by: before.updated_by ?? null, at: before.updated_at };
       this.conflictListeners.forEach((cb) => cb(conflict));
     }
-    const row = { ...before, ...patch, id, updated_at: new Date().toISOString(), updated_by: this.actor } as Row<E>;
+    const row = { ...before, ...patch, id, updated_at: new Date().toISOString(), updated_by: this.actor, tenant_id: before.tenant_id ?? TENANT.id, version: (before.version ?? 0) + 1 } as Row<E>;
     rows[i] = row;
     const activity = this.logActivity(entity, id, before, row, patch);
     this.commit({ entity, kind: 'update', id }, activity.length ? { [entity]: [row], activity } : { [entity]: [row] });

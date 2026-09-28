@@ -16,7 +16,7 @@ import {
   type DeliveryStage,
   type FileType,
 } from '../../domain/archive';
-import type { Post, Project, Relation, Space, Tag } from '../schema';
+import type { BaseRow, Post, Project, Relation, Space, Tag } from '../schema';
 import { PROJECT_IDS } from './projects';
 import type { SeedCtx } from './types';
 
@@ -130,9 +130,9 @@ const STAGE_TONE: Record<string, Tag['tone']> = { lead: 'neutral', sale: 'info',
 /** Registered by other seeds (spaces.ts, assets.ts); the registry has one row per name. */
 const TAGS_ELSEWHERE = new Set(['brand', 'marketing', 'procesos', 'plantillas', 'asana', 'slack', 'clientes', 'entregables', 'herramientas', 'decisión', 'iluminación', 'dev', 'portfolio']);
 
-type SpaceRow = Omit<Space, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
-type PostRow = Omit<Post, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
-type ProjectRow = Omit<Project, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
+type SpaceRow = Omit<Space, keyof BaseRow>;
+type PostRow = Omit<Post, keyof BaseRow>;
+type ProjectRow = Omit<Project, keyof BaseRow>;
 
 /** Up to four file types of a folder from its extension counts, most common first (the S-12 mosaic; same ranking `topFileTypes` used on rows). */
 function topFileTypes(extensions: Record<string, number>, max = 4): FileType[] {
@@ -158,7 +158,7 @@ export function seed({ add, users }: SeedCtx): void {
   const inv = ARCHIVE_INVENTORY;
   const stubNote = inv.stub ? ' Índice provisional (stub): el rastreo completo lo reemplaza.' : '';
 
-  const relate = (id: string, row: Omit<Relation, 'id' | 'created_at' | 'updated_at' | 'updated_by' | 'note'> & { note?: string }) => add('relations', id, { note: '', ...row });
+  const relate = (id: string, row: Omit<Relation, keyof BaseRow | 'note'> & { note?: string }) => add('relations', id, { note: '', ...row });
   const space = (id: string, row: Partial<SpaceRow> & Pick<SpaceRow, 'name' | 'slug' | 'kind'>) =>
     add('spaces', id, { parentId: ARCHIVE_SPACE_ID, description: '', glyph: '◦', order: 0, visibility: 'team', archived: false, aboutType: null, aboutId: null, ...row });
   const post = (id: string, spaces: string[], row: Partial<PostRow> & Pick<PostRow, 'title' | 'body' | 'kind' | 'authorId'>) => {

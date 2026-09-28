@@ -1,4 +1,4 @@
-import type { Client, Deliverable, Post, Relation, Space, Tag, Tool } from '../schema';
+import type { BaseRow, Client, Deliverable, Post, Relation, Space, Tag, Tool } from '../schema';
 import { PROJECT_IDS } from './projects';
 import type { SeedCtx } from './types';
 
@@ -106,8 +106,8 @@ export const DELIVERABLE_IDS = {
   caseStudy: 'del-case-study',
 } as const;
 
-type SpaceRow = Omit<Space, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
-type PostRow = Omit<Post, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
+type SpaceRow = Omit<Space, keyof BaseRow>;
+type PostRow = Omit<Post, keyof BaseRow>;
 
 const ALL_TYPES: Deliverable['requiredFor'] = ['residential', 'commercial', 'hospitality', 'wellness'];
 const SPACE_TYPES: Deliverable['requiredFor'] = ['residential', 'commercial', 'hospitality', 'wellness'];
@@ -176,7 +176,7 @@ export function seed({ add, users }: SeedCtx): void {
   space(S.archive, { name: 'Archive', slug: 'archive', kind: 'archive', glyph: '▫', order: 90, description: 'Retired posts and spaces stay findable here.' });
 
   // ---- Clients (D-029): Hoy and Sporti from Slack "Past Clients"; the rest derived from the projects ----
-  const client = (id: string, row: Omit<Client, 'id' | 'created_at' | 'updated_at' | 'updated_by'>) => add('clients', id, row);
+  const client = (id: string, row: Omit<Client, keyof BaseRow>) => add('clients', id, row);
   client(C.hoy, { name: 'HOY Wellness Center', kind: 'past', sector: 'wellness', city: 'Medellín', contactName: null, notes: 'Slack channel "hoy" under Past Clients. The HOY Wellness Center project (prj-hoy) is the delivered work; see also imagine-os/hoy (HOY OS).', projectIds: [P.hoy] });
   client(C.sporti, { name: 'Sporti', kind: 'past', sector: null, city: null, contactName: null, notes: 'Slack channel "sporti" under Past Clients. Sector, city, contact and the project delivered are unknown; ask the founder.', projectIds: [] });
   client(C.restrepo, { name: 'Familia Restrepo', kind: 'current', sector: 'residential', city: 'Medellín', contactName: null, notes: 'Casa Laureles (sala y comedor). Demo client user u-client.', projectIds: [P.laureles] });
@@ -185,7 +185,7 @@ export function seed({ add, users }: SeedCtx): void {
   client(C.rutaN, { name: 'Ruta N', kind: 'current', sector: 'commercial', city: 'Medellín', contactName: null, notes: 'Oficinas Ruta N piso 4.', projectIds: [P.rutaN] });
 
   // ---- Deliverable types (D-029): Justin's four plus the gaps for an interior design + lighting + experience design studio ----
-  const deliverable = (id: string, row: Omit<Deliverable, 'id' | 'created_at' | 'updated_at' | 'updated_by'>) => add('deliverables', id, row);
+  const deliverable = (id: string, row: Omit<Deliverable, keyof BaseRow>) => add('deliverables', id, row);
   deliverable(D.brief, { name: 'Brief and intake form', phase: 'lead', description: 'What the client wants, budget range, spaces, dates, constraints; the form that starts every project.', templateDocKind: 'brief', ownerRole: 'founder', typicalDays: 2, requiredFor: ALL_TYPES, status: 'defined' });
   deliverable(D.survey, { name: 'Site survey and measurements', phase: 'concept', description: 'Measured plan, photos, existing installations, lighting conditions.', templateDocKind: 'S-09', ownerRole: 'studio', typicalDays: 3, requiredFor: SPACE_TYPES, status: 'template-ready' });
   deliverable(D.concept, { name: 'Concept presentation', phase: 'concept', description: 'Creative direction, references and first spatial ideas presented to the client.', templateDocKind: 'presentation', ownerRole: 'studio', typicalDays: 10, requiredFor: ALL_TYPES, status: 'defined' });
@@ -215,7 +215,7 @@ export function seed({ add, users }: SeedCtx): void {
   deliverable(D.caseStudy, { name: 'Case study', phase: 'delivered', description: 'Story of a delivered project for the website and sales presentations.', templateDocKind: null, ownerRole: 'marketing', typicalDays: 4, requiredFor: ALL_TYPES, status: 'defined' });
 
   // ---- Tools (D-029, D-030): what is paid for today and what replaces it ----
-  const tool = (id: string, row: Omit<Tool, 'id' | 'created_at' | 'updated_at' | 'updated_by'>) => add('tools', id, row);
+  const tool = (id: string, row: Omit<Tool, keyof BaseRow>) => add('tools', id, row);
   tool(T.chatgpt, { name: 'ChatGPT', vendor: 'OpenAI', category: 'ai-text', usedFor: 'Briefs, research, drafting texts and prompts for image tools.', status: 'in-use', replacedByModule: 'Research assistant (planned)', notes: 'Slack section "Art Tools".' });
   tool(T.lovart, { name: 'Lovart', vendor: 'Lovart', category: 'ai-image', usedFor: 'Concept imagery and mood images before renders.', status: 'in-use', replacedByModule: null, notes: 'Slack section "Art Tools". Likely an integration rather than a rebuild (D-030).' });
   tool(T.magnific, { name: 'Magnific', vendor: 'Magnific', category: 'ai-image', usedFor: 'Upscaling and detail passes on renders.', status: 'in-use', replacedByModule: 'Render pipeline (planned)', notes: 'Slack section "Art Tools".' });
@@ -235,7 +235,7 @@ export function seed({ add, users }: SeedCtx): void {
     add('posts', id, { url: null, pinned: false, status: 'published', tags: [], ...row });
     spaces.forEach((spaceId, i) => add('filings', `fil-${id.replace(/^post-/, '')}-${i + 1}`, { postId: id, spaceId }));
   };
-  const relate = (id: string, row: Omit<Relation, 'id' | 'created_at' | 'updated_at' | 'updated_by' | 'note'> & { note?: string }) => add('relations', id, { note: '', ...row });
+  const relate = (id: string, row: Omit<Relation, keyof BaseRow | 'note'> & { note?: string }) => add('relations', id, { note: '', ...row });
 
   post('post-brand-voice', [S.brandVoice, S.marketingStrategyGuide, S.roleMarketing, S.roleStudio], {
     title: 'Brand voice rules',

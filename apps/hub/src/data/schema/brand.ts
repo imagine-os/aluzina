@@ -35,7 +35,8 @@ export interface BrandAsset extends BaseRow {
   name: string;
   kind: BrandAssetKind;
   format: string;
-  version: string;
+  /** The asset's own edition as the brand team labels it ('2.1'); renamed from `version` when the base row took that column (D-091). */
+  assetVersion: string;
   path: string;
   status: 'current' | 'superseded' | 'draft';
 }

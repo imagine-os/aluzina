@@ -1,14 +1,15 @@
 // Playwright captures of the hub into docs/screenshots/<CODE>/<lang>-<width>.jpg plus routes.json.
 // Usage: node scripts/screenshots.mjs [--base=https://imagine-os.github.io/aluzina/] [--out=docs/screenshots] [--shots=en-390,en-1280,en-3840,es-390]
-//        Portal page as a demo user: --as=ops (founder | ops | studio | brand | client | dev) seeds aluzina.session before load (same as ?as=, section 1.1a of surfaces.md).
+//        Portal page as a demo user: --as=ops (founder | ops | studio | brand | client | dev) seeds <id>.session before load (same as ?as=, section 1.1a of surfaces.md).
 //        Wait for the page to settle: --settle=<ms> after the selector appears (Work views: 800).
-//        Dark theme: --theme=dark seeds aluzina.theme=dark and emulates prefers-color-scheme: dark; files are written as <lang>-<width>-dark.jpg (light is the default and keeps <lang>-<width>.jpg).
+//        Dark theme: --theme=dark seeds <id>.theme=dark and emulates prefers-color-scheme: dark; files are written as <lang>-<width>-dark.jpg (light is the default and keeps <lang>-<width>.jpg).
 //        Several captures of one code: --name=board writes <lang>-<width>-board.jpg (e.g. the four Work views of W-02); routes.json keeps the union of the shots captured for the code.
 //        Deeper in the page: --scroll=900 scrolls that many pixels before the shot (use with --name so the top-of-page capture is kept).
-//        Extra page state: --storage='{"aluzina.views.u-miguel":"{...}"}' seeds those localStorage entries before load (the Work views remember view, filters and grouping per user, D-025).
+//        Extra page state: --storage='{"<id>.views.u-miguel":"{...}"}' seeds those localStorage entries before load (the Work views remember view, filters and grouping per user, D-025).
 //        Static page (Business OS bundle): --static=business-os/ --code=BOS-01 [--lang-toggle="button:text-is('EN')"] [--wait=#dc-root]
 //        For static pages `es-*` shots click --lang-toggle after render (the bundle keeps its own language state).
 // Chromium is preinstalled at /opt/pw-browsers in our containers; never run `playwright install`.
+// Storage keys and the window global derive from the tenant id in tenant.json (D-090): `<id>.lang`, `window.__<id>`.
 //        --use-gl=swiftshader --enable-unsafe-swiftshader: software GL for headless captures of WebGL views (K-04 3D).
 //        External bases (not http://localhost) launch with --disable-features=ChromeRootStoreUsed so Chromium trusts the
 //        sandbox's CA-terminating outbound proxy via the OS/NSS store instead of the bundled Chrome Root Store.
@@ -24,6 +25,7 @@ const args = Object.fromEntries(
   }),
 );
 
+const tenant = JSON.parse(readFileSync(new URL('../tenant.json', import.meta.url), 'utf8'));
 const base = (args.base ?? 'http://localhost:4173/').replace(/\/?$/, '/');
 const outRoot = args.out ?? 'docs/screenshots';
 const code = args.code ?? 'HUB-01';
@@ -65,14 +67,14 @@ for (const shot of shots) {
   const height = heights[width] ?? 900;
   const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1, colorScheme: theme });
   await context.addInitScript(
-    ([l, userId, t, extra]) => {
-      localStorage.setItem('aluzina.lang', l);
-      localStorage.setItem('aluzina.theme', t);
-      localStorage.setItem('aluzina.devMode', 'off');
-      if (userId) localStorage.setItem('aluzina.session', JSON.stringify({ userId, viewAs: null, devMode: false }));
+    ([id, l, userId, t, extra]) => {
+      localStorage.setItem(`${id}.lang`, l);
+      localStorage.setItem(`${id}.theme`, t);
+      localStorage.setItem(`${id}.devMode`, 'off');
+      if (userId) localStorage.setItem(`${id}.session`, JSON.stringify({ userId, viewAs: null, devMode: false }));
       for (const [k, v] of Object.entries(extra)) localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v));
     },
-    [lang, asRole ? USER_BY_ROLE[asRole] ?? null : null, theme, storage],
+    [tenant.id, lang, asRole ? USER_BY_ROLE[asRole] ?? null : null, theme, storage],
   );
   const page = await context.newPage();
   const target = staticPath ? `${base}${staticPath}` : `${base}#${route}`;
@@ -94,7 +96,7 @@ for (const shot of shots) {
   }
   const file = join(outDir, `${shot}${suffix}.jpg`);
   await page.screenshot({ path: file, type: 'jpeg', quality: 80, fullPage: false });
-  manifest ??= await page.evaluate(() => window.__aluzina ?? null);
+  manifest ??= await page.evaluate((g) => window[g] ?? null, `__${tenant.id}`);
   if (staticPath) manifest ??= { static: true, url: page.url() };
   console.log(`shot ${file} (${width}x${height}, ${lang}, ${theme})`);
   await context.close();

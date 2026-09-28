@@ -1,5 +1,6 @@
 import type { NewRow, Row } from '../provider';
 import type { EntityName } from '../schema';
+import { TENANT } from '../../tenant/config';
 import { SEED_AT, type SeedCtx, type SeedModule } from './types';
 
 /**
@@ -11,8 +12,10 @@ import { SEED_AT, type SeedCtx, type SeedModule } from './types';
  * `archiveSlug`, `fileTypes`. Tags / stages saved on archived files at version 9 are not carried over (they lived on seeded rows).
  * 12: Dropbox collections pass (G-09, changelog 0023) — one `assets` row per set of the 2021 digital campaign and the studio asset
  * folder (`seed/collections.ts`), their set -> project `depicts` relations and the two Brand Memory notes.
+ * 13: tenant packaging tp-04 (changelog 0026, D-091) — every row gains `tenant_id` (`TENANT.id`) and `version` (1 on seed / create,
+ * +1 per update); `ctx.add` stamps both here so no seed module changes.
  */
-export const SEED_VERSION = 12;
+export const SEED_VERSION = 13;
 
 /** One file per area, globbed: add `src/data/seed/<area>.ts` exporting `seed(ctx)` (+ `order`), never edit this file. */
 const modules = import.meta.glob<SeedModule>(['./*.ts', '!./index.ts', '!./types.ts'], { eager: true });
@@ -20,7 +23,7 @@ const modules = import.meta.glob<SeedModule>(['./*.ts', '!./index.ts', '!./types
 export function runSeeds(tables: { [E in EntityName]: Row<E>[] }): void {
   const ctx: SeedCtx = {
     add(entity, id, row) {
-      (tables[entity] as Row<typeof entity>[]).push({ ...(row as NewRow<typeof entity>), id, created_at: SEED_AT, updated_at: SEED_AT } as Row<typeof entity>);
+      (tables[entity] as Row<typeof entity>[]).push({ ...(row as NewRow<typeof entity>), id, created_at: SEED_AT, updated_at: SEED_AT, tenant_id: TENANT.id, version: 1 } as Row<typeof entity>);
     },
     users: { founder: 'u-alejandra', ops: 'u-miguel', studio: 'u-sarai', brand: 'u-angelica', marketing: 'u-valentina', client: 'u-client', dev: 'u-dev' },
   };

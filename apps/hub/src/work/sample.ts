@@ -1,9 +1,10 @@
 import type { Project, Section, Task } from '../data/schema';
+import { TENANT } from '../tenant/config';
 import type { WorkContext, WorkPerson } from './model';
 
 /** Static rows for the component examples on /#/dev/components (not the seeds). */
 const AT = '2026-09-20T12:00:00.000Z';
-const base = { created_at: AT, updated_at: AT };
+const base = { created_at: AT, updated_at: AT, tenant_id: TENANT.id, version: 1 };
 
 export const SAMPLE_PEOPLE: WorkPerson[] = [
   { id: 'u-alejandra', name: 'Alejandra Guerra', initials: 'AG' },

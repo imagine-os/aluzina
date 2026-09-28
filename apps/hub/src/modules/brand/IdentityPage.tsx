@@ -51,7 +51,7 @@ export function IdentityPage() {
   const columns = (kindLabel: string) => [
     { key: 'name', header: t('brand.identity.col.name'), sortable: true },
     { key: 'format', header: t('brand.identity.col.format'), render: (a: BrandAsset) => a.format.toUpperCase() },
-    { key: 'version', header: t('brand.identity.col.version'), sortable: true },
+    { key: 'assetVersion', header: t('brand.identity.col.version'), sortable: true },
     { key: 'path', header: t('brand.identity.col.path'), render: (a: BrandAsset) => <span className="brand-path">{a.path}</span> },
     {
       key: 'status',

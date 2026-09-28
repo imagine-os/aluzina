@@ -2,7 +2,7 @@ import campaignSets from '@docs/archive/collections/campaign-2021/sets.json';
 import studioSets from '@docs/archive/collections/studio-assets/sets.json';
 import type { CollectionSet, CollectionSlug } from '../../domain/collections';
 import { slugify } from '../../domain/archive';
-import type { Asset, Relation, Tag } from '../schema';
+import type { Asset, BaseRow, Relation, Tag } from '../schema';
 import type { SeedCtx } from './types';
 
 /**
@@ -50,7 +50,7 @@ export function collectionAssetId(slug: CollectionSlug, setId: string): string {
   return `ast-col-${slugify(slug)}-${setId}`;
 }
 
-type AssetRow = Omit<Asset, 'id' | 'created_at' | 'updated_at' | 'updated_by'>;
+type AssetRow = Omit<Asset, keyof BaseRow>;
 
 const KIND_TAGS: Record<string, string> = {
   'social-posts': 'redes sociales',
@@ -75,7 +75,7 @@ const KIND_TAGS: Record<string, string> = {
 };
 
 export function seed({ add, users }: SeedCtx): void {
-  const relate = (id: string, row: Omit<Relation, 'id' | 'created_at' | 'updated_at' | 'updated_by' | 'note'> & { note?: string }) => add('relations', id, { note: '', ...row });
+  const relate = (id: string, row: Omit<Relation, keyof BaseRow | 'note'> & { note?: string }) => add('relations', id, { note: '', ...row });
 
   // ---- Tags registry: only names no other seed registers (`público`, `interno`, `empresa`, `presentación`, `plantillas` exist) ----
   const tagRows: [string, Tag['tone']][] = [

@@ -10,7 +10,7 @@
 //        HTTPS_PROXY is honoured for the external captures only; localhost bypasses it.
 // Chromium is preinstalled at /opt/pw-browsers in our containers; never run `playwright install` there.
 import { createServer } from 'node:http';
-import { createReadStream, existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs';
+import { createReadStream, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
@@ -24,6 +24,8 @@ const args = Object.fromEntries(
 );
 
 const root = fileURLToPath(new URL('..', import.meta.url));
+// Storage keys derive from the tenant id (tenant.json, D-090): `<id>.lang`, `<id>.theme`, `<id>.devMode`.
+const tenant = JSON.parse(readFileSync(new URL('../tenant.json', import.meta.url), 'utf8'));
 const dist = resolve(root, args.dist ?? 'dist');
 const port = Number(args.port ?? 4180);
 const skipExternal = args['skip-external'] === 'true';
@@ -237,13 +239,13 @@ const externalBrowser = proxy && !skipExternal ? await chromium.launch({ ...laun
 const contextOpts = { viewport: CAPTURE, deviceScaleFactor: 1, colorScheme: 'light', reducedMotion: 'reduce' };
 const context = await browser.newContext(contextOpts);
 const externalContext = externalBrowser === browser ? context : await externalBrowser.newContext(contextOpts);
-await context.addInitScript(() => {
+await context.addInitScript((id) => {
   try {
-    localStorage.setItem('aluzina.lang', 'en');
-    localStorage.setItem('aluzina.theme', 'light');
-    localStorage.setItem('aluzina.devMode', 'off');
+    localStorage.setItem(`${id}.lang`, 'en');
+    localStorage.setItem(`${id}.theme`, 'light');
+    localStorage.setItem(`${id}.devMode`, 'off');
   } catch {}
-});
+}, tenant.id);
 
 const items = [];
 let placeholders = 0;

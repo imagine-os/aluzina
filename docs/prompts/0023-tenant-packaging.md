@@ -13,4 +13,20 @@ please prepare and package up and organize the aluzina repo to the best of your 
 
 ## Response
 
-_Synced from the Slack reply after posting; see changelog 0025._
+Pass 1 is on main as 9fac18d, build green, docs only. Start at docs/tenant/README.md.
+
+The plan makes aluzina a self-describing tenant package:
+- One root manifest tells the host who the tenant is, which modules and sub-projects it has, and what each needs from the host to come alive.
+- Tenant-owned code will move into its own folder inside the hub; platform code stays put until the host exists.
+- Storage keys and channels will derive from the tenant id with unchanged values, so tenants stop colliding.
+- Every data row will carry a tenant id and version, and a CI gate plus manifest validator will land.
+- The 13 tasks are in the build plan as step 15 and show up in the in-app plan viewer.
+
+I'm continuing into pass 2 now. Defaults unless you object: binaries stay in git (no LFS or history rewrite) and the default language stays English.
+
+Should the host route tenants by path or subdomain? I'll default to path.
+Can you grant this channel the between-gigs repo, or name its owner, so I can slot it in as tenant two?
+
+Model: Fable 5.1.
+
+_Pass 2 (tp-02 + tp-04) followed in changelog 0026._

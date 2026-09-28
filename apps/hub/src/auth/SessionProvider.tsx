@@ -2,15 +2,16 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { DEFAULT_USER_ID, DEMO_USERS, demoUserById, demoUserForRole, type DemoUser } from './demoUsers';
 import { hasPermission } from './permissions';
 import { isRoleId, type Role } from './roles';
+import { storageKey } from '../tenant/config';
 
-export const SESSION_STORAGE_KEY = 'aluzina.session';
+export const SESSION_STORAGE_KEY = storageKey('session');
 /** Mirror of `devMode` kept for the pre-paint script in index.html and older tooling. */
-export const DEV_MODE_STORAGE_KEY = 'aluzina.devMode';
+export const DEV_MODE_STORAGE_KEY = storageKey('devMode');
 /**
  * sessionStorage (per tab): the demo user this tab was opened as through `?as=<role>`. It wins over the
- * shared `aluzina.session` on reload, so two tabs can stay two different people (D-04 multiuser aid, D-023).
+ * shared session key (`SESSION_STORAGE_KEY`) on reload, so two tabs can stay two different people (D-04 multiuser aid, D-023).
  */
-export const TAB_USER_STORAGE_KEY = 'aluzina.tabUser';
+export const TAB_USER_STORAGE_KEY = storageKey('tabUser');
 
 interface StoredSession {
   userId: string;

@@ -1,6 +1,7 @@
 import { fileTypeOf, mimeTypeOf, slugify, stageFor, type DeliveryStage } from '../domain/archive';
 import type { Asset } from './schema';
 import { SEED_AT } from './seed/types';
+import { TENANT } from '../tenant/config';
 
 /**
  * A project's file index as `scripts/archive/build-index.mjs` writes it to `docs/archive/projects/<slug>/index.json` (ar-19): the
@@ -85,6 +86,8 @@ export function rowsFromDeepIndex(slug: string, index: DeepIndex, year: number |
       id: ids[i],
       created_at: SEED_AT,
       updated_at: SEED_AT,
+      tenant_id: TENANT.id,
+      version: 1,
       kind: 'file',
       title: f.name,
       titleEs: null,

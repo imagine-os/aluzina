@@ -1,3 +1,4 @@
+import { storageKey } from '../tenant/config';
 import { EMPTY_FILTERS, type GroupBy, type SortBy, type WorkFilters, type WorkView } from './model';
 
 /** What a saved view remembers (D-025): the view, its filters, sort and grouping. */
@@ -16,7 +17,7 @@ export interface SavedView extends ViewState {
 export const DEFAULT_VIEW_STATE: ViewState = { view: 'list', filters: EMPTY_FILTERS, sort: 'order', groupBy: 'section' };
 
 /** localStorage key per user (D-025); a `views` table replaces it later behind the same functions. */
-export const VIEWS_STORAGE_PREFIX = 'aluzina.views.';
+export const VIEWS_STORAGE_PREFIX = `${storageKey('views')}.`;
 
 interface StoredViews {
   views: SavedView[];
