@@ -1,5 +1,5 @@
 {
-  "version": "0.17.1",
+  "version": "0.18.0",
   "updatedAt": "2026-09-28",
   "source": "docs/build-plan.md (steps 0-15, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -1922,15 +1922,16 @@
     },
     {
       "id": "tp-12",
-      "title": "Second tenant slot: apply docs/tenant/between-gigs.md checklist to the between-gigs repo when GitHub access lands (own tenant.json, own counters, own namespace) (D-095)",
+      "title": "Second tenant slot: tenant.schema.json + schema / actions checks and --manifest in tenant-validate, between-gigs recipe, host tenant index shape (D-095, D-098); applying it to the between-gigs repo waits for GitHub access",
       "step": "15",
-      "status": "next",
+      "status": "done",
       "model": "Fable 5.1",
       "codes": [],
       "dependsOn": [
         "tp-02"
       ],
-      "owner": "Justin (repo access)"
+      "changelog": "0029",
+      "owner": "Justin (repo access for the between-gigs application)"
     },
     {
       "id": "tp-13",

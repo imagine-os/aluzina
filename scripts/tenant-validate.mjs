@@ -3,12 +3,26 @@
 // Contract: docs/tenant/manifest.md "What tenant-validate.mjs checks". Plain Node, no browser, no TypeScript
 // loader: sources are read as text. One line per failure and exit 1; a summary line and exit 0 when green.
 // Tenant-agnostic: every name it looks for (namespace literals, paths, counters) comes from the manifest.
+// Usage: node scripts/tenant-validate.mjs [--manifest <path/to/tenant.json>]
+//   --manifest  validate another tenant's manifest in place: its directory becomes the repo root every
+//               relative path resolves against (tp-12). Default: ../tenant.json next to this script's repo.
+// Schema (tp-12, D-098): the manifest is first checked structurally against `tenant.schema.json` (the copy
+// next to the manifest when the tenant ships one, else this repo's), with the small walker below.
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { execSync } from 'node:child_process';
-import { dirname, join } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const scriptRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
+const argv = process.argv.slice(2);
+const manifestArg = argv.includes('--manifest') ? argv[argv.indexOf('--manifest') + 1] : undefined;
+if (argv.includes('--manifest') && !manifestArg) {
+  console.error('tenant-validate: --manifest needs a path');
+  process.exit(2);
+}
+const manifestPath = manifestArg ? resolve(manifestArg) : join(scriptRoot, 'tenant.json');
+const root = dirname(manifestPath);
+const manifestName = basename(manifestPath);
 const failures = [];
 const warnings = [];
 const notes = [];
@@ -27,17 +41,67 @@ const diff = (a, b) => {
 
 let m;
 try {
-  m = JSON.parse(read('tenant.json'));
+  m = JSON.parse(read(manifestName));
 } catch (e) {
-  console.error(`tenant-validate: tenant.json does not parse: ${e.message}`);
+  console.error(`tenant-validate: ${manifestName} does not parse: ${e.message}`);
+  process.exit(1);
+}
+if (!exists('package.json')) {
+  console.error(`tenant-validate: ${root} has no package.json; --manifest must point at a tenant repo's root manifest`);
   process.exit(1);
 }
 const pkg = JSON.parse(read('package.json'));
 
+// ---- (j) structural check against tenant.schema.json (JSON Schema draft 2020-12 subset) ----------------
+// Supported keywords: type (string or array; "integer"), const, enum, pattern, required, properties,
+// additionalProperties (false or a schema), items, $ref to a local #/$defs/<name>. Anything else is ignored,
+// so the schema must stay inside this subset (it is checked in the same file: unknown keywords are reported).
+const SCHEMA_KEYWORDS = new Set(['$schema', '$id', 'title', 'description', 'type', 'const', 'enum', 'pattern', 'required', 'properties', 'additionalProperties', 'items', '$ref', '$defs']);
+const schemaPath = exists('tenant.schema.json') ? 'tenant.schema.json' : join(scriptRoot, 'tenant.schema.json');
+const schemaAbs = schemaPath === 'tenant.schema.json' ? abs(schemaPath) : schemaPath;
+let schema = null;
+try {
+  schema = JSON.parse(readFileSync(schemaAbs, 'utf8'));
+} catch (e) {
+  fail(`tenant.schema.json: ${e.message}`);
+}
+const typeOf = (v) => (v === null ? 'null' : Array.isArray(v) ? 'array' : typeof v === 'number' && Number.isInteger(v) ? 'integer' : typeof v);
+const typeOk = (want, v) => {
+  const t = typeOf(v);
+  return [want].flat().some((w) => w === t || (w === 'number' && t === 'integer'));
+};
+let schemaChecks = 0;
+function checkSchema(s, v, at) {
+  if (s.$ref) {
+    const name = /^#\/\$defs\/(\w+)$/.exec(s.$ref)?.[1];
+    const target = name && schema.$defs?.[name];
+    if (!target) { fail(`tenant.schema.json: unresolvable $ref ${s.$ref} at ${at}`); return; }
+    checkSchema({ ...target, ...Object.fromEntries(Object.entries(s).filter(([k]) => k !== '$ref')) }, v, at);
+    return;
+  }
+  for (const k of Object.keys(s)) if (!SCHEMA_KEYWORDS.has(k)) fail(`tenant.schema.json: keyword "${k}" at ${at} is outside the validator's subset`);
+  schemaChecks++;
+  if ('const' in s && JSON.stringify(v) !== JSON.stringify(s.const)) { fail(`schema: ${at} is ${JSON.stringify(v)}, expected ${JSON.stringify(s.const)}`); return; }
+  if (s.enum && !s.enum.some((e) => JSON.stringify(e) === JSON.stringify(v))) { fail(`schema: ${at} is ${JSON.stringify(v)}, expected one of ${s.enum.map((e) => JSON.stringify(e)).join(' | ')}`); return; }
+  if (s.type && !typeOk(s.type, v)) { fail(`schema: ${at} is ${typeOf(v)}, expected ${[s.type].flat().join(' | ')}`); return; }
+  if (s.pattern && typeof v === 'string' && !new RegExp(s.pattern).test(v)) fail(`schema: ${at} ${JSON.stringify(v)} does not match ${s.pattern}`);
+  if (v && typeof v === 'object' && !Array.isArray(v)) {
+    for (const r of s.required ?? []) if (!(r in v)) fail(`schema: ${at} is missing required key "${r}"`);
+    for (const [k, child] of Object.entries(v)) {
+      const sub = s.properties?.[k];
+      if (sub) checkSchema(sub, child, `${at}.${k}`);
+      else if (s.additionalProperties === false) fail(`schema: ${at} has unexpected key "${k}" (closed set)`);
+      else if (s.additionalProperties && typeof s.additionalProperties === 'object') checkSchema(s.additionalProperties, child, `${at}.${k}`);
+    }
+  }
+  if (Array.isArray(v) && s.items) v.forEach((item, i) => checkSchema(s.items, item, `${at}[${i}]`));
+}
+if (schema) checkSchema(schema, m, manifestName.replace(/\.json$/, ''));
+
 // ---- (g) manifest version and required top-level keys ---------------------------------------------------
 const REQUIRED = ['manifestVersion', 'id', 'name', 'repo', 'version', 'identity', 'brand', 'surfaces', 'hubModules', 'subProjects', 'data', 'contentMounts', 'namespace', 'routing', 'deploy', 'docs', 'actions', 'hostRequirements'];
 if (m.manifestVersion !== 1) fail(`manifestVersion is ${JSON.stringify(m.manifestVersion)}, expected 1`);
-for (const k of REQUIRED) if (!(k in m)) fail(`tenant.json: required top-level key "${k}" is missing`);
+for (const k of REQUIRED) if (!(k in m)) fail(`${manifestName}: required top-level key "${k}" is missing`);
 if (typeof m.id !== 'string' || !/^[a-z][a-z0-9-]*$/.test(m.id)) fail(`id ${JSON.stringify(m.id)} does not match ^[a-z][a-z0-9-]*$`);
 
 // ---- (e) version mirrors root package.json --------------------------------------------------------------
@@ -101,7 +165,8 @@ for (const p of m.data?.providers ?? []) {
 
 // ---- (a) hub modules: folder set, paths, codes ----------------------------------------------------------
 const modulesDir = 'apps/hub/src/modules';
-const folders = readdirSync(abs(modulesDir)).filter((n) => isDir(join(modulesDir, n)));
+const folders = isDir(modulesDir) ? readdirSync(abs(modulesDir)).filter((n) => isDir(join(modulesDir, n))) : [];
+if (!isDir(modulesDir)) fail(`${modulesDir} does not exist (manifest v1 describes a hub-shaped tenant repo)`);
 const listed = (m.hubModules ?? []).map((h) => h.name);
 if (!sameSet(folders, listed)) fail(`hubModules names != folders of ${modulesDir}: ${diff(listed, folders)}`);
 
@@ -118,6 +183,9 @@ function specCodes(file) {
 }
 const allSpecCodes = new Set();
 let codeCount = 0;
+// (k) actions recount (tp-12): every `id: '<module>.<verb>'` literal in a module's specs.ts is one declaration.
+const actionIdRe = new RegExp(`\\bid:\\s*['"](${(m.actions?.idPattern ?? '^[a-z][a-zA-Z0-9]*\\.[a-z][a-zA-Z0-9]*$').replace(/^\^|\$$/g, '')})['"]`, 'g');
+const actionIds = [];
 for (const h of m.hubModules ?? []) {
   if (!isDir(h.path)) { fail(`hubModules[${h.name}].path ${h.path} does not exist`); continue; }
   const specs = join(h.path, 'specs.ts');
@@ -126,11 +194,15 @@ for (const h of m.hubModules ?? []) {
   found.forEach((c) => allSpecCodes.add(c));
   codeCount += h.codes.length;
   if (!sameSet(found, h.codes)) fail(`hubModules[${h.name}].codes != codes in ${specs}: ${diff(h.codes, found)}`);
+  for (const x of read(specs).matchAll(actionIdRe)) actionIds.push(x[1]);
 }
 for (const c of m.surfaces?.nextFreeCodes ?? []) if (allSpecCodes.has(c)) fail(`surfaces.nextFreeCodes: ${c} is already defined in a specs.ts`);
+const actionsDistinct = new Set(actionIds).size;
+if (m.actions?.declared !== actionIds.length) fail(`actions.declared is ${m.actions?.declared}, specs.ts declare ${actionIds.length} action ids`);
+if (m.actions?.distinct !== actionsDistinct) fail(`actions.distinct is ${m.actions?.distinct}, specs.ts declare ${actionsDistinct} distinct action ids`);
 
 // ---- surfaces and roles mirror the code -----------------------------------------------------------------
-const pageSpec = read('apps/hub/src/specs/PageSpec.ts');
+const pageSpec = exists('apps/hub/src/specs/PageSpec.ts') ? read('apps/hub/src/specs/PageSpec.ts') : '';
 const surfacesSrc = /export const SURFACES[^=]*=\s*\[([^\]]*)\]/.exec(pageSpec);
 if (!surfacesSrc) fail('apps/hub/src/specs/PageSpec.ts: SURFACES not found');
 else {
@@ -157,25 +229,26 @@ for (const s of m.subProjects ?? []) {
 for (const c of m.contentMounts ?? []) if (!nonEmpty(c.path)) fail(`contentMounts[${c.id}].path: ${c.path} does not exist or is empty`);
 
 // ---- (h) seed version, entities --------------------------------------------------------------------------
-const seedIndex = join(m.data.seedDir, 'index.ts');
+const seedIndex = join(m.data?.seedDir ?? 'apps/hub/src/tenant/seed', 'index.ts');
 const seedVersion = exists(seedIndex) ? /export const SEED_VERSION\s*=\s*(\d+)/.exec(read(seedIndex))?.[1] : undefined;
-const provider = (m.data.providers ?? []).find((p) => p.name === 'mock');
+const provider = (m.data?.providers ?? []).find((p) => p.name === 'mock');
 if (seedVersion === undefined) fail(`${seedIndex}: SEED_VERSION not found`);
 else if (Number(seedVersion) !== m.data.seedVersion) fail(`data.seedVersion ${m.data.seedVersion} != SEED_VERSION ${seedVersion} (${seedIndex})`);
 if (provider && exists(provider.file) && !/\bSEED_VERSION\b/.test(read(provider.file))) fail(`${provider.file} does not use SEED_VERSION`);
-const schemaIndex = read(join(m.data.schemaDir, 'index.ts'));
+const schemaIndexPath = join(m.data?.schemaDir ?? 'apps/hub/src/data/schema', 'index.ts');
+const schemaIndex = exists(schemaIndexPath) ? read(schemaIndexPath) : '';
 const entityMap = /export interface EntityMap\s*\{([^}]*)\}/.exec(schemaIndex);
 const entities = entityMap ? [...entityMap[1].matchAll(/^\s*(\w+)\s*:/gm)].map((x) => x[1]) : [];
-if (!sameSet(entities, m.data.entities)) fail(`data.entities != EntityMap keys: ${diff(m.data.entities, entities)}`);
-const seedModules = readdirSync(abs(m.data.seedDir)).filter((n) => n.endsWith('.ts') && !['index.ts', 'types.ts'].includes(n)).map((n) => n.replace(/\.ts$/, ''));
-if (!sameSet(seedModules, m.data.seedModules ?? [])) fail(`data.seedModules != modules in ${m.data.seedDir}: ${diff(m.data.seedModules ?? [], seedModules)}`);
+if (!sameSet(entities, m.data?.entities ?? [])) fail(`data.entities != EntityMap keys: ${diff(m.data?.entities ?? [], entities)}`);
+const seedModules = isDir(m.data?.seedDir ?? '') ? readdirSync(abs(m.data.seedDir)).filter((n) => n.endsWith('.ts') && !['index.ts', 'types.ts'].includes(n)).map((n) => n.replace(/\.ts$/, '')) : [];
+if (!sameSet(seedModules, m.data?.seedModules ?? [])) fail(`data.seedModules != modules in ${m.data?.seedDir}: ${diff(m.data?.seedModules ?? [], seedModules)}`);
 
 // ---- (d) docs counters equal the highest numbered file --------------------------------------------------
-const highest = (dir) => Math.max(0, ...readdirSync(abs(dir)).map((n) => /^(\d{4})-/.exec(n)?.[1]).filter(Boolean).map(Number));
+const highest = (dir) => (isDir(dir) ? Math.max(0, ...readdirSync(abs(dir)).map((n) => /^(\d{4})-/.exec(n)?.[1]).filter(Boolean).map(Number)) : 0);
 const counters = {
   prompts: highest('docs/prompts'),
   changelog: highest('docs/changelog'),
-  decisions: Math.max(0, ...[...read(m.docs.decisions).matchAll(/^\| D-(\d{3}) \|/gm)].map((x) => Number(x[1]))),
+  decisions: exists(m.docs?.decisions ?? '') ? Math.max(0, ...[...read(m.docs.decisions).matchAll(/^\| D-(\d{3}) \|/gm)].map((x) => Number(x[1]))) : 0,
   qa: highest('docs/qa'),
 };
 for (const [k, v] of Object.entries(counters)) {
@@ -270,11 +343,9 @@ function* walk(dir) {
   }
 }
 const scanFiles = [
-  ...walk('apps/hub/src'),
-  ...walk('apps/hub/scripts'),
-  ...walk('scripts'),
+  ...['apps/hub/src', 'apps/hub/scripts', 'scripts'].filter(isDir).flatMap((d) => [...walk(d)]),
   'apps/hub/index.html',
-].filter((p) => /\.(ts|tsx|mjs|js|html)$/.test(p));
+].filter((p) => exists(p) && /\.(ts|tsx|mjs|js|html)$/.test(p));
 let scanned = 0;
 for (const file of scanFiles) {
   if (allow.has(file) || (tenantDir && file.startsWith(tenantDir + '/')) || /(^|\/)strings\.ts$/.test(file)) continue;
@@ -317,12 +388,12 @@ for (const w of warnings) console.warn(`tenant-validate: warning: ${w}`);
 for (const n of notes) console.log(`tenant-validate: note: ${n}`);
 if (failures.length) {
   for (const f of failures) console.error(`tenant-validate: FAIL ${f}`);
-  console.error(`tenant-validate: ${failures.length} failure(s); fix tenant.json or the code it describes (spec: ${m.spec ?? 'docs/tenant/manifest.md'})`);
+  console.error(`tenant-validate: ${failures.length} failure(s); fix ${manifestName} or the code it describes (spec: ${m.spec ?? 'docs/tenant/manifest.md'}, schema: tenant.schema.json)`);
   process.exit(1);
 }
 console.log(
-  `tenant-validate: OK ${m.id} v${m.version} manifestVersion ${m.manifestVersion} — ${m.hubModules.length} modules / ${codeCount} codes, ` +
-    `${m.subProjects.length} sub-projects (${subPaths} paths), ${m.contentMounts.length} content mounts, ${pathsChecked} path fields, ` +
+  `tenant-validate: OK ${m.id} v${m.version} manifestVersion ${m.manifestVersion} — schema ${schemaChecks} nodes, ${m.hubModules.length} modules / ${codeCount} codes, ` +
+    `${actionIds.length} actions (${actionsDistinct} distinct), ${m.subProjects.length} sub-projects (${subPaths} paths), ${m.contentMounts.length} content mounts, ${pathsChecked} path fields, ` +
     `seed v${seedVersion}, ${entities.length} entities, counters prompts ${counters.prompts} / changelog ${counters.changelog} / decisions ${counters.decisions} / qa ${counters.qa}, ` +
     `routing ${m.routing.strategy}, ${scanned} files scanned for namespace literals`,
 );

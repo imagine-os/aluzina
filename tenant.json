@@ -3,7 +3,7 @@
   "id": "aluzina",
   "name": { "en": "Aluzina", "es": "Aluzina" },
   "repo": "https://github.com/imagine-os/aluzina",
-  "version": "0.17.1",
+  "version": "0.18.0",
   "generatedFrom": "8b0acf8",
   "spec": "docs/tenant/manifest.md",
   "identity": {
@@ -162,7 +162,7 @@
   },
   "docs": {
     "root": "docs/README.md",
-    "counters": { "prompts": 23, "changelog": 28, "decisions": 97, "qa": 6 },
+    "counters": { "prompts": 23, "changelog": 29, "decisions": 98, "qa": 6 },
     "pendingDir": "docs/changelog/_pending",
     "plan": "docs/plan/plan.json",
     "kanban": "docs/kanban.md",

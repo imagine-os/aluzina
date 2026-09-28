@@ -1,0 +1,322 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/imagine-os/aluzina/tenant.schema.json",
+  "title": "Tenant manifest v1 (tenant.json)",
+  "description": "JSON Schema for the root `tenant.json` a multitenant host reads first (manifestVersion 1, D-088, D-098). Prose spec: docs/tenant/manifest.md. Checked structurally by scripts/tenant-validate.mjs (a hand-written walker for the subset used here: type, required, enum, const, properties, items, additionalProperties, pattern, $ref to #/$defs). Every description starts with a tag: [required, tenant-specific] the tenant fills in its own value; [required, platform-fixed] the value is dictated by the platform and the same for every tenant; [optional] may be omitted. Objects are open (extra keys allowed) unless the spec closes the set; only `routing`, `namespace.storageKeys` and `deploy.docsAlias` are closed.",
+  "type": "object",
+  "required": ["manifestVersion", "id", "name", "repo", "version", "identity", "brand", "surfaces", "hubModules", "subProjects", "data", "contentMounts", "namespace", "routing", "deploy", "docs", "actions", "hostRequirements"],
+  "properties": {
+    "manifestVersion": { "const": 1, "description": "[required, platform-fixed] Schema version; the host refuses other values (D-088)." },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$", "description": "[required, tenant-specific] The tenant id and namespace root (D-090): storage keys, channels and the window global derive from it." },
+    "name": {
+      "type": "object",
+      "required": ["en"],
+      "properties": { "en": { "type": "string" }, "es": { "type": "string" } },
+      "additionalProperties": { "type": "string" },
+      "description": "[required, tenant-specific] Display name per UI language (`en` mandatory; one key per entry of identity.languages)."
+    },
+    "repo": { "type": "string", "pattern": "^https?://", "description": "[required, tenant-specific] Canonical repository URL." },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+", "description": "[required, tenant-specific] Mirrors root package.json `version` (validator: must match)." },
+    "generatedFrom": { "type": "string", "pattern": "^[0-9a-f]{7,40}$", "description": "[optional] Commit the values were last verified against; the validator warns when HEAD is more than 50 commits past it." },
+    "spec": { "$ref": "#/$defs/repoPath", "description": "[optional] Repo path of the prose spec this manifest follows (docs/tenant/manifest.md)." },
+    "identity": {
+      "type": "object",
+      "required": ["city", "country", "defaultLanguage", "languages", "currency", "numberLocale", "dateLocale", "timezone"],
+      "properties": {
+        "legalName": { "type": "string", "description": "[optional] Name as used in documents." },
+        "city": { "type": "string", "description": "[required, tenant-specific]" },
+        "country": { "type": "string", "pattern": "^[A-Z]{2}$", "description": "[required, tenant-specific] ISO 3166-1 alpha-2." },
+        "defaultLanguage": { "enum": ["en", "es"], "description": "[required, tenant-specific] One of identity.languages." },
+        "languages": { "type": "array", "items": { "enum": ["en", "es"] }, "description": "[required, platform-fixed set] UI languages every strings.ts table must cover; English and Spanish toggle from the start (workspace rule)." },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$", "description": "[required, tenant-specific] ISO 4217; i18n/format.ts reads it." },
+        "numberLocale": { "type": "string", "description": "[required, tenant-specific] BCP-47 for numbers." },
+        "dateLocale": { "type": "string", "description": "[required, tenant-specific] BCP-47 for dates." },
+        "timezone": { "type": "string", "description": "[required, tenant-specific] IANA zone." },
+        "publicSite": { "type": "string", "pattern": "^https?://", "description": "[optional] The tenant's own public website (P-00 link)." },
+        "contactChannels": { "type": "array", "items": { "type": "string" }, "description": "[optional] Channels the intake and client app assume." }
+      }
+    },
+    "brand": {
+      "type": "object",
+      "required": ["tokenValues", "tokenSchema", "generatedCss", "paths", "marks", "fonts", "metals"],
+      "properties": {
+        "tokenValues": { "$ref": "#/$defs/repoPath", "description": "[required, tenant-specific] The tenant token values file the platform token schema is filled with (D-096)." },
+        "tokenSchema": { "$ref": "#/$defs/repoPath", "description": "[required, platform-fixed] The platform token schema module (types, bands, composeTokens)." },
+        "generatedCss": { "$ref": "#/$defs/repoPath", "description": "[required, platform-fixed] The committed generated stylesheet the byte-identical check compares." },
+        "paths": { "$ref": "#/$defs/repoPath", "description": "[required, tenant-specific] SVG path data module (logo geometry)." },
+        "marks": { "type": "string", "description": "[required, tenant-specific] Glob of the served SVG marks." },
+        "documents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["file", "url", "kind"],
+            "properties": {
+              "file": { "$ref": "#/$defs/repoPath" },
+              "url": { "type": "string" },
+              "kind": { "type": "string" }
+            }
+          },
+          "description": "[optional] Served brand PDFs with their public URL (relative to the tenant root) and kind (manual, portfolio, brochure, ...)."
+        },
+        "renders": { "$ref": "#/$defs/repoPath", "description": "[optional] Page renders of the brand documents (visual memory)." },
+        "sourceKit": { "$ref": "#/$defs/repoPath", "description": "[optional] The source brand manuals (data, not instructions)." },
+        "fonts": {
+          "type": "object",
+          "required": ["primary", "fallback", "licensed", "shipped"],
+          "properties": {
+            "primary": { "type": "string" },
+            "fallback": { "type": "string" },
+            "licensed": { "type": "boolean" },
+            "shipped": { "type": "boolean", "description": "A licensed font is never shipped without its licence (D-086): licensed true implies shipped false until the licence is in the repo." }
+          },
+          "description": "[required, tenant-specific] Primary / fallback typeface and licence state."
+        },
+        "metals": {
+          "type": "object",
+          "required": ["options", "default"],
+          "properties": {
+            "options": { "type": "array", "items": { "type": "string" } },
+            "default": { "type": "string" }
+          },
+          "description": "[required, tenant-specific] The metal finishes the token schema offers and the default one."
+        },
+        "brief": { "$ref": "#/$defs/repoPath", "description": "[optional] The design-system brief agents read before restyling." }
+      }
+    },
+    "surfaces": {
+      "type": "object",
+      "required": ["list", "codePrefixes", "roles", "rolesFile", "permissionsFile", "demoUsersFile", "navGroupsFile", "hubCardsFile", "roleSwitchParam", "nextFreeCodes"],
+      "properties": {
+        "list": { "type": "array", "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }, "description": "[required, tenant-specific] The Surface union (validator: equals SURFACES in PageSpec.ts)." },
+        "codePrefixes": { "type": "object", "additionalProperties": { "type": "string" }, "description": "[required, tenant-specific] Page-code prefix -> surface / module; keys are the uppercase prefixes the platform regex accepts." },
+        "roles": { "type": "array", "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }, "description": "[required, tenant-specific] Role ids (validator: equals ROLES in rolesFile)." },
+        "rolesFile": { "$ref": "#/$defs/repoPath", "description": "[required, tenant-specific] Where ROLES lives." },
+        "permissionsFile": { "$ref": "#/$defs/repoPath", "description": "[required, tenant-specific] Where the permission strings live." },
+        "demoUsersFile": { "$ref": "#/$defs/repoPath", "description": "[required, tenant-specific] Demo identities the role switcher and screenshots.mjs use." },
+        "navGroupsFile": { "$ref": "#/$defs/repoPath", "description": "[required, tenant-specific] Nav groups per surface." },
+        "hubCardsFile": { "$ref": "#/$defs/repoPath", "description": "[required, tenant-specific] The hub card lists (data)." },
+        "roleSwitchParam": { "type": "string", "description": "[required, platform-fixed] The URL query parameter for view-as (`as`)." },
+        "nextFreeCodes": { "type": "array", "items": { "$ref": "#/$defs/pageCode" }, "description": "[required, tenant-specific] Mirrors docs/README.md 'Next free' (validator: none of these exists in any specs.ts)." }
+      }
+    },
+    "hubModules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "path", "codes", "surfaces", "guard", "shell", "owner"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$", "description": "Folder name under apps/hub/src/modules/ (validator: set equality with the folders)." },
+          "path": { "$ref": "#/$defs/repoPath" },
+          "codes": { "type": "array", "items": { "$ref": "#/$defs/pageCode" }, "description": "Page codes its specs.ts defines (validator: set equality)." },
+          "surfaces": { "type": "array", "items": { "type": "string" } },
+          "guard": { "type": ["string", "null"], "description": "Permission of the dashboard route, or null." },
+          "shell": { "enum": ["desktop", "phone", "bare"], "description": "[platform-fixed set] The three platform shells." },
+          "owner": { "type": "string", "description": "Model that builds it." },
+          "platformCandidate": { "type": "boolean", "description": "[optional] Builder / QA / docs modules the host may lift into packages/platform (D-089)." },
+          "note": { "type": "string", "description": "[optional]" }
+        }
+      },
+      "description": "[required, tenant-specific] One entry per module folder of the hub app."
+    },
+    "subProjects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "paths", "entry", "build", "serve", "codes", "status", "dependsOn", "hostNeeds", "owner", "readme"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$", "description": "Stable slug, unique within the tenant; the future `<tenantId>/<subProjectId>` address." },
+          "kind": { "enum": ["app", "static", "external", "data", "pipeline", "docs", "platform-candidate"], "description": "[platform-fixed set] How the host mounts it (D-093)." },
+          "paths": { "type": "array", "items": { "$ref": "#/$defs/repoPath" }, "description": "Everything that belongs to it (validator: each exists and is non-empty)." },
+          "entry": { "type": ["string", "null"], "description": "Repo path or URL a host opens first." },
+          "build": { "type": ["string", "null"], "description": "The npm script(s) that produce or refresh it." },
+          "serve": { "type": ["string", "null"], "description": "Where it appears in dist/ or online." },
+          "codes": { "type": "array", "items": { "$ref": "#/$defs/pageCode" } },
+          "status": { "enum": ["done", "doing", "next", "backlog", "live", "linked"], "description": "[platform-fixed set] Plan statuses plus live / linked for things that are not tasks." },
+          "dependsOn": { "type": "array", "items": { "type": "string" }, "description": "Sub-project ids (validator: each exists)." },
+          "hostNeeds": { "type": "array", "items": { "$ref": "#/$defs/hrId" } },
+          "owner": { "type": "string" },
+          "readme": { "$ref": "#/$defs/repoPath" },
+          "stack": { "type": "string", "description": "[optional] For kind: app, the stack (`hub` for this platform's hub app); hub-specific validator checks apply only when it is `hub` or absent." }
+        }
+      },
+      "description": "[required, tenant-specific] One entry per deliverable that is not 'the hub app' (catalogue: docs/tenant/sub-projects.md)."
+    },
+    "data": {
+      "type": "object",
+      "required": ["providerInterface", "providers", "schemaDir", "entities", "baseRow", "seedVersion", "seedDir", "seedModules", "realtime"],
+      "properties": {
+        "providerInterface": { "$ref": "#/$defs/repoPath", "description": "[required, platform-fixed] The DataProvider seam." },
+        "providers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "file", "storage"],
+            "properties": { "name": { "type": "string" }, "file": { "$ref": "#/$defs/repoPath" }, "storage": { "type": "string" } }
+          },
+          "description": "[required, platform-fixed] Provider implementations present (a `mock` entry is expected)."
+        },
+        "schemaDir": { "$ref": "#/$defs/repoPath", "description": "[required, platform-fixed]" },
+        "entities": { "type": "array", "items": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*$" }, "description": "[required, tenant-specific] The EntityMap keys (validator: equal)." },
+        "baseRow": { "type": "array", "items": { "enum": ["id", "created_at", "updated_at", "updated_by", "tenant_id", "version"] }, "description": "[required, platform-fixed] Columns every row carries (D-091): tenant_id and version included." },
+        "seedVersion": { "type": "integer", "description": "[required, tenant-specific] Mirrors SEED_VERSION in seedDir/index.ts (validator: equal)." },
+        "seedDir": { "$ref": "#/$defs/repoPath", "description": "[required, tenant-specific]" },
+        "domainDir": { "$ref": "#/$defs/repoPath", "description": "[optional] The tenant's domain vocabulary modules." },
+        "seedModules": { "type": "array", "items": { "type": "string" }, "description": "[required, tenant-specific] Seed modules the runner globs (validator: equal to the folder)." },
+        "docsInputs": { "type": "array", "items": { "type": "string" }, "description": "[optional] JSON under docs/ the seeds and lazy loaders import through @docs (globs allowed)." },
+        "realtime": {
+          "type": "object",
+          "required": ["transport", "dataChannel", "presenceChannel"],
+          "properties": {
+            "transport": { "type": "string" },
+            "dataChannel": { "type": "string", "description": "Must equal channelName('data') for this id." },
+            "presenceChannel": { "type": "string", "description": "Must equal channelName('presence') for this id." },
+            "conflict": { "type": "string" }
+          },
+          "description": "[required, platform-fixed shape] Cross-tab transport today; the host replaces it behind subscribe / usePresence()."
+        },
+        "idScheme": { "type": "string", "description": "[optional]" },
+        "plannedProvider": { "type": "string", "description": "[optional]" }
+      }
+    },
+    "contentMounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "sizeMb", "servedAt", "objectStorage", "regenerate"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "path": { "$ref": "#/$defs/repoPath" },
+          "sizeMb": { "type": "number", "description": "Approximate size at generatedFrom; not checked." },
+          "servedAt": { "type": ["string", "null"], "description": "URL under the tenant root, or null if never served." },
+          "objectStorage": { "type": "boolean", "description": "true where the host should own the bytes (HR-04, D-092)." },
+          "regenerate": { "type": ["string", "null"], "description": "Script that rebuilds it, or null." },
+          "note": { "type": "string" }
+        }
+      },
+      "description": "[required, tenant-specific; may be empty] Heavy committed content the host may move to object storage."
+    },
+    "namespace": {
+      "type": "object",
+      "required": ["config", "tenantDir", "storagePrefix", "storageKeys", "channels", "global", "packageScope"],
+      "properties": {
+        "config": { "$ref": "#/$defs/repoPath", "description": "[required, platform-fixed] The one module that spells out derived names (storageKey, channelName, GLOBAL_NAME)." },
+        "tenantDir": { "$ref": "#/$defs/repoPath", "description": "[required, platform-fixed] Tenant-owned code root; namespace literals are allowed only under it." },
+        "storagePrefix": { "type": "string", "pattern": "^[a-z][a-z0-9-]*\\.$", "description": "[required, derived] `${id}.`" },
+        "storageKeys": {
+          "type": "object",
+          "required": ["localStorage", "sessionStorage"],
+          "properties": {
+            "localStorage": { "type": "array", "items": { "type": "string" } },
+            "sessionStorage": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false,
+          "description": "[required, tenant-specific] Key names without the prefix, per web storage area (closed: the browser has exactly these two)."
+        },
+        "channels": { "type": "array", "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*-[a-z]+$" }, "description": "[required, derived] `${id}-<name>` BroadcastChannel names." },
+        "global": { "type": "string", "pattern": "^__[a-z][a-z0-9_]*$", "description": "[required, derived] `window.__<id>` (hyphens become underscores)." },
+        "htmlAttributes": { "type": "array", "items": { "type": "string", "pattern": "^data-" }, "description": "[optional, platform-fixed] Not namespaced (one document per tenant)." },
+        "packageScope": { "type": "string", "pattern": "^@[a-z][a-z0-9-]*$", "description": "[required, tenant-specific] npm scope of the workspace package." },
+        "demoEmailDomain": { "type": "string", "description": "[optional] Demo identities' email domain." },
+        "literalAllowlist": { "type": "array", "items": { "$ref": "#/$defs/repoPath" }, "description": "[optional] Files where a namespace literal is data, not a key." }
+      }
+    },
+    "routing": {
+      "type": "object",
+      "required": ["strategy", "pathPrefix", "supports"],
+      "properties": {
+        "strategy": { "enum": ["path", "subdomain"], "description": "[required, tenant-specific; default path] Must be one of supports (D-097)." },
+        "pathPrefix": { "type": "string", "pattern": "^/t/[a-z][a-z0-9-]*/$", "description": "[required, derived] `/t/<id>/`." },
+        "supports": { "type": "array", "items": { "enum": ["path", "subdomain"] }, "description": "[required, platform-fixed] Strategies the build works under without a rebuild." }
+      },
+      "additionalProperties": false,
+      "description": "[required] Closed set (D-097): the host reads exactly these three fields."
+    },
+    "deploy": {
+      "type": "object",
+      "required": ["target", "workflow", "ciWorkflow", "base", "router", "outDir", "nodeVersion"],
+      "properties": {
+        "target": { "type": "string", "description": "[required, tenant-specific] e.g. github-pages." },
+        "url": { "type": "string", "pattern": "^https?://", "description": "[optional] Where the build is served today." },
+        "workflow": { "$ref": "#/$defs/repoPath", "description": "[required] Deploy workflow." },
+        "ciWorkflow": { "$ref": "#/$defs/repoPath", "description": "[required, platform-fixed] Build gate workflow running tenant:validate (D-094)." },
+        "base": { "type": "string", "description": "[required, platform-fixed] Vite base; `./` (relative) so any route prefix works." },
+        "router": { "enum": ["hash", "browser"], "description": "[required, platform-fixed] `hash` today." },
+        "outDir": { "type": "string", "description": "[required, platform-fixed]" },
+        "staticCopies": {
+          "type": "array",
+          "items": { "type": "object", "required": ["from", "to", "script"], "properties": { "from": { "$ref": "#/$defs/repoPath" }, "to": { "type": "string" }, "script": { "$ref": "#/$defs/repoPath" } } },
+          "description": "[optional] Static sub-projects copied into outDir."
+        },
+        "deployTimeArtifacts": {
+          "type": "array",
+          "items": { "type": "object", "required": ["path", "script"], "properties": { "path": { "type": "string" }, "script": { "type": "string" }, "needs": { "type": "string" } } },
+          "description": "[optional] Produced at deploy time (thumbnails, HR-08)."
+        },
+        "nodeVersion": { "type": "string", "pattern": "^\\d+$", "description": "[required, platform-fixed] Major Node version." },
+        "envVars": {
+          "type": "object",
+          "properties": { "app": { "type": "array", "items": { "type": "string" } }, "scripts": { "type": "array", "items": { "type": "string" } } },
+          "description": "[optional] Environment variables the app / the scripts read."
+        },
+        "buildDefines": { "type": "array", "items": { "type": "string" }, "description": "[optional] Vite defines." },
+        "docsAlias": {
+          "type": "object",
+          "required": ["alias", "path"],
+          "properties": { "alias": { "type": "string" }, "path": { "$ref": "#/$defs/repoPath" } },
+          "additionalProperties": false,
+          "description": "[optional, platform-fixed] The `@docs` alias into the tenant's docs tree (HR-05); closed: exactly alias and path."
+        }
+      }
+    },
+    "docs": {
+      "type": "object",
+      "required": ["root", "counters", "plan", "kanban", "buildPlan", "decisions"],
+      "properties": {
+        "root": { "$ref": "#/$defs/repoPath", "description": "[required] Start-here map." },
+        "counters": {
+          "type": "object",
+          "required": ["prompts", "changelog", "decisions", "qa"],
+          "properties": {
+            "prompts": { "type": "integer" },
+            "changelog": { "type": "integer" },
+            "decisions": { "type": "integer" },
+            "qa": { "type": "integer" }
+          },
+          "description": "[required, tenant-specific] Per-tenant counters (D-095): the highest numbered file per folder / the last D-nnn row; never shared across tenants."
+        },
+        "pendingDir": { "$ref": "#/$defs/repoPath", "description": "[optional] Parallel-worker drafts." },
+        "plan": { "$ref": "#/$defs/repoPath", "description": "[required] Machine-readable plan (D-037 shape)." },
+        "kanban": { "$ref": "#/$defs/repoPath", "description": "[required]" },
+        "buildPlan": { "$ref": "#/$defs/repoPath", "description": "[required]" },
+        "decisions": { "$ref": "#/$defs/repoPath", "description": "[required]" },
+        "pagesDir": { "$ref": "#/$defs/repoPath", "description": "[optional]" },
+        "pageTemplate": { "$ref": "#/$defs/repoPath", "description": "[optional]" },
+        "screenshotsDir": { "$ref": "#/$defs/repoPath", "description": "[optional]" },
+        "knowledge": { "$ref": "#/$defs/repoPath", "description": "[optional] Domain knowledge base; never merged across tenants (D-012, D-087)." },
+        "surfaces": { "$ref": "#/$defs/repoPath", "description": "[optional] Machine-drivable surfaces reference." },
+        "tenantDocs": { "$ref": "#/$defs/repoPath", "description": "[optional] The tenant-packaging docs folder." },
+        "conventions": { "type": "array", "items": { "type": "string" }, "description": "[optional] Short list the host displays to agents." }
+      }
+    },
+    "actions": {
+      "type": "object",
+      "required": ["bus", "global", "idPattern", "declared", "distinct"],
+      "properties": {
+        "bus": { "$ref": "#/$defs/repoPath", "description": "[required, platform-fixed] The actions bus module." },
+        "global": { "type": "string", "pattern": "^window\\.__[a-z][a-z0-9_]*\\.actions$", "description": "[required, derived] `window.<namespace.global>.actions`." },
+        "idPattern": { "type": "string", "description": "[required, platform-fixed] Regex every action id matches (`<module>.<verb>`)." },
+        "declared": { "type": "integer", "description": "[required, tenant-specific] Number of `id: '<module>.<verb>'` declarations across every hubModules[] specs.ts (validator: recounted)." },
+        "distinct": { "type": "integer", "description": "[required, tenant-specific] Distinct ids among them (validator: recounted)." },
+        "browser": { "type": "string", "description": "[optional] The page that browses / runs / exports them." },
+        "exportFormat": { "type": "string", "description": "[optional]" },
+        "mcpServer": { "type": ["string", "null"], "description": "[optional] Path of an MCP server, or null while planned." }
+      }
+    },
+    "hostRequirements": { "type": "array", "items": { "$ref": "#/$defs/hrId" }, "description": "[required, tenant-specific] The HR-nn ids from docs/tenant/host-requirements.md this tenant relies on." }
+  },
+  "$defs": {
+    "repoPath": { "type": "string", "pattern": "^(?!\\./)(?!/)[^\\s]+$", "description": "Repo-relative POSIX path, no leading `./` or `/`." },
+    "pageCode": { "type": "string", "pattern": "^(HUB|BOS|[A-Z])-\\d{2}$", "description": "Page code `<PREFIX>-nn`." },
+    "hrId": { "type": "string", "pattern": "^HR-\\d{2}$", "description": "Host requirement id." }
+  }
+}

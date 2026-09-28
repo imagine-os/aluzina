@@ -1,0 +1,44 @@
+{
+  "$comment": "Shape of the multitenant host's tenant index (D-098). The host keeps this file in its own repo; a copy lives here so the second-tenant recipe (between-gigs.md) and HR-07 can point at one concrete form. Each entry registers a tenant by its repo and manifest path; everything else about the tenant comes from that manifest. `status`: registered (index entry only) | validated (tenant:validate green on `pinned`) | mounted (served at routePrefix) | retired. `pinned` is the commit the host last validated and mounted; null while unreachable.",
+  "indexVersion": 1,
+  "host": {
+    "routing": "path",
+    "routePattern": "/t/<id>/",
+    "storageNamespacePattern": "<id>.<key> | <id>-<channel> | window.__<id>",
+    "objectStorageBucketPattern": "<host-bucket>/<id>/<contentMountId>/",
+    "docsCounters": "per tenant, never shared (D-095)"
+  },
+  "tenants": [
+    {
+      "id": "aluzina",
+      "name": { "en": "Aluzina", "es": "Aluzina" },
+      "repo": "https://github.com/imagine-os/aluzina",
+      "defaultBranch": "main",
+      "manifestPath": "tenant.json",
+      "schemaPath": "tenant.schema.json",
+      "manifestVersion": 1,
+      "routePrefix": "/t/aluzina/",
+      "pagesBase": "https://imagine-os.github.io/aluzina/",
+      "status": "validated",
+      "pinned": null,
+      "contentBuckets": ["archive-renders", "business-os-assets", "screenshots"],
+      "docsCounters": { "prompts": 23, "changelog": 29, "decisions": 98, "qa": 6 }
+    },
+    {
+      "id": "between-gigs",
+      "name": { "en": "Between Gigs", "es": "Between Gigs" },
+      "repo": null,
+      "defaultBranch": "main",
+      "manifestPath": "tenant.json",
+      "schemaPath": "tenant.schema.json",
+      "manifestVersion": 1,
+      "routePrefix": "/t/between-gigs/",
+      "pagesBase": null,
+      "status": "registered",
+      "pinned": null,
+      "contentBuckets": [],
+      "docsCounters": { "prompts": 0, "changelog": 0, "decisions": 0, "qa": 0 },
+      "$comment": "Placeholder (2026-09-28): the repository is not reachable from this channel's GitHub access; `repo` is filled in when Justin grants it or names its owner. Its counters start at 0001 / D-001 in its own repo."
+    }
+  ]
+}

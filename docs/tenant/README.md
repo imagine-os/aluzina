@@ -1,6 +1,6 @@
 # Tenant packaging: aluzina as one tenant of a multitenant host
 
-Status: **pass 4 (tp-07..tp-10) done, changelog 0028; pass 3 (tp-03 + tp-05 + tp-06) changelog 0027; pass 2 (tp-02 + tp-04) changelog 0026; pass 1 (tp-01) changelog 0025; prompt 0023, D-088..D-097.** `tenant.json` exists at the repo root, `apps/hub/src/tenant/` holds the tenant-owned code (config, auth constants, nav groups, hub cards, domain, seeds, brand paths, token values), and `npm run tenant:validate` checks the manifest in every build and in `.github/workflows/ci.yml`. Owner model: Fable 5.1 (architecture and plan). Start here, then read the files in the order of the table.
+Status: **pass 5a (tp-12) done, changelog 0029; pass 4 (tp-07..tp-10) changelog 0028; pass 3 (tp-03 + tp-05 + tp-06) changelog 0027; pass 2 (tp-02 + tp-04) changelog 0026; pass 1 (tp-01) changelog 0025; prompt 0023, D-088..D-098.** `tenant.json` exists at the repo root with `tenant.schema.json` beside it (the structural contract, D-098), `apps/hub/src/tenant/` holds the tenant-owned code (config, auth constants, nav groups, hub cards, domain, seeds, brand paths, token values), and `npm run tenant:validate` checks the manifest in every build and in `.github/workflows/ci.yml`. Owner model: Fable 5.1 (architecture and plan). Start here, then read the files in the order of the table.
 
 ## What a tenant package is
 
@@ -19,12 +19,13 @@ The multitenant system Justin described will hold several client repos (this one
 11. **Actions registry**: the WebMCP surface (`window.__aluzina.actions`, D-09), so the host can aggregate actions across tenants.
 12. **`hostRequirements`**: the explicit list of what the host must provide (HR-01..HR-12 in `host-requirements.md`).
 
-The manifest is **data the tools read**, not a promise the code keeps by convention: `scripts/tenant-validate.mjs` (tp-03) checks it against the repository on every build and in CI, so a stale manifest fails the build the same way a malformed `plan.json` does today.
+The manifest is **data the tools read**, not a promise the code keeps by convention: `scripts/tenant-validate.mjs` (tp-03) checks it against `tenant.schema.json` (tp-12, D-098) and against the repository on every build and in CI, so a stale manifest fails the build the same way a malformed `plan.json` does today.
 
 ## The layers
 
 ```
 tenant.json  (manifestVersion 1)                       <- the host reads this first
+tenant.schema.json                                     <- its structural contract (D-098); the validator walks the manifest against it
 |
 +-- apps/hub/src/tenant/          tenant-owned code (config, brand values, auth constants, nav, cards, domain, seeds)   [tp-02, tp-05]
 +-- apps/hub/src/<everything else> platform code, stays in place, documented as platform (platform-vs-tenant.md)          [extraction deferred, tp-13]
@@ -36,7 +37,7 @@ tenant.json  (manifestVersion 1)                       <- the host reads this fi
 
 ## How the host consumes it
 
-1. Read `tenant.json`; refuse anything not `manifestVersion: 1` or failing `tenant:validate`.
+1. Register the tenant in its index by repo + manifest path (`tenants.example.json`), read `tenant.json`; refuse anything not `manifestVersion: 1`, failing `tenant.schema.json`, or failing `tenant:validate`.
 2. Mount the hub build (`npm ci && npm run build` -> `dist/`) under the tenant's route root (`/t/aluzina/` or a subdomain; the host decides, open question in changelog 0025) and set the tenant id on the platform config so storage keys, channels and the global are derived from it (D-090).
 3. Mount each `subProjects[]` entry per its `kind`: `app` (build and serve), `static` (copy and serve), `external` (link), `data` / `pipeline` (register the scripts and their inputs), `docs` (mount the folder for the in-app viewer), `platform-candidate` (note for extraction).
 4. Provide the `hostRequirements` (auth, tenant-scoped store, realtime, object storage, docs mount, theme loading, routing, thumbnails, per-tenant counters, CI, actions aggregation, annotations store).
@@ -52,7 +53,9 @@ tenant.json  (manifestVersion 1)                       <- the host reads this fi
 | `sub-projects.md` | The sub-project catalogue: table plus one section per sub-project (kind, paths, entry, build, codes, status, dependsOn, hostNeeds, owner model). |
 | `platform-vs-tenant.md` | The split map (two path lists), the tp-05 move plan into `src/tenant/`, what is deferred and why. |
 | `host-requirements.md` | HR-01..HR-12 on the multitenant host, each with "what aluzina provides today / what the host must add". |
-| `between-gigs.md` | The second tenant slot: what a second package must provide, and the host policy for per-tenant docs counters, namespaces and routing. |
+| `between-gigs.md` | **Packaging a second tenant**: the cold-start recipe (inventory, schema-checked manifest, `src/tenant/` layout, namespace, rows, own counters, mounts, CI, host-side steps), what the tenants share, what the host resolves when both are present; between-gigs access status. |
+| `tenants.example.json` | The host's tenant index shape (D-098): aluzina filled in, between-gigs placeholder. |
+| `../../tenant.schema.json` | (repo root) JSON Schema for manifest v1, every field tagged tenant-specific / platform-fixed / derived / optional. |
 
 ## Pass plan (step 15 in `../build-plan.md`, tasks `tp-01..tp-13` in `../plan/plan.json`, cards in `../kanban.md`)
 
@@ -69,7 +72,7 @@ tenant.json  (manifestVersion 1)                       <- the host reads this fi
 | tp-09 | Stale docs fixes (root README status, `_TEMPLATE` surfaces, playwright note, docs map) | tp-01 | Sonnet 5 | **done** (0028) |
 | tp-10 | `surfaces.md` tenant section (manifest, validate script, CI) | tp-03 | Sonnet 5 | **done** (0028) |
 | tp-11 | QA pass: build green, 7-width screenshots of HUB-01 / D-05 / D-09 unchanged, EN / ES spot check, docs agree | tp-03..tp-10 | Sonnet 5 | next |
-| tp-12 | Second tenant slot: between-gigs package checklist, ready when access lands | tp-02 | Fable 5.1 | next |
+| tp-12 | Second tenant slot: `tenant.schema.json`, schema / actions checks + `--manifest` in the validator, between-gigs recipe, host tenant index shape | tp-02 | Fable 5.1 | **done** (0029); applying it to between-gigs waits for repo access |
 | tp-13 | Host-time: extract `packages/platform`; real provider with `tenant_id`; object storage for content mounts | tp-05, tp-06, credentials | Fable 5.1 | backlog |
 
 Definition of done for every pass: `npm run build` green (which includes `tenant:validate` since tp-03), docs agree (`plan.json` = `kanban.md` = `build-plan.md`), changelog with `model:`, decisions logged, `surfaces.md` current.
@@ -87,3 +90,4 @@ Definition of done for every pass: `npm run build` green (which includes `tenant
 - 2026-09-28 (changelog 0026, prompt 0023): tp-02 and tp-04 done: root `tenant.json`, `apps/hub/src/tenant/config.ts`, every key / channel / global derived, `tenant_id` + `version` on rows, `SEED_VERSION` 13, `routing: path` (D-097). Fable 5.1.
 - 2026-09-28 (changelog 0027, prompt 0023): tp-05, tp-06 and tp-03 done: tenant-owned code moved into `apps/hub/src/tenant/` with `git mv` (29 files, no shims), hub card lists into `tenant/hubCards.ts`, locale / currency read from `tenant.json`; token schema / values split with `tokens.css` byte-identical; `scripts/tenant-validate.mjs` in `npm run build` and `.github/workflows/ci.yml`; version 0.17.0. tp-07..tp-10 are next. Opus 5.
 - 2026-09-28 (changelog 0028, prompt 0023): tp-07..tp-10 done: `scripts/thumbnails.mjs` / `screenshots.mjs` read `tenant/hubCards.data.ts` (a plain-data sibling of `hubCards.ts` that Node's type-stripping can import) and `tenant/auth/demoUsers.ts` instead of a hand-kept card list / role map, both scripts gain a `--list` flag, K-05 / K-06 added to the thumbnail list, the two module-local `WEBSITE_URL` constants read `TENANT.publicSite`; a `README.md` for every sub-project root that lacked one plus a "Tenant package" section on every one that already had a README, `scripts/README.md` and `scripts/archive/requirements.txt`; root README status / playwright note / a "Tenant package" paragraph, `_TEMPLATE.md` surfaces, nine knowledge entries and thirteen page docs with pre-move paths fixed, `actions.declared` / `distinct` recounted (430 / 409, unchanged); `surfaces.md` section 1.8 "Tenant package". Version 0.17.1. tp-11 (QA) and tp-12 (second tenant slot) are next. Sonnet 5.
+- 2026-09-28 (changelog 0029, prompt 0023): tp-12 done: `tenant.schema.json` at the repo root (JSON Schema draft 2020-12 for manifest v1, fields tagged tenant-specific / platform-fixed / derived / optional; closed sets only `routing`, `namespace.storageKeys`, `deploy.docsAlias`); `scripts/tenant-validate.mjs` walks the manifest against it with a dependency-free subset walker, recounts `actions.declared` / `distinct` (430 / 409) and takes `--manifest <path>`; `between-gigs.md` rewritten as the recipe "Packaging a second tenant"; `tenants.example.json` host index shape; D-098; version 0.18.0. between-gigs itself is still unreachable from this channel's GitHub access. tp-11 (QA) is next. Fable 5.1.

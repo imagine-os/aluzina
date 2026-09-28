@@ -35,7 +35,7 @@ What the multitenant host must provide to run aluzina as a tenant, numbered HR-0
 ## HR-07 Tenant routing
 
 - **aluzina today:** GitHub Pages at `https://imagine-os.github.io/aluzina/`, Vite `base: './'` (relative, sub-path agnostic), HashRouter (`/#/...`), `dist/` at repo root with `.nojekyll`, the prototype copied to `dist/business-os/` with space-containing filenames and forwarders, thumbnails at `dist/thumbs/`. No server-side routing needed.
-- **host must add:** a route root per tenant (`/t/<id>/` or `<id>.<host>`; **open question for Justin**), serving `dist/` under it unchanged; link slots for `external` sub-projects (P-00); a tenant switcher for host operators. The relative base and HashRouter make both options work without a rebuild.
+- **host must add:** a route root per tenant (`/t/<id>/` or `<id>.<host>`; **open question for Justin**), serving `dist/` under it unchanged; link slots for `external` sub-projects (P-00); a tenant switcher for host operators; a tenant index that registers each tenant by repo + manifest path with its `routePrefix` and `status` (shape: `tenants.example.json`, D-098). The relative base and HashRouter make both options work without a rebuild.
 
 ## HR-08 Deploy-time thumbnails
 
@@ -82,3 +82,4 @@ What the multitenant host must provide to run aluzina as a tenant, numbered HR-0
 ## Change log
 
 - 2026-09-28 (changelog 0025): HR-01..HR-12 first written. Fable 5.1.
+- 2026-09-28 (changelog 0029): HR-07 names the host tenant index (`tenants.example.json`). Fable 5.1.
