@@ -17,4 +17,19 @@ Justin left the choice of the next step open, so the coordinating session chose 
 
 ## Response
 
-Posted in Slack after deploy; appended in a follow-up commit.
+Posted in Slack #all-aluzina 2026-09-29 ~04:23 UTC with three screenshots (docs/screenshots/W-04/en-1280-project.jpg, en-1280-project-mat.jpg, en-1280-trail.jpg).
+
+I made the desk follow a project as light: https://imagine-os.github.io/aluzina/#/founder/desk (pick "Noam Residential" in the new project selector, then Play).
+
+Why this: it's your "everything is light" line made visible, and it puts the two thinnest areas from earlier tonight, communication and money, on the desk where they can be seen and argued about.
+
+What it does now:
+- Following a project lights its status token on its mat, and every record of that project lands as a glowing tile where it belongs: quotes on Development, approvals on Validation, purchases, payments, deliveries and site reports on Delivery, messages on the current phase.
+- A money rail under the desk shows quoted, approved, paid and outstanding for the project, split money in and out, with the formulas in the page doc.
+- Play runs the project's events as a light moving mat to mat, with a caption per event; Prev / Next step through them.
+- It's live: I changed a purchase on the purchasing page in a second tab and the tile, the approved total and the trail updated on the desk without a reload.
+- Every Open button on the desk now goes to the real page or portal. No placeholders left on this page.
+
+Noam Residential is the best demo (21 tiles, most money data); Casa Laureles has the most messages. Logged as prompt 0028, changelog 0035, decision D-105, version 0.21.0.
+
+_Fable 5.1 chose the work and wrote the brief, Opus 5.5 built it, Sonnet 5 will log the reply._
