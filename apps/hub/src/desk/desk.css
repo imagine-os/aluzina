@@ -1671,6 +1671,38 @@
   min-width: var(--target);
 }
 
+/* One-row toolbar (changelog 0043): useToolbarFit folds Tilt, Reset, Legend, S / M / L and Settings into More
+   (.is-folded), then hides the Full screen label (.is-fold-2, icon + accessible name, like phones). */
+.desk-tilt-label {
+  display: inline-grid;
+}
+
+.desk-tilt-label > * {
+  grid-area: 1 / 1;
+}
+
+.desk-tilt-label__ghost {
+  visibility: hidden;
+}
+
+.desk-toolbar.is-fold-2 .desk-fs-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.desk-toolbar.is-folded,
+.desk-toolbar.is-folded .desk-toolbar__group {
+  flex-wrap: nowrap;
+}
+
+.desk-toolbar__more .omenu__row .desk-toolbar__sizes {
+  margin-left: auto;
+}
+
 
 /* The stage's box: its height is the chosen size (S / M / L or dragged); the stage fills it. */
 .desk-stagebox {

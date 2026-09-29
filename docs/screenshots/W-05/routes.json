@@ -1,8 +1,8 @@
 {
-  "capturedAt": "2026-09-29T08:32:20.185Z",
+  "capturedAt": "2026-09-29T13:02:15.971Z",
   "base": "http://localhost:4173/",
   "code": "W-05",
-  "route": "/founder/clients/hoy/hub?lens=standalone",
+  "route": "/founder/clients/hoy/hub",
   "shots": [
     "en-1280",
     "en-1280-between-gigs",
@@ -26620,7 +26620,7 @@
         }
       }
     ],
-    "version": "0.24.0",
+    "version": "0.24.1",
     "actions": {
       "declared": [
         {

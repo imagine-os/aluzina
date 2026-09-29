@@ -27,7 +27,7 @@ Same map, same engine, a different model builder and framing (D-111); switch on 
 - The page subtitle follows the lens: ALUZINA "87 pages on 8 mats, each client role seated at its mat"; Between Gigs "87 pages on 5 mats, one gig with its surfaces and tools"; On its own "87 pages on one mat, as HOY's own hub". Mats are pluralised in both languages ("one mat" / "un tapete"; the mat counts "1 screen" / "1 pantalla").
 - Lens titles and framing come from the map's `lenses` hints, with the host's own wording merged per language from `registry.ts` `lensCopy` (ALUZINA's house style: the studio's name in capitals, "tapete" for mat, natural Spanish: "hoy en el estudio ALUZINA", "hoy como gig", "El hub de pruebas de hoy"). Only the strings given replace the map's; the rest stays the client's. HOY's own role labels are never overridden.
 - A narrow header strip (a container query, 36rem: phones and 768 beside the sidebar) keeps the wordmark, the version and "Project prj-hoy" on one line, Reload map as a named 44 px icon button, and the three lens tabs on one row; below 768 the gig strip's Open is a named icon and the tagline is dropped, so the desk starts inside the first screen at 390 x 844 on the ALUZINA and standalone lenses.
-- The desk toolbar is the shared `DeskStage` one and wraps at 1280 exactly as W-04's does (the camera group and the view group need 975 px EN / 1173 px ES; the content column is 960 px); one row from 1920.
+- The desk toolbar is the shared `DeskStage` one: one row at 1280 in EN and ES since changelog 0043 (Tilt, Reset, Legend, S / M / L and Settings fold into More when the row is short; they needed 975 px EN / 1 173 px ES in the 960 px column, now 637 / 747 px), fully inline from 1920, stacked on phones.
 
 ## The ALUZINA lens: one mat per client role
 
@@ -64,6 +64,10 @@ ALUZINA lens: 16 objects per sub-mat and 48 per mat, so every one of the 87 page
 ## Camera
 
 Default size L; home zoom: phones at least 44 px wide (0.8) and on large screens 120 px x the UI scale tall (1920: 105 %, 2560: 141 %, 3840: 188 %), the desk's top-left corner at the stage's top-left; Fit and `desk.fit` show everything. Every object, mat label, sub-mat label and station is a native button with an aria-label.
+
+## Open live: which route (consumer rule)
+
+Open live, "Open in hoy ↗" and the `clienthub.openLive` / `clienthub.openInClient` actions embed a page at **`page.sampleRoute ?? page.route`** (changelog 0043, HOY 0.11.2): a template route with a `:id` segment (`/app/class/:id`) is not a screen, so HOY publishes a concrete sample next to it (`/app/class/sample`, `/app/booking/sample`, `/site/classes/hot-yoga`; nine pages in 0.11.2). The drawer's Route line keeps the template route (what the page is). Experiences, tools and the hub open at their own `route`.
 
 ## Offline and freshness
 

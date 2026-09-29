@@ -77,7 +77,8 @@ function liveOf(entry: HubEntry | undefined, matRole: HubRole | undefined, map: 
       const allowed = entry.page.roles;
       const own = entry.role?.id ?? matRole?.id;
       const role = own && (allowed.includes(own) || allowed.length === 0) ? own : allowed[0] ?? 'public';
-      return { route: entry.page.route, role, device: entry.page.device };
+      // A template page (`:id`) opens its sample record (hoy 0.11.2): the consumer rule is `sampleRoute ?? route`.
+      return { route: entry.page.sampleRoute ?? entry.page.route, role, device: entry.page.device };
     }
     case 'tool':
       return { route: entry.tool.route, role: map.roles.find((r) => r.band === 'build')?.id ?? 'super_admin', device: 'desktop' };

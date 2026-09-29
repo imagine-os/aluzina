@@ -63,6 +63,8 @@ export const deskStrings: StringTable = {
   'desk.heightValue': { en: '{vh} % of the screen height', es: '{vh} % de la altura de la pantalla' },
   'desk.heightHint': { en: 'Drag, or use the up and down arrows, to change the desk’s height', es: 'Arrastra, o usa las flechas arriba y abajo, para cambiar la altura de la mesa' },
   'desk.settings': { en: 'Settings', es: 'Ajustes' },
+  'desk.overflow': { en: 'More', es: 'Más' },
+  'desk.overflowAria': { en: 'More desk controls', es: 'Más controles de la mesa' },
   'desk.settingsTitle': { en: 'Desk settings', es: 'Ajustes de la mesa' },
   'desk.wheelZoom': { en: 'Scroll wheel zooms', es: 'La rueda del ratón acerca' },
   'desk.wheelZoomHint': { en: 'Off (best for trackpads): scrolling moves the desk; pinch or ctrl + scroll zooms. On (best for a mouse): the wheel zooms, shift + wheel moves.', es: 'Apagado (mejor con trackpad): desplazar mueve la mesa; pellizcar o ctrl + rueda acerca. Encendido (mejor con ratón): la rueda acerca, mayúsculas + rueda mueve.' },

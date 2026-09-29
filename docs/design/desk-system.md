@@ -76,7 +76,20 @@ A page that is its own desk (W-04) calls `useDesk({ code, model, defaultSize, co
 
 ## Frame
 
-Toolbar (`role="toolbar"`, two groups that wrap as wholes): zoom − / % / +, Fit, Tilt, the mat Select, Reset | Legend, S / M / L, Full screen, Settings (Scroll wheel zooms), Hide desk on phones. Stage box (height = the size), tooltip, minimap, legend panel, handle, hint. Full screen: Fullscreen API on the frame, fixed overlay where missing; the Drawer portals into the fullscreen element. Sizes: S / M / L = 40 / 60 / 85 % of the viewport height, stored per page code; default M on W-04, S on page desks. Under 768 px page desks collapse to a bar with Show desk (W-04 starts open).
+Toolbar (`role="toolbar"`, two groups that wrap as wholes): zoom − / % / +, Fit, Tilt, the mat Select, Reset | Legend, S / M / L, Full screen, Settings (Scroll wheel zooms), Hide desk on phones.
+
+One row wherever it fits (changelog 0043): `useToolbarFit` (`src/desk/useToolbarFit.ts`) watches the toolbar with a ResizeObserver (not a media query, so it follows the page column, a D-16 side-by-side column and full screen), measures the controls' natural one-row width with everything inline, and picks the smallest fold that fits on one row. The secondary controls carry `data-desk-fold`.
+
+| Fold | When | Inline | In More (`OverflowMenu`, native `<details>`) |
+| --- | --- | --- | --- |
+| 0 | every control fits on one row (1920 and up in a page column; 2560 / 3840) | everything | nothing |
+| 1 | only the folded row fits (1280 in EN and ES: 975 / 1 173 px needed, 637 / 747 px after, in a 960 px column) | zoom − / % / +, Fit, the mat Select, Full screen, Hide desk, More | Tilt ("Tilted" / "Flat", `aria-pressed`), Reset, Legend (`aria-pressed`), Size S / M / L (`aria-pressed`, keeps the menu open), Settings |
+| 2 | fold 1 still too wide | as fold 1, Full screen as its icon (the label stays as the accessible name and `title`, as on phones) | as fold 1 |
+| 0 (stacked) | not even fold 2 fits on one row (phones 360 / 390, 768 beside the sidebar, narrow D-16 columns) | everything, the groups stack as before | nothing |
+
+More is a 44 px ghost Button ("More" / "Más", named "More desk controls" / "Más controles de la mesa"); Enter / Space opens it, Tab walks its rows, Escape or focus / a pointer leaving it closes it and focus returns to it; activating a row closes it (except S / M / L). The page desk's title keeps its 9rem flex basis on the row. A new language, full screen, the mat count or the compact mode re-measures unfolded inside the layout phase (no flash); Tilt keeps one width for both labels, so a toggle never re-measures. The `desk.*` actions are unchanged (they call the controller, not the buttons).
+
+Stage box (height = the size), tooltip, minimap, legend panel, handle, hint. Full screen: Fullscreen API on the frame, fixed overlay where missing; the Drawer portals into the fullscreen element. Sizes: S / M / L = 40 / 60 / 85 % of the viewport height, stored per page code; default M on W-04, S on page desks. Under 768 px page desks collapse to a bar with Show desk (W-04 starts open).
 
 ## Accessibility
 

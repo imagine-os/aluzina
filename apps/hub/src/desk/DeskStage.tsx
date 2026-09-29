@@ -1,14 +1,16 @@
-import { useCallback, useMemo, useRef, type FocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
+import { useCallback, useMemo, useRef, useState, type FocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '../components/atom/Button/Button';
 import { Checkbox } from '../components/atom/Checkbox/Checkbox';
 import { Select } from '../components/atom/Select/Select';
+import { OverflowMenu } from '../components/molecule/OverflowMenu/OverflowMenu';
 import { useT } from '../i18n/I18nProvider';
 import { pick } from '../tenant/domain';
 import { depthVars } from './depth';
 import { DeskBody, DeskFace, DeskObject, faceBox, isSolid } from './DeskObject';
 import { DeskPersonStation } from './DeskPerson';
 import type { DeskPerson } from './people';
+import { useToolbarFit } from './useToolbarFit';
 import { DESK_SIZES, SIZE_VH, SLAB, TILT_DEG, type DeskController } from './useDesk';
 import type { DeskItem, ItemKind, Mat, PlacedItem, SubMat } from './types';
 import './desk.css';
@@ -84,6 +86,43 @@ export function DeskStage(props: DeskStageProps) {
 
   const fs = desk.fullscreen !== 'off';
   const current = desk.sizeOf(desk.vh);
+  const multiMat = layout.mats.length > 1;
+  // One row wherever it fits (changelog 0043): secondary controls fold into More, then the Full screen label goes.
+  const [moreOpen, setMoreOpen] = useState(false);
+  const bar = useToolbarFit(`${lang}|${fs}|${multiMat}|${desk.compact}|${props.title ? 1 : 0}|${props.matSelectPlaceholder}`);
+  const folded = bar.fold > 0;
+
+  // The secondary controls (`data-desk-fold`): inline when the row has room, in the More menu when it does not.
+  const tiltButton = (
+    <Button size="sm" aria-pressed={desk.tilt} data-desk-fold="" onClick={api.toggleTilt}>
+      {/* Both labels share one grid cell, so the button keeps its width when it toggles (the fit never re-measures on a tilt). */}
+      <span className="desk-tilt-label">
+        <span>{desk.tilt ? t('desk.tiltOn') : t('desk.tiltOff')}</span>
+        <span className="desk-tilt-label__ghost" aria-hidden="true">
+          {desk.tilt ? t('desk.tiltOff') : t('desk.tiltOn')}
+        </span>
+      </span>
+    </Button>
+  );
+  const resetButton = (
+    <Button size="sm" variant="ghost" data-desk-fold="" onClick={api.reset}>
+      {t('desk.reset')}
+    </Button>
+  );
+  const legendButton = (
+    <Button size="sm" variant="ghost" aria-pressed={desk.legendOpen} aria-expanded={desk.legendOpen} data-desk-fold="" onClick={() => desk.setLegendOpen(!desk.legendOpen)}>
+      {t('desk.legend')}
+    </Button>
+  );
+  const sizeButtons = (
+    <span className="desk-toolbar__sizes" role="group" aria-label={t('desk.size')} data-desk-fold="">
+      {DESK_SIZES.map((s) => (
+        <Button key={s} size="sm" variant={current === s ? 'primary' : 'secondary'} aria-pressed={current === s} aria-label={t(`desk.size.${s}Label`)} title={t(`desk.size.${s}Label`)} disabled={fs} onClick={() => desk.setHeight(SIZE_VH[s])}>
+          {t(`desk.size.${s}`)}
+        </Button>
+      ))}
+    </span>
+  );
 
   if (!desk.showStage) {
     // Phones: the page stays usable; the desk is one tap away.
@@ -99,58 +138,64 @@ export function DeskStage(props: DeskStageProps) {
 
   return (
     <div ref={refs.frameRef} className={`desk-frame${fs ? ' is-fullscreen' : ''}${desk.fullscreen === 'css' ? ' is-fs-css' : ''}`} data-desk-frame={desk.code}>
-      <div className="desk-toolbar" role="toolbar" aria-label={t('desk.toolbar')}>
+      <div ref={bar.ref} className={`desk-toolbar${folded ? ' is-folded' : ''}${bar.fold === 2 ? ' is-fold-2' : ''}`} role="toolbar" aria-label={t('desk.toolbar')} data-desk-fold-level={bar.fold}>
         {props.title && <div className="desk-toolbar__title">{props.title}</div>}
         <span className="desk-toolbar__group desk-toolbar__group--camera">
-        <div className="desk-toolbar__zoom">
-          <Button size="sm" icon="−" aria-label={t('desk.zoomOut')} onClick={() => api.zoomBy(0.8)} />
-          <span className="desk-toolbar__pct" aria-live="polite">
-            <span className="visually-hidden">{t('desk.zoomLabel')} </span>
-            {t('desk.zoomNow', { pct: desk.zoom })}
-          </span>
-          <Button size="sm" icon="+" aria-label={t('desk.zoomIn')} onClick={() => api.zoomBy(1.25)} />
-        </div>
-        <Button size="sm" onClick={() => api.fitAll()}>
-          {t('desk.fit')}
-        </Button>
-        <Button size="sm" aria-pressed={desk.tilt} onClick={api.toggleTilt}>
-          {desk.tilt ? t('desk.tiltOn') : t('desk.tiltOff')}
-        </Button>
-        {layout.mats.length > 1 && (
-          <Select
-            label={t('desk.matSelect')}
-            hideLabel
-            className="desk-toolbar__phase"
-            value={desk.matSel}
-            placeholder={props.matSelectPlaceholder}
-            onChange={(e) => e.target.value && api.fitMat(e.target.value)}
-            options={layout.mats.map((m) => ({ value: m.id, label: t('desk.phaseOption', { name: props.matName(m), n: m.count }) }))}
-          />
-        )}
-        <Button size="sm" variant="ghost" onClick={api.reset}>
-          {t('desk.reset')}
-        </Button>
+          <div className="desk-toolbar__zoom">
+            <Button size="sm" icon="−" aria-label={t('desk.zoomOut')} onClick={() => api.zoomBy(0.8)} />
+            <span className="desk-toolbar__pct" aria-live="polite">
+              <span className="visually-hidden">{t('desk.zoomLabel')} </span>
+              {t('desk.zoomNow', { pct: desk.zoom })}
+            </span>
+            <Button size="sm" icon="+" aria-label={t('desk.zoomIn')} onClick={() => api.zoomBy(1.25)} />
+          </div>
+          <Button size="sm" onClick={() => api.fitAll()}>
+            {t('desk.fit')}
+          </Button>
+          {!folded && tiltButton}
+          {multiMat && (
+            <Select
+              label={t('desk.matSelect')}
+              hideLabel
+              className="desk-toolbar__phase"
+              value={desk.matSel}
+              placeholder={props.matSelectPlaceholder}
+              onChange={(e) => e.target.value && api.fitMat(e.target.value)}
+              options={layout.mats.map((m) => ({ value: m.id, label: t('desk.phaseOption', { name: props.matName(m), n: m.count }) }))}
+            />
+          )}
+          {!folded && resetButton}
         </span>
         <span className="desk-toolbar__group desk-toolbar__group--view">
-        <Button size="sm" variant="ghost" aria-pressed={desk.legendOpen} aria-expanded={desk.legendOpen} onClick={() => desk.setLegendOpen(!desk.legendOpen)}>
-          {t('desk.legend')}
-        </Button>
-        <span className="desk-toolbar__sizes" role="group" aria-label={t('desk.size')}>
-          {DESK_SIZES.map((s) => (
-            <Button key={s} size="sm" variant={current === s ? 'primary' : 'secondary'} aria-pressed={current === s} aria-label={t(`desk.size.${s}Label`)} title={t(`desk.size.${s}Label`)} disabled={fs} onClick={() => desk.setHeight(SIZE_VH[s])}>
-              {t(`desk.size.${s}`)}
-            </Button>
-          ))}
-        </span>
-        <Button size="sm" icon={fs ? '✕' : '⛶'} aria-pressed={fs} title={fs ? t('desk.fullscreenExit') : t('desk.fullscreen')} onClick={() => void desk.toggleFullscreen()}>
-          <span className="desk-fs-label">{fs ? t('desk.fullscreenExit') : t('desk.fullscreen')}</span>
-        </Button>
-        <Button size="sm" variant="ghost" icon="⚙" aria-label={t('desk.settings')} aria-expanded={desk.settingsOpen} onClick={() => desk.setSettingsOpen(!desk.settingsOpen)} />
-        {desk.compact && !fs && (
-          <Button size="sm" variant="ghost" aria-expanded onClick={() => desk.setOpenSmall(false)}>
-            {t('desk.hide')}
+          {!folded && legendButton}
+          {!folded && sizeButtons}
+          <Button size="sm" icon={fs ? '✕' : '⛶'} aria-pressed={fs} title={fs ? t('desk.fullscreenExit') : t('desk.fullscreen')} onClick={() => void desk.toggleFullscreen()}>
+            <span className="desk-fs-label">{fs ? t('desk.fullscreenExit') : t('desk.fullscreen')}</span>
           </Button>
-        )}
+          {!folded && (
+            <Button size="sm" variant="ghost" icon="⚙" aria-label={t('desk.settings')} aria-expanded={desk.settingsOpen} data-desk-fold="" onClick={() => desk.setSettingsOpen(!desk.settingsOpen)} />
+          )}
+          {desk.compact && !fs && (
+            <Button size="sm" variant="ghost" aria-expanded onClick={() => desk.setOpenSmall(false)}>
+              {t('desk.hide')}
+            </Button>
+          )}
+          {folded && (
+            <OverflowMenu className="desk-toolbar__more" label={t('desk.overflow')} aria-label={t('desk.overflowAria')} panelLabel={t('desk.overflowAria')} open={moreOpen} onOpenChange={setMoreOpen}>
+              {tiltButton}
+              {resetButton}
+              {legendButton}
+              <div className="omenu__row" data-keep-open="">
+                <span className="omenu__rowlabel" aria-hidden="true">
+                  {t('desk.size')}
+                </span>
+                {sizeButtons}
+              </div>
+              <Button size="sm" variant="ghost" icon="⚙" aria-expanded={desk.settingsOpen} onClick={() => desk.setSettingsOpen(!desk.settingsOpen)}>
+                {t('desk.settings')}
+              </Button>
+            </OverflowMenu>
+          )}
         </span>
       </div>
       {desk.settingsOpen && (

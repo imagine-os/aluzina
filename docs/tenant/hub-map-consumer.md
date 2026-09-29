@@ -27,7 +27,7 @@ URLs in `shots` are relative to `product.baseUrl`. Pick by device: phone / table
 
 ## 4. Embed as a role
 
-Substitute `embed.pattern` = `{baseUrl}#{route}?as={role}&lang={lang}&theme={theme}&dev=0&live=0` (`route` as in the map, `:id` segments resolve against the client's demo data; `role` an id of `roles[]`; `lang` es | en; `theme` light | dark) and load it in an iframe at the device's real size (phone 390 x 844, tablet 768 x 1024, desktop 1280 x 800, website 390 wide scrolling), scaled to fit. The page runs as that role's demo user without touching the viewer's own session. Create the iframe only on demand and remove it when closed.
+Substitute `embed.pattern` = `{baseUrl}#{route}?as={role}&lang={lang}&theme={theme}&dev=0&live=0` (`route` as in the map; for a page use `sampleRoute ?? route`, since a `:id` segment is a template and `sampleRoute` (additive since HOY 0.11.2) already opens a real record; `role` an id of `roles[]`; `lang` es | en; `theme` light | dark) and load it in an iframe at the device's real size (phone 390 x 844, tablet 768 x 1024, desktop 1280 x 800, website 390 wide scrolling), scaled to fit. The page runs as that role's demo user without touching the viewer's own session. Create the iframe only on demand and remove it when closed.
 
 ## 5. Checklist
 
