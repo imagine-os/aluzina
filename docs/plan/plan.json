@@ -1,6 +1,6 @@
 {
-  "version": "0.20.0",
-  "updatedAt": "2026-09-28",
+  "version": "0.20.1",
+  "updatedAt": "2026-09-29",
   "source": "docs/build-plan.md (steps 0-17, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
     "done",
@@ -2100,6 +2100,20 @@
       ],
       "dependsOn": [],
       "changelog": "0033"
+    },
+    {
+      "id": "dk-02",
+      "title": "W-04 desk people (prompt 0027, D-104): a seated role figure at a desk on every journey mat — phase -> role mapping as data with inferred flags, layered vector figures (one look per portal role), CSS 3D desk and pop-up planes, props per phase, tent nameplate, person drawer with an Open portal Placeholder, desk.focusPerson / desk.openPersonPortal",
+      "step": "17",
+      "status": "done",
+      "model": "Opus 5",
+      "codes": [
+        "W-04"
+      ],
+      "dependsOn": [
+        "dk-01"
+      ],
+      "changelog": "0034"
     }
   ]
 }

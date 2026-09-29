@@ -3,7 +3,7 @@
   "id": "aluzina",
   "name": { "en": "Aluzina", "es": "Aluzina" },
   "repo": "https://github.com/imagine-os/aluzina",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "generatedFrom": "8b0acf8",
   "spec": "docs/tenant/manifest.md",
   "identity": {
@@ -163,7 +163,7 @@
   },
   "docs": {
     "root": "docs/README.md",
-    "counters": { "prompts": 26, "changelog": 33, "decisions": 103, "qa": 7 },
+    "counters": { "prompts": 27, "changelog": 34, "decisions": 104, "qa": 7 },
     "pendingDir": "docs/changelog/_pending",
     "plan": "docs/plan/plan.json",
     "kanban": "docs/kanban.md",
@@ -187,8 +187,8 @@
     "bus": "apps/hub/src/actions/bus.ts",
     "global": "window.__aluzina.actions",
     "idPattern": "^[a-z][a-zA-Z0-9]*\\.[a-z][a-zA-Z0-9]*$",
-    "declared": 437,
-    "distinct": 416,
+    "declared": 439,
+    "distinct": 418,
     "browser": "D-09 /#/dev/actions",
     "exportFormat": "webmcp-json (D-09 export)",
     "mcpServer": null

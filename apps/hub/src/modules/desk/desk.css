@@ -784,3 +784,323 @@
   display: grid;
   gap: var(--space-1);
 }
+
+/* ---------- people (prompt 0027, changelog 0034, D-104): a seated role figure at a small desk per mat ---------- */
+
+.desk-page,
+.desk-drawer {
+  /* Station materials: a light birch desk, a charcoal chair, a rug of lighter felt. */
+  --pp-desk: color-mix(in srgb, var(--brand-gold-highlight) 46%, var(--metal-highlight));
+  --pp-desk-side: color-mix(in srgb, var(--brand-gold) 62%, var(--pp-desk));
+  --pp-rug: color-mix(in srgb, var(--desk-linen) 78%, var(--brand-silver));
+  --pp-chair: color-mix(in srgb, var(--brand-ink) 88%, var(--brand-periwinkle));
+  --pp-line: color-mix(in srgb, var(--brand-ink) 62%, transparent);
+  --pp-plate: var(--brand-ink);
+  --pp-plate-ink: var(--metal-highlight);
+  /* Skin tones: mixes of the brand's warm neutrals, from deep to light (no image, no likeness). */
+  --pp-skin-deep: color-mix(in srgb, var(--brand-gold) 58%, var(--brand-ink));
+  --pp-skin-medium: color-mix(in srgb, var(--brand-gold) 90%, var(--brand-ink));
+  --pp-skin-tan: color-mix(in srgb, var(--brand-gold-highlight) 62%, var(--brand-gold));
+  --pp-skin-light: color-mix(in srgb, var(--brand-gold-highlight) 70%, var(--metal-highlight));
+  /* The neutral look (a role with no portal role yet); the role looks below override it on the station. */
+  --pp-skin: var(--pp-skin-medium);
+  --pp-hair: var(--brand-ink);
+  --pp-jacket: var(--brand-silver);
+  --pp-jacket-2: color-mix(in srgb, var(--brand-silver) 70%, var(--brand-ink));
+  --pp-shirt: var(--metal-highlight);
+  --pp-accent: var(--brand-aqua);
+}
+
+:root[data-theme="dark"] :is(.desk-page, .desk-drawer),
+[data-theme="dark"] :is(.desk-page, .desk-drawer) {
+  --pp-desk: color-mix(in srgb, var(--brand-gold) 70%, var(--brand-gold-highlight));
+  --pp-desk-side: color-mix(in srgb, var(--brand-gold) 60%, var(--brand-ink));
+  --pp-rug: color-mix(in srgb, var(--desk-linen) 80%, var(--brand-periwinkle));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) :is(.desk-page, .desk-drawer) {
+    --pp-desk: color-mix(in srgb, var(--brand-gold) 70%, var(--brand-gold-highlight));
+    --pp-desk-side: color-mix(in srgb, var(--brand-gold) 60%, var(--brand-ink));
+    --pp-rug: color-mix(in srgb, var(--desk-linen) 80%, var(--brand-periwinkle));
+  }
+}
+
+/* One look per portal role: the same role looks the same on every mat. */
+.desk-person--founder {
+  --pp-skin: var(--pp-skin-tan);
+  --pp-hair: var(--brand-ink);
+  --pp-jacket: var(--brand-gold);
+  --pp-jacket-2: color-mix(in srgb, var(--brand-gold) 82%, var(--brand-ink));
+  --pp-shirt: var(--brand-ink);
+  --pp-accent: var(--brand-silver);
+}
+
+.desk-person--studio {
+  --pp-skin: var(--pp-skin-deep);
+  --pp-hair: color-mix(in srgb, var(--brand-ink) 86%, var(--brand-gold));
+  --pp-jacket: var(--brand-periwinkle);
+  --pp-jacket-2: color-mix(in srgb, var(--brand-periwinkle) 80%, var(--brand-ink));
+  --pp-shirt: var(--metal-highlight);
+  --pp-accent: var(--brand-aqua);
+}
+
+.desk-person--ops {
+  --pp-skin: var(--pp-skin-medium);
+  --pp-hair: color-mix(in srgb, var(--brand-ink) 70%, var(--brand-gold));
+  --pp-jacket: color-mix(in srgb, var(--brand-ink) 66%, var(--brand-periwinkle));
+  --pp-jacket-2: color-mix(in srgb, var(--brand-ink) 78%, var(--brand-periwinkle));
+  --pp-shirt: var(--metal-highlight);
+  --pp-accent: var(--brand-aqua);
+}
+
+.desk-person--brand {
+  --pp-skin: var(--pp-skin-light);
+  --pp-hair: color-mix(in srgb, var(--brand-gold) 70%, var(--brand-ink));
+  --pp-jacket: color-mix(in srgb, var(--brand-lime) 72%, var(--brand-silver));
+  --pp-jacket-2: color-mix(in srgb, var(--brand-lime) 58%, var(--brand-ink));
+  --pp-shirt: color-mix(in srgb, var(--brand-lime) 56%, var(--brand-ink));
+  --pp-accent: var(--brand-periwinkle);
+}
+
+/* The station: a button the size of its 5 x 3 squares (the hit area), holding flat and pop-up layers. */
+.desk-person {
+  --t: 22px;
+  --pp-lean: -26deg;
+  position: absolute;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.desk-person:focus-visible {
+  outline: none;
+}
+
+.desk-person > span,
+.desk-person__desk > span {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.desk-person__rug {
+  inset: 4px 4px 0;
+  border-radius: 12px;
+  background: var(--desk-fibre), var(--pp-rug);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--brand-black) 45%, transparent),
+    0 3px 8px var(--desk-shadow);
+}
+
+.desk-person:hover .desk-person__rug,
+.desk-person:focus-visible .desk-person__rug,
+.desk-person.is-selected .desk-person__rug {
+  outline: calc(var(--focus-ring) / var(--desk-zoom, 1)) solid var(--desk-focus);
+  outline-offset: calc(2px / var(--desk-zoom, 1));
+}
+
+.desk-person:hover:not(:focus-visible):not(.is-selected) .desk-person__rug {
+  outline-width: calc(1.5px / var(--desk-zoom, 1));
+  outline-color: var(--desk-felt-soft);
+}
+
+.desk-person__desk {
+  transform-style: preserve-3d;
+}
+
+.desk-person__shadow {
+  inset: 0;
+  border-radius: 3px;
+  box-shadow: 0 10px 16px var(--desk-shadow);
+}
+
+.desk-person__top {
+  inset: 0;
+  overflow: hidden;
+  contain: layout paint;
+  border-radius: 3px;
+  transform: translateZ(var(--t));
+  background:
+    var(--desk-grain),
+    var(--desk-woodgrain),
+    var(--pp-desk);
+  background-size: 96px 96px, 512px 512px, auto;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pp-desk-side) 60%, transparent);
+}
+
+.desk-person__desk > .desk-side {
+  background: linear-gradient(to bottom, var(--pp-desk-side), color-mix(in srgb, var(--pp-desk-side) 72%, var(--brand-ink)));
+}
+
+/* Pop-up planes: stand on their bottom edge, lean back so they face the tilted camera, still legible flat. */
+.desk-person__stand {
+  transform-origin: 50% 100%;
+  transform: translateZ(var(--t)) rotateX(var(--pp-lean));
+  backface-visibility: hidden;
+}
+
+.desk-person__stand--chair,
+.desk-person__stand--figure {
+  filter: drop-shadow(0 1px 0 color-mix(in srgb, var(--brand-black) 30%, transparent));
+}
+
+.desk-plate {
+  --pp-lean: -40deg;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--metal-highlight) 14%, transparent), transparent 60%),
+    var(--pp-plate);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-silver) 50%, transparent);
+  color: var(--pp-plate-ink);
+  text-align: center;
+  overflow: hidden;
+}
+
+.desk-plate__text,
+.desk-plate__text > span {
+  display: block;
+}
+
+.desk-plate__name {
+  font-size: 20px;
+  font-weight: var(--weight-bold);
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.desk-plate__role {
+  margin-top: 1px;
+  font-size: 10.5px;
+  line-height: 1.12;
+  color: color-mix(in srgb, var(--pp-plate-ink) 78%, transparent);
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* SVG paint: every fill is a token (the look custom properties above). */
+.pp { display: block; overflow: visible; }
+.pp-line { stroke: var(--pp-line); stroke-width: 0.8; stroke-linejoin: round; }
+.pp-skin { fill: var(--pp-skin); }
+.pp-hair { fill: var(--pp-hair); }
+.pp-jacket { fill: var(--pp-jacket); }
+.pp-jacket-2 { fill: var(--pp-jacket-2); }
+.pp-shirt { fill: var(--pp-shirt); }
+.pp-shirt-2 { fill: color-mix(in srgb, var(--pp-shirt) 86%, var(--brand-ink)); }
+.pp-accent { fill: var(--pp-accent); }
+.pp-accent-line { fill: none; stroke: var(--pp-accent); stroke-width: 1.4; stroke-linecap: round; }
+.pp-chair { fill: var(--pp-chair); }
+.pp-chair-hi { fill: color-mix(in srgb, var(--metal-highlight) 16%, transparent); }
+.pp-metal { fill: color-mix(in srgb, var(--brand-silver) 80%, var(--metal-highlight)); }
+.pp-logo { fill: var(--brand-aqua); opacity: 0.85; }
+.pp-ink { fill: var(--brand-ink); }
+.pp-screen { fill: color-mix(in srgb, var(--brand-periwinkle) 60%, var(--brand-ink)); }
+.pp-paper { fill: var(--desk-paper); }
+.pp-rule { fill: var(--desk-rule); }
+.pp-tick { fill: none; stroke: var(--brand-ink); stroke-width: 0.8; }
+.pp-kraft { fill: var(--desk-kraft); }
+.pp-label { fill: var(--desk-paper); }
+.pp-tape { fill: color-mix(in srgb, var(--brand-lime) 80%, var(--brand-gold-highlight)); }
+.pp-hat { fill: var(--brand-lime); }
+.pp-hat-2 { fill: color-mix(in srgb, var(--brand-lime) 72%, var(--brand-ink)); }
+.pp-sign { fill: none; stroke: var(--brand-ink); stroke-width: 1; stroke-linecap: round; }
+.pp-key { fill: color-mix(in srgb, var(--brand-silver) 70%, var(--brand-ink)); }
+.pp-blue { fill: color-mix(in srgb, var(--brand-periwinkle) 70%, var(--metal-highlight)); }
+.pp-blue-line { fill: color-mix(in srgb, var(--brand-ink) 18%, transparent); }
+.pp-blue-ink { fill: none; stroke: color-mix(in srgb, var(--brand-ink) 70%, var(--brand-periwinkle)); stroke-width: 1.2; }
+.pp-blue-roll { fill: color-mix(in srgb, var(--brand-periwinkle) 86%, var(--brand-ink)); }
+.pp-sketch { fill: none; stroke: color-mix(in srgb, var(--brand-ink) 70%, transparent); stroke-width: 0.9; stroke-linecap: round; stroke-linejoin: round; }
+.pp-s1 { fill: var(--brand-gold); }
+.pp-s2 { fill: var(--brand-periwinkle); }
+.pp-s3 { fill: var(--brand-lime); }
+.pp-s4 { fill: var(--brand-aqua); }
+.pp-ok { fill: none; stroke: var(--color-success); stroke-width: 1.4; }
+.pp-ok-mark { fill: none; stroke: var(--color-success); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.pp-site { fill: color-mix(in srgb, var(--brand-gold) 70%, var(--brand-ink)); }
+.pp-ring { fill: none; stroke: var(--brand-silver); stroke-width: 1.6; }
+.pp-star { fill: color-mix(in srgb, var(--brand-lime) 60%, var(--brand-gold)); }
+.pp-contact { fill: color-mix(in srgb, var(--brand-black) 22%, transparent); }
+.pp-p1 { fill: var(--brand-gold); }
+.pp-p2 { fill: var(--brand-lime); }
+.pp-p3 { fill: var(--brand-periwinkle); }
+.pp-cup { fill: color-mix(in srgb, var(--brand-ink) 84%, var(--brand-silver)); }
+.pp-band { fill: var(--brand-aqua); }
+.pp-render { fill: color-mix(in srgb, var(--brand-gold) 60%, var(--brand-periwinkle)); }
+.pp-easel { fill: none; stroke: color-mix(in srgb, var(--brand-ink) 80%, var(--brand-gold)); stroke-width: 2; stroke-linecap: round; }
+.pp-handle { fill: none; stroke: var(--desk-paper); stroke-width: 3; }
+.pp-cup-w { fill: var(--desk-paper); }
+
+/* The drawer's portrait: the same layers, flat and large. */
+.desk-portrait {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 22rem);
+  aspect-ratio: 352 / 300;
+  border-radius: var(--radius-md);
+  background: var(--desk-fibre), var(--pp-rug);
+  overflow: hidden;
+}
+
+.desk-portrait > span {
+  position: absolute;
+  display: block;
+}
+
+.desk-portrait__chair,
+.desk-portrait__figure {
+  left: 12.5%;
+  width: 75%;
+  aspect-ratio: 120 / 100;
+}
+
+.desk-portrait__chair {
+  aspect-ratio: 120 / 72;
+}
+
+.desk-portrait__chair { bottom: calc(26% + 4%); }
+.desk-portrait__figure { bottom: 26%; }
+
+.desk-portrait__prop {
+  left: 6%;
+  bottom: 26%;
+  max-width: 34%;
+}
+
+.desk-portrait__desk {
+  left: 4%;
+  right: 4%;
+  bottom: 4%;
+  height: 24%;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: var(--desk-grain), var(--desk-woodgrain), var(--pp-desk);
+  background-size: 96px 96px, 512px 512px, auto;
+  box-shadow: inset 0 -0.5rem 0 var(--pp-desk-side);
+}
+
+.desk-portrait__plate {
+  width: 60%;
+  padding: 0.375rem 0.5rem;
+}
+
+.desk-portrait .desk-plate__name { font-size: 1.125rem; }
+.desk-portrait .desk-plate__role { font-size: 0.8125rem; }
+
+.desk-drawer__why {
+  margin: 0;
+  color: var(--color-text-muted);
+}

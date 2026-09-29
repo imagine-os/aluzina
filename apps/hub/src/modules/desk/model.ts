@@ -43,6 +43,9 @@ export const MAT_PAD = SQ / 2;
 export const SUB_HEAD = 24;
 /** Gap between mats and around the world. */
 export const MAT_GAP = SQ;
+/** The person's station (desk, chair, figure) on the mat's near edge, below the sub-mats: 5 x 3 squares (D-104). */
+export const PERSON_COLS = 5;
+export const PERSON_ROWS = 3;
 
 /** The ten phases of the client journey (`CLIENT_JOURNEY`, p. 2); one mat each. */
 export type JourneyId = 'lead' | 'diagnosis' | 'brief' | 'analysis' | 'concept' | 'development' | 'validation' | 'delivery' | 'closure' | 'follow-up';
@@ -125,6 +128,8 @@ export interface Mat {
   h: number;
   subs: SubMat[];
   count: number;
+  /** The person's station, relative to the mat (world px); only on mats that have a person (`deskPeople.ts`). */
+  person?: { x: number; y: number; w: number; h: number };
 }
 
 export interface DeskLayout {
@@ -410,8 +415,12 @@ function subCols(items: DeskItem[]): number {
   return Math.min(MAT_COLS, cols);
 }
 
-/** Lays out every item. `perRow` mats per row (5 landscape, 3 squarish, 2 tall phone stages). */
-export function layoutDesk(items: DeskItem[], perRow: number): DeskLayout {
+/**
+ * Lays out every item. `perRow` mats per row (5 landscape, 3 squarish, 2 tall phone stages). `people` are the phases
+ * that get a person's station: it takes its own rows on the mat's near edge, after the sub-mats, so it never shares a
+ * square with an object (D-104).
+ */
+export function layoutDesk(items: DeskItem[], perRow: number, people: ReadonlySet<string> = new Set()): DeskLayout {
   const matW = MAT_COLS * SQ + 2 * MAT_PAD;
   const mats: Mat[] = CLIENT_JOURNEY.map((step, index) => {
     const mine = items.filter((i) => i.phase === step.id);
@@ -444,8 +453,13 @@ export function layoutDesk(items: DeskItem[], perRow: number): DeskLayout {
       shelfX = x - MAT_PAD + w;
       shelfH = Math.max(shelfH, h);
     }
-    const h = shelfY + shelfH + MAT_PAD;
-    return { id: step.id as JourneyId, index, label: step.label, x: 0, y: 0, w: matW, h, subs, count: mine.length };
+    let h = shelfY + shelfH + MAT_PAD;
+    let person: Mat['person'];
+    if (people.has(step.id)) {
+      person = { x: MAT_PAD + Math.floor((MAT_COLS - PERSON_COLS) / 2) * SQ, y: h, w: PERSON_COLS * SQ, h: PERSON_ROWS * SQ };
+      h += PERSON_ROWS * SQ + MAT_PAD / 2;
+    }
+    return { id: step.id as JourneyId, index, label: step.label, x: 0, y: 0, w: matW, h, subs, count: mine.length, person };
   });
 
   // Rows of mats in journey order, top-aligned; each mat is as long as its content (a phase with little on it is a

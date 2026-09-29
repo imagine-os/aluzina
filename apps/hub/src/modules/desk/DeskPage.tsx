@@ -8,10 +8,13 @@ import { KeyValue } from '../../components/molecule/KeyValue/KeyValue';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { usePrefersReducedMotion } from '../../design/env';
+import { coreStrings } from '../../i18n/core';
 import { useT } from '../../i18n/I18nProvider';
 import type { Surface } from '../../specs/PageSpec';
 import { pick } from '../../tenant/domain';
 import { DeskObject, Preview } from './DeskObject';
+import { DeskPersonStation, PersonPortrait } from './DeskPerson';
+import { buildPeople, type DeskPerson } from './deskPeople';
 import { GEOMETRY, buildItems, findItem, findPhase, layoutDesk, type DeskItem, type Mat, type PlacedItem } from './model';
 import { DESK_CODE } from './specs';
 import './desk.css';
@@ -54,6 +57,8 @@ export function DeskPage({ surface }: { surface: Surface }) {
   const [tilt, setTilt] = useState(true);
   const tiltRef = useRef(tilt);
   const [selected, setSelected] = useState<string | null>(null);
+  /** The phase whose person's drawer is open (people and objects share the one drawer). */
+  const [selectedPerson, setSelectedPerson] = useState<string | null>(null);
   const [phase, setPhase] = useState('');
   const anim = useRef(0);
   /** True once the person moved the camera; until then the desk stays fitted to the stage. */
@@ -63,10 +68,13 @@ export function DeskPage({ surface }: { surface: Surface }) {
   reducedRef.current = reduced;
 
   const items = useMemo(() => buildItems(), []);
+  const people = useMemo(() => buildPeople(), []);
+  const personByPhase = useMemo(() => new Map(people.map((p) => [p.phase as string, p])), [people]);
+  const peoplePhases = useMemo(() => new Set(people.map((p) => p.phase as string)), [people]);
   // Mats per row from the stage's shape, so fit-to-screen stays readable: 5 landscape, 3 squarish, 2 tall phones.
   const aspect = size.w > 0 && size.h > 0 ? size.w / size.h : 2;
   const perRow = aspect < 0.7 ? 2 : aspect < 1.25 ? 3 : 5;
-  const layout = useMemo(() => layoutDesk(items, perRow), [items, perRow]);
+  const layout = useMemo(() => layoutDesk(items, perRow, peoplePhases), [items, perRow, peoplePhases]);
   const layoutRef = useRef(layout);
   layoutRef.current = layout;
   const byId = useMemo(() => new Map(layout.items.map((i) => [i.id, i])), [layout]);
@@ -238,10 +246,28 @@ export function DeskPage({ surface }: { surface: Surface }) {
     flyTo({ cx, cy, z });
   }, [flyTo]);
 
+  /** Flies to a person's station: 'open' shows it beside the drawer at a zoom where the nameplate reads. */
+  const flyToPerson = useCallback((phaseId: string, mode: 'focus' | 'open') => {
+    const m = layoutRef.current.mats.find((x) => x.id === phaseId);
+    if (!m?.person) return undefined;
+    const { w, h } = sizeRef.current;
+    const readable = clampZ(Math.min((0.5 * Math.max(200, h)) / m.person.h, (0.4 * Math.max(200, w)) / m.person.w));
+    const z = mode === 'open' ? readable : cam.current.z < readable * 0.35 ? readable * 0.6 : cam.current.z;
+    let cx = m.x + m.person.x + m.person.w / 2;
+    let cy = m.y + m.person.y + m.person.h / 2;
+    if (mode === 'open') {
+      if (w >= 768) cx += Math.min(w / 4, 224) / z;
+      else cy += (h / 4) / z;
+    }
+    flyTo({ cx, cy, z });
+    return m;
+  }, [flyTo]);
+
   const reset = useCallback(() => {
     tiltRef.current = true;
     setTilt(true);
     setSelected(null);
+    setSelectedPerson(null);
     setPhase('');
     return fitAll();
   }, [fitAll]);
@@ -255,9 +281,22 @@ export function DeskPage({ surface }: { surface: Surface }) {
   const openItem = useCallback((id: string) => {
     const item = layoutRef.current.items.find((i) => i.id === id);
     if (!item) return;
+    setSelectedPerson(null);
     setSelected(id);
     flyToItem(item, 'open');
   }, [flyToItem]);
+
+  const openPerson = useCallback((phaseId: string) => {
+    const m = flyToPerson(phaseId, 'open');
+    if (!m) return undefined;
+    setSelected(null);
+    setSelectedPerson(phaseId);
+    return m;
+  }, [flyToPerson]);
+
+  const onFocusPerson = useCallback((phaseId: string, e: FocusEvent<HTMLButtonElement>) => {
+    if (e.currentTarget.matches(':focus-visible')) flyToPerson(phaseId, 'focus');
+  }, [flyToPerson]);
 
   const onFocusItem = useCallback((id: string, e: FocusEvent<HTMLButtonElement>) => {
     // Keyboard (and restored) focus flies the object into view; a pointer press does not move the camera.
@@ -436,6 +475,18 @@ export function DeskPage({ surface }: { surface: Surface }) {
   const phaseName = (m: Mat) => `${String(m.index + 1).padStart(2, '0')} ${pick(m.label, lang)}`;
   const itemLabel = (i: DeskItem) => `${kindLabel(i.kind)}: ${pick(i.title, lang)}${i.code ? ` (${i.code})` : ''}`;
   const moreLabel = useCallback((n: number) => t('desk.more', { n }), [t]);
+  const roleName = (p: DeskPerson) => pick(p.role.playbookRole, lang);
+  const personLabel = (p: DeskPerson, m: Mat) => t('desk.person.label', { role: roleName(p), name: p.firstName ? ` (${p.firstName})` : '', phase: phaseName(m) });
+  /** The portal a role works in, in the page language, or in English for the action answers (like `desk.openItem`). */
+  const portalOf = useCallback(
+    (p: DeskPerson, en = false) => {
+      if (!p.portal) return en ? 'no portal role yet' : t('desk.person.noPortalRole');
+      const entry = coreStrings[p.portal.portalKey];
+      const name = en ? (typeof entry === 'string' ? entry : entry?.en ?? p.portal.portalKey) : t(p.portal.portalKey);
+      return `${name} (#${p.portal.path})`;
+    },
+    [t],
+  );
   const whereOf = useCallback(
     (i: DeskItem) => {
       const r = routes.find((x) => x.path === i.openAt.path);
@@ -467,6 +518,19 @@ export function DeskPage({ surface }: { surface: Surface }) {
       openItem(item.id);
       return `showing the ${item.kind} ${item.title.en} (${item.id}) on the ${item.phase} mat`;
     },
+    'desk.focusPerson': ({ phase: q }) => {
+      const id = findPhase(String(q ?? ''));
+      const p = id && personByPhase.get(id);
+      const m = p && openPerson(p.phase);
+      if (!p || !m) return `no person on "${String(q ?? '')}" (1-10 or ${[...personByPhase.keys()].join(', ')})`;
+      return `showing the ${p.role.playbookRole.en}${p.firstName ? ` (${p.firstName})` : ''} at the ${m.label.en} mat${p.inferred ? ' (inferred owner)' : ''}`;
+    },
+    'desk.openPersonPortal': ({ phase: q }) => {
+      const id = findPhase(String(q ?? ''));
+      const p = id && personByPhase.get(id);
+      if (!p) return `no person on "${String(q ?? '')}"`;
+      return `not wired yet: ${portalOf(p, true)}`;
+    },
     'desk.openItem': ({ item: q }) => {
       const found = findItem(layoutRef.current.items, String(q ?? ''));
       if (!found) return `no object "${String(q ?? '')}" on the desk`;
@@ -475,6 +539,7 @@ export function DeskPage({ surface }: { surface: Surface }) {
   });
 
   const selectedItem = selected ? byId.get(selected) : undefined;
+  const selectedPersonData = selectedPerson ? personByPhase.get(selectedPerson) : undefined;
   const drawerSide = size.w >= 768 ? 'right' : 'bottom';
   const kv = (i: PlacedItem) => {
     const m = matById(i.phase);
@@ -504,13 +569,50 @@ export function DeskPage({ surface }: { surface: Surface }) {
     );
   };
 
+  /** The person's drawer: portrait, role facts, responsibilities, why this phase, and every phase the role owns. */
+  const personDrawer = (p: DeskPerson) => {
+    const owned = people.filter((x) => x.role.id === p.role.id);
+    const m = matById(p.phase);
+    return (
+      <div className="desk-drawer">
+        <PersonPortrait person={p} lang={lang} />
+        <KeyValue
+          columns={1}
+          items={[
+            { key: t('desk.person.role'), value: roleName(p) },
+            { key: t('desk.person.portalRole'), value: p.roleId ? t(`core.role.${p.roleId}`) : t('desk.person.noPortalRole') },
+            ...(p.firstName ? [{ key: t('desk.person.person'), value: p.firstName }] : []),
+            { key: t('desk.drawer.phase'), value: m ? phaseName(m) : p.phase },
+            { key: t('desk.person.basis'), value: t(`desk.person.basis.${p.basis}`) },
+          ]}
+        />
+        <h3 className="desk-drawer__h">{t('desk.person.why')}</h3>
+        <p className="desk-drawer__why">{pick(p.rationale, lang)}</p>
+        <h3 className="desk-drawer__h">{t('desk.person.responsibilities')}</h3>
+        <p className="desk-drawer__why">{pick(p.role.note, lang)}</p>
+        <h3 className="desk-drawer__h">{t('desk.person.phases', { n: owned.length })}</h3>
+        <ol className="desk-drawer__list">
+          {owned.map((x) => {
+            const xm = matById(x.phase);
+            return (
+              <li key={x.phase}>
+                {xm ? phaseName(xm) : x.phase}
+                {x.inferred ? ` (${t('desk.person.inferred')})` : ''}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    );
+  };
+
   const home = `/${surface}`;
   return (
     <div className="desk-page">
       <PageHeader
         code={DESK_CODE}
         title={t('desk.title')}
-        subtitle={t('desk.subtitle', { items: layout.items.length, mats: layout.mats.length })}
+        subtitle={t('desk.subtitle', { items: layout.items.length, people: layout.mats.filter((m) => m.person).length, mats: layout.mats.length })}
         breadcrumb={[{ label: t(`core.portal.${surface}`), to: surface === 'dev' ? '/dev/components' : home }, { label: t('desk.title') }]}
       />
 
@@ -600,6 +702,18 @@ export function DeskPage({ surface }: { surface: Surface }) {
                     ))}
                   </div>
                 ))}
+                {m.person && personByPhase.get(m.id) && (
+                  <DeskPersonStation
+                    person={personByPhase.get(m.id)!}
+                    left={m.person.x}
+                    top={m.person.y}
+                    lang={lang}
+                    label={personLabel(personByPhase.get(m.id)!, m)}
+                    selected={selectedPerson === m.id}
+                    onActivate={openPerson}
+                    onFocusPerson={onFocusPerson}
+                  />
+                )}
               </section>
             ))}
             </div>
@@ -612,20 +726,31 @@ export function DeskPage({ surface }: { surface: Surface }) {
       </p>
 
       <Drawer
-        open={Boolean(selectedItem)}
-        onClose={() => setSelected(null)}
+        open={Boolean(selectedItem ?? selectedPersonData)}
+        onClose={() => {
+          setSelected(null);
+          setSelectedPerson(null);
+        }}
         side={drawerSide}
-        title={selectedItem ? pick(selectedItem.title, lang) : ''}
+        title={selectedItem ? pick(selectedItem.title, lang) : selectedPersonData ? roleName(selectedPersonData) : ''}
         footer={
+          selectedPersonData && !selectedItem ? (
+            <Placeholder what={t('desk.person.openPortalWhat', { where: portalOf(selectedPersonData) })}>
+              <Button variant="primary" icon="↗">
+                {t('desk.person.openPortal')}
+              </Button>
+            </Placeholder>
+          ) : (
           selectedItem && (
             <Placeholder what={t('desk.drawer.openWhat', { where: whereOf(selectedItem) })}>
               <Button variant="primary" icon="↗">
                 {t('desk.drawer.open')}
               </Button>
             </Placeholder>
-          )
+          ))
         }
       >
+        {selectedPersonData && !selectedItem && personDrawer(selectedPersonData)}
         {selectedItem && (
           <div className="desk-drawer">
             {preview(selectedItem)}

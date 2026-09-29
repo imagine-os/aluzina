@@ -14,6 +14,8 @@ export const deskActions = (permission: string): ActionDef[] => [
   { id: 'desk.focusPhase', label: 'Go to a phase', intent: 'show the {phase} mat', permission, params: { phase: 'enum:lead|diagnosis|brief|analysis|concept|development|validation|delivery|closure|follow-up' } },
   { id: 'desk.focusItem', label: 'Look at an object', intent: 'show me the {item}', permission, params: { item: 'id' } },
   { id: 'desk.openItem', label: 'Open the object’s page', intent: 'open the page of the {item}', permission, params: { item: 'id' } },
+  { id: 'desk.focusPerson', label: 'Look at a phase’s person', intent: 'show me who owns the {phase} phase', permission, params: { phase: 'string' } },
+  { id: 'desk.openPersonPortal', label: 'Open the person’s portal', intent: 'open the portal of the {phase} owner', permission, params: { phase: 'string' } },
 ];
 
 /** W-04 on the four portals and on dev; the surface only changes the shell, guard and breadcrumb (like W-01, D-021). */
@@ -21,16 +23,17 @@ export function deskSpec(surface: Surface, permission = 'projects.read'): PageSp
   return defineSpec({
     code: 'W-04',
     name: 'Method desk',
-    purpose: 'The whole method at a glance as physical objects on a desk: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103).',
+    purpose: 'The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103).',
     surface,
     navGroup: surface === 'dev' ? 'developer' : 'projects',
     layout: [
-      'PageHeader (W-04, object and mat counts)',
+      'PageHeader (W-04, object, people and mat counts)',
       'Toolbar: zoom − / percentage (aria-live) / zoom +, Fit, Tilt toggle, phase Select, Reset; hint line',
       'Stage (perspective) > camera (rotateX 22° or flat) > world (translate + scale): ten mats in reading order, 5 per row on landscape stages, 3 on squarish ones, 2 on tall phones',
       'Mat: label button (number, phase, object count) + sub-mats with a label strip and a chess-square grid (1 square = 64 world px)',
       'Objects: 1x1 or 2x1 squares, CSS 3D thickness (top face + side faces or stacked discs), real-content preview on the top face',
-      'Drawer: large preview, kind / phase / group / source / code, full contents list, Open (Placeholder)',
+      'Person station on each mat\'s near edge (5 x 3 squares, below the sub-mats): rug, CSS 3D desk, chair, seated role figure, phase props, tent nameplate (prompt 0027, D-104)',
+      'Drawer: large preview, kind / phase / group / source / code, full contents list, Open (Placeholder); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (Placeholder)',
     ],
     dataTables: [],
     roles: ['founder', 'ops', 'studio', 'brand', 'dev'],
@@ -41,6 +44,7 @@ export function deskSpec(surface: Surface, permission = 'projects.read'): PageSp
       'Inputs: wheel zooms about the cursor (ctrl + wheel = trackpad pinch), shift + wheel pans; pointer drag on the desk pans (mouse, touch, pen), two-finger pinch zooms; keys + / − zoom, arrows pan, 0 resets, F fits; Tab walks mat labels then objects and keyboard focus flies the object into view.',
       'Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open is a Placeholder: `desk.openItem` answers "not wired yet: <page>" with the code, name and path of the page that will open it (D-047).',
       'Tilt is a toggle (22° / flat top-down); prefers-reduced-motion removes the camera animations (moves are instant) and the tilt transition.',
+      'People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat\'s objects in the Tab order, activating it flies to it and opens the person drawer; `desk.openPersonPortal` answers "not wired yet: <portal> (#<path>)" (D-047).',
       'Textures are procedural: SVG feTurbulence noise as data-URI layers over token colours for the felt mats, linen sub-mats, paper grain and the desk; no images, no dependencies.',
     ],
     components: ['PageHeader', 'Button', 'Select', 'Drawer', 'KeyValue', 'Placeholder'],
