@@ -2273,6 +2273,21 @@
       "changelog": "0040"
     },
     {
+      "id": "ch-05",
+      "title": "Client hub polish (changelog 0042, D-115): lens-aware subtitle, device-true standalone lens, sub-mats from the map's page groups (HOY 0.11.1), compact gig strip, phone header, ES pass, live frame checked; QA 0010",
+      "step": "18",
+      "status": "done",
+      "model": "Opus 5.5",
+      "codes": [
+        "W-05",
+        "D-16"
+      ],
+      "dependsOn": [
+        "ch-02"
+      ],
+      "changelog": "0042"
+    },
+    {
       "id": "ch-03",
       "title": "Between Gigs consumes hoy's hub map with its own lens (docs/tenant/hub-map-consumer.md checklist) once its repo is reachable",
       "step": "18",

@@ -24,7 +24,7 @@ import { pick } from '../../tenant/domain';
 import { useHubMap } from './hubMap.load';
 import { HUB_LENS_IDS, type Bi, type HubDevice, type HubLensId, type HubMap, type HubRole } from './hubMap.types';
 import { buildLens, toolsDefault, type HubEntry, type LensDesk } from './lenses';
-import { clientHub } from './registry';
+import { clientHub, withLensCopy } from './registry';
 import { HUB_CODE } from './specs';
 import './clienthub.css';
 
@@ -130,7 +130,7 @@ export function ClientHubPage({ surface, clientId }: { surface: Surface; clientI
   const [params, setParams] = useSearchParams();
   const hub = clientHub(clientId);
   const hm = useHubMap(clientId);
-  const map = hm.map;
+  const map = useMemo(() => withLensCopy(hm.map, hub), [hm.map, hub]);
   const b = (x: Bi | undefined) => (x ? x[lang] ?? x.en : '');
 
   // ---------------------------------------------------------------- view state in the hash query
@@ -243,6 +243,8 @@ export function ClientHubPage({ surface, clientId }: { surface: Surface; clientI
   const name = map ? b(map.product.name) : clientId.toUpperCase();
   const client = hub?.name ?? clientId.toUpperCase();
   const pages = map?.pages.length ?? 0;
+  /** "one mat" / "8 mats" (EN), "un tapete" / "8 tapetes" (ES). */
+  const matsPhrase = (n: number) => (n === 1 ? t('clienthub.mats.one') : t('clienthub.mats.other', { n }));
 
   // ---------------------------------------------------------------- selection
   const selectedItem = selected ? byId.get(selected) : undefined;
@@ -379,13 +381,16 @@ export function ClientHubPage({ surface, clientId }: { surface: Surface; clientI
         {wordmark ? <img className="ch-wordmark" src={wordmark} alt={t('clienthub.wordmark', { name })} onError={() => setWordmarkOk(false)} /> : <span className="ch-name">{name}</span>}
         {map && <span className="ch-version">{t('clienthub.version', { version: map.product.version })}</span>}
         <Button size="sm" variant="ghost" icon="↗" title={t('clienthub.clientWhat')} onClick={() => navigate(projectPath)}>
-          {t('clienthub.client', { project: hub?.projectId ?? '' })}
+          {/* Phones: the short label keeps the wordmark, the version and the project link on one line (changelog 0041). */}
+          <span className="ch-wide">{t('clienthub.client', { project: hub?.projectId ?? '' })}</span>
+          <span className="ch-narrow">{t('clienthub.clientShort', { project: hub?.projectId ?? '' })}</span>
         </Button>
       </div>
       <div className="ch-strip__map">
         {mapPill}
-        <Button size="sm" variant="ghost" icon="↻" onClick={() => void hm.reload().then((r) => toast(t('clienthub.map.reloaded', { result: r })))}>
-          {t('clienthub.map.reload')}
+        <Button size="sm" variant="ghost" icon="↻" aria-label={t('clienthub.map.reload')} title={t('clienthub.map.reload')} onClick={() => void hm.reload().then((r) => toast(t('clienthub.map.reloaded', { result: r })))}>
+          {/* A narrow strip keeps the icon (44 px, named) so the pill and the button share one line (changelog 0041). */}
+          <span className="ch-wide-label">{t('clienthub.map.reload')}</span>
         </Button>
       </div>
       <div className="ch-strip__lens">
@@ -410,25 +415,27 @@ export function ClientHubPage({ surface, clientId }: { surface: Surface; clientI
   const framing = (
     <div className="ch-framing">
       {hint && (
-        <p className="ch-framing__text">
-          <strong>{b(hint.title)}.</strong> {b(hint.framing)}
-        </p>
+        <div className="ch-framing__text">
+          <p>
+            <strong>{b(hint.title)}.</strong> {b(hint.framing)}
+          </p>
+          {map && lens === 'between-gigs' && <p className="ch-muted ch-tagline">{b(map.product.tagline)}</p>}
+        </div>
       )}
       {hm.source === 'snapshot' && hm.liveError && <p className="ch-muted">{t('clienthub.map.why', { why: hm.liveError })}</p>}
       {map && lens === 'between-gigs' && (
+        // One compact strip beside the framing (changelog 0041): the desk stays within the first screen at 1280.
         <Card
           className="ch-gig"
+          padding="sm"
           title={name}
-          subtitle={`${t('clienthub.gig.kicker')} · ${t('clienthub.version', { version: map.product.version })}`}
+          subtitle={`${t('clienthub.gig.kicker')} · ${t('clienthub.version', { version: map.product.version })} · ${t('clienthub.gig.counts', { experiences: map.experiences.length, pages: map.pages.length, tools: map.tools.length })}`}
           actions={
-            <Button size="sm" variant="secondary" icon="↗" href={`${map.product.baseUrl}#${map.product.hubRoute}`} external>
-              {t('clienthub.gig.open', { name })}
+            <Button size="sm" variant="secondary" icon="↗" href={`${map.product.baseUrl}#${map.product.hubRoute}`} external aria-label={t('clienthub.gig.open', { name })} title={t('clienthub.gig.open', { name })}>
+              <span className="ch-gig__open">{t('clienthub.gig.open', { name })}</span>
             </Button>
           }
-        >
-          <p className="ch-gig__tagline">{b(map.product.tagline)}</p>
-          <p className="ch-muted">{t('clienthub.gig.counts', { experiences: map.experiences.length, pages: map.pages.length, tools: map.tools.length })}</p>
-        </Card>
+        />
       )}
     </div>
   );
@@ -602,7 +609,7 @@ export function ClientHubPage({ surface, clientId }: { surface: Surface; clientI
       <PageHeader
         code={HUB_CODE}
         title={t('clienthub.title', { name: client })}
-        subtitle={t('clienthub.subtitle', { client, pages, mats: layout.mats.length })}
+        subtitle={t(`clienthub.subtitle.${lens}`, { client, pages, mats: matsPhrase(layout.mats.length) })}
         breadcrumb={[{ label: t(`core.portal.${surface}`), to: surface === 'dev' ? '/dev/components' : `/${surface}` }, { label: t('clienthub.crumb.clients') }, { label: t('clienthub.title', { name: client }) }]}
       />
       {header}
@@ -615,8 +622,8 @@ export function ClientHubPage({ surface, clientId }: { surface: Surface; clientI
           stageLabel={t('clienthub.stage', { name: client })}
           hint={t('clienthub.hint')}
           matName={matName}
-          matAria={(m) => t('clienthub.matLabel', { name: matName(m), n: m.count })}
-          matCount={(m) => t('clienthub.screens', { n: m.count })}
+          matAria={(m) => t('clienthub.matLabel', { name: matName(m), screens: m.count === 1 ? t('clienthub.screens.one') : t('clienthub.screens', { n: m.count }) })}
+          matCount={(m) => (m.count === 1 ? t('clienthub.screens.one') : t('clienthub.screens', { n: m.count }))}
           matSelectPlaceholder={t('clienthub.goToMat')}
           subLabel={(s, m) => subName(s.group, m)}
           itemLabel={itemLabel}
@@ -625,7 +632,7 @@ export function ClientHubPage({ surface, clientId }: { surface: Surface; clientI
           personLabel={personLabel}
           selectedPerson={selectedPerson}
           onActivatePerson={openPerson}
-          compactSummary={t('clienthub.compact', { name: client, pages: shownPages, mats: layout.mats.length })}
+          compactSummary={t('clienthub.compact', { name: client, pages: shownPages, mats: matsPhrase(layout.mats.length) })}
           grouping={pick(model.grouping ?? { en: '' }, lang)}
         />
       )}

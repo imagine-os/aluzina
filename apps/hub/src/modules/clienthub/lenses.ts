@@ -64,7 +64,7 @@ const ALUZINA_MAT: Record<string, Text> = {
 /** Outside-in: who practises, who visits, who teaches, then the team, then who builds. */
 const ROLE_ORDER = ['customer', 'public', 'teacher', 'front_desk', 'coordinator', 'finance', 'admin', 'super_admin', 'maintenance'];
 
-/** The customer app is ~40 screens: split by what the member is doing (Book, Pay, Account, Sign in), in the map's nav order. */
+/** Fallback only (a map older than hoy 0.11.1, or a page without `group`): the customer app split locally by what the member is doing, in the map's nav order. */
 const APP_SPLIT: { id: string; label: Text; codes: readonly string[] }[] = [
   { id: 'book', label: T('Book', 'Reservar'), codes: ['C-01', 'A-05', 'C-02', 'C-02b', 'C-03', 'C-08', 'C-08b', 'C-10', 'C-20', 'C-23', 'C-18', 'C-24'] },
   { id: 'pay', label: T('Pay', 'Pagar'), codes: ['C-04', 'C-05', 'C-06', 'C-07', 'C-07b', 'C-11', 'C-16', 'C-17', 'C-22', 'E-02'] },
@@ -72,6 +72,37 @@ const APP_SPLIT: { id: string; label: Text; codes: readonly string[] }[] = [
   { id: 'enter', label: T('Sign in', 'Entrar'), codes: ['A-01', 'A-02', 'A-03', 'C-21', 'E-04', 'E-05'] },
 ];
 const appPart = (code: string) => APP_SPLIT.find((s) => s.codes.includes(code))?.id ?? 'account';
+
+/**
+ * An experience's sub-mats: the map's page groups (`page.group`, label from the map, sorted by `order`); a page
+ * without a group falls back to the local customer-app split (`APP_SPLIT`) or to the experience itself.
+ */
+function bucketsOf(e: HubExperience, pages: HubPage[]): { key: string; label: Text; order: number; pages: HubPage[] }[] {
+  const out = new Map<string, { key: string; label: Text; order: number; pages: HubPage[] }>();
+  for (const p of pages) {
+    let key: string;
+    let label: Text;
+    let order: number;
+    if (p.group) {
+      key = `hx-${e.id}-${p.group.id}`;
+      label = { en: `${e.label.en} · ${p.group.label.en}`, es: `${e.label.es} · ${p.group.label.es}` };
+      order = p.group.order;
+    } else if (e.id === 'app') {
+      const part = APP_SPLIT.find((x) => x.id === appPart(p.code)) ?? APP_SPLIT[2];
+      key = `hx-${e.id}-${part.id}`;
+      label = { en: `${e.label.en} · ${part.label.en}`, es: `${e.label.es} · ${part.label.es}` };
+      order = 1000 + APP_SPLIT.indexOf(part);
+    } else {
+      key = `hx-${e.id}`;
+      label = bi(e.label);
+      order = 2000;
+    }
+    const bk = out.get(key) ?? { key, label, order, pages: [] };
+    bk.pages.push(p);
+    out.set(key, bk);
+  }
+  return [...out.values()].sort((a, c) => a.order - c.order);
+}
 
 const KIND_OF: Record<HubDevice, ItemKind> = { phone: 'phone', tablet: 'tablet', desktop: 'screen', page: 'page', sheet: 'document' };
 
@@ -236,8 +267,24 @@ function aluzinaLens(map: HubMap, ctx: LensCtx): LensDesk {
     let onMat = 0;
     for (const e of exps) {
       const pages = pagesOf(map, e);
-      if (pages.length > caps.sub && e.id !== 'app') {
-        // A big experience (admin): balanced sub-mats in nav order, "Admin · 1 / 2".
+      const buckets = bucketsOf(e, pages);
+      if (buckets.length > 1) {
+        // The map's page groups as sub-mats ("Customer app · Book"); a group over the cap in balanced halves.
+        for (const bk of buckets) {
+          const parts = Math.ceil(bk.pages.length / caps.sub);
+          const size = Math.ceil(bk.pages.length / parts);
+          for (let k = 0; k < parts; k++) {
+            const group = parts > 1 ? `${bk.key}-${k + 1}` : bk.key;
+            subLabels[group] = parts > 1 ? { en: `${bk.label.en} · ${k + 1} / ${parts}`, es: `${bk.label.es} · ${k + 1} / ${parts}` } : bk.label;
+            const chunk = bk.pages.slice(k * size, (k + 1) * size);
+            const room = Math.max(1, Math.min(caps.sub, caps.mat - onMat));
+            onMat += capped(b, chunk.map((p) => ({ item: pageItem(map, b, p, mat, group, ctx, e, role), page: p })), room, mat, group, T(`more screens: ${bk.label.en}`, `más pantallas: ${bk.label.es}`));
+          }
+        }
+        continue;
+      }
+      if (pages.length > caps.sub) {
+        // One big group (or no groups at all): balanced sub-mats in nav order, "Admin · 1 / 2".
         const parts = Math.ceil(pages.length / caps.sub);
         const size = Math.ceil(pages.length / parts);
         for (let k = 0; k < parts; k++) {
@@ -245,19 +292,7 @@ function aluzinaLens(map: HubMap, ctx: LensCtx): LensDesk {
           subLabels[group] = { en: `${e.label.en} · ${k + 1} / ${parts}`, es: `${e.label.es} · ${k + 1} / ${parts}` };
           const chunk = pages.slice(k * size, (k + 1) * size);
           const room = Math.max(1, Math.min(caps.sub, caps.mat - onMat));
-          onMat += capped(b, chunk.map((p) => ({ item: pageItem(map, b, p, mat, group, ctx, e, role), page: p })), room, mat, group, T(`more ${e.label.en} pages`, `páginas más de ${e.label.es}`));
-        }
-        continue;
-      }
-      if (e.id === 'app') {
-        // The member app: sub-mats by what the member is doing.
-        for (const part of APP_SPLIT) {
-          const inPart = pages.filter((p) => appPart(p.code) === part.id);
-          if (!inPart.length) continue;
-          const group = `hx-${e.id}-${part.id}`;
-          subLabels[group] = { en: `${e.label.en} · ${part.label.en}`, es: `${e.label.es} · ${part.label.es}` };
-          const room = Math.max(1, Math.min(caps.sub, caps.mat - onMat));
-          onMat += capped(b, inPart.map((p) => ({ item: pageItem(map, b, p, mat, group, ctx, e, role), page: p })), room, mat, group, T(`more ${part.label.en.toLowerCase()} screens`, `pantallas más de ${(part.label.es ?? part.label.en).toLowerCase()}`));
+          onMat += capped(b, chunk.map((p) => ({ item: pageItem(map, b, p, mat, group, ctx, e, role), page: p })), room, mat, group, T(`more ${e.label.en} pages`, `más páginas de ${e.label.es}`));
         }
         continue;
       }
@@ -268,27 +303,27 @@ function aluzinaLens(map: HubMap, ctx: LensCtx): LensDesk {
         // The whole website first, as a fanned stack of its tall pages; then every page on its own.
         const face = faceSrc(map, pages[0].shots, 'page', ctx);
         const id = `hs-${e.id}`;
-        list.push({ item: { id, kind: 'pages', phase: mat, group, source: 'hubMap', code: e.code, title: { en: `${e.label.en} · ${pages.length} pages`, es: `${e.label.es} · ${pages.length} páginas` }, subtitle: bi(e.label), lines: pages.map((p) => bi(p.name)), more: pages.length, openAt: { path: e.route }, face: face ? { ...face, alt: T(`The ${e.label.en}`, `El ${e.label.es}`) } : undefined } });
+        list.push({ item: { id, kind: 'pages', phase: mat, group, source: 'hubMap', code: e.code, title: { en: `${e.label.en} · ${pages.length} pages`, es: `${e.label.es} · ${pages.length} páginas` }, subtitle: bi(e.label), lines: pages.map((p) => bi(p.name)), more: pages.length, openAt: { path: e.route }, face: face ? { ...face, alt: T(`The ${e.label.en}`, `${e.label.es}`) } : undefined } });
         b.entries.set(id, { kind: 'site', experience: e, pages });
         b.faces++;
       }
       for (const p of pages) list.push({ item: pageItem(map, b, p, mat, group, ctx, e, role), page: p });
       const room = Math.max(1, Math.min(caps.sub + (list.length > pages.length ? 1 : 0), caps.mat - onMat));
-      onMat += capped(b, list, room, mat, group, T(`more ${e.label.en} pages`, `páginas más de ${e.label.es}`));
+      onMat += capped(b, list, room, mat, group, T(`more ${e.label.en} pages`, `más páginas de ${e.label.es}`));
     }
     if (extra.length) {
       const group = 'hx-other';
       subLabels[group] = T('Other pages', 'Otras páginas');
-      onMat += capped(b, extra.map((p) => ({ item: pageItem(map, b, p, mat, group, ctx, undefined, role), page: p })), caps.sub, mat, group, T('more pages', 'páginas más'));
+      onMat += capped(b, extra.map((p) => ({ item: pageItem(map, b, p, mat, group, ctx, undefined, role), page: p })), caps.sub, mat, group, T('more pages', 'más páginas'));
     }
     if (tools.length) {
       const group = 'hx-tools';
       subLabels[group] = T('Tools', 'Herramientas');
-      capped(b, tools.map((tool) => ({ item: toolItem(map, b, tool, mat, group, ctx) })), caps.sub, mat, group, T('more tools', 'herramientas más'));
+      capped(b, tools.map((tool) => ({ item: toolItem(map, b, tool, mat, group, ctx) })), caps.sub, mat, group, T('more tools', 'más herramientas'));
     }
     mats.push({ id: mat, label: ALUZINA_MAT[role.id] ?? bi(role.label), subLabels });
     matRole.set(mat, role);
-    people.push(personFor(role, mat, T(`Owns ${exps.map((e) => e.label.en).join(', ') || 'the tools'} in ${map.product.name.en}.`, `Es dueña de ${exps.map((e) => e.label.es).join(', ') || 'las herramientas'} en ${map.product.name.es}.`)));
+    people.push(personFor(role, mat, T(`Owns ${exps.map((e) => e.label.en).join(', ') || 'the tools'} in ${map.product.name.en}.`, `A cargo de ${exps.map((e) => e.label.es).join(', ') || 'las herramientas'} en ${map.product.name.es}.`)));
   }
   return {
     lens: 'aluzina',
@@ -343,7 +378,7 @@ function betweenGigsLens(map: HubMap, ctx: LensCtx): LensDesk {
       }
       for (const p of pages) list.push({ item: pageItem(map, b, p, def.id, group, ctx, e, roleById.get(e.roleId)), page: p });
       const room = Math.max(1, Math.min(caps.sub, caps.mat - onMat));
-      onMat += capped(b, list, room, def.id, group, T(`more ${e.label.en} pages`, `páginas más de ${e.label.es}`));
+      onMat += capped(b, list, room, def.id, group, T(`more ${e.label.en} pages`, `más páginas de ${e.label.es}`));
       placed.add(e.id);
     }
     mats.push({ id: def.id, label: def.label, subLabels });
@@ -351,13 +386,13 @@ function betweenGigsLens(map: HubMap, ctx: LensCtx): LensDesk {
     const role = primary ? roleById.get(primary) : undefined;
     if (role) {
       matRole.set(def.id, role);
-      people.push(personFor(role, def.id, T(`${role.label.en} owns most of what sits here.`, `${role.label.es} es dueña de casi todo lo que hay aquí.`)));
+      people.push(personFor(role, def.id, T(`${role.label.en} owns most of what sits here.`, `${role.label.es}: lleva casi todo lo que hay en este tapete.`)));
     }
   }
   if (ctx.showTools && map.tools.length) {
     const id = 'hg-tools';
     const group = 'hx-tools';
-    capped(b, map.tools.map((tool) => ({ item: toolItem(map, b, tool, id, group, ctx) })), caps.sub, id, group, T('more tools', 'herramientas más'));
+    capped(b, map.tools.map((tool) => ({ item: toolItem(map, b, tool, id, group, ctx) })), caps.sub, id, group, T('more tools', 'más herramientas'));
     mats.push({ id, label: T('Tools', 'Herramientas'), subLabels: { [group]: T('The gig’s tools', 'Las herramientas del gig') } });
     const role = map.roles.find((r) => r.band === 'build');
     if (role) {
@@ -382,9 +417,9 @@ function betweenGigsLens(map: HubMap, ctx: LensCtx): LensDesk {
 // ---------------------------------------------------------------- standalone: the client's own testing hub
 
 const BANDS: { id: string; label: Text }[] = [
-  { id: 'outside', label: T('Outside: members, visitors, teachers', 'Fuera: socios, visitantes, profesores') },
+  { id: 'outside', label: T('Outside: members, visitors, teachers', 'Afuera: socios, visitantes y profesores') },
   { id: 'team', label: T('The team', 'El equipo') },
-  { id: 'build', label: T('Build: docs and dev', 'Construcción: docs y dev') },
+  { id: 'build', label: T('Build: docs and dev', 'Construcción: documentación y desarrollo') },
 ];
 
 function standaloneLens(map: HubMap, ctx: LensCtx): LensDesk {
@@ -403,9 +438,14 @@ function standaloneLens(map: HubMap, ctx: LensCtx): LensDesk {
     subLabels[group] = band.label;
     for (const e of exps) {
       const entry = map.pages.find((p) => p.code === e.code && p.experienceId === e.id) ?? map.pages.find((p) => p.code === e.code);
-      const face = faceSrc(map, e.shots ?? entry?.shots, 'desktop', ctx);
+      // Device-true (changelog 0041): a phone experience is a phone, the website its fanned stack of tall pages
+      // (the entry page's full-length capture), a document a document, the rest a screen on a stand.
+      const site = e.device === 'page' ? pagesOf(map, e) : [];
+      const kind: ItemKind = e.device === 'page' ? (site.length > 1 ? 'pages' : 'page') : KIND_OF[e.device] ?? 'screen';
+      const face = e.device === 'page' ? faceSrc(map, entry?.shots ?? e.shots, 'page', ctx) ?? faceSrc(map, e.shots, 'page', ctx) : faceSrc(map, e.shots ?? entry?.shots, e.device, ctx);
       const id = `he-${e.id}`;
-      b.items.push({ id, kind: 'screen', phase: mat, group, source: 'hubMap', code: e.code, title: bi(e.label), subtitle: bi(roleById.get(e.roleId)?.label ?? e.label), lines: [bi(e.purpose)], openAt: { path: e.route }, face: face ? { ...face } : undefined, pill: e.featured ? { label: T('featured', 'destacada'), tone: 'accent' } : undefined });
+      b.faces++;
+      b.items.push({ id, kind, phase: mat, group, source: 'hubMap', code: e.code, title: bi(e.label), subtitle: bi(roleById.get(e.roleId)?.label ?? e.label), lines: kind === 'pages' ? site.map((p) => bi(p.name)) : [bi(e.purpose)], more: kind === 'pages' ? site.length : undefined, openAt: { path: e.route }, face: face ? { ...face, alt: T(`Capture of ${e.label.en} (${e.code})`, `Captura de ${e.label.es} (${e.code})`) } : undefined, pill: e.featured ? { label: T('featured', 'destacada'), tone: 'accent' } : undefined });
       b.entries.set(id, { kind: 'experience', experience: e, page: entry, role: roleById.get(e.roleId) });
     }
   }

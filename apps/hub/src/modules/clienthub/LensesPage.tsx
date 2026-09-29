@@ -16,7 +16,7 @@ import { pick } from '../../tenant/domain';
 import { useHubMap } from './hubMap.load';
 import { HUB_LENS_IDS, type HubLensId, type HubMap } from './hubMap.types';
 import { buildLens, toolsDefault } from './lenses';
-import { clientHub } from './registry';
+import { clientHub, withLensCopy } from './registry';
 import { LENSES_CODE } from './specs';
 import './clienthub.css';
 
@@ -56,14 +56,14 @@ function LensDesk({ map, lens, facesLang, clientId }: { map: HubMap | null; lens
           <strong>{b(hint.title)}.</strong> {b(hint.framing)}
         </p>
       )}
-      <p className="ch-muted">{t('clienthub.lenses.count', { objects: desk.layout.items.length, mats: desk.layout.mats.length })}</p>
+      <p className="ch-muted">{t('clienthub.lenses.count', { objects: desk.layout.items.length, mats: desk.layout.mats.length === 1 ? t('clienthub.mats.one') : t('clienthub.mats.other', { n: desk.layout.mats.length }) })}</p>
       <DeskStage
         desk={desk}
         stageLabel={t('clienthub.lenses.stage', { lens: t(`clienthub.lens.${lens}`) })}
         hint={t('clienthub.lenses.hint')}
         matName={matName}
-        matAria={(m) => t('clienthub.matLabel', { name: matName(m), n: m.count })}
-        matCount={(m) => t('clienthub.screens', { n: m.count })}
+        matAria={(m) => t('clienthub.matLabel', { name: matName(m), screens: m.count === 1 ? t('clienthub.screens.one') : t('clienthub.screens', { n: m.count }) })}
+        matCount={(m) => (m.count === 1 ? t('clienthub.screens.one') : t('clienthub.screens', { n: m.count }))}
         matSelectPlaceholder={t('clienthub.goToMat')}
         subLabel={(s, m) => subName(s.group, m)}
         itemLabel={label}
@@ -71,7 +71,7 @@ function LensDesk({ map, lens, facesLang, clientId }: { map: HubMap | null; lens
         selected={null}
         personLabel={(p, m) => t('clienthub.personLabel', { role: pick(p.caption ?? p.role.playbookRole, lang), name: p.firstName ? ` (${p.firstName})` : '', mat: matName(m) })}
         onActivatePerson={() => open()}
-        compactSummary={t('clienthub.lenses.count', { objects: desk.layout.items.length, mats: desk.layout.mats.length })}
+        compactSummary={t('clienthub.lenses.count', { objects: desk.layout.items.length, mats: desk.layout.mats.length === 1 ? t('clienthub.mats.one') : t('clienthub.mats.other', { n: desk.layout.mats.length }) })}
         grouping={pick(model.grouping ?? { en: '' }, lang)}
       />
     </Card>
@@ -86,6 +86,7 @@ export function LensesPage({ clientId }: { clientId: string }) {
   const hm = useHubMap(clientId);
   const [facesLang, setFacesLang] = useState<'es' | 'en'>(lang);
   const name = hub?.name ?? clientId.toUpperCase();
+  const map = useMemo(() => withLensCopy(hm.map, hub), [hm.map, hub]);
 
   useRegisterActions({
     'clienthub.openLens': ({ lens }) => {
@@ -133,7 +134,7 @@ export function LensesPage({ clientId }: { clientId: string }) {
       </div>
       <div className="ch-lenses">
         {HUB_LENS_IDS.map((lens) => (
-          <LensDesk key={lens} map={hm.map} lens={lens} facesLang={facesLang} clientId={clientId} />
+          <LensDesk key={lens} map={map} lens={lens} facesLang={facesLang} clientId={clientId} />
         ))}
       </div>
     </div>

@@ -1,6 +1,7 @@
 /* W-05 client hub desk (and D-16 hub lenses). Tokens only; the desk itself is styled by src/desk/desk.css. */
 
 .ch-strip {
+  container: ch-strip / inline-size;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -18,12 +19,101 @@
 }
 
 .ch-strip__lens {
-  flex: 1 1 22rem;
+  /* Its own width first (changelog 0041), so the lens tabs and "Screens in" share a row wherever both fit. */
+  flex: 1 1 auto;
   min-width: 0;
 }
 
 .ch-strip__lens .tabs__list {
   flex-wrap: wrap;
+}
+
+/* The project link's short label is for phones only (changelog 0041). */
+.ch-narrow {
+  display: none;
+}
+
+/* A narrow strip (phones, and 768 beside the sidebar; changelog 0041): wordmark, version and project link on one
+   line; the three lens tabs on one row. Targets stay 44 px. */
+@container ch-strip (max-width: 36rem) {
+  .ch-strip__brand {
+    flex-wrap: nowrap;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .ch-wide {
+    display: none;
+  }
+
+  .ch-narrow {
+    display: inline;
+  }
+
+  .ch-wide-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .ch-wordmark {
+    height: 1.625rem;
+    max-width: 5.5rem;
+  }
+
+  .ch-strip__lens {
+    flex-basis: 100%;
+  }
+
+  .ch-strip__lens .tabs__list {
+    gap: 0;
+  }
+
+  .ch-strip__lens .tabs__tab {
+    padding: 0 var(--space-2);
+  }
+}
+
+/* Phones: the strip's and the framing's rows closer, so the desk starts inside the first screen at 390 x 844. */
+@media (max-width: 767.98px) {
+  .ch-strip {
+    gap: var(--space-1) var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .ch-framing {
+    margin-bottom: var(--space-2);
+  }
+
+  .ch-framing__text {
+    font-size: 0.9375rem;
+  }
+
+  /* The gig's tagline is the gig's own marketing line; on phones the strip (name, version, counts, Open) is enough. */
+  .ch-tagline {
+    display: none;
+  }
+
+  /* The gig strip on phones: Open keeps its icon (44 px, named), the name and counts get the line. */
+  .ch-gig__open {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .ch-gig .card__title {
+    font-size: 1rem;
+  }
+
+  .ch-gig .card__subtitle {
+    font-size: 0.875rem;
+  }
 }
 
 .ch-wordmark {
@@ -64,18 +154,41 @@
 }
 
 .ch-framing__text {
-  flex: 1 1 28rem;
+  flex: 1 1 22rem;
   max-width: 60rem;
   margin: 0;
   font-size: 1rem;
 }
 
-.ch-gig {
-  flex: 0 1 26rem;
+.ch-framing__text p {
+  margin: 0;
 }
 
-.ch-gig__tagline {
-  margin: 0 0 var(--space-2);
+.ch-framing__text .ch-muted {
+  margin-top: var(--space-1);
+}
+
+/* Between Gigs: the gig as one compact strip beside the framing (changelog 0041), not a tall card. */
+.ch-gig {
+  flex: 1 1 22rem;
+  min-width: 0;
+}
+
+.ch-gig .card__head {
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ch-gig .card__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-3);
+  min-width: 0;
+}
+
+.ch-gig .card__subtitle {
+  margin: 0;
 }
 
 .ch-face {

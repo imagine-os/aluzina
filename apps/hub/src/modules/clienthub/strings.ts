@@ -5,12 +5,24 @@ export const strings: StringTable = {
   'clienthub.nav.hub': { en: 'HOY hub', es: 'Hub HOY' },
   'clienthub.nav.lenses': { en: 'Hub lenses', es: 'Lentes del hub' },
   'clienthub.title': { en: 'Client hub · {name}', es: 'Hub del cliente · {name}' },
-  'clienthub.subtitle': {
-    en: '{client}’s whole hub on the desk: {pages} pages on {mats} mats, each role seated at its mat. Every object is the real screen; open one to try it live as that role.',
-    es: 'Todo el hub de {client} sobre la mesa: {pages} páginas en {mats} tapetes, cada rol sentado en su tapete. Cada objeto es la pantalla real; abre uno para probarlo en vivo como ese rol.',
+  // The subtitle follows the lens (changelog 0041): what the desk holds and how it is grouped.
+  'clienthub.subtitle.aluzina': {
+    en: '{client}’s whole hub on the desk: {pages} pages on {mats}, each client role seated at its mat. Every object is the real screen; open one to try it live as that role.',
+    es: 'Todo el hub de {client} sobre la mesa: {pages} páginas en {mats}, cada rol del cliente sentado en su tapete. Cada objeto es la pantalla real; abre uno para probarlo en vivo con ese rol.',
   },
+  'clienthub.subtitle.between-gigs': {
+    en: '{client}’s whole hub on the desk: {pages} pages on {mats}, one gig with its surfaces and tools. Every object is the real screen; open one to try it live as its role.',
+    es: 'Todo el hub de {client} sobre la mesa: {pages} páginas en {mats}, un gig con sus superficies y herramientas. Cada objeto es la pantalla real; abre uno para probarlo en vivo con su rol.',
+  },
+  'clienthub.subtitle.standalone': {
+    en: '{client}’s whole hub on the desk: {pages} pages on {mats}, as {client}’s own hub. Each object is an experience’s entry screen or a testing tool; open one to try it live as its role.',
+    es: 'Todo el hub de {client} sobre la mesa: {pages} páginas en {mats}, como el hub propio de {client}. Cada objeto es la pantalla de entrada de una experiencia o una herramienta de prueba; abre uno para probarlo en vivo con su rol.',
+  },
+  'clienthub.mats.one': { en: 'one mat', es: 'un tapete' },
+  'clienthub.mats.other': { en: '{n} mats', es: '{n} tapetes' },
   'clienthub.crumb.clients': { en: 'Clients', es: 'Clientes' },
   'clienthub.client': { en: 'ALUZINA client · project {project}', es: 'Cliente de ALUZINA · proyecto {project}' },
+  'clienthub.clientShort': { en: 'Project {project}', es: 'Proyecto {project}' },
   'clienthub.clientWhat': { en: 'Opens the project’s work in this portal (W-02)', es: 'Abre el trabajo del proyecto en este portal (W-02)' },
   'clienthub.version': { en: 'v{version}', es: 'v{version}' },
   'clienthub.wordmark': { en: '{name} wordmark', es: 'Logotipo de {name}' },
@@ -18,9 +30,9 @@ export const strings: StringTable = {
 
   // The map's state (toolbar pill).
   'clienthub.map.live': { en: 'Live map · {date}', es: 'Mapa en vivo · {date}' },
-  'clienthub.map.snapshot': { en: 'Bundled snapshot · {date}', es: 'Copia incluida · {date}' },
+  'clienthub.map.snapshot': { en: 'Bundled snapshot · {date}', es: 'Copia local · {date}' },
   'clienthub.map.loading': { en: 'Loading the hub map…', es: 'Cargando el mapa del hub…' },
-  'clienthub.map.why': { en: 'The live map could not be read ({why}); the copy bundled with ALUZINA is shown and faces fall back to drawn devices when offline.', es: 'No se pudo leer el mapa en vivo ({why}); se muestra la copia incluida en ALUZINA y, sin conexión, las caras vuelven a los dispositivos dibujados.' },
+  'clienthub.map.why': { en: 'The live map could not be read ({why}); the copy bundled with ALUZINA is shown and faces fall back to drawn devices when offline.', es: 'No se pudo leer el mapa en vivo ({why}); se muestra la copia que trae ALUZINA y, sin conexión, las pantallas se ven como dispositivos dibujados.' },
   'clienthub.map.reload': { en: 'Reload map', es: 'Recargar mapa' },
   'clienthub.map.reloaded': { en: 'Map: {result}', es: 'Mapa: {result}' },
   'clienthub.map.none': { en: 'No hub map for this client yet.', es: 'Todavía no hay mapa del hub para este cliente.' },
@@ -29,7 +41,7 @@ export const strings: StringTable = {
   'clienthub.lens': { en: 'Point of view', es: 'Punto de vista' },
   'clienthub.lens.aluzina': { en: 'ALUZINA', es: 'ALUZINA' },
   'clienthub.lens.between-gigs': { en: 'Between Gigs', es: 'Between Gigs' },
-  'clienthub.lens.standalone': { en: 'On its own', es: 'Por sí solo' },
+  'clienthub.lens.standalone': { en: 'On its own', es: 'Por su cuenta' },
   'clienthub.lens.hint.aluzina': { en: 'By role, as a studio deliverable', es: 'Por rol, como entregable del estudio' },
   'clienthub.lens.hint.between-gigs': { en: 'By experience, as one gig', es: 'Por experiencia, como un gig' },
   'clienthub.lens.hint.standalone': { en: 'As the client’s own hub', es: 'Como el hub propio del cliente' },
@@ -47,11 +59,12 @@ export const strings: StringTable = {
     es: 'Desplaza con dos dedos o arrastra para mover; pellizca o ctrl + rueda para acercar; doble clic en un objeto lo acerca. Teclado: + y − acercan y alejan, las flechas mueven, F ajusta, 0 vuelve al inicio, Tab recorre tapetes, subtapetes y objetos, Enter abre, Esc cierra. Abre cualquier pantalla y elige Abrir en vivo para usar la página real, con la sesión de ese rol, sin salir de ALUZINA.',
   },
   'clienthub.goToMat': { en: 'Go to a mat…', es: 'Ir a un tapete…' },
-  'clienthub.matLabel': { en: '{name}, {n} screens. Fit this mat', es: '{name}, {n} pantallas. Ajustar este tapete' },
+  'clienthub.matLabel': { en: '{name}, {screens}. Fit this mat', es: '{name}, {screens}. Ajustar este tapete' },
   'clienthub.screens': { en: '{n} screens', es: '{n} pantallas' },
+  'clienthub.screens.one': { en: '1 screen', es: '1 pantalla' },
   'clienthub.itemLabel': { en: '{kind}: {code} {title} ({where}). Open', es: '{kind}: {code} {title} ({where}). Abrir' },
   'clienthub.personLabel': { en: '{role}{name}: the {mat} mat. Open', es: '{role}{name}: el tapete {mat}. Abrir' },
-  'clienthub.compact': { en: '{name} hub · {pages} pages on {mats} mats', es: 'Hub de {name} · {pages} páginas en {mats} tapetes' },
+  'clienthub.compact': { en: '{name} hub · {pages} pages on {mats}', es: 'Hub de {name} · {pages} páginas en {mats}' },
   'clienthub.tip': { en: '{kind} · {where}', es: '{kind} · {where}' },
 
   // Drawer.
@@ -80,7 +93,7 @@ export const strings: StringTable = {
   'clienthub.device.page': { en: 'Web page · 390 wide, full length', es: 'Página web · 390 de ancho, completa' },
   'clienthub.device.sheet': { en: 'Document page', es: 'Página de documento' },
   'clienthub.live': { en: 'Open live', es: 'Abrir en vivo' },
-  'clienthub.liveWhat': { en: 'Loads the real page here, signed in as {role}, without touching your session', es: 'Carga la página real aquí, con la sesión de {role}, sin tocar tu sesión' },
+  'clienthub.liveWhat': { en: 'Loads the real page here, signed in as {role}, without touching your session', es: 'Carga aquí la página real con la sesión de {role}, sin tocar la tuya' },
   'clienthub.liveClose': { en: 'Close live', es: 'Cerrar en vivo' },
   'clienthub.liveTitle': { en: '{title}, live, as {role}', es: '{title}, en vivo, como {role}' },
   'clienthub.liveSize': { en: '{w} × {h} at {pct} %', es: '{w} × {h} al {pct} %' },
@@ -96,10 +109,10 @@ export const strings: StringTable = {
 
   // D-16 hub lenses.
   'clienthub.lenses.title': { en: 'Hub lenses · {name}', es: 'Lentes del hub · {name}' },
-  'clienthub.lenses.subtitle': { en: 'The same hub map seen by its three hosts, side by side: ALUZINA (by role), Between Gigs (by experience) and the client on its own.', es: 'El mismo mapa del hub visto por sus tres anfitriones, lado a lado: ALUZINA (por rol), Between Gigs (por experiencia) y el cliente por sí solo.' },
+  'clienthub.lenses.subtitle': { en: 'The same hub map seen by its three hosts, side by side: ALUZINA (by role), Between Gigs (by experience) and the client on its own.', es: 'El mismo mapa del hub visto por sus tres anfitriones, uno al lado del otro: ALUZINA (por rol), Between Gigs (por experiencia) y el cliente por su cuenta.' },
   'clienthub.lenses.open': { en: 'Open this view', es: 'Abrir esta vista' },
   'clienthub.lenses.openWhat': { en: 'Opens W-05 in this point of view', es: 'Abre W-05 en este punto de vista' },
-  'clienthub.lenses.count': { en: '{objects} objects on {mats} mats', es: '{objects} objetos en {mats} tapetes' },
+  'clienthub.lenses.count': { en: '{objects} objects on {mats}', es: '{objects} objetos en {mats}' },
   'clienthub.lenses.stage': { en: '{lens} view of the hub', es: 'Vista {lens} del hub' },
-  'clienthub.lenses.hint': { en: 'Each small desk is the same engine and the same map with a different model builder; open one to work in it.', es: 'Cada mesa pequeña es el mismo motor y el mismo mapa con otro constructor de modelo; abre una para trabajar en ella.' },
+  'clienthub.lenses.hint': { en: 'Each small desk is the same engine and the same map with a different model builder; open one to work in it.', es: 'Cada mesa pequeña usa el mismo motor y el mismo mapa; solo cambia cómo se arma el modelo. Abre una para trabajar en ella.' },
 };

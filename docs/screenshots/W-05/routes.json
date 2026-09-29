@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-09-29T07:55:10.039Z",
+  "capturedAt": "2026-09-29T08:32:20.185Z",
   "base": "http://localhost:4173/",
   "code": "W-05",
   "route": "/founder/clients/hoy/hub?lens=standalone",
@@ -7,6 +7,7 @@
     "en-1280",
     "en-1280-between-gigs",
     "en-1280-dark",
+    "en-1280-open-live",
     "en-1280-standalone",
     "en-1920",
     "en-3840",
@@ -15,6 +16,7 @@
     "en-768",
     "es-1280",
     "es-1280-between-gigs",
+    "es-1280-standalone",
     "es-1920",
     "es-3840",
     "es-390",
@@ -3935,13 +3937,13 @@
           "surface": "founder",
           "navGroup": "projects",
           "layout": [
-            "PageHeader (W-05): breadcrumb portal / Clients / Client hub · HOY, title, subtitle with page and mat counts",
-            "Header strip (role=\"toolbar\"): client wordmark (image, falls back to the name) and version, \"ALUZINA client · project prj-hoy\" (Button, opens W-02 of the project), map state StatusPill (Live map · date / Bundled snapshot · date) with Reload map, point-of-view Tabs (ALUZINA / Between Gigs / On its own; ?lens= in the hash query), screens language buttons ES / EN (faces only, independent of the UI language), Tools toggle (aria-pressed)",
-            "Framing line: the lens hint’s framing from the map; Between Gigs adds a gig Card (name, version, tagline, counts, Open the client)",
+            "PageHeader (W-05): breadcrumb portal / Clients / Client hub · HOY, title, subtitle from the lens (ALUZINA: pages on N mats, each client role seated at its mat; Between Gigs: one gig with its surfaces and tools; On its own: on one mat, as HOY’s own hub; mats pluralised)",
+            "Header strip (role=\"toolbar\"): client wordmark (image, falls back to the name) and version, \"ALUZINA client · project prj-hoy\" (Button, opens W-02 of the project; \"Project prj-hoy\" when the strip is narrow, so wordmark, version and link share one line), map state StatusPill (Live map · date / Bundled snapshot · date) with Reload map (icon only, named, when the strip is narrow), point-of-view Tabs (ALUZINA / Between Gigs / On its own; ?lens= in the hash query), screens language buttons ES / EN (faces only, independent of the UI language), Tools toggle (aria-pressed)",
+            "Framing line: the lens hint’s title and framing (the map’s, with the host’s wording from `lensCopy` merged per language); Between Gigs adds the tagline under it and a compact gig strip beside it (Card padding sm: name, Gig · version · counts, Open the client)",
             "Desk frame (src/desk DeskStage): toolbar, stage (default L), minimap, legend, handle, hint; home zoom so phones are >= 44 px and read at 10 feet (>= 200 px tall at 3840)",
-            "ALUZINA lens: mats Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin (maintenance only when it owns pages); each seats the role figure (hub map look, props, role caption, demo first name); sub-mats = the role’s experiences (the member app split Book / Pay / Account / Sign in; admin in two halves); objects = pages as phone / page / screen / document devices with image faces; the website mat opens with a fanned stack of the whole site; Tools as a sub-mat of screens on Super admin when shown",
+            "ALUZINA lens: mats Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin (maintenance only when it owns pages); each seats the role figure (hub map look, props, role caption, demo first name); sub-mats = the role’s experiences, split by the map’s page groups when an experience has several (member app Book / Pay / Account / Sign in; admin Admin / Content / Tables; a page without a group falls back to the local split); objects = pages as phone / page / screen / document devices with image faces; the website mat opens with a fanned stack of the whole site; Tools as a sub-mat of screens on Super admin when shown",
             "Between Gigs lens: mats Website, Apps, Back office, Build (+ Tools), one figure per mat (the role owning most of it), sub-mats by experience, condensed at 12 per sub-mat with a stack",
-            "On its own lens: one mat, the hub itself first (start here), then one screen per experience by band (outside / team / build), then the testing tools",
+            "On its own lens: one mat, the hub itself first (start here, a screen), then one object per experience by band (outside / team / build) as its device (phone apps as phones, the website as a fanned stack of its tall pages, documents as documents, desktops as screens), then the testing tools",
             "Drawer (right from 768 px, 56rem while live on desktop screens; bottom sheet below): large face, code, role, experience, device, route, status, purpose, declared actions; footer Previous / Next (within the sub-mat), Open live / Close live (iframe sized to the device, scaled to fit), Open in HOY ↗ (new tab); for a person: portrait, role, demo person, home, device, what sits on the mat, Open live as that role; for the website stack or a +N stack: its pages, each a button"
           ],
           "dataTables": [],
@@ -4165,13 +4167,13 @@
           "surface": "ops",
           "navGroup": "projects",
           "layout": [
-            "PageHeader (W-05): breadcrumb portal / Clients / Client hub · HOY, title, subtitle with page and mat counts",
-            "Header strip (role=\"toolbar\"): client wordmark (image, falls back to the name) and version, \"ALUZINA client · project prj-hoy\" (Button, opens W-02 of the project), map state StatusPill (Live map · date / Bundled snapshot · date) with Reload map, point-of-view Tabs (ALUZINA / Between Gigs / On its own; ?lens= in the hash query), screens language buttons ES / EN (faces only, independent of the UI language), Tools toggle (aria-pressed)",
-            "Framing line: the lens hint’s framing from the map; Between Gigs adds a gig Card (name, version, tagline, counts, Open the client)",
+            "PageHeader (W-05): breadcrumb portal / Clients / Client hub · HOY, title, subtitle from the lens (ALUZINA: pages on N mats, each client role seated at its mat; Between Gigs: one gig with its surfaces and tools; On its own: on one mat, as HOY’s own hub; mats pluralised)",
+            "Header strip (role=\"toolbar\"): client wordmark (image, falls back to the name) and version, \"ALUZINA client · project prj-hoy\" (Button, opens W-02 of the project; \"Project prj-hoy\" when the strip is narrow, so wordmark, version and link share one line), map state StatusPill (Live map · date / Bundled snapshot · date) with Reload map (icon only, named, when the strip is narrow), point-of-view Tabs (ALUZINA / Between Gigs / On its own; ?lens= in the hash query), screens language buttons ES / EN (faces only, independent of the UI language), Tools toggle (aria-pressed)",
+            "Framing line: the lens hint’s title and framing (the map’s, with the host’s wording from `lensCopy` merged per language); Between Gigs adds the tagline under it and a compact gig strip beside it (Card padding sm: name, Gig · version · counts, Open the client)",
             "Desk frame (src/desk DeskStage): toolbar, stage (default L), minimap, legend, handle, hint; home zoom so phones are >= 44 px and read at 10 feet (>= 200 px tall at 3840)",
-            "ALUZINA lens: mats Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin (maintenance only when it owns pages); each seats the role figure (hub map look, props, role caption, demo first name); sub-mats = the role’s experiences (the member app split Book / Pay / Account / Sign in; admin in two halves); objects = pages as phone / page / screen / document devices with image faces; the website mat opens with a fanned stack of the whole site; Tools as a sub-mat of screens on Super admin when shown",
+            "ALUZINA lens: mats Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin (maintenance only when it owns pages); each seats the role figure (hub map look, props, role caption, demo first name); sub-mats = the role’s experiences, split by the map’s page groups when an experience has several (member app Book / Pay / Account / Sign in; admin Admin / Content / Tables; a page without a group falls back to the local split); objects = pages as phone / page / screen / document devices with image faces; the website mat opens with a fanned stack of the whole site; Tools as a sub-mat of screens on Super admin when shown",
             "Between Gigs lens: mats Website, Apps, Back office, Build (+ Tools), one figure per mat (the role owning most of it), sub-mats by experience, condensed at 12 per sub-mat with a stack",
-            "On its own lens: one mat, the hub itself first (start here), then one screen per experience by band (outside / team / build), then the testing tools",
+            "On its own lens: one mat, the hub itself first (start here, a screen), then one object per experience by band (outside / team / build) as its device (phone apps as phones, the website as a fanned stack of its tall pages, documents as documents, desktops as screens), then the testing tools",
             "Drawer (right from 768 px, 56rem while live on desktop screens; bottom sheet below): large face, code, role, experience, device, route, status, purpose, declared actions; footer Previous / Next (within the sub-mat), Open live / Close live (iframe sized to the device, scaled to fit), Open in HOY ↗ (new tab); for a person: portrait, role, demo person, home, device, what sits on the mat, Open live as that role; for the website stack or a +N stack: its pages, each a button"
           ],
           "dataTables": [],
@@ -4395,13 +4397,13 @@
           "surface": "studio",
           "navGroup": "projects",
           "layout": [
-            "PageHeader (W-05): breadcrumb portal / Clients / Client hub · HOY, title, subtitle with page and mat counts",
-            "Header strip (role=\"toolbar\"): client wordmark (image, falls back to the name) and version, \"ALUZINA client · project prj-hoy\" (Button, opens W-02 of the project), map state StatusPill (Live map · date / Bundled snapshot · date) with Reload map, point-of-view Tabs (ALUZINA / Between Gigs / On its own; ?lens= in the hash query), screens language buttons ES / EN (faces only, independent of the UI language), Tools toggle (aria-pressed)",
-            "Framing line: the lens hint’s framing from the map; Between Gigs adds a gig Card (name, version, tagline, counts, Open the client)",
+            "PageHeader (W-05): breadcrumb portal / Clients / Client hub · HOY, title, subtitle from the lens (ALUZINA: pages on N mats, each client role seated at its mat; Between Gigs: one gig with its surfaces and tools; On its own: on one mat, as HOY’s own hub; mats pluralised)",
+            "Header strip (role=\"toolbar\"): client wordmark (image, falls back to the name) and version, \"ALUZINA client · project prj-hoy\" (Button, opens W-02 of the project; \"Project prj-hoy\" when the strip is narrow, so wordmark, version and link share one line), map state StatusPill (Live map · date / Bundled snapshot · date) with Reload map (icon only, named, when the strip is narrow), point-of-view Tabs (ALUZINA / Between Gigs / On its own; ?lens= in the hash query), screens language buttons ES / EN (faces only, independent of the UI language), Tools toggle (aria-pressed)",
+            "Framing line: the lens hint’s title and framing (the map’s, with the host’s wording from `lensCopy` merged per language); Between Gigs adds the tagline under it and a compact gig strip beside it (Card padding sm: name, Gig · version · counts, Open the client)",
             "Desk frame (src/desk DeskStage): toolbar, stage (default L), minimap, legend, handle, hint; home zoom so phones are >= 44 px and read at 10 feet (>= 200 px tall at 3840)",
-            "ALUZINA lens: mats Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin (maintenance only when it owns pages); each seats the role figure (hub map look, props, role caption, demo first name); sub-mats = the role’s experiences (the member app split Book / Pay / Account / Sign in; admin in two halves); objects = pages as phone / page / screen / document devices with image faces; the website mat opens with a fanned stack of the whole site; Tools as a sub-mat of screens on Super admin when shown",
+            "ALUZINA lens: mats Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin (maintenance only when it owns pages); each seats the role figure (hub map look, props, role caption, demo first name); sub-mats = the role’s experiences, split by the map’s page groups when an experience has several (member app Book / Pay / Account / Sign in; admin Admin / Content / Tables; a page without a group falls back to the local split); objects = pages as phone / page / screen / document devices with image faces; the website mat opens with a fanned stack of the whole site; Tools as a sub-mat of screens on Super admin when shown",
             "Between Gigs lens: mats Website, Apps, Back office, Build (+ Tools), one figure per mat (the role owning most of it), sub-mats by experience, condensed at 12 per sub-mat with a stack",
-            "On its own lens: one mat, the hub itself first (start here), then one screen per experience by band (outside / team / build), then the testing tools",
+            "On its own lens: one mat, the hub itself first (start here, a screen), then one object per experience by band (outside / team / build) as its device (phone apps as phones, the website as a fanned stack of its tall pages, documents as documents, desktops as screens), then the testing tools",
             "Drawer (right from 768 px, 56rem while live on desktop screens; bottom sheet below): large face, code, role, experience, device, route, status, purpose, declared actions; footer Previous / Next (within the sub-mat), Open live / Close live (iframe sized to the device, scaled to fit), Open in HOY ↗ (new tab); for a person: portrait, role, demo person, home, device, what sits on the mat, Open live as that role; for the website stack or a +N stack: its pages, each a button"
           ],
           "dataTables": [],
@@ -4625,13 +4627,13 @@
           "surface": "brand",
           "navGroup": "projects",
           "layout": [
-            "PageHeader (W-05): breadcrumb portal / Clients / Client hub · HOY, title, subtitle with page and mat counts",
-            "Header strip (role=\"toolbar\"): client wordmark (image, falls back to the name) and version, \"ALUZINA client · project prj-hoy\" (Button, opens W-02 of the project), map state StatusPill (Live map · date / Bundled snapshot · date) with Reload map, point-of-view Tabs (ALUZINA / Between Gigs / On its own; ?lens= in the hash query), screens language buttons ES / EN (faces only, independent of the UI language), Tools toggle (aria-pressed)",
-            "Framing line: the lens hint’s framing from the map; Between Gigs adds a gig Card (name, version, tagline, counts, Open the client)",
+            "PageHeader (W-05): breadcrumb portal / Clients / Client hub · HOY, title, subtitle from the lens (ALUZINA: pages on N mats, each client role seated at its mat; Between Gigs: one gig with its surfaces and tools; On its own: on one mat, as HOY’s own hub; mats pluralised)",
+            "Header strip (role=\"toolbar\"): client wordmark (image, falls back to the name) and version, \"ALUZINA client · project prj-hoy\" (Button, opens W-02 of the project; \"Project prj-hoy\" when the strip is narrow, so wordmark, version and link share one line), map state StatusPill (Live map · date / Bundled snapshot · date) with Reload map (icon only, named, when the strip is narrow), point-of-view Tabs (ALUZINA / Between Gigs / On its own; ?lens= in the hash query), screens language buttons ES / EN (faces only, independent of the UI language), Tools toggle (aria-pressed)",
+            "Framing line: the lens hint’s title and framing (the map’s, with the host’s wording from `lensCopy` merged per language); Between Gigs adds the tagline under it and a compact gig strip beside it (Card padding sm: name, Gig · version · counts, Open the client)",
             "Desk frame (src/desk DeskStage): toolbar, stage (default L), minimap, legend, handle, hint; home zoom so phones are >= 44 px and read at 10 feet (>= 200 px tall at 3840)",
-            "ALUZINA lens: mats Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin (maintenance only when it owns pages); each seats the role figure (hub map look, props, role caption, demo first name); sub-mats = the role’s experiences (the member app split Book / Pay / Account / Sign in; admin in two halves); objects = pages as phone / page / screen / document devices with image faces; the website mat opens with a fanned stack of the whole site; Tools as a sub-mat of screens on Super admin when shown",
+            "ALUZINA lens: mats Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin (maintenance only when it owns pages); each seats the role figure (hub map look, props, role caption, demo first name); sub-mats = the role’s experiences, split by the map’s page groups when an experience has several (member app Book / Pay / Account / Sign in; admin Admin / Content / Tables; a page without a group falls back to the local split); objects = pages as phone / page / screen / document devices with image faces; the website mat opens with a fanned stack of the whole site; Tools as a sub-mat of screens on Super admin when shown",
             "Between Gigs lens: mats Website, Apps, Back office, Build (+ Tools), one figure per mat (the role owning most of it), sub-mats by experience, condensed at 12 per sub-mat with a stack",
-            "On its own lens: one mat, the hub itself first (start here), then one screen per experience by band (outside / team / build), then the testing tools",
+            "On its own lens: one mat, the hub itself first (start here, a screen), then one object per experience by band (outside / team / build) as its device (phone apps as phones, the website as a fanned stack of its tall pages, documents as documents, desktops as screens), then the testing tools",
             "Drawer (right from 768 px, 56rem while live on desktop screens; bottom sheet below): large face, code, role, experience, device, route, status, purpose, declared actions; footer Previous / Next (within the sub-mat), Open live / Close live (iframe sized to the device, scaled to fit), Open in HOY ↗ (new tab); for a person: portrait, role, demo person, home, device, what sits on the mat, Open live as that role; for the website stack or a +N stack: its pages, each a button"
           ],
           "dataTables": [],
@@ -4855,13 +4857,13 @@
           "surface": "dev",
           "navGroup": "developer",
           "layout": [
-            "PageHeader (W-05): breadcrumb portal / Clients / Client hub · HOY, title, subtitle with page and mat counts",
-            "Header strip (role=\"toolbar\"): client wordmark (image, falls back to the name) and version, \"ALUZINA client · project prj-hoy\" (Button, opens W-02 of the project), map state StatusPill (Live map · date / Bundled snapshot · date) with Reload map, point-of-view Tabs (ALUZINA / Between Gigs / On its own; ?lens= in the hash query), screens language buttons ES / EN (faces only, independent of the UI language), Tools toggle (aria-pressed)",
-            "Framing line: the lens hint’s framing from the map; Between Gigs adds a gig Card (name, version, tagline, counts, Open the client)",
+            "PageHeader (W-05): breadcrumb portal / Clients / Client hub · HOY, title, subtitle from the lens (ALUZINA: pages on N mats, each client role seated at its mat; Between Gigs: one gig with its surfaces and tools; On its own: on one mat, as HOY’s own hub; mats pluralised)",
+            "Header strip (role=\"toolbar\"): client wordmark (image, falls back to the name) and version, \"ALUZINA client · project prj-hoy\" (Button, opens W-02 of the project; \"Project prj-hoy\" when the strip is narrow, so wordmark, version and link share one line), map state StatusPill (Live map · date / Bundled snapshot · date) with Reload map (icon only, named, when the strip is narrow), point-of-view Tabs (ALUZINA / Between Gigs / On its own; ?lens= in the hash query), screens language buttons ES / EN (faces only, independent of the UI language), Tools toggle (aria-pressed)",
+            "Framing line: the lens hint’s title and framing (the map’s, with the host’s wording from `lensCopy` merged per language); Between Gigs adds the tagline under it and a compact gig strip beside it (Card padding sm: name, Gig · version · counts, Open the client)",
             "Desk frame (src/desk DeskStage): toolbar, stage (default L), minimap, legend, handle, hint; home zoom so phones are >= 44 px and read at 10 feet (>= 200 px tall at 3840)",
-            "ALUZINA lens: mats Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin (maintenance only when it owns pages); each seats the role figure (hub map look, props, role caption, demo first name); sub-mats = the role’s experiences (the member app split Book / Pay / Account / Sign in; admin in two halves); objects = pages as phone / page / screen / document devices with image faces; the website mat opens with a fanned stack of the whole site; Tools as a sub-mat of screens on Super admin when shown",
+            "ALUZINA lens: mats Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin (maintenance only when it owns pages); each seats the role figure (hub map look, props, role caption, demo first name); sub-mats = the role’s experiences, split by the map’s page groups when an experience has several (member app Book / Pay / Account / Sign in; admin Admin / Content / Tables; a page without a group falls back to the local split); objects = pages as phone / page / screen / document devices with image faces; the website mat opens with a fanned stack of the whole site; Tools as a sub-mat of screens on Super admin when shown",
             "Between Gigs lens: mats Website, Apps, Back office, Build (+ Tools), one figure per mat (the role owning most of it), sub-mats by experience, condensed at 12 per sub-mat with a stack",
-            "On its own lens: one mat, the hub itself first (start here), then one screen per experience by band (outside / team / build), then the testing tools",
+            "On its own lens: one mat, the hub itself first (start here, a screen), then one object per experience by band (outside / team / build) as its device (phone apps as phones, the website as a fanned stack of its tall pages, documents as documents, desktops as screens), then the testing tools",
             "Drawer (right from 768 px, 56rem while live on desktop screens; bottom sheet below): large face, code, role, experience, device, route, status, purpose, declared actions; footer Previous / Next (within the sub-mat), Open live / Close live (iframe sized to the device, scaled to fit), Open in HOY ↗ (new tab); for a person: portrait, role, demo person, home, device, what sits on the mat, Open live as that role; for the website stack or a +N stack: its pages, each a button"
           ],
           "dataTables": [],
@@ -5615,6 +5617,16 @@
               "label": "Desk legend",
               "intent": "show what the objects on the desk are",
               "permission": "projects.read"
+            },
+            {
+              "id": "desk.sendToWorkMat",
+              "label": "Send to a work mat",
+              "intent": "put {object} on work mat {mat} of the Leads desk",
+              "permission": "projects.read",
+              "params": {
+                "object": "id",
+                "mat": "string"
+              }
             }
           ],
           "checkedAt": [
@@ -5846,6 +5858,16 @@
               "label": "Desk legend",
               "intent": "show what the objects on the desk are",
               "permission": "tasks.manage"
+            },
+            {
+              "id": "desk.sendToWorkMat",
+              "label": "Send to a work mat",
+              "intent": "put {object} on work mat {mat} of the Leads desk",
+              "permission": "tasks.manage",
+              "params": {
+                "object": "id",
+                "mat": "string"
+              }
             }
           ],
           "checkedAt": [
@@ -6077,6 +6099,16 @@
               "label": "Desk legend",
               "intent": "show what the objects on the desk are",
               "permission": "tasks.own.write"
+            },
+            {
+              "id": "desk.sendToWorkMat",
+              "label": "Send to a work mat",
+              "intent": "put {object} on work mat {mat} of the Leads desk",
+              "permission": "tasks.own.write",
+              "params": {
+                "object": "id",
+                "mat": "string"
+              }
             }
           ],
           "checkedAt": [
@@ -6308,6 +6340,16 @@
               "label": "Desk legend",
               "intent": "show what the objects on the desk are",
               "permission": "tasks.own.write"
+            },
+            {
+              "id": "desk.sendToWorkMat",
+              "label": "Send to a work mat",
+              "intent": "put {object} on work mat {mat} of the Leads desk",
+              "permission": "tasks.own.write",
+              "params": {
+                "object": "id",
+                "mat": "string"
+              }
             }
           ],
           "checkedAt": [
@@ -6539,6 +6581,16 @@
               "label": "Desk legend",
               "intent": "show what the objects on the desk are",
               "permission": "dev.tools"
+            },
+            {
+              "id": "desk.sendToWorkMat",
+              "label": "Send to a work mat",
+              "intent": "put {object} on work mat {mat} of the Leads desk",
+              "permission": "dev.tools",
+              "params": {
+                "object": "id",
+                "mat": "string"
+              }
             }
           ],
           "checkedAt": [
@@ -7492,6 +7544,98 @@
               "label": "Desk legend",
               "intent": "show what the objects on the desk are",
               "permission": "projects.read"
+            },
+            {
+              "id": "desk.fanOut",
+              "label": "Fan out a dossier",
+              "intent": "fan out {object}'s dossier on the desk",
+              "permission": "projects.read",
+              "params": {
+                "object": "id"
+              }
+            },
+            {
+              "id": "desk.stackUp",
+              "label": "Stack a dossier",
+              "intent": "stack {object}'s dossier back up",
+              "permission": "projects.read",
+              "params": {
+                "object": "id"
+              }
+            },
+            {
+              "id": "desk.sortStack",
+              "label": "Sort a dossier",
+              "intent": "sort {object}'s dossier by {by}",
+              "permission": "projects.read",
+              "params": {
+                "object": "id",
+                "by": "enum:kind|date|network"
+              }
+            },
+            {
+              "id": "desk.flipCard",
+              "label": "Flip a dossier card",
+              "intent": "turn over the {card} card",
+              "permission": "projects.read",
+              "params": {
+                "card": "id"
+              }
+            },
+            {
+              "id": "desk.addWorkMat",
+              "label": "Add a work mat",
+              "intent": "add a work mat to the desk",
+              "permission": "projects.read"
+            },
+            {
+              "id": "desk.renameWorkMat",
+              "label": "Rename a work mat",
+              "intent": "call work mat {mat} {name}",
+              "permission": "projects.read",
+              "params": {
+                "mat": "string",
+                "name": "string"
+              }
+            },
+            {
+              "id": "desk.removeWorkMat",
+              "label": "Remove a work mat",
+              "intent": "remove work mat {mat}",
+              "permission": "projects.read",
+              "params": {
+                "mat": "string"
+              }
+            },
+            {
+              "id": "desk.sendToWorkMat",
+              "label": "Send to a work mat",
+              "intent": "put {object} on work mat {mat}",
+              "permission": "projects.read",
+              "params": {
+                "object": "id",
+                "mat": "string"
+              }
+            },
+            {
+              "id": "desk.moveOnWorkMat",
+              "label": "Move on a work mat",
+              "intent": "move {object} to square {x}, {y} of its work mat",
+              "permission": "projects.read",
+              "params": {
+                "object": "id",
+                "x": "number",
+                "y": "number"
+              }
+            },
+            {
+              "id": "desk.removeFromWorkMat",
+              "label": "Remove from a work mat",
+              "intent": "take {object} off its work mat",
+              "permission": "projects.read",
+              "params": {
+                "object": "id"
+              }
             }
           ],
           "checkedAt": [
@@ -7739,6 +7883,98 @@
               "label": "Desk legend",
               "intent": "show what the objects on the desk are",
               "permission": "leads.manage"
+            },
+            {
+              "id": "desk.fanOut",
+              "label": "Fan out a dossier",
+              "intent": "fan out {object}'s dossier on the desk",
+              "permission": "leads.manage",
+              "params": {
+                "object": "id"
+              }
+            },
+            {
+              "id": "desk.stackUp",
+              "label": "Stack a dossier",
+              "intent": "stack {object}'s dossier back up",
+              "permission": "leads.manage",
+              "params": {
+                "object": "id"
+              }
+            },
+            {
+              "id": "desk.sortStack",
+              "label": "Sort a dossier",
+              "intent": "sort {object}'s dossier by {by}",
+              "permission": "leads.manage",
+              "params": {
+                "object": "id",
+                "by": "enum:kind|date|network"
+              }
+            },
+            {
+              "id": "desk.flipCard",
+              "label": "Flip a dossier card",
+              "intent": "turn over the {card} card",
+              "permission": "leads.manage",
+              "params": {
+                "card": "id"
+              }
+            },
+            {
+              "id": "desk.addWorkMat",
+              "label": "Add a work mat",
+              "intent": "add a work mat to the desk",
+              "permission": "leads.manage"
+            },
+            {
+              "id": "desk.renameWorkMat",
+              "label": "Rename a work mat",
+              "intent": "call work mat {mat} {name}",
+              "permission": "leads.manage",
+              "params": {
+                "mat": "string",
+                "name": "string"
+              }
+            },
+            {
+              "id": "desk.removeWorkMat",
+              "label": "Remove a work mat",
+              "intent": "remove work mat {mat}",
+              "permission": "leads.manage",
+              "params": {
+                "mat": "string"
+              }
+            },
+            {
+              "id": "desk.sendToWorkMat",
+              "label": "Send to a work mat",
+              "intent": "put {object} on work mat {mat}",
+              "permission": "leads.manage",
+              "params": {
+                "object": "id",
+                "mat": "string"
+              }
+            },
+            {
+              "id": "desk.moveOnWorkMat",
+              "label": "Move on a work mat",
+              "intent": "move {object} to square {x}, {y} of its work mat",
+              "permission": "leads.manage",
+              "params": {
+                "object": "id",
+                "x": "number",
+                "y": "number"
+              }
+            },
+            {
+              "id": "desk.removeFromWorkMat",
+              "label": "Remove from a work mat",
+              "intent": "take {object} off its work mat",
+              "permission": "leads.manage",
+              "params": {
+                "object": "id"
+              }
             }
           ],
           "checkedAt": [
@@ -26384,7 +26620,7 @@
         }
       }
     ],
-    "version": "0.23.0",
+    "version": "0.24.0",
     "actions": {
       "declared": [
         {
@@ -30957,6 +31193,18 @@
           "permission": "projects.read"
         },
         {
+          "id": "desk.sendToWorkMat",
+          "code": "W-04",
+          "path": "/founder/desk",
+          "label": "Send to a work mat",
+          "intent": "put {object} on work mat {mat} of the Leads desk",
+          "permission": "projects.read",
+          "params": {
+            "object": "id",
+            "mat": "string"
+          }
+        },
+        {
           "id": "desk.zoom",
           "code": "W-04",
           "path": "/ops/desk",
@@ -31140,6 +31388,18 @@
           "permission": "tasks.manage"
         },
         {
+          "id": "desk.sendToWorkMat",
+          "code": "W-04",
+          "path": "/ops/desk",
+          "label": "Send to a work mat",
+          "intent": "put {object} on work mat {mat} of the Leads desk",
+          "permission": "tasks.manage",
+          "params": {
+            "object": "id",
+            "mat": "string"
+          }
+        },
+        {
           "id": "desk.zoom",
           "code": "W-04",
           "path": "/studio/desk",
@@ -31323,6 +31583,18 @@
           "permission": "tasks.own.write"
         },
         {
+          "id": "desk.sendToWorkMat",
+          "code": "W-04",
+          "path": "/studio/desk",
+          "label": "Send to a work mat",
+          "intent": "put {object} on work mat {mat} of the Leads desk",
+          "permission": "tasks.own.write",
+          "params": {
+            "object": "id",
+            "mat": "string"
+          }
+        },
+        {
           "id": "desk.zoom",
           "code": "W-04",
           "path": "/brand/desk",
@@ -31506,6 +31778,18 @@
           "permission": "tasks.own.write"
         },
         {
+          "id": "desk.sendToWorkMat",
+          "code": "W-04",
+          "path": "/brand/desk",
+          "label": "Send to a work mat",
+          "intent": "put {object} on work mat {mat} of the Leads desk",
+          "permission": "tasks.own.write",
+          "params": {
+            "object": "id",
+            "mat": "string"
+          }
+        },
+        {
           "id": "desk.zoom",
           "code": "W-04",
           "path": "/dev/desk",
@@ -31687,6 +31971,18 @@
           "label": "Desk legend",
           "intent": "show what the objects on the desk are",
           "permission": "dev.tools"
+        },
+        {
+          "id": "desk.sendToWorkMat",
+          "code": "W-04",
+          "path": "/dev/desk",
+          "label": "Send to a work mat",
+          "intent": "put {object} on work mat {mat} of the Leads desk",
+          "permission": "dev.tools",
+          "params": {
+            "object": "id",
+            "mat": "string"
+          }
         },
         {
           "id": "dev.searchComponents",
@@ -32308,6 +32604,118 @@
           "permission": "projects.read"
         },
         {
+          "id": "desk.fanOut",
+          "code": "A-03",
+          "path": "/founder/pipeline",
+          "label": "Fan out a dossier",
+          "intent": "fan out {object}'s dossier on the desk",
+          "permission": "projects.read",
+          "params": {
+            "object": "id"
+          }
+        },
+        {
+          "id": "desk.stackUp",
+          "code": "A-03",
+          "path": "/founder/pipeline",
+          "label": "Stack a dossier",
+          "intent": "stack {object}'s dossier back up",
+          "permission": "projects.read",
+          "params": {
+            "object": "id"
+          }
+        },
+        {
+          "id": "desk.sortStack",
+          "code": "A-03",
+          "path": "/founder/pipeline",
+          "label": "Sort a dossier",
+          "intent": "sort {object}'s dossier by {by}",
+          "permission": "projects.read",
+          "params": {
+            "object": "id",
+            "by": "enum:kind|date|network"
+          }
+        },
+        {
+          "id": "desk.flipCard",
+          "code": "A-03",
+          "path": "/founder/pipeline",
+          "label": "Flip a dossier card",
+          "intent": "turn over the {card} card",
+          "permission": "projects.read",
+          "params": {
+            "card": "id"
+          }
+        },
+        {
+          "id": "desk.addWorkMat",
+          "code": "A-03",
+          "path": "/founder/pipeline",
+          "label": "Add a work mat",
+          "intent": "add a work mat to the desk",
+          "permission": "projects.read"
+        },
+        {
+          "id": "desk.renameWorkMat",
+          "code": "A-03",
+          "path": "/founder/pipeline",
+          "label": "Rename a work mat",
+          "intent": "call work mat {mat} {name}",
+          "permission": "projects.read",
+          "params": {
+            "mat": "string",
+            "name": "string"
+          }
+        },
+        {
+          "id": "desk.removeWorkMat",
+          "code": "A-03",
+          "path": "/founder/pipeline",
+          "label": "Remove a work mat",
+          "intent": "remove work mat {mat}",
+          "permission": "projects.read",
+          "params": {
+            "mat": "string"
+          }
+        },
+        {
+          "id": "desk.sendToWorkMat",
+          "code": "A-03",
+          "path": "/founder/pipeline",
+          "label": "Send to a work mat",
+          "intent": "put {object} on work mat {mat}",
+          "permission": "projects.read",
+          "params": {
+            "object": "id",
+            "mat": "string"
+          }
+        },
+        {
+          "id": "desk.moveOnWorkMat",
+          "code": "A-03",
+          "path": "/founder/pipeline",
+          "label": "Move on a work mat",
+          "intent": "move {object} to square {x}, {y} of its work mat",
+          "permission": "projects.read",
+          "params": {
+            "object": "id",
+            "x": "number",
+            "y": "number"
+          }
+        },
+        {
+          "id": "desk.removeFromWorkMat",
+          "code": "A-03",
+          "path": "/founder/pipeline",
+          "label": "Remove from a work mat",
+          "intent": "take {object} off its work mat",
+          "permission": "projects.read",
+          "params": {
+            "object": "id"
+          }
+        },
+        {
           "id": "founder.newLead",
           "code": "A-08",
           "path": "/founder/leads",
@@ -32530,6 +32938,118 @@
           "label": "Desk legend",
           "intent": "show what the objects on the desk are",
           "permission": "leads.manage"
+        },
+        {
+          "id": "desk.fanOut",
+          "code": "A-08",
+          "path": "/founder/leads",
+          "label": "Fan out a dossier",
+          "intent": "fan out {object}'s dossier on the desk",
+          "permission": "leads.manage",
+          "params": {
+            "object": "id"
+          }
+        },
+        {
+          "id": "desk.stackUp",
+          "code": "A-08",
+          "path": "/founder/leads",
+          "label": "Stack a dossier",
+          "intent": "stack {object}'s dossier back up",
+          "permission": "leads.manage",
+          "params": {
+            "object": "id"
+          }
+        },
+        {
+          "id": "desk.sortStack",
+          "code": "A-08",
+          "path": "/founder/leads",
+          "label": "Sort a dossier",
+          "intent": "sort {object}'s dossier by {by}",
+          "permission": "leads.manage",
+          "params": {
+            "object": "id",
+            "by": "enum:kind|date|network"
+          }
+        },
+        {
+          "id": "desk.flipCard",
+          "code": "A-08",
+          "path": "/founder/leads",
+          "label": "Flip a dossier card",
+          "intent": "turn over the {card} card",
+          "permission": "leads.manage",
+          "params": {
+            "card": "id"
+          }
+        },
+        {
+          "id": "desk.addWorkMat",
+          "code": "A-08",
+          "path": "/founder/leads",
+          "label": "Add a work mat",
+          "intent": "add a work mat to the desk",
+          "permission": "leads.manage"
+        },
+        {
+          "id": "desk.renameWorkMat",
+          "code": "A-08",
+          "path": "/founder/leads",
+          "label": "Rename a work mat",
+          "intent": "call work mat {mat} {name}",
+          "permission": "leads.manage",
+          "params": {
+            "mat": "string",
+            "name": "string"
+          }
+        },
+        {
+          "id": "desk.removeWorkMat",
+          "code": "A-08",
+          "path": "/founder/leads",
+          "label": "Remove a work mat",
+          "intent": "remove work mat {mat}",
+          "permission": "leads.manage",
+          "params": {
+            "mat": "string"
+          }
+        },
+        {
+          "id": "desk.sendToWorkMat",
+          "code": "A-08",
+          "path": "/founder/leads",
+          "label": "Send to a work mat",
+          "intent": "put {object} on work mat {mat}",
+          "permission": "leads.manage",
+          "params": {
+            "object": "id",
+            "mat": "string"
+          }
+        },
+        {
+          "id": "desk.moveOnWorkMat",
+          "code": "A-08",
+          "path": "/founder/leads",
+          "label": "Move on a work mat",
+          "intent": "move {object} to square {x}, {y} of its work mat",
+          "permission": "leads.manage",
+          "params": {
+            "object": "id",
+            "x": "number",
+            "y": "number"
+          }
+        },
+        {
+          "id": "desk.removeFromWorkMat",
+          "code": "A-08",
+          "path": "/founder/leads",
+          "label": "Remove from a work mat",
+          "intent": "take {object} off its work mat",
+          "permission": "leads.manage",
+          "params": {
+            "object": "id"
+          }
         },
         {
           "id": "founder.finaliseDocument",

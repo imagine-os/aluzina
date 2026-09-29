@@ -18,21 +18,28 @@ Same map, same engine, a different model builder and framing (D-111); switch on 
 
 | Lens | Host | groupBy hint | Mats | Figures | Sub-mats | Objects | Tools | Framing (from the map) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `aluzina` | ALUZINA (the studio that built it) | role | one per client role, outside-in (8 for HOY) | the mat's role | the role's experiences (member app split by task, big ones halved) | every page as its device (87 + the site stack) | off (Tools switch) | "A studio deliverable: one mat per client role, with that role's screens laid on it." |
-| `between-gigs` | Between Gigs (Justin's company OS, HOY as one gig) | experience | Website, Apps, Back office, Build, Tools | the role owning most pages on the mat | the experiences | pages as devices, condensed at 12 per sub-mat (+N stacks) | on | "One gig with its surfaces and tools." + the gig card (name, version, tagline, counts, Open) |
-| `standalone` | HOY on its own (its testing hub) | surface | one: the hub | the builder (super admin) | the hub, Outside, The team, Build, Testing tools | the hub itself first, one screen per experience (its entry page), the 9 tools | on | "hoy's own testing hub: every surface by band and every tool, as at /#/." |
+| `aluzina` | ALUZINA (the studio that built it) | role | one per client role, outside-in (8 for HOY) | the mat's role | the role's experiences, split by the map's page groups when an experience has several (`page.group`, since HOY 0.11.1; member app Book / Pay / Account / Sign in, admin Admin / Content / Tables); pages without a group fall back to the local split | every page as its device (87 + the site stack) | off (Tools switch) | "A studio deliverable: one mat per client role, with that role's screens laid on it." |
+| `between-gigs` | Between Gigs (Justin's company OS, HOY as one gig) | experience | Website, Apps, Back office, Build, Tools | the role owning most pages on the mat | the experiences | pages as devices, condensed at 12 per sub-mat (+N stacks) | on | "One gig with its surfaces and tools." + the tagline under it and a compact gig strip beside it (name, Gig · version · counts, Open; changelog 0042) |
+| `standalone` | HOY on its own (its testing hub) | surface | one: the hub | the builder (super admin) | the hub, Outside, The team, Build, Testing tools | the hub itself first (a screen), one object per experience as its device (the member and teacher apps as phones, the website as a fanned stack of its tall pages with the full-length capture, the manual and docs as documents, desktops as screens), the 9 tools | on | "hoy's own testing hub: every surface by band and every tool, as at /#/." |
+
+## Header, subtitle and wording (changelog 0042)
+
+- The page subtitle follows the lens: ALUZINA "87 pages on 8 mats, each client role seated at its mat"; Between Gigs "87 pages on 5 mats, one gig with its surfaces and tools"; On its own "87 pages on one mat, as HOY's own hub". Mats are pluralised in both languages ("one mat" / "un tapete"; the mat counts "1 screen" / "1 pantalla").
+- Lens titles and framing come from the map's `lenses` hints, with the host's own wording merged per language from `registry.ts` `lensCopy` (ALUZINA's house style: the studio's name in capitals, "tapete" for mat, natural Spanish: "hoy en el estudio ALUZINA", "hoy como gig", "El hub de pruebas de hoy"). Only the strings given replace the map's; the rest stays the client's. HOY's own role labels are never overridden.
+- A narrow header strip (a container query, 36rem: phones and 768 beside the sidebar) keeps the wordmark, the version and "Project prj-hoy" on one line, Reload map as a named 44 px icon button, and the three lens tabs on one row; below 768 the gig strip's Open is a named icon and the tagline is dropped, so the desk starts inside the first screen at 390 x 844 on the ALUZINA and standalone lenses.
+- The desk toolbar is the shared `DeskStage` one and wraps at 1280 exactly as W-04's does (the camera group and the view group need 975 px EN / 1173 px ES; the content column is 960 px); one row from 1920.
 
 ## The ALUZINA lens: one mat per client role
 
 | Mat (EN / ES) | Role (look, demo) | Sub-mats (experiences) | Objects |
 | --- | --- | --- | --- |
-| 01 Customer / Cliente | customer (ponytail, tee; Juliana) | Customer app · Book, · Pay, · Account, · Sign in | 37 phones |
+| 01 Customer / Cliente | customer (ponytail, tee; Juliana) | Customer app · Book, · Pay, · Account, · Sign in (the map's groups) | 37 phones |
 | 02 Web · Public / Web · Público | public (curly, hoodie) | Website | 1 fanned stack of the whole site + 10 tall pages |
 | 03 Teacher / Profesora | teacher (bun, tee, mala; Andrés) | Teacher app | 1 phone |
 | 04 Front desk / Recepción | front_desk (curly, shirt, badge; Camilo) | Front desk, Inbox, Point of sale | 5 screens |
 | 05 Coordinator / Coordinación | coordinator (long, cardigan, badge; Valentina) | CRM | 2 screens |
 | 06 Finance / Finanzas | finance (short, blazer, tie; Laura) | Finance | 4 screens |
-| 07 Admin / Administración | admin (long, shirt, necklace; Mateo) | Admin dashboard · 1 / 2, · 2 / 2, Operations manual | 17 screens + 2 documents |
+| 07 Admin / Administración | admin (long, shirt, necklace; Mateo) | Admin dashboard · Admin, · Content, · Tables (the map's groups), Operations manual | 17 screens + 2 documents |
 | 08 Super admin / Dirección técnica | super_admin (crop, hoodie; Sofía) | Docs, Kanban & knowledgebase, Dev tools (+ Tools when shown) | 1 document + 8 screens (+ 9 tool screens) |
 
 Maintenance owns no experience today and gets no mat (it appears as soon as the map gives it one). Mats keep the outside-in order of the map (who practises, who visits, who teaches, the team, who builds).
@@ -52,7 +59,7 @@ The faces' language is its own switch (ES / EN), the theme follows the app. Feat
 
 ## Caps
 
-ALUZINA lens: 16 objects per sub-mat and 48 per mat, so every one of the 87 pages is on the desk; the member app is split into four sub-mats by what the member is doing, an experience over 16 pages into balanced halves. Past a cap the rest become one `stack` whose drawer lists them (each a button). The face budget (200) makes objects plain past it (no image requested). `npm run desk:check` lays every lens out at seven widths in every build.
+ALUZINA lens: 16 objects per sub-mat and 48 per mat, so every one of the 87 pages is on the desk; an experience with several page groups gets one sub-mat per group (the map's `order`), a group or an ungrouped experience over 16 pages is split into balanced halves. Past a cap the rest become one `stack` whose drawer lists them (each a button). The face budget (200) makes objects plain past it (no image requested). `npm run desk:check` lays every lens out at seven widths in every build.
 
 ## Camera
 

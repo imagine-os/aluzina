@@ -16,6 +16,9 @@
 //        --mount=<url-prefix>=<dir> (repeatable, comma-separated): answer requests under that URL prefix from a local folder
 //        (longest prefix wins), e.g. a client hub map and its captures from the client's checkout when the sandbox cannot
 //        reach them (W-05 / D-16: --mount=https://imagine-os.github.io/hoy/hub-map/shots/=../hoy/docs/screenshots/,https://imagine-os.github.io/hoy/=../hoy/public/).
+//        A folder request (e.g. the client's site root, loaded by W-05's live frame) answers that folder's index.html.
+//        --click=<selector>[;<selector>...]: after the page settles, click each selector in order (700 ms apart), e.g. W-05's
+//        drawer live: --route='/founder/clients/hoy/hub?open=C-01' --click='.drawer .btn--primary' --name=open-live.
 //        --list prints the resolved --as role -> demo user id (from tenant/auth/demoUsers.ts) and exits, no browser (tp-07).
 import { mkdirSync, readFileSync, writeFileSync, existsSync, statSync } from 'node:fs';
 import { extname, join, resolve } from 'node:path';
@@ -54,6 +57,7 @@ const name = args.name ? `-${args.name}` : ''; // --name=board -> <lang>-<width>
 const suffix = `${name}${theme === 'dark' ? '-dark' : ''}`;
 const storage = args.storage ? JSON.parse(args.storage) : {};
 const scroll = Number(args.scroll ?? 0);
+const clicks = args.click && args.click !== 'true' ? args.click.split(';').filter(Boolean) : [];
 const heights = { 390: 900, 1280: 900, 1920: 1080, 2560: 1440, 3840: 2160 };
 
 // Prefer the preinstalled Chromium when present; override with PW_EXECUTABLE.
@@ -75,7 +79,7 @@ const mounts = (args.mount && args.mount !== 'true' ? args.mount.split(',') : []
     return { prefix: m.slice(0, at), dir: resolve(m.slice(at + 1)) };
   })
   .sort((a, b) => b.prefix.length - a.prefix.length);
-const MIME = { '.json': 'application/json', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp' };
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.json': 'application/json', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp' };
 
 const browser = await chromium.launch(launchOpts);
 const outDir = join(outRoot, code);
@@ -101,7 +105,8 @@ for (const shot of shots) {
     await context.route(`${prefix}**`, (r) => {
       const url = new URL(r.request().url());
       const mount = mounts.find((m) => url.href.startsWith(m.prefix));
-      const file = join(mount.dir, decodeURIComponent(url.href.slice(mount.prefix.length).split(/[?#]/)[0]));
+      let file = join(mount.dir, decodeURIComponent(url.href.slice(mount.prefix.length).split(/[?#]/)[0]));
+      if (existsSync(file) && statSync(file).isDirectory()) file = join(file, 'index.html');
       if (!file.startsWith(mount.dir) || !existsSync(file) || statSync(file).isDirectory()) return r.fulfill({ status: 404, body: 'not mounted' });
       return r.fulfill({ status: 200, contentType: MIME[extname(file).toLowerCase()] ?? 'application/octet-stream', body: readFileSync(file) });
     });
@@ -120,6 +125,14 @@ for (const shot of shots) {
   }
   await page.evaluate(() => document.fonts?.ready);
   if (settle > 0) await page.waitForTimeout(settle);
+  for (const sel of clicks) {
+    await page.locator(sel).first().click();
+    await page.waitForTimeout(700);
+  }
+  if (clicks.length) {
+    await page.waitForLoadState('networkidle', { timeout: 30_000 }).catch(() => {});
+    if (settle > 0) await page.waitForTimeout(settle);
+  }
   if (scroll > 0) {
     await page.evaluate((y) => window.scrollTo(0, y), scroll);
     await page.waitForTimeout(400);
