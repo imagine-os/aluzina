@@ -307,6 +307,8 @@ export function buildLights(rows: FlowRows, ctx: FlowCtx): DeskItem[] {
         openAt: { path: rule.openAt.replace(':projectId', ctx.project.id) },
         ref: { entity, id: row.id },
         more,
+        // A lead's tile carries the contact's photo (D-114).
+        ...(entity === 'leads' && (row as Row<'leads'>).portraitUrl ? { profile: { portrait: (row as Row<'leads'>).portraitUrl } } : {}),
       });
     });
   }

@@ -3,7 +3,7 @@
   "id": "aluzina",
   "name": { "en": "Aluzina", "es": "Aluzina" },
   "repo": "https://github.com/imagine-os/aluzina",
-  "version": "0.23.1",
+  "version": "0.24.0",
   "generatedFrom": "8b0acf8",
   "spec": "docs/tenant/manifest.md",
   "identity": {
@@ -104,7 +104,7 @@
       "leads", "engagements", "revisionItems", "changeOrders", "purchases", "siteReports", "messages", "assets"
     ],
     "baseRow": ["id", "created_at", "updated_at", "updated_by", "tenant_id", "version"],
-    "seedVersion": 13,
+    "seedVersion": 14,
     "seedDir": "apps/hub/src/tenant/seed",
     "domainDir": "apps/hub/src/tenant/domain",
     "seedModules": ["archive", "asana", "assets", "brand", "collections", "company", "operations", "projects", "services", "spaces", "studio", "work"],
@@ -164,7 +164,7 @@
   },
   "docs": {
     "root": "docs/README.md",
-    "counters": { "prompts": 31, "changelog": 40, "decisions": 113, "qa": 9 },
+    "counters": { "prompts": 31, "changelog": 41, "decisions": 114, "qa": 9 },
     "pendingDir": "docs/changelog/_pending",
     "plan": "docs/plan/plan.json",
     "kanban": "docs/kanban.md",
@@ -188,8 +188,8 @@
     "bus": "apps/hub/src/actions/bus.ts",
     "global": "window.__aluzina.actions",
     "idPattern": "^[a-z][a-zA-Z0-9]*\\.[a-z][a-zA-Z0-9]*$",
-    "declared": 474,
-    "distinct": 443,
+    "declared": 485,
+    "distinct": 453,
     "platformDeclarations": ["apps/hub/src/desk/actions.ts"],
     "browser": "D-09 /#/dev/actions",
     "exportFormat": "webmcp-json (D-09 export)",

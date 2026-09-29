@@ -21,6 +21,9 @@ import { DeskStage } from './DeskStage';
 import { ENTITY_RULES, PILL_FIELDS, titleOfRow, type EntityRule } from './entities';
 import { fieldLabel, rowFields, valueLabel } from './fields';
 import { findItem } from './layout';
+import { dossierCards, cardName } from './dossier';
+import { WORK_PREFIX, isWorkItem, useLeadDesk } from './leadDesk';
+import { WORK_COLS, WORK_ROWS, entryItemId, parseRef, useWorkMats, type WorkMatState } from './workmats';
 import { deskStrings } from './strings';
 import { FACE_BUDGET, type DeskItem, type DeskModel, type Mat, type PlacedItem } from './types';
 import { useDesk } from './useDesk';
@@ -34,7 +37,7 @@ export const MAX_MATS = 6;
 export const CAP_PER_SUB = 12;
 export const CAP_PER_MAT = 40;
 /** Face font per kind on page desks: a row carries 3-5 short lines, so its face text is larger than a playbook form's. */
-const ROW_FONT: Partial<Record<DeskItem['kind'], number>> = { card: 3.3, sheet: 3, document: 3, checklist: 3, folder: 3.7, box: 3.7, token: 3.6 };
+const ROW_FONT: Partial<Record<DeskItem['kind'], number>> = { profile: 5, card: 3.3, sheet: 3, document: 3, checklist: 3, folder: 3.7, box: 3.7, token: 3.6 };
 /** Full faces per desk; objects past it render a plain tile (D-106, performance). Defined with the geometry. */
 export { FACE_BUDGET };
 
@@ -169,7 +172,66 @@ function rowItem(entity: EntityName, rule: EntityRule, row: Row, group: string, 
     ref: { entity, id: row.id },
     plain,
     font: ROW_FONT[rule.kind],
+    profile: rule.kind === 'profile' ? profileOf(row, amount) : undefined,
   };
+}
+
+/** A lead's profile card (D-114): its picture, the company's logo, the company when it is not the lead's own name, budget, networks. */
+function profileOf(row: Row, amount: unknown): DeskItem['profile'] {
+  const socials = Array.isArray(row.socials) ? (row.socials as { network: string }[]) : [];
+  const company = typeof row.company === 'string' && row.company && row.company !== row.name ? row.company : undefined;
+  return {
+    portrait: typeof row.portraitUrl === 'string' ? row.portraitUrl : undefined,
+    logo: typeof row.logoUrl === 'string' ? row.logoUrl : undefined,
+    company,
+    place: typeof row.city === 'string' ? row.city : undefined,
+    budget: typeof amount === 'number' ? both((l) => formatCop(amount, l)) : undefined,
+    networks: [...new Set(socials.map((x) => x.network))],
+  };
+}
+
+/**
+ * The work mats of a leads desk (D-114), appended after the process mats: one free mat per work mat, its objects the
+ * references a person put there (a lead's profile card drawn from the live row, or one of its dossier cards), each on
+ * its stored square. The rows are the process stacks' rows: a lead on a work mat updates with them.
+ */
+export function withWorkMats(model: DeskModel, state: WorkMatState, leads: readonly Row[], openFor: (entity: EntityName, row: Row) => string): DeskModel {
+  const rule = ENTITY_RULES.leads;
+  const byId = new Map(leads.map((r) => [r.id, r]));
+  const mats: DeskModel['mats'] = state.mats.map((m, i) => ({
+    id: `${WORK_PREFIX}${m.id}`,
+    label: m.name ? { en: m.name, es: m.name } : both((l) => pick(txt('desk.workmat.default'), l).replace('{n}', String(i + 1))),
+    free: { cols: WORK_COLS, rows: WORK_ROWS, label: txt('desk.workmat.surface') },
+  }));
+  const items: DeskItem[] = [];
+  for (const e of state.entries) {
+    const ref = parseRef(e.ref);
+    const row = ref && byId.get(ref.leadId);
+    if (!ref || !row) continue;
+    const base = rowItem('leads', rule, row, 'free', openFor('leads', row), false);
+    const common = { id: entryItemId(e), phase: `${WORK_PREFIX}${e.mat}`, group: 'free', at: { col: e.col, row: e.row } };
+    if (!ref.cardId) {
+      items.push({ ...base, ...common });
+      continue;
+    }
+    // A dossier card on its own: a card with the card's name, the lead it belongs to and the lead's status.
+    const lead = row as unknown as Parameters<typeof dossierCards>[0];
+    const card = dossierCards(lead, []).find((c) => c.id === ref.cardId);
+    if (!card) continue;
+    const tt = (l: 'en' | 'es') => (key: string) => pick(txt(key), l);
+    items.push({
+      ...base,
+      ...common,
+      kind: 'card',
+      title: both((l) => cardName(card, lead, l, tt(l))),
+      subtitle: { en: String(row.name ?? ''), es: String(row.name ?? '') },
+      code: undefined,
+      lines: [{ en: String(row.name ?? ''), es: String(row.name ?? '') }],
+      profile: undefined,
+      font: ROW_FONT.card,
+    });
+  }
+  return { ...model, mats: [...model.mats, ...mats], items: [...model.items, ...items] };
 }
 
 /** Actions of the page that act on one row of this entity: an id param named after it, or its noun in the action id. */
@@ -237,7 +299,7 @@ export function PageDesk({ route }: { route: RouteDef }) {
   const location = useLocation();
   const navigate = useNavigate();
   const routes = useRoutes();
-  const { can } = useSession();
+  const { can, user } = useSession();
   const entities = useMemo(() => deskEntities(route.spec.dataTables), [route.spec.dataTables]);
   const { rows, loading } = useEntityRows(entities);
   const scoped = useMemo(() => scopeRows(rows, params), [rows, params]);
@@ -258,7 +320,12 @@ export function PageDesk({ route }: { route: RouteDef }) {
     };
   }, [routes, route.path, route.surface, location.pathname]);
 
-  const model = useMemo(() => (route.desk?.build ? route.desk.build({ route, params, rows: scoped }) : buildPageDesk(route, scoped, detailFor)), [route, params, scoped, detailFor]);
+  const base = useMemo(() => (route.desk?.build ? route.desk.build({ route, params, rows: scoped }) : buildPageDesk(route, scoped, detailFor)), [route, params, scoped, detailFor]);
+  /** A desk that shows leads carries their dossiers and the person's work mats (D-114). */
+  const hasLeads = entities.includes('leads') && base.mats.some((m) => m.id === 'leads');
+  const works = useWorkMats(route.code, user.id);
+  const model = useMemo(() => (hasLeads ? withWorkMats(base, works.state, scoped.leads ?? [], detailFor) : base), [hasLeads, base, works.state, scoped.leads, detailFor]);
+  const leadApi = useRef<ReturnType<typeof useLeadDesk> | null>(null);
 
   const [selected, setSelected] = useState<string | null>(null);
   const selectedRef = useRef(selected);
@@ -270,8 +337,12 @@ export function PageDesk({ route }: { route: RouteDef }) {
     compactOpenByDefault: false,
     onOpenItem: (id) => openItem(id),
     onReset: () => setSelected(null),
+    drag: hasLeads ? { can: isWorkItem, end: (id, wx, wy, dx, dy) => leadApi.current?.drop(id, wx, wy, dx, dy) } : undefined,
+    onKey: (e) => leadApi.current?.key(e) ?? false,
   });
   const { layout, byId, api } = desk;
+  const lead = useLeadDesk({ enabled: hasLeads, code: route.code, works, desk, leads: scoped.leads ?? [], t, lang, selected, select: setSelected });
+  leadApi.current = lead;
 
   const openItem = useCallback(
     (id: string) => {
@@ -284,9 +355,11 @@ export function PageDesk({ route }: { route: RouteDef }) {
       }
       setSelected(id);
       api.flyToItem(item, 'open');
+      // A lead turns into its dossier, a stack of cards in place (D-114).
+      if (hasLeads && item.ref?.entity === 'leads') leadApi.current?.openDossier(id);
       return item;
     },
-    [byId, api],
+    [byId, api, hasLeads],
   );
 
   const showBelow = () => {
@@ -301,7 +374,7 @@ export function PageDesk({ route }: { route: RouteDef }) {
   const entityOf = (i: DeskItem) => (i.ref ? ENTITY_RULES[i.ref.entity as EntityName] : undefined);
   const subName = (matId: string, group: string) => {
     const def = model.mats.find((m) => m.id === matId);
-    const l = def?.subLabels?.[group];
+    const l = def?.subLabels?.[group] ?? (group === 'free' ? def?.free?.label : undefined);
     return l ? pick(l, lang) : group;
   };
   const itemLabel = (i: PlacedItem) => {
@@ -390,6 +463,9 @@ export function PageDesk({ route }: { route: RouteDef }) {
         selected={selected}
         compactSummary={t('desk.compact', { objects, mats: layout.mats.length, more: moreText })}
         grouping={grouping}
+        matClass={lead.matClass}
+        toolbarExtra={lead.toolbar}
+        worldOverlay={lead.overlay}
       />
       <Drawer
         open={Boolean(selectedItem)}
@@ -425,6 +501,7 @@ export function PageDesk({ route }: { route: RouteDef }) {
                 { key: t('desk.drawer.page'), value: pageOf(selectedItem.openAt.path || location.pathname) },
               ]}
             />
+            {lead.drawerSection(selectedItem)}
             <h3 className="desk-drawer__h">{t('desk.abilities')}</h3>
             {selectedEntity && abilities.length > 0 ? (
               <>

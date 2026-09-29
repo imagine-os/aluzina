@@ -14,8 +14,10 @@ import { SEED_AT, type SeedCtx, type SeedModule } from './types';
  * folder (`seed/collections.ts`), their set -> project `depicts` relations and the two Brand Memory notes.
  * 13: tenant packaging tp-04 (changelog 0026, D-091) — every row gains `tenant_id` (`TENANT.id`) and `version` (1 on seed / create,
  * +1 per update); `ctx.add` stamps both here so no seed module changes.
+ * 14: lead dossiers (changelog 0041, D-114) — every `leads` row gains `portraitUrl` (generated placeholder art), and `company`,
+ * `logoUrl` (companies: a generated monogram) and `socials` (fictional handles); existing stores re-seed to see them.
  */
-export const SEED_VERSION = 13;
+export const SEED_VERSION = 14;
 
 /** One file per area, globbed: add `src/tenant/seed/<area>.ts` exporting `seed(ctx)` (+ `order`), never edit this file. */
 const modules = import.meta.glob<SeedModule>(['./*.ts', '!./index.ts', '!./types.ts'], { eager: true });

@@ -17,6 +17,7 @@ import { DeskStage } from '../../desk/DeskStage';
 import { findItem } from '../../desk/layout';
 import type { DeskModel } from '../../desk/types';
 import { useDesk } from '../../desk/useDesk';
+import { leadRef, loadWorkMats, sendToOtherDesk } from '../../desk/workmats';
 import { coreStrings } from '../../i18n/core';
 import { formatCop, formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
@@ -53,7 +54,7 @@ export function DeskPage({ surface }: { surface: Surface }) {
 
   const navigate = useNavigate();
   const data = useData();
-  const { can, switchUser } = useSession();
+  const { can, switchUser, user } = useSession();
   /** The followed project (light layer, D-105), the trail's current stop and whether it is playing. */
   const [follow, setFollow] = useState<string | null>(null);
   const [trailIdx, setTrailIdx] = useState(-1);
@@ -315,6 +316,14 @@ export function DeskPage({ surface }: { surface: Surface }) {
       togglePlay(false);
       return eventText(stepTrail(dir === 'prev' ? -1 : 1));
     },
+    'desk.sendToWorkMat': ({ object, mat }) => {
+      // A lead of the followed project (its light tile, or the lead id) onto a work mat of the Leads desk (A-08, D-114).
+      const q = String(object ?? '').trim();
+      const tile = findItem(layout.items, q);
+      const leadId = tile?.ref?.entity === 'leads' ? tile.ref.id : flow.rows.leads.find((l) => l.id === q || l.name.toLowerCase() === q.toLowerCase())?.id;
+      if (!leadId) return `no lead "${q}" on the desk (follow its project first; lead tiles are on the Lead mat)`;
+      return sendLead(leadId, mat ? String(mat) : undefined);
+    },
     'desk.openRow': async ({ entity, id }) => {
       const name = String(entity ?? '') as FlowEntity;
       if (!(FLOW_ENTITIES as readonly string[]).includes(name)) return `no page for "${String(entity)}" (one of ${FLOW_ENTITIES.join(', ')})`;
@@ -346,6 +355,20 @@ export function DeskPage({ surface }: { surface: Surface }) {
     if (key === 'projectId') return project?.name;
     return undefined;
   };
+  /** W-04's "Send to work mat" (D-114): the lead goes onto a work mat of A-08 for this person. */
+  const sendLead = (leadId: string, matQ?: string) => {
+    const lead = flow.rows.leads.find((l) => l.id === leadId);
+    const mats = loadWorkMats('A-08', user.id).mats;
+    const q = (matQ ?? '').trim().toLowerCase();
+    const target = q ? mats.find((m, i) => m.id === q || m.name.toLowerCase() === q || String(i + 1) === q) : mats[0];
+    if (q && !target) return `no work mat "${matQ}" on A-08 (${mats.map((m) => m.id).join(', ')})`;
+    const r = sendToOtherDesk('A-08', user.id, leadRef(leadId), target?.id);
+    const idx = mats.findIndex((m) => m.id === r.mat.id);
+    const matName = r.mat.name || t('desk.workmat.default', { n: idx + 1 });
+    toast(t(r.already ? 'desk.workmat.already' : 'desk.workmat.sentOther', { what: lead?.name ?? leadId, mat: matName, code: 'A-08' }));
+    return `${r.already ? 'already on' : 'sent to'} ${matName} of A-08 at square ${r.col + 1}, ${r.row + 1}: ${lead?.name ?? leadId}`;
+  };
+
   const lightDrawer = (i: PlacedItem) => {
     const entity = i.ref?.entity as FlowEntity | undefined;
     const rule = entity ? FLOW_RULES[entity] : undefined;
@@ -368,6 +391,17 @@ export function DeskPage({ surface }: { surface: Surface }) {
           <>
             <h3 className="desk-drawer__h">{t('desk.drawer.rule')}</h3>
             <p className="desk-drawer__why">{pick(rule.rationale, lang)}</p>
+          </>
+        )}
+        {entity === 'leads' && selectedRow && (
+          <>
+            <h3 className="desk-drawer__h">{t('desk.workmat.title')}</h3>
+            <p className="desk-drawer__why">{t('desk.workmat.fromW04')}</p>
+            <div className="desk-dossier-drawer">
+              <Button size="sm" onClick={() => sendLead(selectedRow.id)} data-ability="desk.sendToWorkMat">
+                {t('desk.workmat.sendHere')}
+              </Button>
+            </div>
           </>
         )}
         <h3 className="desk-drawer__h">{t('desk.drawer.fields', { n: fields.length })}</h3>

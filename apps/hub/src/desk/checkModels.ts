@@ -22,9 +22,12 @@ export function syntheticDesk(): DeskModel {
   // One mat of only devices, one of only papers.
   for (let k = 0; k < 11; k++) items.push({ id: `dev${k}`, kind: (['phone', 'screen', 'page', 'tablet', 'pages'] as const)[k % 5], phase: 'f', group: 'g', source: 'row', title: { en: 'device' }, lines: [], openAt: { path: '/' } });
   for (let k = 0; k < 17; k++) items.push({ id: `pap${k}`, kind: k % 4 === 0 ? 'folder' : 'sheet', phase: 'g', group: 'g', source: 'row', title: { en: 'paper' }, lines: [], openAt: { path: '/' } });
+  // A work mat (a free mat, D-114): stored squares, one taken twice, one off the grid, one missing.
+  const at = [{ col: 0, row: 0 }, { col: 0, row: 0 }, { col: 8, row: 1 }, { col: 3, row: 2 }, undefined, { col: 20, row: 1 }];
+  at.forEach((a, k) => items.push({ id: `wm${k}`, kind: k % 2 ? 'card' : 'profile', phase: 'w', group: 'free', source: 'row', title: { en: 'lead' }, lines: [], openAt: { path: '/' }, at: a }));
   return {
     code: 'CHECK',
-    mats: [...mats, 'f', 'g'].map((id) => ({ id, label: { en: id } })),
+    mats: [...[...mats, 'f', 'g'].map((id) => ({ id, label: { en: id } })), { id: 'w', label: { en: 'Work mat' }, free: { cols: 9, rows: 4 } }],
     items,
     people: ['a', 'c', 'f'].map((phase) => ({ phase, role: { id: 'r', playbookRole: { en: 'Role' }, roleId: null, note: { en: '' } }, roleId: null, look: 'customer', basis: 'closest' as const, inferred: true, rationale: { en: '' }, props: ['phone', 'mug'] as ['phone', 'mug'] })),
   };

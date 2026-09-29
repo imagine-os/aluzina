@@ -14,3 +14,7 @@ make sure everyhting renders clean and smooth, text, no clipping when 3d objects
 ## Response
 
 Posted in Slack after deploy; appended in a follow-up commit.
+
+## Numbering (appended with changelog 0041)
+
+The context line above predicted changelog 0039 / D-108 / 0.23.0 for the dossiers; the parallel hoy-hub pass took changelogs 0039 and 0040 and D-108..D-113 first, so the lead dossiers and work mats are changelog 0041, D-114, version 0.24.0.

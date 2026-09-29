@@ -79,6 +79,11 @@ export interface UseDeskOptions {
   /** Registers the toolbar actions under the route's guard (`false` skips, e.g. without permission). */
   actions?: boolean;
   /**
+   * Objects a person may move by hand (work mats, D-114): a press on one of them and a drag moves the object (pointer,
+   * touch or pen) instead of the camera; `end` gets the world point it was dropped on. Keys and actions move them too.
+   */
+  drag?: { can: (id: string) => boolean; end: (id: string, wx: number, wy: number, dx: number, dy: number) => void };
+  /**
    * The lowest zoom the desk opens at, per stage size (undefined: fit the whole desk). When fitting the whole desk
    * would be smaller, the home view (first view, Reset, refits while untouched) shows the desk's top-left corner at
    * this zoom instead, so big desks keep their faces readable and their hit areas >= 44 px (hub desks). The Fit
@@ -432,6 +437,9 @@ export function useDesk(opts: UseDeskOptions) {
     [fitCam, flyTo, matById],
   );
 
+  /** Fits a world rectangle (e.g. a mat and the fanned dossier over it). */
+  const fitBox = useCallback((x0: number, y0: number, x1: number, y1: number, pad = 20) => flyTo(fitCam(x0, y0, x1, y1, pad)), [fitCam, flyTo]);
+
   const fitSub = useCallback(
     (sub: SubMat, mat: Mat) => {
       const x = mat.x + sub.x;
@@ -714,6 +722,7 @@ export function useDesk(opts: UseDeskOptions) {
   const gesture = useRef<
     | { kind: 'drag'; id: number; sx: number; sy: number; wx: number; wy: number; moved: boolean; type: string; t0: number; samples: { t: number; x: number; y: number }[] }
     | { kind: 'pinch'; d0: number; z0: number; wx: number; wy: number }
+    | { kind: 'item'; id: string; el: HTMLElement; sx: number; sy: number; wx: number; wy: number; moved: boolean; type: string }
     | null
   >(null);
   const suppressClick = useRef(false);
@@ -774,6 +783,13 @@ export function useDesk(opts: UseDeskOptions) {
     if (pointers.current.size === 1) {
       // Space + drag (or the middle button) pans from anywhere, objects included, without activating them.
       const grab = spaceHeld.current || e.button === 1;
+      const itemEl = !grab ? ((e.target as Element).closest?.('[data-desk-item]') as HTMLElement | null) : null;
+      const itemId = itemEl?.getAttribute('data-desk-item') ?? '';
+      if (itemEl && optsRef.current.drag?.can(itemId)) {
+        // A movable object (a work mat's): this press may move it.
+        gesture.current = { kind: 'item', id: itemId, el: itemEl, sx: p.x, sy: p.y, ...worldAt(p.x, p.y), moved: false, type: e.pointerType };
+        return;
+      }
       startDrag(e.pointerId, p, grab, e.pointerType);
       if (grab) {
         spaceDragged.current = true;
@@ -782,6 +798,12 @@ export function useDesk(opts: UseDeskOptions) {
         e.preventDefault();
       }
     } else if (pointers.current.size === 2) {
+      const g = gesture.current;
+      if (g?.kind === 'item') {
+        // A second finger turns an object move into a pinch: the object goes back.
+        g.el.style.transform = '';
+        g.el.classList.remove('is-dragging');
+      }
       for (const id of pointers.current.keys()) stageRef.current?.setPointerCapture?.(id);
       startPinch();
     }
@@ -793,6 +815,19 @@ export function useDesk(opts: UseDeskOptions) {
     pointers.current.set(e.pointerId, p);
     const g = gesture.current;
     if (!g) return;
+    if (g.kind === 'item') {
+      if (!g.moved) {
+        if (Math.hypot(p.x - g.sx, p.y - g.sy) < (g.type === 'mouse' ? 6 : 10)) return;
+        g.moved = true;
+        stageRef.current?.setPointerCapture?.(e.pointerId);
+        g.el.classList.add('is-dragging');
+        setTip(null);
+      }
+      // The object follows the pointer on the desk plane (world px, under the committed zoom); dropped on release.
+      const w = worldAt(p.x, p.y);
+      g.el.style.transform = `translate(${w.wx - g.wx}px, ${w.wy - g.wy}px)`;
+      return;
+    }
     if (g.kind === 'pinch' && pointers.current.size >= 2) {
       // Two fingers: zoom about their midpoint (the midpoint also pans); no rotation.
       const [a, b] = [...pointers.current.values()];
@@ -825,6 +860,18 @@ export function useDesk(opts: UseDeskOptions) {
     const p = local(e);
     pointers.current.delete(e.pointerId);
     const g = gesture.current;
+    if (g?.kind === 'item') {
+      gesture.current = null;
+      if (g.moved) {
+        suppressClick.current = true;
+        g.el.style.transform = '';
+        g.el.classList.remove('is-dragging');
+        const w = worldAt(p.x, p.y);
+        if (e.type === 'pointerup') optsRef.current.drag?.end(g.id, w.wx, w.wy, w.wx - g.wx, w.wy - g.wy);
+        window.setTimeout(() => (suppressClick.current = false), 0);
+      }
+      return;
+    }
     const active = g && (g.kind === 'pinch' || g.moved);
     if (active) suppressClick.current = true;
     if (pointers.current.size === 1 && g?.kind === 'pinch') {
@@ -1112,7 +1159,7 @@ export function useDesk(opts: UseDeskOptions) {
     flatSettled,
     hot,
     refs: { frameRef, boxRef, stageRef, worldRef, zoomRef, miniViewRef },
-    api: { fitAll, home, fitMat, fitSub, flyToItem, flyToPerson, zoomBy, zoomTo, reset, toggleTilt, matById, refitOnNextLayout, miniJump, apply },
+    api: { fitAll, home, fitMat, fitBox, fitSub, flyToItem, flyToPerson, zoomBy, zoomTo, reset, toggleTilt, matById, refitOnNextLayout, miniJump, apply },
     handlers: { onPointerDown, onPointerMove, onPointerEnd, onKeyDown, onKeyUp, onDoubleClick, onClickCapture, activateItem, onFocusItem, onFocusPerson, onHint },
     perspective: persp(),
     MAT_GAP,

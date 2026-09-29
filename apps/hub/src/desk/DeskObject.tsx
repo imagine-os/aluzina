@@ -1,11 +1,12 @@
 import { memo, useState, type CSSProperties, type FocusEvent, type MouseEvent, type ReactNode } from 'react';
+import { Icon, isIconName } from '../components/atom/Icon/Icon';
 import { pick, type Text } from '../tenant/domain';
 import { CAPTION_H, DEVICE_KINDS, GEOMETRY, type DeskItem, type PlacedItem } from './types';
 
 type Lang = 'en' | 'es';
 
 /** Rows the top face of a page shows before "+N" (the drawer lists them all). */
-const FACE_ROWS: Record<string, number> = { sheet: 12, form: 10, checklist: 12, document: 11, folder: 4, box: 0, token: 0, card: 0, light: 3, stack: 0, phone: 5, tablet: 7, screen: 5, page: 12, pages: 10 };
+const FACE_ROWS: Record<string, number> = { profile: 0, sheet: 12, form: 10, checklist: 12, document: 11, folder: 4, box: 0, token: 0, card: 0, light: 3, stack: 0, phone: 5, tablet: 7, screen: 5, page: 12, pages: 10 };
 
 interface PreviewProps {
   item: DeskItem;
@@ -66,8 +67,9 @@ export function Preview({ item, lang, rows, moreLabel, labelled = false }: Previ
   if (item.kind === 'light') {
     // A row of the followed project (D-105): what it is, its real content, and "+N more" on the last of its kind.
     return (
-      <span className={`dp dp--light dp--tone-${item.tone ?? 'info'}`}>
+      <span className={`dp dp--light dp--tone-${item.tone ?? 'info'}${item.profile?.portrait ? ' dp--with-avatar' : ''}`}>
         <span className="dp__kicker">
+          {item.profile?.portrait && <img className="dp__avatar" src={item.profile.portrait} alt="" draggable={false} />}
           <span className="dp__code">{p(item.subtitle)}</span>
         </span>
         <span className="dp__title">{p(item.title)}</span>
@@ -87,6 +89,31 @@ export function Preview({ item, lang, rows, moreLabel, labelled = false }: Previ
       <span className={`dp dp--token dp--tone-${item.tone ?? 'neutral'}`}>
         <span className="dp__title">{p(item.title)}</span>
         <span className="dp__code">{item.code}</span>
+      </span>
+    );
+  }
+  if (item.kind === 'profile') {
+    // A lead's card (D-114): photo top-left, logo top-right, name, company, status, budget, the networks it is on.
+    const pr = item.profile ?? {};
+    return (
+      <span className="dp dp--profile">
+        <span className="dp__head">
+          {pr.portrait ? <img className="dp__portrait" src={pr.portrait} alt="" draggable={false} /> : <span className="dp__portrait dp__portrait--none" />}
+          <span className="dp__who">
+            <span className="dp__title">{p(item.title)}</span>
+            {(pr.company || pr.place) && <span className="dp__sub">{pr.company ?? pr.place}</span>}
+          </span>
+          {pr.logo && <img className="dp__logo" src={pr.logo} alt="" draggable={false} />}
+        </span>
+        <span className="dp__foot">
+          {pill}
+          {pr.budget && <span className="dp__budget">{p(pr.budget)}</span>}
+        </span>
+        {(pr.networks?.length ?? 0) > 0 && (
+          <span className="dp__nets">
+            {pr.networks!.map((n) => (isIconName(n) ? <Icon key={n} name={n} size="sm" className="dp__net" /> : null))}
+          </span>
+        )}
       </span>
     );
   }

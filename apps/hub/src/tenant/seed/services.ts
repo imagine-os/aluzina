@@ -1,6 +1,8 @@
 import { phaseItems, serviceByCode } from '../domain/playbook';
 import { SUPPLIER_IDS as S } from './operations';
 import { PROJECT_IDS as P } from './projects';
+import type { Lead } from '../../data/schema';
+import { logoSvg, portraitSvg } from './leads/art';
 import type { SeedCtx } from './types';
 
 /** After projects, operations and studio rows (references suppliers and projects). */
@@ -45,19 +47,87 @@ function ticked(phaseId: string, n: number, into: Record<string, boolean> = {}):
  * revision matrix of the two projects in design, change orders and purchases on the projects in execution,
  * site reports on Noam, and the Casa Laureles message thread with its client. COP, unknowns `null`.
  */
+/**
+ * Lead dossiers (D-114, changelog 0041): the company behind a lead and its social profiles. The handles are clearly
+ * fictional (`.demo`), the only links are `example.com` subpaths for websites, and the portraits and logos are
+ * generated placeholder art (`leads/art.ts`: a featureless figure and a monogram from the lead id, never a likeness,
+ * nothing fetched). Real leads will carry uploaded photos and logos and their real handles.
+ */
+const DOSSIERS: Record<string, Pick<Lead, 'company' | 'socials'> & { logo?: boolean }> = {
+  'lead-apto-martinez': { socials: [{ network: 'instagram', handle: '@camila.m.demo' }, { network: 'whatsapp', handle: '+57 300 000 0101' }] },
+  'lead-cafe-san-joaquin': {
+    company: 'Café San Joaquín',
+    logo: true,
+    socials: [
+      { network: 'instagram', handle: '@cafe.sanjoaquin.demo' },
+      { network: 'website', handle: 'cafesanjoaquin', url: 'https://example.com/leads/cafe-san-joaquin' },
+      { network: 'tiktok', handle: '@sanjoaquin.cafe.demo' },
+    ],
+  },
+  'lead-clinica-sonrisa': {
+    company: 'Clínica Sonrisa Sana SAS',
+    logo: true,
+    socials: [
+      { network: 'linkedin', handle: 'clinica-sonrisa-sana-demo' },
+      { network: 'facebook', handle: 'SonrisaSanaDemo' },
+      { network: 'website', handle: 'sonrisasana', url: 'https://example.com/leads/clinica-sonrisa-sana' },
+    ],
+  },
+  'lead-casa-envigado': { socials: [{ network: 'whatsapp', handle: '+57 300 000 0104' }, { network: 'facebook', handle: 'FamiliaGomezArangoDemo' }] },
+  'lead-hotel-boutique-guatape': {
+    company: 'Hotel Boutique Guatapé',
+    logo: true,
+    socials: [
+      { network: 'instagram', handle: '@boutique.guatape.demo' },
+      { network: 'website', handle: 'boutiqueguatape', url: 'https://example.com/leads/hotel-boutique-guatape' },
+      { network: 'facebook', handle: 'BoutiqueGuatapeDemo' },
+      { network: 'tiktok', handle: '@guatape.boutique.demo' },
+    ],
+  },
+  'lead-loft-estudio': { socials: [{ network: 'instagram', handle: '@andres.palacio.demo' }, { network: 'linkedin', handle: 'andres-palacio-demo' }] },
+  'lead-oficina-contadores': {
+    company: 'Contadores Asociados SAS',
+    logo: true,
+    socials: [
+      { network: 'linkedin', handle: 'contadores-asociados-demo' },
+      { network: 'website', handle: 'contadoresasociados', url: 'https://example.com/leads/contadores-asociados' },
+    ],
+  },
+  'lead-cafe-provenza': {
+    company: 'Grupo Provenza',
+    logo: true,
+    socials: [
+      { network: 'instagram', handle: '@grupo.provenza.demo' },
+      { network: 'whatsapp', handle: '+57 300 000 0108' },
+      { network: 'website', handle: 'grupoprovenza', url: 'https://example.com/leads/grupo-provenza' },
+    ],
+  },
+};
+
+/** The dossier fields of a mock lead: generated portrait, a monogram logo for companies, company and socials. */
+function dossierOf(id: string): Pick<Lead, 'portraitUrl' | 'logoUrl' | 'company' | 'socials'> {
+  const d = DOSSIERS[id];
+  return {
+    portraitUrl: portraitSvg(id),
+    ...(d?.logo && d.company ? { logoUrl: logoSvg(id, d.company) } : {}),
+    ...(d?.company ? { company: d.company } : {}),
+    socials: d?.socials ?? [],
+  };
+}
+
 export function seed({ add, users }: SeedCtx): void {
   const L = LEAD_IDS;
   const E = ENGAGEMENT_IDS;
 
   // Leads (two from the public intake flow, the rest registered by hand or imported from the old spreadsheet).
-  add('leads', L.martinez, { name: 'Camila Martínez', phone: '+57 300 000 0101', email: 'camila.martinez@demo.aluzina.local', city: 'Medellín', projectType: 'residential', areaM2: 95, projectStatus: 'built', requestedService: '01', suggestedService: '01', budgetCop: 25_000_000, desiredStart: '2026-11-01', channel: 'instagram', ownerId: users.founder, status: 'lead-new', qualification: { transform: 'Sala y comedor del apartamento', why: 'Acaban de mudarse', typology: 'residential', areaM2: '95', floorPlan: 'yes', projectStatus: 'built', depth: 'ideas', execute: 'no', investment: '20 a 30 millones', start: 'Noviembre' }, notes: 'Escribió por DM después de ver el reel de Casa Laureles.', projectId: null, source: 'public-intake' });
-  add('leads', L.cafeSanJoaquin, { name: 'Café San Joaquín', phone: '+57 300 000 0102', email: 'hola@cafesanjoaquin.demo', city: 'Medellín', projectType: 'hospitality', areaM2: 120, projectStatus: 'under-construction', requestedService: '03', suggestedService: '03', budgetCop: 180_000_000, desiredStart: '2026-10-15', channel: 'website', ownerId: users.founder, status: 'lead-qualified', qualification: { transform: 'Local nuevo: barra, mesas y terraza', why: 'Apertura en enero', typology: 'hospitality', areaM2: '120', floorPlan: 'yes', projectStatus: 'under-construction', depth: 'full-design', execute: 'later', investment: '150 a 200 millones', start: 'Octubre' }, notes: 'Llenó el formulario del sitio; llamada de calificación hecha por Alejandra.', projectId: null, source: 'public-intake' });
-  add('leads', L.clinicaSonrisa, { name: 'Clínica Sonrisa Sana', phone: null, email: 'gerencia@sonrisasana.demo', city: 'Rionegro', projectType: 'wellness', areaM2: 260, projectStatus: 'built', requestedService: '02', suggestedService: '03', budgetCop: null, desiredStart: null, channel: 'referral', ownerId: users.founder, status: 'lead-qualified', qualification: { transform: 'Recepción y salas de espera', why: 'Quieren diferenciarse', typology: 'wellness', areaM2: '260', floorPlan: 'no', projectStatus: 'built', depth: 'full-design', execute: 'yes', investment: 'Por definir', start: '2027' }, notes: 'Referida por HOY. Pidieron una visita; el diagnóstico sugiere diseño integral (regla comercial G-10).', projectId: null, source: 'manual' });
-  add('leads', L.casaEnvigado, { name: 'Familia Gómez Arango', phone: '+57 300 000 0104', email: 'gomezarango@demo.aluzina.local', city: 'Envigado', projectType: 'residential', areaM2: 210, projectStatus: 'built', requestedService: '03', suggestedService: '03', budgetCop: 220_000_000, desiredStart: '2026-11-15', channel: 'whatsapp', ownerId: users.founder, status: 'proposal-sent', qualification: { transform: 'Casa completa, primer piso', why: 'Herencia familiar, quieren renovarla', typology: 'residential', areaM2: '210', floorPlan: 'yes', projectStatus: 'built', depth: 'full-design', execute: 'yes', investment: '200 a 250 millones', start: 'Noviembre' }, notes: 'Propuesta enviada el 18 de septiembre; esperan respuesta esta semana.', projectId: null, source: 'manual' });
-  add('leads', L.hotelBoutique, { name: 'Hotel Boutique Guatapé', phone: '+57 300 000 0105', email: 'reservas@boutiqueguatape.demo', city: 'Guatapé', projectType: 'hospitality', areaM2: 640, projectStatus: 'conceptual', requestedService: '01', suggestedService: '03', budgetCop: 450_000_000, desiredStart: '2027-03-01', channel: 'networking', ownerId: null, status: 'lead-new', qualification: { transform: 'Hotel de 12 habitaciones', typology: 'hospitality', areaM2: '640', projectStatus: 'conceptual', depth: 'ideas', execute: 'later' }, notes: 'Contacto en el evento de Camacol; sin dueño asignado aún.', projectId: null, source: 'manual' });
-  add('leads', L.studioLoft, { name: 'Andrés Palacio', phone: '+57 300 000 0106', email: 'andres.palacio@demo.aluzina.local', city: 'Medellín', projectType: 'residential', areaM2: 60, projectStatus: 'built', requestedService: '04', suggestedService: '04', budgetCop: 12_000_000, desiredStart: '2026-10-05', channel: 'email', ownerId: users.studio, status: 'contracted', qualification: { transform: 'Loft: composición y luz decorativa', why: 'Sesión de fotos en noviembre', typology: 'residential', areaM2: '60', floorPlan: 'no', projectStatus: 'built', depth: 'styling', execute: 'no', investment: '10 a 15 millones', start: 'Octubre' }, notes: 'Styling contratado; proyecto pendiente de crear.', projectId: null, source: 'manual' });
-  add('leads', L.oficinaContadores, { name: 'Contadores Asociados SAS', phone: '+57 300 000 0107', email: 'admin@contadoresasociados.demo', city: 'Medellín', projectType: 'commercial', areaM2: 180, projectStatus: 'built', requestedService: null, suggestedService: '02', budgetCop: null, desiredStart: null, channel: 'partnership', ownerId: users.ops, status: 'lead-new', qualification: {}, notes: 'Llegó por la alianza con Luminarias del Valle; falta la llamada de calificación.', projectId: null, source: 'import' });
-  add('leads', L.provenza, { name: 'Grupo Provenza', phone: '+57 300 000 0108', email: 'proyectos@grupoprovenza.demo', city: 'Medellín', projectType: 'hospitality', areaM2: 80, projectStatus: 'built', requestedService: '02', suggestedService: '02', budgetCop: 95_000_000, desiredStart: '2026-10-01', channel: 'referral', ownerId: users.founder, status: 'lead-qualified', qualification: { transform: 'Café de especialidad: barra, terraza y mezzanine', why: 'Cambio de concepto del local', typology: 'hospitality', areaM2: '80', floorPlan: 'yes', projectStatus: 'built', depth: 'ideas', execute: 'later', investment: '80 a 100 millones', start: 'Octubre' }, notes: 'Lead calificado; ya existe el proyecto Café Provenza en fase lead.', projectId: P.provenza, source: 'manual' });
+  add('leads', L.martinez, { ...dossierOf(L.martinez), name: 'Camila Martínez', phone: '+57 300 000 0101', email: 'camila.martinez@demo.aluzina.local', city: 'Medellín', projectType: 'residential', areaM2: 95, projectStatus: 'built', requestedService: '01', suggestedService: '01', budgetCop: 25_000_000, desiredStart: '2026-11-01', channel: 'instagram', ownerId: users.founder, status: 'lead-new', qualification: { transform: 'Sala y comedor del apartamento', why: 'Acaban de mudarse', typology: 'residential', areaM2: '95', floorPlan: 'yes', projectStatus: 'built', depth: 'ideas', execute: 'no', investment: '20 a 30 millones', start: 'Noviembre' }, notes: 'Escribió por DM después de ver el reel de Casa Laureles.', projectId: null, source: 'public-intake' });
+  add('leads', L.cafeSanJoaquin, { ...dossierOf(L.cafeSanJoaquin), name: 'Café San Joaquín', phone: '+57 300 000 0102', email: 'hola@cafesanjoaquin.demo', city: 'Medellín', projectType: 'hospitality', areaM2: 120, projectStatus: 'under-construction', requestedService: '03', suggestedService: '03', budgetCop: 180_000_000, desiredStart: '2026-10-15', channel: 'website', ownerId: users.founder, status: 'lead-qualified', qualification: { transform: 'Local nuevo: barra, mesas y terraza', why: 'Apertura en enero', typology: 'hospitality', areaM2: '120', floorPlan: 'yes', projectStatus: 'under-construction', depth: 'full-design', execute: 'later', investment: '150 a 200 millones', start: 'Octubre' }, notes: 'Llenó el formulario del sitio; llamada de calificación hecha por Alejandra.', projectId: null, source: 'public-intake' });
+  add('leads', L.clinicaSonrisa, { ...dossierOf(L.clinicaSonrisa), name: 'Clínica Sonrisa Sana', phone: null, email: 'gerencia@sonrisasana.demo', city: 'Rionegro', projectType: 'wellness', areaM2: 260, projectStatus: 'built', requestedService: '02', suggestedService: '03', budgetCop: null, desiredStart: null, channel: 'referral', ownerId: users.founder, status: 'lead-qualified', qualification: { transform: 'Recepción y salas de espera', why: 'Quieren diferenciarse', typology: 'wellness', areaM2: '260', floorPlan: 'no', projectStatus: 'built', depth: 'full-design', execute: 'yes', investment: 'Por definir', start: '2027' }, notes: 'Referida por HOY. Pidieron una visita; el diagnóstico sugiere diseño integral (regla comercial G-10).', projectId: null, source: 'manual' });
+  add('leads', L.casaEnvigado, { ...dossierOf(L.casaEnvigado), name: 'Familia Gómez Arango', phone: '+57 300 000 0104', email: 'gomezarango@demo.aluzina.local', city: 'Envigado', projectType: 'residential', areaM2: 210, projectStatus: 'built', requestedService: '03', suggestedService: '03', budgetCop: 220_000_000, desiredStart: '2026-11-15', channel: 'whatsapp', ownerId: users.founder, status: 'proposal-sent', qualification: { transform: 'Casa completa, primer piso', why: 'Herencia familiar, quieren renovarla', typology: 'residential', areaM2: '210', floorPlan: 'yes', projectStatus: 'built', depth: 'full-design', execute: 'yes', investment: '200 a 250 millones', start: 'Noviembre' }, notes: 'Propuesta enviada el 18 de septiembre; esperan respuesta esta semana.', projectId: null, source: 'manual' });
+  add('leads', L.hotelBoutique, { ...dossierOf(L.hotelBoutique), name: 'Hotel Boutique Guatapé', phone: '+57 300 000 0105', email: 'reservas@boutiqueguatape.demo', city: 'Guatapé', projectType: 'hospitality', areaM2: 640, projectStatus: 'conceptual', requestedService: '01', suggestedService: '03', budgetCop: 450_000_000, desiredStart: '2027-03-01', channel: 'networking', ownerId: null, status: 'lead-new', qualification: { transform: 'Hotel de 12 habitaciones', typology: 'hospitality', areaM2: '640', projectStatus: 'conceptual', depth: 'ideas', execute: 'later' }, notes: 'Contacto en el evento de Camacol; sin dueño asignado aún.', projectId: null, source: 'manual' });
+  add('leads', L.studioLoft, { ...dossierOf(L.studioLoft), name: 'Andrés Palacio', phone: '+57 300 000 0106', email: 'andres.palacio@demo.aluzina.local', city: 'Medellín', projectType: 'residential', areaM2: 60, projectStatus: 'built', requestedService: '04', suggestedService: '04', budgetCop: 12_000_000, desiredStart: '2026-10-05', channel: 'email', ownerId: users.studio, status: 'contracted', qualification: { transform: 'Loft: composición y luz decorativa', why: 'Sesión de fotos en noviembre', typology: 'residential', areaM2: '60', floorPlan: 'no', projectStatus: 'built', depth: 'styling', execute: 'no', investment: '10 a 15 millones', start: 'Octubre' }, notes: 'Styling contratado; proyecto pendiente de crear.', projectId: null, source: 'manual' });
+  add('leads', L.oficinaContadores, { ...dossierOf(L.oficinaContadores), name: 'Contadores Asociados SAS', phone: '+57 300 000 0107', email: 'admin@contadoresasociados.demo', city: 'Medellín', projectType: 'commercial', areaM2: 180, projectStatus: 'built', requestedService: null, suggestedService: '02', budgetCop: null, desiredStart: null, channel: 'partnership', ownerId: users.ops, status: 'lead-new', qualification: {}, notes: 'Llegó por la alianza con Luminarias del Valle; falta la llamada de calificación.', projectId: null, source: 'import' });
+  add('leads', L.provenza, { ...dossierOf(L.provenza), name: 'Grupo Provenza', phone: '+57 300 000 0108', email: 'proyectos@grupoprovenza.demo', city: 'Medellín', projectType: 'hospitality', areaM2: 80, projectStatus: 'built', requestedService: '02', suggestedService: '02', budgetCop: 95_000_000, desiredStart: '2026-10-01', channel: 'referral', ownerId: users.founder, status: 'lead-qualified', qualification: { transform: 'Café de especialidad: barra, terraza y mezzanine', why: 'Cambio de concepto del local', typology: 'hospitality', areaM2: '80', floorPlan: 'yes', projectStatus: 'built', depth: 'ideas', execute: 'later', investment: '80 a 100 millones', start: 'Octubre' }, notes: 'Lead calificado; ya existe el proyecto Café Provenza en fase lead.', projectId: P.provenza, source: 'manual' });
 
   // Engagements: one service per real project, checklist ticked up to the current phase.
   add('engagements', E.laureles, { projectId: P.laureles, serviceCode: '03', currentPhaseId: '03-11', checks: { ...ticked('03-1', 7), ...ticked('03-2', 9), ...ticked('03-3', 9), ...ticked('03-4', 7), ...ticked('03-5', 3), ...ticked('03-6', 3), ...ticked('03-7', 6), ...ticked('03-8', 10), ...ticked('03-9', 6), ...ticked('03-10', 4), ...ticked('03-11', 2) }, brief: { 'client.goals': 'Casa luminosa para recibir amigos; cocina abierta al comedor.', 'user.profile': 'Pareja con dos hijos adolescentes.', 'experience.desired': 'Cálida, sin ruido visual, luz baja en la noche.', 'budget.framework': '185 millones incluyendo luminarias.', 'maintenance.expectations': 'Materiales fáciles de limpiar en cocina.' }, startedAt: '2026-07-06', completedAt: null, status: 'in-progress' });

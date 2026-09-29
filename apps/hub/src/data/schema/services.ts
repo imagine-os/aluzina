@@ -13,6 +13,16 @@ export type LeadProjectType = ProjectType | 'other';
 export type LeadProjectStatus = 'built' | 'under-construction' | 'conceptual';
 export type LeadSource = 'public-intake' | 'manual' | 'import';
 
+/** The networks a lead's dossier lists (D-114). */
+export type LeadNetwork = 'instagram' | 'linkedin' | 'facebook' | 'tiktok' | 'website' | 'whatsapp';
+
+/** One social profile of a lead: the network, the handle as the lead writes it, and a link when there is one. */
+export interface LeadSocial {
+  network: LeadNetwork;
+  handle: string;
+  url?: string;
+}
+
 /** One row per inquiry: "every inquiry must enter a single traceable pipeline" (p. 3). Becomes a project at `contracted`. */
 export interface Lead extends BaseRow {
   name: string;
@@ -39,6 +49,15 @@ export interface Lead extends BaseRow {
   /** The project created at contract; null before. */
   projectId: Id | null;
   source: LeadSource;
+  /**
+   * The lead's dossier (D-114, changelog 0041): a photo of the contact, the company's logo, the company when the lead
+   * is one, and its social profiles. Any image URL (an upload for real leads; mock leads carry generated placeholder
+   * art, `tenant/seed/leads/art.ts`, never a likeness). All optional: a lead from the intake form has none.
+   */
+  portraitUrl?: string;
+  logoUrl?: string;
+  company?: string;
+  socials?: LeadSocial[];
 }
 
 export type EngagementStatus = 'started' | 'in-progress' | 'delivered' | 'closed';

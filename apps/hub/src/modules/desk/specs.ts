@@ -27,6 +27,8 @@ export const deskActions = (permission: string): ActionDef[] => [
   { id: 'desk.setHeight', label: 'Desk size', intent: 'make the desk {size}', permission, params: { size: 'enum:s|m|l' } },
   { id: 'desk.toggleWheelZoom', label: 'Scroll wheel zooms', intent: 'make the scroll wheel zoom the desk, or move it', permission },
   { id: 'desk.legend', label: 'Desk legend', intent: 'show what the objects on the desk are', permission },
+  // Lead dossiers (D-114): a followed project's lead tile goes to a work mat of the Leads desk (A-08).
+  { id: 'desk.sendToWorkMat', label: 'Send to a work mat', intent: 'put {object} on work mat {mat} of the Leads desk', permission, params: { object: 'id', mat: 'string' } },
 ];
 
 /** W-04 on the four portals and on dev; the surface only changes the shell, guard and breadcrumb (like W-01, D-021). */

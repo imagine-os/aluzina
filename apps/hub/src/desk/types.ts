@@ -30,8 +30,8 @@ export const PERSON_ROWS = 3;
  * (hub desks): `phone`, `tablet`, `screen` (a monitor on a thin stand), `page` (one tall website page) and `pages` (a
  * fanned stack of tall pages), whose face is an image of the screen they stand for (`DeskItem.face`).
  */
-export type ItemKind = 'sheet' | 'form' | 'checklist' | 'document' | 'folder' | 'box' | 'token' | 'card' | 'light' | 'stack' | 'phone' | 'tablet' | 'screen' | 'page' | 'pages';
-export const ITEM_KINDS: readonly ItemKind[] = ['sheet', 'form', 'checklist', 'document', 'folder', 'box', 'token', 'card', 'light', 'stack', 'phone', 'tablet', 'screen', 'page', 'pages'];
+export type ItemKind = 'sheet' | 'form' | 'checklist' | 'document' | 'folder' | 'box' | 'token' | 'card' | 'light' | 'stack' | 'phone' | 'tablet' | 'screen' | 'page' | 'pages' | 'profile';
+export const ITEM_KINDS: readonly ItemKind[] = ['sheet', 'form', 'checklist', 'document', 'folder', 'box', 'token', 'card', 'light', 'stack', 'phone', 'tablet', 'screen', 'page', 'pages', 'profile'];
 /** Device objects: drawn as a device (bezel, screen, stand or paper) with an image face and a caption strip. */
 export const DEVICE_KINDS: ReadonlySet<ItemKind> = new Set<ItemKind>(['phone', 'tablet', 'screen', 'page', 'pages']);
 
@@ -70,6 +70,8 @@ export const GEOMETRY: Record<ItemKind, KindGeometry> = {
   screen: { t: 4, w: 3, h: 2, face: { w: 176, h: 114 }, font: 5, cap: 9.5 },
   page: { t: 1, w: 1, h: 3, face: { w: 54, h: 162 }, font: 3.4, cap: 8.2 },
   pages: { t: 1, w: 2, h: 3, face: { w: 104, h: 156 }, font: 4.4, cap: 9 },
+  // A lead's profile card (D-114): portrait, logo, name, company, status, budget and its networks, two squares wide.
+  profile: { t: 2, w: 2, h: 1, face: { w: 118, h: 54 }, font: 5 },
 };
 
 /** Full faces per desk; objects past it render a plain tile (D-106, performance; image faces are not requested either). */
@@ -119,6 +121,10 @@ export interface DeskItem {
    * when it fails the drawn device and its title stay (never a broken image). `top` anchors a tall page at its header.
    */
   face?: { src: string; alt?: Text; fit?: 'cover' | 'top' };
+  /** A person or company card with a picture (kind `profile`, lead dossiers D-114; also a lead's light tile on W-04). */
+  profile?: { portrait?: string; logo?: string; company?: string; place?: string; budget?: Text; networks?: readonly string[] };
+  /** On a free mat (a work mat, D-114): the square the object was put on (column, row of its sub-mat grid). */
+  at?: { col: number; row: number };
 }
 
 export interface PlacedItem extends DeskItem {
@@ -172,6 +178,12 @@ export interface DeskMatDef {
   id: string;
   label: Text;
   subLabels?: Record<string, Text>;
+  /**
+   * A free mat (a work mat, D-114): one sub-mat of `cols` x `rows` squares (it grows to fit) where objects lie on the
+   * square in their `at` (a person arranged them) instead of being packed; objects without `at` take the first free
+   * squares. The layout check still proves no two objects share a square.
+   */
+  free?: { cols: number; rows: number; label?: Text };
 }
 
 /**

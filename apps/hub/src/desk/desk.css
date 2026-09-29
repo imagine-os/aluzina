@@ -2381,3 +2381,513 @@
     transition: none;
   }
 }
+
+/* ---------- lead dossiers and work mats (prompt 0031, changelog 0041, D-114) ---------- */
+
+/* The lead's profile card: photo top-left, logo top-right, name and company, status and budget, networks. */
+.desk-item--profile .desk-top {
+  background:
+    linear-gradient(90deg, var(--brand-periwinkle), var(--brand-aqua), var(--brand-lime)) top / 100% 2px no-repeat,
+    var(--desk-grain),
+    var(--desk-paper);
+}
+
+.dp--profile {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.3em;
+  padding: 0.8em 0.85em 0.55em;
+}
+
+.dp--profile .dp__head {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.6em;
+  min-width: 0;
+}
+
+.dp__portrait {
+  flex: none;
+  width: 3.4em;
+  height: 3.4em;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--desk-paper-side);
+}
+
+.dp__logo {
+  flex: none;
+  width: 2.8em;
+  height: 2.8em;
+  margin-left: auto;
+  border-radius: 0.5em;
+  object-fit: contain;
+}
+
+.dp__who {
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.15em;
+  min-width: 0;
+  flex: 1 1 auto;
+  padding-top: 0.2em;
+}
+
+.dp--profile .dp__title {
+  font-size: 1.2em;
+  -webkit-line-clamp: 2;
+}
+
+.dp--profile .dp__sub {
+  font-size: 0.9em;
+}
+
+.dp--profile .dp__foot {
+  display: flex !important;
+  align-items: center;
+  gap: 0.6em;
+  min-width: 0;
+}
+
+.dp__budget {
+  font-size: 0.95em;
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.dp__nets {
+  display: flex !important;
+  align-items: flex-end;
+  gap: 0.35em;
+  color: var(--desk-ink-soft);
+}
+
+.dp .dp__net {
+  /* The Icon atom sizes by font-size (rem for the page); on a face it is em of the face. */
+  font-size: 1.9em;
+}
+
+/* A lead's light tile on W-04 carries the contact's photo in its kicker. */
+.dp__avatar {
+  flex: none;
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dp--with-avatar .dp__kicker {
+  align-items: center;
+}
+
+/* The dossier (D-114): an overlay plane above every object (DEPTH.fan); cards stack in place or fan out in an arc,
+   turn over (rotateY, backface hidden) and animate by transform only (instant under reduced motion). World px sizes,
+   like every face: they read when zoomed in, and a fan reads at a mat's fit on 1280. */
+.dz-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.dz {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transform: translateZ(var(--dz-z));
+  transform-style: preserve-3d;
+  color: var(--desk-ink);
+  line-height: 1.25;
+}
+
+.dz--stack .dz-bar {
+  transform: translate(-50%, -100%) translateZ(3px) scale(0.6);
+  transform-origin: 50% 100%;
+}
+
+.dz-bar {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--desk-felt) 92%, transparent);
+  box-shadow: 0 2px 6px var(--desk-shadow);
+  transform: translateX(-50%) translateZ(3px);
+  pointer-events: auto;
+  white-space: nowrap;
+}
+
+.dz-btn,
+.dz-sort select {
+  min-height: 20px;
+  padding: 2px 7px;
+  border: max(1px, var(--hair)) solid color-mix(in srgb, var(--desk-felt-ink) 40%, transparent);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--desk-felt-ink) 12%, transparent);
+  color: var(--desk-felt-ink);
+  font: inherit;
+  font-size: 8.5px;
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+}
+
+.dz-btn--primary {
+  background: var(--desk-felt-ink);
+  color: var(--desk-felt);
+}
+
+.dz-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dz-btn--icon {
+  min-width: 20px;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.dz-btn:focus-visible,
+.dz-sort select:focus-visible,
+.dz-card__main:focus-visible {
+  outline: calc(var(--focus-ring) / var(--desk-zoom, 1)) solid var(--desk-focus);
+  outline-offset: calc(1px / var(--desk-zoom, 1));
+}
+
+.dz-card {
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1), transform-origin 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: auto;
+}
+
+/* Only a card that turns over has a 3D inside (front and back); the others are one flat layer each (D-107: every
+   preserve-3d element is a compositor layer of its own). */
+.dz-card__inner {
+  position: absolute;
+  inset: 0;
+}
+
+.dz-card.is-flippable .dz-card__inner {
+  transform-style: preserve-3d;
+  transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.dz-card.is-flipped .dz-card__inner {
+  transform: rotateY(180deg);
+}
+
+.dz-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  padding: 0.9em 0.9em 0.8em;
+  border-radius: 6px;
+  border: max(0.6px, var(--hair)) solid var(--desk-paper-edge);
+  background:
+    linear-gradient(90deg, var(--brand-periwinkle), var(--brand-aqua), var(--brand-lime)) top / 100% 3px no-repeat,
+    var(--desk-paper);
+  box-shadow: 0 2px 6px var(--desk-shadow);
+}
+
+.dz-card.is-flippable .dz-face {
+  backface-visibility: hidden;
+}
+
+.dz-card.is-focus .dz-face--front {
+  border-color: var(--desk-focus);
+  box-shadow: 0 4px 12px var(--desk-shadow);
+}
+
+.dz-face--back {
+  transform: rotateY(180deg);
+}
+
+.dz-card__main {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0 0 0.3em;
+  border: 0;
+  border-bottom: max(0.6px, var(--hair)) solid var(--desk-rule);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dz-card__kind {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.95em;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--desk-ink-soft);
+}
+
+.dz .dz-glyph {
+  font-size: 1.5em;
+  color: var(--desk-ink);
+}
+
+.dz-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.dz-who {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  min-width: 0;
+}
+
+.dz-portrait,
+.dz-logo {
+  flex: none;
+  width: 3.4em;
+  height: 3.4em;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dz-logo {
+  border-radius: 0.5em;
+  object-fit: contain;
+}
+
+.dz-title {
+  min-width: 0;
+  font-size: 1.35em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.dz-row {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.4em;
+  min-width: 0;
+}
+
+.dz-row__k {
+  font-size: 0.85em;
+  color: var(--desk-ink-soft);
+  white-space: nowrap;
+}
+
+.dz-row__v {
+  min-width: 0;
+  font-weight: var(--weight-bold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dz-row--empty {
+  display: block;
+  color: var(--desk-ink-soft);
+  font-style: italic;
+}
+
+.dz-btn--copy {
+  min-height: 0;
+  padding: 0.15em 0.5em;
+  border-color: var(--desk-rule);
+  background: none;
+  color: var(--desk-ink);
+  font-size: 0.85em;
+}
+
+.dz-big {
+  font-size: 1.6em;
+  font-weight: var(--weight-black);
+  font-variant-numeric: tabular-nums;
+}
+
+.dz-profile {
+  position: relative;
+  height: 3.6em;
+}
+
+.dz-profile__banner {
+  position: absolute;
+  inset: 0 0 1.2em;
+  border-radius: 0.4em;
+  background: linear-gradient(120deg, var(--brand-periwinkle), var(--brand-aqua) 55%, var(--brand-lime));
+}
+
+.dz-profile__avatar {
+  position: absolute;
+  left: 0.6em;
+  bottom: 0;
+  width: 2.6em;
+  height: 2.6em;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--desk-paper);
+  box-shadow: 0 0 0 0.2em var(--desk-paper);
+}
+
+.dz-handle {
+  font-weight: var(--weight-bold);
+  overflow-wrap: anywhere;
+}
+
+.dz-counts,
+.dz-reason {
+  font-size: 0.85em;
+  color: var(--desk-ink-soft);
+}
+
+/* The library Button inside a card, at the card's scale (its own sizes are rem, for the page). */
+.dz-visit {
+  zoom: 0.42;
+  align-self: flex-start;
+}
+
+.dz-qa {
+  gap: 0.2em;
+  list-style: none;
+  font-size: 0.82em;
+}
+
+.dz-qa li {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dz-qa__q {
+  color: var(--desk-ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dz-qa__a {
+  font-weight: var(--weight-bold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dz-qa li.is-empty .dz-qa__a {
+  font-weight: var(--weight-regular);
+  font-style: italic;
+  color: var(--desk-ink-soft);
+}
+
+.dz-notes {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+}
+
+.dz-msgs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85em;
+}
+
+.dz-msgs__at {
+  font-weight: var(--weight-bold);
+}
+
+.dz-layer.is-reduced .dz-card,
+.dz-layer.is-reduced .dz-card__inner {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dz-card,
+  .dz-card__inner {
+    transition: none;
+  }
+}
+
+/* Work mats (D-114): a free mat whose squares show, and the object being dragged lifts above its neighbours. */
+.desk-mat--work .desk-mat__name::before {
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  margin-right: 0.4em;
+  border-radius: 50%;
+  background: var(--brand-aqua);
+  vertical-align: 0.15em;
+}
+
+.desk-sub--free {
+  background:
+    repeating-conic-gradient(color-mix(in srgb, var(--metal-highlight) 9%, transparent) 0 25%, transparent 0 50%) 0 24px / 128px 128px,
+    var(--desk-fibre),
+    color-mix(in srgb, var(--desk-linen) 86%, var(--brand-aqua));
+}
+
+.desk-item.is-dragging {
+  z-index: 2;
+  cursor: grabbing;
+}
+
+.desk-item.is-dragging .desk-top {
+  outline: calc(var(--focus-ring) / var(--desk-zoom, 1)) dashed var(--desk-focus);
+  outline-offset: calc(2px / var(--desk-zoom, 1));
+}
+
+.desk-item.is-workmat {
+  cursor: grab;
+}
+
+.desk-workmats {
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--space-1));
+}
+
+.desk-workmats__name {
+  flex: 0 1 14rem;
+  min-width: 9rem;
+}
+
+.desk-dossier-drawer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Buttons printed on a card's paper take the paper's ink. */
+.dz-face .dz-btn {
+  border-color: var(--desk-rule);
+  background: none;
+  color: var(--desk-ink);
+}
+
+/* While the world moves nothing inside it is hit-tested, the objects and the dossier cards included (they re-enable
+   pointer events for themselves at rest). */
+.desk-world.is-moving .desk-sub__objects > *,
+.desk-world.is-moving .dz-card,
+.desk-world.is-moving .dz-bar {
+  pointer-events: none;
+}

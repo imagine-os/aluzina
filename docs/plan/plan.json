@@ -1,5 +1,5 @@
 {
-  "version": "0.23.1",
+  "version": "0.24.0",
   "updatedAt": "2026-09-29",
   "source": "docs/build-plan.md (steps 0-17, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -2209,6 +2209,38 @@
         "dk-04"
       ],
       "changelog": "0037"
+    },
+    {
+      "id": "dk-06",
+      "title": "Desk render quality (prompt 0031, D-107): one depth table for the whole desk, no overflow / contain / filter inside the 3D context, only solid bodies join it (layers K-04 1148 -> 567), text rasterised at its final size, hairlines never under a device pixel, rAF-coalesced gestures, tooltip portal; QA 0008 polish defects D1..D5 closed",
+      "step": "17",
+      "status": "done",
+      "model": "Opus 5.5",
+      "codes": [
+        "W-04",
+        "A-08",
+        "K-04"
+      ],
+      "dependsOn": [
+        "dk-05"
+      ],
+      "changelog": "0038"
+    },
+    {
+      "id": "dk-07",
+      "title": "Lead dossiers and work mats (prompt 0031, D-114): Lead portraitUrl / logoUrl / company / socials (SEED_VERSION 14, generated placeholder art), profile cards, dossier stacks that fan on an overlay plane, sort and flip, work mats of references stored per person and page, drag / keys / Move to…, 10 desk.* actions",
+      "step": "17",
+      "status": "done",
+      "model": "Opus 5.5",
+      "codes": [
+        "A-08",
+        "A-03",
+        "W-04"
+      ],
+      "dependsOn": [
+        "dk-06"
+      ],
+      "changelog": "0041"
     },
     {
       "id": "ch-01",

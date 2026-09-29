@@ -204,7 +204,7 @@ const FIELD_LABELS: Record<string, Text> = {
   templateTaskId: T('Template task', 'Tarea de plantilla'),
   thumbnailUrl: T('Thumbnail', 'Miniatura'),
   tone: T('Tone', 'Tono'),
-  // Lead dossier fields (D-108).
+  // Lead dossier fields (D-114).
   portraitUrl: T('Photo', 'Foto'),
   logoUrl: T('Logo', 'Logo'),
   company: T('Company', 'Empresa'),

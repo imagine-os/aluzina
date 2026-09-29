@@ -21,6 +21,8 @@ export const ICON_NAMES = [
   // ar-21: the glyphs the modules printed in their own bodies (theme toggle, pins, print, bug flag, the
   // back chevron) needed drawn names of their own; same 24-grid, 1.75 stroke as the rest.
   'chevron-left', 'moon', 'sun', 'pin', 'print', 'flag', 'menu',
+  // D-114: the six networks a lead's dossier lists (drawn on the same grid; generic marks, not the networks' logos).
+  'instagram', 'linkedin', 'facebook', 'tiktok', 'website', 'whatsapp',
 ] as const;
 
 export type IconName = (typeof ICON_NAMES)[number];
@@ -462,6 +464,39 @@ const PATHS: Record<IconName, ReactNode> = {
     </>
   ),
   menu: <path d="M4 6.8h16M4 12h16M4 17.2h16" />,
+  instagram: (
+    <>
+      <rect x="4" y="4" width="16" height="16" rx="4.6" />
+      <circle cx="12" cy="12" r="3.7" />
+      <Dot cx={16.6} cy={7.4} r={1} />
+    </>
+  ),
+  linkedin: (
+    <>
+      <rect x="4" y="4" width="16" height="16" rx="2.6" />
+      <path d="M8.4 10.6v5.6M12 16.2v-5.6M12 13.2c0-1.6 1-2.6 2.2-2.6s2 .9 2 2.4v3.2" />
+      <Dot cx={8.4} cy={7.9} r={1} />
+    </>
+  ),
+  facebook: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M13.2 20.4v-7.6h2.4M10.4 12.8h5.2M13.2 12.8V10.6c0-1.3.7-2 2-2h.9" />
+    </>
+  ),
+  tiktok: <path d="M13 4.2v10.6a3.3 3.3 0 1 1-3.3-3.3M13 4.2c.4 2.6 2.2 4.4 4.8 4.6" />,
+  website: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M3.5 12h17M12 3.5c2.3 2.4 3.4 5.2 3.4 8.5s-1.1 6.1-3.4 8.5c-2.3-2.4-3.4-5.2-3.4-8.5s1.1-6.1 3.4-8.5Z" />
+    </>
+  ),
+  whatsapp: (
+    <>
+      <path d="M4.6 19.4 5.8 16a8 8 0 1 1 2.6 2.4Z" />
+      <path d="M9.3 9.2c.2 2.6 2.4 4.9 5.2 5.4l1-1.2-1.8-.9-.8.8c-.9-.4-1.6-1.1-2-2l.8-.8-.9-1.8Z" />
+    </>
+  ),
   moon: <path d="M20.3 14.6A8.6 8.6 0 1 1 9.4 3.7a6.9 6.9 0 0 0 10.9 10.9Z" />,
   sun: (
     <>

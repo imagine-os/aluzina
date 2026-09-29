@@ -180,12 +180,12 @@ const ES: Record<string, string> = {
   'work.toggleSubtree': 'Contraer o expandir una tarea',
   'work.openProject': 'Abrir el trabajo del proyecto',
   'work.selectClient': 'Elegir el cliente',
-  // The lead dossier's abilities (D-108) are desk actions and carry their own strings.
+  // The lead dossier's abilities (D-114) are desk actions and carry their own strings.
 };
 
 /**
  * The ability's name in the page language: a `desk.ability.<actionId>` string when the desk defines one (the desk's
- * own actions, D-108), else this table's Spanish row, else the spec's label.
+ * own actions, D-114), else this table's Spanish row, else the spec's label.
  */
 export function abilityLabel(action: Pick<ActionDef, 'id' | 'label'>, lang: 'en' | 'es'): string {
   const own = deskStrings[`desk.ability.${action.id}`];

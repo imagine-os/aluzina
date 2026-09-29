@@ -4,7 +4,7 @@ export default defineMeta({
   name: 'Icon',
   tier: 'atom',
   purpose:
-    'The system icon set (78 names): one inline SVG per name on a 24 x 24 grid, stroke 1.75, round caps and joins, currentColor, no fills except tiny dots. Replaces the Unicode nav glyphs; the glyphs stay in the route manifest as data and as the last fallback (docs/design/icons.md).',
+    'The system icon set (84 names): one inline SVG per name on a 24 x 24 grid, stroke 1.75, round caps and joins, currentColor, no fills except tiny dots. Replaces the Unicode nav glyphs; the glyphs stay in the route manifest as data and as the last fallback (docs/design/icons.md).',
   props: {
     name: 'IconName – one of ICON_NAMES (isIconName guards data)',
     size: "'sm' | 'md' | 'lg' | 'xl' = 'md' (--icon-sm 1rem / md 1.25rem / lg 1.5rem / xl 2rem)",

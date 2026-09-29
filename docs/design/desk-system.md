@@ -22,6 +22,7 @@ The desk is how the Hub shows a page's things as physical objects on a zoomable 
 | token | 1 x 1 | 4 | 44 x 44 | a status or tag (stacked discs) |
 | card | 1 x 1 | 2 | 56 x 40 | a person, company, rule, meeting |
 | light | 1 x 1 | 2 | 58 x 58 | a live record of W-04's followed project |
+| **profile** | 2 x 1 | 2 | 118 x 54 | a lead: photo, logo, name, company, status, budget, networks; opens its dossier (D-114, 0041) |
 | stack | 1 x 1 | 5 | 46 x 56 | the "+N more" pile of a capped sub-mat |
 | **phone** | 1 x 2 | 4 | 44 x 96 + caption strip | one app screen (390 x 844): rounded bezel, speaker slit, the screen |
 | **tablet** | 2 x 2 | 4 | 78 x 104 (3:4) + caption strip | one screen at 768 x 1024 |
@@ -104,7 +105,7 @@ One depth order for the whole desk, in `src/desk/depth.ts` (`DEPTH`, applied as 
 | objects + t | 4 .. 21 | solid bodies on the sub-mat's bodies layer: document (t 6) and folder (8) top + front face, box (18) top + front / left / right, token (4) two discs + face, the "+N more" pile (5) three offset sheets |
 | lift | + 0.75 | a focused or selected solid lifts; a focused or selected flat object paints above its neighbours (`z-index` on the flat plane) |
 | stationTop / standGap | mat + 22 / + 0.5 | a person's desk top; chair, figure, props and nameplate stand 0.5 above it, never on it |
-| fan | 28 | a fanned lead dossier's overlay plane (D-108) |
+| fan | 28 | a fanned lead dossier's overlay plane (D-114) |
 | pulse | 40 | the trail's pulse of light |
 
 Outside the 3D context: toolbar, minimap (its own compositor layer), tooltip (a portal on `body`, or on the fullscreen element), legend, settings, drawer, height handle, money rail.
@@ -119,6 +120,20 @@ Rules:
 - Glows are box-shadows on the glow layer, never on a text-bearing face; every object has one shadow (`desk-item__shadow`, which also draws the paper edge).
 - Gestures: the camera maths runs per event, the DOM write once per frame (`requestApply`); the stage rectangle is read once per gesture (no layout reads in move handlers); `will-change: transform` and `pointer-events: none` on the world only while it moves; `content-visibility` is not used inside the 3D context (it clips). Reduced motion: no inertia, instant camera moves.
 - Tooltips show on hover, on Tab and on a scripted `focus()` (any focus not caused by a pointer press within 800 ms); mat and sub-mat labels have one too (their full name). Sub-mat names take two lines of the label strip instead of an ellipsis.
+
+## Stacks and fans (D-114, changelog 0041)
+
+- A lead on a page desk that shows `leads` (A-08, A-03) is a **profile** object (2 x 1): photo, logo when there is a company, name, company or city, status pill, budget, network icons. Selecting it opens its drawer and its **dossier**: cards for contact, company, each social profile, qualification, commercial, notes and messages (`src/desk/dossier.tsx`, 148 x 204 world px, text 7.2 px).
+- The dossier lives on its own **overlay plane** (`DEPTH.fan` = 28, above every body and station top at 22; each open dossier 2 px higher, each card 0.2 px), not among the objects: it never interpenetrates a solid or clips, and the process stacks under it do not move.
+- **Stack**: over the lead card at scale 0.42, 1.6 px offsets, the top card last in DOM order and highest in Z. **Fan**: an arc of radius 900 world px whose step (at most 8° a card) is chosen so the whole fan stays inside the lead's mat; the focused card rises 30 px and comes to the front. **Sort** by kind, date or network. **Flip**: only social cards turn over (`preserve-3d` on those cards only); the front is the mock profile with Visit (a real link, or a disabled button with its reason), the back the lead's notes with Turn back. `desk.fanOut` fits the mat and the fan together (`useDesk` `fitBox`), so the controls and the raised card stay in the stage. 360 ms transform transitions, none under reduced motion.
+- Actions: `desk.fanOut`, `desk.stackUp`, `desk.sortStack`, `desk.flipCard` (`src/desk/leadDesk.tsx`, the route's guard). Keys: Enter on a focused social card flips it; Tab walks the bar (Fan / Stack, Sort, Flip, To work mat, Close) and the cards.
+
+## Work mats (D-114, changelog 0041)
+
+- Free mats after the process mats (`DeskMatDef.free = {cols: 9, rows: 4}`, rows grow; `DeskItem.at` places an object on a square, a taken square falls to the first free one in `layout.ts`, checked by `desk:check` on a synthetic work mat).
+- They hold **references**, never copies: `lead:<id>` and `card:<lead>:<card>` drawn from the live rows, so a status change shows on the work mat too; the process card stays on its status sub-mat.
+- Arrange by drag (mouse, finger, pen: `useDesk({ drag })`, 6 / 10 px threshold, snaps to squares on release, a taken square or a drop outside goes back with a toast), arrow keys on a focused object, the drawer's Move to… / Back to the process stack, or `desk.sendToWorkMat` / `desk.moveOnWorkMat` / `desk.removeFromWorkMat`; mats with `desk.addWorkMat` / `desk.renameWorkMat` / `desk.removeWorkMat` or the work-mat toolbar.
+- Stored per person and page in the browser: `storageKey('desk.workmats.<code>')` = `{[userId]: {mats, entries}}` (`src/desk/workmats.ts`); W-04's Send to work mat writes A-08's key. Multiplayer later: mats carry ids, entries are keyed by mat + ref, and both are stamped `updated_at` on save, so a shared provider can replace the storage.
 
 ## Performance
 

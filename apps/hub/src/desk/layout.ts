@@ -79,6 +79,7 @@ export function layoutDesk(input: LayoutInput, perRow: number, people: ReadonlyS
 
   const mats: Mat[] = input.mats.map((def, index) => {
     const mine = byMat.get(def.id) ?? [];
+    if (def.free) return freeMat(def, index, mine, matW);
     const order: string[] = [];
     for (const it of mine) if (!order.includes(it.group)) order.push(it.group);
     order.sort((a, b) => rank(a) - rank(b));
@@ -138,6 +139,54 @@ export function layoutDesk(input: LayoutInput, perRow: number, people: ReadonlyS
   // World coordinates of every object (mat + sub-mat + cell), for fly-to, the minimap and the actions.
   const placed: PlacedItem[] = mats.flatMap((m) => m.subs.flatMap((s) => s.items.map((it) => ({ ...it, x: m.x + s.x + it.x, y: m.y + s.y + it.y }))));
   return { mats, items: placed, width, height: Math.max(y, MAT_GAP * 2 + MAT_HEAD) };
+}
+
+/**
+ * A free mat (D-114): one sub-mat whose objects lie where a person put them (`at`, snapped to squares). An object whose
+ * square is taken or off the grid, or that has no `at`, goes to the first free square in reading order, so the result
+ * never overlaps whatever the stored arrangement says.
+ */
+function freeMat(def: DeskMatDef, index: number, items: readonly DeskItem[], matW: number): Mat {
+  const free = def.free!;
+  const cols = Math.min(MAT_COLS, Math.max(1, free.cols));
+  const taken: boolean[][] = [];
+  const fits = (r: number, c: number, w: number, h: number) => {
+    if (r < 0 || c < 0 || c + w > cols) return false;
+    for (let dr = 0; dr < h; dr++) for (let dc = 0; dc < w; dc++) if (taken[r + dr]?.[c + dc]) return false;
+    return true;
+  };
+  const take = (r: number, c: number, w: number, h: number) => {
+    for (let dr = 0; dr < h; dr++) for (let dc = 0; dc < w; dc++) (taken[r + dr] ??= [])[c + dc] = true;
+  };
+  const cells = new Map<string, { col: number; row: number }>();
+  const wait: DeskItem[] = [];
+  for (const it of items) {
+    const g = GEOMETRY[it.kind];
+    const w = Math.min(g.w, cols);
+    if (it.at && fits(it.at.row, it.at.col, w, g.h)) {
+      take(it.at.row, it.at.col, w, g.h);
+      cells.set(it.id, it.at);
+    } else wait.push(it);
+  }
+  for (const it of wait) {
+    const g = GEOMETRY[it.kind];
+    const w = Math.min(g.w, cols);
+    for (let r = 0; !cells.has(it.id); r++)
+      for (let c = 0; c + w <= cols; c++)
+        if (fits(r, c, w, g.h)) {
+          take(r, c, w, g.h);
+          cells.set(it.id, { col: c, row: r });
+          break;
+        }
+  }
+  const rows = Math.max(free.rows, taken.length);
+  const placed: PlacedItem[] = items.map((item) => {
+    const cell = cells.get(item.id)!;
+    return { ...item, at: cell, x: cell.col * SQ, y: SUB_HEAD + cell.row * SQ, cw: GEOMETRY[item.kind].w * SQ, ch: GEOMETRY[item.kind].h * SQ };
+  });
+  const sub: SubMat = { id: `${def.id}:free`, group: 'free', label: free.label ?? def.subLabels?.free, x: MAT_PAD, y: MAT_HEAD, w: cols * SQ, h: SUB_HEAD + rows * SQ, items: placed };
+  const count = items.length;
+  return { id: def.id, index, label: def.label, x: 0, y: 0, w: matW, h: MAT_HEAD + sub.h + MAT_PAD, subs: [sub], count, lights: 0 };
 }
 
 /** Finds an object by id, code or title words (en or es), for the focus / open actions. */

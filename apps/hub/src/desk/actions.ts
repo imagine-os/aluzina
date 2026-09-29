@@ -19,6 +19,23 @@ export const deskActionsFor = (permission?: string): ActionDef[] => [
   { id: 'desk.legend', label: 'Desk legend', intent: 'show what the objects on the desk are', permission },
 ];
 
+/**
+ * The leads desk's vocabulary (D-114): dossiers and work mats, appended to the routes whose page desk shows leads
+ * (their `dataTables` read `leads`; A-08 first) and registered by `useLeadDesk` while that desk is mounted.
+ */
+export const dossierActionsFor = (permission?: string): ActionDef[] => [
+  { id: 'desk.fanOut', label: 'Fan out a dossier', intent: "fan out {object}'s dossier on the desk", permission, params: { object: 'id' } },
+  { id: 'desk.stackUp', label: 'Stack a dossier', intent: "stack {object}'s dossier back up", permission, params: { object: 'id' } },
+  { id: 'desk.sortStack', label: 'Sort a dossier', intent: "sort {object}'s dossier by {by}", permission, params: { object: 'id', by: 'enum:kind|date|network' } },
+  { id: 'desk.flipCard', label: 'Flip a dossier card', intent: 'turn over the {card} card', permission, params: { card: 'id' } },
+  { id: 'desk.addWorkMat', label: 'Add a work mat', intent: 'add a work mat to the desk', permission },
+  { id: 'desk.renameWorkMat', label: 'Rename a work mat', intent: 'call work mat {mat} {name}', permission, params: { mat: 'string', name: 'string' } },
+  { id: 'desk.removeWorkMat', label: 'Remove a work mat', intent: 'remove work mat {mat}', permission, params: { mat: 'string' } },
+  { id: 'desk.sendToWorkMat', label: 'Send to a work mat', intent: 'put {object} on work mat {mat}', permission, params: { object: 'id', mat: 'string' } },
+  { id: 'desk.moveOnWorkMat', label: 'Move on a work mat', intent: 'move {object} to square {x}, {y} of its work mat', permission, params: { object: 'id', x: 'number', y: 'number' } },
+  { id: 'desk.removeFromWorkMat', label: 'Remove from a work mat', intent: 'take {object} off its work mat', permission, params: { object: 'id' } },
+];
+
 /** The surfaces whose pages carry a page desk this pass (the four portals; D-106). */
 export const DESK_SURFACES: readonly Surface[] = ['founder', 'ops', 'studio', 'brand'];
 
@@ -31,6 +48,7 @@ export function hasPageDesk(route: Pick<RouteDef, 'shell' | 'surface' | 'desk'>)
 export function withDeskActions(route: RouteDef): RouteDef {
   if (!hasPageDesk(route)) return route;
   const have = new Set(route.spec.actions.map((a) => a.id));
-  const extra = deskActionsFor(route.permission).filter((a) => !have.has(a.id)).map((a) => (a.permission ? a : { ...a, permission: undefined }));
+  const own = [...deskActionsFor(route.permission), ...(route.spec.dataTables.includes('leads') ? dossierActionsFor(route.permission) : [])];
+  const extra = own.filter((a) => !have.has(a.id)).map((a) => (a.permission ? a : { ...a, permission: undefined }));
   return { ...route, spec: { ...route.spec, actions: [...route.spec.actions, ...extra] } };
 }

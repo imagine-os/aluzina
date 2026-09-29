@@ -71,13 +71,14 @@ Per-route overrides (`ROUTE_ICONS`) cover every nav route of every surface; the 
 
 ## The set
 
-78 names, grouped by what they mark:
+84 names, grouped by what they mark:
 
 - **surfaces and sections**: dashboard, approvals, projects, work, spaces, graph, catalog, import, documents, plans, design, references, palette, brand, competitions, presentations, images, revisions, assets, communication, messages, alerts, reports, quality, settings, manual, developer, docs, archive
 - **business**: sales, leads, intake, schedule, calendar, suppliers, quotes, deliveries, payments, execution, purchases, site, money, clients, team
 - **builder and dev tools**: tools, plan, canvas, simulator, actions, tokens, testing
 - **interface**: folder, search, filter, close, chevron-right, chevron-left, chevron-down, external, download, copy, plus, minus, check, warning, info, user, home, back, note, dot, more, menu
 - **added in ar-21**: chevron-left, moon, sun, pin, print, flag, menu (the theme toggle, pinned posts, the print button, the bug flag, the menu button and the back chevron had no drawn name)
+- **added in D-114 (changelog 0041)**: instagram, linkedin, facebook, tiktok, website, whatsapp: the networks a lead's dossier lists (the lead card's glyph row, the social profile cards). Same grid and stroke, generic geometric marks (a rounded square with a lens, a globe, a speech bubble...), not the networks' own logos; each is always next to its network's name or handle (P-03).
 
 ## Where they are used
 
