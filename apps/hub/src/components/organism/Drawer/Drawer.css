@@ -21,6 +21,11 @@
   height: 100dvh;
 }
 
+.drawer--lg.drawer--right,
+.drawer--lg.drawer--left {
+  width: min(56rem, 100%);
+}
+
 .drawer--right { margin-left: auto; border-left: 1px solid var(--color-border); }
 .drawer--left { margin-right: auto; border-right: 1px solid var(--color-border); }
 

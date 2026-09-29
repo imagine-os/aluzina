@@ -112,6 +112,11 @@ export const strings: StringTable = {
     en: 'The whole method as physical objects on a zoomable desk: one felt mat per phase of the client journey, and every status, form, checklist, template, deliverable, rule and KPI as a small sheet, folder, box, token or card that previews its real content.',
     es: 'Todo el método como objetos físicos sobre una mesa con zoom: un tapete por fase del recorrido del cliente, y cada estado, formulario, lista, plantilla, entregable, regla e indicador como una pequeña hoja, carpeta, caja, ficha o tarjeta que muestra su contenido real.',
   },
+  'hub.cards.clienthub.title': { en: 'Clients · HOY hub desk', es: 'Clientes · mesa del hub HOY' },
+  'hub.cards.clienthub.desc': {
+    en: 'A client’s whole hub laid out physically: HOY’s website, member and teacher apps, staff and admin desktops, docs and tools as real screens on one felt mat per role, each role seated at its mat; open any screen live as that role.',
+    es: 'Todo el hub de un cliente, físico: el sitio de HOY, las apps de socios y profesores, los escritorios del equipo y la administración, los docs y las herramientas como pantallas reales, un tapete por rol con su persona sentada; abre cualquier pantalla en vivo como ese rol.',
+  },
   'hub.cards.businessOs.title': { en: 'Business OS prototype', es: 'Prototipo Business OS' },
   'hub.cards.businessOs.desc': {
     en: 'the Claude Design prototype of the Aluzina operations system: cockpit, stations, work views, QC, media, design system, docs; EN/ES toggle inside',

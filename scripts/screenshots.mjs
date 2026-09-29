@@ -13,9 +13,12 @@
 //        --use-gl=swiftshader --enable-unsafe-swiftshader: software GL for headless captures of WebGL views (K-04 3D).
 //        External bases (not http://localhost) launch with --disable-features=ChromeRootStoreUsed so Chromium trusts the
 //        sandbox's CA-terminating outbound proxy via the OS/NSS store instead of the bundled Chrome Root Store.
+//        --mount=<url-prefix>=<dir> (repeatable, comma-separated): answer requests under that URL prefix from a local folder
+//        (longest prefix wins), e.g. a client hub map and its captures from the client's checkout when the sandbox cannot
+//        reach them (W-05 / D-16: --mount=https://imagine-os.github.io/hoy/hub-map/shots/=../hoy/docs/screenshots/,https://imagine-os.github.io/hoy/=../hoy/public/).
 //        --list prints the resolved --as role -> demo user id (from tenant/auth/demoUsers.ts) and exits, no browser (tp-07).
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
+import { mkdirSync, readFileSync, writeFileSync, existsSync, statSync } from 'node:fs';
+import { extname, join, resolve } from 'node:path';
 import { chromium } from 'playwright';
 // Demo identities as tenant data (tp-07, D-089): one user id per role, instead of a hand-duplicated map here.
 import { demoUserForRole } from '../apps/hub/src/tenant/auth/demoUsers.ts';
@@ -65,6 +68,15 @@ if (args['use-gl']) {
   if (args['enable-unsafe-swiftshader'] !== undefined) launchOpts.args.push('--enable-unsafe-swiftshader');
 }
 
+// --mount: URL prefix -> local folder, longest prefix first.
+const mounts = (args.mount && args.mount !== 'true' ? args.mount.split(',') : [])
+  .map((m) => {
+    const at = m.lastIndexOf('=');
+    return { prefix: m.slice(0, at), dir: resolve(m.slice(at + 1)) };
+  })
+  .sort((a, b) => b.prefix.length - a.prefix.length);
+const MIME = { '.json': 'application/json', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp' };
+
 const browser = await chromium.launch(launchOpts);
 const outDir = join(outRoot, code);
 mkdirSync(outDir, { recursive: true });
@@ -85,6 +97,15 @@ for (const shot of shots) {
     },
     [tenant.id, lang, asRole ? demoUserForRole(asRole)?.id ?? null : null, theme, storage],
   );
+  for (const { prefix, dir } of mounts) {
+    await context.route(`${prefix}**`, (r) => {
+      const url = new URL(r.request().url());
+      const mount = mounts.find((m) => url.href.startsWith(m.prefix));
+      const file = join(mount.dir, decodeURIComponent(url.href.slice(mount.prefix.length).split(/[?#]/)[0]));
+      if (!file.startsWith(mount.dir) || !existsSync(file) || statSync(file).isDirectory()) return r.fulfill({ status: 404, body: 'not mounted' });
+      return r.fulfill({ status: 200, contentType: MIME[extname(file).toLowerCase()] ?? 'application/octet-stream', body: readFileSync(file) });
+    });
+  }
   const page = await context.newPage();
   const target = staticPath ? `${base}${staticPath}` : `${base}#${route}`;
   await page.goto(target, { waitUntil: 'load', timeout: 90_000 });

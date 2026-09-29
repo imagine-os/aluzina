@@ -380,12 +380,17 @@ export function useDesk(opts: UseDeskOptions) {
         flyTo(fit, ms);
         return fit.z;
       }
+      // Exactly the floor zoom, the desk's top-left corner (half a gap in) at the stage's top-left (tilt-aware).
       const { w, h } = sizeRef.current;
-      const c = fitCam(0, 0, Math.min(l.width, w / floor), Math.min(l.height, h / floor), 0);
+      const z = clampZ(floor);
+      // Left edge from the near (bottom) corner, where the tilted plane is narrowest on screen; top from the far edge.
+      const near = toPlane(-w / 2 + 12, h / 2 - 12);
+      const far = toPlane(0, -h / 2 + 12);
+      const c = { cx: MAT_GAP / 2 - near.u / z, cy: MAT_GAP / 2 - far.v / z, z };
       flyTo(c, ms);
       return c.z;
     },
-    [fitCam, flyTo],
+    [fitCam, flyTo, toPlane],
   );
 
   const zoomAtScreen = useCallback(

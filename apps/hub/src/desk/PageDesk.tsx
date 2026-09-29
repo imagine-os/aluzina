@@ -22,7 +22,7 @@ import { ENTITY_RULES, PILL_FIELDS, titleOfRow, type EntityRule } from './entiti
 import { fieldLabel, rowFields, valueLabel } from './fields';
 import { findItem } from './layout';
 import { deskStrings } from './strings';
-import type { DeskItem, DeskModel, Mat, PlacedItem } from './types';
+import { FACE_BUDGET, type DeskItem, type DeskModel, type Mat, type PlacedItem } from './types';
 import { useDesk } from './useDesk';
 
 type Row = Record<string, unknown> & { id: string };
@@ -35,8 +35,8 @@ export const CAP_PER_SUB = 12;
 export const CAP_PER_MAT = 40;
 /** Face font per kind on page desks: a row carries 3-5 short lines, so its face text is larger than a playbook form's. */
 const ROW_FONT: Partial<Record<DeskItem['kind'], number>> = { card: 3.3, sheet: 3, document: 3, checklist: 3, folder: 3.7, box: 3.7, token: 3.6 };
-/** Full faces per desk; objects past it render a plain tile (D-106, performance). */
-export const FACE_BUDGET = 200;
+/** Full faces per desk; objects past it render a plain tile (D-106, performance). Defined with the geometry. */
+export { FACE_BUDGET };
 
 const txt = (key: string): Text => {
   const e = deskStrings[key];

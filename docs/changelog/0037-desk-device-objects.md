@@ -45,3 +45,7 @@ model: Opus 5 (build), Fable 5.1 (architecture and plan)
 ## Checks
 
 `npm run build` green (tsc strict, Vite, `tenant:validate`, `desk:check`). The objects are first rendered by the client hub desk (next pass); the screenshots and the 44 px / 10-foot checks of the device objects are recorded there.
+
+## Correction (appended with changelog 0039)
+
+The `model:` line above should read Opus 5.5 (build), Fable 5.1 (architecture and plan): this pass was built by Opus 5.5.

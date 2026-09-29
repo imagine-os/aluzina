@@ -13,17 +13,19 @@ export interface DrawerProps {
   children: ReactNode;
   footer?: ReactNode;
   side?: 'right' | 'left' | 'bottom';
+  /** `lg`: a wide side panel (56rem) for content that needs room, e.g. a live page frame (W-05). */
+  size?: 'md' | 'lg';
 }
 
 /** Side panel (detail views, menus on phones): same focus and Escape behaviour as Modal. */
-export function Drawer({ open, onClose, title, children, footer, side = 'right' }: DrawerProps) {
+export function Drawer({ open, onClose, title, children, footer, side = 'right', size = 'md' }: DrawerProps) {
   const { t } = useT();
   const ref = useRef<HTMLDivElement>(null);
   useFocusTrap(ref, open, onClose);
   if (!open) return null;
   return createPortal(
     <div className="drawer__backdrop" onClick={onClose}>
-      <div ref={ref} className={cx('drawer', `drawer--${side}`)} role="dialog" aria-modal="true" aria-labelledby="drawer-title" onClick={(e) => e.stopPropagation()} tabIndex={-1}>
+      <div ref={ref} className={cx('drawer', `drawer--${side}`, size === 'lg' && 'drawer--lg')} role="dialog" aria-modal="true" aria-labelledby="drawer-title" onClick={(e) => e.stopPropagation()} tabIndex={-1}>
         <div className="drawer__head">
           <h2 id="drawer-title" className="drawer__title">{title}</h2>
           <Button variant="ghost" icon="×" aria-label={t('core.dialog.close')} onClick={onClose} />

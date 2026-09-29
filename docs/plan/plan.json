@@ -1,5 +1,5 @@
 {
-  "version": "0.22.0",
+  "version": "0.23.0",
   "updatedAt": "2026-09-29",
   "source": "docs/build-plan.md (steps 0-17, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -2201,7 +2201,7 @@
       "title": "Desk device objects (prompt 0030): phone, tablet, screen on a stand, tall web page and fanned stack of pages as desk kinds with lazy image faces and a drawn fallback, multi-row footprints (2D first-fit packer), caption strips, nine client-hub role looks, home zoom, desk:check overlap script in the build",
       "step": "17",
       "status": "done",
-      "model": "Opus 5",
+      "model": "Opus 5.5",
       "codes": [
         "W-04"
       ],
@@ -2209,6 +2209,59 @@
         "dk-04"
       ],
       "changelog": "0037"
+    },
+    {
+      "id": "ch-01",
+      "title": "W-05 client hub desk (prompt 0030, D-108..D-112): HOY's hub map (hoy.hub-map/1) read live with a bundled snapshot, one mat per HOY role with its seated figure, experiences as sub-mats, all 87 pages as phones / tall pages / screens / documents with real capture faces, drawer with purpose, declared actions and Open live as that role, 11 clienthub.* actions, HUB-01 card",
+      "step": "18",
+      "status": "done",
+      "model": "Opus 5.5",
+      "codes": [
+        "W-05",
+        "HUB-01"
+      ],
+      "dependsOn": [
+        "dk-05"
+      ],
+      "changelog": "0039"
+    },
+    {
+      "id": "ch-02",
+      "title": "Three points of view (prompt 0030, D-111): the lens switch on W-05 (ALUZINA by role, Between Gigs by experience with the gig card, HOY on its own) and D-16 hub lenses, the three side by side",
+      "step": "18",
+      "status": "doing",
+      "model": "Opus 5.5",
+      "codes": [
+        "W-05",
+        "D-16"
+      ],
+      "dependsOn": [
+        "ch-01"
+      ]
+    },
+    {
+      "id": "ch-03",
+      "title": "Between Gigs consumes hoy's hub map with its own lens (docs/tenant/hub-map-consumer.md checklist) once its repo is reachable",
+      "step": "18",
+      "status": "backlog",
+      "model": "Fable 5.1",
+      "codes": [],
+      "dependsOn": [
+        "ch-02"
+      ]
+    },
+    {
+      "id": "ch-04",
+      "title": "Refresh the bundled snapshot from hoy's generated public/hub-map.json on every hoy release (one-file swap; optionally a CI step)",
+      "step": "18",
+      "status": "backlog",
+      "model": "Sonnet 5",
+      "codes": [
+        "W-05"
+      ],
+      "dependsOn": [
+        "ch-01"
+      ]
     }
   ]
 }

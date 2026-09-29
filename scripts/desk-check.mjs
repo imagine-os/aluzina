@@ -3,7 +3,7 @@
  * Desk layout check (the desk system, `apps/hub/src/desk/layout.ts`): lays out every registered desk model at seven
  * stage widths and fails (exit 1) on any overlap — object / object, object outside its sub-mat, sub-mat / sub-mat,
  * sub-mat outside its mat, a person's station on a sub-mat, mat / mat — or an object off the half-square grid.
- * Plain Node + esbuild (already installed with Vite): the TS sources are bundled in memory, nothing is written.
+ * Plain Node + esbuild (already installed with Vite): the TS sources are bundled into a temp file that is removed.
  *
  *   node scripts/desk-check.mjs            # every model, seven widths
  *   node scripts/desk-check.mjs --verbose  # one line per model and width
@@ -13,7 +13,10 @@
  */
 import { build } from 'esbuild';
 import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { pathToFileURL } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const src = resolve(root, 'apps/hub/src');
@@ -25,9 +28,13 @@ export { layoutDesk } from './desk/layout';
 export { defaultPerRow } from './desk/types';
 import { syntheticDesk } from './desk/checkModels';
 import { playbookDeskModel } from './modules/desk/playbookDesk';
+import { buildLens } from './modules/clienthub/lenses';
+import hoy from './modules/clienthub/hoy.hub-map.snapshot.json';
+const lenses = ['aluzina', 'between-gigs', 'standalone'].flatMap((lens) => [false, true].map((showTools) => ({ name: 'W-05 hoy · ' + lens + (showTools ? ' + tools' : ''), model: buildLens(hoy, lens, { facesLang: 'es', theme: 'light', showTools }).model })));
 export const deskCheckModels = () => [
   { name: 'synthetic (every kind)', model: syntheticDesk() },
   { name: 'W-04 playbook', model: playbookDeskModel() },
+  ...lenses,
 ];
 `;
 
@@ -46,7 +53,10 @@ const out = await build({
   console.error(`desk-check: bundling failed\n${e.message}`);
   process.exit(1);
 });
-const mod = await import(`data:text/javascript;base64,${Buffer.from(out.outputFiles[0].text).toString('base64')}`);
+const dir = mkdtempSync(join(tmpdir(), 'desk-check-'));
+const file = join(dir, 'bundle.mjs');
+writeFileSync(file, out.outputFiles[0].text);
+const mod = await import(pathToFileURL(file).href).finally(() => rmSync(dir, { recursive: true, force: true }));
 const { layoutDesk, defaultPerRow, deskCheckModels } = mod;
 
 // Stage sizes (css px): the seven matrix widths at a typical viewport height, the stage at ~60 % of it.

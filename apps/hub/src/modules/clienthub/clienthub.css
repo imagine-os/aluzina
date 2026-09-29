@@ -1,0 +1,169 @@
+/* W-05 client hub desk (and D-16 hub lenses). Tokens only; the desk itself is styled by src/desk/desk.css. */
+
+.ch-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.ch-strip__brand,
+.ch-strip__map,
+.ch-strip__faces {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ch-strip__lens {
+  flex: 1 1 22rem;
+  min-width: 0;
+}
+
+.ch-strip__lens .tabs__list {
+  flex-wrap: wrap;
+}
+
+.ch-wordmark {
+  display: block;
+  height: 2rem;
+  width: auto;
+  max-width: 9rem;
+  object-fit: contain;
+}
+
+.ch-name {
+  font-size: 1.375rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.02em;
+}
+
+.ch-version {
+  padding: 0.125rem 0.5rem;
+  border: var(--hairline) solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.ch-muted {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.ch-framing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-3);
+}
+
+.ch-framing__text {
+  flex: 1 1 28rem;
+  max-width: 60rem;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.ch-gig {
+  flex: 0 1 26rem;
+}
+
+.ch-gig__tagline {
+  margin: 0 0 var(--space-2);
+}
+
+.ch-face {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+}
+
+.ch-face .desk-preview {
+  max-width: 100%;
+}
+
+.ch-list,
+.ch-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.ch-actions code {
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.ch-of {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Live frame: the device's real size, scaled into the drawer; the iframe exists only while live. */
+.ch-live {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  width: 100%;
+}
+
+.ch-live__box {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  border: var(--hairline) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-md, none);
+}
+
+.ch-live__box--phone {
+  border-radius: 1.5rem;
+  border-width: 6px;
+  border-color: color-mix(in srgb, var(--brand-black) 86%, var(--brand-silver));
+}
+
+.ch-live__scaler {
+  transform-origin: 0 0;
+}
+
+.ch-live__frame {
+  display: block;
+  border: 0;
+  background: var(--color-bg);
+}
+
+/* D-16: three small desks side by side from 1280 px. */
+.ch-lenses {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 1280px) {
+  .ch-lenses {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.ch-lens__framing {
+  margin: 0 0 var(--space-3);
+}
+
+.ch-step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}

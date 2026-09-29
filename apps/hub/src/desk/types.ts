@@ -65,12 +65,15 @@ export const GEOMETRY: Record<ItemKind, KindGeometry> = {
   light: { t: 2, w: 1, h: 1, face: { w: 58, h: 58 }, font: 6.4 },
   stack: { t: 5, w: 1, h: 1, face: { w: 46, h: 56 }, font: 4.2 },
   // Devices. Phone 390 x 844 screens, tablet 3:4, screen 16:10 on a stand, tall website pages.
-  phone: { t: 4, w: 1, h: 2, face: { w: 44, h: 96 }, font: 3.4, cap: 6.4 },
-  tablet: { t: 4, w: 2, h: 2, face: { w: 78, h: 104 }, font: 4, cap: 7.4 },
-  screen: { t: 4, w: 3, h: 2, face: { w: 176, h: 114 }, font: 5, cap: 7.6 },
-  page: { t: 1, w: 1, h: 3, face: { w: 54, h: 162 }, font: 3.4, cap: 6.4 },
-  pages: { t: 1, w: 2, h: 3, face: { w: 104, h: 156 }, font: 4.4, cap: 7.4 },
+  phone: { t: 4, w: 1, h: 2, face: { w: 44, h: 96 }, font: 3.4, cap: 8.2 },
+  tablet: { t: 4, w: 2, h: 2, face: { w: 78, h: 104 }, font: 4, cap: 9 },
+  screen: { t: 4, w: 3, h: 2, face: { w: 176, h: 114 }, font: 5, cap: 9.5 },
+  page: { t: 1, w: 1, h: 3, face: { w: 54, h: 162 }, font: 3.4, cap: 8.2 },
+  pages: { t: 1, w: 2, h: 3, face: { w: 104, h: 156 }, font: 4.4, cap: 9 },
 };
+
+/** Full faces per desk; objects past it render a plain tile (D-106, performance; image faces are not requested either). */
+export const FACE_BUDGET = 200;
 
 /** Height of a device's caption strip under its body (world px; `screen` prints its caption on the chin instead). */
 export const CAPTION_H = 24;

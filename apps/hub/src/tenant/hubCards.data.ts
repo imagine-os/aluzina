@@ -25,6 +25,7 @@ export const PRODUCT_SURFACES = [
   { id: 'archive', code: 'S-12', key: 'archive', kind: 'route', enterAs: 'studio', enterUnless: 'projects.read' },
   { id: 'spaces', code: 'K-01', key: 'spaces', kind: 'static', href: '#/founder/spaces' },
   { id: 'desk', code: 'W-04', key: 'desk', kind: 'static', href: '#/founder/desk' },
+  { id: 'clienthub', code: 'W-05', key: 'clienthub', kind: 'route', enterAs: 'founder', enterUnless: 'projects.read' },
   { id: 'business-os', code: 'BOS-01', key: 'businessOs', kind: 'static', href: './business-os/' },
 ];
 

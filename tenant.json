@@ -3,7 +3,7 @@
   "id": "aluzina",
   "name": { "en": "Aluzina", "es": "Aluzina" },
   "repo": "https://github.com/imagine-os/aluzina",
-  "version": "0.22.1",
+  "version": "0.23.0",
   "generatedFrom": "8b0acf8",
   "spec": "docs/tenant/manifest.md",
   "identity": {
@@ -59,7 +59,7 @@
     "navGroupsFile": "apps/hub/src/tenant/navGroups.ts",
     "hubCardsFile": "apps/hub/src/tenant/hubCards.ts",
     "roleSwitchParam": "as",
-    "nextFreeCodes": ["A-10", "O-14", "S-14", "G-10", "P-07", "C-07", "M-09", "D-16", "K-07", "W-05"]
+    "nextFreeCodes": ["A-10", "O-14", "S-14", "G-10", "P-07", "C-07", "M-09", "D-16", "K-07", "W-06"]
   },
   "hubModules": [
     { "name": "hub", "path": "apps/hub/src/modules/hub", "codes": ["HUB-01"], "surfaces": ["hub"], "guard": null, "shell": "bare", "owner": "Fable 5.1" },
@@ -70,6 +70,7 @@
     { "name": "archive", "path": "apps/hub/src/modules/archive", "codes": ["S-12", "S-13"], "surfaces": ["studio", "founder", "brand"], "guard": "projects.read", "shell": "desktop", "owner": "Opus 5" },
     { "name": "work", "path": "apps/hub/src/modules/work", "codes": ["W-01", "W-02", "W-03"], "surfaces": ["founder", "ops", "studio", "brand"], "guard": null, "shell": "desktop", "owner": "Opus 5" },
     { "name": "desk", "path": "apps/hub/src/modules/desk", "codes": ["W-04"], "surfaces": ["founder", "ops", "studio", "brand", "dev"], "guard": null, "shell": "desktop", "owner": "Opus 5" },
+    { "name": "clienthub", "path": "apps/hub/src/modules/clienthub", "codes": ["W-05"], "surfaces": ["founder", "ops", "studio", "brand", "dev"], "guard": null, "shell": "desktop", "owner": "Opus 5.5", "note": "W-05 client hub desk: a client's hub map (hoy.hub-map/1) laid on the desk by role; bundled snapshot hoy.hub-map.snapshot.json" },
     { "name": "spaces", "path": "apps/hub/src/modules/spaces", "codes": ["K-01", "K-02", "K-03", "K-04", "K-05", "K-06"], "surfaces": ["founder", "ops", "studio", "brand", "dev"], "guard": "spaces.read", "shell": "desktop", "owner": "Opus 5" },
     { "name": "client", "path": "apps/hub/src/modules/client", "codes": ["C-01", "C-02", "C-03", "C-04", "C-05", "C-06"], "surfaces": ["client"], "guard": "own.projects.read", "shell": "phone", "owner": "Opus 5" },
     { "name": "public", "path": "apps/hub/src/modules/public", "codes": ["P-01", "P-02", "P-03", "P-04", "P-05"], "surfaces": ["public"], "guard": null, "shell": "bare", "owner": "Opus 5" },
@@ -163,7 +164,7 @@
   },
   "docs": {
     "root": "docs/README.md",
-    "counters": { "prompts": 31, "changelog": 38, "decisions": 107, "qa": 9 },
+    "counters": { "prompts": 31, "changelog": 39, "decisions": 112, "qa": 9 },
     "pendingDir": "docs/changelog/_pending",
     "plan": "docs/plan/plan.json",
     "kanban": "docs/kanban.md",
@@ -187,8 +188,8 @@
     "bus": "apps/hub/src/actions/bus.ts",
     "global": "window.__aluzina.actions",
     "idPattern": "^[a-z][a-zA-Z0-9]*\\.[a-z][a-zA-Z0-9]*$",
-    "declared": 460,
-    "distinct": 431,
+    "declared": 471,
+    "distinct": 442,
     "platformDeclarations": ["apps/hub/src/desk/actions.ts"],
     "browser": "D-09 /#/dev/actions",
     "exportFormat": "webmcp-json (D-09 export)",

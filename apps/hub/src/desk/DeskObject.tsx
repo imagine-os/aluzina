@@ -412,7 +412,7 @@ export function DeskFace({ item, lang, box, moreLabel, rows = Infinity }: { item
   const k = Math.min(box / g.face.w, box / g.face.h);
   const tab = item.kind === 'folder' ? 7 * k : 0;
   const device = DEVICE_KINDS.has(item.kind);
-  const capH = device && item.kind !== 'screen' ? CAPTION_H * k : 0;
+  const capH = device && item.kind !== 'screen' ? Math.min(CAPTION_H * k, 44) : 0;
   return (
     <div className={`desk-preview${device ? ' desk-preview--device' : ''}`} style={{ width: g.face.w * k, height: g.face.h * k + tab + capH, paddingTop: tab }}>
       <span className={`desk-item--${item.kind}${device ? ' desk-item--device' : ''} desk-preview__face`} style={{ display: 'block', position: 'relative', width: g.face.w * k, height: g.face.h * k, fontSize: (item.font ?? g.font) * k }}>
@@ -421,7 +421,7 @@ export function DeskFace({ item, lang, box, moreLabel, rows = Infinity }: { item
         </span>
       </span>
       {capH > 0 && (
-        <span className="desk-caption desk-caption--preview" style={{ height: capH - 4 * k, fontSize: (g.cap ?? 6.4) * k }}>
+        <span className="desk-caption desk-caption--preview" style={{ minHeight: Math.min(capH - 4 * k, 40), fontSize: Math.min((g.cap ?? 6.4) * k, 15) }}>
           <DeviceCaption item={item} lang={lang} />
         </span>
       )}
