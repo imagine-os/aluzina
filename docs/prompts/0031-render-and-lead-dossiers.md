@@ -13,7 +13,19 @@ make sure everyhting renders clean and smooth, text, no clipping when 3d objects
 
 ## Response
 
-Posted in Slack after deploy; appended in a follow-up commit.
+Posted in Slack #all-aluzina 2026-09-29 ~07:25 UTC with three screenshots (docs/screenshots/A-08/en-1280-dossier-fan.jpg, docs/screenshots/A-08/en-1280-workmat.jpg, docs/screenshots/W-04/en-1280-crisp-300.jpg).
+
+Both done and live. Leads: https://imagine-os.github.io/aluzina/#/founder/leads (select a lead, then Fan out).
+
+Rendering: the whole desk now has one depth order, so glows, rings and overlapping objects sit on their own layers and nothing clips. Text is rasterised at the final size after each zoom and hairlines never drop below one device pixel. Pan on the Method desk while following a project went from a 50 ms worst frame to 17 ms, and the compositor layer count roughly halved. The six polish defects from the QA pass (Spanish ability labels, legend line breaks, cut-off sub-mat labels, focus tooltip, object counts, toolbar wrap at 4K) are fixed too.
+
+Leads: every lead card carries a portrait, companies carry a logo, and a row of network glyphs. Selecting a lead turns it into a dossier: Contact, Company, one card per social profile (flips to notes, Visit opens the site), Qualification, Commercial, Notes and messages. Fan out, Stack, Sort by kind / date / network, Flip. Work mats sit below the process stacks: add, rename, arrange leads by drag or arrow keys, and the arrangement is remembered per person. The process stacks stay the source of truth, so a lead on a work mat keeps updating.
+
+The portraits and logos on the mock leads are generated art, not real people, and the social cards are drawn from mock handles rather than embedded from the networks (privacy, third-party scripts and the network policy). Real leads will carry uploaded photos and real handles.
+
+Logged as prompt 0031, changelogs 0038 (render) and 0041 (dossiers), decisions D-107 and D-114, QA 0009, version 0.24.0. Another session pushed to the repo in between, so the numbers moved.
+
+_Fable 5.1 wrote the brief, Opus 5.5 built both passes, Sonnet 5 will log the reply._
 
 ## Numbering (appended with changelog 0041)
 
