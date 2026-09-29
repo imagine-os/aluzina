@@ -1,12 +1,13 @@
 # scripts
 
-Root-level tooling. None of these run inside `npm run build` except `tenant-validate.mjs` and
-`copy-static.mjs` (the root `build` script chains hub build -> `tenant:validate` -> `copy-static`); the
+Root-level tooling. None of these run inside `npm run build` except `tenant-validate.mjs`, `desk-check.mjs` and
+`copy-static.mjs` (the root `build` script chains hub build -> `tenant:validate` -> `desk:check` -> `copy-static`); the
 rest are separate `npm run` scripts, run by CI (`thumbs`) or by hand.
 
 | Script | `npm run` | What it does |
 | --- | --- | --- |
 | `tenant-validate.mjs` | `tenant:validate` (in `build`) | Checks the root `tenant.json` (manifestVersion 1) against the checkout: modules, sub-project paths, content mounts, docs counters, version, namespace literals, and more (tp-03). Plain Node, no browser. |
+| `desk-check.mjs` | `desk:check` (in `build`) | Lays out every desk model (a synthetic desk with every object kind, W-04, and every module desk listed in the script's entry) at seven stage widths with the real `layoutDesk()` and fails on any overlap (object / object, object outside its sub-mat, sub-mat / sub-mat, a person's station on a sub-mat, mat / mat) or an object off the grid. Bundles the TS sources in memory with esbuild (installed with Vite); no browser. `--verbose` prints one line per model and width. |
 | `copy-static.mjs` | `copy:static` (in `build`) | Copies `apps/business-os/` into `dist/business-os/` and writes `dist/.nojekyll`. |
 | `thumbnails.mjs` | `thumbs` | Deploy-time thumbnails: serves `dist/` locally and screenshots every hub-linked card with Playwright Chromium into `dist/thumbs/<code>.jpg` + `manifest.json`. Card list read from `apps/hub/src/tenant/hubCards.data.ts` (tp-07). Runs in `pages.yml` after the build; never commit its output. |
 | `screenshots.mjs` | `screenshots` | QA / docs screenshots of one hub page into `docs/screenshots/<CODE>/<lang>-<width>.jpg` + `routes.json`. Demo user per `--as=<role>` read from `apps/hub/src/tenant/auth/demoUsers.ts` (tp-07). |

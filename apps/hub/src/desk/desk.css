@@ -855,6 +855,88 @@
   --pp-accent: var(--brand-periwinkle);
 }
 
+/* Client hub roles (hoy): nine more looks, same construction, their own colours. */
+.desk-person--customer {
+  --pp-skin: var(--pp-skin-tan);
+  --pp-hair: color-mix(in srgb, var(--brand-gold) 46%, var(--brand-ink));
+  --pp-jacket: var(--brand-aqua);
+  --pp-jacket-2: color-mix(in srgb, var(--brand-aqua) 72%, var(--brand-ink));
+  --pp-shirt: var(--metal-highlight);
+  --pp-accent: var(--brand-lime);
+}
+
+.desk-person--teacher {
+  --pp-skin: var(--pp-skin-medium);
+  --pp-hair: var(--brand-ink);
+  --pp-jacket: color-mix(in srgb, var(--brand-lime) 64%, var(--brand-gold-highlight));
+  --pp-jacket-2: color-mix(in srgb, var(--brand-lime) 52%, var(--brand-ink));
+  --pp-shirt: var(--metal-highlight);
+  --pp-accent: var(--brand-gold);
+}
+
+.desk-person--frontdesk {
+  --pp-skin: var(--pp-skin-deep);
+  --pp-hair: var(--brand-ink);
+  --pp-jacket: var(--metal-highlight);
+  --pp-jacket-2: color-mix(in srgb, var(--brand-silver) 70%, var(--brand-ink));
+  --pp-shirt: color-mix(in srgb, var(--brand-periwinkle) 40%, var(--metal-highlight));
+  --pp-accent: var(--brand-periwinkle);
+}
+
+.desk-person--coordinator {
+  --pp-skin: var(--pp-skin-light);
+  --pp-hair: color-mix(in srgb, var(--brand-ink) 78%, var(--brand-gold));
+  --pp-jacket: color-mix(in srgb, var(--brand-periwinkle) 58%, var(--metal-highlight));
+  --pp-jacket-2: color-mix(in srgb, var(--brand-periwinkle) 70%, var(--brand-ink));
+  --pp-shirt: var(--brand-ink);
+  --pp-accent: var(--brand-aqua);
+}
+
+.desk-person--finance {
+  --pp-skin: var(--pp-skin-tan);
+  --pp-hair: color-mix(in srgb, var(--brand-silver) 50%, var(--brand-ink));
+  --pp-jacket: color-mix(in srgb, var(--brand-ink) 82%, var(--brand-aqua));
+  --pp-jacket-2: color-mix(in srgb, var(--brand-ink) 92%, var(--brand-aqua));
+  --pp-shirt: var(--metal-highlight);
+  --pp-accent: var(--brand-gold);
+}
+
+.desk-person--admin {
+  --pp-skin: var(--pp-skin-medium);
+  --pp-hair: color-mix(in srgb, var(--brand-gold) 38%, var(--brand-ink));
+  --pp-jacket: color-mix(in srgb, var(--brand-gold) 34%, var(--metal-highlight));
+  --pp-jacket-2: color-mix(in srgb, var(--brand-gold) 50%, var(--brand-ink));
+  --pp-shirt: color-mix(in srgb, var(--brand-ink) 88%, var(--brand-gold));
+  --pp-accent: var(--brand-lime);
+}
+
+.desk-person--superadmin {
+  --pp-skin: var(--pp-skin-deep);
+  --pp-hair: var(--brand-ink);
+  --pp-jacket: color-mix(in srgb, var(--brand-ink) 70%, var(--brand-periwinkle));
+  --pp-jacket-2: color-mix(in srgb, var(--brand-ink) 84%, var(--brand-periwinkle));
+  --pp-shirt: var(--brand-aqua);
+  --pp-accent: var(--brand-aqua);
+}
+
+.desk-person--public {
+  --pp-skin: var(--pp-skin-light);
+  --pp-hair: color-mix(in srgb, var(--brand-gold) 82%, var(--brand-ink));
+  --pp-jacket: var(--brand-silver);
+  --pp-jacket-2: color-mix(in srgb, var(--brand-silver) 62%, var(--brand-ink));
+  --pp-shirt: var(--metal-highlight);
+  --pp-accent: var(--brand-periwinkle);
+}
+
+.desk-person--maintenance {
+  --pp-skin: var(--pp-skin-medium);
+  --pp-hair: var(--brand-ink);
+  --pp-jacket: color-mix(in srgb, var(--brand-gold) 64%, var(--brand-ink));
+  --pp-jacket-2: color-mix(in srgb, var(--brand-gold) 50%, var(--brand-ink));
+  --pp-shirt: var(--metal-highlight);
+  --pp-accent: color-mix(in srgb, var(--brand-lime) 60%, var(--brand-gold));
+}
+
 /* The station: a button the size of its 5 x 3 squares (the hit area), holding flat and pop-up layers. */
 .desk-person {
   --t: 22px;
@@ -1881,5 +1963,273 @@
 @media (min-width: 1100px) {
   .desk-toolbar__group {
     flex-wrap: nowrap;
+  }
+}
+
+/* ---------- device objects: phone, tablet, screen, tall page, fanned pages (image faces) ---------- */
+
+.desk-page,
+.desk-frame,
+.desk-drawer,
+.desk-legend {
+  --desk-device: color-mix(in srgb, var(--brand-black) 86%, var(--brand-silver));
+  --desk-device-side: color-mix(in srgb, var(--brand-black) 70%, var(--brand-silver));
+  --desk-device-edge: color-mix(in srgb, var(--brand-silver) 60%, transparent);
+  --desk-screen-off: color-mix(in srgb, var(--desk-paper) 92%, var(--brand-periwinkle));
+}
+
+.desk-item--device .desk-top {
+  background: none;
+  box-shadow: none;
+}
+
+.desk-item--phone .desk-top,
+.desk-item--phone .desk-item__shadow { border-radius: 7px; }
+.desk-item--tablet .desk-top,
+.desk-item--tablet .desk-item__shadow { border-radius: 6px; }
+.desk-item--screen .desk-top,
+.desk-item--screen .desk-item__shadow { border-radius: 3px; }
+
+.desk-item--device .desk-side {
+  background: linear-gradient(to bottom, var(--desk-device-side), var(--desk-device));
+}
+
+/* Paper devices: a tall page curls at its corner, a stack of pages fans out behind its top page. */
+.desk-item--page .desk-item__shadow {
+  box-shadow: 0.6px 1.2px 1.6px var(--desk-shadow), 3px 6px 7px -4px var(--desk-shadow);
+}
+
+.desk-item--pages .desk-top {
+  transform: translateZ(0.6px);
+}
+
+.desk-leaf {
+  position: absolute;
+  inset: 0;
+  border-radius: 1px;
+  background: var(--desk-grain), var(--desk-paper);
+  box-shadow: 0 0.6px 1.4px var(--desk-shadow), inset 0 0 0 0.4px var(--desk-paper-edge);
+}
+
+.desk-leaf--1 { transform: translate(3px, 2.5px) rotate(1.4deg); }
+.desk-leaf--2 { transform: translate(6px, 5px) rotate(2.6deg); }
+.desk-leaf--3 { transform: translate(9px, 7px) rotate(-1.2deg); }
+.desk-leaf--4 { transform: translate(12px, 9.5px) rotate(3.4deg); }
+
+/* The monitor's stand: a flat foot and neck on the desk under the lifted screen. */
+.desk-stand {
+  position: absolute;
+  left: 50%;
+  top: calc(100% - 6px);
+  width: 34%;
+  height: 16px;
+  transform: translateX(-50%);
+  border-radius: 1px 1px 5px 5px;
+  background:
+    linear-gradient(to bottom, var(--desk-device-side) 0 55%, transparent 55%) center top / 18% 100% no-repeat,
+    linear-gradient(to bottom, transparent 55%, var(--desk-device-side) 55%);
+  box-shadow: 0 1px 2px var(--desk-shadow);
+}
+
+.dp--device {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  line-height: 1.2;
+}
+
+.dp--dev-phone {
+  padding: 5px 2.6px;
+  border-radius: 7px;
+  background: var(--desk-device);
+  box-shadow: inset 0 0 0 0.6px var(--desk-device-edge);
+}
+
+.dp--dev-tablet {
+  padding: 5px;
+  border-radius: 6px;
+  background: var(--desk-device);
+  box-shadow: inset 0 0 0 0.6px var(--desk-device-edge);
+}
+
+.dp--dev-screen {
+  padding: 3px 3px 0;
+  border-radius: 3px;
+  background: var(--desk-device);
+  box-shadow: inset 0 0 0 0.6px var(--desk-device-edge);
+}
+
+.dp--paper {
+  border-radius: 1px;
+  background: var(--desk-grain), var(--desk-paper);
+  box-shadow: inset 0 0 0 0.4px var(--desk-paper-edge);
+}
+
+.dp__slit {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  width: 11px;
+  height: 1.2px;
+  margin-left: -5.5px;
+  border-radius: 1px;
+  background: var(--desk-device-edge);
+}
+
+.dp__screen {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--desk-screen-off);
+}
+
+.dp--dev-tablet .dp__screen { border-radius: 2.5px; }
+.dp--dev-screen .dp__screen { border-radius: 1px; }
+.dp--paper .dp__screen {
+  border-radius: 1px;
+  background: transparent;
+}
+
+/* The page's curled corner. */
+.dp--dev-page .dp__screen::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 26%;
+  height: 7%;
+  background: linear-gradient(135deg, transparent 49%, color-mix(in srgb, var(--brand-black) 16%, transparent) 50%, var(--desk-paper-edge) 64%, var(--desk-paper) 100%);
+  border-radius: 0 0 1px 0;
+}
+
+/* The drawn face under the image: the device outline stays and names the screen while the capture loads or fails. */
+.dp__fallback {
+  position: absolute;
+  inset: 0;
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.25em;
+  padding: 0.8em 0.7em;
+  color: var(--desk-ink);
+}
+
+.dp__fallback .dp__rows {
+  font-size: 0.8em;
+}
+
+.dp__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0;
+  transition: opacity 240ms ease-out;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.dp__img--top {
+  height: auto;
+  object-fit: fill;
+}
+
+.dp__img.is-ok {
+  opacity: 1;
+}
+
+.dp--imaged {
+  position: relative;
+  padding: 0;
+}
+
+.dp__chin {
+  display: flex !important;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  height: 15px;
+  padding: 0 0.3em;
+  color: var(--metal-highlight);
+  font-size: 1.52em;
+}
+
+.dp__chin .dp__caption {
+  -webkit-line-clamp: 1;
+}
+
+.dp__pillwrap {
+  position: absolute;
+  top: 0.55em;
+  right: 0.55em;
+  z-index: 2;
+}
+
+.dp__badge {
+  position: absolute;
+  right: 0.5em;
+  bottom: 0.5em;
+  z-index: 2;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  background: var(--desk-ink);
+  color: var(--desk-paper);
+  font-size: 0.9em;
+  font-weight: var(--weight-bold);
+}
+
+/* The caption strip under a device (on the felt): code and title, two lines, em-sized from the kind's `cap`. */
+.desk-caption {
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.25em;
+  color: var(--desk-felt-ink);
+  text-align: center;
+  line-height: 1.12;
+  pointer-events: none;
+}
+
+.desk-caption--preview {
+  position: relative;
+  left: auto;
+  right: auto;
+  margin-top: 0.3em;
+  color: var(--color-text-muted);
+}
+
+.dp__caption {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-weight: var(--weight-medium);
+}
+
+.dp__caption .dp__capcode,
+.dp__caption .dp__captext {
+  display: inline !important;
+}
+
+.dp__capcode {
+  margin-right: 0.35em;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.04em;
+  opacity: 0.78;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dp__img {
+    transition: none;
   }
 }

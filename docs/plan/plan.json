@@ -2195,6 +2195,20 @@
         "dk-03"
       ],
       "changelog": "0036"
+    },
+    {
+      "id": "dk-05",
+      "title": "Desk device objects (prompt 0030): phone, tablet, screen on a stand, tall web page and fanned stack of pages as desk kinds with lazy image faces and a drawn fallback, multi-row footprints (2D first-fit packer), caption strips, nine client-hub role looks, home zoom, desk:check overlap script in the build",
+      "step": "17",
+      "status": "done",
+      "model": "Opus 5",
+      "codes": [
+        "W-04"
+      ],
+      "dependsOn": [
+        "dk-04"
+      ],
+      "changelog": "0037"
     }
   ]
 }

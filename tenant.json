@@ -163,7 +163,7 @@
   },
   "docs": {
     "root": "docs/README.md",
-    "counters": { "prompts": 29, "changelog": 36, "decisions": 106, "qa": 8 },
+    "counters": { "prompts": 30, "changelog": 37, "decisions": 106, "qa": 8 },
     "pendingDir": "docs/changelog/_pending",
     "plan": "docs/plan/plan.json",
     "kanban": "docs/kanban.md",

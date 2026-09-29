@@ -50,7 +50,7 @@ export interface DeskStageProps {
 }
 
 /** Kinds in the legend's order (only those on this desk are listed). */
-const LEGEND_ORDER: readonly ItemKind[] = ['folder', 'document', 'sheet', 'form', 'checklist', 'card', 'box', 'token', 'light', 'stack'];
+const LEGEND_ORDER: readonly ItemKind[] = ['pages', 'page', 'phone', 'tablet', 'screen', 'folder', 'document', 'sheet', 'form', 'checklist', 'card', 'box', 'token', 'light', 'stack'];
 
 /**
  * The desk stage (D-103, platform since D-106): a frame holding the toolbar, the zoomable desk, its minimap, tooltip,

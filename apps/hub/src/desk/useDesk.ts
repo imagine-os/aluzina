@@ -4,7 +4,7 @@ import { useMediaQuery, usePrefersReducedMotion } from '../design/env';
 import { storageKey } from '../tenant/config';
 import { layoutDesk } from './layout';
 import type { DeskPerson } from './people';
-import { MAT_GAP, SQ, defaultPerRow, type DeskLayout, type DeskModel, type Mat, type PlacedItem, type SubMat } from './types';
+import { GEOMETRY, MAT_GAP, SQ, defaultPerRow, type DeskLayout, type DeskModel, type Mat, type PlacedItem, type SubMat } from './types';
 
 /**
  * The desk camera and its inputs (D-103, extracted and extended in D-106). One hook per desk: it lays the model out
@@ -78,6 +78,13 @@ export interface UseDeskOptions {
   onKey?: (e: KeyboardEvent<HTMLDivElement>) => boolean;
   /** Registers the toolbar actions under the route's guard (`false` skips, e.g. without permission). */
   actions?: boolean;
+  /**
+   * The lowest zoom the desk opens at, per stage size (undefined: fit the whole desk). When fitting the whole desk
+   * would be smaller, the home view (first view, Reset, refits while untouched) shows the desk's top-left corner at
+   * this zoom instead, so big desks keep their faces readable and their hit areas >= 44 px (hub desks). The Fit
+   * button and `desk.fit` still fit everything.
+   */
+  homeZoom?: (stage: { w: number; h: number }) => number | undefined;
 }
 
 export interface Tip {
@@ -303,6 +310,24 @@ export function useDesk(opts: UseDeskOptions) {
     [fitCam, flyTo],
   );
 
+  /** The home view: the whole desk, or its top-left corner at `homeZoom` when the fit would be smaller. */
+  const home = useCallback(
+    (ms?: number) => {
+      const l = layoutRef.current;
+      const fit = fitCam(0, 0, l.width, l.height, 16);
+      const floor = optsRef.current.homeZoom?.(sizeRef.current);
+      if (!floor || fit.z >= floor) {
+        flyTo(fit, ms);
+        return fit.z;
+      }
+      const { w, h } = sizeRef.current;
+      const c = fitCam(0, 0, Math.min(l.width, w / floor), Math.min(l.height, h / floor), 0);
+      flyTo(c, ms);
+      return c.z;
+    },
+    [fitCam, flyTo],
+  );
+
   const zoomAtScreen = useCallback(
     (sx: number, sy: number, factor: number) => {
       const { cx, cy, z } = cam.current;
@@ -352,13 +377,14 @@ export function useDesk(opts: UseDeskOptions) {
     [fitCam, flyTo],
   );
 
-  /** A zoom at which a face's text reads (the face fills about 45 % of the stage height). */
-  const readableZ = () => clampZ((0.45 * Math.max(200, sizeRef.current.h)) / 60);
+  /** A zoom at which a face's text reads (the face fills about 45 % of the stage height; tall devices by their own height). */
+  const readableZ = (item?: PlacedItem) => clampZ((0.45 * Math.max(200, sizeRef.current.h)) / Math.max(60, item ? GEOMETRY[item.kind].face.h : 60));
 
   const flyToItem = useCallback(
     (item: PlacedItem, mode: 'focus' | 'open' | 'zoom') => {
       const { w, h } = sizeRef.current;
-      const z = mode === 'open' || mode === 'zoom' ? readableZ() : cam.current.z < readableZ() * 0.35 ? readableZ() * 0.6 : cam.current.z;
+      const rz = readableZ(item);
+      const z = mode === 'open' || mode === 'zoom' ? rz : cam.current.z < rz * 0.35 ? rz * 0.6 : cam.current.z;
       let cx = item.x + item.cw / 2;
       let cy = item.y + item.ch / 2;
       if (mode === 'open') {
@@ -396,8 +422,8 @@ export function useDesk(opts: UseDeskOptions) {
     setTilt(tiltRef.current);
     setMatSel('');
     optsRef.current.onReset?.();
-    return fitAll();
-  }, [fitAll]);
+    return home();
+  }, [home]);
 
   const toggleTilt = useCallback(() => {
     tiltRef.current = !tiltRef.current;
@@ -496,9 +522,9 @@ export function useDesk(opts: UseDeskOptions) {
   const lastPerRow = useRef(perRow);
   useEffect(() => {
     if (size.w === 0 || size.h === 0) return;
-    if (!touched.current || lastPerRow.current !== perRow) fitAll(0);
+    if (!touched.current || lastPerRow.current !== perRow) home(0);
     lastPerRow.current = perRow;
-  }, [perRow, size.w, size.h, fitAll]);
+  }, [perRow, size.w, size.h, home]);
 
   /** The next layout change flies to the whole desk once (W-04: following or clearing a project). */
   const refitNext = useRef(false);
@@ -509,9 +535,9 @@ export function useDesk(opts: UseDeskOptions) {
     if (sizeRef.current.w === 0) return;
     if (refitNext.current) {
       refitNext.current = false;
-      fitAll();
-    } else if (!touched.current) fitAll(0);
-  }, [layout.width, layout.height, fitAll]);
+      home();
+    } else if (!touched.current) home(0);
+  }, [layout.width, layout.height, home]);
 
   // ---------------------------------------------------------------- wheel: pan by default, pinch / ctrl zooms
 
@@ -967,7 +993,7 @@ export function useDesk(opts: UseDeskOptions) {
     tip,
     setTip,
     refs: { frameRef, boxRef, stageRef, worldRef, zoomRef, miniViewRef },
-    api: { fitAll, fitMat, fitSub, flyToItem, flyToPerson, zoomBy, zoomTo, reset, toggleTilt, matById, refitOnNextLayout, miniJump, apply },
+    api: { fitAll, home, fitMat, fitSub, flyToItem, flyToPerson, zoomBy, zoomTo, reset, toggleTilt, matById, refitOnNextLayout, miniJump, apply },
     handlers: { onPointerDown, onPointerMove, onPointerEnd, onKeyDown, onKeyUp, onDoubleClick, onClickCapture, activateItem, onFocusItem, onFocusPerson, onHint },
     perspective: persp(),
     MAT_GAP,

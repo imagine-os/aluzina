@@ -26,27 +26,54 @@ export const PERSON_ROWS = 3;
 
 /**
  * Object kinds. `light` is a row of W-04's followed project (D-105); `stack` is the "+N more" pile a page desk puts
- * at the end of a capped sub-mat (D-106). The rest are the physical objects of D-103.
+ * at the end of a capped sub-mat (D-106). The rest are the physical objects of D-103, plus the device objects
+ * (hub desks): `phone`, `tablet`, `screen` (a monitor on a thin stand), `page` (one tall website page) and `pages` (a
+ * fanned stack of tall pages), whose face is an image of the screen they stand for (`DeskItem.face`).
  */
-export type ItemKind = 'sheet' | 'form' | 'checklist' | 'document' | 'folder' | 'box' | 'token' | 'card' | 'light' | 'stack';
-export const ITEM_KINDS: readonly ItemKind[] = ['sheet', 'form', 'checklist', 'document', 'folder', 'box', 'token', 'card', 'light', 'stack'];
+export type ItemKind = 'sheet' | 'form' | 'checklist' | 'document' | 'folder' | 'box' | 'token' | 'card' | 'light' | 'stack' | 'phone' | 'tablet' | 'screen' | 'page' | 'pages';
+export const ITEM_KINDS: readonly ItemKind[] = ['sheet', 'form', 'checklist', 'document', 'folder', 'box', 'token', 'card', 'light', 'stack', 'phone', 'tablet', 'screen', 'page', 'pages'];
+/** Device objects: drawn as a device (bezel, screen, stand or paper) with an image face and a caption strip. */
+export const DEVICE_KINDS: ReadonlySet<ItemKind> = new Set<ItemKind>(['phone', 'tablet', 'screen', 'page', 'pages']);
+
+export interface KindGeometry {
+  /** Thickness in world px (translateZ of the top face). */
+  t: number;
+  /** Footprint in squares: `w` wide by `h` tall (multi-row footprints: devices). */
+  w: 1 | 2 | 3;
+  h: 1 | 2 | 3;
+  /** Top-face size in world px (a device: the device body, without its caption strip). */
+  face: { w: number; h: number };
+  /** The face's base font size in world px (every size inside a face is em). */
+  font: number;
+  /** Device kinds: the caption strip's font size in world px (0 / absent: no strip; `screen` prints it on its chin). */
+  cap?: number;
+}
 
 /**
  * Thickness in world px (translateZ of the top face), footprint in squares, top-face size and the face's base font
  * size in world px (every size inside a face is em, so the drawer and the legend scale the same markup).
  */
-export const GEOMETRY: Record<ItemKind, { t: number; w: 1 | 2; face: { w: number; h: number }; font: number }> = {
-  sheet: { t: 1, w: 1, face: { w: 46, h: 60 }, font: 2.3 },
-  form: { t: 1, w: 1, face: { w: 46, h: 60 }, font: 2.3 },
-  checklist: { t: 1, w: 1, face: { w: 46, h: 60 }, font: 2.3 },
-  document: { t: 6, w: 1, face: { w: 46, h: 58 }, font: 2.3 },
-  folder: { t: 8, w: 2, face: { w: 114, h: 50 }, font: 3.1 },
-  box: { t: 18, w: 1, face: { w: 52, h: 52 }, font: 3.2 },
-  token: { t: 4, w: 1, face: { w: 44, h: 44 }, font: 3.4 },
-  card: { t: 2, w: 1, face: { w: 56, h: 40 }, font: 2.5 },
-  light: { t: 2, w: 1, face: { w: 58, h: 58 }, font: 6.4 },
-  stack: { t: 5, w: 1, face: { w: 46, h: 56 }, font: 4.2 },
+export const GEOMETRY: Record<ItemKind, KindGeometry> = {
+  sheet: { t: 1, w: 1, h: 1, face: { w: 46, h: 60 }, font: 2.3 },
+  form: { t: 1, w: 1, h: 1, face: { w: 46, h: 60 }, font: 2.3 },
+  checklist: { t: 1, w: 1, h: 1, face: { w: 46, h: 60 }, font: 2.3 },
+  document: { t: 6, w: 1, h: 1, face: { w: 46, h: 58 }, font: 2.3 },
+  folder: { t: 8, w: 2, h: 1, face: { w: 114, h: 50 }, font: 3.1 },
+  box: { t: 18, w: 1, h: 1, face: { w: 52, h: 52 }, font: 3.2 },
+  token: { t: 4, w: 1, h: 1, face: { w: 44, h: 44 }, font: 3.4 },
+  card: { t: 2, w: 1, h: 1, face: { w: 56, h: 40 }, font: 2.5 },
+  light: { t: 2, w: 1, h: 1, face: { w: 58, h: 58 }, font: 6.4 },
+  stack: { t: 5, w: 1, h: 1, face: { w: 46, h: 56 }, font: 4.2 },
+  // Devices. Phone 390 x 844 screens, tablet 3:4, screen 16:10 on a stand, tall website pages.
+  phone: { t: 4, w: 1, h: 2, face: { w: 44, h: 96 }, font: 3.4, cap: 6.4 },
+  tablet: { t: 4, w: 2, h: 2, face: { w: 78, h: 104 }, font: 4, cap: 7.4 },
+  screen: { t: 4, w: 3, h: 2, face: { w: 176, h: 114 }, font: 5, cap: 7.6 },
+  page: { t: 1, w: 1, h: 3, face: { w: 54, h: 162 }, font: 3.4, cap: 6.4 },
+  pages: { t: 1, w: 2, h: 3, face: { w: 104, h: 156 }, font: 4.4, cap: 7.4 },
 };
+
+/** Height of a device's caption strip under its body (world px; `screen` prints its caption on the chin instead). */
+export const CAPTION_H = 24;
 
 /** Where the real page for an object lives (its Open navigates there). */
 export interface OpenAt {
@@ -84,13 +111,18 @@ export interface DeskItem {
   plain?: boolean;
   /** The face's base font size in world px when it differs from the kind's (page desk faces carry fewer, larger lines). */
   font?: number;
+  /**
+   * An image face (device kinds): the screen it stands for. Drawn over the text face, lazily; while it loads or
+   * when it fails the drawn device and its title stay (never a broken image). `top` anchors a tall page at its header.
+   */
+  face?: { src: string; alt?: Text; fit?: 'cover' | 'top' };
 }
 
 export interface PlacedItem extends DeskItem {
   /** Cell position in world px (top left of the footprint cell; relative to its sub-mat inside `SubMat.items`). */
   x: number;
   y: number;
-  /** Footprint in world px (w squares by 1 square). */
+  /** Footprint in world px (w squares by h squares). */
   cw: number;
   ch: number;
 }

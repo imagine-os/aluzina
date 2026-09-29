@@ -2,22 +2,32 @@ import { GEOMETRY, MAT_COLS, MAT_GAP, MAT_HEAD, MAT_PAD, PERSON_COLS, PERSON_ROW
 
 /**
  * The desk layout engine (D-103, generalised in D-106): objects -> sub-mats -> mats -> rows. Deterministic,
- * grid-aligned, no overlaps (checked by script at seven widths). Nothing is hand-placed: a client gives mats and
+ * grid-aligned, no overlaps (checked by `scripts/desk-check.mjs` at seven stage widths, in every build). Nothing is hand-placed: a client gives mats and
  * objects, the engine computes every position.
  */
 
-/** Dense first-fit packing of 1x1 / 2x1 objects into `cols` columns; returns cell positions and the row count. */
-function pack(items: DeskItem[], cols: number): { cells: { col: number; row: number }[]; rows: number } {
+/**
+ * Dense first-fit packing into `cols` columns over a 2D grid: each object takes `w` x `h` squares (1x1 papers, 2x1
+ * folders, 1x2 phones, 3x2 screens, 1x3 pages...) at the first free cell in row-major order where its whole footprint
+ * is free. Deterministic (same input, same cells); returns cell positions and the row count.
+ */
+export function pack(items: readonly DeskItem[], cols: number): { cells: { col: number; row: number }[]; rows: number } {
   const taken: boolean[][] = [];
   const free = (r: number, c: number) => !(taken[r]?.[c] ?? false);
+  const fits = (r: number, c: number, w: number, h: number) => {
+    for (let dr = 0; dr < h; dr++) for (let dc = 0; dc < w; dc++) if (!free(r + dr, c + dc)) return false;
+    return true;
+  };
   const cells: { col: number; row: number }[] = [];
   for (const item of items) {
-    const w = GEOMETRY[item.kind].w;
+    const g = GEOMETRY[item.kind];
+    const w = Math.min(g.w, cols);
+    const h = g.h;
     let placed = false;
     for (let r = 0; !placed; r++) {
       for (let c = 0; c + w <= cols; c++) {
-        if (free(r, c) && (w === 1 || free(r, c + 1))) {
-          for (let k = 0; k < w; k++) (taken[r] ??= [])[c + k] = true;
+        if (fits(r, c, w, h)) {
+          for (let dr = 0; dr < h; dr++) for (let dc = 0; dc < w; dc++) (taken[r + dr] ??= [])[c + dc] = true;
           cells.push({ col: c, row: r });
           placed = true;
           break;
@@ -30,12 +40,20 @@ function pack(items: DeskItem[], cols: number): { cells: { col: number; row: num
 
 /**
  * Columns for a sub-mat, chosen so small groups pair up on one shelf of the mat (3 + 4, 4 + 4, 3 + 5 fit in 9 with the
- * half-square gap) and big groups take the whole width.
+ * half-square gap) and big groups take the whole width. Groups with multi-row objects (devices) size by their row
+ * width instead: one row of devices when they fit in 5 columns, the whole mat otherwise; never narrower than the
+ * widest object.
  */
-function subCols(items: DeskItem[]): number {
-  const area = items.reduce((n, i) => n + GEOMETRY[i.kind].w, 0);
+export function subCols(items: readonly DeskItem[]): number {
+  const geo = items.map((i) => GEOMETRY[i.kind]);
+  const widest = geo.reduce((n, g) => Math.max(n, g.w), 1);
+  if (geo.some((g) => g.h > 1)) {
+    const row = geo.reduce((n, g) => n + g.w, 0);
+    return Math.min(MAT_COLS, Math.max(widest, row <= 3 ? 3 : row <= 4 ? 4 : row <= 5 ? 5 : MAT_COLS));
+  }
+  const area = geo.reduce((n, g) => n + g.w, 0);
   const cols = area <= 3 ? 3 : area <= 8 ? 4 : area <= 10 ? 5 : MAT_COLS;
-  return Math.min(MAT_COLS, cols);
+  return Math.min(MAT_COLS, Math.max(widest, cols));
 }
 
 export interface LayoutInput {
@@ -86,7 +104,7 @@ export function layoutDesk(input: LayoutInput, perRow: number, people: ReadonlyS
         x: cells[k].col * SQ,
         y: SUB_HEAD + cells[k].row * SQ,
         cw: GEOMETRY[item.kind].w * SQ,
-        ch: SQ,
+        ch: GEOMETRY[item.kind].h * SQ,
       }));
       subs.push({ id: `${def.id}:${group}`, group, label: def.subLabels?.[group], x, y: shelfY, w, h, items: placed });
       shelfX = x - MAT_PAD + w;

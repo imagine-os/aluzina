@@ -50,4 +50,9 @@ export interface DeskPerson {
   props: [PropId, PropId];
   /** The portal this role works in (Open portal navigates there). */
   portal?: { path: string; portalKey: string };
+  /**
+   * The nameplate's role line when it is not an aluzina playbook role (a client hub's role label, e.g. hoy's
+   * "Recepción / Front desk"); such people carry a minimal `role` (`roleId: null`) and `look` = the hub's look.
+   */
+  caption?: Text;
 }

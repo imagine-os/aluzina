@@ -7,9 +7,33 @@ The desk is how the Hub shows a page's things as physical objects on a zoomable 
 - **Desk** (`DeskModel`): a page code, an ordered list of **mats**, the objects, optional people, a grouping line for the legend, and the mats-per-row rule.
 - **Mat** (`DeskMatDef` -> `Mat`): a felt mat, 9 chess squares wide (1 square = 64 world px), as long as its content. On page desks one mat = one table (entity); on W-04 one mat = one client-journey phase.
 - **Sub-mat** (`SubMat`, id `<mat>:<group>`): a lighter felt group inside a mat, 3 / 4 / 5 / 9 squares wide so small groups share a shelf. On page desks one sub-mat = one value of the table's grouping field (a status); on W-04 one group (services, statuses, forms...).
-- **Object** (`DeskItem` -> `PlacedItem`): 1x1 or 2x1 squares, a kind with thickness (`GEOMETRY`), and a face that shows its real content (em-sized, so the drawer and the legend reuse it). Kinds: sheet, form, checklist, document, folder, box, token, card, light (W-04's followed project), stack (the "+N more" pile). Options: `pill` (status on the face), `plain` (title-only tile past the face budget), `font` (face size), `ref` (the row it is), `openAt` (the page it opens).
-- **Person** (`DeskPerson`): a seated role figure at a small desk on a mat's near edge (W-04, D-104).
-- Layout: `layoutDesk(model, perRow, people)` packs each sub-mat first-fit, shelf-packs sub-mats inside the mat and rows the mats; deterministic, grid-aligned, no overlaps (checked by script).
+- **Object** (`DeskItem` -> `PlacedItem`): a footprint of `w` x `h` squares (1x1, 2x1, and since changelog 0037 the multi-row device footprints 1x2, 2x2, 3x2, 1x3, 2x3), a kind with thickness (`GEOMETRY`), and a face that shows its real content (em-sized, so the drawer and the legend reuse it). Kinds: sheet, form, checklist, document, folder, box, token, card, light (W-04's followed project), stack (the "+N more" pile), and the device kinds phone, tablet, screen, page, pages (below). Options: `pill` (status on the face), `plain` (title-only tile past the face budget), `font` (face size), `ref` (the row it is), `openAt` (the page it opens), `face` (an image face, below).
+- **Person** (`DeskPerson`): a seated role figure at a small desk on a mat's near edge (W-04, D-104). Looks (`DeskPerson.tsx` `LOOKS`, colours in `desk.css`): the four aluzina portal roles (founder, studio, ops, brand) and, since changelog 0037, nine client-hub roles (customer, teacher, frontdesk, coordinator, finance, admin, superadmin, public, maintenance), each a distinct hair / neckline / accent combination (new pieces: ponytail, crop, cap; tee, hoodie; lanyard badge) and palette. A person that is not an aluzina playbook role carries `caption` (the nameplate's role line, e.g. a hub map role label) and a minimal `role` with `roleId: null`.
+- Layout: `layoutDesk(model, perRow, people)` packs each sub-mat first-fit over a 2D grid, shelf-packs sub-mats inside the mat and rows the mats; deterministic, grid-aligned, no overlaps (checked by `scripts/desk-check.mjs` in every build, below).
+
+## Object kinds and footprints
+
+| Kind | Footprint (w x h squares) | Thickness | Face (world px) | What it is |
+| --- | --- | --- | --- | --- |
+| sheet, form, checklist | 1 x 1 | 1 | 46 x 60 | a page: a record with a few fields, a form, a checklist |
+| document | 1 x 1 | 6 | 46 x 58 | pages bound together; may carry an image face (its first page) |
+| folder | 2 x 1 | 8 | 114 x 50 | holds other things |
+| box | 1 x 1 | 18 | 52 x 52 | goods, a kit |
+| token | 1 x 1 | 4 | 44 x 44 | a status or tag (stacked discs) |
+| card | 1 x 1 | 2 | 56 x 40 | a person, company, rule, meeting |
+| light | 1 x 1 | 2 | 58 x 58 | a live record of W-04's followed project |
+| stack | 1 x 1 | 5 | 46 x 56 | the "+N more" pile of a capped sub-mat |
+| **phone** | 1 x 2 | 4 | 44 x 96 + caption strip | one app screen (390 x 844): rounded bezel, speaker slit, the screen |
+| **tablet** | 2 x 2 | 4 | 78 x 104 (3:4) + caption strip | one screen at 768 x 1024 |
+| **screen** | 3 x 2 | 4 | 176 x 114 (16:10 panel + chin) on a flat stand | one desktop page (1280 x 800); the caption is printed on the chin |
+| **page** | 1 x 3 | 1 | 54 x 162 + caption strip | one tall website page, paper-thin, a curled corner and a long shadow |
+| **pages** | 2 x 3 | 1 | 104 x 156 + caption strip | a fanned stack of tall pages (up to four leaves behind the top one, a few px apart); `more` = the page count on its badge |
+
+**Footprint rule.** `GEOMETRY[kind]` gives `w` and `h`; `pack()` places each object at the first free cell (row-major) where its whole `w` x `h` footprint is free, so a 1x3 page and three 1x1 sheets share rows without touching. `subCols()` keeps the paper rule (3 / 4 / 5 / 9 columns by area) for groups of 1-row objects; a group with a multi-row object is one row wide when its widths sum to 5 or less, the whole mat (9) otherwise, and never narrower than its widest object. `PlacedItem.cw` / `ch` = `w * SQ` / `h * SQ`. Device kinds are `DEVICE_KINDS`.
+
+**Image faces.** `DeskItem.face = { src, alt?, fit? }` draws an image as the device's screen (or a document's first page): `<img loading="lazy" decoding="async">`, `object-fit: cover` anchored at the top, or `fit: 'top'` (full width from the top, the rest of the paper below) for tall pages so the header shows. The image is drawn over the text face and fades in when it has loaded; while it loads, and forever when it fails (offline, not published yet), the drawn device outline with its code, title and lines stays: never a broken image. Past `FACE_BUDGET` (`plain`) no image is requested. The caption strip under the device (on the felt; on a screen's chin) prints code and title in em from the kind's `cap` size, so it scales with the zoom and with `DeskFace` (the drawer's and the legend's large preview, where the image carries its `alt`). On the desk the image's `alt` is empty: the object's button already names it.
+
+**Home zoom.** `useDesk({ homeZoom })` sets the lowest zoom a desk opens at per stage size: when fitting the whole desk would be smaller, the first view, Reset and the refits while untouched show the desk's top-left corner at that zoom (faces readable from across the room, hit areas at least 44 px); Fit and `desk.fit` still fit everything. `readableZ` (open / double-click zoom) uses the object's own face height, so a tall page is framed whole.
 
 ## Rule tables (page desks, `src/desk/entities.ts`)
 
@@ -60,6 +84,10 @@ Every object, mat label, sub-mat label and station is a native `<button>` with a
 ## Actions
 
 `DESK_ACTIONS` (`src/desk/actions.ts`): `desk.zoom`, `desk.fit`, `desk.reset`, `desk.toggleTilt`, `desk.focusMat {mat}`, `desk.focusObject {object}`, `desk.openObject {object}`, `desk.fullscreen`, `desk.setHeight {size:enum:s|m|l}`, `desk.toggleWheelZoom`, `desk.legend`; appended by the registry to every route with a page desk (with its guard), registered while the desk is mounted (camera verbs by `useDesk`, object verbs by `PageDesk`). W-04 declares its own set in `modules/desk/specs.ts`.
+
+## Layout check
+
+`npm run desk:check` (`scripts/desk-check.mjs`, inside `npm run build`) bundles the engine with esbuild, lays out every registered model (a synthetic desk with every kind, W-04, and each module desk listed in the script's entry) at seven stage widths (360, 390, 768, 1280, 1920, 2560, 3840) with the real `layoutDesk()`, and fails the build on any overlap (object / object, object outside its sub-mat, sub-mat / sub-mat or outside its mat, a person's station on a sub-mat, mat / mat) or an object off the half-square grid. A module that builds its own desk adds its model to the script's entry.
 
 ## Performance
 

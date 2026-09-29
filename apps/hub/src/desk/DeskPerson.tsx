@@ -15,12 +15,29 @@ type Lang = 'en' | 'es';
  *   props are drawn on the desk top face. 9 or 10 3D layers per station.
  */
 
-/** Hair shapes and neckline per look (portal role). Unknown looks fall back to the neutral figure. */
-const LOOKS: Record<string, { hair: 'long' | 'bun' | 'short' | 'curly'; neck: 'blazer' | 'cardigan' | 'turtle' | 'shirt'; accent?: 'necklace' | 'tie' }> = {
+/**
+ * Hair shapes, neckline and accent per look. The four aluzina portal roles (founder, studio, ops, brand) and the
+ * nine client-hub roles of hoy (customer, teacher, frontdesk, coordinator, finance, admin, superadmin, public,
+ * maintenance): every combination differs, and the colours differ per look in desk.css. Unknown looks fall back to
+ * the neutral figure.
+ */
+type Hair = 'long' | 'bun' | 'short' | 'curly' | 'ponytail' | 'crop' | 'cap';
+type Neck = 'blazer' | 'cardigan' | 'turtle' | 'shirt' | 'tee' | 'hoodie';
+type Accent = 'necklace' | 'tie' | 'badge';
+const LOOKS: Record<string, { hair: Hair; neck: Neck; accent?: Accent }> = {
   founder: { hair: 'long', neck: 'blazer', accent: 'necklace' },
   studio: { hair: 'bun', neck: 'cardigan' },
   ops: { hair: 'short', neck: 'shirt', accent: 'tie' },
   brand: { hair: 'curly', neck: 'turtle' },
+  customer: { hair: 'ponytail', neck: 'tee' },
+  teacher: { hair: 'bun', neck: 'tee', accent: 'necklace' },
+  frontdesk: { hair: 'curly', neck: 'shirt', accent: 'badge' },
+  coordinator: { hair: 'long', neck: 'cardigan', accent: 'badge' },
+  finance: { hair: 'short', neck: 'blazer', accent: 'tie' },
+  admin: { hair: 'long', neck: 'shirt', accent: 'necklace' },
+  superadmin: { hair: 'crop', neck: 'hoodie' },
+  public: { hair: 'curly', neck: 'hoodie' },
+  maintenance: { hair: 'cap', neck: 'tee', accent: 'badge' },
 };
 const lookOf = (look: string) => LOOKS[look] ?? { hair: 'short' as const, neck: 'shirt' as const };
 
@@ -53,6 +70,8 @@ export function PersonSvg({ look }: { look: string }) {
       </g>
     ) : l.hair === 'bun' ? (
       <circle className="pp-hair pp-line" cx="60" cy="14" r="7" />
+    ) : l.hair === 'ponytail' ? (
+      <path className="pp-hair pp-line" d="M68 20 C80 19 84 34 79 50 C77 56 73 58 71 57 C74 48 74 36 66 28 Z" />
     ) : null;
   const front: ReactNode =
     l.hair === 'long' ? (
@@ -63,8 +82,16 @@ export function PersonSvg({ look }: { look: string }) {
         <circle cx="62" cy="20" r="5.5" />
         <circle cx="68" cy="23" r="4.5" />
       </g>
-    ) : l.hair === 'bun' ? (
+    ) : l.hair === 'bun' || l.hair === 'ponytail' ? (
       <path className="pp-hair" d="M48.5 31 C47 17 73 17 71.5 31 C69 24 64 22.5 60 22.5 C56 22.5 51 24 48.5 31 Z" />
+    ) : l.hair === 'crop' ? (
+      <path className="pp-hair" d="M49 26.5 C49.5 17.5 70.5 17.5 71 26.5 C67 22.5 53 22.5 49 26.5 Z" />
+    ) : l.hair === 'cap' ? (
+      <g>
+        <path className="pp-accent pp-line" d="M48 27.5 C48 14.5 72 14.5 72 27.5 Z" />
+        <path className="pp-accent pp-line" d="M45 26.5 L75 26.5 C76.5 26.5 76.5 29.5 75 29.5 L45 29.5 C43.5 29.5 43.5 26.5 45 26.5 Z" />
+        <circle className="pp-shirt" cx="60" cy="15.5" r="1.4" />
+      </g>
     ) : (
       <path className="pp-hair" d="M48.5 30 C47.5 16 72.5 16 71.5 30 L70 26 C66 22 54 22 50 26 Z" />
     );
@@ -93,7 +120,21 @@ export function PersonSvg({ look }: { look: string }) {
           <path className="pp-shirt-2" d="M51 53 L59 60 L55 64 Z M69 53 L61 60 L65 64 Z" />
         </>
       )}
+      {l.neck === 'tee' && <path className="pp-skin pp-line" d="M52 53.5 C54 60 66 60 68 53.5 Z" />}
+      {l.neck === 'hoodie' && (
+        <>
+          <path className="pp-jacket-2 pp-line" d="M41 58 C42 45 78 45 79 58 L71 56 C67 50.5 53 50.5 49 56 Z" />
+          <path className="pp-shirt-2" d="M56 56 L55 70 L56.4 70 L57.4 56 Z M64 56 L65 70 L63.6 70 L62.6 56 Z" />
+        </>
+      )}
       {l.accent === 'necklace' && <path className="pp-accent-line" d="M53 57 Q60 67 67 57" />}
+      {l.accent === 'badge' && (
+        <>
+          <path className="pp-accent-line" d="M52.5 55 L58.5 72 M67.5 55 L61.5 72" />
+          <rect className="pp-shirt pp-line" x="55.5" y="71" width="9" height="11" rx="1.2" />
+          <rect className="pp-accent" x="57" y="73" width="6" height="2" rx="0.6" />
+        </>
+      )}
       {l.accent === 'tie' && <path className="pp-accent" d="M58.5 60 L61.5 60 L63 78 L60 82 L57 78 Z" />}
       {/* Arms reaching to the desk, hands on its edge. */}
       <path className="pp-jacket-2 pp-line" d="M25.5 66 C21 76 21 90 29 100 L42 100 C38 90 35 80 37 71 Z" />
@@ -340,12 +381,13 @@ interface PersonProps {
   onFocusPerson: (phase: string, e: FocusEvent<HTMLButtonElement>) => void;
 }
 
-/** Nameplate text: the role (bilingual) and the demo user's first name when a portal role holds it. */
+/** Nameplate text: the role (bilingual; a hub map's role label when the person has a caption) and the demo user's first name when a role holds it. */
 export function Nameplate({ person, lang }: { person: DeskPerson; lang: Lang }) {
+  const role = pick(person.caption ?? person.role.playbookRole, lang);
   return (
     <span className="desk-plate__text">
-      <span className="desk-plate__name">{person.firstName ?? pick(person.role.playbookRole, lang)}</span>
-      {person.firstName && <span className="desk-plate__role">{pick(person.role.playbookRole, lang)}</span>}
+      <span className="desk-plate__name">{person.firstName ?? role}</span>
+      {person.firstName && <span className="desk-plate__role">{role}</span>}
     </span>
   );
 }
