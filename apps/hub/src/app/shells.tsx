@@ -12,6 +12,8 @@ import { ToggleButton } from '../components/atom/ToggleButton/ToggleButton';
 import { PresenceBar } from '../components/molecule/PresenceBar/PresenceBar';
 import { Drawer } from '../components/organism/Drawer/Drawer';
 import { RoleSwitcher } from '../components/organism/RoleSwitcher/RoleSwitcher';
+import { hasPageDesk } from '../desk/actions';
+import { PageDesk } from '../desk/PageDesk';
 import { useTheme } from '../design/ThemeProvider';
 import { useT } from '../i18n/I18nProvider';
 import { usePresence } from '../presence/PresenceProvider';
@@ -133,7 +135,8 @@ function UserMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 
 /**
  * Sidebar (routes of the current surface grouped by navGroup) + top bar (portal, role badge, controls,
- * back to hub, user menu). Under 768 px: hamburger drawer and a bottom nav. Everything is a link or a
+ * back to hub, user menu). Under 768 px: hamburger drawer and a bottom nav. On the four portals the page desk
+ * (`src/desk/PageDesk`, D-106) sits above the page element. Everything is a link or a
  * button >= 44 px; the `--scale` bands keep it legible up to 3840 (P-01, P-03).
  */
 export function DesktopShell({ route, children }: { route: RouteDef; children: ReactNode }) {
@@ -173,7 +176,19 @@ export function DesktopShell({ route, children }: { route: RouteDef; children: R
           <span className="dshell__side-texture texture-stars" aria-hidden="true" />
         </nav>
         <main id="main" className="dshell__main" tabIndex={-1}>
-          <div className="dshell__content">{children}</div>
+          <div className="dshell__content">
+            {hasPageDesk(route) ? (
+              <>
+                {/* D-106: the desk system on top of every portal page; the page renders unchanged below it. */}
+                <PageDesk key={route.path} route={route} />
+                <div id="desk-after" className="desk-after" tabIndex={-1}>
+                  {children}
+                </div>
+              </>
+            ) : (
+              children
+            )}
+          </div>
         </main>
       </div>
       {bottom.length > 0 && (

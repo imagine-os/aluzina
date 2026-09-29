@@ -22,6 +22,11 @@ export const deskActions = (permission: string): ActionDef[] => [
   { id: 'desk.pauseTrail', label: 'Pause the light trail', intent: 'pause the trail', permission },
   { id: 'desk.stepTrail', label: 'Step through the trail', intent: 'go to the {dir} event', permission, params: { dir: 'enum:prev|next' } },
   { id: 'desk.openRow', label: 'Open a record’s page', intent: 'open the page of the {entity} {id}', permission, params: { entity: 'string', id: 'id' } },
+  // The desk system's toolbar (D-106), registered by the engine (`src/desk/useDesk.ts`) like zoom / fit / reset / tilt.
+  { id: 'desk.fullscreen', label: 'Full screen desk', intent: 'show the desk full screen, or leave full screen', permission },
+  { id: 'desk.setHeight', label: 'Desk size', intent: 'make the desk {size}', permission, params: { size: 'enum:s|m|l' } },
+  { id: 'desk.toggleWheelZoom', label: 'Scroll wheel zooms', intent: 'make the scroll wheel zoom the desk, or move it', permission },
+  { id: 'desk.legend', label: 'Desk legend', intent: 'show what the objects on the desk are', permission },
 ];
 
 /** W-04 on the four portals and on dev; the surface only changes the shell, guard and breadcrumb (like W-01, D-021). */
@@ -34,7 +39,7 @@ export function deskSpec(surface: Surface, permission = 'projects.read'): PageSp
     navGroup: surface === 'dev' ? 'developer' : 'projects',
     layout: [
       'PageHeader (W-04, object, people and mat counts)',
-      'Toolbar: zoom − / percentage (aria-live) / zoom +, Fit, Tilt toggle, phase Select, Reset; hint line',
+      'Desk frame (src/desk DeskStage, D-106): toolbar zoom − / percentage (aria-live) / zoom +, Fit, Tilt toggle, phase Select, Reset, Legend, size S / M / L, Full screen, Settings (Scroll wheel zooms); hint line; height handle at the stage\'s bottom edge; minimap in the stage corner; hover / focus tooltip',
       'Light toolbar: project Select ("Follow a project…", active first), Clear, Previous / Play-Pause / Next; trail caption line (aria-live)',
       'Stage (perspective) > camera (rotateX 22° or flat) > world (translate + scale): ten mats in reading order, 5 per row on landscape stages, 3 on squarish ones, 2 on tall phones',
       'Mat: label button (number, phase, object count) + sub-mats with a label strip and a chess-square grid (1 square = 64 world px)',
@@ -49,7 +54,8 @@ export function deskSpec(surface: Surface, permission = 'projects.read'): PageSp
       'Content is derived, never hand-placed: `buildItems()` reads SERVICES (folders, one checklist per phase, delivery document and kit box), PIPELINE / VALIDATION / PURCHASE statuses (tokens), LEAD_RECORD_FIELDS / COMMERCIAL_FIELDS / QUALIFICATION_QUESTIONS (forms), LEAD_CHANNELS, OPERATIONAL_ASSETS, GOVERNANCE_RULES + FINAL_PRINCIPLE, ROLE_RESPONSIBILITIES, KPIS and the project template phases; classification tables map each to a journey phase with a fallback.',
       '`layoutDesk()` packs each group first-fit into a sub-mat (dense, row-major, no overlaps), shelf-packs sub-mats inside the mat, and rows the mats (equal height per row); positions are multiples of the 64 px square.',
       'Camera = world point at the stage centre + zoom; the world transform is written through a ref and requestAnimationFrame during wheel, drag, pinch and fly-to, and committed to state (percentage, --desk-zoom) when the gesture ends. Screen <-> desk-plane maths inverts rotateX + perspective, so zoom stays anchored under the cursor even tilted.',
-      'Inputs: wheel zooms about the cursor (ctrl + wheel = trackpad pinch), shift + wheel pans; pointer drag on the desk pans (mouse, touch, pen), two-finger pinch zooms; keys + / − zoom, arrows pan, 0 resets, F fits; Tab walks mat labels then objects and keyboard focus flies the object into view.',
+      'Inputs (D-106): two-finger scroll / plain wheel pans (both axes; at the desk\'s edge, or when it fits, a vertical scroll goes on to the page), pinch or ctrl / cmd + wheel zooms about the cursor, the persisted "Scroll wheel zooms" switch makes a mouse wheel zoom; drag pans with a short inertia (off under reduced motion), Space + drag or the middle button pans from anywhere; double-click an object zooms to it, on the empty desk one step in; touch / pen: one-finger drag, two-finger pinch about the midpoint, double-tap zooms, taps activate (drag threshold 10 px); keys + / − zoom, arrows pan, 0 resets, F fits; Tab walks mat labels, sub-mat labels, objects; keyboard focus flies the object into view.',
+      'Frame (D-106): Full screen uses the Fullscreen API on the desk frame (toolbar, stage, rail) and falls back to a fixed overlay where the API is missing (iPhone Safari); Esc exits; the height is S / M / L (40 / 60 / 85 % of the viewport, default M here) or dragged / arrow-keyed on the handle, stored per page code; under 768 px the desk can collapse to a bar (open by default on W-04).',
       'Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open navigates to the page the object names; when the role lacks that route\'s permission the session switches to the demo user of its surface first, with the D-07 toast (D-015). `desk.openItem` answers "opened <code> (#<path>)".',
       'Tilt is a toggle (22° / flat top-down); prefers-reduced-motion removes the camera animations (moves are instant) and the tilt transition.',
       'People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat\'s objects in the Tab order, activating it flies to it and opens the person drawer; Open portal navigates to the role\'s portal (switching the session when needed); `desk.openPersonPortal` answers "opened <code> (#<path>)".',
@@ -58,7 +64,7 @@ export function deskSpec(surface: Surface, permission = 'projects.read'): PageSp
       'Trail: one event per placed row at its own date (purchase date, payment paid or due date, message time, ...; created_at when it has none) plus one per `activity` line on the project or its rows; Play moves a pulse (CSS transform, 700 ms per hop) to each event\'s tile and lights it, Previous / Next step; Space (stage focused) plays / pauses, [ and ] step; reduced motion jumps.',
       'Textures are procedural: SVG feTurbulence noise as data-URI layers over token colours for the felt mats, linen sub-mats, paper grain and the desk; no images, no dependencies.',
     ],
-    components: ['PageHeader', 'Button', 'Select', 'Drawer', 'KeyValue', 'Toast'],
+    components: ['PageHeader', 'Button', 'Select', 'Checkbox', 'Drawer', 'KeyValue', 'Toast'],
     actions: deskActions(permission),
     checkedAt: WIDTHS,
   });

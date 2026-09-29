@@ -196,6 +196,11 @@ for (const h of m.hubModules ?? []) {
   if (!sameSet(found, h.codes)) fail(`hubModules[${h.name}].codes != codes in ${specs}: ${diff(h.codes, found)}`);
   for (const x of read(specs).matchAll(actionIdRe)) actionIds.push(x[1]);
 }
+// Platform declarations (D-106): shared action lists appended to routes at registry time (the page desks' `desk.*`).
+for (const f of m.actions?.platformDeclarations ?? []) {
+  if (!exists(f)) { fail(`actions.platformDeclarations: ${f} does not exist`); continue; }
+  for (const x of read(f).matchAll(actionIdRe)) actionIds.push(x[1]);
+}
 for (const c of m.surfaces?.nextFreeCodes ?? []) if (allSpecCodes.has(c)) fail(`surfaces.nextFreeCodes: ${c} is already defined in a specs.ts`);
 const actionsDistinct = new Set(actionIds).size;
 if (m.actions?.declared !== actionIds.length) fail(`actions.declared is ${m.actions?.declared}, specs.ts declare ${actionIds.length} action ids`);

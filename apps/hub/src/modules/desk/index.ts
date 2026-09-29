@@ -1,6 +1,7 @@
 import { createElement } from 'react';
-import type { RouteDef, Surface } from '../../specs/PageSpec';
+import type { RouteDeskOverride, RouteDef, Surface } from '../../specs/PageSpec';
 import { DeskPage } from './DeskPage';
+import { playbookDeskModel } from './playbookDesk';
 import { deskSpec } from './specs';
 
 export { strings } from './strings';
@@ -31,3 +32,11 @@ export const routes: RouteDef[] = SURFACES.map(({ surface, permission }) => {
     nav: { labelKey: 'desk.nav.desk', order: 7, glyph: '▦' },
   } satisfies RouteDef;
 });
+
+/**
+ * The desk system's per-page override (D-106): W-04 is itself the full-page playbook desk, so the shell mounts no
+ * page desk above it; `build` is the same playbook model for any host that wants it as a page desk.
+ */
+export const desk: Record<string, RouteDeskOverride> = {
+  'W-04': { self: true, build: () => playbookDeskModel() },
+};

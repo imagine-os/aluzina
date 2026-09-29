@@ -1,6 +1,6 @@
 import { memo, type FocusEvent, type ReactNode } from 'react';
-import { pick } from '../../tenant/domain';
-import { POP_PROPS, type DeskPerson, type PropId } from './deskPeople';
+import { pick } from '../tenant/domain';
+import { POP_PROPS, type DeskPerson, type PropId } from './people';
 
 type Lang = 'en' | 'es';
 

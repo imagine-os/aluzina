@@ -106,6 +106,12 @@ import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 - **Plan data** (D-037): `import { PLAN, planOrder, planBlockers } from '../../plan'` reads `docs/plan/plan.json` through the `@docs` alias (`@docs/*` -> `docs/*`, vite + tsconfig); other repo docs can be imported the same way (`?raw` for Markdown).
 - **Quality bar** (P-01, P-03): works at 360 / 390 / 768 / 1280 / 1920 (record what you verified in `checkedAt`); keyboard order, visible focus (global ring), 44 px targets, nothing hover-only or drag-only; light and dark.
 
+## Page desks (D-106, changelog 0036)
+
+- **What the shell mounts**: on every route of the four portals (`founder`, `ops`, `studio`, `brand`, desktop shell) the DesktopShell renders `<PageDesk route={route} />` (`src/desk/PageDesk.tsx`) above your page and your page inside `#desk-after`, unchanged. The desk is derived from your `spec.dataTables` by the rule tables of `src/desk/entities.ts` (one mat per table with rows, sub-mats by status, rows as objects); its drawer lists a row's fields and its **abilities** = your `spec.actions` that take an id param named after the entity (`purchase: 'id'`) or name it in the verb and take an id. Name your id params after the entity's noun and those actions show up on the desk for free.
+- **Override** by page code from your `index.ts`: `export const desk: Record<string, RouteDeskOverride> = { 'O-12': { build: ({ route, params, rows }) => model } }` renders your own `DeskModel` in the page desk; `{ self: true }` says your page is itself a desk (W-04) and the shell mounts none. Engine API and concepts: `docs/design/desk-system.md`.
+- **`DESK_ACTIONS`** (`src/desk/actions.ts`, 11 `desk.*` ids) are appended to your route's `spec.actions` by the registry with your route's guard and registered while the desk is mounted; do not declare them yourself. Never write a desk storage key by hand: the engine stores `storageKey('desk.wheel')` and `storageKey('desk.height.<code>')`.
+
 ## Docs you write (same turn as the code)
 
 - `docs/pages/<CODE>.md` from `docs/pages/_TEMPLATE.md`, one per page.

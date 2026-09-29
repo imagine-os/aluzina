@@ -305,8 +305,9 @@
         "bus": { "$ref": "#/$defs/repoPath", "description": "[required, platform-fixed] The actions bus module." },
         "global": { "type": "string", "pattern": "^window\\.__[a-z][a-z0-9_]*\\.actions$", "description": "[required, derived] `window.<namespace.global>.actions`." },
         "idPattern": { "type": "string", "description": "[required, platform-fixed] Regex every action id matches (`<module>.<verb>`)." },
-        "declared": { "type": "integer", "description": "[required, tenant-specific] Number of `id: '<module>.<verb>'` declarations across every hubModules[] specs.ts (validator: recounted)." },
+        "declared": { "type": "integer", "description": "[required, tenant-specific] Number of `id: '<module>.<verb>'` declarations across every hubModules[] specs.ts and `platformDeclarations` (validator: recounted)." },
         "distinct": { "type": "integer", "description": "[required, tenant-specific] Distinct ids among them (validator: recounted)." },
+        "platformDeclarations": { "type": "array", "items": { "$ref": "#/$defs/repoPath" }, "description": "[optional, platform-fixed] Platform files whose `id:` declarations the registry appends to routes (the page desks' `desk.*`, D-106); counted with the modules'." },
         "browser": { "type": "string", "description": "[optional] The page that browses / runs / exports them." },
         "exportFormat": { "type": "string", "description": "[optional]" },
         "mcpServer": { "type": ["string", "null"], "description": "[optional] Path of an MCP server, or null while planned." }

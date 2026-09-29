@@ -1,8 +1,10 @@
 import type { Row } from '../../data/provider';
 import type { EntityName } from '../../data/schema';
-import { coreStrings } from '../../i18n/core';
 import { formatCop, formatDate } from '../../i18n/format';
-import { LEAD_CHANNELS, PIPELINE_STATUSES, PURCHASE_STATUSES, VALIDATION_STATUSES, type StatusTone, type Text } from '../../tenant/domain';
+import { LEAD_CHANNELS, type StatusTone, type Text } from '../../tenant/domain';
+import { pipelineLabel, purchaseStatus, statusText, validationStatus } from '../../desk/fields';
+
+export { fieldLabel, pipelineLabel, rowFields, statusText } from '../../desk/fields';
 import { PIPELINE_STEP, type DeskItem, type GroupId, type JourneyId } from './model';
 
 /**
@@ -49,15 +51,6 @@ const firstLine = (s: string, max = 64) => {
   return line.length > max ? `${line.slice(0, max - 1)}…` : line;
 };
 
-/** `core.status.<id>` as Text (the StatusPill vocabulary); the id itself when there is no string. */
-export function statusText(id: string): Text {
-  const entry = coreStrings[`core.status.${id}`];
-  if (!entry) return T(id, id);
-  return typeof entry === 'string' ? T(entry, entry) : { en: entry.en, es: entry.es ?? entry.en };
-}
-const purchaseStatus = (id: string) => PURCHASE_STATUSES.find((s) => s.id === id)?.label ?? statusText(id);
-const validationStatus = (id: string) => VALIDATION_STATUSES.find((s) => s.id === id)?.label ?? statusText(id);
-export const pipelineLabel = (id: string) => PIPELINE_STATUSES.find((s) => s.id === id)?.label ?? statusText(id);
 const tx = (x: Text, lang: 'en' | 'es') => (lang === 'es' ? x.es ?? x.en : x.en);
 
 /** Names the flow needs to write a face or a caption (suppliers, people), resolved by the page. */
@@ -440,88 +433,4 @@ export function commsOf(rows: FlowRows, clientUserId: string | null): FlowComms 
     meetings: rows.meetings.length,
     leadChannels: rows.leads.map((l) => LEAD_CHANNELS.find((c) => c.id === l.channel)?.label ?? T(l.channel, l.channel)),
   };
-}
-
-/** Drawer labels for the schema's field names (the rest are humanised from camelCase). */
-const FIELD_LABELS: Record<string, Text> = {
-  projectId: T('Project', 'Proyecto'),
-  supplierId: T('Supplier', 'Proveedor'),
-  authorId: T('Author', 'Autor'),
-  responsibleId: T('Responsible', 'Responsable'),
-  requestedById: T('Requested by', 'Solicitado por'),
-  ownerId: T('Owner', 'Responsable'),
-  engagementId: T('Engagement', 'Servicio'),
-  status: T('Status', 'Estado'),
-  severity: T('Severity', 'Severidad'),
-  reference: T('Reference', 'Referencia'),
-  item: T('Item', 'Ítem'),
-  quantity: T('Quantity', 'Cantidad'),
-  priceCop: T('Price (COP)', 'Precio (COP)'),
-  amountCop: T('Amount (COP)', 'Monto (COP)'),
-  paidCop: T('Paid (COP)', 'Pagado (COP)'),
-  extraCostCop: T('Extra cost (COP)', 'Costo adicional (COP)'),
-  budgetCop: T('Budget (COP)', 'Presupuesto (COP)'),
-  extraDays: T('Extra days', 'Días adicionales'),
-  date: T('Date', 'Fecha'),
-  at: T('At', 'Fecha'),
-  dueDate: T('Due date', 'Vence'),
-  paidDate: T('Paid on', 'Pagado el'),
-  expectedDate: T('Expected', 'Esperada'),
-  confirmedDate: T('Confirmed', 'Confirmada'),
-  decidedAt: T('Decided', 'Decidido'),
-  approvedAt: T('Approved', 'Aprobado'),
-  startedAt: T('Started', 'Iniciado'),
-  completedAt: T('Completed', 'Terminado'),
-  startsAt: T('Starts', 'Empieza'),
-  endsAt: T('Ends', 'Termina'),
-  validUntil: T('Valid until', 'Válida hasta'),
-  counterparty: T('Counterparty', 'Contraparte'),
-  direction: T('Direction', 'Dirección'),
-  concept: T('Concept', 'Concepto'),
-  description: T('Description', 'Descripción'),
-  reason: T('Reason', 'Motivo'),
-  body: T('Message', 'Mensaje'),
-  readBy: T('Read by', 'Leído por'),
-  title: T('Title', 'Título'),
-  kind: T('Kind', 'Tipo'),
-  notes: T('Notes', 'Notas'),
-  comment: T('Comment', 'Comentario'),
-  stage: T('Stage', 'Etapa'),
-  source: T('Source', 'Fuente'),
-  progress: T('Progress (%)', 'Avance (%)'),
-  decisions: T('Decisions', 'Decisiones'),
-  problems: T('Problems', 'Problemas'),
-  created_at: T('Created', 'Creado'),
-  updated_at: T('Updated', 'Actualizado'),
-};
-const humanise = (key: string) => {
-  const words = key.replace(/_/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
-  return words.charAt(0).toUpperCase() + words.slice(1);
-};
-export const fieldLabel = (key: string, lang: 'en' | 'es') => (FIELD_LABELS[key] ? tx(FIELD_LABELS[key], lang) : humanise(key));
-
-/** Fields of a row for the drawer's KeyValue list (base columns other than the dates are left out). */
-export function rowFields(row: Record<string, unknown>, lang: 'en' | 'es'): { field: string; key: string; value: string }[] {
-  const skip = new Set(['tenant_id', 'version', 'updated_by', 'id']);
-  return Object.entries(row)
-    .filter(([k]) => !skip.has(k))
-    .map(([k, v]) => {
-      let value: string;
-      if (v === null || v === undefined || v === '') value = '—';
-      else if (typeof v === 'number' && /Cop$/.test(k)) value = formatCop(v, lang);
-      else if ((k === 'status' || k === 'severity') && typeof v === 'string') value = tx(k === 'status' && PURCHASE_STATUSES.some((x) => x.id === v) && 'priceCop' in row ? purchaseStatus(v) : VALIDATION_STATUSES.some((x) => x.id === v) ? validationStatus(v) : statusText(v), lang);
-      else if (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}/.test(v)) value = /T/.test(v) ? `${formatDate(v, lang)} ${v.slice(11, 16)}` : formatDate(v, lang);
-      else if (Array.isArray(v)) value = v.length ? v.map(String).join(', ') : '—';
-      else if (typeof v === 'object') {
-        const entries = Object.entries(v as Record<string, unknown>);
-        if (entries.length === 0) value = '—';
-        else if (entries.every(([, x]) => typeof x === 'boolean')) value = `${entries.filter(([, x]) => x).length} / ${entries.length}`;
-        else {
-          const text = entries.map(([ek, x]) => `${ek}: ${String(x)}`).join(' · ');
-          value = text.length > 220 ? `${text.slice(0, 219)}…` : text;
-        }
-      }
-      else value = String(v);
-      return { field: k, key: fieldLabel(k, lang), value };
-    });
 }

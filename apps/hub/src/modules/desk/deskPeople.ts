@@ -1,8 +1,11 @@
-import { ROLE_RESPONSIBILITIES, type RoleResponsibility, type Text } from '../../tenant/domain';
+import { ROLE_RESPONSIBILITIES, type Text } from '../../tenant/domain';
 import { TEMPLATES } from '../../tenant/domain/templates';
 import { demoUserForRole } from '../../tenant/auth/demoUsers';
 import { ROLE_META, type RoleId } from '../../tenant/auth/roles';
+import type { DeskPerson, PropId } from '../../desk/people';
 import type { JourneyId } from './model';
+
+export type { DeskPerson } from '../../desk/people';
 
 /**
  * W-04 people (prompt 0027, D-104): one seated figure per journey mat, standing for the playbook role that owns the
@@ -17,31 +20,6 @@ import type { JourneyId } from './model';
  * - `closest`: nobody is named, the closest role is used and the row is `inferred: true` (same convention as the
  *   knowledge base), to be confirmed by the founder.
  */
-
-/** Props on the desk. `pop` props stand up (a plane leaning like the figure); the rest lie flat on the desk top. */
-export type PropId =
-  | 'laptop'
-  | 'phone'
-  | 'clipboard'
-  | 'tape'
-  | 'contract'
-  | 'calculator'
-  | 'plans'
-  | 'ruler'
-  | 'sketchbook'
-  | 'pencils'
-  | 'samples'
-  | 'swatches'
-  | 'board'
-  | 'stamp'
-  | 'hardhat'
-  | 'tablet'
-  | 'book'
-  | 'keys'
-  | 'mug'
-  | 'rating';
-
-export const POP_PROPS: ReadonlySet<PropId> = new Set<PropId>(['laptop', 'pencils', 'samples', 'board', 'hardhat', 'mug']);
 
 type Basis = { kind: 'template'; templatePhase: string } | { kind: 'responsibility' } | { kind: 'closest' };
 
@@ -71,21 +49,6 @@ const PEOPLE: readonly PersonRow[] = [
   { phase: 'follow-up', responsibility: 'creative-director', basis: { kind: 'closest' }, props: ['mug', 'rating'], rationale: T('Closest role: client relations after delivery stay with the Creative Director.', 'Rol más cercano: la relación con el cliente tras la entrega sigue con la directora creativa.') },
 ];
 
-export interface DeskPerson {
-  phase: JourneyId;
-  role: RoleResponsibility;
-  /** Portal role that holds it today (null: none yet). Also the figure's look (`desk-person--<look>`). */
-  roleId: RoleId | null;
-  look: string;
-  /** First name of the demo user holding the portal role, if any. */
-  firstName?: string;
-  basis: Basis['kind'];
-  inferred: boolean;
-  rationale: Text;
-  props: [PropId, PropId];
-  /** The portal this role works in (the Open portal Placeholder names it). */
-  portal?: { path: string; portalKey: string };
-}
 
 const templateOwner = (phaseId: string): RoleId | undefined => TEMPLATES.flatMap((t) => t.phases).find((p) => p.id === phaseId)?.ownerRole;
 

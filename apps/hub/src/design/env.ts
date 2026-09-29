@@ -50,3 +50,16 @@ export function useDocumentHidden(): boolean {
   }, []);
   return hidden;
 }
+
+/** A media query, live (the desk's compact bar under 768 px, D-106). */
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(() => typeof window !== 'undefined' && window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const on = () => setMatches(mq.matches);
+    on();
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, [query]);
+  return matches;
+}

@@ -32,6 +32,7 @@ export function Drawer({ open, onClose, title, children, footer, side = 'right' 
         {footer && <div className="drawer__foot">{footer}</div>}
       </div>
     </div>,
-    document.body,
+    // In full screen only the fullscreen element's subtree is painted (the desk frame, D-106): open inside it.
+    (document.fullscreenElement as HTMLElement | null) ?? document.body,
   );
 }

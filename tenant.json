@@ -3,7 +3,7 @@
   "id": "aluzina",
   "name": { "en": "Aluzina", "es": "Aluzina" },
   "repo": "https://github.com/imagine-os/aluzina",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "generatedFrom": "8b0acf8",
   "spec": "docs/tenant/manifest.md",
   "identity": {
@@ -131,7 +131,7 @@
     "tenantDir": "apps/hub/src/tenant",
     "storagePrefix": "aluzina.",
     "storageKeys": {
-      "localStorage": ["lang", "theme", "metal", "session", "devMode", "data", "graphView", "views.<userId>", "archive.set", "presence"],
+      "localStorage": ["lang", "theme", "metal", "session", "devMode", "data", "graphView", "views.<userId>", "archive.set", "presence", "desk.wheel", "desk.height.<code>"],
       "sessionStorage": ["tabUser", "public.intake"]
     },
     "channels": ["aluzina-data", "aluzina-presence"],
@@ -163,7 +163,7 @@
   },
   "docs": {
     "root": "docs/README.md",
-    "counters": { "prompts": 28, "changelog": 35, "decisions": 105, "qa": 7 },
+    "counters": { "prompts": 29, "changelog": 36, "decisions": 106, "qa": 7 },
     "pendingDir": "docs/changelog/_pending",
     "plan": "docs/plan/plan.json",
     "kanban": "docs/kanban.md",
@@ -187,8 +187,9 @@
     "bus": "apps/hub/src/actions/bus.ts",
     "global": "window.__aluzina.actions",
     "idPattern": "^[a-z][a-zA-Z0-9]*\\.[a-z][a-zA-Z0-9]*$",
-    "declared": 445,
-    "distinct": 424,
+    "declared": 460,
+    "distinct": 431,
+    "platformDeclarations": ["apps/hub/src/desk/actions.ts"],
     "browser": "D-09 /#/dev/actions",
     "exportFormat": "webmcp-json (D-09 export)",
     "mcpServer": null

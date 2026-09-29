@@ -18,10 +18,10 @@ import {
   type GovernanceKind,
   type PipelineStatusId,
   type ServiceCode,
-  type StatusTone,
   type Text,
 } from '../../tenant/domain';
 import { TEMPLATES, type TemplateTask } from '../../tenant/domain/templates';
+import type { DeskItem, DeskMatDef, ItemKind } from '../../desk/types';
 
 /**
  * W-04 Method desk (prompt 0026, D-103): the playbook and the project template laid out as physical objects on a
@@ -31,28 +31,11 @@ import { TEMPLATES, type TemplateTask } from '../../tenant/domain/templates';
  * each with a fallback so new data still lands on the desk.
  */
 
-/** One chess square in world px. Every mat, sub-mat and item sits on this grid. */
-export const SQ = 64;
-/** Columns of squares inside one mat. */
-export const MAT_COLS = 9;
-/** Mat header (the phase label button), one square tall. */
-export const MAT_HEAD = SQ;
-/** Mat padding and the gap between sub-mats. */
-export const MAT_PAD = SQ / 2;
-/** Sub-mat label strip above its squares. */
-export const SUB_HEAD = 24;
-/** Gap between mats and around the world. */
-export const MAT_GAP = SQ;
-/** The person's station (desk, chair, figure) on the mat's near edge, below the sub-mats: 5 x 3 squares (D-104). */
-export const PERSON_COLS = 5;
-export const PERSON_ROWS = 3;
+export { GEOMETRY, SQ, MAT_COLS, type DeskItem, type DeskLayout, type ItemKind, type Mat, type OpenAt, type PlacedItem, type SubMat } from '../../desk/types';
+export { findItem, layoutDesk } from '../../desk/layout';
 
 /** The ten phases of the client journey (`CLIENT_JOURNEY`, p. 2); one mat each. */
 export type JourneyId = 'lead' | 'diagnosis' | 'brief' | 'analysis' | 'concept' | 'development' | 'validation' | 'delivery' | 'closure' | 'follow-up';
-
-/** `light` is a row of the followed project (the light layer, D-105), not a playbook object. */
-export type ItemKind = 'sheet' | 'form' | 'checklist' | 'document' | 'folder' | 'box' | 'token' | 'card' | 'light';
-export const ITEM_KINDS: readonly ItemKind[] = ['sheet', 'form', 'checklist', 'document', 'folder', 'box', 'token', 'card', 'light'];
 
 /** `project` / `projectComms`: the followed project's sub-mats (its rows as light tiles; its messages), D-105. */
 export type GroupId = 'services' | 'statuses' | 'forms' | 'procedures' | 'deliverables' | 'money' | 'communication' | 'rules' | 'team' | 'measures' | 'project' | 'projectComms';
@@ -61,92 +44,15 @@ export const GROUP_ORDER: readonly GroupId[] = ['services', 'statuses', 'forms',
 
 export type ItemSource = 'playbook' | 'template' | 'statusSet' | 'project';
 
-/**
- * Thickness in world px (translateZ of the top face), footprint in squares, top-face size and the face's base font
- * size in world px (every size inside a preview is em, so the drawer scales the same markup by changing this).
- */
-export const GEOMETRY: Record<ItemKind, { t: number; w: 1 | 2; face: { w: number; h: number }; font: number }> = {
-  sheet: { t: 1, w: 1, face: { w: 46, h: 60 }, font: 2.3 },
-  form: { t: 1, w: 1, face: { w: 46, h: 60 }, font: 2.3 },
-  checklist: { t: 1, w: 1, face: { w: 46, h: 60 }, font: 2.3 },
-  document: { t: 6, w: 1, face: { w: 46, h: 58 }, font: 2.3 },
-  folder: { t: 8, w: 2, face: { w: 114, h: 50 }, font: 3.1 },
-  box: { t: 18, w: 1, face: { w: 52, h: 52 }, font: 3.2 },
-  token: { t: 4, w: 1, face: { w: 44, h: 44 }, font: 3.4 },
-  card: { t: 2, w: 1, face: { w: 56, h: 40 }, font: 2.5 },
-  light: { t: 2, w: 1, face: { w: 58, h: 58 }, font: 6.4 },
-};
-
-/** Where the real page for an item lives (the Open button is a Placeholder until it navigates there). */
-export interface OpenAt {
-  /** A route path of the hub, e.g. `/founder/leads`; the page resolves its code and name from the manifest. */
-  path: string;
-}
-
-export interface DeskItem {
-  id: string;
-  kind: ItemKind;
+/** A playbook object: the engine's `DeskItem` with W-04's own mat, group and source vocabularies. */
+export interface PlaybookItem extends DeskItem {
   phase: JourneyId;
   group: GroupId;
   source: ItemSource;
-  /** Short code printed on the object (service code, phase id, rule id, unit). */
-  code?: string;
-  title: Text;
-  /** Second line: the service a checklist belongs to, the status set of a token, a rule kind. */
-  subtitle?: Text;
-  /** Rows of the preview: field labels, checklist items, deliverable lines. */
-  lines: Text[];
-  /** Section headings inside `lines` for grouped checklists (index -> heading). */
-  sections?: { at: number; label: Text }[];
-  tone?: StatusTone;
-  openAt: OpenAt;
-  /** Light tiles only: the row this tile is (entity + id). */
-  ref?: { entity: string; id: string };
-  /** Light tiles only: rows of the same kind not shown ("+N more" on the last tile). */
-  more?: number;
 }
 
-export interface PlacedItem extends DeskItem {
-  /** Cell position in world px (top left of the footprint cell). */
-  x: number;
-  y: number;
-  /** Footprint in world px (w squares by 1 square). */
-  cw: number;
-  ch: number;
-}
-
-export interface SubMat {
-  id: string;
-  group: GroupId;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  items: PlacedItem[];
-}
-
-export interface Mat {
-  id: JourneyId;
-  index: number;
-  label: Text;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  subs: SubMat[];
-  /** Playbook objects on the mat (the light tiles are counted in `lights`). */
-  count: number;
-  lights: number;
-  /** The person's station, relative to the mat (world px); only on mats that have a person (`deskPeople.ts`). */
-  person?: { x: number; y: number; w: number; h: number };
-}
-
-export interface DeskLayout {
-  mats: Mat[];
-  items: PlacedItem[];
-  width: number;
-  height: number;
-}
+/** The journey mats in order (the model's `mats`; labels are the playbook's own). */
+export const JOURNEY_MATS: DeskMatDef[] = CLIENT_JOURNEY.map((step) => ({ id: step.id, label: step.label }));
 
 // ---------------------------------------------------------------------------------------------
 // Classifications (data -> journey phase). Each has a fallback so new data never falls off the desk.
@@ -241,9 +147,9 @@ const pickUnit = (u: string) => (u === '%' ? '%' : u === 'days' ? 'd' : u === 'c
 const manualPath = (slug: string) => `/manual/services/${slug}`;
 
 /** Every object on the desk, in data order. Language-independent: texts are `{ en, es }`. */
-export function buildItems(): DeskItem[] {
-  const items: DeskItem[] = [];
-  const add = (item: DeskItem) => items.push(item);
+export function buildItems(): PlaybookItem[] {
+  const items: PlaybookItem[] = [];
+  const add = (item: PlaybookItem) => items.push(item);
 
   // Services: one folder each on the Lead mat (where the service ladder routes the client), checklists per phase,
   // and at Delivery a document of the delivery contents plus the delivery kit box.
@@ -335,7 +241,7 @@ export function buildItems(): DeskItem[] {
   for (const asset of OPERATIONAL_ASSETS) {
     const place = ASSET_PLACE[asset.id] ?? { phase: 'closure', group: 'procedures', kind: 'sheet', openAt: '/manual/governance' };
     let lines: Text[] = asset.productMapping ? [T(`→ ${asset.productMapping}`, `→ ${asset.productMapping}`)] : [];
-    let sections: DeskItem['sections'];
+    let sections: PlaybookItem['sections'];
     if (asset.id === 'brief-forms' && brief) {
       lines = phaseItems(brief);
       sections = isGrouped(brief.items) ? brief.items.map((g, gi, all) => ({ at: all.slice(0, gi).reduce((n, x) => n + x.items.length, 0), label: g.group })) : undefined;
@@ -386,122 +292,6 @@ export function buildItems(): DeskItem[] {
   }
 
   return items.filter((i) => isJourney(i.phase));
-}
-
-// ---------------------------------------------------------------------------------------------
-// Layout: items -> sub-mats -> mats -> rows. Deterministic, grid-aligned, no overlaps.
-// ---------------------------------------------------------------------------------------------
-
-/** Dense first-fit packing of 1x1 / 2x1 items into `cols` columns; returns cell positions and the row count. */
-function pack(items: DeskItem[], cols: number): { cells: { col: number; row: number }[]; rows: number } {
-  const taken: boolean[][] = [];
-  const free = (r: number, c: number) => !(taken[r]?.[c] ?? false);
-  const cells: { col: number; row: number }[] = [];
-  for (const item of items) {
-    const w = GEOMETRY[item.kind].w;
-    let placed = false;
-    for (let r = 0; !placed; r++) {
-      for (let c = 0; c + w <= cols; c++) {
-        if (free(r, c) && (w === 1 || free(r, c + 1))) {
-          for (let k = 0; k < w; k++) (taken[r] ??= [])[c + k] = true;
-          cells.push({ col: c, row: r });
-          placed = true;
-          break;
-        }
-      }
-    }
-  }
-  return { cells, rows: taken.length };
-}
-
-/**
- * Columns for a sub-mat, chosen so small groups pair up on one shelf of the mat (3 + 4, 4 + 4, 3 + 5 fit in 9 with the
- * half-square gap) and big groups take the whole width.
- */
-function subCols(items: DeskItem[]): number {
-  const area = items.reduce((n, i) => n + GEOMETRY[i.kind].w, 0);
-  const cols = area <= 3 ? 3 : area <= 8 ? 4 : area <= 10 ? 5 : MAT_COLS;
-  return Math.min(MAT_COLS, cols);
-}
-
-/**
- * Lays out every item. `perRow` mats per row (5 landscape, 3 squarish, 2 tall phone stages). `people` are the phases
- * that get a person's station: it takes its own rows on the mat's near edge, after the sub-mats, so it never shares a
- * square with an object (D-104).
- */
-export function layoutDesk(items: DeskItem[], perRow: number, people: ReadonlySet<string> = new Set()): DeskLayout {
-  const matW = MAT_COLS * SQ + 2 * MAT_PAD;
-  const mats: Mat[] = CLIENT_JOURNEY.map((step, index) => {
-    const mine = items.filter((i) => i.phase === step.id);
-    // Sub-mats: pack each group, then shelf-pack the sub-mats inside the mat.
-    const subs: SubMat[] = [];
-    let shelfX = 0;
-    let shelfY = MAT_HEAD;
-    let shelfH = 0;
-    for (const group of GROUP_ORDER) {
-      const groupItems = mine.filter((i) => i.group === group);
-      if (groupItems.length === 0) continue;
-      const cols = subCols(groupItems);
-      const { cells, rows } = pack(groupItems, cols);
-      const w = cols * SQ;
-      const h = SUB_HEAD + rows * SQ;
-      if (shelfX > 0 && shelfX + MAT_PAD + w > MAT_COLS * SQ) {
-        shelfY += shelfH + MAT_PAD;
-        shelfX = 0;
-        shelfH = 0;
-      }
-      const x = MAT_PAD + (shelfX === 0 ? 0 : shelfX + MAT_PAD);
-      const placed: PlacedItem[] = groupItems.map((item, k) => ({
-        ...item,
-        x: cells[k].col * SQ,
-        y: SUB_HEAD + cells[k].row * SQ,
-        cw: GEOMETRY[item.kind].w * SQ,
-        ch: SQ,
-      }));
-      subs.push({ id: `${step.id}:${group}`, group, x, y: shelfY, w, h, items: placed });
-      shelfX = x - MAT_PAD + w;
-      shelfH = Math.max(shelfH, h);
-    }
-    let h = shelfY + shelfH + MAT_PAD;
-    let person: Mat['person'];
-    if (people.has(step.id)) {
-      person = { x: MAT_PAD + Math.floor((MAT_COLS - PERSON_COLS) / 2) * SQ, y: h, w: PERSON_COLS * SQ, h: PERSON_ROWS * SQ };
-      h += PERSON_ROWS * SQ + MAT_PAD / 2;
-    }
-    const lights = mine.filter((i) => i.kind === 'light').length;
-    return { id: step.id as JourneyId, index, label: step.label, x: 0, y: 0, w: matW, h, subs, count: mine.length - lights, lights, person };
-  });
-
-  // Rows of mats in journey order, top-aligned; each mat is as long as its content (a phase with little on it is a
-  // short mat, which is information too).
-  const rows: Mat[][] = [];
-  mats.forEach((m, i) => (rows[Math.floor(i / perRow)] ??= []).push(m));
-  let y = MAT_GAP;
-  for (const row of rows) {
-    const rowH = Math.max(...row.map((m) => m.h));
-    row.forEach((m, i) => {
-      m.x = MAT_GAP + i * (matW + MAT_GAP);
-      m.y = y;
-    });
-    y += rowH + MAT_GAP;
-  }
-  const width = MAT_GAP + Math.min(perRow, mats.length) * (matW + MAT_GAP);
-
-  // World coordinates of every item (mat + sub-mat + cell), for fly-to and the actions.
-  const placed: PlacedItem[] = mats.flatMap((m) => m.subs.flatMap((s) => s.items.map((it) => ({ ...it, x: m.x + s.x + it.x, y: m.y + s.y + it.y }))));
-  return { mats, items: placed, width, height: y };
-}
-
-/** Finds an item by id, code or title words (en or es), for `desk.focusItem` / `desk.openItem`. */
-export function findItem(items: DeskItem[], query: string): DeskItem | undefined {
-  const q = query.trim().toLowerCase();
-  if (!q) return undefined;
-  return (
-    items.find((i) => i.id.toLowerCase() === q) ??
-    items.find((i) => i.code?.toLowerCase() === q) ??
-    items.find((i) => i.title.en.toLowerCase() === q || i.title.es?.toLowerCase() === q) ??
-    items.find((i) => i.title.en.toLowerCase().includes(q) || (i.title.es ?? '').toLowerCase().includes(q))
-  );
 }
 
 /** Finds a journey phase by id, number (1-10) or label (en or es). */

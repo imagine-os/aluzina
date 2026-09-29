@@ -1,12 +1,13 @@
 /*
- * W-04 Method desk (changelog 0033, D-103). Tokens only: every colour is a design token or a color-mix of tokens.
+ * The desk system (W-04 Method desk, changelog 0033, D-103; a platform layer since D-106, on every portal page). Tokens only: every colour is a design token or a color-mix of tokens.
  * Textures are procedural: SVG feTurbulence noise as data-URI layers (no image files, no dependencies).
  * World sizes (mats, objects, their text) are in world px on purpose: the camera scale is the zoom, and nothing on
  * the canvas is clamped to a minimum font size (zoom in to read). UI chrome (toolbar, hint, drawer) is rem.
  */
 
-/* Materials are defined on the page and on the drawer body (the Drawer is portalled outside the page). */
+/* Materials are defined on the page, the desk frame and the drawer body (the Drawer is portalled outside the page). */
 .desk-page,
+.desk-frame,
 .desk-drawer {
   /* Materials, light theme: pale oak desk, charcoal felt mats, lighter felt sub-mats, warm paper, kraft, silver card. */
   --desk-floor: color-mix(in srgb, var(--brand-gold) 18%, var(--color-surface-raised));
@@ -38,8 +39,8 @@
   --desk-woodgrain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.00390625 0.08984375' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.12 0 0 0 0 0.05 0 0 0 0.5 -0.12'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-:root[data-theme="dark"] :is(.desk-page, .desk-drawer),
-[data-theme="dark"] :is(.desk-page, .desk-drawer) {
+:root[data-theme="dark"] :is(.desk-page, .desk-frame, .desk-drawer),
+[data-theme="dark"] :is(.desk-page, .desk-frame, .desk-drawer) {
   --desk-floor: color-mix(in srgb, var(--brand-gold) 6%, var(--color-bg));
   --desk-wood: color-mix(in srgb, var(--brand-gold) 24%, var(--color-bg));
   --desk-felt: color-mix(in srgb, var(--brand-ink) 78%, var(--brand-periwinkle));
@@ -51,7 +52,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) :is(.desk-page, .desk-drawer) {
+  :root:not([data-theme="light"]) :is(.desk-page, .desk-frame, .desk-drawer) {
     --desk-floor: color-mix(in srgb, var(--brand-gold) 6%, var(--color-bg));
     --desk-wood: color-mix(in srgb, var(--brand-gold) 24%, var(--color-bg));
     --desk-felt: color-mix(in srgb, var(--brand-ink) 78%, var(--brand-periwinkle));
@@ -102,10 +103,9 @@
 /* ---------- stage, camera, world ---------- */
 
 .desk-stage {
-  --desk-bottom: var(--space-5);
   position: relative;
   overflow: hidden;
-  min-height: 18rem;
+  height: 100%;
   border: var(--hairline) solid var(--color-border);
   border-radius: var(--radius-md);
   background:
@@ -121,14 +121,6 @@
 
 .desk-stage:active {
   cursor: grabbing;
-}
-
-@media (max-width: 767.98px) {
-  /* Phones: the stage keeps at least half of the screen (the header scrolls away above it) and the bottom nav is reserved. */
-  .desk-stage {
-    --desk-bottom: calc(var(--target) + var(--space-5));
-    min-height: 40dvh;
-  }
 }
 
 /* Under 480 px the hint under the stage carries the explanation; the header keeps its title so the stage gets the room. */
@@ -811,15 +803,15 @@
   --pp-accent: var(--brand-aqua);
 }
 
-:root[data-theme="dark"] :is(.desk-page, .desk-drawer),
-[data-theme="dark"] :is(.desk-page, .desk-drawer) {
+:root[data-theme="dark"] :is(.desk-page, .desk-frame, .desk-drawer),
+[data-theme="dark"] :is(.desk-page, .desk-frame, .desk-drawer) {
   --pp-desk: color-mix(in srgb, var(--brand-gold) 70%, var(--brand-gold-highlight));
   --pp-desk-side: color-mix(in srgb, var(--brand-gold) 60%, var(--brand-ink));
   --pp-rug: color-mix(in srgb, var(--desk-linen) 80%, var(--brand-periwinkle));
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) :is(.desk-page, .desk-drawer) {
+  :root:not([data-theme="light"]) :is(.desk-page, .desk-frame, .desk-drawer) {
     --pp-desk: color-mix(in srgb, var(--brand-gold) 70%, var(--brand-gold-highlight));
     --pp-desk-side: color-mix(in srgb, var(--brand-gold) 60%, var(--brand-ink));
     --pp-rug: color-mix(in srgb, var(--desk-linen) 80%, var(--brand-periwinkle));
@@ -1108,6 +1100,7 @@
 /* ---------- the light layer (prompt 0028, changelog 0035, D-105): one project followed across the desk ---------- */
 
 .desk-page,
+.desk-frame,
 .desk-drawer {
   /* The brand's light: blue (periwinkle) -> aqua -> mint -> lime. Mint is the mix of the two neighbours. */
   --lt-blue: var(--brand-periwinkle);
@@ -1390,5 +1383,503 @@
   }
   .desk-item.is-glow::before {
     animation: none;
+  }
+}
+
+/* ======================================================================================================
+   The desk system frame (D-106): toolbar, stage box, height handle, minimap, tooltip, legend, settings,
+   full screen, the compact bar on phones, and the page desk above every portal page. UI chrome is rem.
+   ====================================================================================================== */
+
+.desk-frame {
+  position: relative;
+  min-width: 0;
+}
+
+.desk-frame .desk-toolbar {
+  row-gap: var(--space-2);
+}
+
+.desk-toolbar__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  min-width: 0;
+  margin-right: auto;
+  flex: 1 1 14rem;
+}
+
+.desk-toolbar__name {
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.desk-toolbar__summary {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.desk-toolbar__group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.desk-toolbar__group--view {
+  margin-left: auto;
+}
+
+/* Controls keep their size and label on one line; a group that does not fit moves to the next row as a whole. */
+.desk-toolbar .btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.desk-toolbar__group {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+
+@media (max-width: 767.98px) {
+  .desk-toolbar,
+  .desk-toolbar__group {
+    gap: var(--space-1);
+  }
+
+  .desk-toolbar__pct {
+    min-width: 3.25rem;
+  }
+
+  .desk-toolbar .desk-fs-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+.desk-toolbar__sizes {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.desk-toolbar__sizes .btn {
+  min-width: var(--target);
+}
+
+
+/* The stage's box: its height is the chosen size (S / M / L or dragged); the stage fills it. */
+.desk-stagebox {
+  position: relative;
+  min-height: 14rem;
+  max-height: 95dvh;
+}
+
+.desk-stage.is-space,
+.desk-stage.is-space * {
+  cursor: grab !important;
+}
+
+/* Sub-mat labels are buttons that fit their sub-mat (D-106). */
+.desk-sub__label {
+  width: 100%;
+  gap: 6px;
+  margin: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.desk-sub__label:hover {
+  background: var(--desk-felt-line);
+}
+
+.desk-sub__label:focus-visible {
+  outline: calc(var(--focus-ring) / var(--desk-zoom, 1)) solid var(--desk-focus);
+  outline-offset: 0;
+}
+
+.desk-sub__n {
+  margin-left: auto;
+  padding-left: 6px;
+  color: var(--desk-felt-soft);
+  font-weight: var(--weight-regular);
+  letter-spacing: 0;
+}
+
+/* Height handle: the stage's bottom edge (a window splitter), 44 px tall for touch, keyboard with the arrows. */
+.desk-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--target);
+  margin-top: calc(-1 * var(--space-3));
+  cursor: ns-resize;
+  touch-action: none;
+  border-radius: var(--radius-sm);
+}
+
+.desk-handle__grip {
+  width: 4.5rem;
+  height: 0.375rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-text-muted) 55%, transparent);
+  box-shadow: 0 0 0 var(--hairline) var(--color-border);
+}
+
+.desk-handle:hover .desk-handle__grip,
+.desk-handle:focus-visible .desk-handle__grip {
+  background: var(--color-accent-text);
+}
+
+/* Minimap: the whole desk small in the stage's corner, the viewport as a trapezoid. Pointer only (aria-hidden). */
+.desk-minimap {
+  position: absolute;
+  right: var(--space-2);
+  bottom: var(--space-2);
+  z-index: 3;
+  width: clamp(7rem, 14%, 13rem);
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-surface-raised) 82%, transparent);
+  box-shadow: 0 2px 10px var(--desk-shadow), 0 0 0 var(--hairline) var(--color-border);
+  cursor: pointer;
+  touch-action: none;
+}
+
+.desk-minimap__desk {
+  fill: color-mix(in srgb, var(--desk-wood) 70%, transparent);
+}
+
+.desk-minimap__mat {
+  fill: var(--desk-felt);
+}
+
+.desk-minimap__view {
+  fill: color-mix(in srgb, var(--brand-aqua) 10%, transparent);
+  stroke: var(--brand-aqua);
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+}
+
+/* Tooltip: on hover and on keyboard focus, above the object (the name, then kind · entity · status). */
+.desk-tip {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  max-width: min(22rem, 70%);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-text);
+  color: var(--color-bg);
+  box-shadow: 0 4px 14px var(--desk-shadow);
+  transform: translate(-50%, calc(-100% - 8px));
+  pointer-events: none;
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
+.desk-tip__title {
+  font-weight: var(--weight-bold);
+  overflow-wrap: anywhere;
+}
+
+.desk-tip__meta {
+  opacity: 0.85;
+}
+
+/* Panels: the legend (over the stage's top right) and the settings (under the toolbar). */
+.desk-panel {
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: var(--hairline) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  box-shadow: 0 10px 30px var(--desk-shadow);
+}
+
+.desk-panel--settings {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  max-width: 44rem;
+}
+
+.desk-panel--legend {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: min(26rem, calc(100% - 2 * var(--space-2)));
+  max-height: calc(100% - 2 * var(--space-2));
+  overflow: auto;
+}
+
+.desk-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.desk-panel__title {
+  margin: 0;
+  font-size: 1.0625rem;
+}
+
+.desk-panel__h {
+  margin: var(--space-1) 0 0;
+  font-size: 0.8125rem;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.desk-panel__p {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.desk-legend {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.desk-legend__row {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9375rem;
+}
+
+.desk-legend__face {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 3.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--desk-fibre), var(--desk-linen);
+}
+
+.desk-legend__face .desk-preview {
+  filter: drop-shadow(0 2px 4px var(--desk-shadow));
+}
+
+/* Full screen: the frame fills the screen (Fullscreen API) or the window (fixed overlay fallback). */
+.desk-frame.is-fullscreen {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100dvh;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+.desk-frame.is-fullscreen > .desk-stagebox {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+}
+
+.desk-frame.is-fullscreen > .desk-hint {
+  display: none;
+}
+
+.desk-frame.is-fs-css {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+}
+
+.desk-frame:fullscreen {
+  background: var(--color-bg);
+}
+
+/* Phones: the compact bar (D-106). */
+.desk-frame--compact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: var(--hairline) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background:
+    var(--desk-fibre),
+    var(--desk-felt);
+  color: var(--desk-felt-ink);
+}
+
+.desk-compact__text {
+  margin: 0;
+  min-width: 0;
+  font-size: 0.9375rem;
+}
+
+/* The page desk above a portal page, and the page below it. */
+.desk-pagedesk {
+  margin-bottom: var(--space-5);
+}
+
+.desk-pagedesk .desk-hint {
+  margin-top: 0;
+  font-size: 0.875rem;
+}
+
+.desk-pagedesk--empty {
+  padding: var(--space-2) var(--space-3);
+  border: var(--hairline) dashed var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+}
+
+.desk-after:focus {
+  outline: none;
+}
+
+.desk-abilities {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.desk-ability {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.desk-ability__select {
+  flex: 0 1 12rem;
+  min-width: 0;
+}
+
+.desk-ability__note {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+/* Faces of page desk objects: a status pill, the "+N more" stack, and plain tiles past the face budget. */
+.dp .dp__pill {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.3em;
+  max-width: 100%;
+  padding: 0.1em 0.45em;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tone) 22%, var(--desk-paper));
+  color: color-mix(in srgb, var(--tone) 70%, var(--desk-ink));
+  font-size: 0.78em;
+  font-weight: var(--weight-bold);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dp .dp__pill::before {
+  content: '';
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background: var(--tone);
+}
+
+.dp--card .dp__kicker .dp__pill {
+  font-size: 0.72em;
+}
+
+.desk-item--stack .desk-top {
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 5px, var(--desk-paper-edge) 5px 5.6px),
+    var(--desk-grain),
+    var(--desk-paper);
+}
+
+.desk-item--stack .desk-side {
+  background: repeating-linear-gradient(to bottom, var(--desk-paper) 0 0.6px, var(--desk-paper-edge) 0.6px 1.1px);
+}
+
+.dp--stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0.3em;
+  text-align: center;
+}
+
+.dp--stack .dp__big {
+  font-size: 1.1em;
+  font-weight: var(--weight-bold);
+  line-height: 1.1;
+}
+
+.dp--stack .dp__sub {
+  font-size: 0.62em;
+  line-height: 1.2;
+}
+
+.dp--plain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  height: 100%;
+  padding: 0.35em;
+}
+
+.dp--plain .dp__title {
+  font-size: 1em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desk-tip {
+    transition: none;
+  }
+}
+
+.desk-toolbar__group .desk-toolbar__phase {
+  flex: 0 1 13rem;
+  min-width: 9rem;
+}
+
+/* Wide screens: a group never breaks inside (it moves to the next row as a whole). */
+@media (min-width: 1100px) {
+  .desk-toolbar__group {
+    flex-wrap: nowrap;
   }
 }

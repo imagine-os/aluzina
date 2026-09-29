@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import type { DeskModel } from '../desk/types';
 
 /**
  * Surfaces: the hub, one per portal (D-014), the client app, dev tools, docs / manual and bare public pages.
@@ -85,6 +86,25 @@ export interface RouteDef {
   element: ReactElement;
   /** Present when the page has a sidebar / bottom-nav entry. */
   nav?: NavDef;
+  /** Page desk override (D-106): a module exports `desk: { '<CODE>': ... }` from its index.ts; the registry sets it here. */
+  desk?: RouteDeskOverride;
+}
+
+/** What the shell's page desk gets to build a model from: the route, its URL params and the live rows of its tables. */
+export interface DeskBuildContext {
+  route: RouteDef;
+  params: Record<string, string | undefined>;
+  rows: Record<string, Record<string, unknown>[]>;
+}
+
+/**
+ * How a page takes part in the desk system (D-106). `self`: the page is itself a full-page desk (W-04), the shell
+ * mounts none above it. `build`: the shell's page desk renders this model instead of the one derived from
+ * `spec.dataTables` by the rule tables of `src/desk/entities.ts`.
+ */
+export interface RouteDeskOverride {
+  self?: boolean;
+  build?: (ctx: DeskBuildContext) => DeskModel;
 }
 
 export interface SpecCompleteness {
