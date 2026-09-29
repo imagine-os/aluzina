@@ -28,11 +28,13 @@ export function HubPage() {
     return home ? (home.status === 'built' ? 'live' : 'stub') : 'planned';
   };
 
-  /** Spaces (K-01) mounts on every portal and on dev; open it on the current role's surface, founder when the role has none (client). */
-  const spacesHref = (() => {
+  /** Spaces (K-01) and the Method desk (W-04) mount on every portal and on dev; open them on the current role's surface, founder when the role has none (client). */
+  const onOwnSurface = (segment: string) => {
     const surface = isRoleId(role) ? ROLE_META[role].surface : 'founder';
-    return routes.some((r) => r.path === `/${surface}/spaces`) ? `#/${surface}/spaces` : '#/founder/spaces';
-  })();
+    return routes.some((r) => r.path === `/${surface}/${segment}`) ? `#/${surface}/${segment}` : `#/founder/${segment}`;
+  };
+  const spacesHref = onOwnSurface('spaces');
+  const deskHref = onOwnSurface('desk');
 
   interface ResolvedSurface {
     status: SurfaceStatus;
@@ -44,7 +46,7 @@ export function HubPage() {
   /** Card state from the manifest (route-derived by page code) or from the static entry; never hard-coded per card. */
   const resolve = (s: SurfaceEntry): ResolvedSurface => {
     if (s.kind === 'external') return { status: 'live', href: s.href, external: true };
-    if (s.kind === 'static') return { status: 'live', href: s.id === 'spaces' ? spacesHref : s.href };
+    if (s.kind === 'static') return { status: 'live', href: s.id === 'spaces' ? spacesHref : s.id === 'desk' ? deskHref : s.href };
     const route = routes.find((r) => r.code === s.code);
     if (!route) return s.fallbackHref ? { status: 'live', href: s.fallbackHref, external: true } : { status: 'planned' };
     const status: SurfaceStatus = route.status === 'built' ? 'live' : 'stub';

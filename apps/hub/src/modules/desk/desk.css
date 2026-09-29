@@ -1,0 +1,786 @@
+/*
+ * W-04 Method desk (changelog 0033, D-103). Tokens only: every colour is a design token or a color-mix of tokens.
+ * Textures are procedural: SVG feTurbulence noise as data-URI layers (no image files, no dependencies).
+ * World sizes (mats, objects, their text) are in world px on purpose: the camera scale is the zoom, and nothing on
+ * the canvas is clamped to a minimum font size (zoom in to read). UI chrome (toolbar, hint, drawer) is rem.
+ */
+
+/* Materials are defined on the page and on the drawer body (the Drawer is portalled outside the page). */
+.desk-page,
+.desk-drawer {
+  /* Materials, light theme: pale oak desk, charcoal felt mats, lighter felt sub-mats, warm paper, kraft, silver card. */
+  --desk-floor: color-mix(in srgb, var(--brand-gold) 18%, var(--color-surface-raised));
+  --desk-wood: color-mix(in srgb, var(--brand-gold) 36%, var(--color-bg));
+  --desk-wood-edge: color-mix(in srgb, var(--brand-gold) 60%, var(--brand-ink));
+  --desk-felt: color-mix(in srgb, var(--brand-ink) 84%, var(--brand-silver));
+  --desk-felt-ink: color-mix(in srgb, var(--metal-highlight) 86%, transparent);
+  --desk-felt-soft: color-mix(in srgb, var(--metal-highlight) 58%, transparent);
+  --desk-felt-line: color-mix(in srgb, var(--metal-highlight) 16%, transparent);
+  --desk-linen: color-mix(in srgb, var(--brand-ink) 64%, var(--brand-silver));
+  --desk-paper: color-mix(in srgb, var(--metal-highlight) 94%, var(--brand-gold-highlight));
+  --desk-paper-edge: color-mix(in srgb, var(--brand-ink) 22%, var(--desk-paper));
+  --desk-paper-side: color-mix(in srgb, var(--brand-ink) 12%, var(--desk-paper));
+  --desk-ink: var(--brand-ink);
+  --desk-ink-soft: color-mix(in srgb, var(--brand-ink) 64%, var(--desk-paper));
+  --desk-rule: color-mix(in srgb, var(--brand-ink) 26%, transparent);
+  --desk-kraft: color-mix(in srgb, var(--brand-gold) 62%, var(--brand-gold-highlight));
+  --desk-kraft-side: color-mix(in srgb, var(--brand-gold) 78%, var(--brand-ink));
+  --desk-folder: color-mix(in srgb, var(--brand-silver) 58%, var(--metal-highlight));
+  --desk-folder-side: color-mix(in srgb, var(--brand-silver) 70%, var(--brand-ink));
+  --desk-accent: var(--gradient-iridescent-x);
+  --desk-metal: var(--gradient-metal);
+  --desk-shadow: color-mix(in srgb, var(--brand-black) 42%, transparent);
+  --desk-focus: var(--brand-aqua);
+
+  /* Procedural textures. Grain: black noise, alpha baked in. Felt: white fibres. Wood: stretched noise = grain lines. */
+  --desk-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='96' height='96' filter='url(%23n)'/%3E%3C/svg%3E");
+  --desk-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)'/%3E%3C/svg%3E");
+  --desk-woodgrain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.00390625 0.08984375' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.12 0 0 0 0 0.05 0 0 0 0.5 -0.12'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+:root[data-theme="dark"] :is(.desk-page, .desk-drawer),
+[data-theme="dark"] :is(.desk-page, .desk-drawer) {
+  --desk-floor: color-mix(in srgb, var(--brand-gold) 6%, var(--color-bg));
+  --desk-wood: color-mix(in srgb, var(--brand-gold) 24%, var(--color-bg));
+  --desk-felt: color-mix(in srgb, var(--brand-ink) 78%, var(--brand-periwinkle));
+  --desk-linen: color-mix(in srgb, var(--brand-ink) 66%, var(--brand-periwinkle));
+  --desk-paper: color-mix(in srgb, var(--metal-highlight) 84%, var(--brand-gold));
+  --desk-kraft: color-mix(in srgb, var(--brand-gold) 80%, var(--brand-gold-highlight));
+  --desk-folder: color-mix(in srgb, var(--brand-silver) 80%, var(--brand-ink));
+  --desk-shadow: color-mix(in srgb, var(--brand-black) 70%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) :is(.desk-page, .desk-drawer) {
+    --desk-floor: color-mix(in srgb, var(--brand-gold) 6%, var(--color-bg));
+    --desk-wood: color-mix(in srgb, var(--brand-gold) 24%, var(--color-bg));
+    --desk-felt: color-mix(in srgb, var(--brand-ink) 78%, var(--brand-periwinkle));
+    --desk-linen: color-mix(in srgb, var(--brand-ink) 66%, var(--brand-periwinkle));
+    --desk-paper: color-mix(in srgb, var(--metal-highlight) 84%, var(--brand-gold));
+    --desk-kraft: color-mix(in srgb, var(--brand-gold) 80%, var(--brand-gold-highlight));
+    --desk-folder: color-mix(in srgb, var(--brand-silver) 80%, var(--brand-ink));
+    --desk-shadow: color-mix(in srgb, var(--brand-black) 70%, transparent);
+  }
+}
+
+/* ---------- toolbar and hint (UI chrome, rem) ---------- */
+
+.desk-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.desk-toolbar__zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.desk-toolbar__pct {
+  min-width: 4.25rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9375rem;
+}
+
+.desk-toolbar__phase {
+  flex: 1 1 11rem;
+  max-width: 16rem;
+  min-width: 0;
+}
+
+.desk-hint {
+  margin: var(--space-3) 0 0;
+  max-width: 60rem;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+/* ---------- stage, camera, world ---------- */
+
+.desk-stage {
+  --desk-bottom: var(--space-5);
+  position: relative;
+  overflow: hidden;
+  min-height: 18rem;
+  border: var(--hairline) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(ellipse at 50% 35%, transparent 40%, color-mix(in srgb, var(--brand-black) 22%, transparent) 100%),
+    var(--desk-grain),
+    var(--desk-floor);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+  perspective-origin: 50% 50%;
+}
+
+.desk-stage:active {
+  cursor: grabbing;
+}
+
+@media (max-width: 767.98px) {
+  /* Phones: the stage keeps at least half of the screen (the header scrolls away above it) and the bottom nav is reserved. */
+  .desk-stage {
+    --desk-bottom: calc(var(--target) + var(--space-5));
+    min-height: 40dvh;
+  }
+}
+
+/* Under 480 px the hint under the stage carries the explanation; the header keeps its title so the stage gets the room. */
+@media (max-width: 479.98px) {
+  .desk-page .page-header__subtitle {
+    display: none;
+  }
+}
+
+.desk-camera {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 520ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.desk-world {
+  --desk-zoom: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  transform-style: preserve-3d;
+}
+
+/* During a gesture only: the world moves as one layer (scaled relative to the committed zoom). */
+.desk-world.is-moving {
+  will-change: transform;
+}
+
+/* The committed zoom is real layout (CSS zoom), so text and edges are rasterised at the size they are seen. */
+.desk-zoom {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+}
+
+.desk-slab {
+  position: absolute;
+  border-radius: 28px;
+  background:
+    var(--desk-grain),
+    var(--desk-woodgrain),
+    linear-gradient(180deg, color-mix(in srgb, var(--metal-highlight) 10%, transparent), transparent 40%),
+    var(--desk-wood);
+  background-size: 96px 96px, 1024px 1024px, 100% 100%, auto;
+  box-shadow:
+    0 0 0 6px var(--desk-wood-edge),
+    0 40px 120px var(--desk-shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desk-camera {
+    transition: none;
+  }
+}
+
+/* ---------- mats ---------- */
+
+.desk-mat {
+  position: absolute;
+  transform-style: preserve-3d;
+  border-radius: 12px;
+  background:
+    linear-gradient(to right, var(--desk-felt-line) 1px, transparent 1px) 32px 64px / 64px 64px,
+    linear-gradient(to bottom, var(--desk-felt-line) 1px, transparent 1px) 32px 64px / 64px 64px,
+    var(--desk-fibre),
+    var(--desk-felt);
+  background-repeat: repeat;
+  box-shadow:
+    0 2px 0 color-mix(in srgb, var(--brand-black) 45%, transparent),
+    0 14px 30px var(--desk-shadow);
+}
+
+/* Stitching along the edge. */
+.desk-mat::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px dashed var(--desk-felt-line);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.desk-mat__label {
+  position: absolute;
+  left: 20px;
+  top: 8px;
+  right: 20px;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  min-height: 48px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--desk-felt-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.desk-mat__label:hover {
+  background: var(--desk-felt-line);
+}
+
+.desk-mat__num {
+  font-size: 28px;
+  font-weight: var(--weight-light);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--desk-felt-soft);
+}
+
+.desk-mat__name {
+  font-size: 22px;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.desk-mat__count {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--desk-felt-soft);
+  white-space: nowrap;
+}
+
+/* ---------- sub-mats: lighter felt, chess squares, label strip ---------- */
+
+.desk-sub {
+  position: absolute;
+  transform: translateZ(1.5px);
+  transform-style: preserve-3d;
+  border-radius: 6px;
+  background:
+    repeating-conic-gradient(color-mix(in srgb, var(--metal-highlight) 6%, transparent) 0 25%, transparent 0 50%) 0 24px / 128px 128px,
+    var(--desk-fibre),
+    var(--desk-linen);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--brand-black) 50%, transparent),
+    0 3px 8px var(--desk-shadow);
+}
+
+.desk-sub__label {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--desk-felt-line);
+  color: var(--desk-felt-ink);
+  font-size: 10px;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- objects ---------- */
+
+.desk-item {
+  position: absolute;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--desk-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.desk-item:focus-visible {
+  outline: none;
+}
+
+.desk-item__body {
+  position: absolute;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.desk-item__shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  box-shadow: 0 calc(0.6px + var(--t) * 0.4) calc(1.5px + var(--t) * 0.7) var(--desk-shadow);
+}
+
+.desk-item--token .desk-item__shadow,
+.desk-coin {
+  border-radius: 50%;
+}
+
+.desk-top {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  contain: layout paint;
+  border-radius: 1.5px;
+  background: var(--desk-grain), var(--desk-paper);
+  color: var(--desk-ink);
+  box-shadow: 0 0.6px 0 var(--desk-paper-edge);
+}
+
+.is-lifted > .desk-top {
+  transform: translateZ(var(--t));
+  box-shadow: none;
+}
+
+.desk-item:hover .desk-top,
+.desk-item:focus-visible .desk-top,
+.desk-item.is-selected .desk-top {
+  outline: calc(var(--focus-ring) / var(--desk-zoom, 1)) solid var(--desk-focus);
+  outline-offset: calc(2px / var(--desk-zoom, 1));
+}
+
+.desk-item:hover:not(:focus-visible):not(.is-selected) .desk-top {
+  outline-width: calc(1.5px / var(--desk-zoom, 1));
+  outline-color: var(--desk-felt-soft);
+}
+
+.desk-mat__label:focus-visible {
+  outline: calc(var(--focus-ring) / var(--desk-zoom, 1)) solid var(--desk-focus);
+}
+
+.desk-side {
+  position: absolute;
+  contain: layout paint;
+  backface-visibility: hidden;
+}
+
+.desk-side--front {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--t);
+  transform-origin: 50% 100%;
+  transform: rotateX(-90deg);
+}
+
+.desk-side--left,
+.desk-side--right {
+  top: 0;
+  width: var(--t);
+  height: 100%;
+}
+
+.desk-side--left {
+  left: 0;
+  transform-origin: 0 50%;
+  transform: rotateY(-90deg);
+}
+
+.desk-side--right {
+  right: 0;
+  transform-origin: 100% 50%;
+  transform: rotateY(90deg);
+}
+
+/* Document: a stack of pages, the sides show the page edges. */
+.desk-item--document .desk-side--front {
+  background: repeating-linear-gradient(to bottom, var(--desk-paper) 0 0.6px, var(--desk-paper-edge) 0.6px 1.1px);
+}
+
+.desk-item--document .desk-side--left,
+.desk-item--document .desk-side--right {
+  background: repeating-linear-gradient(to right, var(--desk-paper-side) 0 0.6px, var(--desk-paper-edge) 0.6px 1.1px);
+}
+
+/* Folder: a closed silver folder with papers inside, its tab carries the accent. */
+.desk-item--folder .desk-top {
+  overflow: visible;
+  contain: layout;
+  background: var(--desk-grain), var(--desk-folder);
+  border-radius: 1px 3px 3px 3px;
+}
+
+.desk-item--folder .desk-side {
+  background: linear-gradient(to bottom, var(--desk-folder-side), color-mix(in srgb, var(--desk-folder-side) 70%, var(--brand-ink)));
+}
+
+.desk-item--folder .desk-side--front {
+  background: repeating-linear-gradient(to bottom, var(--desk-folder-side) 0 1.4px, var(--desk-paper) 1.4px 5.6px, var(--desk-folder-side) 5.6px 8px);
+}
+
+/* Box: kraft cardboard, a band of iridescent tape across the lid. */
+.desk-item--box .desk-top {
+  background: var(--desk-grain), var(--desk-kraft);
+}
+
+.desk-item--box .desk-side {
+  background: var(--desk-grain), var(--desk-kraft-side);
+}
+
+.desk-item--box .desk-side--front {
+  background:
+    linear-gradient(to right, transparent 42%, color-mix(in srgb, var(--brand-aqua) 55%, transparent) 42% 58%, transparent 58%),
+    var(--desk-grain),
+    color-mix(in srgb, var(--desk-kraft-side) 85%, var(--desk-kraft));
+}
+
+/* Token: three stacked discs make the coin's edge; the face is the status colour. */
+.desk-item--token .desk-top {
+  border-radius: 50%;
+  background: none;
+  box-shadow: none;
+  transform: translateZ(var(--t));
+}
+
+.desk-coin {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--tone) 62%, var(--brand-black));
+}
+
+.desk-coin--0 { transform: translateZ(calc(var(--t) * 0.34)); }
+.desk-coin--1 { transform: translateZ(calc(var(--t) * 0.68)); }
+
+/* Card: stiff card, a coloured band on top (rules: the iridescent accent; team and measures: metal). */
+.desk-item--card .desk-top {
+  background:
+    var(--desk-metal) top / 100% 3px no-repeat,
+    var(--desk-grain),
+    var(--desk-paper);
+  box-shadow: 0 0.8px 0 var(--desk-paper-edge), 0 1.4px 0 var(--desk-paper-side);
+}
+
+.desk-item--g-rules .desk-top {
+  background:
+    linear-gradient(90deg, var(--brand-periwinkle), var(--brand-aqua), var(--brand-lime)) top / 100% 3px no-repeat,
+    var(--desk-grain),
+    var(--desk-paper);
+}
+
+/* ---------- previews: em-based so the face and the drawer share the markup ---------- */
+
+.dp {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  line-height: 1.2;
+}
+
+.dp > span,
+.dp span {
+  display: block;
+}
+
+/* The base font size of a face is set inline from GEOMETRY (model.ts); faces inherit it. */
+.desk-top {
+  font-size: inherit;
+}
+
+.dp--page {
+  gap: 0.25em;
+  padding: 1em 1.1em 0.8em;
+}
+
+.dp__code {
+  font-size: 0.78em;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--desk-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dp__title {
+  font-size: 1.45em;
+  font-weight: var(--weight-bold);
+  line-height: 1.1;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.dp__sub {
+  font-size: 0.8em;
+  color: var(--desk-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dp__rows {
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.3em;
+  flex: 1;
+  min-height: 0;
+  margin-top: 0.35em;
+  padding-top: 0.45em;
+  border-top: 0.12em solid var(--desk-rule);
+  overflow: hidden;
+}
+
+.dp__row {
+  display: flex !important;
+  align-items: center;
+  gap: 0.45em;
+  min-width: 0;
+  font-size: 0.92em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.dp__text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dp--form .dp__text {
+  flex: 0 1 auto;
+  max-width: 62%;
+}
+
+.dp__field {
+  flex: 1 1 30%;
+  height: 0.95em;
+  border-bottom: 0.12em solid var(--desk-rule);
+}
+
+.dp__row--blank .dp__field {
+  height: 1.6em;
+}
+
+.dp__box {
+  flex: none;
+  width: 0.95em;
+  height: 0.95em;
+  border: 0.13em solid var(--desk-ink);
+  border-radius: 0.18em;
+}
+
+.dp__num {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  color: var(--desk-ink-soft);
+}
+
+.dp__section {
+  margin-top: 0.25em;
+  font-size: 0.72em;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--desk-ink-soft);
+}
+
+.dp__more {
+  font-size: 0.78em;
+  font-style: italic;
+  color: var(--desk-ink-soft);
+}
+
+/* Folder */
+.dp--folder {
+  position: relative;
+  gap: 0.15em;
+  padding: 0.9em 1.1em 0.7em;
+  overflow: visible;
+}
+
+.dp__tab {
+  position: absolute;
+  left: 0;
+  top: -1.9em;
+  height: 1.95em;
+  min-width: 5em;
+  padding: 0.3em 1em 0;
+  border-radius: 0.5em 0.5em 0 0;
+  background: var(--desk-accent);
+  color: var(--brand-ink);
+  font-size: 0.9em;
+  font-weight: var(--weight-black);
+  letter-spacing: 0.08em;
+}
+
+.dp--folder .dp__title {
+  font-size: 1.4em;
+  -webkit-line-clamp: 1;
+}
+
+.dp--folder .dp__rows {
+  gap: 0.2em;
+  margin-top: 0.2em;
+  padding-top: 0.3em;
+}
+
+.dp--folder .dp__row {
+  font-size: 0.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block !important;
+}
+
+/* Box */
+.dp--box {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2em;
+  padding: 0.6em;
+  text-align: center;
+}
+
+.dp__tape {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44%;
+  height: 12%;
+  background: var(--desk-accent);
+  opacity: 0.85;
+}
+
+.dp__big {
+  position: relative;
+  font-size: 3em;
+  font-weight: var(--weight-black);
+  line-height: 1;
+}
+
+.dp--box .dp__title {
+  position: relative;
+  font-size: 0.95em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  -webkit-line-clamp: 1;
+}
+
+.dp--box .dp__sub {
+  position: relative;
+  max-width: 100%;
+  font-size: 0.7em;
+}
+
+.dp__count {
+  position: absolute;
+  right: 0.5em;
+  bottom: 0.4em;
+  font-size: 0.75em;
+  font-weight: var(--weight-bold);
+  color: var(--desk-ink-soft);
+}
+
+/* Token */
+.dp--token {
+  align-items: center;
+  justify-content: center;
+  gap: 0.25em;
+  padding: 0.6em;
+  border-radius: 50%;
+  text-align: center;
+  background:
+    radial-gradient(circle at 34% 28%, color-mix(in srgb, var(--metal-highlight) 32%, transparent), transparent 55%),
+    var(--desk-grain),
+    var(--tone);
+  color: var(--tone-ink);
+  box-shadow: inset 0 0 0 0.25em color-mix(in srgb, var(--tone) 70%, var(--brand-black));
+}
+
+.dp--token .dp__title {
+  font-size: 1em;
+  line-height: 1.05;
+  -webkit-line-clamp: 3;
+}
+
+.dp--token .dp__code {
+  max-width: 90%;
+  font-size: 0.5em;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.dp--tone-neutral { --tone: var(--color-text-muted); --tone-ink: var(--color-bg); }
+.dp--tone-accent { --tone: var(--color-accent-text); --tone-ink: var(--color-bg); }
+.dp--tone-success { --tone: var(--color-success); --tone-ink: var(--color-bg); }
+.dp--tone-warning { --tone: var(--color-warning); --tone-ink: var(--color-bg); }
+.dp--tone-danger { --tone: var(--color-danger); --tone-ink: var(--color-bg); }
+.dp--tone-info { --tone: var(--color-info); --tone-ink: var(--color-bg); }
+
+/* Card */
+.dp--card {
+  gap: 0.3em;
+  padding: 1.6em 1em 0.8em;
+}
+
+.dp__kicker {
+  display: flex !important;
+  align-items: baseline;
+  gap: 0.5em;
+  min-width: 0;
+}
+
+.dp--card .dp__code {
+  flex: none;
+  font-size: 1em;
+  color: var(--desk-ink);
+}
+
+.dp--card .dp__sub {
+  font-size: 0.75em;
+}
+
+.dp--card .dp__title {
+  font-size: 0.98em;
+  font-weight: var(--weight-medium);
+  line-height: 1.22;
+  -webkit-line-clamp: 5;
+}
+
+/* ---------- drawer ---------- */
+
+.desk-drawer {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.desk-preview {
+  position: relative;
+  justify-self: center;
+  max-width: 100%;
+  filter: drop-shadow(0 6px 12px var(--color-shadow));
+}
+
+.desk-drawer__h {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.desk-drawer__list {
+  margin: 0;
+  padding-left: 1.5rem;
+  display: grid;
+  gap: var(--space-1);
+}

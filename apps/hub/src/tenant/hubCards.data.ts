@@ -24,6 +24,7 @@ export const PRODUCT_SURFACES = [
   { id: 'docs', code: 'D-06', key: 'docs', kind: 'route', fallbackHref: `${REPO_URL}/tree/main/docs` },
   { id: 'archive', code: 'S-12', key: 'archive', kind: 'route', enterAs: 'studio', enterUnless: 'projects.read' },
   { id: 'spaces', code: 'K-01', key: 'spaces', kind: 'static', href: '#/founder/spaces' },
+  { id: 'desk', code: 'W-04', key: 'desk', kind: 'static', href: '#/founder/desk' },
   { id: 'business-os', code: 'BOS-01', key: 'businessOs', kind: 'static', href: './business-os/' },
 ];
 

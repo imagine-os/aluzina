@@ -49,6 +49,7 @@ const DC_ROOT = '#dc-root';
 const roleCode = Object.fromEntries(Object.entries(tenant.surfaces.codePrefixes).map(([letter, role]) => [role, letter]));
 const businessOsCard = PRODUCT_SURFACES.find((s) => s.id === 'business-os');
 const spacesCard = PRODUCT_SURFACES.find((s) => s.id === 'spaces');
+const deskCard = PRODUCT_SURFACES.find((s) => s.id === 'desk');
 const websiteCard = PRODUCT_SURFACES.find((s) => s.id === 'website');
 
 /**
@@ -64,6 +65,8 @@ const SURFACES = [
   // (SessionProvider contract, docs/reference/surfaces.md 1.2b); `.dshell__main` is the DesktopShell content area.
   ...PORTALS.filter((p) => p.role !== 'client').map((p) => ({ code: `${roleCode[p.role]}-01`, path: `?as=${p.role}#/${p.role}`, wait: '.dshell__main' })),
   { code: spacesCard.code, path: `?as=founder${spacesCard.href}`, wait: '.pcard' },
+  // W-04 Method desk (changelog 0033): the mats render after the stage is measured and fitted.
+  { code: deskCard.code, path: `?as=founder${deskCard.href}`, wait: '.desk-mat' },
   { code: 'D-12', path: '?as=dev#/design', wait: '.dshell__main' },
   { code: 'D-02', path: '?as=dev#/dev/components', wait: '.dshell__main' },
   { code: 'D-03', path: '?as=dev#/dev/specs', wait: '.dshell__main' },

@@ -107,6 +107,11 @@ export const strings: StringTable = {
     en: 'The Hub\'s own organizer replacing the Slack sidebar: spaces without depth limit, posts filed in many places at once, relations between anything, a graph and the catalogs (deliverables, clients, tools, roles).',
     es: 'El organizador propio del Hub que reemplaza la barra lateral de Slack: espacios sin límite de profundidad, publicaciones archivadas en varios lugares a la vez, relaciones entre todo, un grafo y los catálogos (entregables, clientes, herramientas, roles).',
   },
+  'hub.cards.desk.title': { en: 'Method desk', es: 'Mesa del método' },
+  'hub.cards.desk.desc': {
+    en: 'The whole method as physical objects on a zoomable desk: one felt mat per phase of the client journey, and every status, form, checklist, template, deliverable, rule and KPI as a small sheet, folder, box, token or card that previews its real content.',
+    es: 'Todo el método como objetos físicos sobre una mesa con zoom: un tapete por fase del recorrido del cliente, y cada estado, formulario, lista, plantilla, entregable, regla e indicador como una pequeña hoja, carpeta, caja, ficha o tarjeta que muestra su contenido real.',
+  },
   'hub.cards.businessOs.title': { en: 'Business OS prototype', es: 'Prototipo Business OS' },
   'hub.cards.businessOs.desc': {
     en: 'the Claude Design prototype of the Aluzina operations system: cockpit, stations, work views, QC, media, design system, docs; EN/ES toggle inside',

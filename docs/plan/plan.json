@@ -1,7 +1,7 @@
 {
-  "version": "0.19.0",
+  "version": "0.20.0",
   "updatedAt": "2026-09-28",
-  "source": "docs/build-plan.md (steps 0-16, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
+  "source": "docs/build-plan.md (steps 0-17, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
     "done",
     "doing",
@@ -2087,6 +2087,19 @@
       "dependsOn": [
         "wa-01"
       ]
+    },
+    {
+      "id": "dk-01",
+      "title": "W-04 Method desk (prompt 0026, D-103): the playbook and the project template as physical objects on a zoomable desk — one felt mat per client-journey phase, sub-mats per group, 146 objects (sheet, form, checklist, document, folder, box, token, card) with real-content previews, CSS 3D thickness, procedural textures, wheel / drag / pinch / keyboard camera with a tilt toggle, drawer with an Open Placeholder; mounted on founder / ops / studio / brand / dev, HUB-01 card",
+      "step": "17",
+      "status": "done",
+      "model": "Opus 5",
+      "codes": [
+        "W-04",
+        "HUB-01"
+      ],
+      "dependsOn": [],
+      "changelog": "0033"
     }
   ]
 }

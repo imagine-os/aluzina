@@ -123,7 +123,7 @@ export const ROUTE_ICONS: Record<string, IconName> = {
   'K-05': 'catalog', 'K-06': 'import',
 
   // Work (W)
-  'W-01': 'work', 'W-02': 'work', 'W-03': 'work',
+  'W-01': 'work', 'W-02': 'work', 'W-03': 'work', 'W-04': 'canvas', // the Method desk is a zoomable canvas (0033)
 
   // Builder and dev tools (D)
   'D-02': 'catalog', 'D-03': 'docs', 'D-04': 'team', 'D-05': 'plan',
