@@ -5,7 +5,7 @@ import { GEOMETRY, type DeskItem, type PlacedItem } from './model';
 type Lang = 'en' | 'es';
 
 /** Rows the top face of a page shows before "+N" (the drawer lists them all). */
-const FACE_ROWS: Record<string, number> = { sheet: 12, form: 10, checklist: 12, document: 11, folder: 4, box: 0, token: 0, card: 0 };
+const FACE_ROWS: Record<string, number> = { sheet: 12, form: 10, checklist: 12, document: 11, folder: 4, box: 0, token: 0, card: 0, light: 3 };
 
 interface PreviewProps {
   item: DeskItem;
@@ -27,6 +27,25 @@ export function Preview({ item, lang, rows, moreLabel }: PreviewProps) {
   const more = item.lines.length - shown.length;
   const heading = (i: number) => item.sections?.find((s) => s.at === i && item.kind !== 'folder');
 
+  if (item.kind === 'light') {
+    // A row of the followed project (D-105): what it is, its real content, and "+N more" on the last of its kind.
+    return (
+      <span className={`dp dp--light dp--tone-${item.tone ?? 'info'}`}>
+        <span className="dp__kicker">
+          <span className="dp__code">{p(item.subtitle)}</span>
+        </span>
+        <span className="dp__title">{p(item.title)}</span>
+        <span className="dp__rows">
+          {shown.map((line, i) => (
+            <span key={i} className={`dp__row${i === shown.length - 1 ? ' dp__row--key' : ''}`}>
+              {p(line)}
+            </span>
+          ))}
+        </span>
+        {(item.more ?? 0) > 0 && <span className="dp__more dp__more--light">{moreLabel(item.more ?? 0)}</span>}
+      </span>
+    );
+  }
   if (item.kind === 'token') {
     return (
       <span className={`dp dp--token dp--tone-${item.tone ?? 'neutral'}`}>
@@ -114,6 +133,9 @@ interface ObjectProps {
   moreLabel: (n: number) => string;
   onActivate: (id: string) => void;
   onFocusItem: (id: string, e: FocusEvent<HTMLButtonElement>) => void;
+  /** Light layer (D-105): `glow` = the followed project's status token, `lit` = the trail's current stop. */
+  glow?: boolean;
+  lit?: boolean;
 }
 
 /**
@@ -122,7 +144,7 @@ interface ObjectProps {
  * stacked discs; thin kinds (sheet, form, checklist, card) lie flat and draw their edge as a 1 px shadow, which keeps
  * the number of 3D layers low (changelog 0033).
  */
-export const DeskObject = memo(function DeskObject({ item, left, top, lang, label, selected, moreLabel, onActivate, onFocusItem }: ObjectProps) {
+export const DeskObject = memo(function DeskObject({ item, left, top, lang, label, selected, moreLabel, onActivate, onFocusItem, glow, lit }: ObjectProps) {
   const g = GEOMETRY[item.kind];
   const body: CSSProperties = {
     left: (item.cw - g.face.w) / 2,
@@ -136,7 +158,7 @@ export const DeskObject = memo(function DeskObject({ item, left, top, lang, labe
   return (
     <button
       type="button"
-      className={`desk-item desk-item--${item.kind} desk-item--g-${item.group}${selected ? ' is-selected' : ''}`}
+      className={`desk-item desk-item--${item.kind} desk-item--g-${item.group}${selected ? ' is-selected' : ''}${glow ? ' is-glow' : ''}${lit ? ' is-lit' : ''}`}
       style={{ left, top, width: item.cw, height: item.ch }}
       data-desk-item={item.id}
       aria-label={label}

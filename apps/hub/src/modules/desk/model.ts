@@ -50,14 +50,16 @@ export const PERSON_ROWS = 3;
 /** The ten phases of the client journey (`CLIENT_JOURNEY`, p. 2); one mat each. */
 export type JourneyId = 'lead' | 'diagnosis' | 'brief' | 'analysis' | 'concept' | 'development' | 'validation' | 'delivery' | 'closure' | 'follow-up';
 
-export type ItemKind = 'sheet' | 'form' | 'checklist' | 'document' | 'folder' | 'box' | 'token' | 'card';
-export const ITEM_KINDS: readonly ItemKind[] = ['sheet', 'form', 'checklist', 'document', 'folder', 'box', 'token', 'card'];
+/** `light` is a row of the followed project (the light layer, D-105), not a playbook object. */
+export type ItemKind = 'sheet' | 'form' | 'checklist' | 'document' | 'folder' | 'box' | 'token' | 'card' | 'light';
+export const ITEM_KINDS: readonly ItemKind[] = ['sheet', 'form', 'checklist', 'document', 'folder', 'box', 'token', 'card', 'light'];
 
-export type GroupId = 'services' | 'statuses' | 'forms' | 'procedures' | 'deliverables' | 'money' | 'communication' | 'rules' | 'team' | 'measures';
-/** Sub-mat order inside a mat (only groups with items are rendered). */
-export const GROUP_ORDER: readonly GroupId[] = ['services', 'statuses', 'forms', 'procedures', 'deliverables', 'money', 'communication', 'rules', 'team', 'measures'];
+/** `project` / `projectComms`: the followed project's sub-mats (its rows as light tiles; its messages), D-105. */
+export type GroupId = 'services' | 'statuses' | 'forms' | 'procedures' | 'deliverables' | 'money' | 'communication' | 'rules' | 'team' | 'measures' | 'project' | 'projectComms';
+/** Sub-mat order inside a mat (only groups with items are rendered); the project's sub-mats come last, above the person. */
+export const GROUP_ORDER: readonly GroupId[] = ['services', 'statuses', 'forms', 'procedures', 'deliverables', 'money', 'communication', 'rules', 'team', 'measures', 'project', 'projectComms'];
 
-export type ItemSource = 'playbook' | 'template' | 'statusSet';
+export type ItemSource = 'playbook' | 'template' | 'statusSet' | 'project';
 
 /**
  * Thickness in world px (translateZ of the top face), footprint in squares, top-face size and the face's base font
@@ -72,6 +74,7 @@ export const GEOMETRY: Record<ItemKind, { t: number; w: 1 | 2; face: { w: number
   box: { t: 18, w: 1, face: { w: 52, h: 52 }, font: 3.2 },
   token: { t: 4, w: 1, face: { w: 44, h: 44 }, font: 3.4 },
   card: { t: 2, w: 1, face: { w: 56, h: 40 }, font: 2.5 },
+  light: { t: 2, w: 1, face: { w: 58, h: 58 }, font: 6.4 },
 };
 
 /** Where the real page for an item lives (the Open button is a Placeholder until it navigates there). */
@@ -97,6 +100,10 @@ export interface DeskItem {
   sections?: { at: number; label: Text }[];
   tone?: StatusTone;
   openAt: OpenAt;
+  /** Light tiles only: the row this tile is (entity + id). */
+  ref?: { entity: string; id: string };
+  /** Light tiles only: rows of the same kind not shown ("+N more" on the last tile). */
+  more?: number;
 }
 
 export interface PlacedItem extends DeskItem {
@@ -127,7 +134,9 @@ export interface Mat {
   w: number;
   h: number;
   subs: SubMat[];
+  /** Playbook objects on the mat (the light tiles are counted in `lights`). */
   count: number;
+  lights: number;
   /** The person's station, relative to the mat (world px); only on mats that have a person (`deskPeople.ts`). */
   person?: { x: number; y: number; w: number; h: number };
 }
@@ -152,7 +161,7 @@ const SERVICE_PHASE_STEPS: Record<ServiceCode, JourneyId[]> = {
   '04': ['brief', 'analysis', 'concept', 'development', 'development', 'development', 'delivery'],
 };
 
-const PIPELINE_STEP: Record<PipelineStatusId, JourneyId> = {
+export const PIPELINE_STEP: Record<PipelineStatusId, JourneyId> = {
   'lead-new': 'lead',
   'lead-qualified': 'lead',
   'proposal-sent': 'diagnosis',
@@ -459,7 +468,8 @@ export function layoutDesk(items: DeskItem[], perRow: number, people: ReadonlySe
       person = { x: MAT_PAD + Math.floor((MAT_COLS - PERSON_COLS) / 2) * SQ, y: h, w: PERSON_COLS * SQ, h: PERSON_ROWS * SQ };
       h += PERSON_ROWS * SQ + MAT_PAD / 2;
     }
-    return { id: step.id as JourneyId, index, label: step.label, x: 0, y: 0, w: matW, h, subs, count: mine.length, person };
+    const lights = mine.filter((i) => i.kind === 'light').length;
+    return { id: step.id as JourneyId, index, label: step.label, x: 0, y: 0, w: matW, h, subs, count: mine.length - lights, lights, person };
   });
 
   // Rows of mats in journey order, top-aligned; each mat is as long as its content (a phase with little on it is a

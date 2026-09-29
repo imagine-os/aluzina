@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-09-29T01:02:44.264Z",
+  "capturedAt": "2026-09-29T03:59:07.041Z",
   "base": "http://localhost:4173/",
   "code": "W-04",
   "route": "/founder/desk",
@@ -2963,19 +2963,39 @@
         "spec": {
           "code": "W-04",
           "name": "Method desk",
-          "purpose": "The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103).",
+          "purpose": "The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103). Follow a project and the desk becomes its spatial view: its status glows, its records land as light tiles on the mats where they belong, a money strip sums what was quoted, approved, paid and is outstanding, and its events travel as light from mat to mat (prompt 0028, D-105).",
           "surface": "founder",
           "navGroup": "projects",
           "layout": [
             "PageHeader (W-04, object, people and mat counts)",
             "Toolbar: zoom − / percentage (aria-live) / zoom +, Fit, Tilt toggle, phase Select, Reset; hint line",
+            "Light toolbar: project Select (\"Follow a project…\", active first), Clear, Previous / Play-Pause / Next; trail caption line (aria-live)",
             "Stage (perspective) > camera (rotateX 22° or flat) > world (translate + scale): ten mats in reading order, 5 per row on landscape stages, 3 on squarish ones, 2 on tall phones",
             "Mat: label button (number, phase, object count) + sub-mats with a label strip and a chess-square grid (1 square = 64 world px)",
             "Objects: 1x1 or 2x1 squares, CSS 3D thickness (top face + side faces or stacked discs), real-content preview on the top face",
             "Person station on each mat's near edge (5 x 3 squares, below the sub-mats): rug, CSS 3D desk, chair, seated role figure, phase props, tent nameplate (prompt 0027, D-104)",
-            "Drawer: large preview, kind / phase / group / source / code, full contents list, Open (Placeholder); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (Placeholder)"
+            "Followed project: status token halo, current mat framed in the brand light, earlier mats tinted done; a project sub-mat (and a messages sub-mat) of light tiles on each mat that has its records; money strip along the near edge (quoted, approved, paid, outstanding, communication); a pulse of light travelling along the trail",
+            "Drawer: large preview, kind / phase / group / source / code, full contents list, Open (navigates); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (navigates); for a light tile: its face, kind, project, mat, managing page, why this mat, every field, Open"
           ],
-          "dataTables": [],
+          "dataTables": [
+            "projects",
+            "leads",
+            "engagements",
+            "meetings",
+            "documents",
+            "quotes",
+            "changeOrders",
+            "revisionItems",
+            "revisions",
+            "purchases",
+            "payments",
+            "deliveries",
+            "siteReports",
+            "messages",
+            "alerts",
+            "activity",
+            "suppliers"
+          ],
           "roles": [
             "founder",
             "ops",
@@ -2988,9 +3008,12 @@
             "`layoutDesk()` packs each group first-fit into a sub-mat (dense, row-major, no overlaps), shelf-packs sub-mats inside the mat, and rows the mats (equal height per row); positions are multiples of the 64 px square.",
             "Camera = world point at the stage centre + zoom; the world transform is written through a ref and requestAnimationFrame during wheel, drag, pinch and fly-to, and committed to state (percentage, --desk-zoom) when the gesture ends. Screen <-> desk-plane maths inverts rotateX + perspective, so zoom stays anchored under the cursor even tilted.",
             "Inputs: wheel zooms about the cursor (ctrl + wheel = trackpad pinch), shift + wheel pans; pointer drag on the desk pans (mouse, touch, pen), two-finger pinch zooms; keys + / − zoom, arrows pan, 0 resets, F fits; Tab walks mat labels then objects and keyboard focus flies the object into view.",
-            "Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open is a Placeholder: `desk.openItem` answers \"not wired yet: <page>\" with the code, name and path of the page that will open it (D-047).",
+            "Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open navigates to the page the object names; when the role lacks that route's permission the session switches to the demo user of its surface first, with the D-07 toast (D-015). `desk.openItem` answers \"opened <code> (#<path>)\".",
             "Tilt is a toggle (22° / flat top-down); prefers-reduced-motion removes the camera animations (moves are instant) and the tilt transition.",
-            "People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat's objects in the Tab order, activating it flies to it and opens the person drawer; `desk.openPersonPortal` answers \"not wired yet: <portal> (#<path>)\" (D-047).",
+            "People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat's objects in the Tab order, activating it flies to it and opens the person drawer; Open portal navigates to the role's portal (switching the session when needed); `desk.openPersonPortal` answers \"opened <code> (#<path>)\".",
+            "Light layer (D-105): following a project reads its rows live (`useTable` per entity, re-rendered from `subscribe`, D-023); `deskFlow.ts` FLOW_RULES places each entity on a mat (leads Lead, engagements Brief, quotes / change orders Development, revision items / brand revisions Validation, purchases / payments / deliveries / site reports Delivery, documents by kind, messages / alerts the current phase, meetings the current phase or Diagnosis); at most 6 tiles per kind (\"+N more\") and 40 per project.",
+            "Money strip: quoted = per comparison group the selected quote, else the lowest not rejected; approved = purchases past Quoted + approved or executed change orders; paid = Σ paidCop of payments (in / out); outstanding = Σ amountCop − paidCop of payments not paid. Communication: messages in the project channel (client / team), meetings, the lead's intake channel.",
+            "Trail: one event per placed row at its own date (purchase date, payment paid or due date, message time, ...; created_at when it has none) plus one per `activity` line on the project or its rows; Play moves a pulse (CSS transform, 700 ms per hop) to each event's tile and lights it, Previous / Next step; Space (stage focused) plays / pauses, [ and ] step; reduced motion jumps.",
             "Textures are procedural: SVG feTurbulence noise as data-URI layers over token colours for the felt mats, linen sub-mats, paper grain and the desk; no images, no dependencies."
           ],
           "components": [
@@ -2999,7 +3022,7 @@
             "Select",
             "Drawer",
             "KeyValue",
-            "Placeholder"
+            "Toast"
           ],
           "actions": [
             {
@@ -3072,6 +3095,52 @@
               "permission": "projects.read",
               "params": {
                 "phase": "string"
+              }
+            },
+            {
+              "id": "desk.followProject",
+              "label": "Follow a project",
+              "intent": "follow the project {project} on the desk",
+              "permission": "projects.read",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "desk.clearProject",
+              "label": "Stop following the project",
+              "intent": "stop following the project",
+              "permission": "projects.read"
+            },
+            {
+              "id": "desk.playTrail",
+              "label": "Play the light trail",
+              "intent": "play the project’s trail",
+              "permission": "projects.read"
+            },
+            {
+              "id": "desk.pauseTrail",
+              "label": "Pause the light trail",
+              "intent": "pause the trail",
+              "permission": "projects.read"
+            },
+            {
+              "id": "desk.stepTrail",
+              "label": "Step through the trail",
+              "intent": "go to the {dir} event",
+              "permission": "projects.read",
+              "params": {
+                "dir": "enum:prev|next"
+              }
+            },
+            {
+              "id": "desk.openRow",
+              "label": "Open a record’s page",
+              "intent": "open the page of the {entity} {id}",
+              "permission": "projects.read",
+              "params": {
+                "entity": "string",
+                "id": "id"
               }
             }
           ],
@@ -3096,19 +3165,39 @@
         "spec": {
           "code": "W-04",
           "name": "Method desk",
-          "purpose": "The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103).",
+          "purpose": "The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103). Follow a project and the desk becomes its spatial view: its status glows, its records land as light tiles on the mats where they belong, a money strip sums what was quoted, approved, paid and is outstanding, and its events travel as light from mat to mat (prompt 0028, D-105).",
           "surface": "ops",
           "navGroup": "projects",
           "layout": [
             "PageHeader (W-04, object, people and mat counts)",
             "Toolbar: zoom − / percentage (aria-live) / zoom +, Fit, Tilt toggle, phase Select, Reset; hint line",
+            "Light toolbar: project Select (\"Follow a project…\", active first), Clear, Previous / Play-Pause / Next; trail caption line (aria-live)",
             "Stage (perspective) > camera (rotateX 22° or flat) > world (translate + scale): ten mats in reading order, 5 per row on landscape stages, 3 on squarish ones, 2 on tall phones",
             "Mat: label button (number, phase, object count) + sub-mats with a label strip and a chess-square grid (1 square = 64 world px)",
             "Objects: 1x1 or 2x1 squares, CSS 3D thickness (top face + side faces or stacked discs), real-content preview on the top face",
             "Person station on each mat's near edge (5 x 3 squares, below the sub-mats): rug, CSS 3D desk, chair, seated role figure, phase props, tent nameplate (prompt 0027, D-104)",
-            "Drawer: large preview, kind / phase / group / source / code, full contents list, Open (Placeholder); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (Placeholder)"
+            "Followed project: status token halo, current mat framed in the brand light, earlier mats tinted done; a project sub-mat (and a messages sub-mat) of light tiles on each mat that has its records; money strip along the near edge (quoted, approved, paid, outstanding, communication); a pulse of light travelling along the trail",
+            "Drawer: large preview, kind / phase / group / source / code, full contents list, Open (navigates); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (navigates); for a light tile: its face, kind, project, mat, managing page, why this mat, every field, Open"
           ],
-          "dataTables": [],
+          "dataTables": [
+            "projects",
+            "leads",
+            "engagements",
+            "meetings",
+            "documents",
+            "quotes",
+            "changeOrders",
+            "revisionItems",
+            "revisions",
+            "purchases",
+            "payments",
+            "deliveries",
+            "siteReports",
+            "messages",
+            "alerts",
+            "activity",
+            "suppliers"
+          ],
           "roles": [
             "founder",
             "ops",
@@ -3121,9 +3210,12 @@
             "`layoutDesk()` packs each group first-fit into a sub-mat (dense, row-major, no overlaps), shelf-packs sub-mats inside the mat, and rows the mats (equal height per row); positions are multiples of the 64 px square.",
             "Camera = world point at the stage centre + zoom; the world transform is written through a ref and requestAnimationFrame during wheel, drag, pinch and fly-to, and committed to state (percentage, --desk-zoom) when the gesture ends. Screen <-> desk-plane maths inverts rotateX + perspective, so zoom stays anchored under the cursor even tilted.",
             "Inputs: wheel zooms about the cursor (ctrl + wheel = trackpad pinch), shift + wheel pans; pointer drag on the desk pans (mouse, touch, pen), two-finger pinch zooms; keys + / − zoom, arrows pan, 0 resets, F fits; Tab walks mat labels then objects and keyboard focus flies the object into view.",
-            "Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open is a Placeholder: `desk.openItem` answers \"not wired yet: <page>\" with the code, name and path of the page that will open it (D-047).",
+            "Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open navigates to the page the object names; when the role lacks that route's permission the session switches to the demo user of its surface first, with the D-07 toast (D-015). `desk.openItem` answers \"opened <code> (#<path>)\".",
             "Tilt is a toggle (22° / flat top-down); prefers-reduced-motion removes the camera animations (moves are instant) and the tilt transition.",
-            "People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat's objects in the Tab order, activating it flies to it and opens the person drawer; `desk.openPersonPortal` answers \"not wired yet: <portal> (#<path>)\" (D-047).",
+            "People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat's objects in the Tab order, activating it flies to it and opens the person drawer; Open portal navigates to the role's portal (switching the session when needed); `desk.openPersonPortal` answers \"opened <code> (#<path>)\".",
+            "Light layer (D-105): following a project reads its rows live (`useTable` per entity, re-rendered from `subscribe`, D-023); `deskFlow.ts` FLOW_RULES places each entity on a mat (leads Lead, engagements Brief, quotes / change orders Development, revision items / brand revisions Validation, purchases / payments / deliveries / site reports Delivery, documents by kind, messages / alerts the current phase, meetings the current phase or Diagnosis); at most 6 tiles per kind (\"+N more\") and 40 per project.",
+            "Money strip: quoted = per comparison group the selected quote, else the lowest not rejected; approved = purchases past Quoted + approved or executed change orders; paid = Σ paidCop of payments (in / out); outstanding = Σ amountCop − paidCop of payments not paid. Communication: messages in the project channel (client / team), meetings, the lead's intake channel.",
+            "Trail: one event per placed row at its own date (purchase date, payment paid or due date, message time, ...; created_at when it has none) plus one per `activity` line on the project or its rows; Play moves a pulse (CSS transform, 700 ms per hop) to each event's tile and lights it, Previous / Next step; Space (stage focused) plays / pauses, [ and ] step; reduced motion jumps.",
             "Textures are procedural: SVG feTurbulence noise as data-URI layers over token colours for the felt mats, linen sub-mats, paper grain and the desk; no images, no dependencies."
           ],
           "components": [
@@ -3132,7 +3224,7 @@
             "Select",
             "Drawer",
             "KeyValue",
-            "Placeholder"
+            "Toast"
           ],
           "actions": [
             {
@@ -3205,6 +3297,52 @@
               "permission": "tasks.manage",
               "params": {
                 "phase": "string"
+              }
+            },
+            {
+              "id": "desk.followProject",
+              "label": "Follow a project",
+              "intent": "follow the project {project} on the desk",
+              "permission": "tasks.manage",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "desk.clearProject",
+              "label": "Stop following the project",
+              "intent": "stop following the project",
+              "permission": "tasks.manage"
+            },
+            {
+              "id": "desk.playTrail",
+              "label": "Play the light trail",
+              "intent": "play the project’s trail",
+              "permission": "tasks.manage"
+            },
+            {
+              "id": "desk.pauseTrail",
+              "label": "Pause the light trail",
+              "intent": "pause the trail",
+              "permission": "tasks.manage"
+            },
+            {
+              "id": "desk.stepTrail",
+              "label": "Step through the trail",
+              "intent": "go to the {dir} event",
+              "permission": "tasks.manage",
+              "params": {
+                "dir": "enum:prev|next"
+              }
+            },
+            {
+              "id": "desk.openRow",
+              "label": "Open a record’s page",
+              "intent": "open the page of the {entity} {id}",
+              "permission": "tasks.manage",
+              "params": {
+                "entity": "string",
+                "id": "id"
               }
             }
           ],
@@ -3229,19 +3367,39 @@
         "spec": {
           "code": "W-04",
           "name": "Method desk",
-          "purpose": "The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103).",
+          "purpose": "The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103). Follow a project and the desk becomes its spatial view: its status glows, its records land as light tiles on the mats where they belong, a money strip sums what was quoted, approved, paid and is outstanding, and its events travel as light from mat to mat (prompt 0028, D-105).",
           "surface": "studio",
           "navGroup": "projects",
           "layout": [
             "PageHeader (W-04, object, people and mat counts)",
             "Toolbar: zoom − / percentage (aria-live) / zoom +, Fit, Tilt toggle, phase Select, Reset; hint line",
+            "Light toolbar: project Select (\"Follow a project…\", active first), Clear, Previous / Play-Pause / Next; trail caption line (aria-live)",
             "Stage (perspective) > camera (rotateX 22° or flat) > world (translate + scale): ten mats in reading order, 5 per row on landscape stages, 3 on squarish ones, 2 on tall phones",
             "Mat: label button (number, phase, object count) + sub-mats with a label strip and a chess-square grid (1 square = 64 world px)",
             "Objects: 1x1 or 2x1 squares, CSS 3D thickness (top face + side faces or stacked discs), real-content preview on the top face",
             "Person station on each mat's near edge (5 x 3 squares, below the sub-mats): rug, CSS 3D desk, chair, seated role figure, phase props, tent nameplate (prompt 0027, D-104)",
-            "Drawer: large preview, kind / phase / group / source / code, full contents list, Open (Placeholder); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (Placeholder)"
+            "Followed project: status token halo, current mat framed in the brand light, earlier mats tinted done; a project sub-mat (and a messages sub-mat) of light tiles on each mat that has its records; money strip along the near edge (quoted, approved, paid, outstanding, communication); a pulse of light travelling along the trail",
+            "Drawer: large preview, kind / phase / group / source / code, full contents list, Open (navigates); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (navigates); for a light tile: its face, kind, project, mat, managing page, why this mat, every field, Open"
           ],
-          "dataTables": [],
+          "dataTables": [
+            "projects",
+            "leads",
+            "engagements",
+            "meetings",
+            "documents",
+            "quotes",
+            "changeOrders",
+            "revisionItems",
+            "revisions",
+            "purchases",
+            "payments",
+            "deliveries",
+            "siteReports",
+            "messages",
+            "alerts",
+            "activity",
+            "suppliers"
+          ],
           "roles": [
             "founder",
             "ops",
@@ -3254,9 +3412,12 @@
             "`layoutDesk()` packs each group first-fit into a sub-mat (dense, row-major, no overlaps), shelf-packs sub-mats inside the mat, and rows the mats (equal height per row); positions are multiples of the 64 px square.",
             "Camera = world point at the stage centre + zoom; the world transform is written through a ref and requestAnimationFrame during wheel, drag, pinch and fly-to, and committed to state (percentage, --desk-zoom) when the gesture ends. Screen <-> desk-plane maths inverts rotateX + perspective, so zoom stays anchored under the cursor even tilted.",
             "Inputs: wheel zooms about the cursor (ctrl + wheel = trackpad pinch), shift + wheel pans; pointer drag on the desk pans (mouse, touch, pen), two-finger pinch zooms; keys + / − zoom, arrows pan, 0 resets, F fits; Tab walks mat labels then objects and keyboard focus flies the object into view.",
-            "Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open is a Placeholder: `desk.openItem` answers \"not wired yet: <page>\" with the code, name and path of the page that will open it (D-047).",
+            "Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open navigates to the page the object names; when the role lacks that route's permission the session switches to the demo user of its surface first, with the D-07 toast (D-015). `desk.openItem` answers \"opened <code> (#<path>)\".",
             "Tilt is a toggle (22° / flat top-down); prefers-reduced-motion removes the camera animations (moves are instant) and the tilt transition.",
-            "People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat's objects in the Tab order, activating it flies to it and opens the person drawer; `desk.openPersonPortal` answers \"not wired yet: <portal> (#<path>)\" (D-047).",
+            "People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat's objects in the Tab order, activating it flies to it and opens the person drawer; Open portal navigates to the role's portal (switching the session when needed); `desk.openPersonPortal` answers \"opened <code> (#<path>)\".",
+            "Light layer (D-105): following a project reads its rows live (`useTable` per entity, re-rendered from `subscribe`, D-023); `deskFlow.ts` FLOW_RULES places each entity on a mat (leads Lead, engagements Brief, quotes / change orders Development, revision items / brand revisions Validation, purchases / payments / deliveries / site reports Delivery, documents by kind, messages / alerts the current phase, meetings the current phase or Diagnosis); at most 6 tiles per kind (\"+N more\") and 40 per project.",
+            "Money strip: quoted = per comparison group the selected quote, else the lowest not rejected; approved = purchases past Quoted + approved or executed change orders; paid = Σ paidCop of payments (in / out); outstanding = Σ amountCop − paidCop of payments not paid. Communication: messages in the project channel (client / team), meetings, the lead's intake channel.",
+            "Trail: one event per placed row at its own date (purchase date, payment paid or due date, message time, ...; created_at when it has none) plus one per `activity` line on the project or its rows; Play moves a pulse (CSS transform, 700 ms per hop) to each event's tile and lights it, Previous / Next step; Space (stage focused) plays / pauses, [ and ] step; reduced motion jumps.",
             "Textures are procedural: SVG feTurbulence noise as data-URI layers over token colours for the felt mats, linen sub-mats, paper grain and the desk; no images, no dependencies."
           ],
           "components": [
@@ -3265,7 +3426,7 @@
             "Select",
             "Drawer",
             "KeyValue",
-            "Placeholder"
+            "Toast"
           ],
           "actions": [
             {
@@ -3338,6 +3499,52 @@
               "permission": "tasks.own.write",
               "params": {
                 "phase": "string"
+              }
+            },
+            {
+              "id": "desk.followProject",
+              "label": "Follow a project",
+              "intent": "follow the project {project} on the desk",
+              "permission": "tasks.own.write",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "desk.clearProject",
+              "label": "Stop following the project",
+              "intent": "stop following the project",
+              "permission": "tasks.own.write"
+            },
+            {
+              "id": "desk.playTrail",
+              "label": "Play the light trail",
+              "intent": "play the project’s trail",
+              "permission": "tasks.own.write"
+            },
+            {
+              "id": "desk.pauseTrail",
+              "label": "Pause the light trail",
+              "intent": "pause the trail",
+              "permission": "tasks.own.write"
+            },
+            {
+              "id": "desk.stepTrail",
+              "label": "Step through the trail",
+              "intent": "go to the {dir} event",
+              "permission": "tasks.own.write",
+              "params": {
+                "dir": "enum:prev|next"
+              }
+            },
+            {
+              "id": "desk.openRow",
+              "label": "Open a record’s page",
+              "intent": "open the page of the {entity} {id}",
+              "permission": "tasks.own.write",
+              "params": {
+                "entity": "string",
+                "id": "id"
               }
             }
           ],
@@ -3362,19 +3569,39 @@
         "spec": {
           "code": "W-04",
           "name": "Method desk",
-          "purpose": "The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103).",
+          "purpose": "The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103). Follow a project and the desk becomes its spatial view: its status glows, its records land as light tiles on the mats where they belong, a money strip sums what was quoted, approved, paid and is outstanding, and its events travel as light from mat to mat (prompt 0028, D-105).",
           "surface": "brand",
           "navGroup": "projects",
           "layout": [
             "PageHeader (W-04, object, people and mat counts)",
             "Toolbar: zoom − / percentage (aria-live) / zoom +, Fit, Tilt toggle, phase Select, Reset; hint line",
+            "Light toolbar: project Select (\"Follow a project…\", active first), Clear, Previous / Play-Pause / Next; trail caption line (aria-live)",
             "Stage (perspective) > camera (rotateX 22° or flat) > world (translate + scale): ten mats in reading order, 5 per row on landscape stages, 3 on squarish ones, 2 on tall phones",
             "Mat: label button (number, phase, object count) + sub-mats with a label strip and a chess-square grid (1 square = 64 world px)",
             "Objects: 1x1 or 2x1 squares, CSS 3D thickness (top face + side faces or stacked discs), real-content preview on the top face",
             "Person station on each mat's near edge (5 x 3 squares, below the sub-mats): rug, CSS 3D desk, chair, seated role figure, phase props, tent nameplate (prompt 0027, D-104)",
-            "Drawer: large preview, kind / phase / group / source / code, full contents list, Open (Placeholder); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (Placeholder)"
+            "Followed project: status token halo, current mat framed in the brand light, earlier mats tinted done; a project sub-mat (and a messages sub-mat) of light tiles on each mat that has its records; money strip along the near edge (quoted, approved, paid, outstanding, communication); a pulse of light travelling along the trail",
+            "Drawer: large preview, kind / phase / group / source / code, full contents list, Open (navigates); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (navigates); for a light tile: its face, kind, project, mat, managing page, why this mat, every field, Open"
           ],
-          "dataTables": [],
+          "dataTables": [
+            "projects",
+            "leads",
+            "engagements",
+            "meetings",
+            "documents",
+            "quotes",
+            "changeOrders",
+            "revisionItems",
+            "revisions",
+            "purchases",
+            "payments",
+            "deliveries",
+            "siteReports",
+            "messages",
+            "alerts",
+            "activity",
+            "suppliers"
+          ],
           "roles": [
             "founder",
             "ops",
@@ -3387,9 +3614,12 @@
             "`layoutDesk()` packs each group first-fit into a sub-mat (dense, row-major, no overlaps), shelf-packs sub-mats inside the mat, and rows the mats (equal height per row); positions are multiples of the 64 px square.",
             "Camera = world point at the stage centre + zoom; the world transform is written through a ref and requestAnimationFrame during wheel, drag, pinch and fly-to, and committed to state (percentage, --desk-zoom) when the gesture ends. Screen <-> desk-plane maths inverts rotateX + perspective, so zoom stays anchored under the cursor even tilted.",
             "Inputs: wheel zooms about the cursor (ctrl + wheel = trackpad pinch), shift + wheel pans; pointer drag on the desk pans (mouse, touch, pen), two-finger pinch zooms; keys + / − zoom, arrows pan, 0 resets, F fits; Tab walks mat labels then objects and keyboard focus flies the object into view.",
-            "Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open is a Placeholder: `desk.openItem` answers \"not wired yet: <page>\" with the code, name and path of the page that will open it (D-047).",
+            "Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open navigates to the page the object names; when the role lacks that route's permission the session switches to the demo user of its surface first, with the D-07 toast (D-015). `desk.openItem` answers \"opened <code> (#<path>)\".",
             "Tilt is a toggle (22° / flat top-down); prefers-reduced-motion removes the camera animations (moves are instant) and the tilt transition.",
-            "People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat's objects in the Tab order, activating it flies to it and opens the person drawer; `desk.openPersonPortal` answers \"not wired yet: <portal> (#<path>)\" (D-047).",
+            "People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat's objects in the Tab order, activating it flies to it and opens the person drawer; Open portal navigates to the role's portal (switching the session when needed); `desk.openPersonPortal` answers \"opened <code> (#<path>)\".",
+            "Light layer (D-105): following a project reads its rows live (`useTable` per entity, re-rendered from `subscribe`, D-023); `deskFlow.ts` FLOW_RULES places each entity on a mat (leads Lead, engagements Brief, quotes / change orders Development, revision items / brand revisions Validation, purchases / payments / deliveries / site reports Delivery, documents by kind, messages / alerts the current phase, meetings the current phase or Diagnosis); at most 6 tiles per kind (\"+N more\") and 40 per project.",
+            "Money strip: quoted = per comparison group the selected quote, else the lowest not rejected; approved = purchases past Quoted + approved or executed change orders; paid = Σ paidCop of payments (in / out); outstanding = Σ amountCop − paidCop of payments not paid. Communication: messages in the project channel (client / team), meetings, the lead's intake channel.",
+            "Trail: one event per placed row at its own date (purchase date, payment paid or due date, message time, ...; created_at when it has none) plus one per `activity` line on the project or its rows; Play moves a pulse (CSS transform, 700 ms per hop) to each event's tile and lights it, Previous / Next step; Space (stage focused) plays / pauses, [ and ] step; reduced motion jumps.",
             "Textures are procedural: SVG feTurbulence noise as data-URI layers over token colours for the felt mats, linen sub-mats, paper grain and the desk; no images, no dependencies."
           ],
           "components": [
@@ -3398,7 +3628,7 @@
             "Select",
             "Drawer",
             "KeyValue",
-            "Placeholder"
+            "Toast"
           ],
           "actions": [
             {
@@ -3471,6 +3701,52 @@
               "permission": "tasks.own.write",
               "params": {
                 "phase": "string"
+              }
+            },
+            {
+              "id": "desk.followProject",
+              "label": "Follow a project",
+              "intent": "follow the project {project} on the desk",
+              "permission": "tasks.own.write",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "desk.clearProject",
+              "label": "Stop following the project",
+              "intent": "stop following the project",
+              "permission": "tasks.own.write"
+            },
+            {
+              "id": "desk.playTrail",
+              "label": "Play the light trail",
+              "intent": "play the project’s trail",
+              "permission": "tasks.own.write"
+            },
+            {
+              "id": "desk.pauseTrail",
+              "label": "Pause the light trail",
+              "intent": "pause the trail",
+              "permission": "tasks.own.write"
+            },
+            {
+              "id": "desk.stepTrail",
+              "label": "Step through the trail",
+              "intent": "go to the {dir} event",
+              "permission": "tasks.own.write",
+              "params": {
+                "dir": "enum:prev|next"
+              }
+            },
+            {
+              "id": "desk.openRow",
+              "label": "Open a record’s page",
+              "intent": "open the page of the {entity} {id}",
+              "permission": "tasks.own.write",
+              "params": {
+                "entity": "string",
+                "id": "id"
               }
             }
           ],
@@ -3495,19 +3771,39 @@
         "spec": {
           "code": "W-04",
           "name": "Method desk",
-          "purpose": "The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103).",
+          "purpose": "The whole method at a glance as physical objects on a desk, with a seated professional for the role that owns each phase: one felt mat per phase of the client journey, sub-mats that group statuses, forms, procedures, deliverables, money, communication, rules, team and measures, and every template or item as a small sheet, form, checklist, document, folder, box, token or card whose face previews its real content (prompt 0026, D-103). Follow a project and the desk becomes its spatial view: its status glows, its records land as light tiles on the mats where they belong, a money strip sums what was quoted, approved, paid and is outstanding, and its events travel as light from mat to mat (prompt 0028, D-105).",
           "surface": "dev",
           "navGroup": "developer",
           "layout": [
             "PageHeader (W-04, object, people and mat counts)",
             "Toolbar: zoom − / percentage (aria-live) / zoom +, Fit, Tilt toggle, phase Select, Reset; hint line",
+            "Light toolbar: project Select (\"Follow a project…\", active first), Clear, Previous / Play-Pause / Next; trail caption line (aria-live)",
             "Stage (perspective) > camera (rotateX 22° or flat) > world (translate + scale): ten mats in reading order, 5 per row on landscape stages, 3 on squarish ones, 2 on tall phones",
             "Mat: label button (number, phase, object count) + sub-mats with a label strip and a chess-square grid (1 square = 64 world px)",
             "Objects: 1x1 or 2x1 squares, CSS 3D thickness (top face + side faces or stacked discs), real-content preview on the top face",
             "Person station on each mat's near edge (5 x 3 squares, below the sub-mats): rug, CSS 3D desk, chair, seated role figure, phase props, tent nameplate (prompt 0027, D-104)",
-            "Drawer: large preview, kind / phase / group / source / code, full contents list, Open (Placeholder); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (Placeholder)"
+            "Followed project: status token halo, current mat framed in the brand light, earlier mats tinted done; a project sub-mat (and a messages sub-mat) of light tiles on each mat that has its records; money strip along the near edge (quoted, approved, paid, outstanding, communication); a pulse of light travelling along the trail",
+            "Drawer: large preview, kind / phase / group / source / code, full contents list, Open (navigates); for a person: portrait, role, portal role, demo person, basis, why here, responsibilities, owned phases, Open portal (navigates); for a light tile: its face, kind, project, mat, managing page, why this mat, every field, Open"
           ],
-          "dataTables": [],
+          "dataTables": [
+            "projects",
+            "leads",
+            "engagements",
+            "meetings",
+            "documents",
+            "quotes",
+            "changeOrders",
+            "revisionItems",
+            "revisions",
+            "purchases",
+            "payments",
+            "deliveries",
+            "siteReports",
+            "messages",
+            "alerts",
+            "activity",
+            "suppliers"
+          ],
           "roles": [
             "founder",
             "ops",
@@ -3520,9 +3816,12 @@
             "`layoutDesk()` packs each group first-fit into a sub-mat (dense, row-major, no overlaps), shelf-packs sub-mats inside the mat, and rows the mats (equal height per row); positions are multiples of the 64 px square.",
             "Camera = world point at the stage centre + zoom; the world transform is written through a ref and requestAnimationFrame during wheel, drag, pinch and fly-to, and committed to state (percentage, --desk-zoom) when the gesture ends. Screen <-> desk-plane maths inverts rotateX + perspective, so zoom stays anchored under the cursor even tilted.",
             "Inputs: wheel zooms about the cursor (ctrl + wheel = trackpad pinch), shift + wheel pans; pointer drag on the desk pans (mouse, touch, pen), two-finger pinch zooms; keys + / − zoom, arrows pan, 0 resets, F fits; Tab walks mat labels then objects and keyboard focus flies the object into view.",
-            "Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open is a Placeholder: `desk.openItem` answers \"not wired yet: <page>\" with the code, name and path of the page that will open it (D-047).",
+            "Activating a mat label fits that mat; activating an object flies to it and opens the drawer. Open navigates to the page the object names; when the role lacks that route's permission the session switches to the demo user of its surface first, with the D-07 toast (D-015). `desk.openItem` answers \"opened <code> (#<path>)\".",
             "Tilt is a toggle (22° / flat top-down); prefers-reduced-motion removes the camera animations (moves are instant) and the tilt transition.",
-            "People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat's objects in the Tab order, activating it flies to it and opens the person drawer; `desk.openPersonPortal` answers \"not wired yet: <portal> (#<path>)\" (D-047).",
+            "People are data (`deskPeople.ts`): phase -> ROLE_RESPONSIBILITIES role with a basis (project template phase ownerRole, role responsibility, or closest role = inferred); the station is a button after its mat's objects in the Tab order, activating it flies to it and opens the person drawer; Open portal navigates to the role's portal (switching the session when needed); `desk.openPersonPortal` answers \"opened <code> (#<path>)\".",
+            "Light layer (D-105): following a project reads its rows live (`useTable` per entity, re-rendered from `subscribe`, D-023); `deskFlow.ts` FLOW_RULES places each entity on a mat (leads Lead, engagements Brief, quotes / change orders Development, revision items / brand revisions Validation, purchases / payments / deliveries / site reports Delivery, documents by kind, messages / alerts the current phase, meetings the current phase or Diagnosis); at most 6 tiles per kind (\"+N more\") and 40 per project.",
+            "Money strip: quoted = per comparison group the selected quote, else the lowest not rejected; approved = purchases past Quoted + approved or executed change orders; paid = Σ paidCop of payments (in / out); outstanding = Σ amountCop − paidCop of payments not paid. Communication: messages in the project channel (client / team), meetings, the lead's intake channel.",
+            "Trail: one event per placed row at its own date (purchase date, payment paid or due date, message time, ...; created_at when it has none) plus one per `activity` line on the project or its rows; Play moves a pulse (CSS transform, 700 ms per hop) to each event's tile and lights it, Previous / Next step; Space (stage focused) plays / pauses, [ and ] step; reduced motion jumps.",
             "Textures are procedural: SVG feTurbulence noise as data-URI layers over token colours for the felt mats, linen sub-mats, paper grain and the desk; no images, no dependencies."
           ],
           "components": [
@@ -3531,7 +3830,7 @@
             "Select",
             "Drawer",
             "KeyValue",
-            "Placeholder"
+            "Toast"
           ],
           "actions": [
             {
@@ -3604,6 +3903,52 @@
               "permission": "dev.tools",
               "params": {
                 "phase": "string"
+              }
+            },
+            {
+              "id": "desk.followProject",
+              "label": "Follow a project",
+              "intent": "follow the project {project} on the desk",
+              "permission": "dev.tools",
+              "params": {
+                "project": "id"
+              }
+            },
+            {
+              "id": "desk.clearProject",
+              "label": "Stop following the project",
+              "intent": "stop following the project",
+              "permission": "dev.tools"
+            },
+            {
+              "id": "desk.playTrail",
+              "label": "Play the light trail",
+              "intent": "play the project’s trail",
+              "permission": "dev.tools"
+            },
+            {
+              "id": "desk.pauseTrail",
+              "label": "Pause the light trail",
+              "intent": "pause the trail",
+              "permission": "dev.tools"
+            },
+            {
+              "id": "desk.stepTrail",
+              "label": "Step through the trail",
+              "intent": "go to the {dir} event",
+              "permission": "dev.tools",
+              "params": {
+                "dir": "enum:prev|next"
+              }
+            },
+            {
+              "id": "desk.openRow",
+              "label": "Open a record’s page",
+              "intent": "open the page of the {entity} {id}",
+              "permission": "dev.tools",
+              "params": {
+                "entity": "string",
+                "id": "id"
               }
             }
           ],
@@ -17942,7 +18287,7 @@
         }
       }
     ],
-    "version": "0.20.1",
+    "version": "0.21.0",
     "actions": {
       "declared": [
         {
@@ -19787,6 +20132,64 @@
           }
         },
         {
+          "id": "desk.followProject",
+          "code": "W-04",
+          "path": "/founder/desk",
+          "label": "Follow a project",
+          "intent": "follow the project {project} on the desk",
+          "permission": "projects.read",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "desk.clearProject",
+          "code": "W-04",
+          "path": "/founder/desk",
+          "label": "Stop following the project",
+          "intent": "stop following the project",
+          "permission": "projects.read"
+        },
+        {
+          "id": "desk.playTrail",
+          "code": "W-04",
+          "path": "/founder/desk",
+          "label": "Play the light trail",
+          "intent": "play the project’s trail",
+          "permission": "projects.read"
+        },
+        {
+          "id": "desk.pauseTrail",
+          "code": "W-04",
+          "path": "/founder/desk",
+          "label": "Pause the light trail",
+          "intent": "pause the trail",
+          "permission": "projects.read"
+        },
+        {
+          "id": "desk.stepTrail",
+          "code": "W-04",
+          "path": "/founder/desk",
+          "label": "Step through the trail",
+          "intent": "go to the {dir} event",
+          "permission": "projects.read",
+          "params": {
+            "dir": "enum:prev|next"
+          }
+        },
+        {
+          "id": "desk.openRow",
+          "code": "W-04",
+          "path": "/founder/desk",
+          "label": "Open a record’s page",
+          "intent": "open the page of the {entity} {id}",
+          "permission": "projects.read",
+          "params": {
+            "entity": "string",
+            "id": "id"
+          }
+        },
+        {
           "id": "desk.zoom",
           "code": "W-04",
           "path": "/ops/desk",
@@ -19877,6 +20280,64 @@
           }
         },
         {
+          "id": "desk.followProject",
+          "code": "W-04",
+          "path": "/ops/desk",
+          "label": "Follow a project",
+          "intent": "follow the project {project} on the desk",
+          "permission": "tasks.manage",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "desk.clearProject",
+          "code": "W-04",
+          "path": "/ops/desk",
+          "label": "Stop following the project",
+          "intent": "stop following the project",
+          "permission": "tasks.manage"
+        },
+        {
+          "id": "desk.playTrail",
+          "code": "W-04",
+          "path": "/ops/desk",
+          "label": "Play the light trail",
+          "intent": "play the project’s trail",
+          "permission": "tasks.manage"
+        },
+        {
+          "id": "desk.pauseTrail",
+          "code": "W-04",
+          "path": "/ops/desk",
+          "label": "Pause the light trail",
+          "intent": "pause the trail",
+          "permission": "tasks.manage"
+        },
+        {
+          "id": "desk.stepTrail",
+          "code": "W-04",
+          "path": "/ops/desk",
+          "label": "Step through the trail",
+          "intent": "go to the {dir} event",
+          "permission": "tasks.manage",
+          "params": {
+            "dir": "enum:prev|next"
+          }
+        },
+        {
+          "id": "desk.openRow",
+          "code": "W-04",
+          "path": "/ops/desk",
+          "label": "Open a record’s page",
+          "intent": "open the page of the {entity} {id}",
+          "permission": "tasks.manage",
+          "params": {
+            "entity": "string",
+            "id": "id"
+          }
+        },
+        {
           "id": "desk.zoom",
           "code": "W-04",
           "path": "/studio/desk",
@@ -19967,6 +20428,64 @@
           }
         },
         {
+          "id": "desk.followProject",
+          "code": "W-04",
+          "path": "/studio/desk",
+          "label": "Follow a project",
+          "intent": "follow the project {project} on the desk",
+          "permission": "tasks.own.write",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "desk.clearProject",
+          "code": "W-04",
+          "path": "/studio/desk",
+          "label": "Stop following the project",
+          "intent": "stop following the project",
+          "permission": "tasks.own.write"
+        },
+        {
+          "id": "desk.playTrail",
+          "code": "W-04",
+          "path": "/studio/desk",
+          "label": "Play the light trail",
+          "intent": "play the project’s trail",
+          "permission": "tasks.own.write"
+        },
+        {
+          "id": "desk.pauseTrail",
+          "code": "W-04",
+          "path": "/studio/desk",
+          "label": "Pause the light trail",
+          "intent": "pause the trail",
+          "permission": "tasks.own.write"
+        },
+        {
+          "id": "desk.stepTrail",
+          "code": "W-04",
+          "path": "/studio/desk",
+          "label": "Step through the trail",
+          "intent": "go to the {dir} event",
+          "permission": "tasks.own.write",
+          "params": {
+            "dir": "enum:prev|next"
+          }
+        },
+        {
+          "id": "desk.openRow",
+          "code": "W-04",
+          "path": "/studio/desk",
+          "label": "Open a record’s page",
+          "intent": "open the page of the {entity} {id}",
+          "permission": "tasks.own.write",
+          "params": {
+            "entity": "string",
+            "id": "id"
+          }
+        },
+        {
           "id": "desk.zoom",
           "code": "W-04",
           "path": "/brand/desk",
@@ -20057,6 +20576,64 @@
           }
         },
         {
+          "id": "desk.followProject",
+          "code": "W-04",
+          "path": "/brand/desk",
+          "label": "Follow a project",
+          "intent": "follow the project {project} on the desk",
+          "permission": "tasks.own.write",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "desk.clearProject",
+          "code": "W-04",
+          "path": "/brand/desk",
+          "label": "Stop following the project",
+          "intent": "stop following the project",
+          "permission": "tasks.own.write"
+        },
+        {
+          "id": "desk.playTrail",
+          "code": "W-04",
+          "path": "/brand/desk",
+          "label": "Play the light trail",
+          "intent": "play the project’s trail",
+          "permission": "tasks.own.write"
+        },
+        {
+          "id": "desk.pauseTrail",
+          "code": "W-04",
+          "path": "/brand/desk",
+          "label": "Pause the light trail",
+          "intent": "pause the trail",
+          "permission": "tasks.own.write"
+        },
+        {
+          "id": "desk.stepTrail",
+          "code": "W-04",
+          "path": "/brand/desk",
+          "label": "Step through the trail",
+          "intent": "go to the {dir} event",
+          "permission": "tasks.own.write",
+          "params": {
+            "dir": "enum:prev|next"
+          }
+        },
+        {
+          "id": "desk.openRow",
+          "code": "W-04",
+          "path": "/brand/desk",
+          "label": "Open a record’s page",
+          "intent": "open the page of the {entity} {id}",
+          "permission": "tasks.own.write",
+          "params": {
+            "entity": "string",
+            "id": "id"
+          }
+        },
+        {
           "id": "desk.zoom",
           "code": "W-04",
           "path": "/dev/desk",
@@ -20144,6 +20721,64 @@
           "permission": "dev.tools",
           "params": {
             "phase": "string"
+          }
+        },
+        {
+          "id": "desk.followProject",
+          "code": "W-04",
+          "path": "/dev/desk",
+          "label": "Follow a project",
+          "intent": "follow the project {project} on the desk",
+          "permission": "dev.tools",
+          "params": {
+            "project": "id"
+          }
+        },
+        {
+          "id": "desk.clearProject",
+          "code": "W-04",
+          "path": "/dev/desk",
+          "label": "Stop following the project",
+          "intent": "stop following the project",
+          "permission": "dev.tools"
+        },
+        {
+          "id": "desk.playTrail",
+          "code": "W-04",
+          "path": "/dev/desk",
+          "label": "Play the light trail",
+          "intent": "play the project’s trail",
+          "permission": "dev.tools"
+        },
+        {
+          "id": "desk.pauseTrail",
+          "code": "W-04",
+          "path": "/dev/desk",
+          "label": "Pause the light trail",
+          "intent": "pause the trail",
+          "permission": "dev.tools"
+        },
+        {
+          "id": "desk.stepTrail",
+          "code": "W-04",
+          "path": "/dev/desk",
+          "label": "Step through the trail",
+          "intent": "go to the {dir} event",
+          "permission": "dev.tools",
+          "params": {
+            "dir": "enum:prev|next"
+          }
+        },
+        {
+          "id": "desk.openRow",
+          "code": "W-04",
+          "path": "/dev/desk",
+          "label": "Open a record’s page",
+          "intent": "open the page of the {entity} {id}",
+          "permission": "dev.tools",
+          "params": {
+            "entity": "string",
+            "id": "id"
           }
         },
         {

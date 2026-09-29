@@ -1,5 +1,5 @@
 {
-  "version": "0.20.1",
+  "version": "0.21.0",
   "updatedAt": "2026-09-29",
   "source": "docs/build-plan.md (steps 0-17, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -2114,6 +2114,20 @@
         "dk-01"
       ],
       "changelog": "0034"
+    },
+    {
+      "id": "dk-03",
+      "title": "W-04 light layer (prompt 0028, D-105): follow a project as light — status glow, its rows as tiles on the mats by an entity -> phase rule table, money and communication rail (quoted / approved / paid / outstanding), event trail with Play / Pause / Previous / Next and a travelling pulse, live via subscribe; every Open on W-04 navigates (session switch as D-07); desk.followProject / clearProject / playTrail / pauseTrail / stepTrail / openRow",
+      "step": "17",
+      "status": "done",
+      "model": "Opus 5.5",
+      "codes": [
+        "W-04"
+      ],
+      "dependsOn": [
+        "dk-02"
+      ],
+      "changelog": "0035"
     }
   ]
 }

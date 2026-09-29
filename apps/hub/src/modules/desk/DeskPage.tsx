@@ -1,21 +1,31 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type FocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
+import { matchPath, useNavigate } from 'react-router-dom';
 import { useRegisterActions } from '../../actions';
 import { useRoutes } from '../../app/RoutesContext';
+import { useSession } from '../../auth/SessionProvider';
 import { Button } from '../../components/atom/Button/Button';
-import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 import { Select } from '../../components/atom/Select/Select';
+import { toast } from '../../components/atom/Toast/Toast';
+import { useData, useTable } from '../../data/DataContext';
+import type { EntityName } from '../../data/schema';
 import { KeyValue } from '../../components/molecule/KeyValue/KeyValue';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { usePrefersReducedMotion } from '../../design/env';
 import { coreStrings } from '../../i18n/core';
+import { formatCop, formatDate } from '../../i18n/format';
 import { useT } from '../../i18n/I18nProvider';
-import type { Surface } from '../../specs/PageSpec';
-import { pick } from '../../tenant/domain';
+import type { RouteDef, Surface } from '../../specs/PageSpec';
+import { demoUserById, demoUserForRole } from '../../tenant/auth/demoUsers';
+import { hasPermission, rolesWith } from '../../tenant/auth/permissions';
+import { roleForSurface } from '../../tenant/auth/roles';
+import { lifecycleOf, pick } from '../../tenant/domain';
 import { DeskObject, Preview } from './DeskObject';
 import { DeskPersonStation, PersonPortrait } from './DeskPerson';
+import { FLOW_ENTITIES, FLOW_RULES, buildLights, buildTrail, commsOf, moneyOf, phaseOfStatus, pipelineLabel, rowFields, shortName, type FlowCtx, type FlowEntity } from './deskFlow';
 import { buildPeople, type DeskPerson } from './deskPeople';
 import { GEOMETRY, buildItems, findItem, findPhase, layoutDesk, type DeskItem, type Mat, type PlacedItem } from './model';
+import { useProjectFlow } from './useProjectFlow';
 import { DESK_CODE } from './specs';
 import './desk.css';
 
@@ -32,6 +42,10 @@ const SLAB = 640;
 const Z_MIN = 0.04;
 const Z_MAX = 10;
 const clampZ = (z: number) => Math.min(Z_MAX, Math.max(Z_MIN, z));
+/** One trail hop (the pulse's travel) and the pause on each stop while playing (D-105). */
+const HOP_MS = 700;
+const DWELL_MS = 650;
+const LIFECYCLE_RANK = { active: 0, prospect: 1, past: 2 } as const;
 const ease = (k: number) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
 
 /**
@@ -67,7 +81,41 @@ export function DeskPage({ surface }: { surface: Surface }) {
   const reducedRef = useRef(reduced);
   reducedRef.current = reduced;
 
-  const items = useMemo(() => buildItems(), []);
+  const navigate = useNavigate();
+  const data = useData();
+  const { can, switchUser } = useSession();
+  /** The followed project (light layer, D-105), the trail's current stop and whether it is playing. */
+  const [follow, setFollow] = useState<string | null>(null);
+  const [trailIdx, setTrailIdx] = useState(-1);
+  const [playing, setPlaying] = useState(false);
+  const refitNext = useRef(false);
+
+  const { rows: projects } = useTable('projects');
+  const projectOptions = useMemo(
+    () => [...projects].sort((a, b) => LIFECYCLE_RANK[lifecycleOf(a.pipelineStatus)] - LIFECYCLE_RANK[lifecycleOf(b.pipelineStatus)] || b.updated_at.localeCompare(a.updated_at) || a.name.localeCompare(b.name)),
+    [projects],
+  );
+  const project = follow ? projects.find((p) => p.id === follow) : undefined;
+  const flow = useProjectFlow(project ? project.id : null);
+  const flowCtx = useMemo<FlowCtx | null>(() => {
+    if (!project) return null;
+    const suppliers = new Map(flow.suppliers.map((x) => [x.id, x.name]));
+    return {
+      project,
+      current: phaseOfStatus(project.pipelineStatus),
+      supplierName: (id) => (id ? suppliers.get(id) ?? id : '—'),
+      personName: (id) => (id ? demoUserById(id)?.name.split(' ')[0] ?? id : '—'),
+    };
+  }, [project, flow.suppliers]);
+  const lights = useMemo(() => (flowCtx ? buildLights(flow.rows, flowCtx) : []), [flow.rows, flowCtx]);
+  const trail = useMemo(() => (flowCtx ? buildTrail(flow.rows, flow.activity, flowCtx, lights) : []), [flow.rows, flow.activity, flowCtx, lights]);
+  const money = useMemo(() => moneyOf(flow.rows), [flow.rows]);
+  const comms = useMemo(() => commsOf(flow.rows, project?.clientUserId ?? null), [flow.rows, project?.clientUserId]);
+  const trailRef = useRef(trail);
+  trailRef.current = trail;
+
+  const baseItems = useMemo(() => buildItems(), []);
+  const items = useMemo(() => (lights.length ? [...baseItems, ...lights] : baseItems), [baseItems, lights]);
   const people = useMemo(() => buildPeople(), []);
   const personByPhase = useMemo(() => new Map(people.map((p) => [p.phase as string, p])), [people]);
   const peoplePhases = useMemo(() => new Set(people.map((p) => p.phase as string)), [people]);
@@ -329,17 +377,38 @@ export function DeskPage({ surface }: { surface: Surface }) {
     lastPerRow.current = perRow;
   }, [perRow, size.w, size.h, fitAll]);
 
+  // Following or clearing a project reflows the mats (its sub-mats, the money strip): fly to the whole desk once;
+  // later reflows (a row added in another tab) keep the camera unless it was never moved.
+  useEffect(() => {
+    if (sizeRef.current.w === 0) return;
+    if (refitNext.current) {
+      refitNext.current = false;
+      fitAll();
+    } else if (!touched.current) fitAll(0);
+  }, [layout.width, layout.height, fitAll]);
+
   // The stage takes the rest of the viewport under the toolbar (the bottom nav on phones is reserved in CSS).
+  // With a project followed, the trail caption sits above the stage and the money rail on its near edge: both are
+  // measured so the stage still ends at the bottom of the viewport.
   const [stageTop, setStageTop] = useState(0);
+  const railRef = useRef<HTMLElement>(null);
+  const [railH, setRailH] = useState(0);
+  const following = Boolean(project);
   useLayoutEffect(() => {
     const measure = () => {
       const stage = stageRef.current;
       if (stage) setStageTop(Math.round(stage.getBoundingClientRect().top + window.scrollY));
+      setRailH(railRef.current ? Math.round(railRef.current.getBoundingClientRect().height) : 0);
     };
     measure();
+    const ro = new ResizeObserver(measure);
+    if (railRef.current) ro.observe(railRef.current);
     window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, []);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [following]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -449,6 +518,13 @@ export function DeskPage({ surface }: { surface: Surface }) {
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
+    // The trail (D-105): Space plays / pauses when the stage itself has focus (inside it Space activates the object), [ and ] step.
+    if (project && ((e.key === ' ' && e.target === e.currentTarget) || e.key === '[' || e.key === ']')) {
+      e.preventDefault();
+      if (e.key === ' ') togglePlay();
+      else stepTrail(e.key === '[' ? -1 : 1);
+      return;
+    }
     const step = 96;
     const keys: Record<string, () => void> = {
       '+': () => zoomBy(1.25),
@@ -473,7 +549,11 @@ export function DeskPage({ surface }: { surface: Surface }) {
 
   const kindLabel = (k: string) => t(`desk.kind.${k}`);
   const phaseName = (m: Mat) => `${String(m.index + 1).padStart(2, '0')} ${pick(m.label, lang)}`;
-  const itemLabel = (i: DeskItem) => `${kindLabel(i.kind)}: ${pick(i.title, lang)}${i.code ? ` (${i.code})` : ''}`;
+  const itemLabel = (i: DeskItem) =>
+    i.kind === 'light' && project
+      ? t('desk.light.label', { kind: i.subtitle ? pick(i.subtitle, lang) : kindLabel(i.kind), title: pick(i.title, lang), project: project.name, facts: i.lines.map((l) => pick(l, lang)).join(', ') })
+      : `${kindLabel(i.kind)}: ${pick(i.title, lang)}${i.code ? ` (${i.code})` : ''}`;
+  const subLabel = (group: string) => (project && group === 'project' ? shortName(project.name) : project && group === 'projectComms' ? t('desk.group.projectComms', { name: shortName(project.name) }) : t(`desk.group.${group}`));
   const moreLabel = useCallback((n: number) => t('desk.more', { n }), [t]);
   const roleName = (p: DeskPerson) => pick(p.role.playbookRole, lang);
   const personLabel = (p: DeskPerson, m: Mat) => t('desk.person.label', { role: roleName(p), name: p.firstName ? ` (${p.firstName})` : '', phase: phaseName(m) });
@@ -487,13 +567,104 @@ export function DeskPage({ surface }: { surface: Surface }) {
     },
     [t],
   );
+  /** The route that serves a path: the exact path first, then the patterns (`/studio/checklist/:projectId`). */
+  const routeOf = useCallback((path: string): RouteDef | undefined => routes.find((x) => x.path === path) ?? routes.find((x) => x.path.includes(':') && matchPath({ path: x.path, end: true }, path)), [routes]);
   const whereOf = useCallback(
     (i: DeskItem) => {
-      const r = routes.find((x) => x.path === i.openAt.path);
-      return r ? `${r.code} ${r.spec.name} (#${r.path})` : `#${i.openAt.path}`;
+      const r = routeOf(i.openAt.path);
+      return r ? `${r.code} ${r.spec.name} (#${i.openAt.path})` : `#${i.openAt.path}`;
     },
-    [routes],
+    [routeOf],
   );
+
+  /**
+   * Opens a hub page for real (Part 1 of changelog 0035). When the current role lacks the route's permission, the
+   * session switches to the demo user of the route's surface first, with the D-07 canvas toast (D-015).
+   */
+  const openPath = useCallback(
+    (path: string) => {
+      const route = routeOf(path);
+      if (route?.permission && !can(route.permission)) {
+        const own = roleForSurface(route.surface);
+        const role = own && hasPermission(own, route.permission) ? own : rolesWith(route.permission)[0] ?? 'founder';
+        switchUser(role);
+        toast(t('desk.enterAs', { code: route.code, role: demoUserForRole(role)?.name ?? role }));
+      }
+      navigate(path);
+      return route ? `opened ${route.code} (#${path})` : `opened #${path}`;
+    },
+    [routeOf, can, switchUser, navigate, t],
+  );
+
+  // ---------------------------------------------------------------- the light layer: follow, trail (D-105)
+
+  const followProject = useCallback((id: string | null) => {
+    setPlaying(false);
+    setTrailIdx(-1);
+    setSelected(null);
+    setSelectedPerson(null);
+    refitNext.current = true;
+    setFollow(id);
+  }, []);
+
+  const trailIdxRef = useRef(trailIdx);
+  trailIdxRef.current = trailIdx;
+  const playingRef = useRef(playing);
+  playingRef.current = playing;
+
+  const stepTrail = useCallback((dir: 1 | -1) => {
+    const n = trailRef.current.length;
+    if (n === 0) return -1;
+    const i = trailIdxRef.current;
+    const next = Math.max(0, Math.min(n - 1, i < 0 ? (dir === 1 ? 0 : n - 1) : i + dir));
+    trailIdxRef.current = next;
+    setTrailIdx(next);
+    return next;
+  }, []);
+
+  const togglePlay = useCallback((force?: boolean) => {
+    const n = trailRef.current.length;
+    if (n === 0) return false;
+    const now = force ?? !playingRef.current;
+    playingRef.current = now;
+    setPlaying(now);
+    // Play from the start when the trail is over (or not started).
+    const i = trailIdxRef.current;
+    if (now && (i < 0 || i >= n - 1)) {
+      trailIdxRef.current = 0;
+      setTrailIdx(0);
+    }
+    return now;
+  }, []);
+
+  // Playing: one stop per hop + dwell; stops at the end. The pulse's travel is a CSS transform transition (700 ms).
+  useEffect(() => {
+    if (!playing) return;
+    if (trailIdx >= trail.length - 1) {
+      const done = window.setTimeout(() => setPlaying(false), HOP_MS);
+      return () => window.clearTimeout(done);
+    }
+    const timer = window.setTimeout(() => setTrailIdx((i) => Math.min(trail.length - 1, i + 1)), reduced ? DWELL_MS + 300 : HOP_MS + DWELL_MS);
+    return () => window.clearTimeout(timer);
+  }, [playing, trailIdx, trail.length, reduced]);
+
+  // A trail that shrank (a row removed elsewhere) keeps a valid stop.
+  useEffect(() => {
+    if (trailIdx > trail.length - 1) setTrailIdx(trail.length - 1);
+  }, [trail.length, trailIdx]);
+
+  const findProject = useCallback(
+    (q: string) => {
+      const needle = q.trim().toLowerCase();
+      if (!needle) return undefined;
+      return projects.find((p) => p.id.toLowerCase() === needle) ?? projects.find((p) => p.name.toLowerCase() === needle) ?? projects.find((p) => p.name.toLowerCase().includes(needle) || p.client.toLowerCase().includes(needle));
+    },
+    [projects],
+  );
+  const eventText = useCallback((i: number) => {
+    const e = trailRef.current[i];
+    return e ? `event ${i + 1}/${trailRef.current.length} (${e.at.slice(0, 10)}, ${e.phase}): ${e.caption.en}` : 'no event';
+  }, []);
 
   useRegisterActions({
     'desk.zoom': ({ zoom: z }) => {
@@ -529,16 +700,102 @@ export function DeskPage({ surface }: { surface: Surface }) {
       const id = findPhase(String(q ?? ''));
       const p = id && personByPhase.get(id);
       if (!p) return `no person on "${String(q ?? '')}"`;
-      return `not wired yet: ${portalOf(p, true)}`;
+      if (!p.portal) return `the ${p.role.playbookRole.en} has no portal role yet`;
+      return openPath(p.portal.path);
     },
     'desk.openItem': ({ item: q }) => {
       const found = findItem(layoutRef.current.items, String(q ?? ''));
       if (!found) return `no object "${String(q ?? '')}" on the desk`;
-      return `not wired yet: ${whereOf(found)}`;
+      return openPath(found.openAt.path);
+    },
+    'desk.followProject': ({ project: q }) => {
+      const p = findProject(String(q ?? ''));
+      if (!p) return `no project "${String(q ?? '')}" (ids: ${projectOptions.slice(0, 6).map((x) => x.id).join(', ')}…)`;
+      followProject(p.id);
+      return `following ${p.name} (${p.id}): status ${pipelineLabel(p.pipelineStatus).en} on the ${phaseOfStatus(p.pipelineStatus)} mat`;
+    },
+    'desk.clearProject': () => {
+      if (!project) return 'no project followed';
+      followProject(null);
+      return `stopped following ${project.name}`;
+    },
+    'desk.playTrail': () => {
+      if (!project) return 'follow a project first (desk.followProject)';
+      if (!trailRef.current.length) return `no events for ${project.name}`;
+      togglePlay(true);
+      return `playing the trail of ${project.name} (${trailRef.current.length} events)`;
+    },
+    'desk.pauseTrail': () => {
+      if (!project) return 'no project followed';
+      togglePlay(false);
+      return `trail paused at ${eventText(trailIdx)}`;
+    },
+    'desk.stepTrail': ({ dir }) => {
+      if (!project) return 'follow a project first (desk.followProject)';
+      if (dir !== 'prev' && dir !== 'next') return `dir must be prev or next, not "${String(dir)}"`;
+      togglePlay(false);
+      return eventText(stepTrail(dir === 'prev' ? -1 : 1));
+    },
+    'desk.openRow': async ({ entity, id }) => {
+      const name = String(entity ?? '') as FlowEntity;
+      if (!(FLOW_ENTITIES as readonly string[]).includes(name)) return `no page for "${String(entity)}" (one of ${FLOW_ENTITIES.join(', ')})`;
+      const row = (await data.get(name as EntityName, String(id ?? ''))) as { projectId?: string | null } | null;
+      if (!row) return `no ${name} row "${String(id)}"`;
+      return openPath(FLOW_RULES[name].openAt.replace(':projectId', row.projectId ?? project?.id ?? ''));
     },
   });
 
   const selectedItem = selected ? byId.get(selected) : undefined;
+  /** The row behind a selected light tile (live: the drawer follows writes from other tabs). */
+  const selectedRow = selectedItem?.ref ? (flow.rows[selectedItem.ref.entity as FlowEntity] as { id: string }[] | undefined)?.find((r) => r.id === selectedItem.ref?.id) : undefined;
+  const currentPhase = project ? phaseOfStatus(project.pipelineStatus) : null;
+  const currentIndex = currentPhase ? layout.mats.findIndex((m) => m.id === currentPhase) : -1;
+  const glowToken = project ? `tok-pipeline-${project.pipelineStatus}` : null;
+  const stop = trailIdx >= 0 ? trail[trailIdx] : undefined;
+  /** Where the pulse is: the centre of the stop's object (world px), or of its mat when the object is not on the desk. */
+  const pulseAt = useMemo(() => {
+    if (!stop) return null;
+    const it = byId.get(stop.target);
+    if (it) return { x: it.x + it.cw / 2, y: it.y + it.ch / 2 };
+    const m = layout.mats.find((x) => x.id === stop.phase);
+    return m ? { x: m.x + m.w / 2, y: m.y + m.h / 2 } : null;
+  }, [stop, byId, layout.mats]);
+  const resolveField = (key: string, value: unknown): string | undefined => {
+    if (typeof value !== 'string' || !flowCtx) return undefined;
+    if (key === 'supplierId') return flowCtx.supplierName(value);
+    if (/^(author|responsible|requestedBy|owner|actor|leadDesigner|clientUser)Id$/.test(key)) return flowCtx.personName(value);
+    if (key === 'projectId') return project?.name;
+    return undefined;
+  };
+  const lightDrawer = (i: PlacedItem) => {
+    const entity = i.ref?.entity as FlowEntity | undefined;
+    const rule = entity ? FLOW_RULES[entity] : undefined;
+    const m = matById(i.phase);
+    const fields = selectedRow ? rowFields(selectedRow as unknown as Record<string, unknown>, lang).map((f) => ({ key: f.key, value: resolveField(f.field, (selectedRow as unknown as Record<string, unknown>)[f.field]) ?? f.value })) : [];
+    const route = routeOf(i.openAt.path);
+    return (
+      <div className="desk-drawer">
+        {preview(i)}
+        <KeyValue
+          columns={1}
+          items={[
+            { key: t('desk.drawer.entity'), value: rule ? pick(rule.label, lang) : entity ?? '' },
+            { key: t('desk.drawer.project'), value: project?.name ?? '' },
+            { key: t('desk.drawer.phase'), value: m ? phaseName(m) : i.phase },
+            { key: t('desk.drawer.page'), value: route ? `${route.code} ${route.spec.name}` : `#${i.openAt.path}` },
+          ]}
+        />
+        {rule && (
+          <>
+            <h3 className="desk-drawer__h">{t('desk.drawer.rule')}</h3>
+            <p className="desk-drawer__why">{pick(rule.rationale, lang)}</p>
+          </>
+        )}
+        <h3 className="desk-drawer__h">{t('desk.drawer.fields', { n: fields.length })}</h3>
+        {selectedRow ? <KeyValue columns={1} items={fields} /> : <p className="desk-drawer__why">{t('desk.drawer.gone')}</p>}
+      </div>
+    );
+  };
   const selectedPersonData = selectedPerson ? personByPhase.get(selectedPerson) : undefined;
   const drawerSide = size.w >= 768 ? 'right' : 'bottom';
   const kv = (i: PlacedItem) => {
@@ -612,7 +869,7 @@ export function DeskPage({ surface }: { surface: Surface }) {
       <PageHeader
         code={DESK_CODE}
         title={t('desk.title')}
-        subtitle={t('desk.subtitle', { items: layout.items.length, people: layout.mats.filter((m) => m.person).length, mats: layout.mats.length })}
+        subtitle={t('desk.subtitle', { items: layout.items.length - lights.length, people: layout.mats.filter((m) => m.person).length, mats: layout.mats.length })}
         breadcrumb={[{ label: t(`core.portal.${surface}`), to: surface === 'dev' ? '/dev/components' : home }, { label: t('desk.title') }]}
       />
 
@@ -645,15 +902,50 @@ export function DeskPage({ surface }: { surface: Surface }) {
         </Button>
       </div>
 
+      <div className="desk-toolbar desk-toolbar--light" role="toolbar" aria-label={t('desk.lightToolbar')}>
+        <Select
+          label={t('desk.followLabel')}
+          hideLabel
+          className="desk-toolbar__project"
+          value={follow ?? ''}
+          placeholder={t('desk.follow')}
+          onChange={(e) => followProject(e.target.value || null)}
+          options={projectOptions.map((p) => ({ value: p.id, label: t('desk.followOption', { name: p.name, status: pick(pipelineLabel(p.pipelineStatus), lang) }) }))}
+        />
+        {project && (
+          <>
+            <Button size="sm" variant="ghost" onClick={() => followProject(null)}>
+              {t('desk.clear')}
+            </Button>
+            <span className="desk-toolbar__trail">
+              <Button size="sm" icon="‹" aria-label={t('desk.prev')} disabled={trail.length === 0} onClick={() => (togglePlay(false), stepTrail(-1))} />
+              <Button size="sm" variant="primary" aria-pressed={playing} disabled={trail.length === 0} onClick={() => togglePlay()}>
+                {playing ? t('desk.pause') : t('desk.play')}
+              </Button>
+              <Button size="sm" icon="›" aria-label={t('desk.next')} disabled={trail.length === 0} onClick={() => (togglePlay(false), stepTrail(1))} />
+            </span>
+          </>
+        )}
+      </div>
+      {project && (
+        <p className="desk-trail" aria-live="polite">
+          {stop
+            ? t('desk.trail.step', { i: trailIdx + 1, n: trail.length, date: formatDate(stop.at, lang), phase: (() => { const m = matById(stop.phase); return m ? phaseName(m) : stop.phase; })(), caption: pick(stop.caption, lang) })
+            : trail.length
+              ? t('desk.trail.idle', { n: trail.length, name: project.name, lights: lights.length })
+              : t('desk.trail.empty', { name: project.name })}
+        </p>
+      )}
+
       <div
         ref={stageRef}
-        className={`desk-stage${tilt ? ' is-tilted' : ''}`}
+        className={`desk-stage${tilt ? ' is-tilted' : ''}${project ? ' has-rail' : ''}`}
         tabIndex={0}
         role="region"
         aria-roledescription={t('desk.roledescription')}
         aria-label={t('desk.stage')}
         aria-describedby="desk-hint"
-        style={{ perspective: `${Math.max(900, 1.6 * Math.max(size.w, size.h))}px`, height: `calc(100dvh - ${stageTop}px - var(--desk-bottom))` }}
+        style={{ perspective: `${Math.max(900, 1.6 * Math.max(size.w, size.h))}px`, height: `calc(100dvh - ${stageTop}px - ${railH}px - var(--desk-bottom))` }}
         onKeyDown={onKeyDown}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -677,15 +969,21 @@ export function DeskPage({ surface }: { surface: Surface }) {
             <div ref={zoomRef} className="desk-zoom" style={{ width: layout.width, height: layout.height }}>
             <div className="desk-slab" aria-hidden="true" style={{ left: -SLAB, top: -SLAB, width: layout.width + 2 * SLAB, height: layout.height + 2 * SLAB }} />
             {layout.mats.map((m) => (
-              <section key={m.id} className="desk-mat" style={{ left: m.x, top: m.y, width: m.w, height: m.h }} aria-label={phaseName(m)} data-desk-mat={m.id}>
+              <section
+                key={m.id}
+                className={`desk-mat${currentIndex >= 0 ? (m.index === currentIndex ? ' is-now' : m.index < currentIndex ? ' is-done' : '') : ''}`}
+                style={{ left: m.x, top: m.y, width: m.w, height: m.h }}
+                aria-label={phaseName(m)}
+                data-desk-mat={m.id}
+              >
                 <button type="button" className="desk-mat__label" onClick={() => fitMat(m.id)} aria-label={t('desk.matLabel', { name: phaseName(m), n: m.count })}>
                   <span className="desk-mat__num">{String(m.index + 1).padStart(2, '0')}</span>
                   <span className="desk-mat__name">{pick(m.label, lang)}</span>
-                  <span className="desk-mat__count">{t('desk.objects', { n: m.count })}</span>
+                  <span className="desk-mat__count">{m.lights ? t('desk.objectsLights', { n: m.count, l: m.lights }) : t('desk.objects', { n: m.count })}</span>
                 </button>
                 {m.subs.map((s) => (
-                  <div key={s.id} className={`desk-sub desk-sub--${s.group}`} style={{ left: s.x, top: s.y, width: s.w, height: s.h }}>
-                    <span className="desk-sub__label">{t(`desk.group.${s.group}`)}</span>
+                  <div key={s.id} className={`desk-sub desk-sub--${s.group}`} data-desk-sub={s.id} style={{ left: s.x, top: s.y, width: s.w, height: s.h }}>
+                    <span className="desk-sub__label">{subLabel(s.group)}</span>
                     {s.items.map((it) => (
                       <DeskObject
                         key={it.id}
@@ -698,6 +996,8 @@ export function DeskPage({ surface }: { surface: Surface }) {
                         moreLabel={moreLabel}
                         onActivate={openItem}
                         onFocusItem={onFocusItem}
+                        glow={glowToken === it.id}
+                        lit={stop?.target === it.id}
                       />
                     ))}
                   </div>
@@ -716,11 +1016,49 @@ export function DeskPage({ surface }: { surface: Surface }) {
                 )}
               </section>
             ))}
+            {project && pulseAt && <span className="desk-pulse" aria-hidden="true" style={{ transform: `translate3d(${pulseAt.x}px, ${pulseAt.y}px, 24px)` }} />}
             </div>
           </div>
         </div>
       </div>
 
+      {project && (
+        <section ref={railRef} className={`desk-strip${tilt ? ' is-tilted' : ''}`} aria-label={t('desk.strip.label', { name: project.name })} data-desk-strip="">
+          <div className="desk-strip__cell desk-strip__cell--name">
+            <span className="desk-strip__k">{t('desk.strip.following')}</span>
+            <span className="desk-strip__v">{project.name}</span>
+            <span className="desk-strip__s">{t('desk.strip.status', { status: pick(pipelineLabel(project.pipelineStatus), lang), phase: currentIndex >= 0 ? phaseName(layout.mats[currentIndex]) : '' })}</span>
+          </div>
+          <div className="desk-strip__cell">
+            <span className="desk-strip__k">{t('desk.money.quoted')}</span>
+            <span className="desk-strip__v">{formatCop(money.quoted, lang)}</span>
+            <span className="desk-strip__s">{t('desk.money.quotedSub', { n: flow.rows.quotes.length, g: new Set(flow.rows.quotes.map((q) => q.comparisonGroup)).size })}</span>
+          </div>
+          <div className="desk-strip__cell">
+            <span className="desk-strip__k">{t('desk.money.approved')}</span>
+            <span className="desk-strip__v">{formatCop(money.approved, lang)}</span>
+            <span className="desk-strip__s">{t('desk.money.approvedSub', { p: flow.rows.purchases.filter((x) => x.status !== 'quoted').length, c: flow.rows.changeOrders.filter((x) => x.status === 'approved' || x.status === 'executed').length })}</span>
+          </div>
+          <div className="desk-strip__cell">
+            <span className="desk-strip__k">{t('desk.money.paid')}</span>
+            <span className="desk-strip__v">{formatCop(money.paid, lang)}</span>
+            <span className="desk-strip__s">{t('desk.money.split', { in: formatCop(money.paidIn, lang), out: formatCop(money.paidOut, lang) })}</span>
+          </div>
+          <div className="desk-strip__cell">
+            <span className="desk-strip__k">{t('desk.money.outstanding')}</span>
+            <span className="desk-strip__v">{formatCop(money.outstanding, lang)}</span>
+            <span className="desk-strip__s">{t('desk.money.split', { in: formatCop(money.outstandingIn, lang), out: formatCop(money.outstandingOut, lang) })}</span>
+          </div>
+          <div className="desk-strip__cell desk-strip__cell--comms">
+            <span className="desk-strip__k">{t('desk.comms.title')}</span>
+            <span className="desk-strip__v">{t(comms.messages === 1 ? 'desk.comms.messages.one' : 'desk.comms.messages', { n: comms.messages })}</span>
+            <span className="desk-strip__s">
+              {t('desk.comms.sub', { c: comms.fromClient, t: comms.fromTeam, m: comms.meetings })}
+              {comms.leadChannels.length > 0 && t('desk.comms.lead', { ch: comms.leadChannels.map((c) => pick(c, lang)).join(', ') })}
+            </span>
+          </div>
+        </section>
+      )}
       <p className="desk-hint" id="desk-hint">
         {t('desk.hint')}
       </p>
@@ -735,23 +1073,23 @@ export function DeskPage({ surface }: { surface: Surface }) {
         title={selectedItem ? pick(selectedItem.title, lang) : selectedPersonData ? roleName(selectedPersonData) : ''}
         footer={
           selectedPersonData && !selectedItem ? (
-            <Placeholder what={t('desk.person.openPortalWhat', { where: portalOf(selectedPersonData) })}>
-              <Button variant="primary" icon="↗">
+            selectedPersonData.portal && (
+              <Button variant="primary" icon="↗" title={t('desk.person.openPortalWhat', { where: portalOf(selectedPersonData) })} onClick={() => selectedPersonData.portal && openPath(selectedPersonData.portal.path)}>
                 {t('desk.person.openPortal')}
               </Button>
-            </Placeholder>
+            )
           ) : (
-          selectedItem && (
-            <Placeholder what={t('desk.drawer.openWhat', { where: whereOf(selectedItem) })}>
-              <Button variant="primary" icon="↗">
+            selectedItem && (
+              <Button variant="primary" icon="↗" title={t('desk.drawer.openWhat', { where: whereOf(selectedItem) })} onClick={() => openPath(selectedItem.openAt.path)}>
                 {t('desk.drawer.open')}
               </Button>
-            </Placeholder>
-          ))
+            )
+          )
         }
       >
         {selectedPersonData && !selectedItem && personDrawer(selectedPersonData)}
-        {selectedItem && (
+        {selectedItem?.kind === 'light' && lightDrawer(selectedItem)}
+        {selectedItem && selectedItem.kind !== 'light' && (
           <div className="desk-drawer">
             {preview(selectedItem)}
             <KeyValue columns={1} items={kv(selectedItem)} />
