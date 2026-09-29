@@ -3,6 +3,7 @@ import { defineSpec, type ActionDef, type PageSpec, type Surface } from '../../s
 
 /** Page codes (prompt 0030). */
 export const HUB_CODE = 'W-05';
+export const LENSES_CODE = 'D-16';
 
 const WIDTHS = [360, 390, 768, 1280, 1920, 2560, 3840];
 
@@ -55,3 +56,29 @@ export function hubSpec(surface: Surface, permission: string): PageSpec {
     checkedAt: WIDTHS,
   });
 }
+
+export const lensesSpec = defineSpec({
+  code: 'D-16',
+  name: 'Hub lenses',
+  purpose: 'The three points of view on a client hub side by side, so the difference is visible at once: the same hoy.hub-map/1 document laid out by the same desk engine with three model builders, ALUZINA (one mat per client role), Between Gigs (one gig, by experience) and the client on its own (its testing hub), each with the framing text its host gives it. (ES: Lentes del hub: los tres puntos de vista sobre el hub de un cliente, lado a lado.)',
+  surface: 'dev',
+  navGroup: 'developer',
+  layout: [
+    'PageHeader (D-16): breadcrumb Dev / Hub lenses, title, subtitle',
+    'Header strip: map state StatusPill with Reload map, screens language buttons ES / EN',
+    'Three columns from 1280 px (one above the other below): per lens a Card with the lens title, the host’s framing text, object and mat counts, a small desk (DeskStage, size S, fitted, tilt as the engine) and Open this view (W-05 with ?lens=)',
+  ],
+  dataTables: [],
+  roles: ['dev'],
+  logic: [
+    'One `useHubMap(\'hoy\')` feeds three `buildLens()` calls; each small desk is a `useDesk` with its own code (`D-16-<lens>`) and `actions: false` so the three do not fight over the desk.* ids; the page registers its own actions.',
+    'Objects open W-05 in that lens with the object selected (`?lens=<lens>&open=<id>`).',
+  ],
+  components: ['PageHeader', 'Card', 'Button', 'StatusPill'],
+  actions: [
+    { id: 'clienthub.openLens', label: 'Open a point of view', intent: 'open the client hub as {lens} sees it', permission: 'dev.tools', params: { lens: 'enum:aluzina|between-gigs|standalone' } },
+    { id: 'clienthub.setFacesLang', label: 'Language of the screens', intent: 'show the client screens in {lang}', permission: 'dev.tools', params: { lang: 'enum:es|en' } },
+    { id: 'clienthub.reloadMap', label: 'Reload the hub map', intent: 'reload the client hub map', permission: 'dev.tools' },
+  ],
+  checkedAt: WIDTHS,
+});

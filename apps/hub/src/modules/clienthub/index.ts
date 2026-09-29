@@ -2,15 +2,16 @@ import { createElement } from 'react';
 import type { RouteDef, RouteDeskOverride, Surface } from '../../specs/PageSpec';
 import type { DeskModel } from '../../desk/types';
 import { ClientHubPage, lastLensModel } from './ClientHubPage';
+import { LensesPage } from './LensesPage';
 import { CLIENT_HUBS } from './registry';
-import { hubSpec } from './specs';
+import { hubSpec, lensesSpec } from './specs';
 
 export { strings } from './strings';
 
 /**
  * W-05 Client hub desk (prompt 0030): a client's whole hub (HOY today) laid on aluzina mats by role, on the four
  * portals with W-04's guards and on dev. One route per client hub in `CLIENT_HUBS`: `/<surface>/clients/<id>/hub`.
- * Nav order 8 puts it right after the Method desk (7).
+ * Nav order 8 puts it right after the Method desk (7). D-16 Hub lenses on dev (`/dev/clients/<id>/lenses`), nav order 23.
  */
 const SURFACES: { surface: Surface; permission: string }[] = [
   { surface: 'founder', permission: 'projects.read' },
@@ -20,7 +21,7 @@ const SURFACES: { surface: Surface; permission: string }[] = [
   { surface: 'dev', permission: 'dev.tools' },
 ];
 
-export const routes: RouteDef[] = Object.values(CLIENT_HUBS).flatMap((hub) =>
+export const routes: RouteDef[] = Object.values(CLIENT_HUBS).flatMap((hub): RouteDef[] =>
   SURFACES.map(({ surface, permission }) => {
     const spec = hubSpec(surface, permission);
     return {
@@ -35,6 +36,19 @@ export const routes: RouteDef[] = Object.values(CLIENT_HUBS).flatMap((hub) =>
       nav: surface === 'dev' ? undefined : { labelKey: 'clienthub.nav.hub', order: 8, glyph: '▣' },
     } satisfies RouteDef;
   }),
+).concat(
+  // D-16 Hub lenses: the three points of view side by side, on dev.
+  Object.values(CLIENT_HUBS).map((hub): RouteDef => ({
+    path: `/dev/clients/${hub.id}/lenses`,
+    code: lensesSpec.code,
+    surface: 'dev' as const,
+    status: 'built' as const,
+    permission: 'dev.tools',
+    shell: 'desktop' as const,
+    spec: lensesSpec,
+    element: createElement(LensesPage, { clientId: hub.id }),
+    nav: { labelKey: 'clienthub.nav.lenses', order: 23, glyph: '◫' },
+  })),
 );
 
 /**

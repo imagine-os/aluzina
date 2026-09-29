@@ -17,3 +17,13 @@ Take a look at the hoy hub we built and each of the dashboards and website and t
 - "Website can be a stack of multiple tall pages or condensed": the website mat opens with one fanned stack for the whole site, then every site page as a tall page.
 - "This is an aluzina client also, so it should fit in aluzina her way": the page lives in aluzina's portals under Clients, is tied to the seeded project `prj-hoy`, uses aluzina's desk, figures, materials and language toggle, and frames hoy as a studio deliverable.
 - "hoy will be in aluzina, in between-gigs and on its own ... each system's point of view can see into the hoy hub contents in its own way": hoy publishes one machine-readable hub map (`hub-map.json`, schema `hoy.hub-map/1`) and each host reads the same map through its own lens: aluzina groups by role, between-gigs by experience (hoy as one gig), standalone as hoy's own hub. aluzina renders all three lenses from the same engine, so every point of view is visible side by side.
+
+## Response
+
+Built in three commits (changelogs 0037, 0039, 0040; 0038 is a parallel render-quality pass). Links once Pages deploys:
+
+- https://imagine-os.github.io/aluzina/#/founder/clients/hoy/hub — the HOY hub on ALUZINA mats: eight role mats (Customer, Web · Public, Teacher, Front desk, Coordinator, Finance, Admin, Super admin), each with its seated role figure, 87 pages as phones, tall web pages (plus one fanned stack of the whole site), screens on stands and documents, every face HOY's real screen (ES / EN, dark). Open any screen for what it is for and its actions, then Open live to use the real HOY page as that role inside the drawer.
+- Same page, "Between Gigs" and "On its own" tabs: HOY as one gig (by what it ships, with the gig card) and as its own testing hub.
+- https://imagine-os.github.io/aluzina/#/dev/clients/hoy/lenses — the three points of view side by side.
+
+The data is HOY's own published hub map (https://imagine-os.github.io/hoy/hub-map.json), with a bundled copy when it cannot be read; any host (Between Gigs next) consumes it the same way: `docs/tenant/hub-map-consumer.md`.

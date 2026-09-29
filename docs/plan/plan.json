@@ -1,5 +1,5 @@
 {
-  "version": "0.23.0",
+  "version": "0.23.1",
   "updatedAt": "2026-09-29",
   "source": "docs/build-plan.md (steps 0-17, roadmap R1-R10) and docs/kanban.md; the human views must agree with this file (D-037)",
   "statuses": [
@@ -2229,7 +2229,7 @@
       "id": "ch-02",
       "title": "Three points of view (prompt 0030, D-111): the lens switch on W-05 (ALUZINA by role, Between Gigs by experience with the gig card, HOY on its own) and D-16 hub lenses, the three side by side",
       "step": "18",
-      "status": "doing",
+      "status": "done",
       "model": "Opus 5.5",
       "codes": [
         "W-05",
@@ -2237,7 +2237,8 @@
       ],
       "dependsOn": [
         "ch-01"
-      ]
+      ],
+      "changelog": "0040"
     },
     {
       "id": "ch-03",

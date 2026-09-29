@@ -12,6 +12,16 @@ The client publishes one machine-readable **hub map** (schema `hoy.hub-map/1`, t
 - Routes `/<founder|ops|studio|brand|dev>/clients/hoy/hub`, W-04's guards, nav group Projects right after the Method desk (glyph ▣), a HUB-01 product card ("Clients · HOY hub desk", opens as the founder when needed). The page is its own desk (`desk: { 'W-05': { self: true } }`).
 - It is a client of the studio, so it fits the studio's way: the project link (`prj-hoy` in Work), ALUZINA's felt, figures, materials and language toggle, and the lens framing "a studio deliverable".
 
+## Three points of view (lenses)
+
+Same map, same engine, a different model builder and framing (D-111); switch on W-05 (`?lens=`, `Tabs` in the header strip) or see all three side by side on D-16.
+
+| Lens | Host | groupBy hint | Mats | Figures | Sub-mats | Objects | Tools | Framing (from the map) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `aluzina` | ALUZINA (the studio that built it) | role | one per client role, outside-in (8 for HOY) | the mat's role | the role's experiences (member app split by task, big ones halved) | every page as its device (87 + the site stack) | off (Tools switch) | "A studio deliverable: one mat per client role, with that role's screens laid on it." |
+| `between-gigs` | Between Gigs (Justin's company OS, HOY as one gig) | experience | Website, Apps, Back office, Build, Tools | the role owning most pages on the mat | the experiences | pages as devices, condensed at 12 per sub-mat (+N stacks) | on | "One gig with its surfaces and tools." + the gig card (name, version, tagline, counts, Open) |
+| `standalone` | HOY on its own (its testing hub) | surface | one: the hub | the builder (super admin) | the hub, Outside, The team, Build, Testing tools | the hub itself first, one screen per experience (its entry page), the 9 tools | on | "hoy's own testing hub: every surface by band and every tool, as at /#/." |
+
 ## The ALUZINA lens: one mat per client role
 
 | Mat (EN / ES) | Role (look, demo) | Sub-mats (experiences) | Objects |

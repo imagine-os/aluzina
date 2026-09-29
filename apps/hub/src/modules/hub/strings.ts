@@ -117,6 +117,11 @@ export const strings: StringTable = {
     en: 'A client’s whole hub laid out physically: HOY’s website, member and teacher apps, staff and admin desktops, docs and tools as real screens on one felt mat per role, each role seated at its mat; open any screen live as that role.',
     es: 'Todo el hub de un cliente, físico: el sitio de HOY, las apps de socios y profesores, los escritorios del equipo y la administración, los docs y las herramientas como pantallas reales, un tapete por rol con su persona sentada; abre cualquier pantalla en vivo como ese rol.',
   },
+  'hub.cards.lenses.title': { en: 'Hub lenses · HOY', es: 'Lentes del hub · HOY' },
+  'hub.cards.lenses.desc': {
+    en: 'The same client hub map seen by its three hosts side by side: ALUZINA by role, Between Gigs by experience, and HOY on its own.',
+    es: 'El mismo mapa del hub del cliente visto por sus tres anfitriones lado a lado: ALUZINA por rol, Between Gigs por experiencia y HOY por sí solo.',
+  },
   'hub.cards.businessOs.title': { en: 'Business OS prototype', es: 'Prototipo Business OS' },
   'hub.cards.businessOs.desc': {
     en: 'the Claude Design prototype of the Aluzina operations system: cockpit, stations, work views, QC, media, design system, docs; EN/ES toggle inside',

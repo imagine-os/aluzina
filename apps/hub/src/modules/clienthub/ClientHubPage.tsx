@@ -28,9 +28,6 @@ import { clientHub } from './registry';
 import { HUB_CODE } from './specs';
 import './clienthub.css';
 
-/** The lens switch (ALUZINA / Between Gigs / On its own) is wired with D-16 (next pass); until then `setLens` answers "not wired yet". */
-export const LENS_SWITCH = false;
-
 const EMPTY: DeskModel = { code: HUB_CODE, mats: [], items: [] };
 let lastModel: DeskModel = EMPTY;
 /** The last lens model W-05 rendered (the module's `desk.build`; empty before the map has loaded). */
@@ -138,7 +135,7 @@ export function ClientHubPage({ surface, clientId }: { surface: Surface; clientI
 
   // ---------------------------------------------------------------- view state in the hash query
   const qLens = params.get('lens');
-  const lens: HubLensId = LENS_SWITCH && isLens(qLens) ? qLens : 'aluzina';
+  const lens: HubLensId = isLens(qLens) ? qLens : 'aluzina';
   const qFaces = params.get('faces');
   const facesLang: 'es' | 'en' = qFaces === 'es' || qFaces === 'en' ? qFaces : lang;
   const qTools = params.get('tools');
@@ -299,7 +296,6 @@ export function ClientHubPage({ surface, clientId }: { surface: Surface; clientI
       return `showing the ${r.label.en} mat${r.demoUser ? ` (${r.demoUser.firstName})` : ''}`;
     },
     'clienthub.setLens': ({ lens: l }) => {
-      if (!LENS_SWITCH) return 'not wired yet: the point-of-view switch lands with D-16 (the ALUZINA lens is shown)';
       if (!isLens(l)) return `lens must be aluzina, between-gigs or standalone, not "${String(l)}"`;
       setQuery({ lens: l === 'aluzina' ? null : l });
       return `showing the hub as ${l} sees it`;
@@ -392,11 +388,9 @@ export function ClientHubPage({ surface, clientId }: { surface: Surface; clientI
           {t('clienthub.map.reload')}
         </Button>
       </div>
-      {LENS_SWITCH && (
-        <div className="ch-strip__lens">
-          <Tabs label={t('clienthub.lens')} value={lens} onChange={(id) => setQuery({ lens: id === 'aluzina' ? null : id, tools: null })} tabs={HUB_LENS_IDS.map((id) => ({ id, label: t(`clienthub.lens.${id}`) }))} />
-        </div>
-      )}
+      <div className="ch-strip__lens">
+        <Tabs label={t('clienthub.lens')} value={lens} onChange={(id) => setQuery({ lens: id === 'aluzina' ? null : id, tools: null })} tabs={HUB_LENS_IDS.map((id) => ({ id, label: t(`clienthub.lens.${id}`) }))} />
+      </div>
       <div className="ch-strip__faces" role="group" aria-label={t('clienthub.faces')}>
         <span className="ch-muted" aria-hidden="true">
           {t('clienthub.faces')}

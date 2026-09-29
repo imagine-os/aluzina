@@ -167,3 +167,19 @@
   gap: var(--space-2);
   margin-bottom: var(--space-3);
 }
+
+/* Narrow cards: the desk toolbar's groups wrap inside the card instead of overflowing it. */
+.ch-lens .desk-toolbar__group {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.ch-lens .desk-toolbar__group .desk-toolbar__phase {
+  flex: 1 1 9rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ch-lens .card__body {
+  min-width: 0;
+}

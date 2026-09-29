@@ -41,6 +41,7 @@ export const TOOL_SURFACES = [
   { id: 'components', code: 'D-02', key: 'components', kind: 'route' },
   { id: 'specs', code: 'D-03', key: 'specs', kind: 'route' },
   { id: 'multiuser', code: 'D-04', key: 'multiuser', kind: 'route' },
+  { id: 'lenses', code: 'D-16', key: 'lenses', kind: 'route' },
 ];
 
 /** Must match `apps/hub/src/modules/hub/specs.ts`'s `PORTAL_ROLES` (founder, ops, studio, brand). */
