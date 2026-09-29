@@ -6,7 +6,7 @@ decision: D-104 (people on the desk are procedural vector figures representing p
 rejected: downloaded 3D character models (glTF + three.js: a dependency and binaries, D-103), photos or likenesses of real people, faces with features (reads as a caricature of the real team), one figure per object (146 people would bury the objects), a top-down view of the person (reads as hair and shoulders, not as a person at a desk), an upright (90°) figure plane (foreshortened to 37 % in the tilted camera and invisible flat)
 files: apps/hub/src/modules/desk/{deskPeople.ts,DeskPerson.tsx} (new), apps/hub/src/modules/desk/{model.ts,DeskPage.tsx,desk.css,specs.ts,strings.ts}, docs/pages/W-04.md, docs/screenshots/W-04/{en-390,en-1280,en-3840,es-1280,en-1280-dark,en-1280-lead,en-1280-drawer}.jpg (recaptured) + {en-1280-people,en-1280-person-drawer}.jpg (new) + routes.json, docs/prompts/0027-desk-people.md (new), docs/changelog/0034-desk-people.md (new), docs/decisions.md (D-104), docs/reference/surfaces.md (W-04 row, `desk.*` row, entry count, change log), docs/plan/plan.json (dk-02, version), docs/build-plan.md (row 17), docs/kanban.md (dk-02 Done), docs/README.md (latest counters), tenant.json (version 0.20.1, `docs.counters` 27 / 34 / 104, `actions` 439 / 418), package.json + apps/hub/package.json (version)
 codes: W-04
-model: Opus 5 (build), Fable 5.1 (brief)
+model: Opus 5.5 (build), Fable 5.1 (brief), Sonnet 5 (response log)
 
 # 0034 - Desk people (W-04): a seated role figure at a desk on every mat
 
