@@ -60,7 +60,7 @@ Module page content (`founder`, `ops`, `studio`, `brand`, `client`, `public`, `s
 | Deferred | Why not now | Trigger |
 | --- | --- | --- |
 | `packages/platform` npm workspace (tp-13) | ~200 files and every import path change for zero consumers; the by-directory split gives the same map. | The host repo exists and wants to import the platform from two tenants. |
-| Deriving `SURFACES` / `CODE_RE` / `ROLES` from `tenant.json` at build time | Type unions need codegen or `as const` imports; the validator's equality check gives the same guarantee today. | A second tenant with a different surface set (between-gigs). |
+| Deriving `SURFACES` / `CODE_RE` / `ROLES` from `tenant.json` at build time | Type unions need codegen or `as const` imports; the validator's equality check gives the same guarantee today. | A second tenant with a different surface set (none exists yet; Between Gigs is a host, not a tenant, D-116). |
 | Replacing `@docs` compile-time imports with fetched docs | Changes the docs viewer, plan reader and five seed modules; a host may prefer per-tenant mounts anyway (HR-05). | The host decides between mounts and fetch. |
 | Real provider with `tenant_id` filtering | Supabase credentials are blocked; the column lands in tp-04 so seeds and the mock already carry it. | Credentials. |
 | `window.__aluzina` renamed to a host global | Screenshots script and D-03 / D-09 read it; derived name keeps the value for aluzina (D-090). | The host defines its own global. |

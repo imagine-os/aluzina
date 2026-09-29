@@ -1925,7 +1925,7 @@
     },
     {
       "id": "tp-12",
-      "title": "Second tenant slot: tenant.schema.json + schema / actions checks and --manifest in tenant-validate, between-gigs recipe, host tenant index shape (D-095, D-098); applying it to the between-gigs repo waits for GitHub access",
+      "title": "Second tenant slot: tenant.schema.json + schema / actions checks and --manifest in tenant-validate, between-gigs recipe (generic since changelog 0044: Between Gigs turned out to be a host, D-116), host tenant index shape (D-095, D-098)",
       "step": "15",
       "status": "done",
       "model": "Fable 5.1",
@@ -1934,7 +1934,7 @@
         "tp-02"
       ],
       "changelog": "0029",
-      "owner": "Justin (repo access for the between-gigs application)"
+      "owner": "Justin (a real second static tenant, when one exists)"
     },
     {
       "id": "tp-13",
@@ -2288,8 +2288,20 @@
       "changelog": "0042"
     },
     {
+      "id": "ch-06",
+      "title": "Between Gigs is a host of the hub map, not an aluzina tenant (changelog 0044, D-116): between-gigs.md rewritten from the repo survey, hub-map-consumer.md section 5, wording fixed elsewhere",
+      "step": "18",
+      "status": "done",
+      "model": "Sonnet 5 (mechanical), Fable 5.1 (direction)",
+      "codes": [],
+      "dependsOn": [
+        "ch-05"
+      ],
+      "changelog": "0044"
+    },
+    {
       "id": "ch-03",
-      "title": "Between Gigs consumes hoy's hub map with its own lens (docs/tenant/hub-map-consumer.md checklist) once its repo is reachable",
+      "title": "Between Gigs consumes hoy's hub map with its own lens (docs/tenant/hub-map-consumer.md, \"Between Gigs, the real host\"); built in the Between Gigs repo (release 3.71), a host not a tenant (D-116)",
       "step": "18",
       "status": "backlog",
       "model": "Fable 5.1",

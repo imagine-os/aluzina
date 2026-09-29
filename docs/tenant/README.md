@@ -4,7 +4,7 @@ Status: **QA (tp-11) done, changelog 0030 — step 15 complete except tp-13; pas
 
 ## What a tenant package is
 
-The multitenant system Justin described will hold several client repos (this one, `between-gigs`, others) as **tenants** and will bring "all the individual deliverables and sub projects to life" with its own tools. For that to work without a human reading each repo, every tenant repo must be **self-describing**: one root manifest, `tenant.json` (`manifestVersion: 1`, D-088), from which the host discovers everything it needs to mount the tenant:
+The multitenant system Justin described will hold several client repos (this one and any further static hub-shaped repo) as **tenants**; Between Gigs is not one of them, it is a host of the hub map (D-116, `between-gigs.md`) and will bring "all the individual deliverables and sub projects to life" with its own tools. For that to work without a human reading each repo, every tenant repo must be **self-describing**: one root manifest, `tenant.json` (`manifestVersion: 1`, D-088), from which the host discovers everything it needs to mount the tenant:
 
 1. **Identity and locale**: `id` (`aluzina`, the namespace root), display name, default and supported languages, currency and locale formatting.
 2. **Brand**: token *values* (colours, metal ramps, fonts, textures), marks, PDFs, the token values file the platform schema is filled with.
@@ -53,8 +53,8 @@ tenant.schema.json                                     <- its structural contrac
 | `sub-projects.md` | The sub-project catalogue: table plus one section per sub-project (kind, paths, entry, build, codes, status, dependsOn, hostNeeds, owner model). |
 | `platform-vs-tenant.md` | The split map (two path lists), the tp-05 move plan into `src/tenant/`, what is deferred and why. |
 | `host-requirements.md` | HR-01..HR-12 on the multitenant host, each with "what aluzina provides today / what the host must add". |
-| `between-gigs.md` | **Packaging a second tenant**: the cold-start recipe (inventory, schema-checked manifest, `src/tenant/` layout, namespace, rows, own counters, mounts, CI, host-side steps), what the tenants share, what the host resolves when both are present; between-gigs access status. |
-| `tenants.example.json` | The host's tenant index shape (D-098): aluzina filled in, between-gigs placeholder. |
+| `between-gigs.md` | **Between Gigs is a host, not a tenant** (what it really is, surveyed 2026-09-29; the relationship; the history of the superseded plan), then the **generic recipe for packaging a future static tenant**: the cold-start recipe (inventory, schema-checked manifest, `src/tenant/` layout, namespace, rows, own counters, mounts, CI, host-side steps), what the tenants share, what the host resolves when both are present; no access status (the repo was read on 2026-09-29). |
+| `tenants.example.json` | The host's tenant index shape (D-098): aluzina filled in (the between-gigs placeholder was removed in 0044). |
 | `../../tenant.schema.json` | (repo root) JSON Schema for manifest v1, every field tagged tenant-specific / platform-fixed / derived / optional. |
 
 ## Pass plan (step 15 in `../build-plan.md`, tasks `tp-01..tp-13` in `../plan/plan.json`, cards in `../kanban.md`)
@@ -72,7 +72,7 @@ tenant.schema.json                                     <- its structural contrac
 | tp-09 | Stale docs fixes (root README status, `_TEMPLATE` surfaces, playwright note, docs map) | tp-01 | Sonnet 5 | **done** (0028) |
 | tp-10 | `surfaces.md` tenant section (manifest, validate script, CI) | tp-03 | Sonnet 5 | **done** (0028) |
 | tp-11 | QA pass: build + `tenant:validate` green, CI checked green, 7-width EN-light + ES + dark screenshots of HUB-01 / D-05 / D-09 / D-10 / S-01, functional smoke, docs agree | tp-03..tp-10 | Sonnet 5 | **done** (0030) |
-| tp-12 | Second tenant slot: `tenant.schema.json`, schema / actions checks + `--manifest` in the validator, between-gigs recipe, host tenant index shape | tp-02 | Fable 5.1 | **done** (0029); applying it to between-gigs waits for repo access |
+| tp-12 | Second tenant slot: `tenant.schema.json`, schema / actions checks + `--manifest` in the validator, generic second-tenant recipe (`between-gigs.md`), host tenant index shape | tp-02 | Fable 5.1 | **done** (0029); recipe made generic in 0044 (Between Gigs is a host, D-116); applies when a real static tenant appears |
 | tp-13 | Host-time: extract `packages/platform`; real provider with `tenant_id`; object storage for content mounts | tp-05, tp-06, credentials | Fable 5.1 | backlog |
 
 Definition of done for every pass: `npm run build` green (which includes `tenant:validate` since tp-03), docs agree (`plan.json` = `kanban.md` = `build-plan.md`), changelog with `model:`, decisions logged, `surfaces.md` current.
@@ -98,7 +98,7 @@ What a migration thread should check before mounting this tenant in the host, an
 | `docs/tenant/` files | every file in this folder is listed in the table above and in `../README.md`'s `tenant/` row (`README.md`, `inventory-2026-09-28.md`, `manifest.md`, `sub-projects.md`, `platform-vs-tenant.md`, `host-requirements.md`, `between-gigs.md`, `tenants.example.json`). |
 | Docs agreement | `plan.json` = `kanban.md` = `build-plan.md` on every `tp-*` and `wa-*` status (checked by hand this pass; the validator checks steps, dependsOn and statuses). |
 | Domain data since 0030 | `playbook.ts` gained the client-facing status map, project lines and G-15..G-17 (changelog 0031, D-099..D-101) — data only, no route / action / seed / storage-key change, so nothing in the host contract (`hostRequirements`, `namespace`, `dataLayer`) moved. |
-| Open items with Justin | unchanged from 0029 / 0030: between-gigs repo access (tp-12 application), path vs subdomain routing (D-097 defaults to path), go-ahead before any binary leaves git (D-092). New founder questions from the process flow (not blockers): Site Visit / Installation as internal statuses or derived (wa-02), stage owners, Spanish wording of the flow (wa-07). |
+| Open items with Justin | unchanged from 0029 / 0030: path vs subdomain routing (D-097 defaults to path), go-ahead before any binary leaves git (D-092). New founder questions from the process flow (not blockers): Site Visit / Installation as internal statuses or derived (wa-02), stage owners, Spanish wording of the flow (wa-07). |
 | Still host-time | tp-13 (extract `packages/platform`, real `DataProvider` with `tenant_id`, object storage for `contentMounts`) — blocked on the host + credentials. |
 
 ## Change log of this folder
