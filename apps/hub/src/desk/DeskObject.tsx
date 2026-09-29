@@ -250,6 +250,36 @@ function Leaves({ n }: { n: number }) {
   );
 }
 
+/** The top face's rectangle inside the object's cell (world px): the body the object draws, centred on its squares
+ *  (a device together with its caption strip; a fanned `pages` stack leaves room for its leaves). */
+export function faceBox(item: Pick<PlacedItem, 'kind' | 'cw' | 'ch'>): { left: number; top: number; width: number; height: number } {
+  const g = GEOMETRY[item.kind];
+  const capH = DEVICE_KINDS.has(item.kind) && item.kind !== 'screen' ? CAPTION_H : 0;
+  return {
+    left: (item.cw - g.face.w) / 2 - (item.kind === 'pages' ? 5 : 0),
+    top: (item.ch - g.face.h - capH) / 2 + (item.kind === 'folder' ? 3 : 0) + (item.kind === 'screen' ? -4 : 0),
+    width: g.face.w,
+    height: g.face.h,
+  };
+}
+
+/** True for kinds whose body has thickness (a lifted top and side faces, discs or sheets): they join the 3D context. */
+export function isSolid(item: Pick<DeskItem, 'kind' | 'plain'>): boolean {
+  return (GEOMETRY[item.kind].t >= 3 && !item.plain) || item.kind === 'stack';
+}
+
+/** The body's inline box: the face rectangle, its thickness and font size as custom properties. */
+function bodyStyle(item: PlacedItem, at?: { left: number; top: number }): CSSProperties {
+  const g = GEOMETRY[item.kind];
+  const f = faceBox(item);
+  return {
+    ['--t' as string]: `${g.t}px`,
+    ...f,
+    ...(at ? { left: at.left + f.left, top: at.top + f.top } : {}),
+    fontSize: item.font ?? g.font,
+  };
+}
+
 interface ObjectProps {
   item: PlacedItem;
   /** Position inside its sub-mat (world px). */
@@ -263,76 +293,113 @@ interface ObjectProps {
   onActivate: (id: string, detail: number) => void;
   onFocusItem: (id: string, e: FocusEvent<HTMLButtonElement>) => void;
   /** Hover and focus tooltip (D-106): the element while hovered or focused, null when left or blurred. */
-  onHint?: (id: string, el: HTMLElement | null) => void;
+  onHint?: (id: string, el: HTMLElement | null, text?: undefined, source?: 'hover' | 'focus') => void;
   /** Light layer (D-105): `glow` = the followed project's status token, `lit` = the trail's current stop. */
   glow?: boolean;
   lit?: boolean;
 }
 
 /**
- * One physical object: a <button> the size of its chess squares (the hit area) holding a body with thickness.
- * Thick kinds (document, folder, box) get a lifted top face plus front / left / right side faces; tokens are three
- * stacked discs; thin kinds (sheet, form, checklist, card) lie flat and draw their edge as a 1 px shadow, which keeps
- * the number of 3D layers low (changelog 0033).
+ * One physical object's hit area and flat part: a <button> the size of its chess squares on the sub-mat's objects
+ * plane (one flat compositor layer per sub-mat, D-107), holding the object's one shadow, a device's caption strip
+ * and, for thin kinds (sheet, form, checklist, card, light, page, pages, plain tiles), its face. Solid kinds
+ * (document, folder, box, token, phone, tablet, screen, the "+N more" pile) draw their body on the sub-mat's bodies
+ * layer (`DeskBody`), because in Chrome every element of a 3D context is a layer of its own: keeping the buttons flat
+ * took K-04 from ~1 150 layers to ~570 (changelog 0038).
  */
 export const DeskObject = memo(function DeskObject({ item, left, top, lang, label, selected, moreLabel, onActivate, onFocusItem, onHint, glow, lit }: ObjectProps) {
   const g = GEOMETRY[item.kind];
   const device = DEVICE_KINDS.has(item.kind);
-  /** Devices centre the body and its caption strip together (the screen prints its caption on its chin). */
+  const solid = isSolid(item);
   const capH = device && item.kind !== 'screen' ? CAPTION_H : 0;
-  const body: CSSProperties = {
-    left: (item.cw - g.face.w) / 2 - (item.kind === 'pages' ? 5 : 0),
-    top: (item.ch - g.face.h - capH) / 2 + (item.kind === 'folder' ? 3 : 0) + (item.kind === 'screen' ? -4 : 0),
-    width: g.face.w,
-    height: g.face.h,
-    fontSize: item.font ?? g.font,
-    ['--t' as string]: `${g.t}px`,
-  };
-  const lifted = g.t >= 3 && !item.plain;
+  const box = faceBox(item);
   return (
     <button
       type="button"
-      className={`desk-item desk-item--${item.kind}${device ? ' desk-item--device' : ''} desk-item--g-${item.group}${item.plain ? ' is-plain' : ''}${selected ? ' is-selected' : ''}${glow ? ' is-glow' : ''}${lit ? ' is-lit' : ''}`}
+      className={`desk-item desk-item--${item.kind}${device ? ' desk-item--device' : ''} desk-item--g-${item.group}${solid ? ' is-solid' : ''}${item.plain ? ' is-plain' : ''}${selected ? ' is-selected' : ''}${glow ? ' is-glow' : ''}${lit ? ' is-lit' : ''}`}
       style={{ left, top, width: item.cw, height: item.ch }}
       data-desk-item={item.id}
       aria-label={label}
       onClick={(e: MouseEvent<HTMLButtonElement>) => onActivate(item.id, e.detail)}
       onFocus={(e) => {
+        // The stage decides whether this focus came from a pointer press (no fly-to, no tooltip) or from the keyboard
+        // or a script (fly into view, then show the tooltip).
         onFocusItem(item.id, e);
-        if (e.currentTarget.matches(':focus-visible')) onHint?.(item.id, e.currentTarget);
       }}
-      onBlur={() => onHint?.(item.id, null)}
-      onPointerEnter={(e) => e.pointerType === 'mouse' && onHint?.(item.id, e.currentTarget)}
-      onPointerLeave={(e) => e.pointerType === 'mouse' && onHint?.(item.id, null)}
+      onBlur={() => onHint?.(item.id, null, undefined, 'focus')}
+      onPointerEnter={(e) => e.pointerType === 'mouse' && onHint?.(item.id, e.currentTarget, undefined, 'hover')}
+      onPointerLeave={(e) => e.pointerType === 'mouse' && onHint?.(item.id, null, undefined, 'hover')}
     >
-      <span className={`desk-item__body${lifted ? ' is-lifted' : ''}`} style={body} aria-hidden="true">
+      <span className="desk-item__body" style={bodyStyle(item)} aria-hidden="true">
         <span className="desk-item__shadow" />
         {item.kind === 'pages' && <Leaves n={(item.more ?? 3) - 1} />}
-        {item.kind === 'screen' && <span className="desk-stand" aria-hidden="true" />}
-        {item.kind === 'token' ? (
-          <>
-            <span className={`desk-coin desk-coin--0 dp--tone-${item.tone ?? 'neutral'}`} />
-            <span className={`desk-coin desk-coin--1 dp--tone-${item.tone ?? 'neutral'}`} />
-          </>
-        ) : (
-          lifted && (
-            <>
-              <span className="desk-side desk-side--front" />
-              <span className="desk-side desk-side--left" />
-              <span className="desk-side desk-side--right" />
-            </>
-          )
+        {!solid && (
+          <span className="desk-top">
+            <Preview item={item} lang={lang} moreLabel={moreLabel} />
+          </span>
         )}
-        <span className="desk-top">
-          <Preview item={item} lang={lang} moreLabel={moreLabel} />
-        </span>
       </span>
       {capH > 0 && (
-        <span className="desk-caption" aria-hidden="true" style={{ top: body.top as number + g.face.h + 3, height: CAPTION_H - 4, fontSize: g.cap ?? 6.4 }}>
+        <span className="desk-caption" aria-hidden="true" style={{ top: box.top + g.face.h + 3, height: CAPTION_H - 4, fontSize: g.cap ?? 6.4 }}>
           <DeviceCaption item={item} lang={lang} />
         </span>
       )}
     </button>
+  );
+});
+
+interface BodyProps {
+  item: PlacedItem;
+  lang: Lang;
+  moreLabel: (n: number) => string;
+  /** `hover` / `focus` while the object's button is hovered or keyboard-focused (the ring), else null. */
+  hot: 'hover' | 'focus' | null;
+  selected: boolean;
+  glow?: boolean;
+}
+
+/**
+ * The solid part of an object on its sub-mat's bodies layer (D-107): the lifted top face and the front face
+ * (documents, folders, devices; a screen also its stand), plus the left and right faces for boxes (the only kind tall
+ * enough for them to show at the 22° tilt); tokens are discs, the "+N more" pile three offset sheets. Pointer-inert
+ * and hidden from assistive tech: the button on the objects plane is the object.
+ */
+export const DeskBody = memo(function DeskBody({ item, lang, moreLabel, hot, selected, glow }: BodyProps) {
+  const pile = item.kind === 'stack';
+  const device = DEVICE_KINDS.has(item.kind);
+  return (
+    <span
+      className={`desk-body desk-item--${item.kind}${device ? ' desk-item--device' : ''} desk-item--g-${item.group}${hot ? ` is-hot is-${hot}` : ''}${selected ? ' is-selected' : ''}${glow ? ' is-glow' : ''}`}
+      style={bodyStyle(item, { left: item.x, top: item.y })}
+      data-desk-body={item.id}
+      aria-hidden="true"
+    >
+      {item.kind === 'screen' && <span className="desk-stand" aria-hidden="true" />}
+      {item.kind === 'token' ? (
+        <>
+          <span className={`desk-coin desk-coin--0 dp--tone-${item.tone ?? 'neutral'}`} />
+          <span className={`desk-coin desk-coin--1 dp--tone-${item.tone ?? 'neutral'}`} />
+        </>
+      ) : pile ? (
+        <>
+          <span className="desk-sheet desk-sheet--0" />
+          <span className="desk-sheet desk-sheet--1" />
+        </>
+      ) : (
+        <>
+          <span className="desk-side desk-side--front" />
+          {item.kind === 'box' && (
+            <>
+              <span className="desk-side desk-side--left" />
+              <span className="desk-side desk-side--right" />
+            </>
+          )}
+        </>
+      )}
+      <span className="desk-top">
+        <Preview item={item} lang={lang} moreLabel={moreLabel} />
+      </span>
+    </span>
   );
 });
 

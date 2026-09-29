@@ -1,10 +1,12 @@
-import { useMemo, useRef, type FocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
+import { useCallback, useMemo, useRef, type FocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { Button } from '../components/atom/Button/Button';
 import { Checkbox } from '../components/atom/Checkbox/Checkbox';
 import { Select } from '../components/atom/Select/Select';
 import { useT } from '../i18n/I18nProvider';
 import { pick } from '../tenant/domain';
-import { DeskFace, DeskObject } from './DeskObject';
+import { depthVars } from './depth';
+import { DeskBody, DeskFace, DeskObject, faceBox, isSolid } from './DeskObject';
 import { DeskPersonStation } from './DeskPerson';
 import type { DeskPerson } from './people';
 import { DESK_SIZES, SIZE_VH, SLAB, TILT_DEG, type DeskController } from './useDesk';
@@ -61,10 +63,19 @@ export function DeskStage(props: DeskStageProps) {
   const { desk } = props;
   const { t, lang } = useT();
   const { layout, refs, handlers, api } = desk;
-  const moreLabel = (n: number) => t('desk.more', { n });
+  // Stable, so the memoised objects do not re-render on every zoom commit or trail step (D-107).
+  const moreLabel = useCallback((n: number) => t('desk.more', { n }), [t]);
   const hintId = `desk-hint-${desk.code}`;
-  const tipItem = desk.tip ? desk.byId.get(desk.tip.id) : undefined;
-  const tipText = tipItem ? props.tipOf(tipItem) : null;
+  const tipItem = desk.tip && !desk.tip.text ? desk.byId.get(desk.tip.id) : undefined;
+  const tipText = desk.tip?.text ?? (tipItem ? props.tipOf(tipItem) : null);
+  /** Where portalled UI goes: the fullscreen element when there is one (the Fullscreen API shows only its subtree). */
+  const portalTarget = typeof document === 'undefined' ? null : desk.fullscreen === 'api' ? (document.fullscreenElement as HTMLElement | null) ?? document.body : document.body;
+  const labelHint = (id: string, title: string, meta: string) => ({
+    onPointerEnter: (e: ReactPointerEvent<HTMLButtonElement>) => e.pointerType === 'mouse' && handlers.onHint(id, e.currentTarget, { title, meta }),
+    onPointerLeave: (e: ReactPointerEvent<HTMLButtonElement>) => e.pointerType === 'mouse' && handlers.onHint(id, null),
+    onFocus: (e: FocusEvent<HTMLButtonElement>) => handlers.onHint(id, e.currentTarget, { title, meta }),
+    onBlur: () => handlers.onHint(id, null),
+  });
   const legendKinds = useMemo(() => {
     const first = new Map<ItemKind, DeskItem>();
     for (const it of layout.items) if (!first.has(it.kind)) first.set(it.kind, { ...it, plain: false });
@@ -162,7 +173,7 @@ export function DeskStage(props: DeskStageProps) {
           aria-roledescription={t('desk.roledescription')}
           aria-label={props.stageLabel}
           aria-describedby={hintId}
-          style={{ perspective: `${desk.perspective}px` }}
+          style={{ perspective: desk.flatSettled ? 'none' : `${desk.perspective}px` }}
           onKeyDown={handlers.onKeyDown}
           onKeyUp={handlers.onKeyUp}
           onPointerDown={handlers.onPointerDown}
@@ -177,13 +188,20 @@ export function DeskStage(props: DeskStageProps) {
             e.currentTarget.scrollLeft = 0;
           }}
         >
-          <div className="desk-camera" style={{ transform: `rotateX(${desk.tilt ? TILT_DEG : 0}deg)` }}>
+          <div className="desk-camera" style={{ transform: desk.flatSettled ? 'none' : `rotateX(${desk.tilt ? TILT_DEG : 0}deg)` }}>
             <div ref={refs.worldRef} className="desk-world">
-              <div ref={refs.zoomRef} className="desk-zoom" style={{ width: layout.width, height: layout.height }}>
+              <div ref={refs.zoomRef} className="desk-zoom" style={{ width: layout.width, height: layout.height, ...depthVars() }}>
                 <div className="desk-slab" aria-hidden="true" style={{ left: -SLAB, top: -SLAB, width: layout.width + 2 * SLAB, height: layout.height + 2 * SLAB }} />
+                {/* The current phase's light rings: below every mat (D-107), so no neighbour cuts them. */}
+                {layout.mats.map((m) => {
+                  // A mat's own shadow never reaches its neighbour (the gap is a square); the followed project's light does,
+                  // so it gets a layer of its own below every mat.
+                  const cls = props.matClass ? props.matClass(m) : '';
+                  return cls.includes('is-now') ? <span key={`glow:${m.id}`} className={`desk-matglow${cls}`} aria-hidden="true" style={{ left: m.x, top: m.y, width: m.w, height: m.h }} /> : null;
+                })}
                 {layout.mats.map((m) => (
                   <section key={m.id} className={`desk-mat${props.matClass ? props.matClass(m) : ''}`} style={{ left: m.x, top: m.y, width: m.w, height: m.h }} aria-label={props.matName(m)} data-desk-mat={m.id}>
-                    <button type="button" className="desk-mat__label" onClick={() => api.fitMat(m.id)} aria-label={props.matAria(m)}>
+                    <button type="button" className="desk-mat__label" onClick={() => api.fitMat(m.id)} aria-label={props.matAria(m)} {...labelHint(`mat:${m.id}`, props.matName(m), props.matCount(m))}>
                       <span className="desk-mat__num">{String(m.index + 1).padStart(2, '0')}</span>
                       <span className="desk-mat__name">{pick(m.label, lang)}</span>
                       <span className="desk-mat__count">{props.matCount(m)}</span>
@@ -191,10 +209,23 @@ export function DeskStage(props: DeskStageProps) {
                     {m.subs.map((s) => {
                       const name = props.subLabel(s, m);
                       const n = s.items.reduce((k, i) => k + (i.kind === 'stack' ? i.more ?? 0 : 1), 0);
+                      const glows = s.items.filter((it) => it.kind === 'light' || props.glowId === it.id);
+                      const solids = s.items.filter(isSolid);
                       return (
                         <div key={s.id} className={`desk-sub desk-sub--${s.group}`} data-desk-sub={s.id} style={{ left: s.x, top: s.y, width: s.w, height: s.h }}>
-                          <button type="button" className="desk-sub__label" onClick={() => api.fitSub(s, m)} aria-label={t('desk.subLabel.aria', { name, n })}>
-                            {name}
+                          {glows.length > 0 && (
+                            <div className="desk-sub__glows" aria-hidden="true">
+                              {glows.map((it) => {
+                                const f = faceBox(it);
+                                const kind = props.glowId === it.id ? 'halo' : props.litId === it.id ? 'lit' : 'light';
+                                return <span key={it.id} className={`desk-glow desk-glow--${kind}`} style={{ left: it.x + f.left, top: it.y + f.top, width: f.width, height: f.height }} />;
+                              })}
+                            </div>
+                          )}
+                          {/* The objects plane: one flat layer with the label, every hit area, every shadow and the thin faces. */}
+                          <div className="desk-sub__objects">
+                          <button type="button" className="desk-sub__label" onClick={() => api.fitSub(s, m)} aria-label={t('desk.subLabel.aria', { name, n })} {...labelHint(`sub:${s.id}`, name, t('desk.tip.sub', { mat: props.matName(m), n }))}>
+                            <span className="desk-sub__name">{name}</span>
                             <span className="desk-sub__n">{n}</span>
                           </button>
                           {s.items.map((it) => (
@@ -214,6 +245,14 @@ export function DeskStage(props: DeskStageProps) {
                               lit={props.litId === it.id}
                             />
                           ))}
+                          </div>
+                          {solids.length > 0 && (
+                            <div className="desk-sub__bodies" aria-hidden="true">
+                              {solids.map((it) => (
+                                <DeskBody key={it.id} item={it} lang={lang} moreLabel={moreLabel} hot={desk.hot?.id === it.id ? desk.hot.kind : null} selected={props.selected === it.id} glow={props.glowId === it.id} />
+                              ))}
+                            </div>
+                          )}
                         </div>
                       );
                     })}
@@ -236,12 +275,22 @@ export function DeskStage(props: DeskStageProps) {
             </div>
           </div>
         </div>
-        {tipText && desk.tip && (
-          <div className="desk-tip" aria-hidden="true" style={{ left: Math.max(96, Math.min(desk.size.w - 96, desk.tip.x)), top: Math.max(8, desk.tip.y) }}>
-            <span className="desk-tip__title">{tipText.title}</span>
-            <span className="desk-tip__meta">{tipText.meta}</span>
-          </div>
-        )}
+        {tipText &&
+          desk.tip &&
+          portalTarget &&
+          createPortal(
+            // A portal (D-107): the stage's clip and the 3D context never cut it; it flips below the anchor near the top.
+            <div
+              className={`desk-tip${desk.tip.y < 72 ? ' is-below' : ''}`}
+              aria-hidden="true"
+              data-desk-tip={desk.tip.id}
+              style={{ left: Math.max(120, Math.min(window.innerWidth - 120, desk.tip.x)), top: desk.tip.y < 72 ? desk.tip.bottom : desk.tip.y }}
+            >
+              <span className="desk-tip__title">{tipText.title}</span>
+              <span className="desk-tip__meta">{tipText.meta}</span>
+            </div>,
+            portalTarget,
+          )}
         {desk.size.w >= 480 && desk.size.h >= 200 && <DeskMinimap desk={desk} label={t('desk.minimap')} />}
         {desk.legendOpen && (
           <div className="desk-panel desk-panel--legend" role="dialog" aria-label={t('desk.legendTitle')}>
@@ -257,7 +306,8 @@ export function DeskStage(props: DeskStageProps) {
                     <DeskFace item={it} lang={lang} box={56} moreLabel={moreLabel} rows={3} />
                   </span>
                   <span className="desk-legend__text">
-                    <strong>{t(`desk.kind.${it.kind}`)}</strong> {t(`desk.help.${it.kind}`)}
+                    <strong className="desk-legend__name">{t(`desk.kind.${it.kind}`)}</strong>
+                    <span className="desk-legend__help">{t(`desk.help.${it.kind}`)}</span>
                   </span>
                 </li>
               ))}

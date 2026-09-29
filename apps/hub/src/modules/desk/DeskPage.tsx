@@ -535,7 +535,7 @@ export function DeskPage({ surface }: { surface: Surface }) {
         toolbarExtra={lightToolbar}
         aboveStage={trailCaption}
         belowStage={rail}
-        worldOverlay={project && pulseAt ? <span className="desk-pulse" aria-hidden="true" style={{ transform: `translate3d(${pulseAt.x}px, ${pulseAt.y}px, 24px)` }} /> : null}
+        worldOverlay={project && pulseAt ? <span className="desk-pulse" aria-hidden="true" style={{ transform: `translate3d(${pulseAt.x}px, ${pulseAt.y}px, var(--z-pulse))` }} /> : null}
         stageClass={project ? 'has-rail' : ''}
         compactSummary={t('desk.compact', { objects: layout.items.length - lights.length, mats: layout.mats.length })}
         grouping={pick(model.grouping ?? { en: '' }, lang)}

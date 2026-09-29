@@ -32,6 +32,9 @@
   --desk-metal: var(--gradient-metal);
   --desk-shadow: color-mix(in srgb, var(--brand-black) 42%, transparent);
   --desk-focus: var(--brand-aqua);
+  /* Text (D-107): grayscale smoothing is only for light-on-dark; light paper keeps the platform default. */
+  -webkit-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
 
   /* Procedural textures. Grain: black noise, alpha baked in. Felt: white fibres. Wood: stretched noise = grain lines. */
   --desk-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='96' height='96' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -49,6 +52,8 @@
   --desk-kraft: color-mix(in srgb, var(--brand-gold) 80%, var(--brand-gold-highlight));
   --desk-folder: color-mix(in srgb, var(--brand-silver) 80%, var(--brand-ink));
   --desk-shadow: color-mix(in srgb, var(--brand-black) 70%, transparent);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -61,6 +66,8 @@
     --desk-kraft: color-mix(in srgb, var(--brand-gold) 80%, var(--brand-gold-highlight));
     --desk-folder: color-mix(in srgb, var(--brand-silver) 80%, var(--brand-ink));
     --desk-shadow: color-mix(in srgb, var(--brand-black) 70%, transparent);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -139,6 +146,12 @@
 
 .desk-world {
   --desk-zoom: 1;
+  --desk-dpr: 1;
+  /* One device pixel in world px at the committed zoom: thin lines never fall below it (D-107). */
+  --hair: calc(1px / (var(--desk-zoom) * var(--desk-dpr)));
+  /* A line held at one device pixel keeps the ink of the thinner line it replaces (its alpha scales down instead). */
+  --hair-ink: calc(min(1, var(--desk-zoom) * var(--desk-dpr)) * 100%);
+  --desk-felt-grid: color-mix(in srgb, var(--desk-felt-line) var(--hair-ink), transparent);
   position: absolute;
   left: 0;
   top: 0;
@@ -146,9 +159,11 @@
   transform-style: preserve-3d;
 }
 
-/* During a gesture only: the world moves as one layer (scaled relative to the committed zoom). */
+/* During a gesture only: the world moves as one layer (scaled relative to the committed zoom), and nothing inside it
+   is hit-tested (no hover restyles while the desk glides under the pointer). The stage keeps its own events. */
 .desk-world.is-moving {
   will-change: transform;
+  pointer-events: none;
 }
 
 /* The committed zoom is real layout (CSS zoom), so text and edges are rasterised at the size they are seen. */
@@ -181,16 +196,27 @@
 
 /* ---------- mats ---------- */
 
+/* The depth order (D-107, src/desk/depth.ts): every layer's translateZ comes from the --z-* table on .desk-zoom;
+   children are placed relative to their parent layer, so each rule subtracts the parent's level. */
+.desk-matglow {
+  position: absolute;
+  transform: translateZ(var(--z-matGlow));
+  pointer-events: none;
+  border-radius: 12px;
+}
+
 .desk-mat {
   position: absolute;
+  transform: translateZ(var(--z-mat));
   transform-style: preserve-3d;
   border-radius: 12px;
   background:
-    linear-gradient(to right, var(--desk-felt-line) 1px, transparent 1px) 32px 64px / 64px 64px,
-    linear-gradient(to bottom, var(--desk-felt-line) 1px, transparent 1px) 32px 64px / 64px 64px,
+    linear-gradient(to right, var(--desk-felt-grid) max(1px, var(--hair)), transparent 0) 32px 64px / 64px 64px,
+    linear-gradient(to bottom, var(--desk-felt-grid) max(1px, var(--hair)), transparent 0) 32px 64px / 64px 64px,
     var(--desk-fibre),
     var(--desk-felt);
   background-repeat: repeat;
+  /* Its own shadow: it never reaches a neighbour (the gap between mats is one square). */
   box-shadow:
     0 2px 0 color-mix(in srgb, var(--brand-black) 45%, transparent),
     0 14px 30px var(--desk-shadow);
@@ -201,7 +227,7 @@
   content: '';
   position: absolute;
   inset: 7px;
-  border: 1px dashed var(--desk-felt-line);
+  border: max(1px, var(--hair)) dashed var(--desk-felt-grid);
   border-radius: 8px;
   pointer-events: none;
 }
@@ -211,7 +237,6 @@
   left: 20px;
   top: 8px;
   right: 20px;
-  z-index: 1;
   display: flex;
   align-items: baseline;
   gap: 14px;
@@ -257,7 +282,7 @@
 
 .desk-sub {
   position: absolute;
-  transform: translateZ(1.5px);
+  transform: translateZ(calc(var(--z-sub) - var(--z-mat)));
   transform-style: preserve-3d;
   border-radius: 6px;
   background:
@@ -276,15 +301,62 @@
   display: flex;
   align-items: center;
   padding: 0 8px;
-  border-bottom: 1px solid var(--desk-felt-line);
+  border-bottom: max(1px, var(--hair)) solid var(--desk-felt-line);
   color: var(--desk-felt-ink);
   font-size: 10px;
   font-weight: var(--weight-bold);
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  white-space: nowrap;
+}
+
+/* A long sub-mat name takes two lines of the strip (changelog 0038), never an ellipsis; the tooltip repeats it whole. */
+.desk-sub__name {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+/* The glow layer and the objects plane of a sub-mat (D-107): glows sit under every face of the sub-mat. */
+.desk-sub__glows,
+.desk-sub__objects {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* The glows' halo animates (a layer of its own in the 3D context); the objects plane is flat: one layer. */
+.desk-sub__glows {
+  transform-style: preserve-3d;
+}
+
+.desk-sub__glows {
+  transform: translateZ(calc(var(--z-glow) - var(--z-sub)));
+}
+
+.desk-sub__objects {
+  transform: translateZ(calc(var(--z-objects) - var(--z-sub)));
+}
+
+.desk-sub__objects > * {
+  pointer-events: auto;
+}
+
+.desk-glow {
+  position: absolute;
+  border-radius: 3px;
+}
+
+.desk-glow--light {
+  box-shadow: 0 0 7px 1px var(--lt-glow);
+}
+
+.desk-glow--lit {
+  box-shadow: 0 0 0 1.6px var(--lt-lime), 0 0 0 3.2px var(--lt-aqua), 0 0 22px 8px var(--lt-glow);
 }
 
 /* ---------- objects ---------- */
@@ -299,24 +371,51 @@
   font: inherit;
   text-align: left;
   cursor: pointer;
-  transform-style: preserve-3d;
 }
 
+/* Objects (D-107). In Chrome every element of a 3D context is a compositor layer of its own, so the hit areas, the
+   shadows and the thin faces (sheet, form, checklist, card, light, plain tiles) stay flat on the sub-mat's objects
+   plane (one layer per sub-mat); only the solid bodies (document, folder, box, token, the pile) join the 3D context,
+   on the sub-mat's bodies layer. That took K-04 from ~1 150 layers to ~400. */
 .desk-item:focus-visible {
   outline: none;
 }
 
+/* A focused or selected object paints above its neighbours on the flat plane, so its ring is never under their faces
+   or shadows. */
+.desk-item:focus-visible,
+.desk-item.is-selected {
+  z-index: 1;
+}
+
 .desk-item__body {
   position: absolute;
-  transform-style: preserve-3d;
   pointer-events: none;
 }
 
+/* The object's one shadow. It is a hair taller than the face, so its paper-edge colour peeks out under the face as
+   the object's edge; thin objects need no second shadow for it. */
 .desk-item__shadow {
   position: absolute;
-  inset: 0;
+  inset: 0 0 calc(-1 * max(0.6px, var(--hair))) 0;
   border-radius: 2px;
+  background: var(--desk-paper-edge);
   box-shadow: 0 calc(0.6px + var(--t) * 0.4) calc(1.5px + var(--t) * 0.7) var(--desk-shadow);
+}
+
+.desk-item.is-solid .desk-item__shadow {
+  bottom: 0;
+  background: none;
+}
+
+.desk-item--card .desk-item__shadow {
+  bottom: calc(-1 * max(1.4px, var(--hair)));
+  background: linear-gradient(to bottom, var(--desk-paper-edge) 0 calc(100% - 0.6px), var(--desk-paper-side) 0);
+}
+
+.desk-item--light .desk-item__shadow {
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--brand-aqua) 80%, var(--brand-ink));
 }
 
 .desk-item--token .desk-item__shadow,
@@ -324,31 +423,54 @@
   border-radius: 50%;
 }
 
+/* The sub-mat's bodies layer and a solid body: its top face at its thickness, its sides standing on the plane. */
+.desk-sub__bodies {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(calc(var(--z-objects) - var(--z-sub)));
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.desk-body {
+  position: absolute;
+  display: block;
+  transform-style: preserve-3d;
+  color: var(--desk-ink);
+  text-align: left;
+}
+
+/* A focused or selected solid lifts a hair (the ring rides on its top face). */
+.desk-body.is-focus,
+.desk-body.is-selected {
+  transform: translateZ(var(--z-lift));
+}
+
+/* No overflow or containment on faces (D-107): they flatten preserve-3d and clip; the face's text is clipped by .dp. */
 .desk-top {
   position: absolute;
   inset: 0;
   display: block;
-  overflow: hidden;
-  contain: layout paint;
   border-radius: 1.5px;
   background: var(--desk-grain), var(--desk-paper);
   color: var(--desk-ink);
-  box-shadow: 0 0.6px 0 var(--desk-paper-edge);
 }
 
-.is-lifted > .desk-top {
+.desk-body > .desk-top {
   transform: translateZ(var(--t));
-  box-shadow: none;
 }
 
 .desk-item:hover .desk-top,
 .desk-item:focus-visible .desk-top,
-.desk-item.is-selected .desk-top {
+.desk-item.is-selected .desk-top,
+.desk-body.is-hot > .desk-top,
+.desk-body.is-selected > .desk-top {
   outline: calc(var(--focus-ring) / var(--desk-zoom, 1)) solid var(--desk-focus);
   outline-offset: calc(2px / var(--desk-zoom, 1));
 }
 
-.desk-item:hover:not(:focus-visible):not(.is-selected) .desk-top {
+.desk-item:hover:not(:focus-visible):not(.is-selected) .desk-top,
+.desk-body.is-hover:not(.is-selected) > .desk-top {
   outline-width: calc(1.5px / var(--desk-zoom, 1));
   outline-color: var(--desk-felt-soft);
 }
@@ -359,7 +481,6 @@
 
 .desk-side {
   position: absolute;
-  contain: layout paint;
   backface-visibility: hidden;
 }
 
@@ -403,8 +524,6 @@
 
 /* Folder: a closed silver folder with papers inside, its tab carries the accent. */
 .desk-item--folder .desk-top {
-  overflow: visible;
-  contain: layout;
   background: var(--desk-grain), var(--desk-folder);
   border-radius: 1px 3px 3px 3px;
 }
@@ -437,8 +556,6 @@
 .desk-item--token .desk-top {
   border-radius: 50%;
   background: none;
-  box-shadow: none;
-  transform: translateZ(var(--t));
 }
 
 .desk-coin {
@@ -456,7 +573,6 @@
     var(--desk-metal) top / 100% 3px no-repeat,
     var(--desk-grain),
     var(--desk-paper);
-  box-shadow: 0 0.8px 0 var(--desk-paper-edge), 0 1.4px 0 var(--desk-paper-side);
 }
 
 .desk-item--g-rules .desk-top {
@@ -762,7 +878,12 @@
   position: relative;
   justify-self: center;
   max-width: 100%;
-  filter: drop-shadow(0 6px 12px var(--color-shadow));
+}
+
+/* A shadow, not a filter (D-107): filters re-rasterise text. */
+.desk-preview__face {
+  border-radius: 2px;
+  box-shadow: 0 6px 12px var(--color-shadow);
 }
 
 .desk-drawer__h {
@@ -995,8 +1116,6 @@
 
 .desk-person__top {
   inset: 0;
-  overflow: hidden;
-  contain: layout paint;
   border-radius: 3px;
   transform: translateZ(var(--t));
   background:
@@ -1014,13 +1133,9 @@
 /* Pop-up planes: stand on their bottom edge, lean back so they face the tilted camera, still legible flat. */
 .desk-person__stand {
   transform-origin: 50% 100%;
-  transform: translateZ(var(--t)) rotateX(var(--pp-lean));
+  /* A hair above the desk top (D-107): a stand's bottom edge never lies in the plane it stands on. No filters in the 3D context. */
+  transform: translateZ(calc(var(--t) + var(--z-standGap))) rotateX(var(--pp-lean));
   backface-visibility: hidden;
-}
-
-.desk-person__stand--chair,
-.desk-person__stand--figure {
-  filter: drop-shadow(0 1px 0 color-mix(in srgb, var(--brand-black) 30%, transparent));
 }
 
 .desk-plate {
@@ -1036,12 +1151,17 @@
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-silver) 50%, transparent);
   color: var(--pp-plate-ink);
   text-align: center;
-  overflow: hidden;
 }
 
 .desk-plate__text,
 .desk-plate__text > span {
   display: block;
+}
+
+.desk-plate__text {
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .desk-plate__name {
@@ -1223,7 +1343,7 @@
 
 /* Status light: the current phase's mat wears the brand light as concentric rings (blue, aqua, mint, lime) and a glow,
    painted in the mat's own plane; earlier phases are faintly done. */
-.desk-mat.is-now {
+.desk-matglow.is-now {
   box-shadow:
     0 0 0 5px var(--lt-blue),
     0 0 0 10px var(--lt-aqua),
@@ -1243,25 +1363,21 @@
   color: var(--lt-mint);
 }
 
-/* The project's status token: a soft halo of light under the coin. */
-.desk-item.is-glow::before {
-  content: '';
-  position: absolute;
-  inset: -26px;
+/* The project's status token: a soft halo of light under the coin, on the sub-mat's glow layer (D-107), so it lights
+   the felt around the coin and never veils a neighbour's face. Rings and glow are on this layer, not on the coin's
+   text-bearing face. */
+.desk-glow--halo {
+  box-sizing: content-box;
+  padding: 26px;
+  margin: -26px 0 0 -26px;
   border-radius: 50%;
   background: radial-gradient(circle, color-mix(in srgb, var(--lt-lime) 80%, transparent) 0 28%, color-mix(in srgb, var(--lt-aqua) 60%, transparent) 44%, color-mix(in srgb, var(--lt-blue) 30%, transparent) 60%, transparent 71%);
-  transform: translateZ(0.5px);
-  pointer-events: none;
   animation: desk-breathe 2.4s ease-in-out infinite alternate;
 }
 
-.desk-item.is-glow .desk-top {
-  box-shadow: 0 0 0 2px var(--lt-lime), 0 0 0 4px var(--lt-aqua), 0 0 14px 5px var(--lt-glow);
-}
-
 @keyframes desk-breathe {
-  from { transform: translateZ(0.5px) scale(0.9); }
-  to { transform: translateZ(0.5px) scale(1.06); }
+  from { transform: scale(0.9); }
+  to { transform: scale(1.06); }
 }
 
 /* The project's sub-mats: linen washed with light. */
@@ -1291,11 +1407,8 @@
     var(--desk-grain),
     var(--lt-face);
   color: var(--lt-ink);
-  box-shadow: 0 0 0 0.8px color-mix(in srgb, var(--brand-aqua) 80%, var(--brand-ink)), 0 0 7px 1px var(--lt-glow);
-}
-
-.desk-item--light.is-lit .desk-top {
-  box-shadow: 0 0 0 1.6px var(--lt-lime), 0 0 0 3.2px var(--lt-aqua), 0 0 22px 8px var(--lt-glow);
+  /* The tile's edge, inside the face (never under a neighbour); its light is on the glow layer. */
+  box-shadow: inset 0 0 0 max(0.8px, var(--hair)) color-mix(in srgb, var(--brand-aqua) 80%, var(--brand-ink));
 }
 
 .dp--light {
@@ -1456,14 +1569,13 @@
   box-shadow: 0 0 calc(14px / var(--desk-zoom, 1)) calc(6px / var(--desk-zoom, 1)) var(--lt-glow);
   pointer-events: none;
   transition: transform 700ms cubic-bezier(0.45, 0, 0.55, 1);
-  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .desk-pulse {
     transition: none;
   }
-  .desk-item.is-glow::before {
+  .desk-glow--halo {
     animation: none;
   }
 }
@@ -1489,7 +1601,8 @@
   gap: 0 var(--space-2);
   min-width: 0;
   margin-right: auto;
-  flex: 1 1 14rem;
+  /* The summary wraps inside the title before a control group has to leave the row (changelog 0038). */
+  flex: 1 1 9rem;
 }
 
 .desk-toolbar__name {
@@ -1640,6 +1753,9 @@
   box-shadow: 0 2px 10px var(--desk-shadow), 0 0 0 var(--hairline) var(--color-border);
   cursor: pointer;
   touch-action: none;
+  /* Its own compositor layer (D-107): the viewport polygon repaints only the minimap while the desk moves. */
+  will-change: transform;
+  contain: layout paint;
 }
 
 .desk-minimap__desk {
@@ -1660,8 +1776,8 @@
 
 /* Tooltip: on hover and on keyboard focus, above the object (the name, then kind · entity · status). */
 .desk-tip {
-  position: absolute;
-  z-index: 4;
+  position: fixed;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
@@ -1670,11 +1786,16 @@
   border-radius: var(--radius-sm);
   background: var(--color-text);
   color: var(--color-bg);
-  box-shadow: 0 4px 14px var(--desk-shadow);
+  box-shadow: 0 4px 14px var(--color-shadow);
   transform: translate(-50%, calc(-100% - 8px));
   pointer-events: none;
   font-size: 0.875rem;
   line-height: 1.3;
+}
+
+/* Near the top of the window the tooltip goes under its anchor instead of off screen. */
+.desk-tip.is-below {
+  transform: translate(-50%, 8px);
 }
 
 .desk-tip__title {
@@ -1768,8 +1889,19 @@
   background: var(--desk-fibre), var(--desk-linen);
 }
 
-.desk-legend__face .desk-preview {
-  filter: drop-shadow(0 2px 4px var(--desk-shadow));
+.desk-legend__face .desk-preview__face {
+  box-shadow: 0 2px 4px var(--desk-shadow);
+}
+
+/* The kind's name on its own line, its description below (changelog 0038). */
+.desk-legend__name,
+.desk-legend__help {
+  display: block;
+}
+
+.desk-legend__help {
+  margin-top: 0.125rem;
+  color: var(--color-text-muted);
 }
 
 /* Full screen: the frame fills the screen (Fullscreen API) or the window (fixed overlay fallback). */
@@ -1911,8 +2043,22 @@
     var(--desk-paper);
 }
 
-.desk-item--stack .desk-side {
-  background: repeating-linear-gradient(to bottom, var(--desk-paper) 0 0.6px, var(--desk-paper-edge) 0.6px 1.1px);
+/* The "+N more" pile (D-107): three real sheets at three heights, each nudged so its edge shows (no z-fight: each
+   sheet has its own Z, below the top at --t). */
+.desk-sheet {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.5px;
+  background: var(--desk-paper);
+  border: max(0.5px, var(--hair)) solid var(--desk-paper-edge);
+}
+
+.desk-sheet--0 {
+  transform: translate(1.6px, 1.4px) translateZ(calc(var(--t) * 0.34)) rotate(1.2deg);
+}
+
+.desk-sheet--1 {
+  transform: translate(-1.3px, 0.7px) translateZ(calc(var(--t) * 0.67)) rotate(-0.9deg);
 }
 
 .dp--stack {

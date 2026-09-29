@@ -1,6 +1,6 @@
 import { coreStrings } from '../i18n/core';
 import { formatCop, formatDate } from '../i18n/format';
-import { PIPELINE_STATUSES, PURCHASE_STATUSES, VALIDATION_STATUSES, type Text } from '../tenant/domain';
+import { LEAD_CHANNELS, PIPELINE_STATUSES, PURCHASE_STATUSES, VALIDATION_STATUSES, type Text } from '../tenant/domain';
 import { deskStrings } from './strings';
 
 /**
@@ -162,6 +162,72 @@ const FIELD_LABELS: Record<string, Text> = {
   items: T('Items', 'Ítems'),
   note: T('Note', 'Nota'),
   summaryEs: T('Summary (Spanish)', 'Resumen (español)'),
+  // Added in changelog 0038 (QA 0008 D1): the columns and action params that fell back to English in Spanish.
+  projectType: T('Project type', 'Tipo de proyecto'),
+  aboutType: T('About (kind)', 'Sobre (tipo)'),
+  aboutId: T('About (record)', 'Sobre (registro)'),
+  actorId: T('By', 'Por'),
+  archiveSlug: T('Archive folder', 'Carpeta del archivo'),
+  clientUserId: T('Client user', 'Usuario cliente'),
+  coverAssetId: T('Cover', 'Portada'),
+  coverUrl: T('Cover', 'Portada'),
+  deliverableId: T('Deliverable', 'Entregable'),
+  done: T('Done', 'Hecho'),
+  externalId: T('External id', 'Id externo'),
+  field: T('Field', 'Campo'),
+  fileTypes: T('File types', 'Tipos de archivo'),
+  fonts: T('Fonts', 'Tipografías'),
+  from: T('From', 'De'),
+  fromId: T('From (record)', 'De (registro)'),
+  fromType: T('From (kind)', 'De (tipo)'),
+  to: T('To', 'A'),
+  toId: T('To (record)', 'A (registro)'),
+  toType: T('To (kind)', 'A (tipo)'),
+  glyph: T('Glyph', 'Glifo'),
+  imageUrl: T('Image', 'Imagen'),
+  label: T('Label', 'Etiqueta'),
+  materialsFolder: T('Materials folder', 'Carpeta de materiales'),
+  ok: T('OK', 'Correcto'),
+  parentTaskId: T('Parent task', 'Tarea padre'),
+  photoUrls: T('Photos', 'Fotos'),
+  postId: T('Post', 'Publicación'),
+  previewUrls: T('Previews', 'Vistas previas'),
+  repoPath: T('Repository path', 'Ruta en el repositorio'),
+  resolutionDue: T('Resolve by', 'Resolver antes de'),
+  sourceFileId: T('Source file', 'Archivo de origen'),
+  sourceFolderUrl: T('Source folder', 'Carpeta de origen'),
+  sourceName: T('Source', 'Origen'),
+  sourceUrl: T('Source link', 'Enlace de origen'),
+  spaceId: T('Space', 'Espacio'),
+  supersedesId: T('Replaces', 'Reemplaza'),
+  templateDocKind: T('Template kind', 'Tipo de plantilla'),
+  templateTaskId: T('Template task', 'Tarea de plantilla'),
+  thumbnailUrl: T('Thumbnail', 'Miniatura'),
+  tone: T('Tone', 'Tono'),
+  // Lead dossier fields (D-108).
+  portraitUrl: T('Photo', 'Foto'),
+  logoUrl: T('Logo', 'Logo'),
+  company: T('Company', 'Empresa'),
+  socials: T('Social profiles', 'Perfiles sociales'),
+  // Params of page actions an ability may still need (the refusal line names them).
+  question: T('Question', 'Pregunta'),
+  answer: T('Answer', 'Respuesta'),
+  owner: T('Owner', 'Responsable'),
+  of: T('Of', 'De'),
+  cost: T('Cost', 'Costo'),
+  days: T('Days', 'Días'),
+  supplier: T('Supplier', 'Proveedor'),
+  price: T('Price', 'Precio'),
+  amount: T('Amount', 'Monto'),
+  text: T('Text', 'Texto'),
+  space: T('Space', 'Espacio'),
+  target: T('Target', 'Destino'),
+  post: T('Post', 'Publicación'),
+  person: T('Person', 'Persona'),
+  start: T('Start', 'Inicio'),
+  due: T('Due', 'Vence'),
+  group: T('Group', 'Grupo'),
+  deliverable: T('Deliverable', 'Entregable'),
   created_at: T('Created', 'Creado'),
   updated_at: T('Updated', 'Actualizado'),
 };
@@ -181,7 +247,7 @@ export function rowFields(row: Record<string, unknown>, lang: 'en' | 'es'): { fi
       if (v === null || v === undefined || v === '') value = '—';
       else if (typeof v === 'number' && /Cop$/.test(k)) value = formatCop(v, lang);
       else if ((k === 'status' || k === 'severity') && typeof v === 'string') value = tx(k === 'status' && PURCHASE_STATUSES.some((x) => x.id === v) && 'priceCop' in row ? purchaseStatus(v) : VALIDATION_STATUSES.some((x) => x.id === v) ? validationStatus(v) : valueLabel(v), lang);
-      else if ((k === 'pipelineStatus' || k === 'kind' || k === 'type' || k === 'phase' || k === 'priority') && typeof v === 'string') value = tx(valueLabel(v), lang);
+      else if (/^(pipelineStatus|kind|type|phase|priority|projectType|projectStatus|source|channel|aboutType|fromType|toType|direction|visibility)$/.test(k) && typeof v === 'string') value = tx(valueLabel(v), lang);
       else if (typeof v === 'boolean') value = tx(v ? T('Yes', 'Sí') : T('No', 'No'), lang);
       else if (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}/.test(v)) value = /T/.test(v) ? `${formatDate(v, lang)} ${v.slice(11, 16)}` : formatDate(v, lang);
       else if (Array.isArray(v)) value = v.length ? (v.every((x) => typeof x !== 'object') ? v.map(String).join(', ') : String(v.length)) : '—';
@@ -205,6 +271,8 @@ export function valueLabel(value: string): Text {
   if (core) return typeof core === 'string' ? T(core, core) : { en: core.en, es: core.es ?? core.en };
   const set = PIPELINE_STATUSES.find((s) => s.id === value) ?? PURCHASE_STATUSES.find((s) => s.id === value) ?? VALIDATION_STATUSES.find((s) => s.id === value);
   if (set) return set.label;
+  const channel = LEAD_CHANNELS.find((c) => c.id === value);
+  if (channel) return channel.label;
   const own = deskStrings[`desk.value.${value}`];
   if (own) return typeof own === 'string' ? T(own, own) : { en: own.en, es: own.es ?? own.en };
   return T(value, value);

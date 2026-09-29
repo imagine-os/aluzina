@@ -15,13 +15,14 @@ import { formatCop, formatDate } from '../i18n/format';
 import { useT } from '../i18n/I18nProvider';
 import type { ActionDef, RouteDef } from '../specs/PageSpec';
 import { pick, type StatusTone, type Text } from '../tenant/domain';
+import { abilityLabel } from './abilityLabels';
 import { DeskFace } from './DeskObject';
 import { DeskStage } from './DeskStage';
 import { ENTITY_RULES, PILL_FIELDS, titleOfRow, type EntityRule } from './entities';
 import { fieldLabel, rowFields, valueLabel } from './fields';
 import { findItem } from './layout';
 import { deskStrings } from './strings';
-import type { DeskItem, DeskModel, PlacedItem } from './types';
+import type { DeskItem, DeskModel, Mat, PlacedItem } from './types';
 import { useDesk } from './useDesk';
 
 type Row = Record<string, unknown> & { id: string };
@@ -347,9 +348,17 @@ export function PageDesk({ route }: { route: RouteDef }) {
     },
   });
 
-  const objects = layout.items.reduce((n, i) => n + (i.kind === 'stack' ? i.more ?? 0 : 1), 0);
+  // What is on the canvas, and what the stacks stand for (changelog 0038, QA 0008 D5): never the raw record count.
+  const objects = layout.items.filter((i) => i.kind !== 'stack').length;
+  const stacked = layout.items.reduce((n, i) => n + (i.kind === 'stack' ? i.more ?? 0 : 0), 0);
+  const moreText = stacked > 0 ? t('desk.page.stacked', { n: stacked }) : '';
   const grouping = pick(model.grouping ?? txt('desk.grouped.none'), lang);
-  const summary = t('desk.page.summary', { objects, mats: layout.mats.length, grouping: grouping.charAt(0).toLowerCase() + grouping.slice(1) });
+  const summary = t('desk.page.summary', { objects, mats: layout.mats.length, more: moreText, grouping: grouping.charAt(0).toLowerCase() + grouping.slice(1) });
+  const matCount = (m: Mat) => {
+    const shown = m.subs.reduce((n, sub) => n + sub.items.filter((i) => i.kind !== 'stack').length, 0);
+    const more = m.count - shown;
+    return more > 0 ? t('desk.objectsStacked', { n: shown, more }) : t('desk.objects', { n: shown });
+  };
 
   if (!loading && layout.mats.length === 0) {
     return (
@@ -372,14 +381,14 @@ export function PageDesk({ route }: { route: RouteDef }) {
         stageLabel={t('desk.page.stage', { page: route.spec.name })}
         hint={t('desk.hint.page')}
         matName={(m) => pick(m.label, lang)}
-        matAria={(m) => t('desk.matLabel.generic', { name: pick(m.label, lang), n: m.count })}
-        matCount={(m) => t('desk.objects', { n: m.count })}
+        matAria={(m) => t('desk.matLabel.generic', { name: pick(m.label, lang), n: matCount(m) })}
+        matCount={matCount}
         matSelectPlaceholder={t('desk.goToMat')}
         subLabel={(s, m) => subName(m.id, s.group)}
         itemLabel={itemLabel}
         tipOf={tipOf}
         selected={selected}
-        compactSummary={t('desk.compact', { objects, mats: layout.mats.length })}
+        compactSummary={t('desk.compact', { objects, mats: layout.mats.length, more: moreText })}
         grouping={grouping}
       />
       <Drawer
@@ -450,12 +459,21 @@ function AbilityRow({ action, param, rowId, title, allowed }: { action: ActionDe
   const open = extra.filter(([, type]) => !type.startsWith('enum:') && type !== 'boolean');
   const [values, setValues] = useState<Record<string, string>>(() => Object.fromEntries(enums.map(([k, type]) => [k, type.slice(5).split('|')[0] ?? ''])));
   const needs = open.map(([k]) => k);
+  const label = abilityLabel(action, lang);
   const run = async () => {
     if (!rowId) return;
     const res = await runAction(action.id, { [param]: rowId, ...values });
-    toast(res.ok ? t('desk.abilities.done', { label: action.label, result: res.result === undefined ? t('desk.abilities.ok') : String(res.result) }) : t('desk.abilities.failed', { label: action.label, error: res.error ?? '' }));
+    // The action's answer is the WebMCP / voice text (English); the toast names the ability in the page language.
+    toast(res.ok ? t('desk.abilities.done', { label, result: res.result === undefined ? t('desk.abilities.ok') : String(res.result) }) : t('desk.abilities.failed', { label, error: res.error ?? '' }));
   };
-  const why = !allowed ? t('desk.abilities.denied', { permission: action.permission ?? '' }) : needs.length ? t('desk.abilities.needs', { fields: needs.map((k) => fieldLabel(k, lang).toLowerCase()).join(', ') }) : action.intent.replace(/\{(\w+)\}/g, (_, k: string) => (k === param ? title : values[k] ?? `{${k}}`));
+  const fields = needs.map((k) => fieldLabel(k, lang).toLowerCase());
+  const why = !allowed
+    ? t('desk.abilities.denied', { permission: action.permission ?? '' })
+    : needs.length
+      ? t('desk.abilities.needs', { fields: fields.length > 1 ? `${fields.slice(0, -1).join(', ')} ${t('desk.and')} ${fields[fields.length - 1]}` : fields[0] })
+      : lang === 'es'
+        ? t('desk.abilities.runs', { label, title })
+        : action.intent.replace(/\{(\w+)\}/g, (_, k: string) => (k === param ? title : values[k] ?? `{${k}}`));
   return (
     <li className="desk-ability">
       {enums.map(([k, type]) => (
@@ -470,7 +488,7 @@ function AbilityRow({ action, param, rowId, title, allowed }: { action: ActionDe
         />
       ))}
       <Button size="sm" disabled={!allowed || !rowId || needs.length > 0} title={why} onClick={() => void run()} data-ability={action.id}>
-        {action.label}
+        {label}
       </Button>
       {needs.length > 0 && allowed && <span className="desk-ability__note">{why}</span>}
     </li>

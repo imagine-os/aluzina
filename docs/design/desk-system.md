@@ -89,6 +89,37 @@ Every object, mat label, sub-mat label and station is a native `<button>` with a
 
 `npm run desk:check` (`scripts/desk-check.mjs`, inside `npm run build`) bundles the engine with esbuild, lays out every registered model (a synthetic desk with every kind, W-04, and each module desk listed in the script's entry) at seven stage widths (360, 390, 768, 1280, 1920, 2560, 3840) with the real `layoutDesk()`, and fails the build on any overlap (object / object, object outside its sub-mat, sub-mat / sub-mat or outside its mat, a person's station on a sub-mat, mat / mat) or an object off the half-square grid. A module that builds its own desk adds its model to the script's entry.
 
+## Rendering (D-107, changelog 0038)
+
+One depth order for the whole desk, in `src/desk/depth.ts` (`DEPTH`, applied as `--z-*` custom properties on `.desk-zoom`; `desk.css` reads nothing else for translateZ). World px above the desk plane:
+
+| Layer | Z | What |
+| --- | --- | --- |
+| slab | 0 | the wooden desk (world layer) |
+| matGlow | 0.5 | the followed project's light rings round the current mat, before every mat (a mat's own drop shadow stays on the mat: it never reaches a neighbour across the one-square gap) |
+| mat | 1 | felt, stitching, mat label, its drop shadow (one layer per mat) |
+| sub | 2 | linen, chess squares (one layer per sub-mat) |
+| glow | 2.5 | the status token's halo, light tiles' light and the lit tile's rings (under every face) |
+| objects | 3 | the objects plane, flat, one layer per sub-mat: the sub-mat label, every object's hit area and single shadow, the thin faces (sheet, form, checklist, card, light, plain tiles) |
+| objects + t | 4 .. 21 | solid bodies on the sub-mat's bodies layer: document (t 6) and folder (8) top + front face, box (18) top + front / left / right, token (4) two discs + face, the "+N more" pile (5) three offset sheets |
+| lift | + 0.75 | a focused or selected solid lifts; a focused or selected flat object paints above its neighbours (`z-index` on the flat plane) |
+| stationTop / standGap | mat + 22 / + 0.5 | a person's desk top; chair, figure, props and nameplate stand 0.5 above it, never on it |
+| fan | 28 | a fanned lead dossier's overlay plane (D-108) |
+| pulse | 40 | the trail's pulse of light |
+
+Outside the 3D context: toolbar, minimap (its own compositor layer), tooltip (a portal on `body`, or on the fullscreen element), legend, settings, drawer, height handle, money rail.
+
+Rules:
+
+- No two layers that can overlap share a Z, and DOM order is depth order, so when a low zoom squeezes two planes closer than the compositor can tell apart (it then paints in DOM order) the picture is the same.
+- Nothing inside the 3D context carries `overflow`, `contain` or `filter` (they flatten `preserve-3d`, clip, or re-rasterise text); faces clip their text in the 2D `.dp` spans. The stage frame is the only clip. Checked by script (`nbad = 0` on every desk).
+- Only solids join the 3D context. In Chrome every element of a 3D rendering context is a compositor layer of its own, so hit areas, shadows and thin faces are painted flat into one layer per sub-mat; documents and folders keep a front face only (their left / right faces are edge-on at 22°). K-04 went from 1 148 to ~570 layers, W-04 (following a project) from 831 to 460.
+- Text is rasterised at its final size: the committed zoom is CSS `zoom` (layout), gestures preview with a scaled transform, and the commit swaps zoom, scale, the device-pixel snap and the end of `will-change` synchronously in one frame. At rest the world sits on whole device pixels. The flat view drops the perspective once the tilt transition has run, so nothing is resampled. `-webkit-font-smoothing` is `auto` on light, `antialiased` (+ `-moz-osx-font-smoothing: grayscale`) on dark.
+- Thin lines never fall under one device pixel: `--hair` = 1 px / (zoom x devicePixelRatio) in world px; grid lines, stitching and edges use `max(<design width>, var(--hair))`, and the felt grid's ink scales down with its width (`--hair-ink`) so a zoomed-out desk keeps its tone.
+- Glows are box-shadows on the glow layer, never on a text-bearing face; every object has one shadow (`desk-item__shadow`, which also draws the paper edge).
+- Gestures: the camera maths runs per event, the DOM write once per frame (`requestApply`); the stage rectangle is read once per gesture (no layout reads in move handlers); `will-change: transform` and `pointer-events: none` on the world only while it moves; `content-visibility` is not used inside the 3D context (it clips). Reduced motion: no inertia, instant camera moves.
+- Tooltips show on hover, on Tab and on a scripted `focus()` (any focus not caused by a pointer press within 800 ms); mat and sub-mat labels have one too (their full name). Sub-mat names take two lines of the label strip instead of an ellipsis.
+
 ## Performance
 
 Gestures move one transform through a ref + requestAnimationFrame; the zoom commits as CSS `zoom` layout (crisp text). Objects are memoised; the layout recomputes only when the model or the mats-per-row change. Caps and stacks keep a page desk under ~240 objects; the face budget turns the rest into plain tiles. Measured (changelog 0036): the biggest page desk, K-04 (997 rows on 6 mats), renders 183 objects, first object 742 ms after navigation on the production build at 1280 (app boot included).

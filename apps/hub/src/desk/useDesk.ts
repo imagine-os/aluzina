@@ -87,10 +87,16 @@ export interface UseDeskOptions {
   homeZoom?: (stage: { w: number; h: number }) => number | undefined;
 }
 
+/**
+ * The tooltip (D-106; a portal since D-107 so the stage never clips it): viewport coordinates of the anchor's top
+ * centre and its bottom, and, for labels, the text itself (objects take theirs from the client's `tipOf`).
+ */
 export interface Tip {
   id: string;
   x: number;
   y: number;
+  bottom: number;
+  text?: { title: string; meta: string };
 }
 
 export function useDesk(opts: UseDeskOptions) {
@@ -116,6 +122,14 @@ export function useDesk(opts: UseDeskOptions) {
   /** True once the person moved the camera; until then the desk stays fitted to the stage. */
   const touched = useRef(false);
   const commitTimer = useRef(0);
+  /** True between the first move of a gesture and its commit (the world wears `is-moving`, D-107). */
+  const movingRef = useRef(false);
+  /** One DOM write per frame: input handlers update the camera and ask for a frame (D-107). */
+  const frameReq = useRef(0);
+  /** The stage's viewport rectangle, read once per gesture, never inside a move handler (D-107). */
+  const rectRef = useRef<DOMRect | null>(null);
+  /** When the last pointer press on the stage happened: a focus right after it is a pointer focus. */
+  const pressedAt = useRef(0);
   const reducedRef = useRef(reduced);
   reducedRef.current = reduced;
   const optsRef = useRef(opts);
@@ -136,7 +150,25 @@ export function useDesk(opts: UseDeskOptions) {
   fsRef.current = fullscreen;
   const [legendOpen, setLegendOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [tip, setTip] = useState<Tip | null>(null);
+  const [tip, setTipState] = useState<Tip | null>(null);
+  const tipRef = useRef<Tip | null>(null);
+  const setTip = useCallback((next: Tip | null | ((t: Tip | null) => Tip | null)) => {
+    const v = typeof next === 'function' ? next(tipRef.current) : next;
+    if (v === tipRef.current) return;
+    tipRef.current = v;
+    setTipState(v);
+  }, []);
+  /** The object whose ring shows (hovered by a mouse, or focused by keyboard / script): solid bodies draw it (D-107). */
+  const [hot, setHotState] = useState<{ id: string; kind: 'hover' | 'focus' } | null>(null);
+  const hotRef = useRef(hot);
+  const setHot = useCallback((next: { id: string; kind: 'hover' | 'focus' } | null) => {
+    const cur = hotRef.current;
+    if (cur === next || (cur && next && cur.id === next.id && cur.kind === next.kind)) return;
+    hotRef.current = next;
+    setHotState(next);
+  }, []);
+  /** Flat view settled: the perspective is dropped so nothing is resampled and text stays on the pixel grid (D-107). */
+  const [flatSettled, setFlatSettled] = useState(!(opts.tilted ?? true));
 
   const showStage = !compact || openSmall || fullscreen !== 'off';
 
@@ -209,11 +241,31 @@ export function useDesk(opts: UseDeskOptions) {
   const apply = useCallback(() => {
     const world = worldRef.current;
     if (!world) return;
+    cancelAnimationFrame(frameReq.current);
+    frameReq.current = 0;
     const { cx, cy, z } = cam.current;
     const { w, h } = sizeRef.current;
-    world.style.transform = `translate3d(${w / 2 - z * cx}px, ${h / 2 - z * cy}px, 0) scale(${z / laidOut.current})`;
+    let tx = w / 2 - z * cx;
+    let ty = h / 2 - z * cy;
+    if (!movingRef.current) {
+      // At rest the world sits on whole device pixels, so its text is never resampled at a fractional offset (D-107).
+      const dpr = window.devicePixelRatio || 1;
+      tx = Math.round(tx * dpr) / dpr;
+      ty = Math.round(ty * dpr) / dpr;
+    }
+    world.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${z / laidOut.current})`;
     updateMinimap();
   }, [updateMinimap]);
+
+  /** Input handlers call this: the camera maths runs per event, the DOM write once per frame (event coalescing). */
+  const requestApply = useCallback(() => {
+    if (frameReq.current) return;
+    frameReq.current = requestAnimationFrame(() => {
+      frameReq.current = 0;
+      apply();
+    });
+  }, [apply]);
+  useEffect(() => () => cancelAnimationFrame(frameReq.current), []);
 
   const commit = useCallback(() => {
     window.clearTimeout(commitTimer.current);
@@ -221,10 +273,14 @@ export function useDesk(opts: UseDeskOptions) {
     const inner = zoomRef.current;
     if (world && inner) {
       // Commit: lay the world out at the new zoom (crisp text), and drop the gesture scale in the same frame.
+      // One synchronous swap in one frame: the CSS zoom (text rasterised at its final size), the transform's scale back
+      // to 1, the snap to device pixels and the end of `will-change` land together, so there is no visible jump.
       laidOut.current = cam.current.z;
       inner.style.zoom = String(cam.current.z);
+      movingRef.current = false;
       world.classList.remove('is-moving');
       world.style.setProperty('--desk-zoom', String(cam.current.z));
+      world.style.setProperty('--desk-dpr', String(window.devicePixelRatio || 1));
       apply();
     }
     setZoom(Math.round(cam.current.z * 100));
@@ -233,9 +289,12 @@ export function useDesk(opts: UseDeskOptions) {
   const moving = useCallback(() => {
     touched.current = true;
     cancelAnimationFrame(anim.current);
-    worldRef.current?.classList.add('is-moving');
+    if (!movingRef.current) {
+      movingRef.current = true;
+      worldRef.current?.classList.add('is-moving');
+    }
     setTip(null);
-  }, []);
+  }, [setTip]);
 
   const commitSoon = useCallback(() => {
     window.clearTimeout(commitTimer.current);
@@ -256,6 +315,7 @@ export function useDesk(opts: UseDeskOptions) {
       }
       const from = { ...cam.current };
       const t0 = performance.now();
+      movingRef.current = true;
       worldRef.current?.classList.add('is-moving');
       const step = (now: number) => {
         const k = Math.min(1, (now - t0) / ms);
@@ -431,6 +491,20 @@ export function useDesk(opts: UseDeskOptions) {
     return tiltRef.current;
   }, []);
 
+  // Tilting brings the perspective back at once; flattening keeps it until the 520 ms camera transition has run.
+  useEffect(() => {
+    if (tilt) {
+      setFlatSettled(false);
+      return;
+    }
+    if (reduced) {
+      setFlatSettled(true);
+      return;
+    }
+    const timer = window.setTimeout(() => setFlatSettled(true), 560);
+    return () => window.clearTimeout(timer);
+  }, [tilt, reduced]);
+
   // ---------------------------------------------------------------- fullscreen (Fullscreen API, CSS fallback)
 
   const enterFullscreen = useCallback(async () => {
@@ -510,12 +584,29 @@ export function useDesk(opts: UseDeskOptions) {
     const ro = new ResizeObserver(([entry]) => {
       const next = { w: Math.round(entry.contentRect.width), h: Math.round(entry.contentRect.height) };
       sizeRef.current = next;
+      rectRef.current = null;
       setSize(next);
       apply();
     });
     ro.observe(stage);
-    return () => ro.disconnect();
+    // The cached rectangle moves with the page: any scroll or resize outside a gesture drops it.
+    const drop = () => {
+      if (!movingRef.current) rectRef.current = null;
+    };
+    window.addEventListener('scroll', drop, { passive: true, capture: true });
+    window.addEventListener('resize', drop, { passive: true });
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('scroll', drop, { capture: true });
+      window.removeEventListener('resize', drop);
+    };
   }, [apply, showStage]);
+
+  /** The stage's rectangle for this gesture (read once, then reused by every move). */
+  const stageRect = useCallback((): DOMRect | null => {
+    if (!rectRef.current) rectRef.current = stageRef.current?.getBoundingClientRect() ?? null;
+    return rectRef.current;
+  }, []);
 
   // Stay fitted while the person has not moved the camera (first measure, a new height, a window resize, going full
   // screen), and refit when the layout reflows (portrait <-> landscape changes the mats per row).
@@ -568,7 +659,8 @@ export function useDesk(opts: UseDeskOptions) {
     const stage = stageRef.current;
     if (!stage || !showStage) return;
     const onWheel = (e: WheelEvent) => {
-      const rect = stage.getBoundingClientRect();
+      const rect = stageRect();
+      if (!rect) return;
       const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? rect.height : 1;
       const dx = e.deltaX * unit;
       const dy = e.deltaY * unit;
@@ -604,12 +696,12 @@ export function useDesk(opts: UseDeskOptions) {
           cy: Math.min(Math.max(ry.hi, cy), Math.max(Math.min(ry.lo, cy), c.cy)),
         };
       }
-      apply();
+      requestApply();
       commitSoon();
     };
     stage.addEventListener('wheel', onWheel, { passive: false });
     return () => stage.removeEventListener('wheel', onWheel);
-  }, [apply, commitSoon, moving, panScreen, zoomAtScreen, showStage]);
+  }, [requestApply, commitSoon, moving, panScreen, zoomAtScreen, showStage, stageRect]);
 
   // ---------------------------------------------------------------- pointer: drag (inertia), pinch, double-tap
 
@@ -627,7 +719,7 @@ export function useDesk(opts: UseDeskOptions) {
   const spaceDragged = useRef(false);
 
   const local = (e: { clientX: number; clientY: number }) => {
-    const rect = stageRef.current?.getBoundingClientRect();
+    const rect = stageRect();
     return rect ? { x: e.clientX - rect.left - rect.width / 2, y: e.clientY - rect.top - rect.height / 2 } : { x: 0, y: 0 };
   };
   const worldAt = (x: number, y: number) => {
@@ -649,6 +741,7 @@ export function useDesk(opts: UseDeskOptions) {
   const glide = (vx: number, vy: number) => {
     let last = performance.now();
     const t0 = last;
+    movingRef.current = true;
     worldRef.current?.classList.add('is-moving');
     const step = (now: number) => {
       const dt = Math.min(48, now - last);
@@ -665,8 +758,12 @@ export function useDesk(opts: UseDeskOptions) {
   };
 
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    pressedAt.current = performance.now();
     if (e.pointerType === 'mouse' && e.button !== 0 && e.button !== 1) return;
     cancelAnimationFrame(anim.current);
+    // A press that stops a glide or a fly-to commits where the camera is (the world must not stay inert).
+    if (movingRef.current && !gesture.current) commit();
+    if (pointers.current.size === 0) rectRef.current = null;
     const p = local(e);
     pointers.current.set(e.pointerId, p);
     if (pointers.current.size === 1) {
@@ -698,7 +795,7 @@ export function useDesk(opts: UseDeskOptions) {
       const q = toPlane((a.x + b.x) / 2, (a.y + b.y) / 2);
       const nz = clampZ((g.z0 * d) / g.d0);
       cam.current = { cx: g.wx - q.u / nz, cy: g.wy - q.v / nz, z: nz };
-      apply();
+      requestApply();
       return;
     }
     if (g.kind === 'drag' && g.id === e.pointerId) {
@@ -714,7 +811,7 @@ export function useDesk(opts: UseDeskOptions) {
       while (g.samples.length > 2 && now - g.samples[0].t > 90) g.samples.shift();
       const q = toPlane(p.x, p.y);
       cam.current = { ...cam.current, cx: g.wx - q.u / cam.current.z, cy: g.wy - q.v / cam.current.z };
-      apply();
+      requestApply();
     }
   };
 
@@ -865,38 +962,53 @@ export function useDesk(opts: UseDeskOptions) {
 
   // ---------------------------------------------------------------- focus and hover: fly into view, tooltip
 
+  /** A focus that follows a pointer press within 800 ms is the pointer's (no fly-to, no tooltip); any other focus (Tab, a script, focus restored by a drawer) is not. */
+  const byPointer = () => performance.now() - pressedAt.current < 800;
+
   const onFocusItem = useCallback(
     (id: string, e: FocusEvent<HTMLButtonElement>) => {
-      // Keyboard (and restored) focus flies the object into view; a pointer press does not move the camera.
-      if (!e.currentTarget.matches(':focus-visible')) return;
+      // Keyboard, scripted and restored focus fly the object into view and show its tooltip; a pointer press does not
+      // move the camera (changelog 0038: `:focus-visible` alone missed a scripted focus()).
+      if (byPointer()) return;
       const item = layoutRef.current.items.find((i) => i.id === id);
       if (item) flyToItem(item, 'focus');
+      setHot({ id, kind: 'focus' });
+      onHintRef.current?.(id, e.currentTarget);
     },
-    [flyToItem],
+    [flyToItem, setHot],
   );
 
   const onFocusPerson = useCallback(
-    (matId: string, e: FocusEvent<HTMLButtonElement>) => {
-      if (e.currentTarget.matches(':focus-visible')) flyToPerson(matId, 'focus');
+    (matId: string) => {
+      if (!byPointer()) flyToPerson(matId, 'focus');
     },
     [flyToPerson],
   );
 
   const tipTimer = useRef(0);
-  const onHint = useCallback((id: string, el: HTMLElement | null) => {
-    window.clearTimeout(tipTimer.current);
-    if (!el) {
-      setTip((t) => (t?.id === id ? null : t));
-      return;
-    }
-    // Wait for the fly-to of a keyboard focus to settle before measuring.
-    tipTimer.current = window.setTimeout(() => {
-      const box = boxRef.current?.getBoundingClientRect();
-      const r = el.getBoundingClientRect();
-      if (!box) return;
-      setTip({ id, x: r.left + r.width / 2 - box.left, y: r.top - box.top });
-    }, worldRef.current?.classList.contains('is-moving') ? 520 : 60);
-  }, []);
+  const onHint = useCallback(
+    (id: string, el: HTMLElement | null, text?: { title: string; meta: string }, source?: 'hover' | 'focus') => {
+      window.clearTimeout(tipTimer.current);
+      if (!el) {
+        setTip((t) => (t?.id === id ? null : t));
+        const h = hotRef.current;
+        if (h?.id === id && (!source || h.kind === source)) setHot(null);
+        return;
+      }
+      if (source === 'hover' && hotRef.current?.kind !== 'focus') setHot({ id, kind: 'hover' });
+      // Wait for the fly-to of a keyboard focus to settle before measuring (viewport coordinates: the tooltip is a portal).
+      tipTimer.current = window.setTimeout(() => {
+        const r = el.getBoundingClientRect();
+        const stage = stageRef.current?.getBoundingClientRect();
+        // An anchor the camera has moved out of the stage gets no tooltip.
+        if (stage && (r.bottom < stage.top || r.top > stage.bottom || r.right < stage.left || r.left > stage.right)) return;
+        setTip({ id, x: r.left + r.width / 2, y: r.top, bottom: r.bottom, text });
+      }, movingRef.current ? 520 : 60);
+    },
+    [setTip, setHot],
+  );
+  const onHintRef = useRef(onHint);
+  onHintRef.current = onHint;
 
   // ---------------------------------------------------------------- minimap
 
@@ -992,6 +1104,8 @@ export function useDesk(opts: UseDeskOptions) {
     setSettingsOpen,
     tip,
     setTip,
+    flatSettled,
+    hot,
     refs: { frameRef, boxRef, stageRef, worldRef, zoomRef, miniViewRef },
     api: { fitAll, home, fitMat, fitSub, flyToItem, flyToPerson, zoomBy, zoomTo, reset, toggleTilt, matById, refitOnNextLayout, miniJump, apply },
     handlers: { onPointerDown, onPointerMove, onPointerEnd, onKeyDown, onKeyUp, onDoubleClick, onClickCapture, activateItem, onFocusItem, onFocusPerson, onHint },
