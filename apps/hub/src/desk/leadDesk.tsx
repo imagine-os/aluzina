@@ -6,7 +6,7 @@ import { Select } from '../components/atom/Select/Select';
 import { toast } from '../components/atom/Toast/Toast';
 import { useTable } from '../data/DataContext';
 import type { Lead } from '../data/schema';
-import { DOSSIER_SORTS, DossierLayer, cardName, dossierCards, dossierGeometry, newDossier, sortCards, type DossierSort, type DossierState } from './dossier';
+import { DOSSIER_SORTS, DossierLayer, FAN_BAR, cardName, dossierCards, dossierGeometry, newDossier, sortCards, type DossierSort, type DossierState } from './dossier';
 import { findItem } from './layout';
 import { SQ, SUB_HEAD, type Mat, type PlacedItem } from './types';
 import type { DeskController } from './useDesk';
@@ -246,7 +246,17 @@ export function useLeadDesk({ enabled, works, desk, leads, t, lang, selected, se
     setMat('');
   }
 
-  const matClass = useCallback((m: Mat) => (isWorkMat(m.id) ? ' desk-mat--work' : ''), []);
+  /** Mats under an open fan dim a little (changelog 0045): their materials step down, the cards above stay bright. */
+  const fanned = useMemo(() => {
+    const out = new Set<string>();
+    for (const [id, st] of dossiers) {
+      const it = byId.get(id);
+      const m = st.mode === 'fan' && it ? matOf(it) : undefined;
+      if (m) out.add(m.id);
+    }
+    return out;
+  }, [dossiers, byId, matOf]);
+  const matClass = useCallback((m: Mat) => `${isWorkMat(m.id) ? ' desk-mat--work' : ''}${fanned.has(m.id) ? ' is-fanned' : ''}`, [fanned]);
 
   /** The drawer's dossier and work-mat section for a lead object (its process card or a work-mat reference). */
   const drawerSection = (item: PlacedItem): ReactNode => {
@@ -376,9 +386,9 @@ export function useLeadDesk({ enabled, works, desk, leads, t, lang, selected, se
   const fitFan = (it: PlacedItem, lead: Lead) => {
     const m = matOf(it);
     const g = dossierGeometry(it, m, dossierCards(lead, []).length, 'fan');
-    const top = g.top - 60 - 12;
-    if (!m) return api.fitBox(g.cx - g.width / 2, top, g.cx + g.width / 2, g.cy + 16);
-    api.fitBox(Math.min(m.x, g.cx - g.width / 2), Math.min(m.y, top), Math.max(m.x + m.w, g.cx + g.width / 2), Math.max(m.y + m.h, g.cy + 16));
+    const top = g.top - FAN_BAR - 12;
+    if (!m) return api.fitBox(g.cx - g.width / 2, top, g.cx + g.width / 2, g.bottom + 16);
+    api.fitBox(Math.min(m.x, g.cx - g.width / 2), Math.min(m.y, top), Math.max(m.x + m.w, g.cx + g.width / 2), Math.max(m.y + m.h, g.bottom + 16));
     return undefined;
   };
 

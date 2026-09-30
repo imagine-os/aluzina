@@ -18,9 +18,17 @@
   --desk-felt-soft: color-mix(in srgb, var(--metal-highlight) 58%, transparent);
   --desk-felt-line: color-mix(in srgb, var(--metal-highlight) 16%, transparent);
   --desk-linen: color-mix(in srgb, var(--brand-ink) 64%, var(--brand-silver));
-  --desk-paper: color-mix(in srgb, var(--metal-highlight) 94%, var(--brand-gold-highlight));
+  /* Paper (D-117): the `--color-paper` token, light on both themes (paper on a dark desk); its edges are ink steps. */
+  --desk-paper: var(--color-paper);
   --desk-paper-edge: color-mix(in srgb, var(--brand-ink) 22%, var(--desk-paper));
   --desk-paper-side: color-mix(in srgb, var(--brand-ink) 12%, var(--desk-paper));
+  --desk-paper-back: color-mix(in srgb, var(--metal-highlight) 72%, var(--desk-paper));
+  --desk-edge-ink: color-mix(in srgb, var(--brand-ink) 52%, var(--desk-paper));
+  --desk-manila: color-mix(in srgb, var(--brand-gold-highlight) 58%, var(--desk-paper));
+  --desk-manila-edge: color-mix(in srgb, var(--brand-gold) 70%, var(--brand-ink));
+  --desk-manila-side: color-mix(in srgb, var(--brand-gold-highlight) 40%, var(--brand-gold));
+  --desk-shadow-contact: color-mix(in srgb, var(--brand-black) 38%, transparent);
+  --desk-shadow-soft: color-mix(in srgb, var(--brand-black) 22%, transparent);
   --desk-ink: var(--brand-ink);
   --desk-ink-soft: color-mix(in srgb, var(--brand-ink) 64%, var(--desk-paper));
   --desk-rule: color-mix(in srgb, var(--brand-ink) 26%, transparent);
@@ -48,10 +56,11 @@
   --desk-wood: color-mix(in srgb, var(--brand-gold) 24%, var(--color-bg));
   --desk-felt: color-mix(in srgb, var(--brand-ink) 78%, var(--brand-periwinkle));
   --desk-linen: color-mix(in srgb, var(--brand-ink) 66%, var(--brand-periwinkle));
-  --desk-paper: color-mix(in srgb, var(--metal-highlight) 84%, var(--brand-gold));
   --desk-kraft: color-mix(in srgb, var(--brand-gold) 80%, var(--brand-gold-highlight));
   --desk-folder: color-mix(in srgb, var(--brand-silver) 80%, var(--brand-ink));
   --desk-shadow: color-mix(in srgb, var(--brand-black) 70%, transparent);
+  --desk-shadow-contact: color-mix(in srgb, var(--brand-black) 62%, transparent);
+  --desk-shadow-soft: color-mix(in srgb, var(--brand-black) 42%, transparent);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -62,10 +71,11 @@
     --desk-wood: color-mix(in srgb, var(--brand-gold) 24%, var(--color-bg));
     --desk-felt: color-mix(in srgb, var(--brand-ink) 78%, var(--brand-periwinkle));
     --desk-linen: color-mix(in srgb, var(--brand-ink) 66%, var(--brand-periwinkle));
-    --desk-paper: color-mix(in srgb, var(--metal-highlight) 84%, var(--brand-gold));
-    --desk-kraft: color-mix(in srgb, var(--brand-gold) 80%, var(--brand-gold-highlight));
+      --desk-kraft: color-mix(in srgb, var(--brand-gold) 80%, var(--brand-gold-highlight));
     --desk-folder: color-mix(in srgb, var(--brand-silver) 80%, var(--brand-ink));
     --desk-shadow: color-mix(in srgb, var(--brand-black) 70%, transparent);
+    --desk-shadow-contact: color-mix(in srgb, var(--brand-black) 62%, transparent);
+    --desk-shadow-soft: color-mix(in srgb, var(--brand-black) 42%, transparent);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -391,26 +401,27 @@
 .desk-item__body {
   position: absolute;
   pointer-events: none;
+  /* Placed by hand (D-117): a deterministic turn of at most 1.5° from the object's id (paper.ts), inside its squares. */
+  transform: rotate(var(--turn, 0deg));
 }
 
 /* The object's one shadow. It is a hair taller than the face, so its paper-edge colour peeks out under the face as
    the object's edge; thin objects need no second shadow for it. */
 .desk-item__shadow {
   position: absolute;
-  inset: 0 0 calc(-1 * max(0.6px, var(--hair))) 0;
+  /* The paper's edge (D-117): one device px of ink on its bottom and right, so its thickness reads at every zoom. */
+  inset: 0 calc(-1 * max(0.5px, var(--hair))) calc(-1 * max(0.5px, var(--hair))) 0;
   border-radius: 2px;
-  background: var(--desk-paper-edge);
-  box-shadow: 0 calc(0.6px + var(--t) * 0.4) calc(1.5px + var(--t) * 0.7) var(--desk-shadow);
+  background: var(--desk-edge-ink);
+  /* Grounded: a tight contact shadow and a soft one that grows with the thickness. */
+  box-shadow:
+    0 0.3px 0.5px var(--desk-shadow-contact),
+    0.3px calc(0.8px + var(--t) * 0.35) calc(1.8px + var(--t) * 0.6) -0.3px var(--desk-shadow-soft);
 }
 
 .desk-item.is-solid .desk-item__shadow {
   bottom: 0;
   background: none;
-}
-
-.desk-item--card .desk-item__shadow {
-  bottom: calc(-1 * max(1.4px, var(--hair)));
-  background: linear-gradient(to bottom, var(--desk-paper-edge) 0 calc(100% - 0.6px), var(--desk-paper-side) 0);
 }
 
 .desk-item--light .desk-item__shadow {
@@ -435,6 +446,7 @@
 .desk-body {
   position: absolute;
   display: block;
+  transform: rotate(var(--turn, 0deg));
   transform-style: preserve-3d;
   color: var(--desk-ink);
   text-align: left;
@@ -443,7 +455,7 @@
 /* A focused or selected solid lifts a hair (the ring rides on its top face). */
 .desk-body.is-focus,
 .desk-body.is-selected {
-  transform: translateZ(var(--z-lift));
+  transform: translateZ(var(--z-lift)) rotate(var(--turn, 0deg));
 }
 
 /* No overflow or containment on faces (D-107): they flatten preserve-3d and clip; the face's text is clipped by .dp. */
@@ -522,36 +534,6 @@
   background: repeating-linear-gradient(to right, var(--desk-paper-side) 0 0.6px, var(--desk-paper-edge) 0.6px 1.1px);
 }
 
-/* Folder: a closed silver folder with papers inside, its tab carries the accent. */
-.desk-item--folder .desk-top {
-  background: var(--desk-grain), var(--desk-folder);
-  border-radius: 1px 3px 3px 3px;
-}
-
-.desk-item--folder .desk-side {
-  background: linear-gradient(to bottom, var(--desk-folder-side), color-mix(in srgb, var(--desk-folder-side) 70%, var(--brand-ink)));
-}
-
-.desk-item--folder .desk-side--front {
-  background: repeating-linear-gradient(to bottom, var(--desk-folder-side) 0 1.4px, var(--desk-paper) 1.4px 5.6px, var(--desk-folder-side) 5.6px 8px);
-}
-
-/* Box: kraft cardboard, a band of iridescent tape across the lid. */
-.desk-item--box .desk-top {
-  background: var(--desk-grain), var(--desk-kraft);
-}
-
-.desk-item--box .desk-side {
-  background: var(--desk-grain), var(--desk-kraft-side);
-}
-
-.desk-item--box .desk-side--front {
-  background:
-    linear-gradient(to right, transparent 42%, color-mix(in srgb, var(--brand-aqua) 55%, transparent) 42% 58%, transparent 58%),
-    var(--desk-grain),
-    color-mix(in srgb, var(--desk-kraft-side) 85%, var(--desk-kraft));
-}
-
 /* Token: three stacked discs make the coin's edge; the face is the status colour. */
 .desk-item--token .desk-top {
   border-radius: 50%;
@@ -566,21 +548,6 @@
 
 .desk-coin--0 { transform: translateZ(calc(var(--t) * 0.34)); }
 .desk-coin--1 { transform: translateZ(calc(var(--t) * 0.68)); }
-
-/* Card: stiff card, a coloured band on top (rules: the iridescent accent; team and measures: metal). */
-.desk-item--card .desk-top {
-  background:
-    var(--desk-metal) top / 100% 3px no-repeat,
-    var(--desk-grain),
-    var(--desk-paper);
-}
-
-.desk-item--g-rules .desk-top {
-  background:
-    linear-gradient(90deg, var(--brand-periwinkle), var(--brand-aqua), var(--brand-lime)) top / 100% 3px no-repeat,
-    var(--desk-grain),
-    var(--desk-paper);
-}
 
 /* ---------- previews: em-based so the face and the drawer share the markup ---------- */
 
@@ -666,35 +633,6 @@
   text-overflow: ellipsis;
 }
 
-.dp--form .dp__text {
-  flex: 0 1 auto;
-  max-width: 62%;
-}
-
-.dp__field {
-  flex: 1 1 30%;
-  height: 0.95em;
-  border-bottom: 0.12em solid var(--desk-rule);
-}
-
-.dp__row--blank .dp__field {
-  height: 1.6em;
-}
-
-.dp__box {
-  flex: none;
-  width: 0.95em;
-  height: 0.95em;
-  border: 0.13em solid var(--desk-ink);
-  border-radius: 0.18em;
-}
-
-.dp__num {
-  flex: none;
-  font-variant-numeric: tabular-nums;
-  color: var(--desk-ink-soft);
-}
-
 .dp__section {
   margin-top: 0.25em;
   font-size: 0.72em;
@@ -710,95 +648,11 @@
   color: var(--desk-ink-soft);
 }
 
-/* Folder */
-.dp--folder {
-  position: relative;
-  gap: 0.15em;
-  padding: 0.9em 1.1em 0.7em;
-  overflow: visible;
-}
-
-.dp__tab {
-  position: absolute;
-  left: 0;
-  top: -1.9em;
-  height: 1.95em;
-  min-width: 5em;
-  padding: 0.3em 1em 0;
-  border-radius: 0.5em 0.5em 0 0;
-  background: var(--desk-accent);
-  color: var(--brand-ink);
-  font-size: 0.9em;
-  font-weight: var(--weight-black);
-  letter-spacing: 0.08em;
-}
-
-.dp--folder .dp__title {
-  font-size: 1.4em;
-  -webkit-line-clamp: 1;
-}
-
-.dp--folder .dp__rows {
-  gap: 0.2em;
-  margin-top: 0.2em;
-  padding-top: 0.3em;
-}
-
-.dp--folder .dp__row {
-  font-size: 0.8em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block !important;
-}
-
-/* Box */
-.dp--box {
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2em;
-  padding: 0.6em;
-  text-align: center;
-}
-
-.dp__tape {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 44%;
-  height: 12%;
-  background: var(--desk-accent);
-  opacity: 0.85;
-}
-
 .dp__big {
   position: relative;
   font-size: 3em;
   font-weight: var(--weight-black);
   line-height: 1;
-}
-
-.dp--box .dp__title {
-  position: relative;
-  font-size: 0.95em;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  -webkit-line-clamp: 1;
-}
-
-.dp--box .dp__sub {
-  position: relative;
-  max-width: 100%;
-  font-size: 0.7em;
-}
-
-.dp__count {
-  position: absolute;
-  right: 0.5em;
-  bottom: 0.4em;
-  font-size: 0.75em;
-  font-weight: var(--weight-bold);
-  color: var(--desk-ink-soft);
 }
 
 /* Token */
@@ -837,34 +691,11 @@
 .dp--tone-danger { --tone: var(--color-danger); --tone-ink: var(--color-bg); }
 .dp--tone-info { --tone: var(--color-info); --tone-ink: var(--color-bg); }
 
-/* Card */
-.dp--card {
-  gap: 0.3em;
-  padding: 1.6em 1em 0.8em;
-}
-
 .dp__kicker {
   display: flex !important;
   align-items: baseline;
   gap: 0.5em;
   min-width: 0;
-}
-
-.dp--card .dp__code {
-  flex: none;
-  font-size: 1em;
-  color: var(--desk-ink);
-}
-
-.dp--card .dp__sub {
-  font-size: 0.75em;
-}
-
-.dp--card .dp__title {
-  font-size: 0.98em;
-  font-weight: var(--weight-medium);
-  line-height: 1.22;
-  -webkit-line-clamp: 5;
 }
 
 /* ---------- drawer ---------- */
@@ -1403,9 +1234,8 @@
 .desk-item--light .desk-top {
   border-radius: 3px;
   background:
-    var(--lt-gradient) top / 100% 2.5px no-repeat,
     var(--desk-grain),
-    var(--lt-face);
+    color-mix(in srgb, var(--desk-paper) 90%, var(--brand-aqua));
   color: var(--lt-ink);
   /* The tile's edge, inside the face (never under a neighbour); its light is on the glow layer. */
   box-shadow: inset 0 0 0 max(0.8px, var(--hair)) color-mix(in srgb, var(--brand-aqua) 80%, var(--brand-ink));
@@ -1414,19 +1244,27 @@
 .dp--light {
   position: relative;
   gap: 0.12em;
-  padding: 0.7em 0.55em 0.45em 0.8em;
-  border-left: 0.28em solid var(--tone);
+  padding: 0 0.55em 0.45em;
 }
 
-.dp--light .dp__kicker .dp__code {
-  font-size: 0.62em;
-  letter-spacing: 0.12em;
-  color: var(--lt-ink-soft);
+/* Light tiles adopt the paper faces (changelog 0045): a band in the record's tone carrying its kind, a caps title. */
+.dp--light .dp__band {
+  height: 0.62em;
+  margin: 0 -0.55em 0.3em;
+  padding: 0 0.55em;
+}
+
+.dp--light .dp__bandtext {
+  font-size: 0.5em;
 }
 
 .dp--light .dp__title {
-  font-size: 0.92em;
-  line-height: 1.12;
+  font-family: var(--font-display);
+  font-size: 0.86em;
+  font-weight: var(--weight-bold);
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .dp--light .dp__rows {
@@ -1921,10 +1759,6 @@
   background: var(--desk-fibre), var(--desk-linen);
 }
 
-.desk-legend__face .desk-preview__face {
-  box-shadow: 0 2px 4px var(--desk-shadow);
-}
-
 /* The kind's name on its own line, its description below (changelog 0038). */
 .desk-legend__name,
 .desk-legend__help {
@@ -2062,10 +1896,6 @@
   height: 0.55em;
   border-radius: 50%;
   background: var(--tone);
-}
-
-.dp--card .dp__kicker .dp__pill {
-  font-size: 0.72em;
 }
 
 .desk-item--stack .desk-top {
@@ -2539,37 +2369,63 @@
   transform-origin: 50% 100%;
 }
 
+/* The control strip (changelog 0045): a paper-white strip of the library's Buttons and Select, drawn at half size
+   (their sizes are rem, for the page; the inner `zoom` keeps the text rasterised at its final size). */
 .dz-bar {
   position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px;
-  border-radius: 7px;
-  background: color-mix(in srgb, var(--desk-felt) 92%, transparent);
-  box-shadow: 0 2px 6px var(--desk-shadow);
+  width: max-content;
   transform: translateX(-50%) translateZ(3px);
   pointer-events: auto;
   white-space: nowrap;
 }
 
-.dz-btn,
-.dz-sort select {
+.dz-bar__inner {
+  zoom: 0.5;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 0 0 1px var(--color-border), var(--shadow-md);
+  font-size: 1rem;
+}
+
+.dz-bar .btn {
+  white-space: nowrap;
+}
+
+.dz-bar .dz-sort {
+  margin: 0;
+  min-width: 9rem;
+}
+
+.dz-bar .dz-sort .field__select {
+  min-height: var(--target);
+}
+
+/* While a fan is open its mat dims a little: the mat's materials step down (custom properties, no extra layer and
+   no filter in the 3D context); the dossier's cards are on their own plane and keep the full paper. */
+.desk-mat.is-fanned {
+  --desk-felt: color-mix(in srgb, var(--brand-ink) 92%, var(--brand-silver));
+  --desk-linen: color-mix(in srgb, var(--brand-ink) 80%, var(--brand-silver));
+  --desk-paper: color-mix(in srgb, var(--color-paper) 80%, var(--brand-ink));
+  --desk-manila: color-mix(in srgb, var(--brand-gold-highlight) 48%, color-mix(in srgb, var(--color-paper) 80%, var(--brand-ink)));
+  --desk-kraft: color-mix(in srgb, var(--brand-gold) 70%, var(--brand-ink));
+}
+
+.dz-btn {
   min-height: 20px;
   padding: 2px 7px;
-  border: max(1px, var(--hair)) solid color-mix(in srgb, var(--desk-felt-ink) 40%, transparent);
+  border: max(1px, var(--hair)) solid var(--desk-rule);
   border-radius: 5px;
-  background: color-mix(in srgb, var(--desk-felt-ink) 12%, transparent);
-  color: var(--desk-felt-ink);
+  background: none;
+  color: var(--desk-ink);
   font: inherit;
   font-size: 8.5px;
   font-weight: var(--weight-bold);
   cursor: pointer;
-}
-
-.dz-btn--primary {
-  background: var(--desk-felt-ink);
-  color: var(--desk-felt);
 }
 
 .dz-btn:disabled {
@@ -2577,14 +2433,7 @@
   cursor: not-allowed;
 }
 
-.dz-btn--icon {
-  min-width: 20px;
-  font-size: 11px;
-  line-height: 1;
-}
-
 .dz-btn:focus-visible,
-.dz-sort select:focus-visible,
 .dz-card__main:focus-visible {
   outline: calc(var(--focus-ring) / var(--desk-zoom, 1)) solid var(--desk-focus);
   outline-offset: calc(1px / var(--desk-zoom, 1));
@@ -2592,9 +2441,17 @@
 
 .dz-card {
   position: absolute;
+  /* One transform from the card's placement (dossier.tsx cardVars): a change of mode, focus or hover interpolates. */
+  transform: translate(var(--x), var(--y)) translateZ(var(--z)) rotate(var(--r)) scale(var(--s));
   transform-style: preserve-3d;
-  transition: transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1), transform-origin 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
   pointer-events: auto;
+}
+
+/* A hovered or keyboard-focused card of a fan lifts a few px and comes upright (the focused one is already up). */
+.dz--fan .dz-card:not(.is-focus):hover,
+.dz--fan .dz-card:not(.is-focus):focus-within {
+  transform: translate(var(--x), calc(var(--y) - 6px)) translateZ(var(--zh)) rotate(0deg) scale(1.02);
 }
 
 /* Only a card that turns over has a 3D inside (front and back); the others are one flat layer each (D-107: every
@@ -2619,37 +2476,69 @@
   display: flex;
   flex-direction: column;
   gap: 0.35em;
-  padding: 0.9em 0.9em 0.8em;
+  padding: 0 0.9em 0.8em;
   border-radius: 6px;
-  border: max(0.6px, var(--hair)) solid var(--desk-paper-edge);
-  background:
-    linear-gradient(90deg, var(--brand-periwinkle), var(--brand-aqua), var(--brand-lime)) top / 100% 3px no-repeat,
-    var(--desk-paper);
-  box-shadow: 0 2px 6px var(--desk-shadow);
+  background: var(--desk-grain), var(--desk-paper);
+  /* The paper's edge (bottom and right, 1 device px) and a soft grounded shadow. */
+  box-shadow:
+    inset calc(-1 * max(0.5px, var(--hair))) calc(-1 * max(0.5px, var(--hair))) 0 var(--desk-edge-ink),
+    inset 0 0 0 max(0.5px, var(--hair)) var(--desk-paper-edge),
+    0 0.6px 1px var(--desk-shadow-contact),
+    0 3px 8px -1px var(--desk-shadow-soft);
+  --ink-soft: color-mix(in srgb, var(--desk-ink) 62%, var(--desk-paper));
 }
+
+/* Band colour per card kind (and per network, muted), the same band as the paper objects. */
+.dz-card--contact { --band: color-mix(in srgb, var(--brand-periwinkle) 82%, var(--desk-paper)); }
+.dz-card--company { --band: color-mix(in srgb, var(--brand-gold) 52%, var(--desk-paper)); }
+.dz-card--qualification { --band: color-mix(in srgb, var(--brand-lime) 72%, var(--desk-paper)); }
+.dz-card--commercial { --band: color-mix(in srgb, var(--brand-aqua) 62%, var(--desk-paper)); }
+.dz-card--notes { --band: color-mix(in srgb, var(--brand-ink) 16%, var(--desk-paper)); }
+.dz-card--social { --band: color-mix(in srgb, var(--brand-silver) 70%, var(--desk-paper)); }
+.dz-card--net-instagram { --band: color-mix(in srgb, color-mix(in srgb, var(--color-danger) 45%, var(--brand-periwinkle)) 55%, var(--desk-paper)); }
+.dz-card--net-linkedin,
+.dz-card--net-facebook { --band: color-mix(in srgb, var(--color-info) 45%, var(--desk-paper)); }
+.dz-card--net-tiktok { --band: color-mix(in srgb, color-mix(in srgb, var(--brand-ink) 55%, var(--brand-aqua)) 60%, var(--desk-paper)); }
+.dz-card--net-whatsapp { --band: color-mix(in srgb, var(--color-success) 42%, var(--desk-paper)); }
+.dz-card--net-website { --band: color-mix(in srgb, var(--brand-silver) 80%, var(--desk-paper)); }
 
 .dz-card.is-flippable .dz-face {
   backface-visibility: hidden;
 }
 
 .dz-card.is-focus .dz-face--front {
-  border-color: var(--desk-focus);
-  box-shadow: 0 4px 12px var(--desk-shadow);
+  box-shadow:
+    inset calc(-1 * max(0.5px, var(--hair))) calc(-1 * max(0.5px, var(--hair))) 0 var(--desk-edge-ink),
+    inset 0 0 0 max(1px, var(--hair)) var(--desk-focus),
+    0 1px 2px var(--desk-shadow-contact),
+    0 12px 22px -6px var(--desk-shadow);
+}
+
+.dz--fan .dz-card:not(.is-focus):hover .dz-face--front {
+  box-shadow:
+    inset calc(-1 * max(0.5px, var(--hair))) calc(-1 * max(0.5px, var(--hair))) 0 var(--desk-edge-ink),
+    inset 0 0 0 max(0.5px, var(--hair)) var(--desk-paper-edge),
+    0 1px 2px var(--desk-shadow-contact),
+    0 8px 16px -5px var(--desk-shadow-soft);
 }
 
 .dz-face--back {
   transform: rotateY(180deg);
 }
 
+/* The card's band: its kind in caps on the kind's colour (6 % of the card), the card's own button. */
 .dz-card__main {
-  display: block;
-  width: 100%;
-  margin: 0;
-  padding: 0 0 0.3em;
+  display: flex;
+  align-items: center;
+  flex: none;
+  width: auto;
+  height: 1.7em;
+  margin: 0 -0.9em 0.35em;
+  padding: 0 0.9em;
   border: 0;
-  border-bottom: max(0.6px, var(--hair)) solid var(--desk-rule);
-  background: none;
-  color: inherit;
+  border-radius: 6px 6px 0 0;
+  background: var(--band);
+  color: var(--desk-ink);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -2659,16 +2548,24 @@
   display: flex;
   align-items: center;
   gap: 0.4em;
-  font-size: 0.95em;
+  font-size: 0.8em;
   font-weight: var(--weight-bold);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--desk-ink-soft);
+  color: var(--desk-ink);
 }
 
 .dz .dz-glyph {
-  font-size: 1.5em;
+  font-size: 1.4em;
   color: var(--desk-ink);
+}
+
+.dz-face--back .dz-card__kind {
+  margin: 0 -0.9em;
+  height: 1.7em;
+  padding: 0 0.9em;
+  border-radius: 6px 6px 0 0;
+  background: var(--band);
 }
 
 .dz-body {
@@ -2704,8 +2601,12 @@
 
 .dz-title {
   min-width: 0;
-  font-size: 1.35em;
-  line-height: 1.15;
+  font-family: var(--font-display);
+  font-size: 1.2em;
+  font-weight: var(--weight-bold);
+  line-height: 1.12;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   overflow-wrap: anywhere;
 }
 
@@ -2761,7 +2662,7 @@
   position: absolute;
   inset: 0 0 1.2em;
   border-radius: 0.4em;
-  background: linear-gradient(120deg, var(--brand-periwinkle), var(--brand-aqua) 55%, var(--brand-lime));
+  background: var(--desk-grain), linear-gradient(120deg, var(--band), color-mix(in srgb, var(--band) 45%, var(--desk-paper)));
 }
 
 .dz-profile__avatar {
@@ -2922,4 +2823,588 @@
 .desk-world.is-moving .dz-card,
 .desk-world.is-moving .dz-bar {
   pointer-events: none;
+}
+
+/* ======================================================================================================
+   Paper objects (prompt 0032, changelog 0045, D-117): ink on warm paper, one band of colour per service.
+   Every face has the same hierarchy: a thin band (about 6 % of the face, the service's or the status' or the kind's
+   colour, a tiny caps code), a caps title in the heading face sized to fit (paper.ts `fitTitle`), a body preview, a
+   footer (code or count). Silhouettes: a sheet's folded corner, a form's field rules and signature, a checklist's
+   tick boxes, a document's cover on three page edges, a manila folder's tab and label plate, a box's lid and plate,
+   a card's rounded corners and left rule. Sizes are em of the face font (1em = 4 world px), lines at least 1 device px.
+   ====================================================================================================== */
+
+/* Band colours: the five services (tokens), the status tones (page desk rows), graphite steps per kind. */
+.dp--svc-clarity { --band: var(--color-service-clarity); }
+.dp--svc-direction { --band: var(--color-service-direction); }
+.dp--svc-definition { --band: var(--color-service-definition); }
+.dp--svc-materialization { --band: var(--color-service-materialization); }
+.dp--svc-soul { --band: var(--color-service-soul); }
+.dp--band-tone { --band: color-mix(in srgb, var(--tone) 58%, var(--desk-paper)); }
+.dp--band-kind { --band: color-mix(in srgb, var(--desk-ink) var(--band-mix, 26%), var(--desk-paper)); }
+.dp--band-sheet { --band-mix: 20%; }
+.dp--band-form { --band-mix: 34%; }
+.dp--band-checklist { --band-mix: 27%; }
+.dp--band-document { --band-mix: 40%; }
+.dp--band-box { --band-mix: 36%; }
+.dp--band-card { --band-mix: 30%; }
+.dp--band-folder { --band: color-mix(in srgb, var(--brand-gold) 55%, var(--desk-paper)); }
+.dp--band-rules {
+  --band: color-mix(in srgb, var(--brand-aqua) 70%, var(--desk-paper));
+  --band-img: linear-gradient(180deg, var(--brand-periwinkle), var(--brand-aqua), var(--brand-lime));
+}
+.dp--band-team,
+.dp--band-measures {
+  --band: var(--brand-silver);
+  --band-img: linear-gradient(180deg, var(--metal-stop-2), var(--metal-stop-4));
+}
+
+.dp--paperface,
+.dp--folderface,
+.dp--boxface {
+  position: relative;
+  border-radius: inherit;
+  color: var(--desk-ink);
+  --ink-soft: color-mix(in srgb, var(--desk-ink) 62%, var(--desk-paper));
+}
+
+.dp--paperface {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.7em 0.45em;
+}
+
+.dp__band {
+  flex: none;
+  display: flex !important;
+  align-items: center;
+  height: 0.95em;
+  margin: 0 -0.7em 0.55em;
+  padding: 0 0.7em;
+  background: var(--band-img, linear-gradient(var(--band), var(--band)));
+}
+
+.dp__bandtext {
+  min-width: 0;
+  font-size: 0.56em;
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--band-ink, var(--desk-ink));
+  white-space: nowrap;
+  /* No clip of its own: the face clips it (a clipping span in a solid's top that overlaps a neighbour is a layer). */
+}
+
+/* The title: the brand's heading (caps, tracked), its size and line count set inline by fitTitle. */
+:is(.dp--paperface, .dp--folderface, .dp--boxface) .dp__title {
+  flex: none;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  line-height: 1.08;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.dp__body {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 0;
+  margin-top: 0.35em;
+  font-size: 0.8em;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+
+.dp__line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dp__line--key {
+  font-weight: var(--weight-bold);
+  color: var(--desk-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.dp__para {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dp__foot {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+  min-width: 0;
+  margin-top: auto;
+  padding-top: 0.4em;
+  border-top: max(0.5px, var(--hair)) solid var(--desk-rule);
+  font-size: 0.56em;
+  font-weight: var(--weight-bold);
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.dp__foot > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dp__count {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A status pill in a footer keeps the pill's own size (the footer's caps are smaller). */
+.dp .dp__foot .dp__pill {
+  font-size: 1.3em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Sheet: the top-right corner folds over. The face is cut along the fold (the objects plane is flat, so the clip
+   is a paint clip, not a 3D flattening); the fold is the lighter back of the paper with a crease and a soft edge. */
+.desk-item--sheet .desk-top {
+  clip-path: polygon(0 0, calc(100% - 1.75em) 0, 100% 1.75em, 100% 100%, 0 100%);
+}
+
+.desk-item--sheet .desk-item__shadow {
+  background: linear-gradient(225deg, transparent 0 calc(1.24em + 0.5px), var(--desk-edge-ink) calc(1.24em + 0.5px));
+}
+
+.dp__fold {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.75em;
+  height: 1.75em;
+  background: linear-gradient(to bottom left, transparent calc(50% - max(0.3px, var(--hair) / 2)), var(--desk-paper-edge) 50%, var(--desk-paper-back) calc(50% + max(0.6px, var(--hair))));
+  box-shadow: -0.25px 0.45px 0.7px -0.1px var(--desk-shadow-soft);
+  border-bottom-left-radius: 0.2em;
+}
+
+/* The focus ring of a sheet rides on its edge (the face is clipped along the fold). */
+.desk-item--sheet .desk-top {
+  outline: none !important;
+}
+
+.desk-item.desk-item--sheet:hover .desk-item__shadow,
+.desk-item.desk-item--sheet:focus-visible .desk-item__shadow,
+.desk-item.desk-item--sheet.is-selected .desk-item__shadow {
+  outline: calc(var(--focus-ring) / var(--desk-zoom, 1)) solid var(--desk-focus);
+  outline-offset: calc(2px / var(--desk-zoom, 1));
+}
+
+.desk-item.desk-item--sheet:hover:not(:focus-visible):not(.is-selected) .desk-item__shadow {
+  outline-width: calc(1.5px / var(--desk-zoom, 1));
+  outline-color: var(--desk-felt-soft);
+}
+
+/* Form: field rows (label + rule to write on) and a signature line at the foot. */
+.dp__fields {
+  display: flex !important;
+  flex-direction: column;
+  margin-top: 0.3em;
+}
+
+.dp__fieldrow {
+  display: flex !important;
+  align-items: flex-end;
+  gap: 0.3em;
+  height: 1.08em;
+  min-width: 0;
+}
+
+.dp__label {
+  flex: 0 1 auto;
+  max-width: 62%;
+  font-size: 0.6em;
+  line-height: 1.25;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dp__rule {
+  flex: 1 1 auto;
+  min-width: 18%;
+  height: 0;
+  margin-bottom: 0.18em;
+  border-bottom: max(0.5px, var(--hair)) solid var(--desk-rule);
+}
+
+.dp__sign {
+  display: block;
+  margin-top: auto;
+}
+
+.dp__signline {
+  display: block;
+  width: 72%;
+  margin-bottom: 0.18em;
+  border-bottom: max(0.5px, var(--hair)) solid var(--desk-ink);
+}
+
+.dp__sign .dp__foot {
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Checklist: square tick boxes, one real item a row. */
+.dp__ticks {
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.22em;
+  margin-top: 0.35em;
+}
+
+.dp__tick {
+  display: flex !important;
+  align-items: center;
+  gap: 0.35em;
+  height: 0.9em;
+  min-width: 0;
+}
+
+.dp__tickbox {
+  flex: none;
+  width: 0.72em;
+  height: 0.72em;
+  border: max(0.5px, var(--hair)) solid var(--desk-ink);
+  border-radius: 0.1em;
+  background: var(--desk-paper);
+}
+
+.dp__ticktext {
+  min-width: 0;
+  font-size: 0.7em;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dp__tick .dp__rule {
+  margin-bottom: 0;
+}
+
+/* Document: a cover on three page edges (the edges are the shadow's offset copies, on the flat plane). */
+.dp--document {
+  padding: 0 0.8em 0.45em;
+  background: color-mix(in srgb, var(--band) 14%, transparent);
+}
+
+.dp--document .dp__band {
+  margin-left: -0.8em;
+  margin-right: -0.8em;
+  padding: 0 0.8em;
+}
+
+.dp__cover {
+  display: flex !important;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.35em;
+  min-height: 0;
+}
+
+.dp__coverrule {
+  width: 2.2em;
+  height: 0.16em;
+  background: var(--band-img, var(--band));
+}
+
+.dp--paperface .dp__sub {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+  font-size: 0.62em;
+  line-height: 1.25;
+  color: var(--ink-soft);
+}
+
+.dp__mark {
+  display: flex !important;
+  align-items: center;
+}
+
+.dp__mark .brand-mark {
+  --brand-mark-h: 2.2em;
+}
+
+.desk-item--document .desk-item__shadow {
+  --e: calc(1.4px * var(--k, 1));
+  box-shadow:
+    var(--e) var(--e) 0 var(--desk-paper),
+    calc(var(--e) + max(0.5px, var(--hair))) calc(var(--e) + max(0.5px, var(--hair))) 0 var(--desk-edge-ink),
+    calc(var(--e) * 2) calc(var(--e) * 2) 0 var(--desk-paper-side),
+    calc(var(--e) * 2 + max(0.5px, var(--hair))) calc(var(--e) * 2 + max(0.5px, var(--hair))) 0 var(--desk-edge-ink),
+    calc(var(--e) * 3) calc(var(--e) * 3) 0 var(--desk-paper-side),
+    calc(var(--e) * 3 + max(0.5px, var(--hair))) calc(var(--e) * 3 + max(0.5px, var(--hair))) 0 var(--desk-edge-ink),
+    calc(var(--e) * 3) calc(var(--e) * 3 + 1.2px) 3px var(--desk-shadow-soft);
+}
+
+.desk-item--document .desk-side--front {
+  background: repeating-linear-gradient(to bottom, var(--desk-paper) 0 0.9px, var(--desk-paper-edge) 0.9px 1.5px);
+}
+
+/* Folder: manila, a coloured tab with the code, papers showing at the top edge, a label plate. */
+.desk-item--folder .desk-top {
+  border-radius: 0.5px 2.5px 2.5px 2.5px;
+  background: var(--desk-grain), var(--desk-manila);
+  box-shadow: inset 0 0 0 max(0.5px, var(--hair)) color-mix(in srgb, var(--desk-manila-edge) 55%, transparent);
+}
+
+.desk-item--folder .desk-side {
+  background: var(--desk-manila-side);
+}
+
+.desk-item--folder .desk-side--front {
+  /* Front edge: the front cover, the papers, the back cover. */
+  background: linear-gradient(to bottom, var(--desk-manila-side) 0 30%, var(--desk-paper) 30% 62%, var(--desk-manila-edge) 62%);
+}
+
+.dp--folderface {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.75em 0.55em;
+  overflow: visible;
+}
+
+/* The tab and the papers stand above the face's top edge, in the flow (a negative margin), never positioned. */
+.dp__tabrow {
+  display: flex !important;
+  align-items: flex-end;
+  flex: none;
+  height: 1.8em;
+  margin: -1.75em -0.75em 0.85em;
+}
+
+.dp__tab {
+  display: flex !important;
+  align-items: center;
+  flex: none;
+  height: 1.8em;
+  min-width: 6em;
+  padding: 0 0.8em;
+  border-radius: 0.5em 0.6em 0 0;
+  background: var(--band-img, var(--band));
+  box-shadow: inset 0 max(0.5px, var(--hair)) 0 color-mix(in srgb, var(--metal-highlight) 45%, transparent);
+}
+
+.dp__tabtext {
+  font-size: 0.8em;
+  font-weight: var(--weight-black);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--band-ink, var(--desk-ink));
+  white-space: nowrap;
+}
+
+.dp__papers {
+  flex: 0 0 64%;
+  height: 0.42em;
+  margin: 0 3% 0 auto;
+  border-radius: 0.2em 0.35em 0 0;
+  background: linear-gradient(to right, var(--desk-paper) 0 58%, var(--desk-paper-back) 58% 60%, var(--desk-paper) 60%);
+  box-shadow: inset 0 max(0.5px, var(--hair)) 0 var(--desk-paper-edge), inset calc(-1 * max(0.5px, var(--hair))) 0 0 var(--desk-paper-edge);
+}
+
+.dp__folderbody {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.75em;
+  min-height: 0;
+}
+
+.dp__plate {
+  display: flex !important;
+  flex: none;
+  flex-direction: column;
+  gap: 0.25em;
+  padding: 0.4em 0.55em 0.45em;
+  border-radius: 0.25em;
+  background: var(--desk-paper);
+  box-shadow: 0 0 0 max(0.5px, var(--hair)) var(--desk-paper-edge), 0 0.3px 0.6px var(--desk-shadow-soft);
+}
+
+.dp--folderface .dp__sub,
+.dp--boxface .dp__sub {
+  font-size: 0.62em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dp__side {
+  display: flex !important;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.15em;
+  min-width: 0;
+  font-size: 0.68em;
+  line-height: 1.25;
+  color: color-mix(in srgb, var(--desk-ink) 78%, var(--desk-manila));
+}
+
+.dp__side .dp__pill {
+  margin-bottom: 0.2em;
+}
+
+.dp__foot--folder,
+.dp__foot--box {
+  align-self: flex-end;
+  padding: 0;
+  border: 0;
+}
+
+/* Box: kraft, a lid with its rim, a label plate with the kit's name, the code stencilled on the lid. */
+.desk-item--box .desk-top {
+  border-radius: 1px;
+  background: var(--desk-grain), var(--desk-kraft);
+  box-shadow:
+    inset 0 0 0 max(0.5px, var(--hair)) color-mix(in srgb, var(--desk-kraft-side) 80%, var(--brand-ink)),
+    inset 0 0 0 0.35em color-mix(in srgb, var(--desk-kraft) 82%, var(--metal-highlight));
+}
+
+.desk-item--box .desk-side {
+  /* The lid's skirt over the box: lighter, a seam line, then the box's side. */
+  background:
+    linear-gradient(to bottom, transparent 0 32%, color-mix(in srgb, var(--desk-kraft-side) 70%, var(--brand-ink)) 32% calc(32% + max(0.6px, var(--hair))), transparent 0),
+    linear-gradient(to bottom, color-mix(in srgb, var(--desk-kraft) 72%, var(--desk-kraft-side)) 0 32%, var(--desk-kraft-side) 32%),
+    var(--desk-grain);
+}
+
+.desk-item--box .desk-side--left,
+.desk-item--box .desk-side--right {
+  background:
+    linear-gradient(to right, transparent 0 32%, color-mix(in srgb, var(--desk-kraft-side) 70%, var(--brand-ink)) 32% calc(32% + max(0.6px, var(--hair))), transparent 0),
+    linear-gradient(to right, color-mix(in srgb, var(--desk-kraft) 72%, var(--desk-kraft-side)) 0 32%, color-mix(in srgb, var(--desk-kraft-side) 88%, var(--brand-ink)) 32%),
+    var(--desk-grain);
+}
+
+.desk-item--box .desk-side--left {
+  background:
+    linear-gradient(to left, transparent 0 32%, color-mix(in srgb, var(--desk-kraft-side) 70%, var(--brand-ink)) 32% calc(32% + max(0.6px, var(--hair))), transparent 0),
+    linear-gradient(to left, color-mix(in srgb, var(--desk-kraft) 72%, var(--desk-kraft-side)) 0 32%, color-mix(in srgb, var(--desk-kraft-side) 88%, var(--brand-ink)) 32%),
+    var(--desk-grain);
+}
+
+.dp--boxface {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em 0.9em 0.55em;
+}
+
+.dp__stencil {
+  flex: none;
+  font-size: 1.5em;
+  font-weight: var(--weight-black);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--desk-kraft-side) 55%, var(--brand-ink));
+}
+
+.dp--boxface .dp__plate {
+  flex: none;
+  gap: 0.2em;
+  margin-top: 0.35em;
+  padding: 0 0.45em 0.4em;
+  overflow: hidden;
+}
+
+.dp__plateband {
+  display: block;
+  height: 0.5em;
+  margin: 0 -0.45em 0.2em;
+  background: var(--band-img, var(--band));
+}
+
+.dp__foot--box {
+  margin-top: auto;
+  justify-content: flex-end;
+}
+
+/* Card: stiff card, rounded corners, a coloured rule down its left edge. */
+.desk-item--card .desk-top,
+.desk-item--card .desk-item__shadow {
+  border-radius: 3px;
+}
+
+.desk-item--card .desk-top {
+  background: var(--desk-grain), var(--desk-paper);
+}
+
+.dp--cardface {
+  gap: 0.3em;
+  padding: 0.6em 0.6em 0.45em 0.95em;
+  background: var(--band-img, linear-gradient(var(--band), var(--band))) left top / 0.32em 100% no-repeat;
+}
+
+.dp--cardface .dp__kicker {
+  flex: none;
+  align-items: center;
+}
+
+.dp--cardface .dp__kicker .dp__pill {
+  font-size: 0.7em;
+}
+
+.dp--cardface .dp__bandtext {
+  color: var(--ink-soft);
+}
+
+.dp--cardface.is-sentence .dp__title {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  line-height: 1.24;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Plain tiles (past the face budget) and the pile take the band too. */
+.dp--plain {
+  border-top: 0.3em solid var(--desk-paper-edge);
+}
+
+/* The drawer and the legend draw the same shadow and edges: world px there are preview px. */
+.desk-preview,
+.desk-legend__face {
+  --hair: 0.6px;
+}
+
+.desk-preview__face {
+  box-shadow: none;
+}
+
+.desk-preview__face .desk-top {
+  font-size: inherit;
+}
+
+/* Sub-mat label: a small glyph of the kind it mostly holds. */
+.desk-sub__label .desk-sub__glyph {
+  flex: none;
+  font-size: 12px;
+  color: var(--desk-felt-soft);
+}
+
+/* Inside a solid's top face (document, folder, box on the bodies layer) a title that clips its own lines becomes a
+   compositor layer of its own whenever it overlaps another layer (a fan over the desk: A-08 +19 %). fitTitle already
+   sizes it to its line budget, so there it does not clip; the drawer and the legend keep the clamp as a safety. */
+.desk-body :is(.dp--folderface, .dp--boxface, .dp--document) .dp__title {
+  display: block !important;
+  overflow: visible;
 }

@@ -54,14 +54,16 @@ export interface KindGeometry {
  * size in world px (every size inside a face is em, so the drawer and the legend scale the same markup).
  */
 export const GEOMETRY: Record<ItemKind, KindGeometry> = {
-  sheet: { t: 1, w: 1, h: 1, face: { w: 46, h: 60 }, font: 2.3 },
-  form: { t: 1, w: 1, h: 1, face: { w: 46, h: 60 }, font: 2.3 },
-  checklist: { t: 1, w: 1, h: 1, face: { w: 46, h: 60 }, font: 2.3 },
-  document: { t: 6, w: 1, h: 1, face: { w: 46, h: 58 }, font: 2.3 },
-  folder: { t: 8, w: 2, h: 1, face: { w: 114, h: 50 }, font: 3.1 },
-  box: { t: 18, w: 1, h: 1, face: { w: 52, h: 52 }, font: 3.2 },
+  // Paper objects (changelog 0045): every paper face is 1em = 4 world px, so the hierarchy (caps title, body preview,
+  // footer) is the same on every kind; each leaves at least 6 px to the next square, turned (paper.ts).
+  sheet: { t: 1, w: 1, h: 1, face: { w: 46, h: 58 }, font: 4 },
+  form: { t: 1, w: 1, h: 1, face: { w: 46, h: 58 }, font: 4 },
+  checklist: { t: 1, w: 1, h: 1, face: { w: 46, h: 58 }, font: 4 },
+  document: { t: 6, w: 1, h: 1, face: { w: 44, h: 53 }, font: 4 },
+  folder: { t: 8, w: 2, h: 1, face: { w: 112, h: 46 }, font: 4 },
+  box: { t: 20, w: 1, h: 1, face: { w: 50, h: 50 }, font: 4.4 },
   token: { t: 4, w: 1, h: 1, face: { w: 44, h: 44 }, font: 3.4 },
-  card: { t: 2, w: 1, h: 1, face: { w: 56, h: 40 }, font: 2.5 },
+  card: { t: 2, w: 1, h: 1, face: { w: 56, h: 40 }, font: 4 },
   light: { t: 2, w: 1, h: 1, face: { w: 58, h: 58 }, font: 6.4 },
   stack: { t: 5, w: 1, h: 1, face: { w: 46, h: 56 }, font: 4.2 },
   // Devices. Phone 390 x 844 screens, tablet 3:4, screen 16:10 on a stand, tall website pages.
@@ -97,6 +99,8 @@ export interface DeskItem {
   source: string;
   /** Short code printed on the object (service code, phase id, rule id, unit). */
   code?: string;
+  /** The playbook service the object belongs to (`01`, `02`, `03`, `E`, `04`): its face's band colour (D-117). */
+  service?: string;
   title: Text;
   /** Second line: the service a checklist belongs to, the status set of a token, a rule kind, a row's entity. */
   subtitle?: Text;

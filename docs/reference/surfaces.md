@@ -369,6 +369,8 @@ The client reads every one of these as one of eleven statuses derived from the f
 
 ## 3. Change log of this file
 
+- 2026-09-30 (changelog 0045): no route, action or CLI change (desk paper objects and the dossier fan restyled; `desk:check` also fails a turned paper face that leaves its squares; tokens `--color-paper` and `--color-service-*` added, D-117).
+
 - 2026-09-29 (changelog 0042): no route or action change (W-05 / D-16 polish: lens-aware subtitle, device-true standalone lens, the map's page groups as sub-mats, header strip on phones, ES wording). CLI: `screenshots.mjs --click=<selector>[;…]` and folder-index answers for `--mount` (section 1.4 `npm run screenshots` row).
 
 - 2026-09-29 (changelog 0041): lead dossiers and work mats (D-114): 10 `desk.*` ids (`dossierActionsFor`, `src/desk/actions.ts`) appended to the page-desk routes that read `leads` and registered while those desks are mounted (1.3 row); W-04 +`desk.sendToWorkMat` (1.1 W-04 row, 1.3 row); storage key `aluzina.desk.workmats.<code>` (1.2); `tenant.json` `actions` 471 declared / 441 distinct. No route, channel or global added. Changelog 0038 (render quality) changed no surface.

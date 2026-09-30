@@ -15,10 +15,10 @@ The desk is how the Hub shows a page's things as physical objects on a zoomable 
 
 | Kind | Footprint (w x h squares) | Thickness | Face (world px) | What it is |
 | --- | --- | --- | --- | --- |
-| sheet, form, checklist | 1 x 1 | 1 | 46 x 60 | a page: a record with a few fields, a form, a checklist |
-| document | 1 x 1 | 6 | 46 x 58 | pages bound together; may carry an image face (its first page) |
-| folder | 2 x 1 | 8 | 114 x 50 | holds other things |
-| box | 1 x 1 | 18 | 52 x 52 | goods, a kit |
+| sheet, form, checklist | 1 x 1 | 1 | 46 x 58 | a page: a record with a few fields, a form, a checklist |
+| document | 1 x 1 | 6 | 44 x 53 (+ 4.2 page edges) | pages bound together; may carry an image face (its first page) |
+| folder | 2 x 1 | 8 | 112 x 46 (+ 7 tab) | holds other things |
+| box | 1 x 1 | 20 | 50 x 50 | goods, a kit |
 | token | 1 x 1 | 4 | 44 x 44 | a status or tag (stacked discs) |
 | card | 1 x 1 | 2 | 56 x 40 | a person, company, rule, meeting |
 | light | 1 x 1 | 2 | 58 x 58 | a live record of W-04's followed project |
@@ -115,7 +115,7 @@ One depth order for the whole desk, in `src/desk/depth.ts` (`DEPTH`, applied as 
 | sub | 2 | linen, chess squares (one layer per sub-mat) |
 | glow | 2.5 | the status token's halo, light tiles' light and the lit tile's rings (under every face) |
 | objects | 3 | the objects plane, flat, one layer per sub-mat: the sub-mat label, every object's hit area and single shadow, the thin faces (sheet, form, checklist, card, light, plain tiles) |
-| objects + t | 4 .. 21 | solid bodies on the sub-mat's bodies layer: document (t 6) and folder (8) top + front face, box (18) top + front / left / right, token (4) two discs + face, the "+N more" pile (5) three offset sheets |
+| objects + t | 4 .. 23 | solid bodies on the sub-mat's bodies layer: document (t 6) and folder (8) top + front face, box (20) top + front / left / right, token (4) two discs + face, the "+N more" pile (5) three offset sheets |
 | lift | + 0.75 | a focused or selected solid lifts; a focused or selected flat object paints above its neighbours (`z-index` on the flat plane) |
 | stationTop / standGap | mat + 22 / + 0.5 | a person's desk top; chair, figure, props and nameplate stand 0.5 above it, never on it |
 | fan | 28 | a fanned lead dossier's overlay plane (D-114) |
@@ -134,11 +134,33 @@ Rules:
 - Gestures: the camera maths runs per event, the DOM write once per frame (`requestApply`); the stage rectangle is read once per gesture (no layout reads in move handlers); `will-change: transform` and `pointer-events: none` on the world only while it moves; `content-visibility` is not used inside the 3D context (it clips). Reduced motion: no inertia, instant camera moves.
 - Tooltips show on hover, on Tab and on a scripted `focus()` (any focus not caused by a pointer press within 800 ms); mat and sub-mat labels have one too (their full name). Sub-mat names take two lines of the label strip instead of an ellipsis.
 
+## Paper objects (D-117, changelog 0045)
+
+Ink on warm paper, one band of colour, no clip-art; procedural only. Rules in `src/desk/paper.ts` (pure: bands, turns, `faceBox`, `drawnBox`, `fitTitle`), faces in `DeskObject.tsx`, styles in `desk.css` "Paper objects".
+
+- **Paper**: `--color-paper` (light `#FBF8F1`, dark `#EEE8DC`; paper stays light on the dark desk), the SVG grain, a 1 device-px ink edge on its bottom and right (the object's one shadow, a hair larger), a grounded shadow (contact + soft, growing with the thickness).
+- **Band**: about 6 % of the face (0.95 em), a tiny caps code (0.56 em): service and stage ("03 · Stage 11"), else the code (a card: code · kind), else the row's entity, else the kind. Colour: `DeskItem.service` -> the service token; else the row's status tone mixed 58 % into paper; else a graphite step per kind; rule cards the iridescent rule, team and KPI cards the metal. Ink text on every band.
+
+| Service | Token | Light | Dark |
+| --- | --- | --- | --- |
+| 01 Clarity (Creative Digital Consultation) | `--color-service-clarity` | `#8FA5E6` | `#8499DB` |
+| 02 Direction (In-Person Consultation) | `--color-service-direction` | `#4FD3BC` | `#45C2AD` |
+| 03 Definition (Comprehensive Interior Design) | `--color-service-definition` | `#A9CF47` | `#9DC040` |
+| E Materialization (Execution / Construction) | `--color-service-materialization` | `#BC9C68` | `#AF9060` |
+| 04 Soul (Interior Styling) | `--color-service-soul` | `#B09BD6` | `#A28DCB` |
+
+- **Silhouettes**: sheet, the top-right corner folded (the face cut along the fold on the flat plane, the fold the lighter back with a crease; its focus ring on the paper's edge); form, 5-7 field rows (label + rule) and a signature line; checklist, 3-6 real items with square tick boxes and "n items"; document, a cover tinted by its band (title, rule, subtitle, the brand monogram, "n pages") on three offset page edges (the shadow's offset copies); folder, manila with a tab in the band colour carrying the code, papers at the top edge, a label plate, preview lines, the count; box, kraft lid with its rim, the lid's skirt and seam on every side, the code stencilled, a label plate; card, rounded corners and a coloured left rule (a rule's text reads as a sentence); token unchanged; light tiles keep their glow and take the band and the caps title.
+- **Type**: the title in the heading face (bold caps, 0.05 em tracking) at the largest size `fitTitle` finds for its line budget (widths measured on a canvas in the live heading face, the estimate 0.8 em a character where there is none), the preview in the body face (0.8 em), the footer in caps (0.56 em); 1 em = 4 world px on paper faces. Whole rows only: row counts are computed from the space left, never clipped mid-row. No min-font-size clamps (the zoom rasterises).
+- **Placement**: paper kinds (sheet, form, checklist, document, folder, box, card, the pile) turn `turnOf(id)` in -1.5° .. 1.5° (0.1° steps, FNV-1a of the id), the object's shadow and its body together (`--turn`); `drawnBox()` is the turned face with its tab or page edges, and `desk:check` fails when it leaves the object's squares.
+- **Sub-mat labels** carry a small glyph of the kind they mostly hold.
+- **Inside a solid's top face** (document, folder, box on the bodies layer) nothing is positioned and nothing clips itself except the face: a positioned or clipping span that overlaps a neighbour's side or a fan becomes a compositor layer of its own (K-04 went 561 -> 675 until the tab and plates were in the flow). The face clips the band's code; titles there are sized, not clamped.
+- **Fans**: a uniform arc (760 world px under the middle card, at most 96 px and 7.5° a card, shrunk evenly to fit the mat), placement as `--x --y --z --r --s` composed into one transform; the focused card rises 16 px, upright, in front; a hovered or keyboard-focused card lifts 6 px, upright; the fanned mat dims (its materials step down: no veil, no filter); card bands per kind (Contact periwinkle, Company gold, Qualification lime, Commercial aqua, Notes graphite, social cards the network's colour muted); the strip is the library's `Button` and `Select` at half size.
+
 ## Stacks and fans (D-114, changelog 0041)
 
 - A lead on a page desk that shows `leads` (A-08, A-03) is a **profile** object (2 x 1): photo, logo when there is a company, name, company or city, status pill, budget, network icons. Selecting it opens its drawer and its **dossier**: cards for contact, company, each social profile, qualification, commercial, notes and messages (`src/desk/dossier.tsx`, 148 x 204 world px, text 7.2 px).
 - The dossier lives on its own **overlay plane** (`DEPTH.fan` = 28, above every body and station top at 22; each open dossier 2 px higher, each card 0.2 px), not among the objects: it never interpenetrates a solid or clips, and the process stacks under it do not move.
-- **Stack**: over the lead card at scale 0.42, 1.6 px offsets, the top card last in DOM order and highest in Z. **Fan**: an arc of radius 900 world px whose step (at most 8° a card) is chosen so the whole fan stays inside the lead's mat; the focused card rises 30 px and comes to the front. **Sort** by kind, date or network. **Flip**: only social cards turn over (`preserve-3d` on those cards only); the front is the mock profile with Visit (a real link, or a disabled button with its reason), the back the lead's notes with Turn back. `desk.fanOut` fits the mat and the fan together (`useDesk` `fitBox`), so the controls and the raised card stay in the stage. 360 ms transform transitions, none under reduced motion.
+- **Stack**: over the lead card at scale 0.42, 1.6 px offsets, the top card last in DOM order and highest in Z. **Fan**: a uniform arc kept inside the lead's mat (changelog 0045: 760 world px under the middle card, evenly spaced; see Paper objects); the focused card rises 16 px, upright and in front. **Sort** by kind, date or network. **Flip**: only social cards turn over (`preserve-3d` on those cards only); the front is the mock profile with Visit (a real link, or a disabled button with its reason), the back the lead's notes with Turn back. `desk.fanOut` fits the mat and the fan together (`useDesk` `fitBox`), so the controls and the raised card stay in the stage. 360 ms transform transitions, none under reduced motion.
 - Actions: `desk.fanOut`, `desk.stackUp`, `desk.sortStack`, `desk.flipCard` (`src/desk/leadDesk.tsx`, the route's guard). Keys: Enter on a focused social card flips it; Tab walks the bar (Fan / Stack, Sort, Flip, To work mat, Close) and the cards.
 
 ## Work mats (D-114, changelog 0041)

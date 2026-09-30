@@ -2243,6 +2243,22 @@
       "changelog": "0041"
     },
     {
+      "id": "dk-09",
+      "title": "Paper objects redesigned (prompt 0032, D-117): paper and five service colours as tokens, a band per service / status / kind, real silhouettes per kind, caps titles sized to fit, hand-placed turns checked by desk:check, a uniform dossier fan with the library's Button / Select strip; layer counts unchanged",
+      "step": "17",
+      "status": "done",
+      "model": "Opus 5.5",
+      "codes": [
+        "W-04",
+        "A-08",
+        "A-03"
+      ],
+      "dependsOn": [
+        "dk-07"
+      ],
+      "changelog": "0045"
+    },
+    {
       "id": "ch-01",
       "title": "W-05 client hub desk (prompt 0030, D-108..D-112): HOY's hub map (hoy.hub-map/1) read live with a bundled snapshot, one mat per HOY role with its seated figure, experiences as sub-mats, all 87 pages as phones / tall pages / screens / documents with real capture faces, drawer with purpose, declared actions and Open live as that role, 11 clienthub.* actions, HUB-01 card",
       "step": "18",

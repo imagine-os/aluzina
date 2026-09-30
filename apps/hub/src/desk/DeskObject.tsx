@@ -1,7 +1,12 @@
 import { memo, useState, type CSSProperties, type FocusEvent, type MouseEvent, type ReactNode } from 'react';
 import { Icon, isIconName } from '../components/atom/Icon/Icon';
 import { pick, type Text } from '../tenant/domain';
+import { BrandMark } from '../components/atom/BrandMark/BrandMark';
+import { bandClass, faceBox, fitTitle, stageOf, turnOf } from './paper';
+import { deskStrings } from './strings';
 import { CAPTION_H, DEVICE_KINDS, GEOMETRY, type DeskItem, type PlacedItem } from './types';
+
+export { faceBox } from './paper';
 
 type Lang = 'en' | 'es';
 
@@ -28,7 +33,6 @@ export function Preview({ item, lang, rows, moreLabel, labelled = false }: Previ
   const cap = rows ?? FACE_ROWS[item.kind] ?? 8;
   const shown = item.lines.slice(0, cap);
   const more = item.lines.length - shown.length;
-  const heading = (i: number) => item.sections?.find((s) => s.at === i && item.kind !== 'folder');
   const pill = item.pill ? <span className={`dp__pill dp--tone-${item.pill.tone}`}>{p(item.pill.label)}</span> : null;
 
   if (DEVICE_KINDS.has(item.kind)) return <DeviceFace item={item} lang={lang} shown={shown} pill={pill} moreLabel={moreLabel} labelled={labelled} />;
@@ -67,12 +71,14 @@ export function Preview({ item, lang, rows, moreLabel, labelled = false }: Previ
   if (item.kind === 'light') {
     // A row of the followed project (D-105): what it is, its real content, and "+N more" on the last of its kind.
     return (
-      <span className={`dp dp--light dp--tone-${item.tone ?? 'info'}${item.profile?.portrait ? ' dp--with-avatar' : ''}`}>
+      <span className={`dp dp--light dp--band-tone dp--tone-${item.tone ?? 'info'}${item.profile?.portrait ? ' dp--with-avatar' : ''}`}>
+        <span className="dp__band">
+          <span className="dp__bandtext">{p(item.subtitle)}</span>
+        </span>
         <span className="dp__kicker">
           {item.profile?.portrait && <img className="dp__avatar" src={item.profile.portrait} alt="" draggable={false} />}
-          <span className="dp__code">{p(item.subtitle)}</span>
+          <span className="dp__title">{p(item.title)}</span>
         </span>
-        <span className="dp__title">{p(item.title)}</span>
         <span className="dp__rows">
           {shown.map((line, i) => (
             <span key={i} className={`dp__row${i === shown.length - 1 ? ' dp__row--key' : ''}`}>
@@ -117,82 +123,316 @@ export function Preview({ item, lang, rows, moreLabel, labelled = false }: Previ
       </span>
     );
   }
-  if (item.kind === 'card') {
-    return (
-      <span className="dp dp--card">
-        <span className="dp__kicker">
-          {pill ?? <span className="dp__code">{item.code}</span>}
-          <span className="dp__sub">{p(item.subtitle)}</span>
-        </span>
-        <span className="dp__title">{p(item.title)}</span>
-        {item.pill && item.lines.length > 0 && (
-          <span className="dp__rows">
-            {item.lines.slice(0, 2).map((line, i) => (
-              <span key={i} className="dp__row">
+  if (item.kind === 'card') return <CardFace item={item} lang={lang} pill={pill} />;
+  if (item.kind === 'box') return <BoxFace item={item} lang={lang} pill={pill} />;
+  if (item.kind === 'folder') return <FolderFace item={item} lang={lang} pill={pill} shown={shown} more={more} moreLabel={moreLabel} />;
+  if (item.kind === 'document') return <DocumentFace item={item} lang={lang} pill={pill} />;
+  if (item.kind === 'form') return <FormFace item={item} lang={lang} pill={pill} />;
+  if (item.kind === 'checklist') return <ChecklistFace item={item} lang={lang} pill={pill} />;
+  return <SheetFace item={item} lang={lang} pill={pill} rows={rows} />;
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Paper faces (changelog 0045, D-117). One hierarchy on every kind: a band (service / status / kind colour, a tiny
+// caps code), a caps title in the heading face sized to fit (`fitTitle`), a body-face preview, a footer (code or a
+// count). Sizes are em of the face font (1em = 4 world px on paper), so the drawer and the legend scale the same
+// markup. Row counts are computed, never clipped mid-row: a face shows whole rows only.
+// ---------------------------------------------------------------------------------------------------------------
+
+type FaceProps = { item: DeskItem; lang: Lang; pill: ReactNode };
+
+/** A desk string in the face's language (the faces render outside the page's `t`, like the drawer's preview). */
+function ft(key: string, lang: Lang, vars: Record<string, string | number> = {}): string {
+  const e = deskStrings[key];
+  const raw = typeof e === 'string' ? e : (lang === 'es' ? e?.es : undefined) ?? e?.en ?? key;
+  return raw.replace(/\{(\w+)\}/g, (_, k: string) => String(vars[k] ?? ''));
+}
+
+/** The band's text: service and stage, else the code (and a card's kind), else the row's entity, else the kind. */
+function bandText(item: DeskItem, lang: Lang): string {
+  const p = (x: Text | undefined) => (x ? pick(x, lang) : '');
+  if (item.service) {
+    const stage = stageOf(item.code);
+    return stage ? `${item.service} · ${ft('desk.face.stage', lang, { n: stage })}` : item.service;
+  }
+  if (item.kind === 'card' && item.code && item.subtitle) return `${item.code} · ${p(item.subtitle)}`;
+  if (item.code) return item.code;
+  if (item.source === 'row' && item.subtitle) return p(item.subtitle);
+  return ft(`desk.kind.${item.kind}`, lang);
+}
+
+function Band({ item, lang }: { item: DeskItem; lang: Lang }) {
+  return (
+    <span className="dp__band">
+      <span className="dp__bandtext">{bandText(item, lang)}</span>
+    </span>
+  );
+}
+
+/** Face size in em of its font: width and height of the face. */
+function faceEm(item: DeskItem): { w: number; h: number } {
+  const g = GEOMETRY[item.kind];
+  const f = item.font ?? g.font;
+  return { w: g.face.w / f, h: g.face.h / f };
+}
+
+/**
+ * Caps widths measured in the face's own heading font (a canvas, once per word), 4 % wider for the tracking's
+ * rounding; the estimate of paper.ts where there is no canvas. The first measure happens after the page's fonts
+ * are declared, so a fallback face measures wider, never narrower, than the face that loads later.
+ */
+const capsCache = new Map<string, number>();
+let capsCtx: CanvasRenderingContext2D | null | undefined;
+function measureCaps(word: string): number {
+  const hit = capsCache.get(word);
+  if (hit !== undefined) return hit;
+  if (capsCtx === undefined) {
+    try {
+      capsCtx = typeof document !== 'undefined' ? document.createElement('canvas').getContext('2d') : null;
+      if (capsCtx) capsCtx.font = `700 100px ${getComputedStyle(document.documentElement).getPropertyValue('--font-display') || 'system-ui'}`;
+    } catch {
+      capsCtx = null;
+    }
+  }
+  const w = capsCtx ? (capsCtx.measureText(word.toUpperCase()).width / 100 + (word === ' ' ? 0 : word.length * 0.05)) * 1.04 : word === ' ' ? 0.36 : word.length * 0.8;
+  capsCache.set(word, w);
+  return w;
+}
+
+/** Title size and the lines it takes, for a width in em (the face minus its padding). */
+function titleFit(text: string, widthEm: number, maxEm: number, lines: number, minEm = 0.95) {
+  return fitTitle(text, widthEm, maxEm, minEm, lines, measureCaps);
+}
+
+const LH_TITLE = 1.08;
+const PAD_X = 0.7;
+
+/** Sheet: one page, its top-right corner folded over (a real triangle with the lighter back of the paper). */
+function SheetFace({ item, lang, pill, rows }: FaceProps & { rows?: number }) {
+  const p = (x: Text | undefined) => (x ? pick(x, lang) : '');
+  const em = faceEm(item);
+  const title = p(item.title);
+  const t = titleFit(title, em.w - 2 * PAD_X - 0.6, 1.6, 3);
+  // Rows of the preview (0.8em, 1.3 line height): what is left under band, title and footer.
+  const avail = em.h - 0.95 - 0.55 - t.lines * t.size * LH_TITLE - 0.35 - 1.25 - 0.45;
+  const cap = rows === Infinity ? item.lines.length : Math.max(0, Math.min(3, Math.floor(avail / 1.04)));
+  const one = item.lines.length === 1;
+  const shown = item.lines.slice(0, one ? 1 : cap);
+  const foot = pill ?? (item.lines.length > cap && cap > 0 ? <span className="dp__count">{ft('desk.face.items', lang, { n: item.lines.length })}</span> : null);
+  return (
+    <span className={`dp dp--paperface dp--sheet ${bandClass(item)}`}>
+      <Band item={item} lang={lang} />
+      <span className="dp__fold" aria-hidden="true" />
+      <span className="dp__title" style={{ fontSize: `${t.size}em`, WebkitLineClamp: t.lines }}>
+        {title}
+      </span>
+      {cap > 0 && shown.length > 0 && (
+        <span className="dp__body">
+          {one ? (
+            <span className="dp__para" style={{ WebkitLineClamp: rows === Infinity ? 99 : cap }}>
+              {p(shown[0])}
+            </span>
+          ) : (
+            shown.map((line, i) => (
+              <span key={i} className={`dp__line${i === 0 && item.source === 'row' ? ' dp__line--key' : ''}`}>
                 {p(line)}
               </span>
-            ))}
+            ))
+          )}
+        </span>
+      )}
+      <span className="dp__foot">{foot}</span>
+    </span>
+  );
+}
+
+/** Form: 5 to 7 field rows (label and a rule to write on), a signature line at the foot. */
+function FormFace({ item, lang, pill }: FaceProps) {
+  const p = (x: Text | undefined) => (x ? pick(x, lang) : '');
+  const em = faceEm(item);
+  const title = p(item.title);
+  const t = titleFit(title, em.w - 2 * PAD_X, 1.3, 2);
+  const avail = em.h - 0.95 - 0.5 - t.lines * t.size * LH_TITLE - 0.3 - 2.3 - 0.4;
+  const n = Math.max(5, Math.min(7, Math.floor(avail / 1.08)));
+  const fields = Array.from({ length: n }, (_, i) => item.lines[i]);
+  return (
+    <span className={`dp dp--paperface dp--form ${bandClass(item)}`}>
+      <Band item={item} lang={lang} />
+      <span className="dp__title" style={{ fontSize: `${t.size}em`, WebkitLineClamp: t.lines }}>
+        {title}
+      </span>
+      <span className="dp__fields">
+        {fields.map((f, i) => (
+          <span key={i} className={`dp__fieldrow${f ? '' : ' is-blank'}`}>
+            {f && <span className="dp__label">{p(f)}</span>}
+            <span className="dp__rule" aria-hidden="true" />
           </span>
-        )}
+        ))}
       </span>
-    );
-  }
-  if (item.kind === 'box') {
-    return (
-      <span className="dp dp--box">
-        <span className="dp__tape" aria-hidden="true" />
-        {pill}
-        <span className="dp__big">{item.code}</span>
-        <span className="dp__title">{p(item.title)}</span>
-        <span className="dp__sub">{p(item.subtitle)}</span>
-        {item.lines.length > 0 && <span className="dp__count">{item.lines.length}</span>}
+      <span className="dp__sign">
+        <span className="dp__signline" aria-hidden="true" />
+        <span className="dp__foot">
+          <span>{ft('desk.face.signature', lang)}</span>
+          {pill ?? <span className="dp__count">{ft('desk.face.fields', lang, { n: item.lines.length })}</span>}
+        </span>
       </span>
-    );
-  }
-  if (item.kind === 'folder') {
-    return (
-      <span className="dp dp--folder">
-        <span className="dp__tab">{item.code}</span>
-        {pill}
-        <span className="dp__title">{p(item.title)}</span>
-        <span className="dp__sub">{p(item.subtitle)}</span>
-        <span className="dp__rows">
-          {item.sections?.[0] && <span className="dp__section">{p(item.sections[0].label)}</span>}
-          {shown.map((line, i) => (
-            <span key={i} className="dp__row">
+    </span>
+  );
+}
+
+/** Checklist: a title, 3 to 6 real items with square tick boxes, "n items" at the foot. */
+function ChecklistFace({ item, lang, pill }: FaceProps) {
+  const p = (x: Text | undefined) => (x ? pick(x, lang) : '');
+  const em = faceEm(item);
+  const title = p(item.title);
+  const t = titleFit(title, em.w - 2 * PAD_X, 1.35, 2);
+  const avail = em.h - 0.95 - 0.5 - t.lines * t.size * LH_TITLE - 0.35 - 1.25 - 0.45;
+  const n = Math.max(3, Math.min(6, Math.floor(avail / 1.12)));
+  const items = item.lines.slice(0, n);
+  const blanks = Math.max(0, Math.min(3, n) - items.length);
+  return (
+    <span className={`dp dp--paperface dp--checklist ${bandClass(item)}`}>
+      <Band item={item} lang={lang} />
+      <span className="dp__title" style={{ fontSize: `${t.size}em`, WebkitLineClamp: t.lines }}>
+        {title}
+      </span>
+      <span className="dp__ticks">
+        {items.map((line, i) => (
+          <span key={i} className="dp__tick">
+            <span className="dp__tickbox" aria-hidden="true" />
+            <span className="dp__ticktext">{p(line)}</span>
+          </span>
+        ))}
+        {Array.from({ length: blanks }, (_, i) => (
+          <span key={`b${i}`} className="dp__tick is-blank">
+            <span className="dp__tickbox" aria-hidden="true" />
+            <span className="dp__rule" aria-hidden="true" />
+          </span>
+        ))}
+      </span>
+      <span className="dp__foot">
+        {pill ?? <span className="dp__count">{ft('desk.face.items', lang, { n: item.lines.length })}</span>}
+      </span>
+    </span>
+  );
+}
+
+/** Document: a cover (title, subtitle, the brand's monogram) on three offset page edges (drawn by its shadow). */
+function DocumentFace({ item, lang, pill }: FaceProps) {
+  const p = (x: Text | undefined) => (x ? pick(x, lang) : '');
+  const em = faceEm(item);
+  const title = p(item.title);
+  const t = titleFit(title, em.w - 2 * 0.8, 1.55, 3);
+  const sub = item.source === 'row' ? (item.lines[0] ? p(item.lines[0]) : '') : p(item.subtitle);
+  return (
+    <span className={`dp dp--paperface dp--document ${bandClass(item)}`}>
+      <Band item={item} lang={lang} />
+      <span className="dp__cover">
+        <span className="dp__title" style={{ fontSize: `${t.size}em`, WebkitLineClamp: t.lines }}>
+          {title}
+        </span>
+        <span className="dp__coverrule" aria-hidden="true" />
+        {sub && <span className="dp__sub">{sub}</span>}
+      </span>
+      <span className="dp__foot">
+        <span className="dp__mark" aria-hidden="true">
+          <BrandMark kind="monogram" finish="flat" tone="periwinkle" size="sm" />
+        </span>
+        {pill ?? (item.lines.length > 0 && <span className="dp__count">{ft('desk.face.pages', lang, { n: item.lines.length })}</span>)}
+      </span>
+    </span>
+  );
+}
+
+/** Folder: manila, a real tab with the code, papers showing at the top edge, a label plate with the name. */
+function FolderFace({ item, lang, pill, shown, more, moreLabel }: FaceProps & { shown: Text[]; more: number; moreLabel: (n: number) => string }) {
+  const p = (x: Text | undefined) => (x ? pick(x, lang) : '');
+  const em = faceEm(item);
+  const title = p(item.title);
+  const plateW = em.w * 0.62;
+  const t = titleFit(title, plateW - 2 * 0.55, 1.5, 2);
+  const count = item.sections?.[0] ? p(item.sections[0].label) : item.lines.length > 0 ? ft('desk.face.items', lang, { n: item.lines.length }) : '';
+  const rest = shown.slice(0, 3);
+  return (
+    // Flow layout only (no positioned spans): inside a solid's top face a positioned span that overlaps a neighbour's
+    // side becomes a compositor layer of its own (K-04 went +20 % until the tab and the plate were in the flow).
+    <span className={`dp dp--folderface ${bandClass(item)}`}>
+      <span className="dp__tabrow" aria-hidden="true">
+        <span className="dp__tab">
+          <span className="dp__tabtext">{item.code ?? bandText(item, lang)}</span>
+        </span>
+        <span className="dp__papers" />
+      </span>
+      <span className="dp__folderbody">
+        <span className="dp__plate" style={{ width: `${plateW}em` }}>
+          <span className="dp__title" style={{ fontSize: `${t.size}em`, WebkitLineClamp: t.lines }}>
+            {title}
+          </span>
+          {item.subtitle && <span className="dp__sub">{p(item.subtitle)}</span>}
+        </span>
+        <span className="dp__side">
+          {pill}
+          {rest.map((line, i) => (
+            <span key={i} className="dp__line">
               {p(line)}
             </span>
           ))}
-          {more > 0 && <span className="dp__more">{moreLabel(more)}</span>}
+          {more > 0 && rest.length === shown.length && <span className="dp__more">{moreLabel(more)}</span>}
         </span>
       </span>
-    );
-  }
-  // Pages: sheet, form, checklist, document.
+      {count && <span className="dp__foot dp__foot--folder">{count}</span>}
+    </span>
+  );
+}
+
+/** Box: a lid (its seam on the sides), a label plate with the kit's name, the code stencilled on the kraft. */
+function BoxFace({ item, lang, pill }: FaceProps) {
+  const p = (x: Text | undefined) => (x ? pick(x, lang) : '');
+  const em = faceEm(item);
+  const title = p(item.title);
+  const t = titleFit(title, em.w - 2 * 0.9 - 2 * 0.45, 1.2, 2, 0.8);
   return (
-    <span className={`dp dp--page dp--${item.kind}`}>
-      {item.code && <span className="dp__code">{item.code}</span>}
-      {pill}
-      <span className="dp__title">{p(item.title)}</span>
-      {item.subtitle && <span className="dp__sub">{p(item.subtitle)}</span>}
-      <span className="dp__rows">
-        {shown.map((line, i) => {
-          const h = heading(i);
-          return (
-            <span key={i} className="dp__rowwrap">
-              {h && <span className="dp__section">{p(h.label)}</span>}
-              <span className="dp__row">
-                {item.kind === 'checklist' && <span className="dp__box" aria-hidden="true" />}
-                {item.kind === 'document' && <span className="dp__num">{String(i + 1).padStart(2, '0')}</span>}
-                <span className="dp__text">{p(line)}</span>
-                {item.kind === 'form' && <span className="dp__field" aria-hidden="true" />}
-              </span>
-            </span>
-          );
-        })}
-        {item.kind === 'form' && item.lines.length <= 1 && [0, 1, 2, 3].map((k) => <span key={`blank-${k}`} className="dp__row dp__row--blank"><span className="dp__field" aria-hidden="true" /></span>)}
-        {more > 0 && <span className="dp__more">{moreLabel(more)}</span>}
+    <span className={`dp dp--boxface ${bandClass(item)}`}>
+      {item.code && <span className="dp__stencil">{item.code}</span>}
+      <span className="dp__plate">
+        <span className="dp__plateband" aria-hidden="true" />
+        <span className="dp__title" style={{ fontSize: `${t.size}em`, WebkitLineClamp: t.lines }}>
+          {title}
+        </span>
+        {item.subtitle && <span className="dp__sub">{p(item.subtitle)}</span>}
       </span>
+      <span className="dp__foot dp__foot--box">
+        {pill}
+        {item.lines.length > 0 && <span className="dp__count">{ft('desk.face.items', lang, { n: item.lines.length })}</span>}
+      </span>
+    </span>
+  );
+}
+
+/** Card: stiff card, rounded corners, a coloured rule down its left edge; a rule's text reads as a sentence. */
+function CardFace({ item, lang, pill }: FaceProps) {
+  const p = (x: Text | undefined) => (x ? pick(x, lang) : '');
+  const em = faceEm(item);
+  const title = p(item.title);
+  const sentence = title.length > 34;
+  const t = sentence ? { size: 0.8, lines: 5 } : titleFit(title, em.w - 0.9 - 0.3 - 0.7, 1.35, 2);
+  const avail = em.h - 0.6 - 1.05 - t.lines * t.size * (sentence ? 1.24 : LH_TITLE) - 0.4 - 0.5;
+  const cap = sentence ? 0 : Math.max(0, Math.min(2, Math.floor(avail / 1.0)));
+  return (
+    <span className={`dp dp--paperface dp--cardface ${bandClass(item)}${sentence ? ' is-sentence' : ''}`}>
+      <span className="dp__kicker">{pill ?? <span className="dp__bandtext">{bandText(item, lang)}</span>}</span>
+      <span className="dp__title" style={{ fontSize: `${t.size}em`, WebkitLineClamp: t.lines }}>
+        {title}
+      </span>
+      {cap > 0 && item.lines.length > 0 && (
+        <span className="dp__body">
+          {item.lines.slice(0, cap).map((line, i) => (
+            <span key={i} className="dp__line">
+              {p(line)}
+            </span>
+          ))}
+        </span>
+      )}
     </span>
   );
 }
@@ -277,19 +517,6 @@ function Leaves({ n }: { n: number }) {
   );
 }
 
-/** The top face's rectangle inside the object's cell (world px): the body the object draws, centred on its squares
- *  (a device together with its caption strip; a fanned `pages` stack leaves room for its leaves). */
-export function faceBox(item: Pick<PlacedItem, 'kind' | 'cw' | 'ch'>): { left: number; top: number; width: number; height: number } {
-  const g = GEOMETRY[item.kind];
-  const capH = DEVICE_KINDS.has(item.kind) && item.kind !== 'screen' ? CAPTION_H : 0;
-  return {
-    left: (item.cw - g.face.w) / 2 - (item.kind === 'pages' ? 5 : 0),
-    top: (item.ch - g.face.h - capH) / 2 + (item.kind === 'folder' ? 3 : 0) + (item.kind === 'screen' ? -4 : 0),
-    width: g.face.w,
-    height: g.face.h,
-  };
-}
-
 /** True for kinds whose body has thickness (a lifted top and side faces, discs or sheets): they join the 3D context. */
 export function isSolid(item: Pick<DeskItem, 'kind' | 'plain'>): boolean {
   return (GEOMETRY[item.kind].t >= 3 && !item.plain) || item.kind === 'stack';
@@ -299,8 +526,10 @@ export function isSolid(item: Pick<DeskItem, 'kind' | 'plain'>): boolean {
 function bodyStyle(item: PlacedItem, at?: { left: number; top: number }): CSSProperties {
   const g = GEOMETRY[item.kind];
   const f = faceBox(item);
+  const turn = turnOf(item);
   return {
     ['--t' as string]: `${g.t}px`,
+    ...(turn ? { ['--turn' as string]: `${turn}deg` } : {}),
     ...f,
     ...(at ? { left: at.left + f.left, top: at.top + f.top } : {}),
     fontSize: item.font ?? g.font,
@@ -442,7 +671,8 @@ export function DeskFace({ item, lang, box, moreLabel, rows = Infinity }: { item
   const capH = device && item.kind !== 'screen' ? Math.min(CAPTION_H * k, 44) : 0;
   return (
     <div className={`desk-preview${device ? ' desk-preview--device' : ''}`} style={{ width: g.face.w * k, height: g.face.h * k + tab + capH, paddingTop: tab }}>
-      <span className={`desk-item--${item.kind}${device ? ' desk-item--device' : ''} desk-preview__face`} style={{ display: 'block', position: 'relative', width: g.face.w * k, height: g.face.h * k, fontSize: (item.font ?? g.font) * k }}>
+      <span className={`desk-item--${item.kind}${device ? ' desk-item--device' : ''} desk-preview__face`} style={{ display: 'block', position: 'relative', width: g.face.w * k, height: g.face.h * k, fontSize: (item.font ?? g.font) * k, ['--t' as string]: `${g.t * k}px`, ['--k' as string]: k }}>
+        {!device && <span className="desk-item__shadow" aria-hidden="true" />}
         <span className="desk-top">
           <Preview item={item} lang={lang} rows={rows} moreLabel={moreLabel} labelled />
         </span>

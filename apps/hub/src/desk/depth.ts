@@ -35,7 +35,7 @@ export const DEPTH = {
   /** A station's desk top above its mat (the stand-up planes stand this much above it, never on it). */
   stationTop: 22,
   standGap: 0.5,
-  /** The trail's pulse of light: above every object top (the tallest, a box, reaches objects + 18). */
+  /** The trail's pulse of light: above every object top (the tallest, a box, reaches objects + 20). */
   pulse: 40,
   /** A fanned dossier's overlay plane (lead dossiers, D-114): above every object top, below the pulse. */
   fan: 28,

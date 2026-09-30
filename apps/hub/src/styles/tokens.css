@@ -25,6 +25,12 @@
   --color-tint-aqua: #DFFCF6;
   --color-tint-lime: #F3FCD9;
   --color-metal-text: #5C5C5C;
+  --color-paper: #FBF8F1;
+  --color-service-clarity: #8FA5E6;
+  --color-service-direction: #4FD3BC;
+  --color-service-definition: #A9CF47;
+  --color-service-materialization: #BC9C68;
+  --color-service-soul: #B09BD6;
   --color-overlay: rgb(17 17 17 / 0.45);
   --color-shadow: rgb(17 17 17 / 0.12);
   /* Metal finish: silver by default; override with <html data-metal="..."> (every key of tokens.metal). */
@@ -138,6 +144,12 @@
   --color-tint-aqua: #17332E;
   --color-tint-lime: #26301A;
   --color-metal-text: #C0C0C0;
+  --color-paper: #EEE8DC;
+  --color-service-clarity: #8499DB;
+  --color-service-direction: #45C2AD;
+  --color-service-definition: #9DC040;
+  --color-service-materialization: #AF9060;
+  --color-service-soul: #A28DCB;
   --color-overlay: rgb(0 0 0 / 0.6);
   --color-shadow: rgb(0 0 0 / 0.5);
   color-scheme: dark;
@@ -169,6 +181,12 @@
   --color-tint-aqua: #DFFCF6;
   --color-tint-lime: #F3FCD9;
   --color-metal-text: #5C5C5C;
+  --color-paper: #FBF8F1;
+  --color-service-clarity: #8FA5E6;
+  --color-service-direction: #4FD3BC;
+  --color-service-definition: #A9CF47;
+  --color-service-materialization: #BC9C68;
+  --color-service-soul: #B09BD6;
   --color-overlay: rgb(17 17 17 / 0.45);
   --color-shadow: rgb(17 17 17 / 0.12);
   color-scheme: light;
@@ -201,6 +219,12 @@
     --color-tint-aqua: #17332E;
     --color-tint-lime: #26301A;
     --color-metal-text: #C0C0C0;
+    --color-paper: #EEE8DC;
+    --color-service-clarity: #8499DB;
+    --color-service-direction: #45C2AD;
+    --color-service-definition: #9DC040;
+    --color-service-materialization: #AF9060;
+    --color-service-soul: #A28DCB;
     --color-overlay: rgb(0 0 0 / 0.6);
     --color-shadow: rgb(0 0 0 / 0.5);
     color-scheme: dark;

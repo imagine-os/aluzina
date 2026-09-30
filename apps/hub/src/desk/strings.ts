@@ -19,6 +19,12 @@ export const deskStrings: StringTable = {
   'desk.roledescription': { en: 'zoomable desk', es: 'mesa con zoom' },
   'desk.objects': { en: '{n} objects', es: '{n} objetos' },
   'desk.more': { en: '+ {n} more', es: '+ {n} más' },
+  // Paper faces (changelog 0045): the band's stage, the footer's counts and the form's signature line.
+  'desk.face.stage': { en: 'Stage {n}', es: 'Etapa {n}' },
+  'desk.face.items': { en: '{n} items', es: '{n} elementos' },
+  'desk.face.fields': { en: '{n} fields', es: '{n} campos' },
+  'desk.face.pages': { en: '{n} pages', es: '{n} páginas' },
+  'desk.face.signature': { en: 'Signature', es: 'Firma' },
   'desk.kind.sheet': { en: 'Sheet', es: 'Hoja' },
   'desk.kind.form': { en: 'Form', es: 'Formulario' },
   'desk.kind.checklist': { en: 'Checklist', es: 'Lista de verificación' },

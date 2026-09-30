@@ -2,7 +2,8 @@
 /**
  * Desk layout check (the desk system, `apps/hub/src/desk/layout.ts`): lays out every registered desk model at seven
  * stage widths and fails (exit 1) on any overlap — object / object, object outside its sub-mat, sub-mat / sub-mat,
- * sub-mat outside its mat, a person's station on a sub-mat, mat / mat — or an object off the half-square grid.
+ * sub-mat outside its mat, a person's station on a sub-mat, mat / mat — an object off the half-square grid, or a
+ * turned paper face (changelog 0045) that leaves its own squares.
  * Plain Node + esbuild (already installed with Vite): the TS sources are bundled into a temp file that is removed.
  *
  *   node scripts/desk-check.mjs            # every model, seven widths
@@ -26,6 +27,7 @@ const verbose = process.argv.includes('--verbose');
 const entry = `
 export { layoutDesk } from './desk/layout';
 export { defaultPerRow } from './desk/types';
+export { drawnBox } from './desk/paper';
 import { syntheticDesk } from './desk/checkModels';
 import { playbookDeskModel } from './modules/desk/playbookDesk';
 import { buildLens } from './modules/clienthub/lenses';
@@ -57,7 +59,7 @@ const dir = mkdtempSync(join(tmpdir(), 'desk-check-'));
 const file = join(dir, 'bundle.mjs');
 writeFileSync(file, out.outputFiles[0].text);
 const mod = await import(pathToFileURL(file).href).finally(() => rmSync(dir, { recursive: true, force: true }));
-const { layoutDesk, defaultPerRow, deskCheckModels } = mod;
+const { layoutDesk, defaultPerRow, deskCheckModels, drawnBox } = mod;
 
 // Stage sizes (css px): the seven matrix widths at a typical viewport height, the stage at ~60 % of it.
 const STAGES = [
@@ -90,6 +92,9 @@ for (const { name, model } of deskCheckModels()) {
           checks++;
           if (!inside({ x: it.x, y: it.y, w: it.cw, h: it.ch }, { x: 0, y: 0, w: s.w, h: s.h })) fail(`${it.id} (${it.kind}) outside sub-mat ${s.id}`);
           if (it.x % 32 !== 0 || (it.y - 24) % 32 !== 0) fail(`${it.id} off the grid (${it.x}, ${it.y})`);
+          // A paper object's hand-placed turn (changelog 0045) keeps everything it draws inside its own squares.
+          const d = drawnBox(it);
+          if (d.x0 < 0 || d.y0 < 0 || d.x1 > it.cw || d.y1 > it.ch) fail(`${it.id} (${it.kind}) turned face leaves its squares (${d.x0.toFixed(1)}, ${d.y0.toFixed(1)}, ${d.x1.toFixed(1)}, ${d.y1.toFixed(1)} in ${it.cw} x ${it.ch})`);
         }
       }
       if (m.person && !inside(m.person, { x: 0, y: 0, w: m.w, h: m.h })) fail(`the person on ${m.id} is outside its mat`);

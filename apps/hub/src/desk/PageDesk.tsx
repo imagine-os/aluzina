@@ -36,8 +36,8 @@ export const MAX_MATS = 6;
 /** Objects shown per sub-mat before the "+N more" stack, and per mat. */
 export const CAP_PER_SUB = 12;
 export const CAP_PER_MAT = 40;
-/** Face font per kind on page desks: a row carries 3-5 short lines, so its face text is larger than a playbook form's. */
-const ROW_FONT: Partial<Record<DeskItem['kind'], number>> = { profile: 5, card: 3.3, sheet: 3, document: 3, checklist: 3, folder: 3.7, box: 3.7, token: 3.6 };
+/** Face font per kind on page desks where it differs from the kind's (paper kinds share the playbook's since changelog 0045). */
+const ROW_FONT: Partial<Record<DeskItem['kind'], number>> = { profile: 5, token: 3.6 };
 /** Full faces per desk; objects past it render a plain tile (D-106, performance). Defined with the geometry. */
 export { FACE_BUDGET };
 
@@ -163,6 +163,7 @@ function rowItem(entity: EntityName, rule: EntityRule, row: Row, group: string, 
     group,
     source: 'row',
     code,
+    service: typeof row.serviceCode === 'string' && row.serviceCode ? row.serviceCode : undefined,
     title: both((l) => titleOfRow(row, rule, l)),
     subtitle: rule.one,
     lines,

@@ -1,6 +1,7 @@
 import { memo, useMemo, type CSSProperties, type KeyboardEvent } from 'react';
 import { Button } from '../components/atom/Button/Button';
 import { Icon, isIconName } from '../components/atom/Icon/Icon';
+import { Select } from '../components/atom/Select/Select';
 import { toast } from '../components/atom/Toast/Toast';
 import type { Lead, LeadNetwork, Message } from '../data/schema';
 import { copyText } from '../design/clipboard';
@@ -73,44 +74,72 @@ export const CARD_W = 148;
 export const CARD_H = 204;
 const CARD_FONT = 7.2;
 const STACK_SCALE = 0.42;
-const FAN_RADIUS = 900;
+/** A fan (changelog 0045): cards turn about a point FAN_R under the middle card's centre, evenly spaced along that arc. */
+const FAN_R = 760;
+/** The gap a card leaves showing of the one under it, at most (world px), and the largest turn between two cards. */
+const FAN_SPACING = 96;
+const FAN_MAX_STEP = 7.5;
+/** How far the focused card rises out of the hand, and a hovered one (world px). */
+const FAN_LIFT = 16;
+/** Room the control strip takes above the fan (world px). */
+export const FAN_BAR = 40;
 
-/** Where a dossier's cards go (world px): in the stack over its lead card, or along an arc kept inside its mat. */
+/** A card at angle `deg` on the arc: its centre (relative to the middle card's centre) and its turned half extents. */
+function arcAt(deg: number) {
+  const a = (deg * Math.PI) / 180;
+  const x = FAN_R * Math.sin(a);
+  const y = FAN_R * (1 - Math.cos(a));
+  const hw = (CARD_W / 2) * Math.cos(Math.abs(a)) + (CARD_H / 2) * Math.sin(Math.abs(a));
+  const hh = (CARD_H / 2) * Math.cos(Math.abs(a)) + (CARD_W / 2) * Math.sin(Math.abs(a));
+  return { x, y, hw, hh };
+}
+
+/**
+ * Where a dossier's cards go (world px): in the stack over its lead card, or along a uniform arc kept inside its
+ * mat. `cx`, `cy` are the middle card's centre (the section's origin); `top` / `bottom` / `width` bound the fan with
+ * its raised card, for the camera fit and the strip.
+ */
 export function dossierGeometry(anchor: PlacedItem, mat: Mat | undefined, n: number, mode: 'stack' | 'fan') {
   const ax = anchor.x + anchor.cw / 2;
   const ay = anchor.y + anchor.ch / 2;
-  if (mode === 'stack') return { cx: ax, cy: ay, step: 0, width: CARD_W * STACK_SCALE, top: ay - (CARD_H * STACK_SCALE) / 2 };
-  // The widest arc that stays inside the mat (a fan never leaves its mat, so it reads at the mat's fit), at most 8° a card.
-  const room = mat ? mat.w - 16 : 640;
-  const maxTheta = (Math.asin(Math.min(0.9, Math.max(0, room / 2 - CARD_W / 2) / (FAN_RADIUS + CARD_H))) * 180) / Math.PI;
-  const step = n > 1 ? Math.min(8, (2 * maxTheta) / (n - 1)) : 0;
-  const spread = (Math.sin((((n - 1) / 2) * step * Math.PI) / 180) * (FAN_RADIUS + CARD_H) + CARD_W / 2) * 2;
-  const mx0 = mat ? mat.x + 8 : ax - spread / 2;
-  const mx1 = mat ? mat.x + mat.w - 8 : ax + spread / 2;
-  const cx = mx1 - mx0 > spread ? Math.min(mx1 - spread / 2, Math.max(mx0 + spread / 2, ax)) : (mx0 + mx1) / 2;
-  const top0 = mat ? mat.y + 12 : ay - CARD_H;
-  const cy = Math.max(top0 + CARD_H + 54, ay + anchor.ch / 2 + 8);
-  return { cx, cy, step, width: spread, top: cy - CARD_H - 24 };
+  if (mode === 'stack') {
+    const h = CARD_H * STACK_SCALE;
+    return { cx: ax, cy: ay, step: 0, width: CARD_W * STACK_SCALE, top: ay - h / 2, bottom: ay + h / 2 };
+  }
+  // The widest even spacing (at most FAN_SPACING) whose turned end cards stay inside the mat.
+  const room = mat ? mat.w - 32 : 640;
+  const half = (n - 1) / 2;
+  let step = n > 1 ? Math.min(FAN_MAX_STEP, (FAN_SPACING / FAN_R) * (180 / Math.PI)) : 0;
+  for (let k = 0; k < 40 && n > 1; k++) {
+    const end = arcAt(half * step);
+    if (2 * (end.x + end.hw) <= room) break;
+    step *= 0.95;
+  }
+  const end = arcAt(half * step);
+  const width = 2 * (end.x + end.hw);
+  const mx0 = mat ? mat.x + 16 : ax - width / 2;
+  const mx1 = mat ? mat.x + mat.w - 16 : ax + width / 2;
+  const cx = mx1 - mx0 > width ? Math.min(mx1 - width / 2, Math.max(mx0 + width / 2, ax)) : (mx0 + mx1) / 2;
+  // The middle card a little above its lead card, never above the mat's top (room for the strip and the lift).
+  const minCy = (mat ? mat.y + 14 : ay - CARD_H) + FAN_BAR + FAN_LIFT + CARD_H / 2;
+  const cy = Math.max(minCy, ay - CARD_H / 4);
+  return { cx, cy, step, width, top: cy - CARD_H / 2 - FAN_LIFT, bottom: cy + end.y + end.hh };
 }
 
-function cardTransform(i: number, n: number, mode: 'stack' | 'fan', step: number, top: boolean): CSSProperties {
-  if (mode === 'fan' && top) {
-    // The focused card of a fan rises out of the hand and comes to the front (above every other card's Z).
-    const theta = (i - (n - 1) / 2) * step;
-    return { transformOrigin: `50% ${CARD_H + FAN_RADIUS}px`, transform: `translate(0px, ${-CARD_H / 2 - 30}px) translateZ(${n * 0.2}px) rotate(${theta}deg) scale(1.04)` };
-  }
+/**
+ * A card's placement as custom properties (the stylesheet composes one transform from them, so a change of mode,
+ * focus or hover interpolates smoothly, transform only). Fan: on the arc, turned with it; the focused card rises and
+ * comes upright and to the front. Stack: a pile in place, small offsets and turns, the focused card on top.
+ */
+function cardVars(i: number, n: number, mode: 'stack' | 'fan', step: number, top: boolean): CSSProperties {
+  const v = (x: number, y: number, z: number, r: number, s: number) => ({ ['--x' as string]: `${x.toFixed(2)}px`, ['--y' as string]: `${y.toFixed(2)}px`, ['--z' as string]: `${z.toFixed(2)}px`, ['--r' as string]: `${r.toFixed(2)}deg`, ['--s' as string]: s, ['--zh' as string]: `${(n * 0.2 + 0.1).toFixed(2)}px` });
   if (mode === 'stack') {
-    // A pile in place: small offsets and turns, the focused card on top.
     const k = top ? n : i;
-    return {
-      transformOrigin: '50% 50%',
-      transform: `translate(${k * 1.6}px, ${-k * 1.6}px) translateZ(${k * 0.2}px) rotate(${((k % 3) - 1) * 1.4}deg) scale(${STACK_SCALE})`,
-    };
+    return v(k * 1.6, -k * 1.6, k * 0.2, ((k % 3) - 1) * 1.4, STACK_SCALE);
   }
-  // A hand of cards: each turns about a point FAN_RADIUS under the fan's centre; the same function list as the stack,
-  // so a change of mode interpolates smoothly (transform only).
-  const theta = (i - (n - 1) / 2) * step;
-  return { transformOrigin: `50% ${CARD_H + FAN_RADIUS}px`, transform: `translate(0px, ${-CARD_H / 2}px) translateZ(${i * 0.2}px) rotate(${theta}deg) scale(1)` };
+  const deg = (i - (n - 1) / 2) * step;
+  const p = arcAt(deg);
+  return top ? v(p.x, p.y - FAN_LIFT, n * 0.2 + 0.2, 0, 1.04) : v(p.x, p.y, i * 0.2, deg, 1);
 }
 
 /** Mock follower numbers for a drawn profile: deterministic from the handle, labelled as mock on the card. */
@@ -181,40 +210,38 @@ const Dossier = memo(function Dossier({ anchorId, anchor, mat, lead, state, leve
   const flippable = (c: DossierCard | undefined) => c?.kind === 'social';
   const flip = (id: string) => onChange(anchorId, { focus: id, flipped: state.flipped.includes(id) ? state.flipped.filter((x) => x !== id) : [...state.flipped, id] });
   const name = lead.name;
-  const barTop = state.mode === 'fan' ? g.top - 60 : g.top - 20;
+  const barTop = state.mode === 'fan' ? g.top - FAN_BAR : g.top - 20;
   // The controls stay over the mat (a stack near the mat's edge would push them off it); smaller over a stack.
-  const half = state.mode === 'fan' ? 135 : 82;
+  const half = state.mode === 'fan' ? 150 : 90;
   const barX = mat ? Math.min(mat.x + mat.w - half, Math.max(mat.x + half, g.cx)) - g.cx : 0;
   return (
     <section
       className={`dz dz--${state.mode}`}
       aria-label={t('desk.dossier.aria', { name, n })}
       data-dossier={anchorId}
-      style={{ left: g.cx, top: state.mode === 'fan' ? g.cy : g.cy, ['--dz-z' as string]: `calc(var(--z-fan) + ${level * 2}px)`, fontSize: CARD_FONT }}
+      style={{ left: g.cx, top: g.cy, ['--dz-z' as string]: `calc(var(--z-fan) + ${level * 2}px)`, fontSize: CARD_FONT }}
     >
       <div className="dz-bar" role="toolbar" aria-label={t('desk.dossier.controls', { name })} style={{ top: barTop - g.cy, left: barX }}>
-        <button type="button" className="dz-btn dz-btn--primary" aria-pressed={state.mode === 'fan'} onClick={() => onChange(anchorId, { mode: state.mode === 'fan' ? 'stack' : 'fan' })}>
-          {state.mode === 'fan' ? t('desk.dossier.stack') : t('desk.dossier.fan')}
-        </button>
-        <label className="dz-sort">
-          <span className="visually-hidden">{t('desk.dossier.sortLabel')}</span>
-          <select value={state.sort} onChange={(e) => onChange(anchorId, { sort: e.target.value as DossierSort })} aria-label={t('desk.dossier.sortLabel')}>
-            {DOSSIER_SORTS.map((s) => (
-              <option key={s} value={s}>
-                {t(`desk.dossier.sort.${s}`)}
-              </option>
-            ))}
-          </select>
-        </label>
-        <button type="button" className="dz-btn" disabled={!flippable(focusCard)} title={flippable(focusCard) ? undefined : t('desk.dossier.flipNone')} onClick={() => focus && flip(focus)}>
-          {t('desk.dossier.flip')}
-        </button>
-        <button type="button" className="dz-btn" onClick={() => (focus ? onSendCard(anchorId, focus) : onSendLead(anchorId))} title={t('desk.dossier.sendCardHint')}>
-          {t('desk.dossier.sendCard')}
-        </button>
-        <button type="button" className="dz-btn dz-btn--icon" aria-label={t('desk.dossier.close', { name })} onClick={() => onChange(anchorId, null)}>
-          ×
-        </button>
+        <div className="dz-bar__inner">
+          <Button size="sm" variant="primary" aria-pressed={state.mode === 'fan'} onClick={() => onChange(anchorId, { mode: state.mode === 'fan' ? 'stack' : 'fan' })}>
+            {state.mode === 'fan' ? t('desk.dossier.stack') : t('desk.dossier.fan')}
+          </Button>
+          <Select
+            className="dz-sort"
+            label={t('desk.dossier.sortLabel')}
+            hideLabel
+            value={state.sort}
+            onChange={(e) => onChange(anchorId, { sort: e.target.value as DossierSort })}
+            options={DOSSIER_SORTS.map((s) => ({ value: s, label: t(`desk.dossier.sort.${s}`) }))}
+          />
+          <Button size="sm" variant="secondary" disabled={!flippable(focusCard)} title={flippable(focusCard) ? undefined : t('desk.dossier.flipNone')} onClick={() => focus && flip(focus)}>
+            {t('desk.dossier.flip')}
+          </Button>
+          <Button size="sm" variant="secondary" onClick={() => (focus ? onSendCard(anchorId, focus) : onSendLead(anchorId))} title={t('desk.dossier.sendCardHint')}>
+            {t('desk.dossier.sendCard')}
+          </Button>
+          <Button size="sm" variant="ghost" icon="close" aria-label={t('desk.dossier.close', { name })} onClick={() => onChange(anchorId, null)} />
+        </div>
       </div>
       {cards.map((c, i) => {
         const isTop = c.id === focus;
@@ -222,8 +249,8 @@ const Dossier = memo(function Dossier({ anchorId, anchor, mat, lead, state, leve
         return (
           <article
             key={c.id}
-            className={`dz-card dz-card--${c.kind}${flippable(c) ? ' is-flippable' : ''}${isTop ? ' is-focus' : ''}${flipped ? ' is-flipped' : ''}`}
-            style={{ left: -CARD_W / 2, top: -CARD_H / 2, width: CARD_W, height: CARD_H, ...cardTransform(i, n, state.mode, g.step, isTop) }}
+            className={`dz-card dz-card--${c.kind}${c.network ? ` dz-card--net-${c.network}` : ''}${flippable(c) ? ' is-flippable' : ''}${isTop ? ' is-focus' : ''}${flipped ? ' is-flipped' : ''}`}
+            style={{ left: -CARD_W / 2, top: -CARD_H / 2, width: CARD_W, height: CARD_H, ...cardVars(i, n, state.mode, g.step, isTop) }}
             data-dossier-card={c.id}
           >
             <div className="dz-card__inner">

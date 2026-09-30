@@ -45,6 +45,12 @@ const COLOR_ROWS: { key: keyof ColorSet; kind: Kind }[] = [
   { key: 'tintAqua', kind: 'surface' },
   { key: 'tintLime', kind: 'surface' },
   { key: 'metalText', kind: 'text' },
+  { key: 'paper', kind: 'surface' },
+  { key: 'serviceClarity', kind: 'surface' },
+  { key: 'serviceDirection', kind: 'surface' },
+  { key: 'serviceDefinition', kind: 'surface' },
+  { key: 'serviceMaterialization', kind: 'surface' },
+  { key: 'serviceSoul', kind: 'surface' },
   { key: 'overlay', kind: 'surface' },
   { key: 'shadow', kind: 'surface' },
 ];

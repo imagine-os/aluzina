@@ -2,6 +2,7 @@ import { useCallback, useMemo, useRef, useState, type FocusEvent, type KeyboardE
 import { createPortal } from 'react-dom';
 import { Button } from '../components/atom/Button/Button';
 import { Checkbox } from '../components/atom/Checkbox/Checkbox';
+import { Icon, type IconName } from '../components/atom/Icon/Icon';
 import { Select } from '../components/atom/Select/Select';
 import { OverflowMenu } from '../components/molecule/OverflowMenu/OverflowMenu';
 import { useT } from '../i18n/I18nProvider';
@@ -14,6 +15,34 @@ import { useToolbarFit } from './useToolbarFit';
 import { DESK_SIZES, SIZE_VH, SLAB, TILT_DEG, type DeskController } from './useDesk';
 import type { DeskItem, ItemKind, Mat, PlacedItem, SubMat } from './types';
 import './desk.css';
+
+/** The glyph of a kind on a sub-mat label (changelog 0045): what the sub-mat mostly holds, drawn from the icon set. */
+const KIND_GLYPH: Partial<Record<ItemKind, IconName>> = {
+  sheet: 'note',
+  form: 'intake',
+  checklist: 'check',
+  document: 'documents',
+  folder: 'folder',
+  box: 'deliveries',
+  token: 'dot',
+  card: 'references',
+  profile: 'leads',
+  light: 'dot',
+  phone: 'simulator',
+  tablet: 'simulator',
+  screen: 'simulator',
+  page: 'documents',
+  pages: 'documents',
+};
+
+/** The kind most objects of a sub-mat are (ties: the first seen), as its label's glyph. */
+function subGlyph(items: readonly PlacedItem[]): IconName | undefined {
+  const n = new Map<ItemKind, number>();
+  for (const it of items) if (it.kind !== 'stack') n.set(it.kind, (n.get(it.kind) ?? 0) + 1);
+  let best: ItemKind | undefined;
+  for (const [k, v] of n) if (!best || v > (n.get(best) ?? 0)) best = k;
+  return best ? KIND_GLYPH[best] : undefined;
+}
 
 export interface DeskStageProps {
   desk: DeskController;
@@ -270,6 +299,7 @@ export function DeskStage(props: DeskStageProps) {
                           {/* The objects plane: one flat layer with the label, every hit area, every shadow and the thin faces. */}
                           <div className="desk-sub__objects">
                           <button type="button" className="desk-sub__label" onClick={() => api.fitSub(s, m)} aria-label={t('desk.subLabel.aria', { name, n })} {...labelHint(`sub:${s.id}`, name, t('desk.tip.sub', { mat: props.matName(m), n }))}>
+                            {subGlyph(s.items) && <Icon name={subGlyph(s.items)!} size="sm" className="desk-sub__glyph" />}
                             <span className="desk-sub__name">{name}</span>
                             <span className="desk-sub__n">{n}</span>
                           </button>

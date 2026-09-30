@@ -40,6 +40,20 @@ export interface ColorSet {
   tintLime: string;
   /** Flat metal that is readable as text on this theme (outlines, eyebrows, descriptor). */
   metalText: string;
+  /**
+   * Desk paper (D-117): the warm off-white every paper object on a desk is printed on. Stays light on the dark
+   * theme (it is paper on a dark desk: the desk and the mats darken instead).
+   */
+  paper: string;
+  /**
+   * The five playbook services' band colours (D-117), named by the service ladder: 01 clarity, 02 direction,
+   * 03 definition, E materialization, 04 soul. Calm, distinct at small size, always under ink text.
+   */
+  serviceClarity: string;
+  serviceDirection: string;
+  serviceDefinition: string;
+  serviceMaterialization: string;
+  serviceSoul: string;
   /** Scrim behind Modal / Drawer (rgb with alpha). */
   overlay: string;
   /** Shadow colour (rgb with alpha); the `shadow.*` tokens build on it. */

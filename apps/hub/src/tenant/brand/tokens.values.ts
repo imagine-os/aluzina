@@ -98,6 +98,14 @@ export const tokenValues = {
       tintAqua: '#DFFCF6',
       tintLime: '#F3FCD9',
       metalText: '#5C5C5C',
+      /** Desk paper (D-117): warm off-white, a whisper of the gold highlight in white. */
+      paper: '#FBF8F1',
+      /** Service bands (D-117): the brand's three pastels deepened for a band under ink, plus the two metals. */
+      serviceClarity: '#8FA5E6',
+      serviceDirection: '#4FD3BC',
+      serviceDefinition: '#A9CF47',
+      serviceMaterialization: '#BC9C68',
+      serviceSoul: '#B09BD6',
       overlay: 'rgb(17 17 17 / 0.45)',
       shadow: 'rgb(17 17 17 / 0.12)',
     },
@@ -127,6 +135,13 @@ export const tokenValues = {
       tintAqua: '#17332E',
       tintLime: '#26301A',
       metalText: '#C0C0C0',
+      /** Paper stays light on the dark desk, a step dimmer so it does not glare (D-117). */
+      paper: '#EEE8DC',
+      serviceClarity: '#8499DB',
+      serviceDirection: '#45C2AD',
+      serviceDefinition: '#9DC040',
+      serviceMaterialization: '#AF9060',
+      serviceSoul: '#A28DCB',
       overlay: 'rgb(0 0 0 / 0.6)',
       shadow: 'rgb(0 0 0 / 0.5)',
     },
